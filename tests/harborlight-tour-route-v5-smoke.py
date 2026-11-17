@@ -1,4 +1,4 @@
-"""Walk the actual first introduction through all 56 grouped targets.
+"""Walk the actual first introduction through the three advisor introduction targets.
 
 Only the fresh in-memory loopback fixture is injected. Naming, every Next,
 viewport layout, smiley demo, tab changes and finishing use the real interface.
@@ -20,10 +20,11 @@ OUTPUT = Path(os.environ.get('HARBORLIGHT_TEST_OUTPUT', '/tmp/harborlight-tour-r
 OUTPUT.mkdir(parents=True, exist_ok=True)
 fixture = json.loads(subprocess.check_output(['node','--input-type=module','-e',"""
 import {createState} from './harborlight-v1-state.js';
-import {APPROVED_TOUR_IDS,APPROVED_TOUR_VERSION} from './harborlight-v1-approved-copy.js';
-console.log(JSON.stringify({state:createState(Date.now(),{ruleset:32,onboarding:true}),ids:APPROVED_TOUR_IDS,version:APPROVED_TOUR_VERSION}));
+import {APPROVED_TOUR_VERSION} from './harborlight-v1-approved-copy.js';
+import {ADVISOR_INTRO_IDS} from './harborlight-v1-advisor-intro.js';
+console.log(JSON.stringify({state:createState(Date.now(),{ruleset:32,onboarding:true}),ids:ADVISOR_INTRO_IDS,version:APPROVED_TOUR_VERSION}));
 """], cwd=SOURCE))
-assert fixture['version'] == 5 and len(fixture['ids']) == 56
+assert fixture['ids'] == ['home','category-administration','building-farm']
 acknowledge_daily_offer(fixture['state'])
 LOWER = ['administration','economy','resources','decorations','paths']
 SNAPSHOT = """()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {
@@ -80,28 +81,12 @@ with sync_playwright() as playwright:
             frame=bounded(page,'[data-onboarding-highlight]')
             for selector in ['[data-onboarding-card]','[data-onboarding-next]','[data-onboarding-previous]','[data-onboarding-exit]']:
                 bounded(page,selector)
-            expect(page.locator('[data-onboarding-counter]')).to_contain_text(f'{index+1} z 56')
+            expect(page.locator('[data-onboarding-counter]')).to_contain_text(f'{index+1} z 3')
             assert page.locator('[data-onboarding-card]').evaluate('(e)=>e.scrollWidth<=e.clientWidth+1'),identity
-            if identity=='clothing':
-                expect(page.locator('[data-onboarding-title]')).to_have_text('Ubrani')
-            if identity=='producer-storage':
-                face=page.locator('#hit-world-farm [data-production-penalty="farm"]')
-                expect(face).to_be_visible()
-                box=face.bounding_box()
-                assert abs(frame['x']-(box['x']-4))<=2,(frame,box)
-                assert abs(frame['y']-(box['y']-4))<=2,(frame,box)
-                assert abs(frame['width']-(box['width']+8))<=2,(frame,box)
-                assert abs(frame['height']-(box['height']+8))<=2,(frame,box)
-                assert frame['width']<100 and frame['height']<100,'The highlight must cover the face, not the Farm'
-                smiley_record={'highlight':frame,'face':box}
-                page.screenshot(path=str(OUTPUT/f'smiley-{width}.png'))
-            elif index>fixture['ids'].index('producer-storage'):
-                assert not page.evaluate('document.body.hasAttribute("data-tour-storage-demo")'),identity
-            if identity.startswith('category-'):
-                category=identity.removeprefix('category-')
-                expect(page.locator('#hit-category-'+category)).to_have_attribute('aria-pressed','true')
-                tab_records.append(category)
-                page.screenshot(path=str(OUTPUT/f'tab-{category}-{width}.png'))
+            if identity=='category-administration':
+                expect(page.locator('#hit-category-administration')).to_have_attribute('aria-pressed','true')
+                tab_records.append('administration')
+            page.screenshot(path=str(OUTPUT/f'intro-{index}-{width}.png'))
             current=page.evaluate(SNAPSHOT)
             assert current==before, f'Tour step {index+1}/{identity} changed clock, stock, workers or practical history'
             page.locator('[data-onboarding-next]').click()
@@ -110,15 +95,16 @@ with sync_playwright() as playwright:
         assert after['onboarding']['stage']=='complete'
         assert after['onboarding']['worldStartedAt'] is not None
         assert seen==fixture['ids']
-        assert tab_records==LOWER
-        assert seen.index('building-townhall')<seen.index('building-theatre')<seen.index('building-dock')<seen.index('category-administration')
+        assert tab_records==['administration']
+        assert seen == ['home','category-administration','building-farm']
+        assert page.locator('[data-active-tutorial-guide]').count() == 0
         assert not errors,errors
         assert not failed,failed
         assert page.evaluate('Object.keys(localStorage).filter(k=>k!=="harborlight-language")')==[]
         assert page.evaluate('Object.keys(sessionStorage)')==[]
-        report.append({'width':width,'steps':len(seen),'all_highlights_bounded':True,'grouped_top_buildings_bottom':True,'lower_tabs':tab_records,'smiley':smiley_record,'practical_and_world_frozen':True,'finished_normally':True,'errors':errors})
+        report.append({'width':width,'steps':len(seen),'all_highlights_bounded':True,'top_bottom_one_producer':True,'lower_tabs':tab_records,'smiley':smiley_record,'practical_and_world_frozen':True,'finished_normally':True,'errors':errors})
         context.close()
     browser.close()
 (OUTPUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))
-print('PASS actual first tutorial: all56 grouped targets, native Theatre with buildings, five bottom tabs, Ubrani, smiley-only frame, frozen stock/workers/practical history; desktop/mobile.')
+print('PASS compact introduction: top bar, bottom menu, one production building; bounded highlights and controls, frozen clock/stock/workers/practical history; desktop/mobile.')

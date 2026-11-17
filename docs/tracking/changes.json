@@ -30003,6 +30003,82 @@
         "OPS:failed-promotion-history-preserved",
         "OPS:new-source-own-CI-required"
       ]
+    },
+    {
+      "id": "HL-CHG-1159",
+      "epic": "HL-EPIC-TUT",
+      "area": "Doradca i pierwsze wprowadzenie",
+      "type": "Story",
+      "title": "Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala",
+      "source": {
+        "kind": "user_request",
+        "date": "2026-11-17",
+        "date_note": "GO wyłącznie development; doprecyzowanie: góra, dół, jeden budynek produkcyjny.",
+        "summary": "Doradca w lewym dolnym rogu sugeruje działania i odpowiada na cele rozwoju według bieżącej wyspy. Krótkie oprowadzanie zastępuje automatyczny długi tutorial.",
+        "reference": "conversation:advisor-development-GO-and-short-tutorial"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_acceptance_in_progress",
+        "ci": "pending_exact_source_CI",
+        "preprod": "not_authorized_for_this_change",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwsze oprowadzanie ma kolejność: górny pasek, dolne menu, Gospodarstwo. Zegar i postęp pozostają zatrzymane do świadomego rozpoczęcia.",
+        "Doradca jest dobrowolny, można go wyciszyć i ponownie otworzyć. Nie wykonuje akcji za gracza.",
+        "Rozmowa o rozbudowie Portu i innych budynków wykorzystuje bieżące wymagania, zapasy ponad rezerwę, obsadę, łańcuchy produkcji i transport.",
+        "Plany nie zużywają tych samych materiałów dwukrotnie; zsumowane proponowane przydziały mieszczą się w liczbie wolnych osób i miejscach pracy.",
+        "Szacunek czasu jest jawnie niedostępny przy brakujących warunkach; osobno pokazuje się rzeczywistą wycenę opcjonalnej usługi za monety.",
+        "Pokaż gdzie otwiera właściwy budynek lub sekcję i podświetla kontrolkę.",
+        "Na390px i1440px pole rozmowy oraz zamknięcie pozostają dostępne; aktualizacje nie kasują wpisu.",
+        "Dotychczasowe lekcje, nagrody i pełny katalog Pomocy są zachowane. Długi kurs uruchamia się na życzenie.",
+        "Publikacja obejmuje DEV/Git/Pages; bez promocji doradcy na PRE-PROD, PROD, resetu i DNS."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1157"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-KINGDOM-ADVISOR.md",
+          "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-advisor.js",
+          "harborlight-v1-advisor-ui.js",
+          "harborlight-v1-advisor-intro.js",
+          "harborlight-v1-advisor.css",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-advisor.test.mjs",
+          "tests/harborlight-advisor-ui-smoke.py",
+          "tests/harborlight-tour-route-v5-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "Lokalne testy kierunkowe PASS; pełny odbiór i własny CI/publikacja DEV w toku."
+      },
+      "notes": [
+        "Rozmowa korzysta z lokalnego planera zasad gry; nie wymaga płatnego zewnętrznego modelu ani kluczy. Nie obiecuje globalnie optymalnego planu.",
+        "Indeksy starego oprowadzania i odebrane nagrody nie są zerowane."
+      ],
+      "tags": [
+        "v32",
+        "advisor",
+        "tutorial",
+        "dev-only"
+      ],
+      "rules": [
+        "UI:optional-advisor",
+        "TUTORIAL:top-bottom-one-producer",
+        "PLAN:read-only-live-state",
+        "OPS:DEV-only"
+      ]
     }
   ],
   "current_environment": {
@@ -33086,6 +33162,14 @@
       "previous_accepted_publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
       "successful_receipt": false,
       "tag_created": false
+    },
+    "advisor_task": {
+      "as_of": "2026-11-17",
+      "version": "0.15.1.0",
+      "status": "local_acceptance_in_progress",
+      "DEV_only": true,
+      "PREPROD_authorized": false,
+      "reset": false
     }
   }
 }

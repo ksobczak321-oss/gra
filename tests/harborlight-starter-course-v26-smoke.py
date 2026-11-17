@@ -13,6 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +48,8 @@ def enter(browser, state, *, language='pl', mobile=False):
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)
     assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('document.getElementById("loading").hidden')
+    if not state.get('tutorial', {}).get('autoOpenDisabled', False):
+        request_practical_guidance(page)
     return context, page
 
 
@@ -220,11 +223,24 @@ def task_and_cashout_targets(browser):
     finally:
         context.close()
 
-    decision = model(21, decision=True)
-    before_coins = decision['resources']['coins']
-    pot = decision['expeditionRuns']['misty']['pot']
-    context, page = enter(browser, decision)
+    # Opt into this optional course before starting the expedition. Reloading
+    # an already-won board intentionally returns to the Advisor by default.
+    initial = model(21)
+    before_coins = initial['resources']['coins']
+    context, page = enter(browser, initial)
     try:
+        page.locator('[data-tutorial-go="lighthouse-task"],[data-tutorial-visit="lighthouse-task"]').first.click()
+        page.locator('[data-expedition-choice="triples"]').click()
+        active = saved(page)
+        run = next(run for run in active['expeditionRuns'].values() if run['status'] == 'active')
+        for symbol in sorted(set(run['miniGame']['cards'])):
+            for index, value in enumerate(run['miniGame']['cards']):
+                if value == symbol:
+                    page.locator('[data-memory-card="%s"]' % index).click()
+        won = saved(page)
+        decision = next(run for run in won['expeditionRuns'].values() if run['status'] == 'decision')
+        pot = decision['pot']
+        assert pot > 0 and not won['tutorial']['completed'].get('lighthouse-task')
         cashout = page.locator('[data-expedition-cashout]')
         expect(cashout).to_be_visible()
         expect(cashout).to_have_class(re.compile('tutorial-action-target'))

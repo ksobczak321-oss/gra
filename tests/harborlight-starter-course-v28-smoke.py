@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import re
 from playwright.sync_api import expect,sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('v28_course_browser_base',ROOT/'tests/harborlight-starter-course-v26-smoke.py')
 base=importlib.util.module_from_spec(spec);spec.loader.exec_module(base)
@@ -50,7 +51,7 @@ def farm_direct_purchase(browser,language,mobile):
         assert finished['buildings']['farm']['level']==2
         assert not any(p['building']=='farm' for p in finished['constructionProjects'])
         base.reward(page,'construction-queue')
-        page.reload();page.wait_for_function('document.body.dataset.cloudStatus !== undefined');page.clock.run_for(30000)
+        page.reload();page.wait_for_function('document.getElementById("loading").hidden');request_practical_guidance(page);page.clock.run_for(30000)
         current=base.saved(page)
         assert current['buildings']['farm']['level']==2
         assert current['tutorial']['guided']['farm']['purchased']
@@ -86,7 +87,7 @@ def natural_delivery_and_resume(browser,language,mobile):
         assert not started['tutorial']['guided']['townhall']['transported']
         # Refresh while the real delivery is pending. The saved guide must
         # still explain transport, without paying or completing it on reload.
-        page.reload();page.wait_for_function('document.body.dataset.cloudStatus !== undefined');page.clock.run_for(30000)
+        page.reload();page.wait_for_function('document.getElementById("loading").hidden');request_practical_guidance(page);page.clock.run_for(30000)
         expect(page.locator('[data-tutorial-current-substep="transport"]:visible').first).to_be_visible()
         open_map(page,'townhall-upgrade','townhall')
         expect(page.locator('[data-premium-route="construction"]')).to_have_class(re.compile('tutorial-action-target'))
@@ -105,7 +106,7 @@ def natural_delivery_and_resume(browser,language,mobile):
         expect(page.locator('[data-tutorial-current-substep="building"]:visible').first).to_be_visible()
         # Reload a second time at the changed phase. No dead transport button
         # may reclaim the arrow; the actual100% construction service is next.
-        page.reload();page.wait_for_function('document.body.dataset.cloudStatus !== undefined');page.clock.run_for(1000)
+        page.reload();page.wait_for_function('document.getElementById("loading").hidden');request_practical_guidance(page);page.clock.run_for(1000)
         expect(page.locator('[data-tutorial-current-substep="building"]:visible').first).to_be_visible()
         open_map(page,'townhall-upgrade','townhall')
         accelerate=page.locator('[data-premium-percent="100"]')

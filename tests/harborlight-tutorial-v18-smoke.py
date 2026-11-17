@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 from helpers.browser_offers import acknowledge_daily_offer
 
 
@@ -32,6 +33,8 @@ def install(page, value):
     page.evaluate('(value)=>sessionStorage.setItem(%s,JSON.stringify(value))' % json.dumps(RELAY), value)
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
+    if not value.get('tutorial', {}).get('autoOpenDisabled', False):
+        request_practical_guidance(page)
 
 
 def open_fixture(browser, mode='tutorial', *, now=None, width=1366, height=768):

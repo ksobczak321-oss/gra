@@ -10,6 +10,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('onboarding_cloud_fixture', SOURCE / 'tests/harborlight-dev-game-smoke.py')
@@ -28,8 +29,9 @@ def starter(*, ruleset=None):
 
 def current_tour():
     source = """import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
+      import {ADVISOR_INTRO_IDS} from './harborlight-v1-advisor-intro.js';
       import {ALL_BUILDINGS} from './harborlight-v1-state.js';
-      console.log(JSON.stringify({ids:APPROVED_TOUR_IDS,buildings:Object.keys(ALL_BUILDINGS)}));"""
+      console.log(JSON.stringify({ids:ADVISOR_INTRO_IDS,fullIds:APPROVED_TOUR_IDS,positions:ADVISOR_INTRO_IDS.map(id=>APPROVED_TOUR_IDS.indexOf(id)),buildings:Object.keys(ALL_BUILDINGS)}));"""
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', source], cwd=SOURCE,
                                     capture_output=True, text=True, check=True).stdout)
 
@@ -163,7 +165,7 @@ def onboarding_language_switch(browser, *, language, mobile):
     name.fill(draft)
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
-    expect(page.locator('[data-onboarding-title]')).to_have_text('Twoja wyspa' if other == 'pl' else 'Your island')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Górny pasek — sytuacja na wyspie' if other == 'pl' else 'Top bar — your island at a glance')
     expect(page.locator('[data-onboarding-counter]')).to_contain_text('Poznaj wyspę' if other == 'pl' else 'Explore your island')
     frozen(saved(page), original)
     assert cloud.cloud_state(UID)['islandName'] == draft
@@ -283,7 +285,7 @@ def onboarding_language_failed_save_recovers(browser):
     # Recovery resumes a writable introduction, not a replacement island.
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
-    expect(page.locator('[data-onboarding-title]')).to_have_text('Your island')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Top bar — your island at a glance')
     assert saved(page)['islandName'] == draft
     frozen(cloud.cloud_state(UID), original)
     context.close()
@@ -312,18 +314,18 @@ def persisted_tour_and_skip(browser):
     expect(guide).to_have_attribute('data-onboarding-step', first_step)
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-step', second_step)
-    # Follow the real tour arrows through the requested HUD order, then return
-    # to the same saved step before checking resume-after-reload behaviour.
-    for expected in ['happiness', 'coins', 'working']:
-        page.locator('[data-onboarding-next]').click()
-        expect(guide).to_have_attribute('data-onboarding-step', expected)
-    for expected in ['coins', 'happiness', 'level']:
-        page.locator('[data-onboarding-previous]').click()
-        expect(guide).to_have_attribute('data-onboarding-step', expected)
+    # The short first introduction keeps canonical catalogue positions:
+    # top bar -> bottom menu -> one production building. Help retains all56.
+    assert first_step == 'home' and second_step == 'category-administration'
+    page.locator('[data-onboarding-next]').click()
+    expect(guide).to_have_attribute('data-onboarding-step', 'building-farm')
+    page.locator('[data-onboarding-previous]').click()
+    expect(guide).to_have_attribute('data-onboarding-step', second_step)
     page.clock.run_for(61000)
     frozen(saved(page), original)
     assert cloud.cloud_state(UID)['islandName'] == 'Port Żółtej Latarni'
     expected_index = cloud.cloud_state(UID)['onboarding']['index']
+    assert expected_index == current_tour()['positions'][1] == 51
 
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden')
@@ -345,7 +347,8 @@ def persisted_tour_and_skip(browser):
     assert started['onboarding']['worldStartedAt'] == now
     assert started['welcome']['startedAt'] == now
     assert started['welcome']['until'] - now == 72 * 3600 * 1000
-    expect(page.locator('[data-tutorial-current]')).to_be_visible()
+    expect(page.locator('[data-tutorial-current]')).to_have_count(0)
+    expect(page.locator('[data-kingdom-advisor]')).to_be_visible()
     page.clock.run_for(31000)
     progressed = cloud.cloud_state(UID)
     assert progressed['worldTimeMs'] >= now + 28000
@@ -354,7 +357,7 @@ def persisted_tour_and_skip(browser):
     assert progressed['onboarding']['worldStartedAt'] == now
     cloud.no_island_cache(page)
     context.close()
-    print('PASS20 persisted intro/name/arrows, frozen clocks across reload, explicit exit starts time and regular tutorial', flush=True)
+    print('PASS20 persisted intro/name/arrows, frozen clocks across reload, explicit exit starts time and optional advisor', flush=True)
 
 
 def complete_mobile_tour(browser):
@@ -392,18 +395,20 @@ def complete_mobile_tour(browser):
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
     assert ids == expected['ids'], ids
+    assert ids == ['home', 'category-administration', 'building-farm']
+    assert expected['positions'] == [0, 51, 26]
+    # The separate full-replay suite still renders every catalogue target.
+    # Shortening the initial presentation must not remove those explanations.
+    assert len(expected['fullIds']) == 56
     for building in expected['buildings']:
         target = 'level' if building == 'townhall' else 'building-' + building
-        assert target in ids, (building, ids)
-    for target in ['home', 'level', 'happiness', 'coins', 'working', 'arrival', 'food', 'clothing',
-                   'transport', 'construction', 'education', 'research', 'kingdom', 'archipelago',
-                   'chat', 'league', 'charity', 'category-decorations', 'category-paths', 'settings', 'tutorial']:
-        assert target in ids, (target, ids)
+        assert target in expected['fullIds'], (building, expected['fullIds'])
     assert cloud.cloud_state(UID)['onboarding']['stage'] == 'complete'
-    expect(page.locator('[data-tutorial-current]')).to_be_visible()
+    expect(page.locator('[data-tutorial-current]')).to_have_count(0)
+    expect(page.locator('[data-kingdom-advisor]')).to_be_visible()
     cloud.no_island_cache(page)
     context.close()
-    print('PASS20 complete English mobile tour: every HUD control, building and bottom category, visible spotlight/arrows and no horizontal overflow', flush=True)
+    print('PASS20 short English mobile introduction: top bar, bottom menu and one producer, visible spotlight/arrows and no horizontal overflow', flush=True)
 
 
 def existing_history(browser):
@@ -479,15 +484,17 @@ def lost_finish_acknowledgement(browser):
     expect(guide).not_to_be_visible()
     expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
     page.locator('[data-close-tutorial-exit-reminder]').click()
-    expect(page.locator('[data-tutorial-current]')).to_be_visible()
+    expect(page.locator('[data-tutorial-current]')).to_have_count(0)
+    expect(page.locator('[data-kingdom-advisor]')).to_be_visible()
     assert cloud.DOCUMENTS[UID]['revision'] == revision, 'A confirmed ambiguous completion must not be sent twice'
     assert cloud.cloud_state(UID)['population'] == 13
     assert cloud.cloud_state(UID)['welcomeWorkers']['granted'] == 1
     assert cloud.cloud_state(UID)['islandName'] == 'Port po utracie odpowiedzi'
     assert cloud.cloud_state(UID)['tutorial']['curriculum'] == 4
 
-    # Recovery must start the standard tutorial after the cloud coordinator
-    # has become writable, so its first real worker assignment still works.
+    # Recovery leaves the optional advisor. Opt into the preserved course via
+    # Help after proving the ambiguous finish was not written twice.
+    request_practical_guidance(page)
     page.locator('[data-tutorial-visit="rules-read"]').click()
     page.locator('#hit-world-farm').click()
     page.locator('[data-worker-building="farm"][data-worker-delta="1"]').click()

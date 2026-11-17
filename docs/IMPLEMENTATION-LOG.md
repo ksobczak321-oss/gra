@@ -1,5 +1,14 @@
 # Dziennik implementacji
 
+## Doradca Królestwa — DEV 0.15.1.0 w przygotowaniu
+
+GO17listopada obejmuje doradcę w lewym dolnym rogu, rozmowę o celach według aktualnej wyspy i **trzy kroki pierwszego oprowadzania: górny pasek → dolne menu → Gospodarstwo**. Podpowiedzi można ignorować i wyciszyć. Pełne opisy i25lekcji pozostają w Pomocy; nie są automatycznie narzucane po wprowadzeniu. Historia nagród i kont pozostaje zachowana.
+
+Planer22/22PASS; rzeczywistyUI doradcy1440×1000/390×844/390×480PASS; krótki tutorial i wymiana podświetlanego DOM1440/390PASS; pakowanie27/27PASS. Pełna regresja, odświeżenie arkuszy, nowe źródło, własnyCI i publikacjaPages są W TOKU. **Doradca nie jest autoryzowany na PRE-PROD ani PROD.** Bez resetu i DNS. Wcześniejszy bootstrap minigier08e ma CI44096593096SUCCESS, co nie jest odbiorem nowego doradcy ani kolejną promocją.
+
+[Zakres](v32/GO-KINGDOM-ADVISOR.md) · [Dowody](v32/KINGDOM-ADVISOR-EVIDENCE.json) · [HL-CHG-1159](tracking/changes/HL-CHG-1159.md).
+
+
 Każdy wpis powinien podawać wynik zmiany, sposób sprawdzenia oraz stan publikacji. Prace lokalne, wysłanie commita i udana publikacja GitHub Pages są osobnymi zdarzeniami.
 
 Wpisy z 21–22 października są historią tamtych wersji. Ich zasady aktywnego czasu, obsada początkowa, limity połowy populacji, transport godzinowy i dawne czasy budowy zostały zastąpione regułami z 23 października. Aktualną specyfikację opisuje [ECONOMY-RULES.md](ECONOMY-RULES.md), a nie wcześniejsze zapisy historyczne.

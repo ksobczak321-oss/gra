@@ -1,5 +1,14 @@
 # HARBORLIGHT
 
+## Doradca Królestwa — DEV 0.15.1.0 w przygotowaniu
+
+GO17listopada obejmuje doradcę w lewym dolnym rogu, rozmowę o celach według aktualnej wyspy i **trzy kroki pierwszego oprowadzania: górny pasek → dolne menu → Gospodarstwo**. Podpowiedzi można ignorować i wyciszyć. Pełne opisy i25lekcji pozostają w Pomocy; nie są automatycznie narzucane po wprowadzeniu. Historia nagród i kont pozostaje zachowana.
+
+Planer22/22PASS; rzeczywistyUI doradcy1440×1000/390×844/390×480PASS; krótki tutorial i wymiana podświetlanego DOM1440/390PASS; pakowanie27/27PASS. Pełna regresja, odświeżenie arkuszy, nowe źródło, własnyCI i publikacjaPages są W TOKU. **Doradca nie jest autoryzowany na PRE-PROD ani PROD.** Bez resetu i DNS. Wcześniejszy bootstrap minigier08e ma CI44096593096SUCCESS, co nie jest odbiorem nowego doradcy ani kolejną promocją.
+
+[Zakres](docs/v32/GO-KINGDOM-ADVISOR.md) · [Dowody](docs/v32/KINGDOM-ADVISOR-EVIDENCE.json) · [HL-CHG-1159](docs/tracking/changes/HL-CHG-1159.md).
+
+
 **Osobne minigry — DEV odebrany, pierwszy odbiór PRE-PROD nieudany.** Źródło 03f39a2 ma CI i Pages SUCCESS oraz niezmienny tag DEV. Gotowe 55 gier, 55 Word i 55 TXT są opublikowane na Hostingu, lecz PRE-PROD 44093734171/próba1 zakończył się FAILURE przez ścieżkę uruchamiania modułu. Nowa poprawka, własny CI i ponowna standardowa promocja oczekują; nie ma udanego receipt ani tagu PRE-PROD tej próby. [Indeks i dokumenty](https://harborlight-dev.web.app/minigames/) · [Zakres i przyczyna](docs/v32/GO-MINIGAMES-STANDALONE.md) · [Dowody](docs/v32/MINIGAMES-STANDALONE-EVIDENCE.json).
 
 **DEV i PRE-PROD0.15.0.2/cache13 odebrane — 16listopada2026.** Aplikacja37061c, publikacja/wdrożenie `c4f752142c0421aad1dc0490a2f5139c277e6ee5`. WłasnyCI43850690541 SUCCESS24m31s (1614Node,166Python,66programówChromium), Pages43850690456 SUCCESS22s i PRE-PROD43854387444/1 SUCCESS2m22s. Start bez starej mapy/HUD; tempo1×/2×/6× tylkoadmin3. Natywny odbiór zalogowanej istniejącej wyspy i wszystkie109bajtowo zgodne plikiTLS PASS. TagiDEV/PRE-PROD0.15.0.2 opublikowane i zdalnie potwierdzone na c4.

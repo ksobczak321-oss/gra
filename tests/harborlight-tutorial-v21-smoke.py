@@ -11,6 +11,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +42,7 @@ def enter(browser, value, *, language='pl', mobile=False, motion='reduce'):
     page.clock.pause_at(now)
     assert page.goto(qa.URL).ok
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
+    request_practical_guidance(page)
     return context, page
 
 

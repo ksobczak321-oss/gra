@@ -1,0 +1,32 @@
+{
+  "as_of": "2026-11-17",
+  "application_version": "0.15.1.0",
+  "scope": "DEV_ONLY",
+  "initial_tutorial": [
+    "top_bar",
+    "bottom_menu",
+    "farm"
+  ],
+  "preserved_help_catalog_steps": 56,
+  "preserved_practical_lessons": 25,
+  "planner_cases": 23,
+  "planner": "PASS",
+  "browser_advisor": "PASS_1440x1000_390x844_390x480",
+  "browser_first_introduction": "PASS_3_STEPS_1440_390",
+  "browser_target_replacement": "PASS_1440_390",
+  "full_regression": "LOCAL_MODELS_PASS_BROWSER_COMPATIBILITY_IN_PROGRESS",
+  "source_sha": null,
+  "CI": "PENDING",
+  "Pages": "PENDING",
+  "PREPROD": "NOT_AUTHORIZED_FOR_ADVISOR",
+  "PROD_DNS": "NO_ACTION",
+  "account_reset": false,
+  "manual_user_acceptance": "NOT_RUN",
+  "full_frontend_node": {
+    "passed": 1467,
+    "failed": 0,
+    "duration_ms": 315179.559317,
+    "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
+  },
+  "frontend_bundle_cases": 27
+}

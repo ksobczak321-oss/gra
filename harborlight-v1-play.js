@@ -1,3 +1,6 @@
+import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-14';
+import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-14';
+import { createAdvisorIntroduction } from './harborlight-v1-advisor-intro.js?v=frontend-v32-14';
 import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-13';
 import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-13';
 import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-13';
@@ -35,7 +38,7 @@ import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-13
 import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-13';
 import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-13';
 import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-13';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-13';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-14';
 import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-13';
 import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-13';
 import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-13';
@@ -310,6 +313,9 @@ let tutorialCelebration = null;
 let pendingStarterConstructionGuide = null;
 let learningFeedback = null;
 let tutorialReady = false;
+let practicalGuidanceRequested = false;
+let kingdomAdvisor = null;
+let advisorHighlightTimer = null;
 let onboardingFlow = null;
 let worldExperienceReady = false;
 let tutorialGuideSignature = '';
@@ -661,7 +667,7 @@ function toast(message) {
 function refreshLearningFeedback() {
   if (!learningFeedback) learningFeedback = createLearningFeedback({
     getState: () => state, getLanguage: language,
-    isEnabled: () => tutorialReady && !state.tutorial?.autoOpenDisabled && !state.learning?.practical?.reviewActive && !replayTour?.active,
+    isEnabled: () => practicalGuidanceRequested && tutorialReady && !state.tutorial?.autoOpenDisabled && !state.learning?.practical?.reviewActive && !replayTour?.active,
     canShow: () => !State.onboardingStatus(state).pending && !onboardingFlow?.active && !replayTour?.active && !expeditionSession() && !tutorialCelebration && !Progression.tutorialRows(state).some(row => row.canClaim || row.pendingDecision) && !taskCelebration?.open && !taskAcceptanceDialog?.open && !confirmationDialog?.open,
     getTarget: kind => {
       if (kind === 'lighthouse') return document.getElementById('hit-world-lighthouse');
@@ -715,7 +721,7 @@ function showConstructionReduction(savedSeconds, projectOrder) {
   popup.addEventListener('cancel', event => { event.preventDefault(); close(); }); localize(popup); popup.showModal();
 }
 function refreshStarterConstructionGuide() {
-  if (!pendingStarterConstructionGuide || tutorialCelebration || document.querySelector('.island-flow-dialog[open]')) return;
+  if (!practicalGuidanceRequested || !pendingStarterConstructionGuide || tutorialCelebration || document.querySelector('.island-flow-dialog[open]')) return;
   const project = pendingStarterConstructionGuide; pendingStarterConstructionGuide = null;
   const estimate = scheduledConstructionEstimate('townhall', project);
   const transport = estimate?.transport ?? estimate?.transportRemaining ?? estimate?.delivery ?? estimate?.total;
@@ -1163,6 +1169,7 @@ function renderHUD() {
   refreshStarterConstructionGuide();
   refreshLearningFeedback();
   refreshIdleSession();
+  kingdomAdvisor?.update();
   if (!State.onboardingStatus(state).pending && worldExperienceReady && !refreshPlayerOffers()) refreshEngagementExperience();
   localize();
   document.querySelectorAll('[data-dock-building="dock"], [data-mobile-building="dock"]').forEach(node => node.classList.toggle('charity-port-lit', charityPortIlluminated(state)));
@@ -1393,6 +1400,7 @@ function lockedBuildingPanel(id) {
     el('p', { class: 'notice' }, uiCopy(`Current Town Hall level: ${state.buildings.townhall.level}.`, `Obecny poziom Ratusza: ${state.buildings.townhall.level}.`)));
 }
 function openPanel(kind, id) {
+  if (kind === 'tutorial') practicalGuidanceRequested = true;
   if (['building', 'building-details'].includes(kind) && buildingLocked(id)) kind = 'building-locked';
   if (panel?.kind==='original-puzzle' && (kind!=='original-puzzle'||id!==panel.id)) exitOriginalPuzzle();
   if (expeditionSession() && !['puzzle', 'expeditions'].includes(kind) && dialog.open) { requestExpeditionExit(() => openPanel(kind, id)); return; }
@@ -3325,7 +3333,6 @@ async function replayIslandTour(fromBeginning = false) {
       delete document.body.dataset.tourStorageDemo;
       if (!await persistLearning({ tour: { active: false, paused: false, completed: true } })) return false;
       replayTour = null; renderHUD();
-      if (!Progression.tutorialStatus(state).finished) queueMicrotask(() => void resumePracticalTutorial());
       return true;
     }
   });
@@ -3877,6 +3884,7 @@ function updateTutorialPointer(row) {
 }
 
 function refreshTutorialExperience() {
+  if (!practicalGuidanceRequested) { clearTutorialGuidance(true); return; }
   if (state.learning?.practical?.reviewActive || replayTour?.active || learningFeedback?.active) { clearTutorialGuidance(true); return; }
   const cashoutLesson = expeditionSession()?.status === 'decision' && Progression.tutorialRows(state).find(row => !row.completed)?.subject === 'expedition-complete';
   if (!tutorialReady || expeditionSession() && !cashoutLesson || document.querySelector('dialog[open]:not(#island-dialog)')) { clearTutorialGuidance(true); return; }
@@ -4094,7 +4102,7 @@ async function beginOnboarding() {
     onboardingFlow?.destroy(); onboardingFlow = null;
     beginWorldExperience(); renderHUD(); return true;
   };
-  onboardingFlow = createIslandOnboarding({ ...status, islandName: state.islandName, language: language(), getLanguage: language, steps: onboardingSteps(),
+  onboardingFlow = createAdvisorIntroduction({ ...status, islandName: state.islandName, language: language(), getLanguage: language, steps: onboardingSteps(),
     onLanguageChange: async next => {
       if (devSync && !devSync.writable && !await devSync.recover()) return false;
       if (!act(state, { type: 'setting', key: 'language', value: next }).ok) return false;
@@ -4115,6 +4123,32 @@ async function beginOnboarding() {
   });
   await onboardingFlow.start();
 }
+function mountKingdomAdvisor() {
+  if (kingdomAdvisor) { kingdomAdvisor.update(); return; }
+  kingdomAdvisor = createKingdomAdvisor({getState:() => state, getSuggestion:advisorSuggestion,
+    getPlan:(input, options) => advisorPlan(state, input, options),
+    isVisible:() => worldExperienceReady && !State.onboardingStatus(state).pending &&
+      document.documentElement.dataset.gameStartup === 'ready' && !document.querySelector('dialog[open]') &&
+      !expeditionSession() && !replayTour?.active && !document.querySelector('[data-active-tutorial-guide]'),
+    onNavigate:step => {
+      if (!BUILDINGS[step.target] && step.target !== 'theatre') return;
+      if (step.target === 'theatre') openPanel('theatre');
+      else openPanel('building', step.target);
+      const section = step.section === 'food' ? 'feeding' : step.section;
+      const toggle = section && dialog.querySelector(`[data-warehouse-section-toggle="${section}"]`);
+      if (toggle?.getAttribute('aria-expanded') === 'false') toggle.click();
+      const target = toggle || (section === 'workers' ? dialog.querySelector('[data-manage-workers], [data-worker-delta="1"]') : null) || dialog.querySelector('[data-v32-workers], .dialog-body');
+      document.querySelectorAll('.advisor-navigation-target').forEach(node => node.classList.remove('advisor-navigation-target'));
+      if (target) {
+        target.classList.add('advisor-navigation-target');
+        target.scrollIntoView({block:'nearest',behavior:'instant'});
+        clearTimeout(advisorHighlightTimer);
+        advisorHighlightTimer = setTimeout(() => target.classList.remove('advisor-navigation-target'), 6000);
+      }
+      kingdomAdvisor.update();
+    }
+  });
+}
 function beginWorldExperience() {
   if (worldExperienceReady || State.onboardingStatus(state).pending) return;
   worldExperienceReady = true;
@@ -4129,9 +4163,9 @@ function beginWorldExperience() {
   else if (restoredExpedition?.status === 'decision') openPanel('expeditions');
   else if (Activities.taskAcceptanceStatus?.(state)?.pending) { const pending = state.lighthouseTasks.find(task => task.id === state.taskAcceptanceDraft.taskId); if (pending) openTaskAcceptance(pending); }
   tutorialReady = true;
+  mountKingdomAdvisor();
   if (state.learning?.tour?.active && !expeditionSession()) { void replayIslandTour(false); return; }
   if (state.learning?.practical?.reviewActive && !expeditionSession()) { openPanel('tutorial'); return; }
-  if (!dialog.open && !taskAcceptanceDialog?.open && Progression.tutorialStatus(state).shouldAutoOpen) openPanel('tutorial');
 }
 const sessionStartedAt = devCloud.lastSessionActivityAt || Date.now();
 let foregroundAnchor = Date.now();
@@ -4182,6 +4216,9 @@ async function requestIdleSignout() {
 // Seen markers are saved before display; closing a reminder never grants its reward.
 function refreshPlayerOffers() {
   if (tradeMutationBusy || shipMutationPreparing || uncertainShipPurchase) return true;
+  // Optional offers must not cover a confirmation, an exit reminder or a
+  // conversation the player is already reading.
+  if (document.querySelector('dialog[open], [data-advisor-conversation]:not([hidden])')) return true;
   if (State.onboardingStatus(state).pending || onboardingFlow?.active || replayTour?.active || expeditionSession() || tutorialCelebration || taskCelebration?.open || taskAcceptanceDialog?.open || confirmationDialog?.open || dialog.open || document.querySelector('.island-flow-dialog[open]')) return false;
   if (Progression.tutorialPendingRewards(state).length) return false;
   const intro = Missions.missionStoryIntro?.(state);

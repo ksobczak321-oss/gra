@@ -13,6 +13,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -57,6 +58,9 @@ def seed(state):
 def visit(page):
     assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('document.getElementById("loading").hidden')
+    value = cloud.cloud_state(UID)
+    if value.get('onboarding', {}).get('stage') == 'complete' and not value.get('tutorial', {}).get('autoOpenDisabled', False):
+        request_practical_guidance(page)
 
 
 def saved(page):
@@ -214,16 +218,19 @@ def initial_pause_and_ads(browser):
         tour.locator('[data-onboarding-next]').click()
         tour.locator('[data-onboarding-name]').fill('Moja przystań')
         tour.locator('[data-onboarding-next]').click()
-        for step in ['level', 'happiness']:
+        for step in ['category-administration', 'building-farm']:
             tour.locator('[data-onboarding-next]').click()
             expect(tour).to_have_attribute('data-onboarding-step', step)
         tour.locator('[data-onboarding-exit]').click()
         expect(tour).to_have_count(0)
         dismiss_tour_reminder(page)
+        expect(page.locator('[data-tutorial-current]')).to_have_count(0)
+        expect(page.locator('[data-kingdom-advisor]')).to_be_visible()
+        request_practical_guidance(page)
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'island-map')
         started = flush_pagehide(page)
         assert started['onboarding']['worldStartedAt'] is not None
-        assert started['learning']['tour']['paused'] and started['learning']['tour']['index'] == 2
+        assert started['learning']['tour']['paused'] and started['learning']['tour']['index'] == 26
         assert started['learning']['adsNotBeforeActiveSeconds'] - started['engagementSchedule']['activeSeconds'] >= 3599
         page.clock.run_for(31_000)
         no_offer(page)

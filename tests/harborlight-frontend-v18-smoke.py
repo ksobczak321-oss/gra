@@ -12,6 +12,7 @@ import os
 import threading
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -89,6 +90,8 @@ def install(page, state):
     page.add_init_script('window.__HARBORLIGHT_DEV_FIXTURE__=' + json.dumps(state, ensure_ascii=False))
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
+    if not state.get('tutorial', {}).get('autoOpenDisabled', False):
+        request_practical_guidance(page)
 
 
 def state(page):

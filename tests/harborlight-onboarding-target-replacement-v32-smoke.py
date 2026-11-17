@@ -16,7 +16,7 @@ import {createState} from './harborlight-v1-state.js';
 import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
 const state=createState(Date.now(),{ruleset:32,onboarding:true});
 state.islandName='Przystań Ramki';state.settings.language='pl';
-state.onboarding.stage='tour';state.onboarding.index=APPROVED_TOUR_IDS.indexOf('category-resources');
+state.onboarding.stage='tour';state.onboarding.index=APPROVED_TOUR_IDS.indexOf('category-administration');
 console.log(JSON.stringify(state));
 """],cwd=SOURCE))
 SNAPSHOT='''()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {worldTimeMs:s.worldTimeMs,lastSimulatedAt:s.lastSimulatedAt,resources:s.resources,buildings:s.buildings,residents:s.residents,tutorial:s.tutorial}}'''
@@ -33,7 +33,7 @@ def asset(route):
 def follows_real_target(page,selector):
     highlight=page.locator('[data-onboarding-highlight]')
     expect(highlight).to_be_visible()
-    page.wait_for_function('''selector=>{const target=document.querySelector(selector),frame=document.querySelector('[data-onboarding-highlight]');if(!target||!frame||frame.hidden)return false;const r=target.getBoundingClientRect(),f=frame.getBoundingClientRect();return Math.abs(f.x-r.x+4)<2&&Math.abs(f.y-r.y+4)<2&&Math.abs(f.width-r.width-8)<2&&Math.abs(f.height-r.height-8)<2}''',arg=selector)
+    page.wait_for_function('''selector=>{const target=document.querySelector(selector),frame=document.querySelector('[data-onboarding-highlight]');if(!target||!frame||frame.hidden)return false;const r=target.getBoundingClientRect(),f=frame.getBoundingClientRect();const left=Math.max(12,r.left),right=Math.min(innerWidth-12,r.right),top=Math.max(12,r.top),bottom=Math.min(innerHeight-12,r.bottom);return Math.abs(f.x-left+4)<2&&Math.abs(f.y-top+4)<2&&Math.abs(f.width-(right-left)-8)<2&&Math.abs(f.height-(bottom-top)-8)<2}''',arg=selector)
 
 
 report=[]
@@ -46,8 +46,8 @@ with sync_playwright() as p:
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
-        expect(page.locator('[data-island-onboarding]')).to_have_attribute('data-onboarding-step','category-resources')
-        selector='[data-mobile-category="resources"]' if touch else '#hit-category-resources'
+        expect(page.locator('[data-island-onboarding]')).to_have_attribute('data-onboarding-step','category-administration')
+        selector='.mobile-bottom-dock' if touch else '.dock-tabs'
         follows_real_target(page,selector)
         before=page.evaluate(SNAPSHOT)
         page.locator(selector).evaluate('''target=>{const replacement=target.cloneNode(true);target.replaceWith(replacement);window.dispatchEvent(new Event('resize'))}''')

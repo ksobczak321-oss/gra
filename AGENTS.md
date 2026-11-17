@@ -1,5 +1,14 @@
 # Zasady pracy nad HARBORLIGHT
 
+## Doradca Królestwa — DEV 0.15.1.0 w przygotowaniu
+
+GO17listopada obejmuje doradcę w lewym dolnym rogu, rozmowę o celach według aktualnej wyspy i **trzy kroki pierwszego oprowadzania: górny pasek → dolne menu → Gospodarstwo**. Podpowiedzi można ignorować i wyciszyć. Pełne opisy i25lekcji pozostają w Pomocy; nie są automatycznie narzucane po wprowadzeniu. Historia nagród i kont pozostaje zachowana.
+
+Planer22/22PASS; rzeczywistyUI doradcy1440×1000/390×844/390×480PASS; krótki tutorial i wymiana podświetlanego DOM1440/390PASS; pakowanie27/27PASS. Pełna regresja, odświeżenie arkuszy, nowe źródło, własnyCI i publikacjaPages są W TOKU. **Doradca nie jest autoryzowany na PRE-PROD ani PROD.** Bez resetu i DNS. Wcześniejszy bootstrap minigier08e ma CI44096593096SUCCESS, co nie jest odbiorem nowego doradcy ani kolejną promocją.
+
+[Zakres](docs/v32/GO-KINGDOM-ADVISOR.md) · [Dowody](docs/v32/KINGDOM-ADVISOR-EVIDENCE.json) · [HL-CHG-1159](docs/tracking/changes/HL-CHG-1159.md).
+
+
 ## Osobne minigry — DEV 03f odebrany, pierwszy PRE-PROD FAILURE
 
 Źródło `03f39a2e8e8854208548ba53dc842aae5955e2af` ma CI 44087431085 SUCCESS 36 min 49 s (1622 Node, 167 Python, 67 Chromium), Pages 44087430928 SUCCESS 52 s i niezmienny, zdalnie potwierdzony tag `dev-minigames-20261117` (obiekt e1538ee8adb3e7801e0f47a3a4103eef7bc37b7b). Gotowe 55 gier i 110 instrukcji obejmują 100 wariantów opowieści; lokalne i dokładnie pakowane testy zachowują własny PASS.

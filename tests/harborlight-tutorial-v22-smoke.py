@@ -13,6 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import request_practical_guidance
 from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -79,6 +80,8 @@ def early_house_then_reload(browser):
     context, page = cloud.context(browser, UID)
     try:
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
+        page.wait_for_function('document.getElementById("loading").hidden')
+        request_practical_guidance(page)
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
         confirmed(page)
         expect(page.locator('[data-tutorial-panel] progress')).to_have_attribute('max', '25')
@@ -151,6 +154,8 @@ def early_house_then_reload(browser):
         # A new page load must use the fixture cloud payload, retaining both the
         # hidden future lesson and the Farm reward, with no island browser cache.
         assert page.reload().ok
+        page.wait_for_function('document.getElementById("loading").hidden')
+        request_practical_guidance(page)
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'island-map')
         confirmed(page)
         expect(page.locator('[data-tutorial-list-item="%s"]' % EARLY_LESSON)).to_have_count(0)
@@ -190,6 +195,8 @@ def mobile_reward_grid(browser):
     try:
         page.set_viewport_size({'width': 360, 'height': 800})
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
+        page.wait_for_function('document.getElementById("loading").hidden')
+        request_practical_guidance(page)
         expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'rules-read')
         page.locator('[data-tutorial-visit="rules-read"]').click()
         page.locator('#hit-world-farm').click()
