@@ -50,7 +50,9 @@ def open_building(page,identity,mobile):
     if mobile:
         page.locator('[data-mobile-category="administration"]').click()
         target=page.locator('[data-mobile-building="'+identity+'"]')
-        target.scroll_into_view_if_needed();target.click()
+        # The live dock can rerender on a resource tick. Locator.click()
+        # scrolls and reacquires the current control before the real click.
+        target.click()
     else:
         page.locator('#hit-world-'+identity+' .map-hitshape').click()
     expect(page.locator('[data-building-panel="'+identity+'"]')).to_be_visible()

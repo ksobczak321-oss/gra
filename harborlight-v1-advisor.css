@@ -46,3 +46,7 @@
 @media(prefers-reduced-motion:no-preference){.advisor-navigation-target{animation:advisor-beacon 1.2s ease-in-out 3}@keyframes advisor-beacon{50%{outline-color:#fff4ce}}}
 
 @media(max-height:450px){.kingdom-advisor-chips{display:none}}
+
+/* Legacy desktop keeps its dock at the left edge. Leave space above its tabs,
+   including the mute button that extends below the collapsed advisor. */
+@media(min-width:901px) and (min-height:501px){body[data-ruleset="legacy"] .kingdom-advisor:not(.is-open){bottom:max(260px,calc(50vh - 100px))}}

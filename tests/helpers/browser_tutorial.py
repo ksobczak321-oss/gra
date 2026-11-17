@@ -4,6 +4,7 @@ The Advisor is the default experience. A course regression must choose Help ->
 lessons explicitly, including after reload, without changing world/fixture flags.
 """
 from playwright.sync_api import expect
+from helpers.browser_offers import dismiss_player_offers
 
 
 def request_practical_guidance(page):
@@ -13,6 +14,8 @@ def request_practical_guidance(page):
     dialog = page.locator('#island-dialog[open]')
     if dialog.count():
         dialog.locator('.dialog-close').click()
+    # Course tests leave unrelated first-visit notices through their real UI.
+    dismiss_player_offers(page)
     page.locator('[data-mobile-control="tutorial"]:visible,#hit-tutorial:visible').first.click()
     page.locator('[data-help-return-lessons]').click()
     expect(panel).to_be_visible()
