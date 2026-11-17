@@ -112,7 +112,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-hidden-objects.
 
-Źródło katalogu: b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db.
+Źródło katalogu: 44bc5381e9e29aaf5c9786492f54fdb996cda507.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

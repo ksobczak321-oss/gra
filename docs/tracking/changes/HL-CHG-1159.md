@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. GO wyłącznie development; doprecyzowa
 - **Scenariusze automatyczne:** [tests/harborlight-advisor.test.mjs](../../../tests/harborlight-advisor.test.mjs), [tests/harborlight-advisor-ui-smoke.py](../../../tests/harborlight-advisor-ui-smoke.py), [tests/harborlight-tour-route-v5-smoke.py](../../../tests/harborlight-tour-route-v5-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Kod lokalnie zamrożony; kierunkowe29testów iUI doradcy/tekstu/3krokówPASS. PełnylokalnyNode1472/1473 z10swatchdogFAIL i osobnymretryPASS9515ms; niczego nie osłabiono. Master157/57/61923budowa i freshvalidatePASS; własnyCI/Pagesw toku. TylkoDEV; bez PRE-PROD/resetu/PROD/DNS.
+Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

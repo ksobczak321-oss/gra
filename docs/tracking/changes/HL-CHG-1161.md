@@ -42,7 +42,7 @@ Data pierwotnej wiadomości: 2026-11-17. CI44141264184 źródła70d wykrył pomi
 - **Scenariusze automatyczne:** [scripts/stage_backend_trade_rules.py](../../../scripts/stage_backend_trade_rules.py), [tests/harborlight-backend-package.test.py](../../../tests/harborlight-backend-package.test.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Bajtowe stage3CHECK i pakiet2/2PASS. Nowy master i CIw toku. PierwszyCI70dFAILEDpo1474/1474frontendNodePASS; PagesSUCCESS i229plikówTLSzgodne.
+Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

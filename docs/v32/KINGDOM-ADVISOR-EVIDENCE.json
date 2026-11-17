@@ -43,7 +43,7 @@
     "new_catalog_records": 10,
     "theme_selection": "Includes light-purple theme7/8064A2/tint0.6, changed from gold in original workbook."
   },
-  "cache": "frontend-v32-14_all_modules",
+  "cache": "frontend-v32-15_all_modules",
   "minigame_models_cache_only_audit": {
     "baseline": "08e34b449573f6bd20b82636da57587ee8b8dad6",
     "application_source": "b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db",
@@ -57,7 +57,7 @@
     "duration_ms": 315179.559317,
     "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
   },
-  "application_source_sha": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
+  "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
   "latest_local_frontend_node": {
     "total": 1473,
     "pass": 1472,
@@ -89,12 +89,12 @@
   "targeted_current_cases": 29,
   "intent_regression": "PASS_EXPLICIT_NEW_PRODUCTION_GOAL_OVERRIDES_PRIOR_UPGRADE_CONTEXT",
   "master": {
-    "source_git_commit": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
-    "sha256": "6473fda0fdb6a3ddb4fa7bbe29f6827f6c7b8f38e95fd1bf59379b0e75355096",
-    "bytes": 7665723,
+    "source_git_commit": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+    "sha256": "3d1459215655e38521454880be8496d28b68237732a817487bcb31d71e7940c2",
+    "bytes": 7672341,
     "sheets": 157,
     "current_sheets": 57,
-    "rows_current": 61923,
+    "rows_current": 61971,
     "historical_sheets_unchanged": 100,
     "historical_zip_parts_unchanged": 220,
     "historical_comments_unchanged": 48,
@@ -102,19 +102,18 @@
     "new_cached_formulas": 12,
     "formula_samples_against_code": 160,
     "fresh_validate_only": "PASS",
-    "source_files": 117,
-    "superseded_by_cache15_and_fifth_purple_sheet": true
+    "source_files": 117
   },
   "editorial_six": {
-    "source_git_commit": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
-    "sha256": "f95ea4c9c74a1ebffd8c46bf3cf19d466b33df89adc38cd440e8d5d2a3f2f2ff",
+    "source_git_commit": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
+    "sha256": "e36f491bab122ee6e9a90e6390006b0f2128c65cbcc9ecb1f0b28a170a5995c5",
     "rows": 413,
     "sheets": 6,
     "C_all_blank": true,
     "scope_unchanged": true
   },
   "minigame_documents": {
-    "catalog_model_source": "b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db",
+    "catalog_model_source": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
     "games": 55,
     "DOCX": 55,
     "TXT": 55,
@@ -147,10 +146,10 @@
     "TLS_bypass": false
   },
   "canonical_API_model_fix": {
-    "status": "LOCAL_STAGED_CHECK_PASS",
+    "status": "CANONICAL_3_CHECK_PASS_CLOSED_PACKAGE_2_PASS",
     "files": 3,
     "backend_package_cases": 2,
-    "new_source_and_CI": "PENDING",
+    "new_source_and_CI": "NEW_PUBLICATION_PENDING",
     "backend_cases": 170,
     "backend": "PASS"
   },
@@ -162,5 +161,24 @@
   "mobile_keyboard_reduced_viewport": "PASS_390x350_open_conversation_input_send_close",
   "candidate_targeted_cases": 30,
   "candidate_browser_advisor": "PASS_1440_390_480_and_keyboard350",
-  "candidate_browser_purple": "PASS_1440_390"
+  "candidate_browser_purple": "PASS_1440_390",
+  "master_previous": {
+    "source_git_commit": "2dbbb089917ef8816ce89265fcb9037513ec4a96",
+    "sha256": "6473fda0fdb6a3ddb4fa7bbe29f6827f6c7b8f38e95fd1bf59379b0e75355096",
+    "bytes": 7665723,
+    "sheets": 157,
+    "current_sheets": 57,
+    "rows_current": 61923,
+    "historical_sheets_unchanged": 100,
+    "historical_zip_parts_unchanged": 220,
+    "historical_comments_unchanged": 48,
+    "historical_cached_formulas_unchanged": 4982,
+    "new_cached_formulas": 12,
+    "formula_samples_against_code": 160,
+    "fresh_validate_only": "PASS",
+    "source_files": 117,
+    "superseded_by_cache15_and_fifth_purple_sheet": true
+  },
+  "current_UI": "PASS_CACHE15_ADVISOR3_SCOPES_KEYBOARD350_AND_PURPLE2_SCOPES",
+  "next_CI": "PENDING_EXACT_NEW_SOURCE"
 }

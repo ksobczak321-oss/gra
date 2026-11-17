@@ -1,10 +1,12 @@
 # Dziennik implementacji
 
-## Doradca Królestwa — DEV 0.15.1.0 w przygotowaniu
+## Doradca Królestwa — DEV 0.15.1.0 / cache15, nowy odbiór w toku
 
-GO17listopada obejmuje doradcę w lewym dolnym rogu, rozmowę o celach według aktualnej wyspy i **trzy kroki pierwszego oprowadzania: górny pasek → dolne menu → Gospodarstwo**. Podpowiedzi można ignorować i wyciszyć. Pełne opisy i25lekcji pozostają w Pomocy; nie są automatycznie narzucane po wprowadzeniu. Historia nagród i kont pozostaje zachowana.
+Pierwsze wprowadzenie ma trzy kroki: **górny pasek → dolne menu → Gospodarstwo**. Dalsze rady i rozmowa z doradcą są dobrowolne. Pełny katalog i 25 lekcji pozostają w Pomocy, z zachowaną historią i nagrodami.
 
-Planer25/25PASS; rzeczywistyUI doradcy1440×1000/390×844/390×480PASS; krótki tutorial i wymiana podświetlanego DOM1440/390PASS; pakowanie27/27PASS. Pięć fioletowych zakładek (także jasnofioletowe „Odłożone odkrycia”) obejmuje175wierszy/34niepusteC:35tekstów poprawiono,10rekordów katalogu dodano bez aktywacji nieuzgodnionych mechanik. Targeted30/30PASS; poprzedni rzeczywistyUI1440/390 pozostaje osobnym dowodem. Kandydatcache15 synchronizuje także wszystkie3kanoniczne kopieAPI. PierwszePages70d maSUCCESS i229plikówTLSzgodnych, a CI44141264184 maFAILUREpo1474/1474frontendPASS przez starekopieAPI. Nowy master i własnyCI są w przygotowaniu. Nowy master157arkuszy/57bieżących/61923wiersze ma walidację budowyPASS; redakcyjnyExcel6/413/Cpusta ma aktualne odciski. Najnowsza pełna regresja lokalna ma1472/1473PASS i jeden watchdog96hFAIL; izolowanyretryPASS9515ms bez zmiany10slimitu. WłasnyCI i publikacjaPages są W TOKU. **Doradca nie jest autoryzowany na PRE-PROD ani PROD.** Bez resetu i DNS. Wcześniejszy bootstrap minigier08e ma CI44096593096SUCCESS, co nie jest odbiorem nowego doradcy ani kolejną promocją.
+Uwzględniono pięć fioletowych zakładek, także jasnofioletowe „Odłożone odkrycia”: 175 wierszy, 34 niepuste C, 35 poprawionych i 10 dodanych rekordów katalogu. Nie uruchomiono nieuzgodnionych mechanik. Kierunkowe testy 30/30 PASS; UI doradcy i redakcji na 1440/390/480 oraz rozmowa przy 350 px wysokości PASS. Trzy kanoniczne kopie API, pakiet i backend 170 PASS. Master z44bc ma świeże validate-only PASS: 157 arkuszy, 57 bieżących, 61 971 wierszy, 117 źródeł; Excel6/413/Cpusta ma aktualne odciski z5dd. Model/kopia to44bc, pełny frontend z poprawką CSS to5dd.
+
+Pierwsza publikacja70d ma Pages44141263907 SUCCESS i 229 plików zgodnych TLS. Jej CI44141264184 pozostaje FAILURE po 1474/1474 frontend PASS przez stare kopie API; dalsze etapy pominięto. Nowy własny CI i Pages cache15 oczekują. Natywny Chromium zatrzymał się na błędzie certyfikatu; bez obchodzenia TLS. Lokalne odtworzenie rzeczywistych opublikowanych bajtów doradcy, tekstów i3kroków PASS. **Tylko DEV: bez PRE-PROD, PROD, resetu i DNS.**
 
 [Zakres](v32/GO-KINGDOM-ADVISOR.md) · [Dowody](v32/KINGDOM-ADVISOR-EVIDENCE.json) · [HL-CHG-1159](tracking/changes/HL-CHG-1159.md).
 

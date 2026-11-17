@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. Użytkownik wskazał wyłącznie zakła
 - **Scenariusze automatyczne:** [tests/harborlight-purple-editorial.test.mjs](../../../tests/harborlight-purple-editorial.test.mjs), [tests/harborlight-purple-editorial-ui-smoke.py](../../../tests/harborlight-purple-editorial-ui-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Kandydatcache15:175wybranychwierszy/34niepusteC/35poprawionych+10dodanychrekordów. Targeted30/30PASS; kanoniczneAPI3CHECK+pakiet2PASS. Nowymaster i własnyCIw toku; pierwszy70dCI pozostajeFAILURE.
+Cache15:5zakładek/175wierszy/34C;30targetedPASS; UI1440/390/480/keyboard350PASS; kanoniczneAPI3CHECK+pakiet2+backend170PASS. Master157/57/61971świeżyPASS117źródeł. PierwszyCI70d pozostajeFAILUREpo1474frontendPASS. Nowy CI/Pagesw toku, bezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

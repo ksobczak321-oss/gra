@@ -1,6 +1,6 @@
 # Arkusz zasad HARBORLIGHT
 
-Aktualizacja17listopada: bieżący master dla **0.15.1.0/cache14** pochodzi ze źródła `2dbbb089917ef8816ce89265fcb9037513ec4a96`. Ma157arkuszy,57bieżących i61923bieżącewiersze;7665723bajty, SHA256`6473fda0fdb6a3ddb4fa7bbe29f6827f6c7b8f38e95fd1bf59379b0e75355096`. Uwzględnia3kroki startu, dobrowolnego doradcę i teksty4fioletowychzakładek. Pełny katalog56kroków i25lekcji pozostaje jako Pomoc. Archiwum14/100arkuszy/220części/48komentarzy/4982starychwyników zachowane. Budowa i świeżevalidate-onlyPASS; własnyCI/publikacjaDEV wymagają osobnego potwierdzenia. Raport6zakładek nadal dotyczy wyłącznie pierwotnych413wierszy z pustąC; nowyMERGE4fioletowych jest [osobny](../v32/EDITORIAL-PURPLE-TABS-MERGE.json).
+Aktualizacja 17 listopada: master dla **0.15.1.0/cache15** pochodzi ze źródła `44bc5381e9e29aaf5c9786492f54fdb996cda507`. Ma157arkuszy,57bieżących i61971bieżącychwierszy;7672341bajtów, SHA256`3d1459215655e38521454880be8496d28b68237732a817487bcb31d71e7940c2`. Obejmuje doradcę,3kroki startu i175rekordów z5fioletowychzakładek. Budowa i świeżevalidate-onlyPASS,117źródeł,12formuł/160porównań;100archiwalnycharkuszy/220części/48komentarzy/4982wyników zachowano. Excel6/413/ABC/Cpusta ma osobne aktualne odciski z5dd. Nowy własnyCI i Pagesw toku. [MERGE5fioletowych](../v32/EDITORIAL-PURPLE-TABS-MERGE.json).
 
 Poniższy opis156arkuszy/e23 dokumentuje poprzednią zamrożoną generację, nie aktualną publikację.
 
