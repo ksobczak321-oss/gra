@@ -30019,8 +30019,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
-        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
+        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
+        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30061,9 +30061,9 @@
           "tests/harborlight-tour-route-v5-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
-        "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
+        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
         "Rozmowa korzysta z lokalnego planera zasad gry; nie wymaga płatnego zewnętrznego modelu ani kluczy. Nie obiecuje globalnie optymalnego planu.",
@@ -30097,8 +30097,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
-        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
+        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
+        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30139,9 +30139,9 @@
           "tests/harborlight-purple-editorial-ui-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
-        "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
+        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
         "Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane5zakładek.",
@@ -30176,8 +30176,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
-        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
+        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
+        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30212,9 +30212,9 @@
           "tests/harborlight-backend-package.test.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
-        "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
+        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
         "Nie pomija się kontroli zgodności i nie przenosi zielonego kroku reguł gry na cały nieudany przebieg."
@@ -30236,7 +30236,7 @@
       "epic": "HL-EPIC-OPS",
       "area": "Testy dobrowolnego tutoriala",
       "type": "Bug",
-      "title": "Otwieraj zachowany pełny przewodnik i kurs przez rzeczywistą Pomoc w testach",
+      "title": "Dostosuj testy do dobrowolnego tutoriala, zwykłych ofert i wersji0.15.1.0",
       "source": {
         "kind": "exact_source_CI_failure",
         "date": "2026-11-17",
@@ -30246,8 +30246,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending",
-        "ci": "R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending",
+        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
+        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30257,7 +30257,9 @@
         "Zachowane asercje20budynków,19długich opisów,geometrii,pełnego zamrożonego świata i braku zapisów.",
         "Scenariusze Domu/lekcji14 i pełnej56krokowej trasy wznawiają dobrowolny kurs przez Pomoc; nagrody i budowa nadal sprawdzane.",
         "Brak zmian aplikacji, limitów, modelu, generatorów, archiwów i117odcisków źródeł mastera.",
-        "WłasnyCI nowegoSHA i publicznyDEV wymagają osobnego potwierdzenia; poprzednieFAILURE pozostają historią."
+        "WłasnyCI nowegoSHA i publicznyDEV wymagają osobnego potwierdzenia; poprzednieFAILURE pozostają historią.",
+        "Po krótkim wprowadzeniu test zapisu zamyka codzienną ofertę jej zwykłym przyciskiem, bez odbierania nagrody.",
+        "Ustawienia pokazują aktualną wersję0.15.1.0; zachowane sprawdzenie widoczności i PL/EN desktop/mobile."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -30277,12 +30279,14 @@
         "automated_tests": [
           "tests/harborlight-editorial-six-tabs-v32-smoke.py",
           "tests/harborlight-release-v31-smoke.py",
-          "scripts/test_frontend_v29_learning.py"
+          "scripts/test_frontend_v29_learning.py",
+          "tests/harborlight-dev-game-smoke.py",
+          "tests/harborlight-settings-signout-smoke.py"
         ],
         "manual_execution": "NOT_RUN",
-        "release_note": "Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
-        "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
-        "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507"
+        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
       },
       "notes": [
         "Poprawiono sposób wejścia w opcjonalny przewodnik; nie pominięto kontroli ani nie zmieniono oczekiwanego zachowania gry."
@@ -30297,6 +30301,75 @@
         "TEST:real-help-opt-in",
         "OPS:preserve-failed-CI",
         "OPS:no-gameplay-delta"
+      ]
+    },
+    {
+      "id": "HL-CHG-1163",
+      "epic": "HL-EPIC-UI",
+      "area": "Doradca na małej mapie",
+      "type": "Bug",
+      "title": "Zwęż zwiniętą kartę doradcy, aby nie przejmowała kliknięcia Magazynu",
+      "source": {
+        "kind": "exact_source_CI_failure",
+        "date": "2026-11-17",
+        "date_note": "CI44154508808 i lokalne odtworzenie przy widocznym doradcy potwierdziły rzeczywiste przechwycenie kliknięcia, bez dialogów.",
+        "summary": "Na390px karta szerokości190px kończyła się na x198 i pokrywała wyśrodkowany punktMagazynu x196. Szybsza wcześniejsza próba lokalna trafiała na jeszcze ukryty moduł.",
+        "reference": "workflow:44154508808:accepted-front-v32-mobile-warehouse"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "R4_mobile_CSS_fix_local_PASS_own_publication_pending",
+        "ci": "R3_FAILURE_mobile_warehouse_overlap_R4_pending",
+        "preprod": "not_authorized_for_this_change",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Zwężony doradca, zwykły i wyciszony, mieści się po lewej stronie środka mapy na320px i390px.",
+        "Fizyczny tapMagazynu jest sprawdzany po rzeczywistym odświeżeniu i pokazaniu doradcy, z zachowaniem wszystkich wcześniejszych hit-testów i kliknięć.",
+        "Pełna rozmowa, pole, wysłanie, zamknięcie i klawiatura350px pozostają dostępne; brak poziomego przepełnienia.",
+        "WyłącznieCSS i odrębna rewizja jegoURL; graf modułówJS/cache15, zatwierdzona grafika, reguły i zapisy bez zmiany.",
+        "Master iExcel6 mają aktualne źródłoHTML, zachowane arkusze historyczne i pustąC; nowy własnyCI wymagany."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1159",
+        "HL-CHG-1162"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json",
+          "docs/v32/GO-KINGDOM-ADVISOR.md"
+        ],
+        "code": [
+          "harborlight-v1-advisor.css",
+          "harborlight-v1-layered.html"
+        ],
+        "automated_tests": [
+          "tests/harborlight-accepted-front-v32-smoke.py",
+          "tests/harborlight-advisor-ui-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.",
+        "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+        "model_source_sha": "76a663da9e093d909e6289286649c5c925139614"
+      },
+      "notes": [
+        "Nie ukrywa się doradcy ani nie usuwa asercji rzeczywistego elementFromPoint. Poprawiony jest produkt, a nie oczekiwane trafienie testu."
+      ],
+      "tags": [
+        "v32",
+        "advisor",
+        "mobile",
+        "dev-only"
+      ],
+      "rules": [
+        "UI:map-centre-accessible",
+        "TEST:visible-advisor-real-hit",
+        "OPS:DEV-only"
       ]
     }
   ],
@@ -33385,7 +33458,7 @@
     "advisor_task": {
       "as_of": "2026-11-17",
       "version": "0.15.1.0",
-      "status": "R2_PAGES_SUCCESS_CI_FAILURE_TEST_ONLY_R3_PENDING",
+      "status": "R4_MOBILE_CSS_FIX_CURRENT_WORKBOOKS_PASS_OWN_CI_PENDING",
       "DEV_only": true,
       "PREPROD_authorized": false,
       "reset": false,
@@ -33402,21 +33475,28 @@
         "changed_rows": 45,
         "unselected_sheet_contents_read": false
       },
-      "application_source_sha": "5ddba0a35a060b4fdca18c3b1394d0ef7f679df4",
-      "master_source": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+      "application_source_sha": "76a663da9e093d909e6289286649c5c925139614",
+      "master_source": "76a663da9e093d909e6289286649c5c925139614",
       "master_validation": "BUILD_AND_FRESH_VALIDATE_PASS",
       "local_frontend_full": "1472of1473PASS_one_watchdog_FAIL_isolated_retryPASS9515ms",
       "first_CI": 44141264184,
       "first_Pages": 44141263907,
       "candidate_cache": "frontend-v32-15",
-      "model_source_sha": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+      "model_source_sha": "76a663da9e093d909e6289286649c5c925139614",
       "publication_source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
       "second_CI": 44148037986,
       "second_CI_status": "FAILURE",
       "second_Pages": 44148037993,
       "second_Pages_status": "SUCCESS",
       "remaining_v32_browser": "18_PASS",
-      "test_only_fix": "HL-CHG-1162"
+      "test_only_fix": "HL-CHG-1162",
+      "third_CI": 44154508808,
+      "third_CI_status": "FAILURE",
+      "third_Pages": 44154508829,
+      "third_Pages_status": "SUCCESS",
+      "mobile_fix": "HL-CHG-1163",
+      "stylesheet_cache": "frontend-v32-15-layout2",
+      "isolated_cloud_latest": "18_PASS"
     }
   }
 }

@@ -1,0 +1,18 @@
+{
+  "application_source": "76a663da9e093d909e6289286649c5c925139614",
+  "status": "LOCAL_PASS_OWN_CI_PENDING",
+  "master": {
+    "source": "76a663da9e093d909e6289286649c5c925139614",
+    "sha256": "ed53b12ff3b4ace2f49fd978a10074ce4b7715e3e8458da957ea7dc781769b1d",
+    "rows": 61971
+  },
+  "editorial_six": {
+    "source": "76a663da9e093d909e6289286649c5c925139614",
+    "sha256": "06533a25d4203b4e2788b91deb14e02317299ca2f4b4317813fd7507b595a043",
+    "C_all_blank": true
+  },
+  "CSS_cache": "frontend-v32-15-layout2",
+  "scope": "DEV_ONLY",
+  "PREPROD_deployed": false,
+  "reset": false
+}

@@ -674,5 +674,19 @@
     "commit": null
   },
   "game_or_cloud_changes": false,
-  "publication_wording": "Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions."
+  "publication_wording": "Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions.",
+  "historical_generation_notice": "Fields above describe the preserved e23 generation; current_generation below supersedes it.",
+  "current_generation": {
+    "source": "76a663da9e093d909e6289286649c5c925139614",
+    "application_version": "0.15.1.0",
+    "CSS_cache": "frontend-v32-15-layout2",
+    "sha256": "ed53b12ff3b4ace2f49fd978a10074ce4b7715e3e8458da957ea7dc781769b1d",
+    "bytes": 7672350,
+    "sheets": 157,
+    "rows_current": 61971,
+    "build": "PASS",
+    "fresh_validate_only": "PASS",
+    "own_CI": "PENDING",
+    "evidence": "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json"
+  }
 }

@@ -1,6 +1,6 @@
 # Arkusz zasad HARBORLIGHT
 
-Aktualizacja 17 listopada: master dla **0.15.1.0/cache15** pochodzi ze źródła `44bc5381e9e29aaf5c9786492f54fdb996cda507`. Ma157arkuszy,57bieżących i61971bieżącychwierszy;7672341bajtów, SHA256`3d1459215655e38521454880be8496d28b68237732a817487bcb31d71e7940c2`. Obejmuje doradcę,3kroki startu i175rekordów z5fioletowychzakładek. Budowa i świeżevalidate-onlyPASS,117źródeł,12formuł/160porównań;100archiwalnycharkuszy/220części/48komentarzy/4982wyników zachowano. Excel6/413/ABC/Cpusta ma osobne aktualne odciski z5dd. Nowy własnyCI i Pagesw toku. [MERGE5fioletowych](../v32/EDITORIAL-PURPLE-TABS-MERGE.json).
+Aktualizacja17listopada: master dla **0.15.1.0/cache15/CSSlayout2** ma źródło `76a663da9e093d909e6289286649c5c925139614`, 157arkuszy/57bieżących/61971wierszy, 7672350bajtów iSHA256`ed53b12ff3b4ace2f49fd978a10074ce4b7715e3e8458da957ea7dc781769b1d`. Obejmuje doradcę,3kroki startu i175rekordów5fioletowychzakładek. Budowa i świeżevalidate-onlyPASS;117źródeł,12formuł/160porównań,100archiwalnycharkuszy/220części/48komentarzy/4982wyników zachowane. Excel6/413/Cpusta ma to samo źródło iSHA256`06533a25d4203b4e2788b91deb14e02317299ca2f4b4317813fd7507b595a043`. Nowy własnyCI iPages oczekuje. [Aktualne dowody](../v32/KINGDOM-ADVISOR-EVIDENCE.json).
 
 Poniższy opis156arkuszy/e23 dokumentuje poprzednią zamrożoną generację, nie aktualną publikację.
 

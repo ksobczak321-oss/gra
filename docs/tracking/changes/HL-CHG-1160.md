@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending` |
-| CI | `R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending` |
+| DEV | `R4_mobile_CSS_fix_local_PASS_own_publication_pending` |
+| CI | `R3_FAILURE_mobile_warehouse_overlap_R4_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. Użytkownik wskazał wyłącznie zakła
 - **Scenariusze automatyczne:** [tests/harborlight-purple-editorial.test.mjs](../../../tests/harborlight-purple-editorial.test.mjs), [tests/harborlight-purple-editorial-ui-smoke.py](../../../tests/harborlight-purple-editorial-ui-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.
+KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

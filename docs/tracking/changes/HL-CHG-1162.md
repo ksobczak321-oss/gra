@@ -1,4 +1,4 @@
-# HL-CHG-1162 — Otwieraj zachowany pełny przewodnik i kurs przez rzeczywistą Pomoc w testach
+# HL-CHG-1162 — Dostosuj testy do dobrowolnego tutoriala, zwykłych ofert i wersji0.15.1.0
 
 **Typ:** Bug · **Obszar:** Testy dobrowolnego tutoriala · **Epik:** `HL-EPIC-OPS`
 
@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `Pages553_SUCCESS_229files_TLS_match_R3_test_only_pending` |
-| CI | `R2_FAILURE_automatic_tutorial_fixture_R3_exact_CI_pending` |
+| DEV | `R4_mobile_CSS_fix_local_PASS_own_publication_pending` |
+| CI | `R3_FAILURE_mobile_warehouse_overlap_R4_pending` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -26,6 +26,8 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - Scenariusze Domu/lekcji14 i pełnej56krokowej trasy wznawiają dobrowolny kurs przez Pomoc; nagrody i budowa nadal sprawdzane.
 - Brak zmian aplikacji, limitów, modelu, generatorów, archiwów i117odcisków źródeł mastera.
 - WłasnyCI nowegoSHA i publicznyDEV wymagają osobnego potwierdzenia; poprzednieFAILURE pozostają historią.
+- Po krótkim wprowadzeniu test zapisu zamyka codzienną ofertę jej zwykłym przyciskiem, bez odbierania nagrody.
+- Ustawienia pokazują aktualną wersję0.15.1.0; zachowane sprawdzenie widoczności i PL/EN desktop/mobile.
 
 ## Źródło
 
@@ -39,10 +41,10 @@ Data pierwotnej wiadomości: 2026-11-17. CI44148037986 zachowuje FAILURE po1475f
 
 - **Dokumenty:** [docs/v32/KINGDOM-ADVISOR-EVIDENCE.json](../../v32/KINGDOM-ADVISOR-EVIDENCE.json), [docs/v32/GO-KINGDOM-ADVISOR.md](../../v32/GO-KINGDOM-ADVISOR.md)
 - **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** [tests/harborlight-editorial-six-tabs-v32-smoke.py](../../../tests/harborlight-editorial-six-tabs-v32-smoke.py), [tests/harborlight-release-v31-smoke.py](../../../tests/harborlight-release-v31-smoke.py), [scripts/test_frontend_v29_learning.py](../../../scripts/test_frontend_v29_learning.py)
+- **Scenariusze automatyczne:** [tests/harborlight-editorial-six-tabs-v32-smoke.py](../../../tests/harborlight-editorial-six-tabs-v32-smoke.py), [tests/harborlight-release-v31-smoke.py](../../../tests/harborlight-release-v31-smoke.py), [scripts/test_frontend_v29_learning.py](../../../scripts/test_frontend_v29_learning.py), [tests/harborlight-dev-game-smoke.py](../../../tests/harborlight-dev-game-smoke.py), [tests/harborlight-settings-signout-smoke.py](../../../tests/harborlight-settings-signout-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Cache15 opublikowany na DEV553: Pages44148037993 SUCCESS29s, 229 plików/36 878 716 bajtów zgodnych TLS. CI44148037986 FAILURE na przestarzałym oczekiwaniu pełnego tutoriala; wcześniej1475frontend,170backend,stage iExcelle PASS. Trzy poprawione testy używają rzeczywistej Pomocy;18dalszych v32PASS. R3 zmienia tylko testy/dokumentację, własnyCI oczekuje. BezPRE-PROD/resetu/PROD/DNS.
+KandydatR4 DEV0.15.1.0/cache15, CSSlayout2. R3e033 ma Pages44154508829SUCCESS24s iCI44154508808FAILURE po1652NodePASS; zwinięty doradca zasłonił fizyczny tapMagazynu na390px. PoprawkaCSS zachowuje pełną rozmowę; nowe prawdziwekliki po odświeżeniu doradcy i320px. Master/Excel6 odtworzone z76a663d. Pełny nowyCI/Pages oczekuje. BezPRE-PROD/resetu/PROD/DNS.
 
 ## Relacje
 

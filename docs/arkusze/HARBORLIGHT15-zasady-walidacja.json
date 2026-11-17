@@ -4,9 +4,9 @@
   "game_version": "0.15.1.0",
   "ruleset": 32,
   "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
-  "sha256": "3d1459215655e38521454880be8496d28b68237732a817487bcb31d71e7940c2",
-  "bytes": 7672341,
-  "source_git_commit": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+  "sha256": "ed53b12ff3b4ace2f49fd978a10074ce4b7715e3e8458da957ea7dc781769b1d",
+  "bytes": 7672350,
+  "source_git_commit": "76a663da9e093d909e6289286649c5c925139614",
   "accepted_application_source": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
   "accepted_publication_source": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
   "historical_master": "docs/arkusze/HARBORLIGHT14-zasady.xlsx",
@@ -187,7 +187,7 @@
     "harborlight-terms.html": "9c37c3a277816cc722476108f804ce4e27111ac99bebaf2244c711774293c95c",
     "harborlight-v04.html": "d659fbd4ab9c7e033d05d150cb515dda3cced401a48215d66a9ee60d4816b323",
     "harborlight-v05.html": "c988d41127ab0076e36cd2c08eda1e0224aa80280ecde193abc8c459e9dad71d",
-    "harborlight-v1-layered.html": "412134be321ba9434d40f9b8f6e815a35ae142fe3b93a6ae85a98af19da09685",
+    "harborlight-v1-layered.html": "1904c748b26cb72f585ccd784e0903c5d7ee09ee311de08a1d7c1280b388e6a2",
     "harborlight-v1-screen.html": "ccd6e4460adb4f93830eee29aac0b9af7a23eac60b0c9695f580248a2d6d43b5",
     "harborlight.html": "0430cbbf3df4119408218e7665926c26a340533b610ed597cecfd77a7016bf60",
     "index.html": "8476977fc9ece6afe26f6987f0e5c97e17aa3b0e6124792ee9c6b85133c610f4",
@@ -200,9 +200,9 @@
   },
   "builder_sha256": "b73cda6e63feba1e4957b14e8f3b24fffce1482029dbff231eb2c4abd5172ac9",
   "export_payload_hashes": {
-    "facts": "70a4deb534056a6d2e69b363856ec542320f0e0c140ad312f5e5835eaf983bd6",
-    "texts": "df5a15d20c64bb77c91501b2dce10004781a02a41b6fd16712177e8f71b4a804",
-    "scenarios": "5f266b146b4e59aaac1ec12001c96b4c89a226587254c5b484f4c1966c1a9a6c"
+    "facts": "5a1c6ee70a0676cc0865d972293b5fd822ebdd793ec3ffde93616491224bfa89",
+    "texts": "256c268a55550558c6c80417f8f66a372dd85bcb3bf2f883860975f0b9ad557e",
+    "scenarios": "1f4e2010b3371e06ce4e416cde6a116f6eecbc95c655e1c1ecb2e3698a1e5f33"
   },
   "tables": [
     {
@@ -550,7 +550,7 @@
   ],
   "scope": "Aktualny kod, pełne katalogi, warunki i źródła; wyniki symulacji tylko według jawnych horyzontów i strategii.",
   "simulation_snapshot": "docs/design/WORKBOOK-V32-SIMULATION.json",
-  "simulation_sha256": "e4f4d2872b00c6f8d1f5fad0c6e4e703ba266f29aaf77bb41682e745559178de",
+  "simulation_sha256": "cf638dcb6100d5766087f4369389eeb03d9a3f0c02848493f5cd4f99cdddb16c",
   "facts_checks": {
     "passed": true,
     "physicalRecipeExamples": 20,
