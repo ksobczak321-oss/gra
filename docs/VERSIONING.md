@@ -1,8 +1,8 @@
 # Wersja gry HARBORLIGHT
 
-## DEV 0.15.1.0 — doradca i redakcja, w przygotowaniu
+## DEV 0.15.1.0 — doradca i redakcja, odebrany
 
-DEV 0.15.1.0 obejmuje doradcę, trzy kroki pierwszego wprowadzenia i pięć fioletowych zakładek ABC. Bieżące źródło aplikacji to `abacd3fffc7fe033fca6c3a1e9003bb688aa4afa`; HTML i źródło pełnego mastera pozostają76a663d; arkusz redakcyjny ma aktualny odciskCSS. Moduły używają cache15, a CSS rewizji layout2. Własny CI i publikacja R5 oczekują. Schemat9 i ruleset32 są zachowane; zakres wyłącznie DEV. [Dowody](v32/KINGDOM-ADVISOR-EVIDENCE.json).
+DEV 0.15.1.0 obejmuje doradcę, trzy kroki pierwszego wprowadzenia i pięć fioletowych zakładek ABC. Bieżące źródło aplikacji to `abacd3fffc7fe033fca6c3a1e9003bb688aa4afa`; HTML i źródło pełnego mastera pozostają76a663d; arkusz redakcyjny ma aktualny odciskCSS. Moduły używają cache15, a CSS rewizji layout2. Własne CI44164876130 i Pages44164876499 SUCCESS; odebrane źródło `4dcc34ec3b462992330f88a22062070fcc0f7092`, tag `dev-0.15.1.0-20261117` potwierdzony zdalnie. Schemat9 i ruleset32 są zachowane; zakres wyłącznie DEV. [Dowody](v32/KINGDOM-ADVISOR-EVIDENCE.json).
 
 
 Bieżące odebrane DEV i PRE-PROD: **0.14.0.0 / v31**, źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`, cache `frontend-v31-2`. WłasneCI41906515746 iPages41906515747 SUCCESS; standardowyPRE-PROD41909268052/próba1 SUCCESS. Oba tagi `dev-0.14.0.0-20261104` i `preprod-0.14.0.0-20261104` są opublikowane i zdalnie potwierdzone na tym źródle. [Odbiór](DEV-0.14.0.0-VALIDATION.md) · [Promocja](PREPROD-V31-PROMOTION.md). Schemat świata9 i archipelagu2 pozostały zgodne. Pierwsze wydanie Google Play nadal1.0.0.0.

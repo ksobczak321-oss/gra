@@ -686,7 +686,10 @@
     "rows_current": 61971,
     "build": "PASS",
     "fresh_validate_only": "PASS",
-    "own_CI": "PENDING",
-    "evidence": "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json"
+    "own_CI": "SUCCESS",
+    "evidence": "docs/v32/KINGDOM-ADVISOR-EVIDENCE.json",
+    "CI_run": 44164876130,
+    "publication_source": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+    "Pages_run": 44164876499
   }
 }

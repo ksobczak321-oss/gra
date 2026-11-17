@@ -220,8 +220,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1150 — Import zatwierdzonej redakcjiPL z sześciu arkuszy z pierwszeństwemC i zachowaniem prawdziwej logiki](changes/HL-CHG-1150.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1154 — Start pokazuje ekran ładowania zamiast starej mapy referencyjnej i HUD](changes/HL-CHG-1154.md) | Bug | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
 | [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
-| [HL-CHG-1160 — Uwzględnij pięć fioletowych zakładek, w tym jasnofioletowe Odłożone odkrycia](changes/HL-CHG-1160.md) | Story | `accepted` | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` | `not_authorized_for_this_change` |
-| [HL-CHG-1163 — Odsuń zwiniętą kartę doradcy od mapy i dolnego menu](changes/HL-CHG-1163.md) | Bug | `accepted` | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` | `not_authorized_for_this_change` |
+| [HL-CHG-1160 — Uwzględnij pięć fioletowych zakładek, w tym jasnofioletowe Odłożone odkrycia](changes/HL-CHG-1160.md) | Story | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
+| [HL-CHG-1163 — Odsuń zwiniętą kartę doradcy od mapy i dolnego menu](changes/HL-CHG-1163.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 
 <a id="hl-epic-tut"></a>
 
@@ -274,7 +274,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1110 — Biblioteka zawiera zróżnicowane opowieści od prologu do poziomu 20](changes/HL-CHG-1110.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1113 — Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale](changes/HL-CHG-1113.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1136 — Tutorial 48 i samouczek 25 objaśniają nowe produkty i budynki](changes/HL-CHG-1136.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1159 — Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala](changes/HL-CHG-1159.md) | Story | `accepted` | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` | `not_authorized_for_this_change` |
+| [HL-CHG-1159 — Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala](changes/HL-CHG-1159.md) | Story | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 
 <a id="hl-epic-eco"></a>
 
@@ -596,8 +596,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1156 — Pełny MASTER 15 łączy bieżące zasady, teksty, produkcję, minigry i symulacje z archiwum 14](changes/HL-CHG-1156.md) | Ops | `accepted` | `artifact_ready_local_build_and_fresh_validation_PASS` | `not_applicable_document_only_game_unchanged` |
 | [HL-CHG-1157 — Każda aktywna minigra ma osobny link PRE-PROD oraz instrukcję Word i TXT](changes/HL-CHG-1157.md) | Story | `accepted` | `accepted_source_03f_CI_and_Pages_SUCCESS_remote_tag_verified` | `FAILURE_44093734171_native_bootstrap_fix_1158_PENDING` |
 | [HL-CHG-1158 — Adres minigier bez końcowego ukośnika nie może pobierać modułu z katalogu głównego](changes/HL-CHG-1158.md) | Bug | `accepted` | `six_real_slashless_HTTP200_routes_PASS_new_source_pending` | `first_attempt_FAILURE_new_standard_promotion_pending` |
-| [HL-CHG-1161 — Zsynchronizuj trzy zamknięte kopie modeli API po zmianie cache i tekstów](changes/HL-CHG-1161.md) | Bug | `accepted` | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` | `not_authorized_for_this_change` |
-| [HL-CHG-1162 — Dostosuj testy do dobrowolnego tutoriala, zwykłych ofert i wersji0.15.1.0](changes/HL-CHG-1162.md) | Bug | `accepted` | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` | `not_authorized_for_this_change` |
+| [HL-CHG-1161 — Zsynchronizuj trzy zamknięte kopie modeli API po zmianie cache i tekstów](changes/HL-CHG-1161.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
+| [HL-CHG-1162 — Dostosuj testy do dobrowolnego tutoriala, zwykłych ofert i wersji0.15.1.0](changes/HL-CHG-1162.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 
 <a id="hl-epic-arc"></a>
 

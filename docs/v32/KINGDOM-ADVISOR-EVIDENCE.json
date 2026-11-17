@@ -14,10 +14,10 @@
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
   "browser_target_replacement": "PASS_1440_390",
-  "full_regression": "R4_FROZEN_MAIN26_24_PASS_2_FAIL_FIXES_PASS_R5_OWN_CI_PENDING",
-  "source_sha": "b40b7d8dda33ec20b308e135bea813bdc4e7ccb1",
-  "CI": "R5_EXACT_SOURCE_PENDING",
-  "Pages": "R4_SUCCESS_R5_PENDING",
+  "full_regression": "OWN_SOURCE_CI_SUCCESS_ALL_REQUIRED_STEPS",
+  "source_sha": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+  "CI": "SUCCESS_44164876130_EXACT_SOURCE",
+  "Pages": "SUCCESS_44164876499_EXACT_SOURCE",
   "PREPROD": "NOT_AUTHORIZED_FOR_ADVISOR",
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
@@ -135,9 +135,9 @@
   },
   "public_byte_audit": {
     "status": "PASS",
-    "source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
+    "source": "4dcc34ec3b462992330f88a22062070fcc0f7092",
     "files": 229,
-    "bytes": 36878716,
+    "bytes": 36879151,
     "normal_TLS": true,
     "native_browser_claimed": false
   },
@@ -150,12 +150,12 @@
     "status": "CANONICAL_3_CHECK_PASS_CLOSED_PACKAGE_2_PASS",
     "files": 3,
     "backend_package_cases": 2,
-    "new_source_and_CI": "R2_CANONICAL_STAGE_AND_BACKEND_PASS",
+    "new_source_and_CI": "PASS_EXACT_SOURCE_CI44164876130",
     "backend_cases": 170,
     "backend": "PASS"
   },
   "candidate_cache": "frontend-v32-15",
-  "candidate_source_sha": null,
+  "candidate_source_sha": "4dcc34ec3b462992330f88a22062070fcc0f7092",
   "current_targeted_cases": 30,
   "current_frontend_discoveries": 3,
   "candidate_model_source_sha": "76a663da9e093d909e6289286649c5c925139614",
@@ -181,7 +181,7 @@
     "superseded_by_cache15_and_fifth_purple_sheet": true
   },
   "current_UI": "PASS_CACHE15_ADVISOR3_SCOPES_KEYBOARD350_AND_PURPLE2_SCOPES",
-  "next_CI": "R5_EXACT_SOURCE_PENDING",
+  "next_CI": "COMPLETE_SUCCESS",
   "second_publication": {
     "source": "553db9bbd6a0cb1149e7684c40d314f14cf5add5",
     "CI_run": 44148037986,
@@ -300,7 +300,9 @@
       "tests/harborlight-tutorial-v22-smoke.py"
     ],
     "accepted": false,
-    "actual_CI_failure": "legacy-resident-labels-v32: explicit scroll ElementHandle detached during a live dock update; real Locator.click retained."
+    "actual_CI_failure": "legacy-resident-labels-v32: explicit scroll ElementHandle detached during a live dock update; real Locator.click retained.",
+    "CI_final_status": "completed",
+    "CI_final_conclusion": "FAILURE"
   },
   "legacy_layout_fix": {
     "application_source": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
@@ -336,5 +338,46 @@
     "sheets": 6,
     "C_all_blank": true,
     "scope_unchanged": true
-  }
+  },
+  "public_replay_evidence": "docs/v32/KINGDOM-ADVISOR-PUBLIC-REPLAY.json",
+  "fifth_publication": {
+    "status": "ACCEPTED_DEV_ONLY",
+    "source": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+    "CI_run": 44164876130,
+    "CI_conclusion": "SUCCESS",
+    "Pages_run": 44164876499,
+    "Pages_conclusion": "SUCCESS",
+    "frontend_Node_cases": 1475,
+    "backend_Node_cases": 170,
+    "physical_Node_cases": 7,
+    "browser_programs": 69,
+    "main_browser_programs": 50,
+    "standalone_browser_programs": 1,
+    "cloud_browser_programs": 18,
+    "all_CI_required_checks": "SUCCESS",
+    "manual_user_acceptance": "NOT_RUN",
+    "public_files": 229,
+    "public_bytes": 36879151,
+    "normal_TLS_byte_audit": "PASS",
+    "native_HTTPS_browser": "BLOCKED_ERR_CERT_AUTHORITY_INVALID_NO_BYPASS",
+    "published_byte_replay": "PASS",
+    "tag": "dev-0.15.1.0-20261117",
+    "tag_object": "66eaa8b5b3eeca0834c990b8a8d3fbbc92da217c",
+    "tag_remote_verified": true,
+    "package": {
+      "archive": "/workspace/work/advisor-release-20261117-r5/committed-frontend.tar.gz",
+      "archive_sha256": "0f6c237a850d95e4e874da3f0ba7c55a9d795049020c6f7e402856b0b00749bd",
+      "commit": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+      "file_count": 230,
+      "manifest_sha256": "30d716a615761debf782127a6ac4e3029252665807810def72f97f5de50fac13",
+      "total_bytes": 36902073
+    },
+    "account_reset": false,
+    "PREPROD_deployed": false,
+    "PROD_DNS": "NO_ACTION",
+    "accepted_at_utc": "2026-11-17T20:38:20.698889+00:00"
+  },
+  "accepted_DEV_tag": "dev-0.15.1.0-20261117",
+  "accepted_DEV_tag_object": "66eaa8b5b3eeca0834c990b8a8d3fbbc92da217c",
+  "accepted_DEV_tag_remote_verified": true
 }

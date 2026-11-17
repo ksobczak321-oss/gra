@@ -1,12 +1,12 @@
 # HARBORLIGHT
 
-## Doradca Królestwa — DEV 0.15.1.0 / cache15, nowy odbiór w toku
+## Doradca Królestwa — DEV 0.15.1.0 / cache15, odebrany
 
 Pierwsze wprowadzenie ma trzy kroki: **górny pasek → dolne menu → Gospodarstwo**. Dalsze rady i rozmowa z doradcą są dobrowolne. Pełny katalog i 25 lekcji pozostają w Pomocy, z zachowaną historią i nagrodami.
 
 Uwzględniono pięć fioletowych zakładek, także jasnofioletowe „Odłożone odkrycia”: 175 wierszy, 34 niepuste C, 35 poprawionych tekstów i 10 dodanych rekordów katalogu. Siedem projektów pozostaje odłożonych. Testy kierunkowe: 30/30 PASS. Pełny master ma źródło 76a663d: obejmuje 157 arkuszy i 61 971 bieżących wierszy, a arkusz redakcyjny ze źródła abacd3f ma 6 zakładek, 413 wierszy i pustą kolumnę C. Budowa i niezależna walidacja przeszły.
 
-Kandydat R5 uwzględnia także starszy układ menu: zwinięty doradca pozostaje nad nim, a na małym ekranie zostawia dostęp do środka mapy. Rzeczywiste kliknięcia sprawdzono na sześciu rozmiarach starszego układu oraz na telefonach 320 i 390 px, także po wyciszeniu. Pełna rozmowa i klawiatura działają. Pełny lokalny przegląd 26 programów wskazał dwie usterki; po poprawkach oba scenariusze przeszły ponownie. Zmienił się wyłącznie CSS i testowy sposób wejścia do Pomocy. HTML, 117 odcisków i pełny master z 76a663d pozostają zgodne. Arkusz redakcyjny odtworzono dla aktualnego odcisku CSS; nadal ma 6 zakładek, 413 wierszy i pustą C. Nowy własny CI i publikacja R5 oczekują. Poprzednie wyniki zachowano osobno. **Zakres: wyłącznie DEV.**
+DEV 0.15.1.0 / cache15 z poprawką CSS layout2 odebrany dla źródła `4dcc34ec3b462992330f88a22062070fcc0f7092`: [CI44164876130](https://github.com/ksobczak321-oss/gra/actions/runs/44164876130) i [Pages44164876499](https://github.com/ksobczak321-oss/gra/actions/runs/44164876499) **SUCCESS**. 1475 testów frontend, 170 backend, 7 planszówki i wszystkie 69 programów Chromium PASS; master i oba arkusze zwalidowane. Wszystkie 229 plików (36 879 151 bajtów) pobrano przez HTTPS i porównano z wersją w Git. Natywny HTTPS Chromium w tej infrastrukturze ma ograniczenie certyfikatu; odtworzenie rzeczywistych publicznych bajtów lokalnie PASS, bez obchodzenia TLS. Tag `dev-0.15.1.0-20261117` opublikowany i zdalnie potwierdzony na tym samym źródle. Poprzednie CI44141264184,44148037986,44154508808,44160545938 pozostają FAILURE. Doradca pozostawia dostęp do mapy na 320 i 390 px i dolnego menu starszych zapisów, także po wyciszeniu. Ręczny odbiór użytkownika: NOT_RUN. **Zakres: wyłącznie DEV.**
 
 [DEV — start gry](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-15&ui=3) · [DEV — podgląd poziomu 5](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5&v=frontend-v32-15&ui=3)
 

@@ -1,6 +1,6 @@
 {
   "application_source": "abacd3fffc7fe033fca6c3a1e9003bb688aa4afa",
-  "status": "LOCAL_ALL_COMPATIBILITY_FIXES_PASS_OWN_CI_PENDING",
+  "status": "ACCEPTED_DEV_ONLY",
   "master": {
     "source": "76a663da9e093d909e6289286649c5c925139614",
     "sha256": "ed53b12ff3b4ace2f49fd978a10074ce4b7715e3e8458da957ea7dc781769b1d",
@@ -25,5 +25,10 @@
     1100,
     901
   ],
-  "legacy_geometry": "PASS_NORMAL_AND_MUTED"
+  "legacy_geometry": "PASS_NORMAL_AND_MUTED",
+  "publication_source": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+  "CI_run": 44164876130,
+  "Pages_run": 44164876499,
+  "tag": "dev-0.15.1.0-20261117",
+  "tag_remote_verified": true
 }

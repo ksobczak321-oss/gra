@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `R5_legacy_UI_and_helper_local_PASS_own_publication_pending` |
-| CI | `R5_exact_source_pending` |
+| DEV | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` |
+| CI | `SUCCESS_44164876130_exact_4dcc34e` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -46,7 +46,7 @@ Data pierwotnej wiadomości: 2026-11-17. Użytkownik wskazał wyłącznie zakła
 - **Scenariusze automatyczne:** [tests/harborlight-purple-editorial.test.mjs](../../../tests/harborlight-purple-editorial.test.mjs), [tests/harborlight-purple-editorial-ui-smoke.py](../../../tests/harborlight-purple-editorial-ui-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-R5: karta doradcy nie zasłania mapy ani starszego dolnego menu. Zwykłe oferty są zamykane realnymi przyciskami przed testowym wejściem do Pomocy. Pełny sweep26 dał24PASS/2FAIL; dwa poprawione scenariusze oraz accepted-front i advisorUI ponowniePASS. Wszystkie117odcisków i master76a pozostają zgodne; Excel6 ma aktualny odciskCSS i nadal413wierszy/pustąC. Nowy własnyCI/Pages oczekuje; zakres wyłącznieDEV.
+DEV 0.15.1.0 / cache15 z poprawką CSS layout2 odebrany dla źródła `4dcc34ec3b462992330f88a22062070fcc0f7092`: [CI44164876130](https://github.com/ksobczak321-oss/gra/actions/runs/44164876130) i [Pages44164876499](https://github.com/ksobczak321-oss/gra/actions/runs/44164876499) SUCCESS. 1475 testów frontend, 170 backend, 7 planszówki i wszystkie 69 programów Chromium PASS; master i oba arkusze zwalidowane. Wszystkie 229 plików (36 879 151 bajtów) pobrano przez HTTPS i porównano z wersją w Git. Natywny HTTPS Chromium w tej infrastrukturze ma ograniczenie certyfikatu; odtworzenie rzeczywistych publicznych bajtów lokalnie PASS, bez obchodzenia TLS. Tag `dev-0.15.1.0-20261117` opublikowany i zdalnie potwierdzony na tym samym źródle. Poprzednie CI44141264184,44148037986,44154508808,44160545938 pozostają FAILURE. Doradca pozostawia dostęp do mapy na 320 i 390 px i dolnego menu starszych zapisów, także po wyciszeniu. Ręczny odbiór użytkownika: NOT_RUN. Zakres: wyłącznie DEV.
 
 ## Relacje
 

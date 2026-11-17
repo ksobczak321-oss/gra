@@ -1,0 +1,554 @@
+{
+  "status": "PASS",
+  "source": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+  "byte_audit_source": "4dcc34ec3b462992330f88a22062070fcc0f7092",
+  "normal_TLS_downloaded_files": 229,
+  "all_assets_served_from_audited_public_bytes": true,
+  "native_HTTPS_browser_claimed": false,
+  "real_account_or_cloud_writes": false,
+  "programs": [
+    {
+      "name": "advisor",
+      "exit_code": 0,
+      "report_SHA256": "fd4b54b27c634c6db96374ef9250c79fadaed9f3b163dd528016cb10730b4cc3",
+      "script_SHA256": "7543744eb0909c0d4846c8c503cb8ba49360ecc2f1e4455519b94157e9320caf",
+      "scopes": 3,
+      "widths": [
+        1440,
+        390,
+        390
+      ],
+      "results": [
+        {
+          "width": 1440,
+          "height": 1000,
+          "port_plan": true,
+          "live_input_preserved": true,
+          "why_and_alternative": true,
+          "navigation_highlight": true,
+          "optional_mute": true,
+          "no_api_or_storage_writes": true,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "port_plan": true,
+          "live_input_preserved": true,
+          "why_and_alternative": true,
+          "navigation_highlight": true,
+          "optional_mute": true,
+          "no_api_or_storage_writes": true,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "height": 480,
+          "port_plan": true,
+          "live_input_preserved": true,
+          "why_and_alternative": true,
+          "navigation_highlight": true,
+          "optional_mute": true,
+          "no_api_or_storage_writes": true,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "accepted_front",
+      "exit_code": 0,
+      "report_SHA256": "8ca722611063b822ef69cbcecbda5ea8dc53e7332d2064b2f4d4a41f5dcee31e",
+      "script_SHA256": "2b36749fca20bf253e81a4fac73c93f9d6ec9577b7b02af31f25ce4bf747613c",
+      "scopes": 4,
+      "widths": [
+        1672,
+        1440,
+        390,
+        320
+      ],
+      "results": [
+        {
+          "width": 1672,
+          "functions": 20,
+          "physical_map_clicks": 8,
+          "advisor_after_real_refresh": [],
+          "old_leatherworks_decorative": true,
+          "all_tabs": [
+            "administration",
+            "economy",
+            "resources",
+            "decorations",
+            "paths"
+          ],
+          "matching_economy_art": 10,
+          "levels_workers_unchanged": true,
+          "right_edges_aligned": true,
+          "errors": []
+        },
+        {
+          "width": 1440,
+          "functions": 20,
+          "physical_map_clicks": 8,
+          "advisor_after_real_refresh": [],
+          "old_leatherworks_decorative": true,
+          "all_tabs": [
+            "administration",
+            "economy",
+            "resources",
+            "decorations",
+            "paths"
+          ],
+          "matching_economy_art": 10,
+          "levels_workers_unchanged": true,
+          "right_edges_aligned": true,
+          "errors": []
+        },
+        {
+          "width": 390,
+          "functions": 20,
+          "physical_map_clicks": 9,
+          "advisor_after_real_refresh": [
+            {
+              "state": "suggesting",
+              "box": {
+                "x": 8,
+                "y": 434.09375,
+                "width": 167,
+                "height": 57
+              }
+            },
+            {
+              "state": "muted",
+              "box": {
+                "x": 8,
+                "y": 432.65625,
+                "width": 167,
+                "height": 58.4375
+              }
+            }
+          ],
+          "old_leatherworks_decorative": true,
+          "all_tabs": [
+            "administration",
+            "economy",
+            "resources",
+            "decorations",
+            "paths"
+          ],
+          "matching_economy_art": 10,
+          "levels_workers_unchanged": true,
+          "right_edges_aligned": false,
+          "errors": []
+        },
+        {
+          "width": 320,
+          "functions": 20,
+          "physical_map_clicks": 9,
+          "advisor_after_real_refresh": [
+            {
+              "state": "suggesting",
+              "box": {
+                "x": 8,
+                "y": 421.59375,
+                "width": 132,
+                "height": 69.5
+              }
+            },
+            {
+              "state": "muted",
+              "box": {
+                "x": 8,
+                "y": 418.90625,
+                "width": 132,
+                "height": 72.1875
+              }
+            }
+          ],
+          "old_leatherworks_decorative": true,
+          "all_tabs": [
+            "administration",
+            "economy",
+            "resources",
+            "decorations",
+            "paths"
+          ],
+          "matching_economy_art": 10,
+          "levels_workers_unchanged": true,
+          "right_edges_aligned": false,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "legacy",
+      "exit_code": 0,
+      "report_SHA256": "552ca360ee625993638aae5f7430ddd471c4c829bcefff8104dc55df92b38f1e",
+      "script_SHA256": "11ae4fb79e8cb81cbbb4539e8345b24eea0c2c18c3496d16158a3ef73f444291",
+      "scopes": 6,
+      "widths": [
+        1366,
+        1440,
+        1600,
+        1101,
+        1100,
+        901
+      ],
+      "results": [
+        {
+          "width": 1366,
+          "height": 768,
+          "ruleset": "legacy",
+          "bodyClass": "",
+          "advisor": {
+            "x": 16,
+            "y": 395.59375,
+            "width": 270,
+            "height": 88.40625,
+            "top": 395.59375,
+            "right": 286,
+            "bottom": 484,
+            "left": 16
+          },
+          "mute": {
+            "x": 235.71875,
+            "y": 473,
+            "width": 47.28125,
+            "height": 24,
+            "top": 473,
+            "right": 283,
+            "bottom": 497,
+            "left": 235.71875
+          },
+          "dock": {
+            "x": 159.84588623046875,
+            "y": 577.8363647460938,
+            "width": 971.2221069335938,
+            "height": 40.8076171875,
+            "top": 577.8363647460938,
+            "right": 1131.0679931640625,
+            "bottom": 618.6439819335938,
+            "left": 159.84588623046875
+          },
+          "card": {
+            "x": 168.00741577148438,
+            "y": 626.8055419921875,
+            "width": 129.41128540039062,
+            "height": 132.216796875,
+            "top": 626.8055419921875,
+            "right": 297.418701171875,
+            "bottom": 759.0223388671875,
+            "left": 168.00741577148438
+          },
+          "top": "hit-dock-townhall",
+          "mobileDock": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "trusted_card_click": true,
+          "trusted_muted_card_click": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "ruleset": "legacy",
+          "bodyClass": "",
+          "advisor": {
+            "x": 16,
+            "y": 511.59375,
+            "width": 270,
+            "height": 88.40625,
+            "top": 511.59375,
+            "right": 286,
+            "bottom": 600,
+            "left": 16
+          },
+          "mute": {
+            "x": 235.71875,
+            "y": 589,
+            "width": 47.28125,
+            "height": 24,
+            "top": 589,
+            "right": 283,
+            "bottom": 613,
+            "left": 235.71875
+          },
+          "dock": {
+            "x": 167.9425811767578,
+            "y": 704.54541015625,
+            "width": 1024.88037109375,
+            "height": 43.062255859375,
+            "top": 704.54541015625,
+            "right": 1192.8229522705078,
+            "bottom": 747.607666015625,
+            "left": 167.9425811767578
+          },
+          "card": {
+            "x": 176.55502319335938,
+            "y": 756.2200927734375,
+            "width": 136.56100463867188,
+            "height": 139.5216064453125,
+            "top": 756.2200927734375,
+            "right": 313.11602783203125,
+            "bottom": 895.74169921875,
+            "left": 176.55502319335938
+          },
+          "top": "hit-dock-townhall",
+          "mobileDock": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "trusted_card_click": true,
+          "trusted_muted_card_click": true
+        },
+        {
+          "width": 1600,
+          "height": 900,
+          "ruleset": "legacy",
+          "bodyClass": "",
+          "advisor": {
+            "x": 16,
+            "y": 461.59375,
+            "width": 270,
+            "height": 88.40625,
+            "top": 461.59375,
+            "right": 286,
+            "bottom": 550,
+            "left": 16
+          },
+          "mute": {
+            "x": 235.71875,
+            "y": 539,
+            "width": 47.28125,
+            "height": 24,
+            "top": 539,
+            "right": 283,
+            "bottom": 563,
+            "left": 235.71875
+          },
+          "dock": {
+            "x": 186.92881774902344,
+            "y": 677.1519165039062,
+            "width": 1138.1507568359375,
+            "height": 47.82147216796875,
+            "top": 677.1519165039062,
+            "right": 1325.079574584961,
+            "bottom": 724.973388671875,
+            "left": 186.92881774902344
+          },
+          "card": {
+            "x": 196.4931182861328,
+            "y": 734.5377197265625,
+            "width": 151.65382385253906,
+            "height": 154.9415283203125,
+            "top": 734.5377197265625,
+            "right": 348.1469421386719,
+            "bottom": 889.479248046875,
+            "left": 196.4931182861328
+          },
+          "top": "hit-dock-townhall",
+          "mobileDock": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "trusted_card_click": true,
+          "trusted_muted_card_click": true
+        },
+        {
+          "width": 1101,
+          "height": 1000,
+          "ruleset": "legacy",
+          "bodyClass": "",
+          "advisor": {
+            "x": 16,
+            "y": 511.59375,
+            "width": 270,
+            "height": 88.40625,
+            "top": 511.59375,
+            "right": 286,
+            "bottom": 600,
+            "left": 16
+          },
+          "mute": {
+            "x": 235.71875,
+            "y": 589,
+            "width": 47.28125,
+            "height": 24,
+            "top": 589,
+            "right": 283,
+            "bottom": 613,
+            "left": 235.71875
+          },
+          "dock": {
+            "x": 128.40609741210938,
+            "y": 656.3920288085938,
+            "width": 783.6064453125,
+            "height": 32.92462158203125,
+            "top": 656.3920288085938,
+            "right": 912.0125427246094,
+            "bottom": 689.316650390625,
+            "left": 128.40609741210938
+          },
+          "card": {
+            "x": 134.99102783203125,
+            "y": 695.901611328125,
+            "width": 104.41226196289062,
+            "height": 106.67584228515625,
+            "top": 695.901611328125,
+            "right": 239.40328979492188,
+            "bottom": 802.5774536132812,
+            "left": 134.99102783203125
+          },
+          "top": "hit-dock-townhall",
+          "mobileDock": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "trusted_card_click": true,
+          "trusted_muted_card_click": true
+        },
+        {
+          "width": 1100,
+          "height": 1000,
+          "ruleset": "legacy",
+          "bodyClass": "",
+          "advisor": {
+            "x": 10,
+            "y": 511.59375,
+            "width": 220,
+            "height": 88.40625,
+            "top": 511.59375,
+            "right": 230,
+            "bottom": 600,
+            "left": 10
+          },
+          "mute": {
+            "x": 179.71875,
+            "y": 589,
+            "width": 47.28125,
+            "height": 24,
+            "top": 589,
+            "right": 227,
+            "bottom": 613,
+            "left": 179.71875
+          },
+          "dock": {
+            "x": 128.2894744873047,
+            "y": 656.25,
+            "width": 782.8947143554688,
+            "height": 32.894775390625,
+            "top": 656.25,
+            "right": 911.1841888427734,
+            "bottom": 689.144775390625,
+            "left": 128.2894744873047
+          },
+          "card": {
+            "x": 134.86842346191406,
+            "y": 695.7236938476562,
+            "width": 104.31742858886719,
+            "height": 106.57891845703125,
+            "top": 695.7236938476562,
+            "right": 239.18585205078125,
+            "bottom": 802.3026123046875,
+            "left": 134.86842346191406
+          },
+          "top": "hit-dock-townhall",
+          "mobileDock": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "trusted_card_click": true,
+          "trusted_muted_card_click": true
+        },
+        {
+          "width": 901,
+          "height": 1000,
+          "ruleset": "legacy",
+          "bodyClass": "",
+          "advisor": {
+            "x": 10,
+            "y": 511.59375,
+            "width": 220,
+            "height": 88.40625,
+            "top": 511.59375,
+            "right": 230,
+            "bottom": 600,
+            "left": 10
+          },
+          "mute": {
+            "x": 179.71875,
+            "y": 589,
+            "width": 47.28125,
+            "height": 24,
+            "top": 589,
+            "right": 227,
+            "bottom": 613,
+            "left": 179.71875
+          },
+          "dock": {
+            "x": 105.08073425292969,
+            "y": 627.9829711914062,
+            "width": 641.2619018554688,
+            "height": 26.94378662109375,
+            "top": 627.9829711914062,
+            "right": 746.3426361083984,
+            "bottom": 654.9267578125,
+            "left": 105.08073425292969
+          },
+          "card": {
+            "x": 110.46949768066406,
+            "y": 660.3154907226562,
+            "width": 85.44544982910156,
+            "height": 87.2978515625,
+            "top": 660.3154907226562,
+            "right": 195.91494750976562,
+            "bottom": 747.6133422851562,
+            "left": 110.46949768066406
+          },
+          "top": "hit-dock-townhall",
+          "mobileDock": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "trusted_card_click": true,
+          "trusted_muted_card_click": true
+        }
+      ]
+    }
+  ]
+}
