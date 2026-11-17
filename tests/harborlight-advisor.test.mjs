@@ -160,3 +160,13 @@ test('maximum-level buildings and unavailable discoveries do not invent a furthe
  assert.match(advisorPlan(s,'Port').text,/maksymalny poziom/);
  s.buildings.farm.level=5;const p=advisorPlan(s,'Potrzebuję więcej sera');assert.equal(p.kind,'resource');assert.match(p.steps[0].text,/Nie masz teraz dostępnej produkcji: Ser/);
 });
+
+test('specific Polish product names take precedence over generic milk, fish and clothes',()=>{
+ const s=world();s.buildings.dairy.level=1;
+ for(const prompt of ['Potrzebuję mleka pasteryzowanego','Potrzebuję pasteryzowanego mleka']){
+  const p=advisorPlan(s,prompt);assert.equal(p.kind,'resource');assert.equal(p.title,'Cel: Mleko pasteryzowane');assert.ok(p.steps.some(x=>x.target==='dairy'));
+ }
+ const sour=advisorPlan(s,'Potrzebuję kwaśnego mleka');assert.equal(sour.title,'Cel: Kwaśne mleko');assert.equal(sour.steps[0].target,'warehouse');assert.match(sour.steps[0].text,/72 godzinach/);
+ assert.equal(advisorPlan(s,'Potrzebuję wędzonych ryb').title,'Cel: Ryba wędzona');
+ assert.equal(advisorPlan(s,'Potrzebuję strojów wojskowych').title,'Cel: Strój wojskowy');
+});

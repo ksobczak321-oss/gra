@@ -1,5 +1,5 @@
-import { developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-13';
-import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-13';
+import { developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-14';
+import { getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-14';
 
 // Presentation only: descriptions and level names never affect saved mechanics.
 const purposes = {
@@ -57,10 +57,10 @@ Brighter reflector|Jaśniejszy reflektor
 Storm shelter|Osłona przed sztormem
 Light of the bay|Światło zatoki
 Keepers’ lodge|Siedziba latarników
-Fog bell|Dzwon mgłowy
+Fog bell|Dzwon przeciwmgłowy
 Precision lens|Precyzyjna soczewka
-Coastal tower|Wieża wybrzeża
-Far-reaching beam|Daleki promień
+Coastal tower|Wieża nad wybrzeżem
+Far-reaching beam|Promień dalekiego zasięgu
 Port lighthouse|Latarnia portowa
 Expanded gallery|Rozbudowana galeria
 Coastal lookout|Nadmorski punkt obserwacyjny
@@ -87,7 +87,7 @@ Reinforced lantern|Wzmocniona komnata światła
 Sweeping beam|Szeroki promień
 Coastal signal station|Nadmorska stacja sygnałowa
 Island’s guiding star|Gwiazda przewodnia wyspy
-All-weather watch|Warta każdej pogody
+All-weather watch|Strażnica na każdą pogodę
 Keepers’ guild|Bractwo latarników
 Light of safe waters|Światło bezpiecznych wód
 Cliffside sentinel|Straż nad klifami

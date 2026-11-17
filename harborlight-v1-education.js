@@ -1,4 +1,4 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-13';
+import { developmentText, developmentResearchDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-14';
 // DEV v32. Pure education/research model; all persistent identity is keyed by personUid.
 // This module never advances the world's clock or calls a network service.
 const HOUR = 3600, DAY = 86400, EPS = 1e-8;
@@ -29,7 +29,7 @@ function spend(state,cost,ctx={}) {
   for(const [id,n] of Object.entries(cost))state.resources[id]-=n;return true;
 }
 export const RESEARCH_TIME_SECONDS = Object.freeze([1800,2700,3600,5400,7200,10800,14400,21600,28800,43200,57600,72000,86400,108000,129600,151200,172800,201600,230400,259200]);
-const repeat=(id,name,firstCost,effect)=>Object.freeze({id,name,kind:'repeat',firstCost,effect,minimumAcademy:1});
+const repeat=(id,name,firstCost,effect)=>Object.freeze({id,name,kind:'repeat',firstCost,effect:developmentResearchDescription(id,effect),minimumAcademy:1});
 export const RESEARCH_CATALOG = Object.freeze([
   repeat('lumber','Siekiera o pewnym ostrzu',{wood:12,stone:8},'+5% wydajności drwali'),
   repeat('quarry','Sekrety pękającej skały',{stone:12,wood:8},'+5% wydobycia kamienia'),

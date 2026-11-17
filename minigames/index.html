@@ -26,7 +26,7 @@
       const ready = document.readyState === 'loading'
         ? new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }))
         : Promise.resolve();
-      const styles = ['./styles.css?v=minigames-2', '../harborlight-v1-minigame.css?v=frontend-v32-13', '../harborlight-v1-original-puzzles.css?v=frontend-v32-13'].map(path => new Promise(resolve => {
+      const styles = ['./styles.css?v=minigames-3', '../harborlight-v1-minigame.css?v=frontend-v32-13', '../harborlight-v1-original-puzzles.css?v=frontend-v32-13'].map(path => new Promise(resolve => {
         const link = document.createElement('link');
         link.rel = 'stylesheet'; link.href = new URL(path, directory).href;
         link.onload = link.onerror = resolve;
@@ -34,7 +34,7 @@
       }));
       Promise.all([ready, ...styles]).then(() => {
         const script = document.createElement('script');
-        script.type = 'module'; script.src = new URL('./app.js?v=minigames-2', directory).href;
+        script.type = 'module'; script.src = new URL('./app.js?v=minigames-3', directory).href;
         script.addEventListener('error', () => {
           document.getElementById('loading').hidden = true;
           document.getElementById('error-message').textContent = 'Nie udało się pobrać gry. Odśwież stronę i spróbuj ponownie.';

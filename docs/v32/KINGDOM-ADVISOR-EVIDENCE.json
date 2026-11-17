@@ -9,7 +9,7 @@
   ],
   "preserved_help_catalog_steps": 56,
   "preserved_practical_lessons": 25,
-  "planner_cases": 23,
+  "planner_cases": 24,
   "planner": "PASS",
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
@@ -28,5 +28,21 @@
     "duration_ms": 315179.559317,
     "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
   },
-  "frontend_bundle_cases": 27
+  "frontend_bundle_cases": 27,
+  "purple_editorial": {
+    "selected_sheets": [
+      "Samouczek",
+      "Produkty i receptury",
+      "Badania",
+      "Nazwy poziomów Latarni"
+    ],
+    "rows": 165,
+    "nonempty_C": 31,
+    "changed_rows": 35,
+    "unselected_sheet_contents_read": false,
+    "unit_test_cases": 4,
+    "merge": "docs/v32/EDITORIAL-PURPLE-TABS-MERGE.json",
+    "browser": "IN_PROGRESS"
+  },
+  "cache": "frontend-v32-14_all_modules"
 }

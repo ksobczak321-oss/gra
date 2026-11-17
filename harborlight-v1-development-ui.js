@@ -1,13 +1,17 @@
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-13';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-13';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-13';
-import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-13';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-14';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation, developmentProductDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-14';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-14';
+import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-14';
 
 // All views share the approved presentation mapping; model IDs stay unchanged.
 export const DEVELOPMENT_BUILDINGS = Object.freeze(Object.fromEntries(Object.entries({
   bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',
   leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary'
 }).map(([id,name])=>{const [x,y,width,height]=mapRegionFor(id);return [id,Object.freeze({name,x,y,width,height,footprint:mapFootprintFor(id)})]})));
+function productInformation(id) {
+  const description = developmentProductDescription(id);
+  return description ? node('details',{class:'v32-info','data-v32-product-description':id},node('summary',{text:'Opis produktu'}),p(description)) : null;
+}
 const RECIPE_LABELS={farmGrain:'Zboże',farmVegetables:'Warzywa',farmLivestock:'Żywiec',farmMilk:'Surowe mleko',farmCheese:'Ser',wood:'Drewno',stone:'Kamień',flour:'Mąka',planks:'Deski',bread:'Chleb',cake:'Ciasto',pasteurizedMilk:'Mleko pasteryzowane',meat:'Mięso',leather:'Skóry',fish:'Ryby',smokedFish:'Ryba wędzona',fishPreserves:'Przetwory rybne',civilianClothes:'Ubrania cywilne',militaryClothes:'Stroje wojskowe',professorRobes:'Szaty profesorskie'};
 const FALLBACK_RECIPES={farm:['farmGrain','farmVegetables','farmLivestock','farmMilk','farmCheese'],windmill:['flour'],bakery:['bread','cake'],dairy:['pasteurizedMilk'],slaughterhouse:['meat','leather'],fisher:['fish','smokedFish','fishPreserves'],leatherworks:['civilianClothes','militaryClothes','professorRobes'],lumber:['wood'],quarry:['stone'],sawmill:['planks']};
 const RECIPE_INPUTS={flour:{grain:4},bread:{flour:4},cake:{flour:4,rawMilk:2},pasteurizedMilk:{rawMilk:4},meat:{livestock:2},leather:{livestock:2},farmCheese:{sourMilk:4},civilianClothes:{leather:4},militaryClothes:{leather:8},professorRobes:{leather:8},planks:{wood:2},smokedFish:{fish:4},fishPreserves:{fish:6}};
@@ -66,6 +70,7 @@ export function renderProductionControls(building,options={}){
   const capacity=call(options,'provisions','crewCapacity',state,building);
   const crewLimit=typeof capacity==='object'?capacity.total??capacity.capacity:capacity;
   const title=section('Produkty i pracownicy',...(options.context?.compactProductionHelp?[]:[p(`Załoga: ${whole(b.workers)}${crewLimit==null?'':` / ${whole(crewLimit)}`}. Każdą osobę przydziel do jednego produktu.`),p('Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.','v32-muted')]));
+  if(building==='slaughterhouse')title.append(p(developmentText('HELP-NEW-02'),'v32-muted'));
   const shownGoods=new Set();
   for(const recipeId of recipes){
     const recipe=Array.isArray(catalog)?catalog.find(r=>(r.id||r.recipeId)===recipeId)||{}:catalog[recipeId]||{};
@@ -77,7 +82,7 @@ export function renderProductionControls(building,options={}){
     const outText=output&&typeof output==='object'?Object.entries(output).map(([id,qty])=>`${format(qty)} ${label(id)}`).join(', '):RECIPE_LABELS[recipeId]||recipe.name||recipeId;
     const input=integerInput(assigned[recipeId]?.workers??assigned[recipeId]??0,b.workers,{'data-v32-workers':recipeId,'aria-label':`Pracownicy: ${RECIPE_LABELS[recipeId]||recipeId}`});
     const action=submit(developmentText(RECIPE_ACTION_COPY[recipeId])||'Przydziel');action.classList.add('v32-recipe-assign');
-    title.append(form(()=>act(options,'provisionsSetWorkers',{building,recipeId,workers:whole(input.value)}),node('div',{class:'v32-recipe'},node('div',{},node('strong',{text:RECIPE_LABELS[recipeId]||recipe.name||recipeId}),p(inputText?`${inputText} → ${outText}`:'Pozyskiwanie surowca','v32-muted')),field('Osoby',input),action)));
+    title.append(form(()=>act(options,'provisionsSetWorkers',{building,recipeId,workers:whole(input.value)}),node('div',{class:'v32-recipe'},node('div',{},node('strong',{text:RECIPE_LABELS[recipeId]||recipe.name||recipeId}),p(inputText?`${inputText} → ${outText}`:'Pozyskiwanie surowca','v32-muted'),...Object.keys(output||{}).map(productInformation).filter(Boolean)),field('Osoby',input),action)));
   }
   const local=call(options,'provisions','localStorageStatus',state,building);
   if(local){const goods=local.stock||local.goods||local.materials||local.products||{};title.append(p(`Magazyn lokalny: ${format(local.used??Object.values(goods).reduce((sum,v)=>sum+num(v),0))} / ${format(local.totalCapacity??local.capacity??local.total??300*num(b.level))}`,'v32-muted'));if(Object.keys(goods).length)title.append(p(Object.entries(goods).filter(([id,qty])=>shownGoods.has(id)||num(qty?.quantity??qty)>0).map(([id,qty])=>`${label(id)}: ${format(qty?.quantity??qty)}`).join(' · '),'v32-muted'));}
@@ -92,6 +97,8 @@ export function renderFoodControls(options={}){
   const root=section('Wyżywienie mieszkańców',p(developmentText('MSG-FOOD-SETTINGS')),p('Limit oznacza jednorazową partię; puste pole pozwala wydawać bez limitu. Po wykorzystaniu partii ustawiona ilość nie odnawia się sama.'),p(developmentText('MSG-FOOD-RESERVE-CHEAPEST'),'v32-muted'));
   const rebuild=()=>{table.replaceChildren();ids.forEach((id,index)=>{let c=controls.get(id);if(!c){c={enabled:node('input',{type:'checkbox',checked:settings.enabled?.[id]!==false,'aria-label':`Wydawaj: ${label(id)}`}),limit:node('input',{type:'number',min:0,step:'any',inputMode:'decimal',value:settings.limits?.[id]??'',placeholder:'Bez limitu',title:developmentText('UI-FOOD-BATCH-SET'),'aria-label':`${developmentText('UI-002')}: ${label(id)}`})};controls.set(id,c);}const protectedQty=reserve.materials?.[id]??reserve.reserved?.[id]??reserve.reserve?.[id]??0;table.append(node('div',{class:'v32-food-row','data-v32-food':id},field(label(id),c.enabled),node('span',{class:'v32-muted',text:`${format(SATIETY[id])} pkt · rezerwa ${format(protectedQty)}`}),c.limit,node('div',{class:'v32-order',title:developmentText('UI-001')},btn('↑',()=>{[ids[index-1],ids[index]]=[ids[index],ids[index-1]];rebuild();},{disabled:index===0,'aria-label':`Wcześniej: ${label(id)}`}),btn('↓',()=>{[ids[index+1],ids[index]]=[ids[index],ids[index+1]];rebuild();},{disabled:index===ids.length-1,'aria-label':`Później: ${label(id)}`}))));});};
   rebuild();root.append(form(()=>act(options,'provisionsFoodSettings',{priorities:ids,enabled:Object.fromEntries([...controls].map(([id,c])=>[id,c.enabled.checked])),limits:Object.fromEntries([...controls].map(([id,c])=>[id,c.limit.value===''?null:Math.max(0,num(c.limit.value))]))}),table,submit(developmentText('UI-003'))));
+  root.append(p(developmentText('HELP-NEW-01'),'v32-muted'));
+  root.append(node('details',{class:'v32-info','data-v32-food-product-guide':''},node('summary',{text:'Opisy produktów żywnościowych'}),...ids.map(productInformation).filter(Boolean)));
   root.append(p('Jeśli to jedyne dostępne jedzenie, mieszkańcy mogą przekroczyć limit ilości. Pominięcie wyłączonego rodzaju jedzenia podlega osobnej zasadzie awaryjnej.','v32-muted'));
   root.append(node('details',{class:'v32-info'},node('summary',{text:'Różnorodność posiłków i ciasto'}),p(developmentText('MSG-DIET-SHARE')),p(developmentText('MSG-CAKE-BONUS'))));
   return root;
@@ -115,7 +122,7 @@ export function renderConstructionFoodMix(building,options={}){
 export function renderTransportControls(building,options={}){
   const status=options.context?.transportStatus?.(building);if(!status)return null;
   const routes=status.routes||[];
-  if(status.direct){const root=section('Dostawy bezpośrednie',p('Każda trasa wymaga osobnego odkrycia w Akademii i Magazynu na poziomie 5. Do jednej trasy przydzielisz najwyżej połowę tragarzy; co najmniej jeden pozostaje do zwykłych dostaw.'));root.append(p(developmentText('MSG-RECEIVER-FULL'),'v32-muted'));for(const route of routes){const workers=integerInput(route.workers,Math.floor(num(stateOf(options).buildings?.warehouse?.workers)/2));root.append(form(()=>act(options,'developmentRoute',{routeId:route.id,workers:whole(workers.value)}),field(`${DEVELOPMENT_NAMES[route.source]||route.source} → ${DEVELOPMENT_NAMES[route.target]||route.target}: ${label(route.product)}`,workers),submit('Zapisz trasę')));}return root;}
+  if(status.direct){const root=section('Dostawy bezpośrednie',p('Każda trasa wymaga osobnego odkrycia w Akademii i Magazynu na poziomie 5. Do jednej trasy przydzielisz najwyżej połowę tragarzy; co najmniej jeden pozostaje do zwykłych dostaw.'));root.append(p(developmentText('HELP-NEW-06'),'v32-muted'));root.append(p(developmentText('MSG-RECEIVER-FULL'),'v32-muted'));for(const route of routes){const workers=integerInput(route.workers,Math.floor(num(stateOf(options).buildings?.warehouse?.workers)/2));root.append(form(()=>act(options,'developmentRoute',{routeId:route.id,workers:whole(workers.value)}),field(`${DEVELOPMENT_NAMES[route.source]||route.source} → ${DEVELOPMENT_NAMES[route.target]||route.target}: ${label(route.product)}`,workers),submit('Zapisz trasę')));}return root;}
   const root=section('Dostawy bezpośrednie',p('Wyznacz trasę dla konkretnego produktu. Trasa korzysta z tragarzy przypisanych przez Magazyn; brak wolnego tragarza wstrzymuje dostawę.'));
   for(const route of routes){root.append(node('div',{class:'v32-list-row'},node('span',{text:`${label(route.resource||route.good)} → ${DEVELOPMENT_NAMES[route.destination]||route.destination} · ${route.workers||0} tragarzy`}),btn('Usuń',()=>act(options,options.context?.transportRemoveActionType||'v32TransportRouteRemove',{building,routeId:route.id}))));}
   const destinations=status.destinations||[],products=status.products||[];
@@ -136,6 +143,7 @@ export function renderAcademyControls(options={}){
   root.append(section('Profesorowie i nauka',p(`Profesorowie: ${s.professors?.length||0} / ${s.professorLimit??3+num(s.level)}. Runda nauki: ${s.round?.number||1}. Każdy profesor uczy jedną osobę albo prowadzi badania.`)));
   const professors=s.professors||[],candidates=(s.candidates||[]).filter(person=>!(s.professors||[]).some(professor=>uid(person)===uid(professor)));
   const teacher=selectPeople(professors.filter(person=>!person.busy&&person.present!==false),'Wybierz wolnego profesora',directory),student=selectPeople(candidates,'Wybierz adepta',directory);teacher.required=true;student.required=true;
+  root.append(p(developmentText('HELP-NEW-03'),'v32-muted'));
   root.append(section('Rozpocznij naukę',p(`Opłata: ${format(10*num(s.level))} monet. Uczestnik musi być wolnym cywilem zakwaterowanym w Domu.`),form(()=>act(options,'educationEnroll',{studentUid:student.value,teacherUid:teacher.value}),field('Adept',student),field('Profesor',teacher),submit(developmentText('UI-017')))));
   const courseList=section('Trwające zajęcia');
   if(!s.courses?.length)courseList.append(p('Nie trwa żaden kurs.','v32-muted'));
@@ -157,6 +165,7 @@ export function renderAcademyControls(options={}){
 
 export function renderResearchControls(options={},provided,providedDirectory){
   const state=stateOf(options),directory=providedDirectory||createResidentDirectory(state,{language:options.language||'pl'}),s=provided||educationState(options),root=section('Badania i odkrycia');
+  root.append(p(developmentText('HELP-NEW-04'),'v32-muted'));
   const islandNumber=Math.max(1,whole(options.context?.islandIndex||state.islandIndex||String(state.islandId||'island-1').match(/(\d+)$/)?.[1]||1));
   root.append(p(developmentText('MSG-ISLAND-SPEED',{'wyspa':state.islandName||`Wyspa ${islandNumber}`,'numer':islandNumber}),'v32-muted'));
   const catalog=Array.isArray(s.researchCatalog)?s.researchCatalog:Object.entries(s.researchCatalog||{}).map(([id,item])=>({id,...item}));
@@ -175,6 +184,7 @@ export function renderResearchControls(options={},provided,providedDirectory){
 export function renderBarracksControls(options={}){
   const state=stateOf(options),directory=createResidentDirectory(state,{language:options.language||'pl'}),s=call(options,'military','militaryStatus',state,options.context)||{unlocked:num(state.buildings?.townhall?.level)>=4,level:num(state.buildings?.barracks?.level),beds:4+2*num(state.buildings?.barracks?.level),soldiers:[],candidates:[],courses:state.military?.courses||[],squads:state.military?.squads||[],waiting:[]};
   const root=node('div',{'data-v32-barracks':''});if(!s.unlocked){root.append(p('Koszary są dostępne od 4. poziomu Ratusza.'));return root;}
+  root.append(p(developmentText('HELP-NEW-05'),'v32-muted'));
   const soldiers=s.soldiers||[],ready=soldiers.filter(person=>person.ready&&person.housed&&!person.busy);
   root.append(section('Załoga Koszar',p(`Żołnierze na wyspie: ${soldiers.length}. Łóżka w Koszarach: ${s.beds}. Osoby na wyprawie lub oczekujące poza wyspą nie zajmują miejsca w Ratuszu.`)));
   const recruit=selectPeople(s.candidates||[],'Wybierz rekruta',directory),instructor=selectPeople(ready,'Wybierz instruktora',directory);recruit.required=true;instructor.required=true;
@@ -243,7 +253,7 @@ export function renderTheatreControls(options={}){
   if(!shows.length)showList.append(p('Nie zaplanowano jeszcze przedstawienia.','v32-muted'));
   for(const show of shows){showList.append(node('article',{class:'v32-card'},node('strong',{text:show.active||show.status==='running'?'Przedstawienie trwa':show.status==='completed'?'Zakończone przedstawienie':show.status==='cancelled'?'Odwołane przedstawienie':'Zaplanowane przedstawienie'}),p(`${new Date(show.startAt??show.startsAt).toLocaleString('pl-PL')} · ${show.audience?.length??show.personUids?.length??show.viewers??0} widzów · opłata ${format(show.cost??show.coins)} monet`),show.stage==='planned'||show.status==='planned'?btn('Anuluj przedstawienie',()=>act(options,'theatreCancelShow',{showId:show.id})):null));}
   const description=root.querySelector(':scope>p'),planning=root.querySelector(':scope>form');
-  const main=section('Planowanie przedstawienia',planning),secondary=node('div',{class:'v32-column','data-v32-column':'secondary'},section('Zasady przedstawienia',description),showList);
+  const main=section('Planowanie przedstawienia',planning),secondary=node('div',{class:'v32-column','data-v32-column':'secondary'},section('Zasady przedstawienia',description,p(developmentText('HELP-NEW-08'))),showList);
   root.classList.add('v32-theatre-controls');main.dataset.v32Column='main';main.classList.add('v32-column');
   root.append(node('div',{class:'v32-panel-layout v32-theatre-layout'},main,secondary));
   return root;

@@ -1,14 +1,14 @@
 // Read-only advice. Model getters can normalize sidecars, so every public entry
 // works on its own snapshot and never receives the live world for an action.
-import { ALL_BUILDINGS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-13';
-import { centralAvailable, centralUnreserved } from './harborlight-v1-inventory.js?v=frontend-v32-13';
-import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-13';
-import { GOODS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-13';
-import { quotePremiumBuilding } from './harborlight-v1-activities.js?v=frontend-v32-13';
+import { ALL_BUILDINGS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-14';
+import { centralAvailable, centralUnreserved } from './harborlight-v1-inventory.js?v=frontend-v32-14';
+import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-14';
+import { GOODS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-14';
+import { quotePremiumBuilding } from './harborlight-v1-activities.js?v=frontend-v32-14';
 
 export const ADVISOR_BUILDING_NAMES = Object.freeze({ townhall:'Ratusz', house:'Dom', farm:'Gospodarstwo', lumber:'Drwale', quarry:'Kamieniołom', windmill:'Młyn', sawmill:'Tartak', warehouse:'Magazyn', dock:'Port', market:'Targ', lighthouse:'Latarnia', chapel:'Kaplica', theatre:'Teatr', bakery:'Piekarnia', dairy:'Mleczarnia', slaughterhouse:'Rzeźnia', fisher:'Rybak', leatherworks:'Zakład skórzany', academy:'Akademia', barracks:'Koszary' });
 const aliases = {townhall:'ratusz\\w*', house:'dom(?:u|em|y|ow)?|lozk\\w*', farm:'gospodarstw\\w*|rolnik\\w*', lumber:'drwal\\w*|lesnik\\w*', quarry:'kamieniolom\\w*|kamieniarz\\w*', windmill:'mlyn\\w*|mlynarz\\w*', sawmill:'tartak\\w*', warehouse:'magazyn\\w*|tragarz\\w*', dock:'port(?:u|em|y|ow)?|porcie|przystan\\w*', market:'targ\\w*', lighthouse:'latarn\\w*', chapel:'kaplic\\w*', theatre:'teatr\\w*', bakery:'piekarn\\w*|piekarz\\w*', dairy:'mleczarn\\w*', slaughterhouse:'rzezn\\w*|rzeznik\\w*', fisher:'rybak\\w*', leatherworks:'zaklad\\w*\\s+skorz\\w*', academy:'akadem\\w*', barracks:'koszar\\w*'};
-const resourceAliases = {wood:'drewn\\w*',stone:'kamien\\w*',grain:'zboz\\w*',vegetables:'warzyw\\w*',planks:'des(?:ek|k)\\w*',flour:'mak\\w*',bread:'chleb\\w*',cake:'ciast\\w*',rawMilk:'surow\\w*\\s+mlek\\w*|mlek(?:o|a|iem|u)?',pasteurizedMilk:'mlek\\w*\\s+pasteryz\\w*',fish:'ryb\\w*',cheese:'ser(?:a|em|y|ow)?',livestock:'zywi\\w*|krow\\w*',meat:'mies\\w*',leather:'skor\\w*',civilianClothes:'ubran\\w*|stroj\\w*',coins:'monet\\w*'};
+const resourceAliases = {wood:'drewn\\w*',stone:'kamien\\w*',grain:'zboz\\w*',vegetables:'warzyw\\w*',planks:'des(?:ek|k)\\w*',flour:'mak\\w*',bread:'chleb\\w*',cake:'ciast\\w*',pasteurizedMilk:'mlek\\w*\\s+pasteryz\\w*|pasteryz\\w*\\s+mlek\\w*',sourMilk:'kwasn\\w*\\s+mlek\\w*|mlek\\w*\\s+kwasn\\w*',rawMilk:'surow\\w*\\s+mlek\\w*|mlek(?:o|a|iem|u)?',smokedFish:'ryb\\w*\\s+wedz\\w*|wedz\\w*\\s+ryb\\w*',fishPreserves:'przetwor\\w*\\s+rybn\\w*',fish:'ryb\\w*',cheese:'ser(?:a|em|y|ow)?',livestock:'zywi\\w*|krow\\w*',meat:'mies\\w*',leather:'skor\\w*',militaryClothes:'ubran\\w*\\s+wojsk\\w*|stroj\\w*\\s+wojsk\\w*',professorRobes:'szat\\w*',civilianClothes:'ubran\\w*|stroj\\w*',coins:'monet\\w*'};
 const fold = value => String(value ?? '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').slice(0,1000);
 const matches = (text, pattern) => new RegExp(`(?:^|[^a-z0-9])(?:${pattern})(?=$|[^a-z0-9])`).test(text);
 const amount = value => Math.max(0, Number(value)||0);
@@ -65,6 +65,7 @@ function lockAdvice(state,id,eligibility,next) {
 function resourceAdvice(state,resource,required=1,budget={free:freeWorkers(state)},seen=new Set()) {
  if(seen.has(resource))return [];
  seen.add(resource);
+ if(resource==='sourMilk')return [step('Kwaśne mleko powstaje z surowego mleka po 72 godzinach łącznego pobytu w Magazynie centralnym. Transport i magazyn lokalny nie zużywają tego czasu. Sprawdź ilość surowego mleka i miejsce na kwaśne mleko.','warehouse'),step('Surowe mleko pozyskasz w Gospodarstwie od poziomu 2.','farm')];
  if(resource==='coins')return [step(`Brakuje monet: ${n(required)}. Pracujący mieszkańcy zapewniają wpływy; sprawdź też dostępne zadania i nagrody. Nie zwalniaj pracowników potrzebnych przy jedzeniu.`, 'townhall')];
  const choice=producerFor(state,resource);
  if(!choice)return [step(`Nie masz teraz dostępnej produkcji: ${goodName(resource)}. Sprawdź odblokowanie budynku lub odkrycia w Akademii.`, 'academy')];

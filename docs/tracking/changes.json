@@ -30079,6 +30079,82 @@
         "PLAN:read-only-live-state",
         "OPS:DEV-only"
       ]
+    },
+    {
+      "id": "HL-CHG-1160",
+      "epic": "HL-EPIC-UI",
+      "area": "Redakcja czterech fioletowych zakładek",
+      "type": "Story",
+      "title": "Uwzględnij przejrzane Samouczek, Produkty i receptury, Badania oraz Nazwy poziomów Latarni",
+      "source": {
+        "kind": "user_workbook",
+        "date": "2026-11-17",
+        "date_note": "Użytkownik wskazał wyłącznie zakładki fioletowe w nowym pliku ABC(1).",
+        "summary": "165wierszy,31niepustychC; pytania i komentarze redakcyjne rozwiązane względem rzeczywistych ekranów i reguł gry.",
+        "reference": "upload-sha256:0253226de2712d22d5ab28098a40931f02e8be652089b0c3fcbd343b459037a7"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "local_acceptance_in_progress",
+        "ci": "pending_exact_source_CI",
+        "preprod": "not_authorized_for_this_change",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Import czyta treści tylko4zakładek z tabColorFF7030A0; pozostałe treści załącznika nie są analizowane.",
+        "C ma pierwszeństwo, pusteC zatwierdzaB. Pytania, skróty redakcyjne i nieaktualne odwołania do interfejsu mają jawne rozwiązanie w MERGE.",
+        "Wszystkie165wybranych rekordów są powiązane z działającym API tekstów, a25lekcji korzysta z zatwierdzonych opisów.",
+        "Opisy produktów można rozwinąć w rzeczywistych ekranach produkcji i wyżywienia. Badania pokazują efekt za poziom badania także w powiadomieniach.",
+        "Wszystkie8instrukcji uzupełniających jest dostępnych we właściwych kontekstach.",
+        "Nazwy Latarni16/18/19/46 mają czytelne redakcyjne odpowiedniki; pozostałe zatwierdzone nazwy są zachowane.",
+        "Nie dodaje się mechaniki otrębów samą zmianą opisu; parametry receptur, czasy, nagrody i warunki nie zmieniają się.",
+        "Nowycache14 obejmuje cały graf modułów. Master i pochodnyExcel6 są odświeżone przy zachowaniu archiwum14 i pierwotnego zakresu6zakładek.",
+        "Publikacja wyłącznieDEV/Git/Pages bez resetu, PRE-PROD, PROD i DNS."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1159",
+        "HL-CHG-1150"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/EDITORIAL-PURPLE-TABS-MERGE.json",
+          "docs/v32/GO-KINGDOM-ADVISOR.md"
+        ],
+        "code": [
+          "harborlight-v1-development-copy.js",
+          "harborlight-v1-development-ui.js",
+          "harborlight-v1-education.js",
+          "harborlight-v1-copy.js",
+          "harborlight-v1-kingdom-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-purple-editorial.test.mjs",
+          "tests/harborlight-purple-editorial-ui-smoke.py"
+        ],
+        "manual_execution": "NOT_RUN",
+        "release_note": "165wybranychwierszy;35zmienionychtekstów; lokalne testy danych PASS, odbiórUI i publikacjaDEVw toku."
+      },
+      "notes": [
+        "Plik wejściowy nie jest publikowany w całości. MERGE zawiera wyłącznie wybrane4zakładki.",
+        "PusteC nadal zatwierdzaB; jawne korekty nieaktualnych nazw przycisków zapobiegają publikacji niewykonalnych instrukcji."
+      ],
+      "tags": [
+        "v32",
+        "editorial",
+        "purple-tabs",
+        "dev-only"
+      ],
+      "rules": [
+        "COPY:four-purple-tabs-only",
+        "COPY:C-over-B",
+        "COPY:resolve-editorial-notes",
+        "OPS:DEV-only"
+      ]
     }
   ],
   "current_environment": {
@@ -33169,7 +33245,19 @@
       "status": "local_acceptance_in_progress",
       "DEV_only": true,
       "PREPROD_authorized": false,
-      "reset": false
+      "reset": false,
+      "purple_editorial": {
+        "selected_sheets": [
+          "Samouczek",
+          "Produkty i receptury",
+          "Badania",
+          "Nazwy poziomów Latarni"
+        ],
+        "rows": 165,
+        "nonempty_C": 31,
+        "changed_rows": 35,
+        "unselected_sheet_contents_read": false
+      }
     }
   }
 }

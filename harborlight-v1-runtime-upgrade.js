@@ -1,7 +1,7 @@
 // Official-cloud runtime migration. No network access, clocks, or save writes.
 // The caller chooses the runtime policy; historical preview fixtures stay legacy.
-import { MATERIAL_IDS, RECIPE_CATALOG } from './harborlight-v1-provisions.js?v=frontend-v32-13';
-import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-13';
+import { MATERIAL_IDS, RECIPE_CATALOG } from './harborlight-v1-provisions.js?v=frontend-v32-14';
+import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-14';
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 const amount = value => Number.isFinite(Number(value)) ? Math.max(0, Math.min(Number.MAX_SAFE_INTEGER, Number(value))) : 0;
 const whole = value => Math.floor(amount(value));

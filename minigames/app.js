@@ -1,11 +1,11 @@
-import { createState, EXPEDITIONS } from '../harborlight-v1-state.js?v=frontend-v32-13';
-import * as Adventures from '../harborlight-v1-adventures.js?v=frontend-v32-13';
-import * as Activities from '../harborlight-v1-activities.js?v=frontend-v32-13';
-import { normalizeExpeditionHour } from '../harborlight-v1-expedition-hour.js?v=frontend-v32-13';
-import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG } from '../harborlight-v1-story-catalog.js?v=frontend-v32-13';
-import { createAdventuresPanel } from '../harborlight-v1-adventures-ui.js?v=frontend-v32-13';
-import { mountMiniGame } from '../harborlight-v1-minigame-ui.js?v=frontend-v32-13';
-import { adventureArt, puzzleSceneArt } from '../harborlight-v1-adventures-art.js?v=frontend-v32-13';
+import { createState, EXPEDITIONS } from '../harborlight-v1-state.js?v=frontend-v32-14';
+import * as Adventures from '../harborlight-v1-adventures.js?v=frontend-v32-14';
+import * as Activities from '../harborlight-v1-activities.js?v=frontend-v32-14';
+import { normalizeExpeditionHour } from '../harborlight-v1-expedition-hour.js?v=frontend-v32-14';
+import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG } from '../harborlight-v1-story-catalog.js?v=frontend-v32-14';
+import { createAdventuresPanel } from '../harborlight-v1-adventures-ui.js?v=frontend-v32-14';
+import { mountMiniGame } from '../harborlight-v1-minigame-ui.js?v=frontend-v32-14';
+import { adventureArt, puzzleSceneArt } from '../harborlight-v1-adventures-art.js?v=frontend-v32-14';
 
 // This launcher has no persistence, authentication or account client. The same
 // models and boards as the island run only against a new object in this tab.

@@ -1,13 +1,13 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-13';
-import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-13';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-13';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-13';
-import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-13';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-14';
+import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-14';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-14';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-14';
+import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-14';
 
-import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-13';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-14';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];

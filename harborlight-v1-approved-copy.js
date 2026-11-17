@@ -1,4 +1,4 @@
-import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-13';
+import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-14';
 // Approved presentation copy only. No world state, timers or rewards are mutated.
 // User revision: 2026-11-15. Native PL/EN share stable game IDs.
 // Numeric legacy tour positions migrate once through the retained stable IDs.

@@ -1,6 +1,6 @@
-// Approved six-sheet editorial merge: nonempty C overrides B; blank C accepts B.
+// Approved six-sheet and four-purple-sheet editorial merges: nonempty C overrides B; blank C accepts B.
 // Editorial notes are resolved against the current game, never shown literally.
-// Other spreadsheet sheets and game rules are outside this text import.
+// Only the explicitly reviewed sheets are imported; game rules remain separate.
 export const DEVELOPMENT_COPY = Object.freeze({
   "TOUR-01": "Poznaj mapę, budynki i zasady działania wyspy. Pokażemy Ci, gdzie przydzielać mieszkańców, zarządzać zapasami i planować rozwój.",
   "TOUR-02": "Rozbudowuj Ratusz, aby zwiększać limit mieszkańców i podnosić poziomy pozostałych budynków. Jego poziom jest też poziomem Twojej wyspy. Od awansu 3 → 4 potrzebujesz co najmniej 75% limitu mieszkańców poprzedniego poziomu.",
@@ -246,37 +246,37 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "MSG-CLOSED": "Tutorial został zamknięty. Aby wrócić do przerwanego miejsca, kliknij ? → Wznów tutorial. Twoja wyspa działa dalej.",
   "MSG-REPLAY": "Możesz ponownie przejść lekcje. Odebrane wcześniej nagrody nie zostaną przyznane drugi raz.",
   "LESSON-01": "Znajdź Magazyn na mapie i przyciskiem „+” przydziel trzech tragarzy. Otrzymasz nagrodę po przydzieleniu trzeciej osoby. Tragarze dotrą do pracy w ciągu 2 minut i zadbają o sprawne dostawy materiałów. Pozostałych mieszkańców możesz przydzielić do innych prac.",
-  "LESSON-02": "Otwórz Magazyn i wybierz „Więcej o budynku”. W priorytetach transportu zaznacz „Budowa”, aby tragarze w pierwszej kolejności dostarczali materiały na rozbudowę. Jeśli jeszcze nie dotarli do pracy, zobaczysz ich pozostały czas dojścia.",
-  "LESSON-03": "Znajdź Gospodarstwo na mapie, wybierz zboże i przydziel jednego rolnika. Zboże jest jadalne i służy także do produkcji mąki. Pracownik rozpocznie pracę po dotarciu do budynku.",
+  "LESSON-02": "Otwórz Magazyn i wybierz „Priorytety transportu”. Zaznacz „Budowa”, aby tragarze w pierwszej kolejności dostarczali materiały na rozbudowę. Jeśli jeszcze nie dotarli do pracy, zobaczysz ich pozostały czas dojścia.",
+  "LESSON-03": "Znajdź Gospodarstwo na mapie, wybierz zboże i przydziel jednego rolnika. Zboże jest produktem spożywczym I kategorii i służy do produkcji mąki. Pracownik rozpocznie pracę po dotarciu do budynku.",
   "LESSON-04": "Znajdź na mapie budynek „Drwale” i przydziel jednego pracownika. Drewno przyda się do rozbudowy osady, produkcji desek i odbudowy Latarni.",
   "LESSON-05": "Znajdź Ratusz i zleć rozbudowę do poziomu 2. Sprawdzisz osobno czas dostawy i czas budowania. Najpierw skorzystaj z natychmiastowego transportu za monety, a po dostarczeniu materiałów skróć budowę o 100%. Strzałki wskażą właściwe przyciski i potwierdzenie ceny. Potrzebne materiały i monety przygotowują nagrody wcześniejszych lekcji.",
-  "LESSON-06": "Znajdź Młyn i przydziel jednego pracownika. Z 4 jednostek zboża powstaje 1 porcja mąki. Jest jadalna i przyda się w Piekarni. Gotową mąkę odbiorą tragarze.",
-  "LESSON-07": "Znajdź Kamieniołom i przydziel jednego pracownika. Pozyskiwany kamień będzie potrzebny przy kolejnych rozbudowach oraz odbudowie Latarni. Pracownik rozpocznie pracę po dotarciu na miejsce.",
+  "LESSON-06": "Znajdź Młyn i przydziel jednego pracownika. Z 4 jednostek zboża powstaje 1 porcja mąki. Mąka jest produktem spożywczym II stopnia i przyda się w Piekarni. Gotową mąkę odbiorą tragarze.",
+  "LESSON-07": "Znajdź Kamieniołom i przydziel jednego pracownika. Pozyskiwany kamień będzie potrzebny przy kolejnych rozbudowach budynków, ścieżek oraz odbudowie Latarni. Pracownik rozpocznie pracę po dotarciu na miejsce.",
   "LESSON-08": "Poczekaj, aż zakończą się dostawy i budowa Ratusza. W jego oknie sprawdzisz rzeczywisty pozostały czas. Po ukończeniu rozbudowy strzałka wskaże nowy poziom wyspy na górnym pasku.",
   "LESSON-09": "Znajdź Kamieniołom i zleć rozbudowę do poziomu 2. Tym razem zaczekaj: tragarze dostarczą materiały, a budowa zakończy się bez kupowania przyspieszenia. W oknie budynku zobaczysz pozostały czas. Możesz w tym czasie zajmować się wyspą.",
   "LESSON-10": "Znajdź Tartak i przydziel jednego pracownika. Do wyprodukowania jednej deski potrzebuje dwóch jednostek drewna z magazynu centralnego. Gotowe deski czekają przy Tartaku na odbiór przez tragarzy.",
-  "LESSON-11": "Wróć do Magazynu i przydziel kolejnego tragarza. Następnie otwórz „Więcej o budynku” i w priorytetach transportu zaznacz „Zboże”, zachowując wcześniej ustawioną „Budowę”. Tragarze będą częściej odbierać ten towar z Gospodarstwa. Pamiętaj, że magazyn centralny musi mieć miejsce na dostawę.",
+  "LESSON-11": "Wróć do Magazynu i przydziel kolejnego tragarza. Następnie wybierz „Priorytety transportu” i zaznacz „Zboże”, zachowując wcześniej ustawioną „Budowę”. Tragarze będą częściej odbierać ten towar z Gospodarstwa. Pamiętaj, że magazyn centralny musi mieć miejsce na dostawę.",
   "LESSON-12": "Pozwól tragarzom i budowniczym dokończyć pracę. Nie musisz kupować przyspieszenia. Gdy Kamieniołom osiągnie poziom 2, otrzymasz nagrodę i przejdziesz do kolejnej lekcji.",
   "LESSON-13": "Znajdź Magazyn i zleć rozbudowę do poziomu 2. Zwiększysz miejsce na zapasy. Każdy towar ma swój limit, a wszystkie towary zajmują również wspólną pojemność; oba wskaźniki znajdziesz pod symbolem „i”.",
   "LESSON-14": "Znajdź Dom i przekaż zgromadzone punkty szczęścia wszystkim uprawnionym mieszkańcom. Jeśli nikt nie może ich teraz otrzymać, kliknij „Zachowaj punkty na później”, aby ukończyć lekcję. Dom przechowuje do siedmiu porcji dobowych, naliczanych o północy według liczby mieszkańców mających łóżko.",
   "LESSON-15": "Poczekaj na zakończenie rozbudowy Magazynu. Nagroda za tę lekcję uzupełni brakujące materiały potrzebne do rozbudowy Gospodarstwa.",
-  "LESSON-16": "Znajdź Gospodarstwo i otwórz opcje ulepszenia. Wybierz „Kup rozbudowę”, sprawdź cenę i potwierdź zakup za monety. Pełny zakup obejmuje materiały i transport, a budynek będzie gotowy po 10 sekundach. Korzystasz z jednej metody rozbudowy, bez wcześniejszego opłacania zwykłego zlecenia.",
+  "LESSON-16": "Znajdź Gospodarstwo i otwórz opcje ulepszenia. Wybierz „Kup pakiet budynku”, sprawdź cenę i potwierdź zakup za monety. Pełny zakup obejmuje materiały i transport, a budynek będzie gotowy po 10 sekundach. Korzystasz z jednej metody rozbudowy, bez wcześniejszego opłacania zwykłego zlecenia.",
   "LESSON-17": "Na dolnym pasku wybierz „Ścieżki”, a następnie wskazany odcinek. Ulepszenie kosztuje 100 jednostek kamienia. Ukończenie wszystkich odcinków bieżącego poziomu zapewni premię do transportu.",
   "LESSON-18": "Na dolnym pasku wybierz „Dekoracje”. Sprawdź cenę atrakcji, czas jej działania oraz objętych nią mieszkańców, a następnie kup jedną z dostępnych. Po zakupie wskażemy otrzymaną premię do szczęścia.",
   "LESSON-19": "Znajdź Kaplicę i wybierz dostępne błogosławieństwo. Otrzymasz materiały oraz czasową premię do szczęścia. Przed potwierdzeniem sprawdź warunki i ewentualny koszt; po otrzymaniu błogosławieństwa wskażemy jego działanie.",
-  "LESSON-20": "Poczekaj na zakończenie rozbudowy Gospodarstwa. Na poziomie 2 możesz przydzielać rolników także do żywca i surowego mleka. Sprawdź dostępne kierunki pracy.",
+  "LESSON-20": "Poczekaj na zakończenie rozbudowy Gospodarstwa. Na poziomie 2 możesz przydzielać rolników do zboża, warzyw, żywca i surowego mleka. W sekcji „Produkty i pracownicy” wybierz produkt i ustaw liczbę osób, które mają go wytwarzać.",
   "LESSON-21": "Otwórz „Zadania”, sprawdź cel bieżącej misji Latarni i przyjmij ją. Wykonaj wskazane działanie; zadanie dostaw wymaga przekazania wszystkich określonych towarów. Minigry pozostają osobną aktywnością i nie są warunkiem zaliczenia tej misji.",
   "LESSON-22": "Otwórz „Ekspedycje” i wybierz minigrę. Wygraj jedną rundę, a następnie wypłać zgromadzone monety. Wygrana i odebranie puli kończą tę lekcję; wyjście z planszy przed końcem oznacza przegraną bieżącej próby.",
-  "LESSON-23": "Znajdź Latarnię na mapie i otwórz jej okno. Sprawdź postęp misji, wymagania i koszt odbudowy. Dokończ wskazane przygotowania, a następnie wykorzystaj materiały, aby rozpocząć odbudowę. To jeden z głównych celów rozwoju Twojej wyspy.",
+  "LESSON-23": "Znajdź Latarnię na mapie i kliknij jej budynek. Sprawdź postęp misji, wymagania i koszt odbudowy. Dokończ wskazane przygotowania, a następnie zleć rozbudowę, aby rozpocząć odbudowę. To jeden z głównych celów rozwoju Twojej wyspy.",
   "LESSON-24": "Poczekaj na zakończenie dostaw i odbudowy Latarni. Po ukończeniu prac wskażemy jej nowy poziom oraz premię: szczęście wszystkich mieszkańców wyniesie 100 punktów przez pokazany czas. Sprawdź, jak wspólny wysiłek zmienił Twoją wyspę.",
-  "LESSON-25": "Sprawdź końcową nagrodę i zakończ samouczek. Na zakończenie uzupełnisz w Magazynie zapasy pięciu podstawowych materiałów do jego obecnych limitów: drewna, kamienia, zboża, mąki i desek. Otrzymasz też monety. Znasz już podstawy — teraz Ty wyznaczasz kierunek rozwoju wyspy.",
-  "HELP-NEW-01": "W Magazynie ustaw priorytety i jednorazowe ilości jedzenia do wydania. Partia nie odnawia się automatycznie. Gra może przekroczyć wyczerpany limit danego produktu tylko wtedy, gdy jest on jedynym dostępnym jedzeniem.",
-  "HELP-NEW-02": "W Rzeźni osobno przydzielaj pracowników do mięsa i skór. Sprawdź zapotrzebowanie na żywiec i miejsce na wynik.",
-  "HELP-NEW-03": "Odwołaj cywila do Domu, wybierz wolnego profesora i sprawdź koszt oraz czas kursu przed zapisem.",
-  "HELP-NEW-04": "Wybierz temat, sprawdź materiały i przydziel badaczy. Ostatni profesor musi pozostać przy aktywnym badaniu. Jeśli prowadzący zostanie przymusowo usunięty, proces czeka na zastępcę z zachowaniem postępu i opłaty.",
-  "HELP-NEW-05": "Wybierz wolnego cywila bez ukończonej Akademii. Sprawdź dostępnego instruktora, 3 stroje wojskowe i czas szkolenia.",
-  "HELP-NEW-06": "Po Magazynie 5 i odpowiednim odkryciu wybierz towar, kierunek oraz tragarzy. Jedna osoba musi pozostać bez stałej trasy.",
-  "HELP-NEW-07": "Przed przyjęciem porównaj wymagania z pozostałymi zobowiązaniami. Osobno sprawdź termin oferty i czas wykonania.",
+  "LESSON-25": "Sprawdź końcową nagrodę i zakończ samouczek. Otrzymasz monety oraz uzupełnienie wolnego miejsca w Magazynie. Znasz już podstawy — teraz Ty wyznaczasz kierunek rozwoju wyspy.",
+  "HELP-NEW-01": "Ustaw kolejność produktów i jednorazowe ilości do wydania. Po wykorzystaniu ilość nie odnawia się sama. Jeśli dany produkt jest jedynym dostępnym jedzeniem, gra może wydać go mimo wykorzystanego limitu.",
+  "HELP-NEW-02": "W Rzeźni osobno przydzielaj pracowników do mięsa i skór. Sprawdź zapotrzebowanie na żywiec i wolne miejsce na gotowe produkty w magazynie lokalnym.",
+  "HELP-NEW-03": "Odwołaj z pracy mieszkańca, którego chcesz wysłać na naukę, i zaczekaj, aż wróci do Domu. W Akademii wybierz go w polu „Adept”, a w polu „Profesor” wskaż wolnego nauczyciela obecnego w Akademii. Sprawdź koszt i czas nauki, a następnie wybierz „Zapisz na kurs”.",
+  "HELP-NEW-04": "Wybierz temat, sprawdź materiały i przydziel badaczy. Jeżeli badanie prowadzi tylko jeden profesor to musi pozostać przy aktywnym badaniu. Jeśli prowadzący zostanie przymusowo usunięty, proces czeka na zastępcę z zachowaniem postępu i opłaty.",
+  "HELP-NEW-05": "Wybierz wolnego mieszkańca Domu bez ukończonej Akademii, który nie jest obecnie na nauce ani szkoleniu. Sprawdź dostępnego instruktora, potrzebne zasoby i czas szkolenia.",
+  "HELP-NEW-06": "Po osiągnięciu 5 poziomu Magazynu i odpowiednim odkryciu masz możliwość wyznaczania stałych tras. Wybierz towar, kierunek oraz tragarzy. Jeden tragarz musi pozostać bez stałej trasy.",
+  "HELP-NEW-07": "Przed przyjęciem prośby porównaj jej wymagania ze swoimi zapasami i aktualnymi zobowiązaniami. Osobno sprawdź termin oferty i czas wykonania.",
   "HELP-NEW-08": "Wybierz widzów i zaplanuj termin co najmniej 45 minut wcześniej. Przed potwierdzeniem sprawdź listę i pełny koszt — zostaną zamrożone przy planowaniu. Przedstawienie nie przerywa pracy, badań ani szkolenia widzów.",
   "BLD-TOWNHALL-Podstawowy-OPIS": "Rozbudowuj Ratusz, aby pomieścić więcej mieszkańców i podnosić poziomy pozostałych budynków. Jego poziom jest też poziomem Twojej wyspy.",
   "BLD-TOWNHALL-Podstawowy-INFO": "Każdy poziom pozwala przyjąć 36 mieszkańców. Od awansu 3 → 4 potrzebujesz co najmniej 75% bieżącego limitu ludności. Warunek sprawdzamy przy zatwierdzaniu rozbudowy; późniejszy spadek populacji nie przerywa rozpoczętych prac.",
@@ -326,7 +326,7 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "BLD-MARKET-Podstawowy-INFO": "Od Ratusza 6 możesz sprzedawać materiały innym graczom za monety. Możesz ustawić niższą cenę, ale nie wyższą niż podstawowa cena zakupu tych towarów od gry. Przed zatwierdzeniem zobaczysz dokładną ilość i cenę wymiany.",
   "BLD-DOCK-Podstawowy-OPIS": "Kupuj i sprzedawaj towary oraz wysyłaj statki między własnymi wyspami. Przed rejsem sprawdź ładunek, pasażerów i warunki przyjęcia.",
   "BLD-DOCK-Podstawowy-INFO": "Ilość dostępnych miejsc na wyspie sprawdzamy po przypłynięciu. Najpierw przyjmowani są specjaliści, potem pozostali mieszkańcy, do dostępnego limitu. Pasażerowie, dla których zabrakło miejsca na nowej wyspie wracają na wyspę, z której przypłynęli; jeśli tam również brakuje miejsca, czekają na statku i blokują dalszy transport.",
-  "RES-01": "+5% tempa pozyskiwania drewna za stopień.",
+  "RES-01": "+5% tempa pozyskiwania drewna za każdy ukończony poziom tego badania. Poziom 1 daje +5%, a poziom 2 +10%.",
   "RES-02": "+5% tempa wydobycia kamienia za stopień.",
   "RES-03": "+5% tempa zbioru zboża za stopień.",
   "RES-04": "+5% tempa zbioru warzyw za stopień.",
@@ -342,22 +342,22 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "RES-14": "+5% prędkości tragarzy za stopień.",
   "RES-15": "+5% pojemności za stopień.",
   "RES-16": "+5% szybkości budowy za stopień.",
-  "PROD-grain": "Zbiory w Gospodarstwie. Jadalny produkt I kategorii; sytość: 1 punktów na porcję.",
-  "PROD-vegetables": "Zbiory w Gospodarstwie. Jadalny produkt I kategorii; sytość: 1 punktów na porcję.",
-  "PROD-livestock": "Hodowla w Gospodarstwie. Nie jest jedzeniem; dostarczaj do Rzeźni.",
-  "PROD-raw_milk": "Pozyskiwanie w Gospodarstwie. Jadalny produkt I kategorii; sytość: 1 punktów na porcję. Świeżość trwa 72 godziny łącznego pobytu w magazynie centralnym; transport i magazyn lokalny nie zużywają tego czasu.",
-  "PROD-sour_milk": "72 h pobytu surowego mleka w centrali. Jadalny produkt I kategorii; sytość: 0,5 punktu na porcję. Może służyć do jedzenia lub wyrobu sera. Nadmiar powstały przy pełnym limicie kwaśnego mleka przepada.",
+  "PROD-grain": "Zbiory w Gospodarstwie. Produkt żywnościowy I kategorii; sytość: 1 punkt na porcję.",
+  "PROD-vegetables": "Zbiory w Gospodarstwie. Produkt żywnościowy I kategorii; sytość: 1 punkt na porcję.",
+  "PROD-livestock": "Hodowla zwierząt w Gospodarstwie od poziomu 2. Żywiec nie jest jedzeniem dla mieszkańców. Tragarze dostarczają go do Rzeźni, gdzie osobni pracownicy wytwarzają mięso i skóry.",
+  "PROD-raw_milk": "Pozyskiwane w Gospodarstwie. Produkt żywnościowy I kategorii; sytość: 1 punkt na porcję. Świeżość trwa 72 godziny łącznego pobytu w magazynie centralnym; transport i magazyn lokalny nie zużywają tego czasu.",
+  "PROD-sour_milk": "72 h pobytu surowego mleka w centrali. Produkt żywnościowy I kategorii; sytość: 0,5 punktu na porcję. Może służyć do spożycia lub wyrobu sera. Nadmiar powstały przy pełnym limicie kwaśnego mleka przepada.",
   "PROD-smokedFish": "Wyrób u Rybaka: 4 świeże ryby → 1 ryba wędzona. Pożywienie III kategorii; sytość: 12 punktów na porcję. Wymaga odkrycia wędzenia i przetworów rybnych oraz 5. poziomu Rybaka. Świeże ryby są zużywane z miejscowego magazynu, bez przewozu do innego budynku.",
   "PROD-fishPreserves": "Wyrób u Rybaka: 6 świeżych ryb → 1 porcja przetworów rybnych. Pożywienie III kategorii; sytość: 18 punktów na porcję. Wymaga tego samego odkrycia i 5. poziomu Rybaka. Świeże ryby są przerabiane na miejscu; gotowe przetwory czekają na tragarzy.",
-  "PROD-fish": "Połów u Rybaka. Jadalny produkt I kategorii; sytość: 1 punktów na porcję.",
-  "PROD-flour": "4 zboża → 1 mąka. Jadalny produkt II kategorii; sytość: 6 punktów na porcję.",
-  "PROD-pasteurized_milk": "4 surowe mleka → 1 mleko pasteryzowane. Jadalny produkt II kategorii; sytość: 6 punktów na porcję. Nie kwaśnieje i można przechowywać je bezterminowo.",
-  "PROD-meat": "2 żywca → 2 mięsa. Jadalny produkt II kategorii; sytość: 6 punktów na porcję. Nie ma terminu ważności; powstaje w osobnym procesie niż skóry.",
-  "PROD-leather": "2 żywca → 1 skóra. Powstaje w osobnym procesie niż mięso; służy do szycia ubrań i wyposażenia.",
-  "PROD-bread": "4 mąki → 1 chleb. Jadalny produkt III kategorii; sytość: 36 punktów na porcję. Nie daje dodatkowej premii szczęścia.",
-  "PROD-cake": "4 mąki + 2 surowe mleka → 1 ciasto. Jadalny produkt III kategorii; sytość: 48 punktów na porcję. Podstawowe ciasto jest dostępne od razu w Piekarni. Porcja odpowiadająca godzinie wyżywienia danej osoby daje +5 punktów szczęścia na 6 godzin; kolejna taka porcja odnawia czas premii.",
-  "PROD-cheese": "4 kwaśne mleka → 1 ser. Jadalny produkt III kategorii; sytość: 12 punktów na porcję. Wymaga Gospodarstwa na poziomie 6 i odkrycia sera; bez wymogu Akademii 6. Kwaśne mleko trzeba przywieźć z centrali.",
-  "PROD-civilian_outfit": "4 skóry → 1 strój. Wystarcza na 21 dni noszenia od Ratusza 5; brak stroju obniża szczęście do czasu otrzymania ubrania.",
+  "PROD-fish": "Połów u Rybaka. Produkt żywnościowy I kategorii; sytość: 1 punkt na porcję.",
+  "PROD-flour": "4 porcje zboża → 1 porcja mąki. Produkt żywnościowy II kategorii; sytość: 6 punktów na porcję.",
+  "PROD-pasteurized_milk": "4 porcje surowego mleka → 1 porcja mleka pasteryzowanego. Produkt żywnościowy II kategorii; sytość: 6 punktów na porcję. Nie kwaśnieje i można przechowywać je bezterminowo.",
+  "PROD-meat": "2 porcje żywca → 2 porcje mięsa. Produkt żywnościowy II kategorii; sytość: 6 punktów na porcję. Nie ma terminu ważności; powstaje w osobnym procesie niż skóry.",
+  "PROD-leather": "2 porcje żywca → 1 skóra. Powstaje w osobnym procesie niż mięso; służy do szycia ubrań i wyposażenia.",
+  "PROD-bread": "4 porcje mąki → 1 chleb. Produkt żywnościowy III kategorii; sytość: 36 punktów na porcję. Nie daje dodatkowej premii szczęścia.",
+  "PROD-cake": "4 porcje mąki + 2 porcje surowego mleka → 1 porcja ciasta. Produkt żywnościowy III kategorii; sytość: 48 punktów na porcję. Podstawowe ciasto jest dostępne od razu w Piekarni. Porcja odpowiadająca godzinie wyżywienia danej osoby daje +5 punktów szczęścia na 6 godzin; kolejna taka porcja odnawia czas premii.",
+  "PROD-cheese": "4 porcje kwaśnego mleka → 1 ser. Produkt żywnościowy III kategorii; sytość: 12 punktów na porcję. Wymaga Gospodarstwa na poziomie 6 i odkrycia sera; bez wymogu Akademii 6. Kwaśne mleko trzeba przywieźć z centrali.",
+  "PROD-civilian_outfit": "4 skóry → 1 strój. Wystarcza na 21 dni noszenia od 5 poziomu Ratusza; brak stroju obniża szczęście do czasu otrzymania ubrania.",
   "PROD-military_outfit": "8 skór → 1 strój. Jednorazowy koszt szkolenia: 3 stroje na rekruta i 8 dodatkowych na szkolenie oficera.",
   "PROD-professor_robe": "8 skór → 1 szata. Szaty odblokowują się automatycznie wraz z Akademią. Jedna szata wystarcza na mianowanie profesora i całą jego karierę.",
   "TOUR-REPLAY-RUNNING": "Oglądasz ponownie tutorial. Twoja wyspa działa dalej, a czas nie jest zatrzymany.",
@@ -504,4 +504,13 @@ export function developmentBuildingInformation(id, state={}) {
     warehouse: ['BLD-WAREHOUSE-MILK-OVERFLOW-INFO', 'BLD-WAREHOUSE-CONSTRUCTION-MEALS-INFO']
   };
   return [developmentBuildingCopy(id,state,'INFO'), ...(supplementary[id] || []).map(key=>developmentText(key))].filter(Boolean);
+}
+
+// Reviewed purple worksheets: presentation aliases keep physical model IDs stable.
+const productCopyIds = Object.freeze({rawMilk:'raw_milk',sourMilk:'sour_milk',pasteurizedMilk:'pasteurized_milk',civilianClothes:'civilian_outfit',militaryClothes:'military_outfit',professorRobes:'professor_robe'});
+export function developmentProductDescription(id) { return developmentText(`PROD-${productCopyIds[id] || id}`); }
+const researchCopyIds = Object.freeze(['lumber','quarry','grain','vegetables','livestock','rawMilk','fisher','windmill','bakery','dairy','slaughterhouse','leatherworks','sawmill','roads','warehouse','construction']);
+export function developmentResearchDescription(id, fallback='') {
+  const index = researchCopyIds.indexOf(id);
+  return index < 0 ? fallback : developmentText(`RES-${String(index+1).padStart(2,'0')}`) || fallback;
 }

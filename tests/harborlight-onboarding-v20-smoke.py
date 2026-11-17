@@ -11,6 +11,7 @@ import subprocess
 
 from playwright.sync_api import expect, sync_playwright
 from helpers.browser_tutorial import request_practical_guidance
+from helpers.browser_offers import dismiss_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('onboarding_cloud_fixture', SOURCE / 'tests/harborlight-dev-game-smoke.py')
@@ -485,8 +486,15 @@ def lost_finish_acknowledgement(browser):
     expect(page.locator('[data-tutorial-exit-reminder]')).to_be_visible()
     page.locator('[data-close-tutorial-exit-reminder]').click()
     expect(page.locator('[data-tutorial-current]')).to_have_count(0)
-    expect(page.locator('[data-kingdom-advisor]')).to_be_visible()
     assert cloud.DOCUMENTS[UID]['revision'] == revision, 'A confirmed ambiguous completion must not be sent twice'
+    # Recovery keeps the fixture clock paused. Let one normal HUD refresh show
+    # the advisor after the modal closes, without reaching an autosave interval.
+    page.clock.run_for(1100)
+    # The now-unblocked daily reminder is legitimate and has its own suite.
+    # Close it normally, without claiming a reward, before selecting lessons.
+    dismiss_daily_offer(page)
+    page.clock.run_for(1000)
+    expect(page.locator('[data-kingdom-advisor]')).to_be_visible()
     assert cloud.cloud_state(UID)['population'] == 13
     assert cloud.cloud_state(UID)['welcomeWorkers']['granted'] == 1
     assert cloud.cloud_state(UID)['islandName'] == 'Port po utracie odpowiedzi'
