@@ -1,5 +1,10 @@
 # Wersja gry HARBORLIGHT
 
+## DEV 0.15.1.0 — doradca i redakcja, w przygotowaniu
+
+GO17listopada obejmuje dobrowolnego doradcę, trzy kroki pierwszego tutoriala i cztery fioletowe zakładki nowego ABC. Kod aplikacji `b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db`, wspólny cache `frontend-v32-14`, schemat9/rules32 zachowane. WłasnyCI i publicznyDEV wymagają odrębnego odbioru. PRE-PROD i PROD tej paczki nie są autoryzowane. [Zakres](v32/GO-KINGDOM-ADVISOR.md).
+
+
 Bieżące odebrane DEV i PRE-PROD: **0.14.0.0 / v31**, źródło `7e81a1a436770f57fd8abf390b6af8022e3300f6`, cache `frontend-v31-2`. WłasneCI41906515746 iPages41906515747 SUCCESS; standardowyPRE-PROD41909268052/próba1 SUCCESS. Oba tagi `dev-0.14.0.0-20261104` i `preprod-0.14.0.0-20261104` są opublikowane i zdalnie potwierdzone na tym źródle. [Odbiór](DEV-0.14.0.0-VALIDATION.md) · [Promocja](PREPROD-V31-PROMOTION.md). Schemat świata9 i archipelagu2 pozostały zgodne. Pierwsze wydanie Google Play nadal1.0.0.0.
 
 Poprzedni odebrany DEV: **0.13.1.0 / v30**, źródło `13c55a4e4853edf44c185747c1c626ac42c221fc`; własne CI i Pages SUCCESS. PRE-PROD **0.13.1.0** jest odebrany dla źródła `68e9bcd6adf22ab98f963688726a71d4d8a66c6b`; własneCI41671140612 i deploy41673824262/próba1 SUCCESS. Tag`preprod-0.13.1.0-20261103` opublikowany i potwierdzony zdalnie; [dowody](PREPROD-V30-PROMOTION.md). Numer aplikacji jest odrębny od schematu9 i archipelagu2. Pierwsze wydanie Google Play nadal1.0.0.0.

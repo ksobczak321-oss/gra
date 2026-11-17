@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "HARBORLIGHT — wszystkie aktywne minigry i przygody",
   "language": "pl",
-  "sourceCommit": "6b40252ba4f57a035d6b624656c8fce735559b07",
+  "sourceCommit": "b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db",
   "baseUrl": "https://harborlight-dev.web.app/minigames/",
   "counts": {
     "total": 55,
@@ -19,17 +19,17 @@
     "wcześniejsze makiety HARBORLIGHT"
   ],
   "sourceHashes": {
-    "harborlight-v1-activities.js": "355edd287dad9ecd7cf2042c307a4ae9d4bdbb84999c1cde91f010e8c79afc74",
-    "harborlight-v1-adventure-journey.js": "035e3021cd38cb3f9a2048526f378037818d177a097328225d3362d01d986e6c",
+    "harborlight-v1-activities.js": "e948bcb1788ea6ecc003ebdb48b12ef3da49ba4bf345f7de7b1ee881ef5db7d8",
+    "harborlight-v1-adventure-journey.js": "28d938be898f7d51683710c2ae41b2271a0c485cc3151c2a7ed178c3354e67f6",
     "harborlight-v1-adventure-puzzles.js": "c6f415ce50df8534357cf1d2c698b3ff436fa68f33ef80b918e79740922d7071",
-    "harborlight-v1-adventures.js": "0a88438e4ff1c251ad8131392a0f2d1ca552cd3745202bdf1aab747400d8f88b",
+    "harborlight-v1-adventures.js": "fe8b050862e1ad45674447afeb2d175618b0df553df00ec2244cddcb8cc90aad",
     "harborlight-v1-expedition-hour.js": "bc3782d63bb2f0d4f396ba63282a75a7c0d2de0a06b80ffefb3eb25d7f24495c",
-    "harborlight-v1-inventory.js": "f49ab18510db07df54a63afa0b504ebdec9c08045888c9d68e4eb1f709a10c14",
-    "harborlight-v1-island-puzzles.js": "b52afc01ef2ccbff251b90ed7c03b6749bace13e09e775f9e767911593d67453",
-    "harborlight-v1-logistics.js": "a8ffd055ec9ae19dd0a9f42a6978eddcb5570989118fd4cc1bf111bfbd7d7950",
+    "harborlight-v1-inventory.js": "b76117af5b2bfaa484356b9318e521bafd0b6abf9ab91b64ac3152ac811fa39b",
+    "harborlight-v1-island-puzzles.js": "0c489490b0ba9964e82dede3cbf90fd2e91e66c1a920c3d0feca49c34d746c09",
+    "harborlight-v1-logistics.js": "e1dc27ccff75e9cad8d0cb3742b822dbd2b27bf78e8a33fb686cfc636679c29f",
     "harborlight-v1-minigames.js": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
-    "harborlight-v1-original-puzzles.js": "59901f94e35d0197783ee8adddc4f3b574056db8dca16f99006529aa4dda38ec",
-    "harborlight-v1-state.js": "1aa6bfe774aba13dcbb4b47c4c070a463182fdab814d04d77bfe408c7857e731",
+    "harborlight-v1-original-puzzles.js": "f0b0444200ae150210558d23e3bda0a39343ff94c779fd87800310ad2c16cab3",
+    "harborlight-v1-state.js": "57350be7e642aca4965c6a2bca3d0bbac007614da3be17d7802bb12d548540fc",
     "harborlight-v1-story-catalog.js": "e2b4c43e345735c8b169e3e34ca130d58f3ea9598f10a54680fb548ddcb43ec4"
   },
   "entries": [

@@ -14,7 +14,7 @@
   "browser_advisor": "PASS_1440x1000_390x844_390x480",
   "browser_first_introduction": "PASS_3_STEPS_1440_390",
   "browser_target_replacement": "PASS_1440_390",
-  "full_regression": "LOCAL_MODELS_PASS_BROWSER_COMPATIBILITY_IN_PROGRESS",
+  "full_regression": "LATEST_SOURCE_NODE_RUNNING_FULL_CI_PENDING",
   "source_sha": null,
   "CI": "PENDING",
   "Pages": "PENDING",
@@ -22,12 +22,6 @@
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
   "manual_user_acceptance": "NOT_RUN",
-  "full_frontend_node": {
-    "passed": 1467,
-    "failed": 0,
-    "duration_ms": 315179.559317,
-    "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
-  },
   "frontend_bundle_cases": 27,
   "purple_editorial": {
     "selected_sheets": [
@@ -42,7 +36,21 @@
     "unselected_sheet_contents_read": false,
     "unit_test_cases": 4,
     "merge": "docs/v32/EDITORIAL-PURPLE-TABS-MERGE.json",
-    "browser": "IN_PROGRESS"
+    "browser": "PASS_1440_390_ACTUAL_PRODUCTS_RESEARCH_ACADEMY_BARRACKS_FOOD",
+    "data_cases": 4
   },
-  "cache": "frontend-v32-14_all_modules"
+  "cache": "frontend-v32-14_all_modules",
+  "minigame_models_cache_only_audit": {
+    "baseline": "08e34b449573f6bd20b82636da57587ee8b8dad6",
+    "application_source": "b1f9855fbcad1e85c4088d5ee8f1a22959c9c6db",
+    "files": 12,
+    "result": "PASS",
+    "method": "Full bytes identical after replacing only frontend-v32 cache query identifiers."
+  },
+  "prior_full_frontend_node": {
+    "passed": 1467,
+    "failed": 0,
+    "duration_ms": 315179.559317,
+    "note": "Full suite includes22 planner cases; the added intro-index case also passed in separate23-case advisor rerun."
+  }
 }

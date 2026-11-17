@@ -26,6 +26,7 @@ test('Port natural-language goal uses exact live construction costs and protecte
  const cost=buildingCost(structuredClone(s),'dock');assert.deepEqual(plan.cost,Object.fromEntries(Object.entries(cost)));
  for(const row of plan.missing){assert.equal(row.required,cost[row.id]);assert.equal(row.available,row.id==='coins'?s.resources.coins:centralAvailable(structuredClone(s),row.id));}
  assert.deepEqual(structuredClone(s),copy);assert.equal(plan.foodMissing,cost.foodQuote.missingSatiety);assert.equal(plan.estimate.seconds,null);
+ const grain=advisorPlan(s,'Potrzebuję więcej zboża');const wholeAvailable=Math.floor(centralAvailable(structuredClone(s),'grain'));assert.ok(grain.text.includes(`${wholeAvailable} szt.`),'available fractional food must not be rounded up to a spendable whole unit');
  assert.ok(plan.steps.some(x=>x.target==='sawmill'));assert.ok(plan.steps.some(x=>x.target==='warehouse'&&x.section==='priorities'));
 });
 
