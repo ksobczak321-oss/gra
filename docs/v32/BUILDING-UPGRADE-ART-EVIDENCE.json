@@ -1,14 +1,15 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-18",
-  "scope": "DEV_ONLY",
+  "scope": "DEV_THEN_AUTHORIZED_PREPROD",
   "application_version": "0.15.2.0",
   "cache": "frontend-v32-16",
-  "status": "LOCAL_VALIDATION_PASS_PUBLICATION_PENDING",
+  "status": "PROVENANCE_REFRESH_LOCAL_PASS_NEW_CI_PENDING",
   "authorization": {
     "initial": "10 wersji każdego budynku oraz średniowieczny żuraw w czasie budowy",
     "development_GO": "wrzuć na deva",
-    "latest_scope": "zasada ma dotyczyć wszystkich budynków na wyspie"
+    "latest_scope": "zasada ma dotyczyć wszystkich budynków na wyspie",
+    "later_PREPROD_GO": "wrzuć na pre prod; doradca z królestwa, uproszczony tutorial i samouczek, zmieniające się budynki, żuraw; +zmiany z excela"
   },
   "functional_buildings": [
     "townhall",
@@ -113,7 +114,8 @@
       "native_latest": "PASS1440/390",
       "accepted_front": "PASS1672/1440/390/320 before final frame metadata",
       "cloud_rules": "PASS FirestoreCAS andAccountAPI before final frame metadata",
-      "full_startup_local": "PARTIAL_FAILURE_intro390_timeout; isolated samecasePASS; full exact-sourceCIrequired"
+      "full_startup_local": "PARTIAL_FAILURE_intro390_timeout; isolated samecasePASS; full exact-sourceCIrequired",
+      "full_startup_public_bytes": "PASS complete program after final source freeze, downloaded9fc bytes"
     },
     "frontend_bundle": {
       "status": "PASS",
@@ -129,11 +131,11 @@
   },
   "full_regression": "PENDING",
   "CI": {
-    "status": "PENDING",
+    "status": "PENDING_NEW_SOURCE",
     "run_id": null
   },
   "Pages": {
-    "status": "PENDING",
+    "status": "PENDING_NEW_SOURCE",
     "run_id": null
   },
   "public_file_audit": "PENDING",
@@ -167,7 +169,14 @@
     "remote_verified": false
   },
   "manual_user_acceptance": "NOT_RUN",
-  "PREPROD": "NOT_AUTHORIZED_FOR_THIS_CHANGE",
+  "PREPROD": {
+    "status": "AUTHORIZED_AFTER_NEW_EXACT_SOURCE_DEV_CI_SUCCESS",
+    "workflow": "google-cloud-dev.yml",
+    "source_sha": null,
+    "run_id": null,
+    "preserve_accounts_and_progress": true,
+    "reset": false
+  },
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
   "economic_model_change": false,
@@ -208,5 +217,50 @@
     ],
     "cache_only_existing_root_js": 53,
     "existing_economic_fact_tables_identical": 14
+  },
+  "first_attempt": {
+    "source_sha": "9fc8cb1a4fe7f58811a3404682d00f83b72c413e",
+    "CI": {
+      "run_id": 44279863651,
+      "status": "FAILURE",
+      "reason": "Standalone minigame provenance still referenced44bc538 after cache16 changed source imports",
+      "duration": "3m08s",
+      "frontend_node": 1490,
+      "backend_node": 170,
+      "boardgame_node": 7,
+      "python": 167,
+      "Chromium_programs": 0
+    },
+    "Pages": {
+      "run_id": 44279863637,
+      "status": "SUCCESS"
+    },
+    "public_audit": {
+      "status": "PASS",
+      "files": 254,
+      "bytes": 69262176,
+      "normal_TLS": true
+    },
+    "public_bytes_local_replay": {
+      "new_building_runtime": "PASS",
+      "accepted_front_four_widths": "PASS",
+      "full_startup": "PASS"
+    },
+    "native_public_browser": "BLOCKED_ERR_CERT_AUTHORITY_INVALID_NO_TLS_BYPASS"
+  },
+  "minigame_provenance_refresh": {
+    "status": "PASS",
+    "source_commit": "9fc8cb1a4fe7f58811a3404682d00f83b72c413e",
+    "previous_source_commit": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+    "entries_semantically_byte_identical": 55,
+    "changed_catalog_top_level_keys": [
+      "sourceCommit",
+      "sourceHashes"
+    ],
+    "canonical_semantic_sha256": "344c77c26aad1daf696172e1fa47ba011e7371c81ff70031fa9d22c481d7ddd4",
+    "txt_documents_only_source_header_changed": 55,
+    "docx_documents_only_source_header_changed": 55,
+    "docx_uncompressed_parts_compared": 1045,
+    "minigames_app_js_unchanged": true
   }
 }

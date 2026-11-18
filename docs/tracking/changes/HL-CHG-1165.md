@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` |
 | CI | `PENDING_OWN_EXACT_SOURCE` |
-| PRE-PROD | `not_authorized_for_this_change` |
+| PRE-PROD | `authorized_after_own_new_exact_source_CI_and_DEV_acceptance` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 

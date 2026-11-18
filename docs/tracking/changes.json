@@ -30420,7 +30420,7 @@
         "implementation": "implemented",
         "dev": "LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16",
         "ci": "PENDING_OWN_EXACT_SOURCE",
-        "preprod": "not_authorized_for_this_change",
+        "preprod": "authorized_after_own_new_exact_source_CI_and_DEV_acceptance",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -30503,7 +30503,7 @@
         "implementation": "implemented",
         "dev": "LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16",
         "ci": "PENDING_OWN_EXACT_SOURCE",
-        "preprod": "not_authorized_for_this_change",
+        "preprod": "authorized_after_own_new_exact_source_CI_and_DEV_acceptance",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33699,9 +33699,9 @@
       "as_of": "2026-11-18",
       "version": "0.15.2.0",
       "cache": "frontend-v32-16",
-      "status": "IMPLEMENTATION_IN_PROGRESS",
-      "DEV_only": true,
-      "PREPROD_authorized": false,
+      "status": "PROVENANCE_REFRESH_NEW_CI_PENDING",
+      "DEV_only": false,
+      "PREPROD_authorized": true,
       "PROD_DNS": "NO_ACTION",
       "reset": false,
       "functional_buildings": 20,
@@ -33717,7 +33717,9 @@
       "manual_user_acceptance": "NOT_RUN",
       "evidence": "docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json",
       "theatre_visual_level_follows": "townhall",
-      "gallery": "harborlight-building-gallery.html"
+      "gallery": "harborlight-building-gallery.html",
+      "PREPROD_status": "WAIT_NEW_EXACT_SOURCE_CI_AND_DEV_ACCEPTANCE",
+      "authorization_reference": "docs/v32/GO-PREPROD-0.15.2.0.md"
     }
   }
 }

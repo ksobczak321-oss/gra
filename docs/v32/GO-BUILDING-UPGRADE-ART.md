@@ -1,8 +1,8 @@
-# Wygląd rozbudowy wszystkich budynków — GO DEV, 18 listopada 2026
+# Wygląd rozbudowy wszystkich budynków — GO DEV → PRE-PROD, 18 listopada 2026
 
 Użytkownik zamówił dziesięć wersji każdego budynku i średniowieczny żuraw widoczny w czasie budowy. Po pierwszych planszach zatwierdził implementację słowami „wrzuć na deva”, a następnie doprecyzował: **„zasada ma dotyczyć wszystkich budynków na wyspie”**. Zakres obejmuje wszystkie 20 istniejących funkcji budynków, również Ratusz, Dom, Port, Latarnię i Kamieniołom.
 
-Przygotowywany kandydat ma wersję **0.15.2.0** i cache modułów **`frontend-v32-16`**. To publikacja wyłącznie DEV, Git i podglądu Pages. PRE-PROD, PROD, DNS, reset, hasła oraz dane kont pozostają poza tą operacją. Własne CI, Pages, odbiór opublikowanych bajtów i niezmienny tag nowego źródła są **PENDING**; wyniki wcześniejszej wersji 0.15.1.0 ich nie zastępują.
+Przygotowywany kandydat ma wersję **0.15.2.0** i cache modułów **`frontend-v32-16`**. Pierwotne GO obejmowało DEV, Git i Pages. Późniejsze jawne GO rozszerza paczkę o standardową promocję PRE-PROD po zielonym CI, razem z Doradcą Królestwa, krótkim wprowadzeniem i zaakceptowanymi zmianami z Excela. [Dokładny zakres promocji](GO-PREPROD-0.15.2.0.md). Konta i postęp zostają zachowane; PROD, DNS i reset pozostają poza operacją. Własne CI, Pages, odbiór opublikowanych bajtów i niezmienny tag nowego źródła są **PENDING**; wyniki wcześniejszej wersji 0.15.1.0 ich nie zastępują.
 
 ## Dziesięć wyglądów
 

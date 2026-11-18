@@ -228,8 +228,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1155 — Admin3 steruje rzeczywistym tempem1×/2×/6× na DEV i PRE-PROD](changes/HL-CHG-1155.md) | Story | `accepted` | `accepted_source_c4f7521_own_CI_Pages_tag` | `deployed_and_accepted_source_c4f7521_run43854387444` |
 | [HL-CHG-1160 — Uwzględnij pięć fioletowych zakładek, w tym jasnofioletowe Odłożone odkrycia](changes/HL-CHG-1160.md) | Story | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 | [HL-CHG-1163 — Odsuń zwiniętą kartę doradcy od mapy i dolnego menu](changes/HL-CHG-1163.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
-| [HL-CHG-1164 — Dodaj10wyglądów wszystkich20budynków i zgodne miniatury](changes/HL-CHG-1164.md) | Story | `accepted` | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` | `not_authorized_for_this_change` |
-| [HL-CHG-1165 — Pokazuj średniowieczny żuraw tylko podczas rzeczywistej budowy](changes/HL-CHG-1165.md) | Story | `accepted` | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` | `not_authorized_for_this_change` |
+| [HL-CHG-1164 — Dodaj10wyglądów wszystkich20budynków i zgodne miniatury](changes/HL-CHG-1164.md) | Story | `accepted` | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` | `authorized_after_own_new_exact_source_CI_and_DEV_acceptance` |
+| [HL-CHG-1165 — Pokazuj średniowieczny żuraw tylko podczas rzeczywistej budowy](changes/HL-CHG-1165.md) | Story | `accepted` | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` | `authorized_after_own_new_exact_source_CI_and_DEV_acceptance` |
 
 <a id="hl-epic-tut"></a>
 
