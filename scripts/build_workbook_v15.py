@@ -256,7 +256,7 @@ def prepare(exports, source_sha):
     guide = Sheet(sheet_name('Przeczytaj', used), 'HARBORLIGHT15 — pełny master aktualnych zasad',
                   'Bieżące tabele v15 mają pierwszeństwo. 100 wcześniejszych kart zachowano jako ukryte archiwum. Pełna treść warunków i źródeł jest dostępna w dodatkach. Każdy wynik symulacji ma własny horyzont i założenia.',
                   ['Temat', 'Aktualna informacja', 'Źródło / granica'], [45, 140, 100], table_id='readme')
-    guide.add(['Kod gry', '0.15.1.0 / ruleset32', source_sha])
+    guide.add(['Kod gry', '0.15.2.0 / ruleset32', source_sha])
     guide.add(['Wdrożone DEV i PRE-PROD', RELEASE_SOURCE, 'Własny CI43850690541 i PRE-PROD43854387444 SUCCESS; aktualizacja Excela nie wdraża gry.'])
     guide.add(['Źródło aplikacji', APP_SOURCE, 'Arkusz odczytuje aktualny kod; nie modyfikuje parametrów.'])
     guide.add(['Nawigacja', 'Spis treści zawiera odnośnik do każdej bieżącej tabeli i jej źródła.', 'Filtrowanie od wiersza5; nagłówki zamrożone.'])
@@ -369,7 +369,7 @@ def write_book(sheets):
         entries[name] = sheet_xml(spec, active=index == 0)
     changed = {'xl/workbook.xml': workbook, 'xl/_rels/workbook.xml.rels': rels, '[Content_Types].xml': types}
     core = E.fromstring(entries['docProps/core.xml']); dc = 'http://purl.org/dc/elements/1.1/'
-    for name, value in [('title', 'HARBORLIGHT15 — pełny master0.15.1.0/v32'), ('subject', 'Aktualne reguły, teksty, scenariusze i symulacje;100kart archiwum'), ('description', 'Eksport bieżącego kodu; każda symulacja ma założenia i zmierzony horyzont, a generator nie zmienia gry lub kont.')]:
+    for name, value in [('title', 'HARBORLIGHT15 — pełny master0.15.2.0/v32'), ('subject', 'Aktualne reguły, teksty, scenariusze i symulacje;100kart archiwum'), ('description', 'Eksport bieżącego kodu; każda symulacja ma założenia i zmierzony horyzont, a generator nie zmienia gry lub kont.')]:
         node = core.find(f'{{{dc}}}{name}')
         if node is None: node = E.SubElement(core, f'{{{dc}}}{name}')
         node.text = value
@@ -384,7 +384,7 @@ def write_book(sheets):
 def source_checks(exports, source_sha):
     hashes = {}
     assert exports['scenarios']['meta']['exporterSha256'] == digest(EXPORTERS['scenarios']), 'Simulation exporter changed; refresh simulations'
-    assert exports['facts']['meta']['appVersion'] == exports['texts']['meta']['applicationVersion'] == exports['scenarios']['meta']['version'] == '0.15.1.0'
+    assert exports['facts']['meta']['appVersion'] == exports['texts']['meta']['applicationVersion'] == exports['scenarios']['meta']['version'] == '0.15.2.0'
     assert all(payload['meta']['ruleset'] == 32 for payload in exports.values())
     assert exports['facts']['checks']['passed'] is True
     assert exports['texts']['meta']['completeSourceTrace'] is True
@@ -450,7 +450,7 @@ def validate(exports, sheets, source_sha, write_report=True):
         calc.rows[6][2], calc.rows[11][2] = entry['level'], entry['recipeId']
         assert math.isclose(evaluate(calc.rows[26][2].text, sheets, calc.name), entry['batchesPerWorkerHour'], rel_tol=1e-12)
         calc.rows[6][2], calc.rows[11][2] = old_level, old_recipe; samples += 1
-    report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': '0.15.1.0', 'ruleset': 32,
+    report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': '0.15.2.0', 'ruleset': 32,
               'file': str(OUTPUT.relative_to(ROOT)), 'sha256': digest(OUTPUT), 'bytes': OUTPUT.stat().st_size,
               'source_git_commit': source_sha, 'accepted_application_source': APP_SOURCE, 'accepted_publication_source': RELEASE_SOURCE,
               'historical_master': str(BASE.relative_to(ROOT)), 'historical_master_sha256': BASE_SHA,
