@@ -1,0 +1,1910 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-18",
+  "status": "ACCEPTED_DEV_AND_PREPROD",
+  "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+  "application_and_export_source_sha": "6a27649b12bff223d35889f875fca1bc23564daa",
+  "version": "0.15.2.0",
+  "cache": "frontend-v32-17",
+  "CI": {
+    "run": 44287093749,
+    "head_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "conclusion": "success",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44287093749",
+    "created_at": "2026-11-18T10:37:04Z",
+    "job_started_at": "2026-11-18T10:37:24Z",
+    "job_completed_at": "2026-11-18T11:12:18Z",
+    "workflow_updated_at": "2026-11-18T11:12:19Z",
+    "workflow_seconds": 2115,
+    "job_seconds": 2094,
+    "workflow_duration": "35m15s",
+    "job_duration": "34m54s",
+    "step_status_counts": {
+      "success": 35,
+      "skipped": 2
+    },
+    "node_total": 1669,
+    "unit_tests_total": 1836,
+    "full_log_sha256": "e5a413e54dbd095f111050a4843111cc0774f32bcf3e71d215ad195a6a288f9e",
+    "node": {
+      "frontend": 1492,
+      "backend": 170,
+      "board": 7
+    },
+    "python_tests": 167,
+    "chromium_programs": {
+      "total": 70,
+      "standalone": 1,
+      "main": 51,
+      "cloud": 18
+    },
+    "failure_steps": 0,
+    "skipped_steps": "Two conditional failure-diagnostics steps only"
+  },
+  "Pages": {
+    "run": 44287093698,
+    "conclusion": "success",
+    "normal_TLS_public_content": {
+      "files": 254,
+      "bytes": 69262846
+    },
+    "local_public_byte_replay": "PASS_runtime_front_four_widths_startup26cases",
+    "native_local_HTTPS_Chromium": "BLOCKED_CERT_AUTHORITY_without_TLS_bypass"
+  },
+  "PREPROD": {
+    "run": 44292700743,
+    "attempt": 1,
+    "head_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44292700743/attempts/1",
+    "created_at": "2026-11-18T11:13:25Z",
+    "workflow_updated_at": "2026-11-18T11:20:16Z",
+    "workflow_seconds": 411,
+    "workflow_duration": "6m51s",
+    "jobs": {
+      "gate": {
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T11:13:29Z",
+        "completed_at": "2026-11-18T11:13:36Z",
+        "seconds": 7,
+        "step_status_counts": {
+          "success": 7
+        }
+      },
+      "deploy": {
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-18T11:13:40Z",
+        "completed_at": "2026-11-18T11:20:15Z",
+        "seconds": 395,
+        "step_status_counts": {
+          "success": 32,
+          "skipped": 1
+        }
+      }
+    },
+    "required_steps": [
+      {
+        "number": 21,
+        "name": "Verify the exact hosted frontend release",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 22,
+        "name": "Test every separately hosted minigame and its downloads",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 23,
+        "name": "Test the actual hosted game in Chromium",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 25,
+        "name": "Verify permanent DEV accounts and cloud save isolation",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 26,
+        "name": "Publish the exact successful DEV frontend bundle",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 27,
+        "name": "Write successful DEV release receipt",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 28,
+        "name": "Publish successful DEV release receipt",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "number": 29,
+        "name": "Summarize validated DEV release",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "required_steps_skipped": 0,
+    "only_skipped_step": {
+      "conclusion": "skipped",
+      "name": "Publish hosted browser failure diagnostics",
+      "number": 24,
+      "status": "completed"
+    },
+    "native_standalone": {
+      "status": "PASS",
+      "bootstrap_routes": 3,
+      "boards": 110,
+      "story_variants": 100,
+      "documents": 110,
+      "interactions": [
+        "expedition-memory-reveal-pause-reset",
+        "expedition-triples-solved-and-next-round",
+        "expedition-cashout-settles-only-practice-pot",
+        "gull-solved-through-real-ui-and-finished",
+        "story-first-room-solved-and-next-room",
+        "classic-letters-solved-through-real-ui",
+        "selected-difficulty-form-starts-real-66-card-model"
+      ],
+      "native": true
+    },
+    "native_hosted_existing_island": {
+      "status": "PASS",
+      "exact_asset_hashes": 254,
+      "all_browser_gameplay_writes_blocked": true,
+      "new_world_created": false,
+      "log_line": "deploy\tTest the actual hosted game in Chromium\t2026-11-18T11:20:01.6818978Z PASS hosted: 254 exact asset hashes, anonymous Auth entry, isolated runtime/API routing, actual existing signed-in island render; all browser writes blocked; no gameplay claims/upgrades/resets performed"
+    },
+    "accounts": {
+      "status": "PASS",
+      "permanent_accounts": 3,
+      "existing_saves": 3,
+      "empty_islands": 0,
+      "foreign_reads_denied": 6,
+      "anonymous_reads_denied": 3,
+      "authenticated_api_reads": 3,
+      "owned_direct_reads_denied": 3,
+      "anonymous_api_reads_denied": 3,
+      "island_writes": 0,
+      "log_line": "deploy\tVerify permanent DEV accounts and cloud save isolation\t2026-11-18T11:20:07.5147529Z PASS — 3 permanent DEV accounts; 3 existing saves; 0 empty islands; 6 foreign and 3 anonymous reads denied. 3 API reads; 3 owned direct reads and 3 anonymous API reads denied. No island writes performed."
+    },
+    "artifacts_reported": [
+      {
+        "name": "harborlight-dev-frontend-44292700743-1",
+        "bytes": 65318475,
+        "id": 14422886201,
+        "sha256": "59c5a1779d5cc75b1bcde4b15976cd0aca873c6554d9d9146ecea1e603f0b0c4",
+        "verification": "Reported by GitHub upload log; watcher did not independently download the artifact."
+      },
+      {
+        "name": "harborlight-dev-release-44292700743-1",
+        "bytes": 615,
+        "id": 14421683768,
+        "sha256": "771a278063fcd44856f4aaed3018dccf66d4b819c34599f54957d11507bcd984",
+        "verification": "Reported by GitHub upload log; watcher did not independently download the artifact."
+      }
+    ],
+    "full_log_bytes": 274173,
+    "full_log_sha256": "441a044ec41642c3555e2cabc1c63d5d3f2a624131a8d7fe3af7698ec2c1a2bd",
+    "watcher_actions": "Read-only monitoring and local log/metadata/summary artifacts only; no deployment, retry, account write, commit or tag performed."
+  },
+  "original_artifacts": {
+    "status": "PASS",
+    "checked_at_utc": "2026-11-18T11:23:17.961266+00:00",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "repository": "ksobczak321-oss/gra",
+    "repository_id": 1428128759,
+    "run": 44292700743,
+    "attempt": 1,
+    "ci_run": 44287093749,
+    "original_artifacts": [
+      {
+        "kind": "release",
+        "artifact_id": 14421683768,
+        "name": "harborlight-dev-release-44292700743-1",
+        "bytes": 615,
+        "sha256": "771a278063fcd44856f4aaed3018dccf66d4b819c34599f54957d11507bcd984",
+        "metadata_size_and_digest_verified": true,
+        "download_method": "existing_original_zip_reverified",
+        "path": "/workspace/work/building-upgrade-release-20261118-r3/release-44292700743-1.zip"
+      },
+      {
+        "kind": "frontend",
+        "artifact_id": 14422886201,
+        "name": "harborlight-dev-frontend-44292700743-1",
+        "bytes": 65318475,
+        "sha256": "59c5a1779d5cc75b1bcde4b15976cd0aca873c6554d9d9146ecea1e603f0b0c4",
+        "metadata_size_and_digest_verified": true,
+        "download_method": "existing_original_zip_reverified",
+        "path": "/workspace/work/building-upgrade-release-20261118-r3/frontend-44292700743-1.zip"
+      }
+    ],
+    "receipt_member": {
+      "member": "release.json",
+      "bytes": 989,
+      "sha256": "1592cd79a805025f2729522b75ef5a103ee3d2590894ae70a895766d2586d932"
+    },
+    "frontend_member": {
+      "member": "harborlight-frontend.tar.gz",
+      "bytes": 65299733,
+      "sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4"
+    },
+    "standard_verify_receipt": {
+      "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "source_image": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
+      "image_digest": "sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
+      "ci_run_id": "44287093749",
+      "frontend_artifact_name": "harborlight-dev-frontend-44292700743-1",
+      "frontend_archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+      "frontend_manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf"
+    },
+    "receipt_checks": {
+      "ci": true,
+      "dev_smoke": true,
+      "frontend_smoke": true,
+      "account_api": true
+    },
+    "standard_frontend_verification": {
+      "archive": "/workspace/work/building-upgrade-release-20261118-r3/original-frontend-44292700743-1/harborlight-frontend.tar.gz",
+      "archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+      "commit": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "file_count": 255,
+      "manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
+      "total_bytes": 69289150
+    },
+    "committed_package_comparison": "PASS_ALL_FIVE_CONTENT_PINS_AND_EXACT_MANIFEST",
+    "normal_TLS": true,
+    "credentials_or_signed_URLs_saved": false,
+    "external_mutations": false,
+    "account_or_GCP_requests": false,
+    "transport_provenance": {
+      "method": "mcp__codex_apps__github_download_workflow_artifact_then_reusable_FileService_reference",
+      "repository": "ksobczak321-oss/gra",
+      "artifact_ids": {
+        "release": 14421683768,
+        "frontend": 14422886201
+      },
+      "materialization": "anonymous HTTPS with system CA and existing proxy; signed references in memory and non-echo stdin only",
+      "rest_metadata_compared_before_and_after_materialization": true,
+      "first_transport_failure_report": "original-artifact-audit-44292700743-1-first-transport-failure.json",
+      "first_transport_block": "GitHub returned 302, environment proxy rejected CDN CONNECT with 403",
+      "TLS_bypass": false,
+      "secret_or_signed_URL_saved": false
+    }
+  },
+  "standard_check_dev": {
+    "status": "PASS",
+    "standard_check_dev": {
+      "dev_run_id": "44292700743",
+      "dev_run_attempt": "1",
+      "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "artifact_name": "harborlight-dev-release-44292700743-1",
+      "frontend_artifact_name": "harborlight-dev-frontend-44292700743-1"
+    },
+    "credentials_saved": false
+  },
+  "actual_PREPROD_all_public_files": {
+    "status": "PASS",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "origin": "https://harborlight-dev.web.app/",
+    "checked_at_utc": "2026-11-18T11:24:00.014373+00:00",
+    "normal_TLS": true,
+    "original_verified_archive": "/workspace/work/building-upgrade-release-20261118-r3/verified-original-frontend-44292700743-1",
+    "file_count": 255,
+    "total_bytes": 69289150,
+    "includes_generated_release_json": true,
+    "account_requests_or_writes": false,
+    "native_browser_claimed": false,
+    "files": [
+      {
+        "path": "assets/building-upgrades-v1/academy.webp",
+        "bytes": 1561998,
+        "sha256": "033ac371270313c8e2edfd863b81d63423f5d12bd7b6a304053d95f633c851b6",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/bakery.webp",
+        "bytes": 1832714,
+        "sha256": "b49104a2fed07b937656a4b145f468a09be1fc34af2c6aa800194834c3152725",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/barracks.webp",
+        "bytes": 1283968,
+        "sha256": "774d535a5678bd5af9ad292763d8d94ad040d521e630feb515bf2d2fc5d3d86b",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/chapel.webp",
+        "bytes": 1260658,
+        "sha256": "a91c3ab69174ca5f1171186c112c198ea030aa249154ff5a0cb7b8b7dbaf1424",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/crane.webp",
+        "bytes": 1065926,
+        "sha256": "f3f5c7da67c8e1bcc66fbc5a97eecbb8ca9ac08ae1037ccd739a0599c476ea2b",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/dairy.webp",
+        "bytes": 1505702,
+        "sha256": "19b19eff5b21c64236d003da7470a95f6d1b66d34c3cb1c62ac7f8916c0abcde",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/dock.webp",
+        "bytes": 1142328,
+        "sha256": "de4fd4687a30e71f3a0b4e98e255442b97df3825232d2ac31c2f5fc04d631409",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/farm.webp",
+        "bytes": 1297138,
+        "sha256": "29eebdb2537c8ff52b7fb59e85c5b202d5b0126fa39ffb1ee68b50a2d31c84ca",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/fisher.webp",
+        "bytes": 1548386,
+        "sha256": "6e536a2bb0f9d4b9f8e22dd0a29a42608d2894fa3d042c2d22fff77bd213adea",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/house.webp",
+        "bytes": 1409766,
+        "sha256": "ed7076142a816e2a06ace1030002d9387a3c6fdefb51deb61ec2f9bf02485c6f",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/leatherworks.webp",
+        "bytes": 1392062,
+        "sha256": "065c57e2a2e4c68a60ee1685fc6a4182696a7bfcb25a5f1bda099483e7819da9",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/lighthouse.webp",
+        "bytes": 1061526,
+        "sha256": "a26e720dd846cada16b904531c1efb392188e324ad5fa3c7fb533b59cfb2f50f",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/lumber.webp",
+        "bytes": 1351288,
+        "sha256": "6eaea52bdfb4f159b4726a64950c8b4520fb76df0e33fc8781c885dc766543a8",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/manifest.json",
+        "bytes": 55517,
+        "sha256": "aeb8d176511228f3321859425aa3aec82f1bb7dae8354f055fe25f6f8225606c",
+        "mime": "application/json"
+      },
+      {
+        "path": "assets/building-upgrades-v1/market.webp",
+        "bytes": 1679422,
+        "sha256": "559f7f44ab8449725e5751dccfd7a39cc599d24acabcb153c1e0459de2dccb7e",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/quarry.webp",
+        "bytes": 1618108,
+        "sha256": "5cffdb713941e13393c35debd1807712ef7574ee8d18b897f95cd3e570160f52",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/sawmill.webp",
+        "bytes": 1581556,
+        "sha256": "89b9a1d98383e077724da351630454112a66a03ac86f6c1739d7e3a3c141d07b",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/slaughterhouse.webp",
+        "bytes": 1390064,
+        "sha256": "dfa0728500cb5abfd67e7c0b9a8f9a29e270b58378cec51f64b2f200484411b8",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/terrain.webp",
+        "bytes": 2388598,
+        "sha256": "020defe85185be91348fbac308c1f8f0fd419dcbb2a0484716153a5c938b52a5",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/theatre.webp",
+        "bytes": 1502016,
+        "sha256": "bf683735c1677cb59ba47f956513f79cf3ec9a26c335cb7f6edcddf8249881c3",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/townhall.webp",
+        "bytes": 1382070,
+        "sha256": "836f5dd91db45e8e9adc4d8488cad1679e72a2fd34af03d23e2ee9cda086c749",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/warehouse.webp",
+        "bytes": 1526370,
+        "sha256": "04a41d01b670bd2a4427f040cdf22232bbac2b59ef75744193c8032652508613",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/building-upgrades-v1/windmill.webp",
+        "bytes": 1523898,
+        "sha256": "33d798b4c8286ac92851d0e760bd499205e9638809ea91d2942048bb3a091a7c",
+        "mime": "image/webp"
+      },
+      {
+        "path": "assets/harborlight-farm-forest-approved-v32.png",
+        "bytes": 2877034,
+        "sha256": "39d6fcca12cb136a307a41665172a11835aaa85adbeaa99504e7357e9ba7b7bf",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/harborlight-goods-v32.png",
+        "bytes": 2909709,
+        "sha256": "0c48421274f8c810f5452668195242e5aadc284be9a3621b095d19451cbc2e20",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/harborlight-harbor-approved-v32.png",
+        "bytes": 2887859,
+        "sha256": "8a5209b6b6ae98fa9b7059758c85a1bf71e82ceb3d208882fbf96d581fdf6752",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/harborlight-inhabitants-clean.png",
+        "bytes": 3019604,
+        "sha256": "480d967c7323d5987b711d9d71de9589bb8e5807216f980054413c8fe100d105",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/harborlight-ocean-approved-v32.png",
+        "bytes": 1775689,
+        "sha256": "8f22f7a16160d0bd5cab69e8ba94245c183b92d905b5189fcc70c6112d58c558",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/harborlight-v1-approved.png",
+        "bytes": 3315500,
+        "sha256": "4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/harborlight-windmill-clean.png",
+        "bytes": 3133527,
+        "sha256": "b52435067f75fb37500df4b3de5506cd55646e4e16c840164e007ed7fb362bbc",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/paynow-wordmark.svg",
+        "bytes": 355,
+        "sha256": "39e5de3318c00471dd9b0d43c5aff0b5508d6513d6d3253c086e02fbc4d1313f",
+        "mime": "image/svg+xml"
+      },
+      {
+        "path": "assets/theatre-building-v30.png",
+        "bytes": 1878638,
+        "sha256": "b83c1977061a872d173c54c4af340cf2736dfb1acb673ab43cfb53132b474bbd",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/theatre-courtyard-v30.png",
+        "bytes": 3733415,
+        "sha256": "ca050faf691e8f97253891d1c12ec8336940390fd83e89b6cc13783cd6916d9d",
+        "mime": "image/png"
+      },
+      {
+        "path": "assets/theatre-decor-atlas-v30.png",
+        "bytes": 2202716,
+        "sha256": "66cac2d5c133643595a37962086d7c2c98ec73273cb7b236640f9cdc8ab6b674",
+        "mime": "image/png"
+      },
+      {
+        "path": "backend/island-name.mjs",
+        "bytes": 2821,
+        "sha256": "d84d85d93a922017a4d160ae98adcced18a7b455cc4e44e0606fc36695c2efb1",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "backend/league-rules.mjs",
+        "bytes": 13616,
+        "sha256": "b8b81f16e12fc9b981e3b310efd049460e83dbef31ae58b533d3f1b8ebbe592c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-auth-providers.js",
+        "bytes": 6929,
+        "sha256": "8b04ea2750c41ebb8169bc206670a252aa7a158369d1d93ce3f1a247b35af91a",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-auth.css",
+        "bytes": 12188,
+        "sha256": "84454fea75712d1401ad4b42f5bd0618e5a7b5925517048b49a84fd6c8dff80b",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-auth.html",
+        "bytes": 11392,
+        "sha256": "76a17f8aae974d442f15580d52290cad8d85efea562a161c9d32f520b68e5dae",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "harborlight-auth.js",
+        "bytes": 32558,
+        "sha256": "e933a126a9ba44d9a3973f45766552c7ffe3a66ecf4454e0b1747b51d5ad7c28",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-building-gallery.html",
+        "bytes": 3513,
+        "sha256": "7851c49bd00acef11fa60ef36294601a036068f11f23d6fda072fd89c4dd6360",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "harborlight-dev-cloud.js",
+        "bytes": 59658,
+        "sha256": "bd791f2ec0ca61d9e479ed2467b0b1d48e7439f3dd03f9330e6852cc861e7ede",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-dev-sync.js",
+        "bytes": 11365,
+        "sha256": "4137d0b00eeee3340041b9623da68e2a77eaea80874e06857c70f145c7177946",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-legal.css",
+        "bytes": 1163,
+        "sha256": "a6b5a9da1854b452acc425b428b82ca21f43b35fb587f15eb065ac3c19a973eb",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-legal.js",
+        "bytes": 990,
+        "sha256": "01d0ea0bc136047c55f08f90bf762ff2f58499b04376ced6b3718fda7a98fb27",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-privacy.html",
+        "bytes": 16108,
+        "sha256": "3eb28df7f07e2f543c4b9ed2067a198a60c6b969625f29bb4770d95fcb12f6e0",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "harborlight-terms.html",
+        "bytes": 22220,
+        "sha256": "9c37c3a277816cc722476108f804ce4e27111ac99bebaf2244c711774293c95c",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-activities.js",
+        "bytes": 79638,
+        "sha256": "58a0ae58ff07025ff5cf4513848fa387999a7fbe6beeba4891184dc7869c8470",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventure-budget.js",
+        "bytes": 4578,
+        "sha256": "fd3e4663fec9b15662595ca1ae853bbd22ffedaaf9f038ba4b6f752678c55258",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventure-journey.js",
+        "bytes": 30599,
+        "sha256": "3494af8629ce8cef1f60ddcf39263d9a9e7c1296272855cae19bba64099a2034",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventure-puzzles.js",
+        "bytes": 6617,
+        "sha256": "c6f415ce50df8534357cf1d2c698b3ff436fa68f33ef80b918e79740922d7071",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventures-art.js",
+        "bytes": 18738,
+        "sha256": "026e7e889edcb29b0528c8628ef0ec7a9c5e83f12791e9e56358cb29165df9c5",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventures-expanded-ui.js",
+        "bytes": 26309,
+        "sha256": "c773a416591621a2bcaa64e3533ef63d699da94552512b68bfa7a410037c5eff",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventures-ui.js",
+        "bytes": 63458,
+        "sha256": "d17c31e102fd87bc1309d0fe4bd0a67112fb2969ef3fccc0c05c11779d3196ad",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventures.css",
+        "bytes": 27855,
+        "sha256": "c4ed19b36ccbfd0a71bd80c15c99f8dba904090ce55c2b4e4de637f1c48ae8b0",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-adventures.js",
+        "bytes": 62420,
+        "sha256": "d9988d22b2126dfe8918f257dfb2bd5e682ebdfaca9a69dbf2cf4b8e91f416e4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-advisor-intro.js",
+        "bytes": 3676,
+        "sha256": "a472ae6eb03aad517e85fba74b6c35c79a84a8788b2b9ddc9fbf4af0d61fb05c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-advisor-ui.js",
+        "bytes": 8328,
+        "sha256": "677c876a311fccb800284f808da0f398746afb7e854229e5daa2a2a845bb5c7f",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-advisor.css",
+        "bytes": 6267,
+        "sha256": "87498aff7c9445dbd5c93054e64b1f9acd76488e9a864da67b67a75020c25c3c",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-advisor.js",
+        "bytes": 28512,
+        "sha256": "0636906e778b97cef62f9c8d64d78546ae42de66f6a2a4d862a7730c12838754",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-ambient.js",
+        "bytes": 13529,
+        "sha256": "8852451e60874c2f70da35d2eff75c714e637e9ed3fbaf5cde818a096747398a",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-approved-copy.js",
+        "bytes": 68943,
+        "sha256": "8f214021bd26c829c1872d0c21ac2b188e4a54d5bb83eddb451b60ba0cb2c96b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-archipelago.js",
+        "bytes": 49824,
+        "sha256": "9078f4b69c269aa6d2109d46705864930593831baff24913339876dc9d345f4f",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-building-stages.js",
+        "bytes": 16623,
+        "sha256": "47cd3f24875c3531f1945a12e9b60705fa1ed416312b95b233a9992476088d7e",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-calendar.js",
+        "bytes": 2286,
+        "sha256": "bb0314ecc83345212200b91854622e2eee1b9d5c5ace0a915bb1a102c05f2d10",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-campaign.js",
+        "bytes": 42673,
+        "sha256": "15ebf1b882f652412299227d2240e3aef1c7e5f37309841bdf2c877d1f8129d3",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-charity.js",
+        "bytes": 28890,
+        "sha256": "800b9c602db6ad78987368fb894f48bea584ea0fbd26247a2aa126abcab44c7d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-commerce.js",
+        "bytes": 13946,
+        "sha256": "c0aa5c2c8dbb79a8c1ab0f77adefbdc8388ae4e544a6bdb4588c46ff7674abbf",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-community-client.js",
+        "bytes": 12708,
+        "sha256": "e580ed4ec13d8b539452ff71f539b3ddfce969f8ad26a6f341de1fc24dc30752",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-community-ui.js",
+        "bytes": 40968,
+        "sha256": "fa0ebc5686973394ba5fde541422b226479a1f3dc4dc70858e1e2ccc693372a8",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-copy.js",
+        "bytes": 14933,
+        "sha256": "1504b40fcf3ddc4399507258e62df5fb6f05c7922b3ee3ac76609337feab9b7f",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-dev-preview.js",
+        "bytes": 2340,
+        "sha256": "92c065990d53f653dc77de60e761c41efb636031f06d7bfebd399758242c5222",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-development-copy.js",
+        "bytes": 80113,
+        "sha256": "a776cfb2668a82dd61d581ee18e9b8724cd22ebdd98adf33195794965ba7da34",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-development-logistics.js",
+        "bytes": 12743,
+        "sha256": "b51e91ad9625431d96c7bf74dc45de722d872e7fc0364500d90c4a94ad4cb55a",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-development-ui.js",
+        "bytes": 50685,
+        "sha256": "641fc9db25b7c70f0d94f098dd1861b715e0ec0e1d29fbbb24e95548602a6954",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-development.css",
+        "bytes": 16846,
+        "sha256": "ba37cf334707fdd5e6bc6ef872f7985c2afb1ed0e7c3d026f7d25a2fa03c01be",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-development.js",
+        "bytes": 11546,
+        "sha256": "16b68a068bf0ba3efe491de47c7424b420638eafca073e34eadeac24c27fb26c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-economy.js",
+        "bytes": 7493,
+        "sha256": "b7d9c1932e3107c637127f80512686b26301d9eb436cc87966d87c768c014002",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-education.js",
+        "bytes": 28528,
+        "sha256": "024744196ecafdef9f42401d4dbf07c07d649994b7f24635e0b8054b01ed0e9c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-effects.js",
+        "bytes": 22172,
+        "sha256": "b85d53c234fc44aa5d747e4b09619392ac016d8b802f05cebdfec2f8c7b1e26d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-engagement.js",
+        "bytes": 9411,
+        "sha256": "e94d94399fa12d01947e4154b1215ac0b872a00e962409688a1b270f7d892899",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-events.js",
+        "bytes": 21350,
+        "sha256": "f387db22e138072b788cbd621f77e1f6b2b865edd5b2801c37a597bb3b6dbc7f",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-expedition-hour.js",
+        "bytes": 6981,
+        "sha256": "bc3782d63bb2f0d4f396ba63282a75a7c0d2de0a06b80ffefb3eb25d7f24495c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-goods-art.js",
+        "bytes": 2203,
+        "sha256": "26b81718f50f9366c79f9f7ca0abac7a6fe2194ca0b34a0d4c85dd9f0625871a",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-housing.js",
+        "bytes": 7115,
+        "sha256": "b5a333653712bdd8ea0935aca23afb0870f4e39563d537a76ead87b65b1df7ac",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-i18n.js",
+        "bytes": 241208,
+        "sha256": "ed172d3f4b1251275f592d16841c6a99b0cd2618de9d3bc9f6e73c28989f63bc",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-inhabitants.js",
+        "bytes": 1898,
+        "sha256": "d2cd1ad2b22c948ed9056f521afdfed98e5f89f0749be0e461d5b6e42bcb5835",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-interruption.js",
+        "bytes": 7069,
+        "sha256": "d3d1453acb803d2a68191a349d19e378a20c24674c8cfbb4069679f2a4d7105b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-inventory.js",
+        "bytes": 6744,
+        "sha256": "dc6bf44724977f6062e7645c9f60f4edb245bc7a24ea9f40a8bb9f2d900d86bd",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-island-puzzles.js",
+        "bytes": 49148,
+        "sha256": "3e08fecb066ed36650be60f0652c651eeb387f5cb365acbdbc443a5f02b42d64",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-kingdom-client.js",
+        "bytes": 3210,
+        "sha256": "5d8e4194c2cdb5eca278ef2c666844179a44b900260c8bdfbf4bbb65f3361f54",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-kingdom-ui.js",
+        "bytes": 23928,
+        "sha256": "f36f505de07b66452b5b5fa7b62fb3ebd018d701eb0ea1e032927d56e6402401",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-kingdom.js",
+        "bytes": 48954,
+        "sha256": "0a521ef6e1ffa0f0196a4e257465a03868a8d1742fe78d77e5cf849c22633af9",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-layered.html",
+        "bytes": 13211,
+        "sha256": "c68279a19c046a3870fc7214c35401c9985378facee6549551614af147accda6",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-league.js",
+        "bytes": 138,
+        "sha256": "25964d48724a03162a52727ee77b62d893bf0c5e883b5d88314628a8392f26b1",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-learning-feedback.css",
+        "bytes": 3145,
+        "sha256": "af42a024c1129dd841553e25e3a62fff78bf5b98a215844b83291298bc35cbcc",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-learning-feedback.js",
+        "bytes": 15057,
+        "sha256": "3d42e06cd85cd772edeb1d0a51f8027da8dec0c6cd0b632d7a68c3d4a773cfac",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-leisure.js",
+        "bytes": 18491,
+        "sha256": "dec6948ca9062f5d5cbc2857f44af3de653b254cf576efac6c36264ad65480b1",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-life.js",
+        "bytes": 16871,
+        "sha256": "af51b2c40670ee3954ce4dad84cb2f600d9d3bb0fc5400e5ea43fd8c542e9b35",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-logistics.js",
+        "bytes": 119447,
+        "sha256": "9dbd4a1079c65b0049b71116df36fb541fd06fbf606d74cd4e36e135851a5c4c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-map-art.js",
+        "bytes": 7562,
+        "sha256": "9c88814d0846092869bf22c4643730ff656c26280f7e5730e7b3bbb7f2aab526",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-military.js",
+        "bytes": 25417,
+        "sha256": "5f7bd38756c8dec0555e6238e15a49608b8b71e6c04d5f3e0cf5d91d4a933845",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-minigame-ui.js",
+        "bytes": 37569,
+        "sha256": "8d6db8e9a5825d34c3fcceb703c6fcdf58f3d613d9be2e6c55a95a0c3b89b7d1",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-minigame.css",
+        "bytes": 22092,
+        "sha256": "66818e8ac815ccdb341a0cbb7cd0e483a6099060fc3c3aa3a27c2e58574c3519",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-minigames.js",
+        "bytes": 15130,
+        "sha256": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-missions-ui.js",
+        "bytes": 26115,
+        "sha256": "15de952789639a679dafe28c86cdae9cc70dac38928e02fe67ff2e602bfcf271",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-missions.js",
+        "bytes": 86100,
+        "sha256": "5457e0f0fdf4833e1667bc2be9de40a730c4922c3baece4d691fdb01d633ba8b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-notification-copy.js",
+        "bytes": 4698,
+        "sha256": "3c698d66ca124bd35630780e90f21a21764714ff88c0868d33e29051a22dc569",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-onboarding-ui.js",
+        "bytes": 21667,
+        "sha256": "f1087d2835f3c08484f8b8f372ead6c766ad8307c29872a9962a6747d2db0a1d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-onboarding.css",
+        "bytes": 6048,
+        "sha256": "dfe7ad6c679efc43298a3db0195f3328fd24949343f0363d767d18a15b7d73eb",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-original-puzzles-ui.js",
+        "bytes": 14657,
+        "sha256": "3f32f0dc690e3541c90b9b2c643fe8b24ac74e6c830d0ceb4f74a1832c1f181b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-original-puzzles.css",
+        "bytes": 7188,
+        "sha256": "f6108fa66be8a605c8e7e5f10675cc2ca9b719e59de4284e5c696377df3a81a1",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-original-puzzles.js",
+        "bytes": 23276,
+        "sha256": "824946f49b7c54daa2e7f51d2b65113e06df34b56dbec8a20204b5129e8bd868",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-play.css",
+        "bytes": 115467,
+        "sha256": "cf47eed19ec38b66f259bf17a0cb28c448721c606d8f3bcda688909dd3f9fdc8",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-play.js",
+        "bytes": 433218,
+        "sha256": "037a4ca62aa84a2eec562b9f7a96efeb45ce4f5318d214bec3f11877ca6d43f5",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-profile.js",
+        "bytes": 4591,
+        "sha256": "27480a7bda80f4b4690e9666f402033cf23d52cb4e373cda78964d418c9006be",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-progression.js",
+        "bytes": 105507,
+        "sha256": "3b0fe148c850a5908709dd42e0dc079faeb407b0898a0a366d234ef14cc32409",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-provisions.js",
+        "bytes": 43846,
+        "sha256": "7907f2b220fbd0d15b11a5993b83c2b3364187a3cf08b210139c16ea2f0119aa",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-resident-labels.js",
+        "bytes": 11664,
+        "sha256": "42e2f019755d66d4abe9c57aadb15fe67b9e08cb678458ff7444ad157922f552",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-residents.js",
+        "bytes": 47849,
+        "sha256": "001b63391b82f44bbff7392f3c17d9c9fb7a180069b838a571b9cfa011efa49c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-runtime-upgrade.js",
+        "bytes": 6597,
+        "sha256": "be4c7658738e763a424721aca418be6488e4986f6310b565df28299d16ae0baa",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-save-packing.js",
+        "bytes": 7720,
+        "sha256": "44d6c2d63ec44fca4b4b263ca283722a1ff21193c9100def76c46a4c409fd56c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-smoke.js",
+        "bytes": 3572,
+        "sha256": "ddb6cb56780145da1daf97d948db074532e2bfcafbc83d56ca3566b97db415d4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-state.js",
+        "bytes": 104268,
+        "sha256": "f7d0f0208395662a7d7e08606e2995d05a046a408aeaa0bf53f8327cf8aa858c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-story-catalog.js",
+        "bytes": 11120,
+        "sha256": "e2b4c43e345735c8b169e3e34ca130d58f3ea9598f10a54680fb548ddcb43ec4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-theatre-art.js",
+        "bytes": 15404,
+        "sha256": "1b1c546ca2174a7a2f8e684c9c47fe73c2a0b2ef0155fb80a0631b739c4618e5",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-theatre-scene.css",
+        "bytes": 1578,
+        "sha256": "5abf7b50f6eeaff40d869cff7daa04ffcf799a88b16825b97018ec91cabb0f96",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-theatre-ui.js",
+        "bytes": 47216,
+        "sha256": "09d9ab98b1a2353ca50a07189562cde2565f60b31e476ba8a7d0901fb613426d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-theatre.css",
+        "bytes": 22506,
+        "sha256": "d65b15688e8af2da48c2f7e6cde89cb5dae6139bbfaaf1f6cb229a3361eb4323",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-theatre.js",
+        "bytes": 39257,
+        "sha256": "9af363390a61f04ddd22eec55a094289f74bdb6a409d19945d56069b1183ee23",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-tutorial-ui.js",
+        "bytes": 29238,
+        "sha256": "765ab3e38c00b2bb5b05ae1327b32af46d86b63da8a3b162cb5a136537bf36df",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-tutorial.css",
+        "bytes": 8773,
+        "sha256": "5410a3b88103cbda5e3b258dcdd0badc7a98fe2fb7db38b14abe0b95ecb0c63c",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-v16-copy.js",
+        "bytes": 18597,
+        "sha256": "00cf84190dd8072f0a42535b07cd8c64ed709278367481c89114069db14e7ee7",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-water.js",
+        "bytes": 14886,
+        "sha256": "897c6e4fc26366eb6704600c64dea91eb5eaedb66fb2d34672699c525a296720",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-v1-welcome.js",
+        "bytes": 3510,
+        "sha256": "44f956d81275747fd6b339d0b32cf8448ec1f942953aacde4f66fb27d9373c6d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "harborlight-version.js",
+        "bytes": 196,
+        "sha256": "8b3d8e8073d2a80582bd390725b02be8bd35bec68c50027db51ae87aaedfb3e1",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "index.html",
+        "bytes": 747,
+        "sha256": "c1747b739e1e44833aec10e59b7d3feb768c4689ad630ee752dc120f9cdfb31b",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "minigames/HARBORLIGHT-minigry-dokumentacja.zip",
+        "bytes": 2390952,
+        "sha256": "1c6dfc10e8789fc599dc6455e2a622cef9f536792bdc5581e1117fa149ee514f",
+        "mime": "application/zip"
+      },
+      {
+        "path": "minigames/app.js",
+        "bytes": 20118,
+        "sha256": "d03f4ee07c23ec25217fbd35bf0e34ca5489b00efd55923372357771c229bf70",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "path": "minigames/catalog.json",
+        "bytes": 773894,
+        "sha256": "f5f396548970cbdf84586d23c7711b02c6e32b807361f4bfc3e1808ec1f98148",
+        "mime": "application/json"
+      },
+      {
+        "path": "minigames/docs/adventure-bridge.docx",
+        "bytes": 41030,
+        "sha256": "7c8a115bd920e33aa3192030ec1e950f7a54690d96c761f3a963976b84e36cbb",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-bridge.txt",
+        "bytes": 5046,
+        "sha256": "f944be48cdf9059395982cb297b3f865a03b5f4cdcedee57a30e08e49cd7e7a9",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-cargo-balance.docx",
+        "bytes": 40936,
+        "sha256": "d25fd44a5f6cff9eaa4099513aa07fb325d714690fde3510d1ecbecb95290f79",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-cargo-balance.txt",
+        "bytes": 4791,
+        "sha256": "9ccbc717b0f6b21581c601aee2b6377244953e54d78189c7bdec80bad49e3e79",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-cargo-rain.docx",
+        "bytes": 40604,
+        "sha256": "c28d2acf9e461bacac6a6463536cd3217b6260e44b08ff81d3faea730f599466",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-cargo-rain.txt",
+        "bytes": 4149,
+        "sha256": "d504bbc580377f410f2cfa792ac4b35c1b54eace50e44f60ff7c4355fc066c17",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-garden.docx",
+        "bytes": 40885,
+        "sha256": "097a39a5cc626ee4763e977349f9250033232a3e96617262cf64ce9d1664ca16",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-garden.txt",
+        "bytes": 4656,
+        "sha256": "6fe08d277b08e227b4eeeeb7a3de499acc27238ae8be854e5dcf0f9bfac519d6",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-letters.docx",
+        "bytes": 40837,
+        "sha256": "f61f8b00602f32f61a67a9fe52faa5acadee3f951a43bff0daf5ca4a59a19065",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-letters.txt",
+        "bytes": 4591,
+        "sha256": "2f2e564fce36f3097480f42844796b561b5af3a790aee5b88c70276dfe86eb9b",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-pirate-cannon.docx",
+        "bytes": 40937,
+        "sha256": "3f6b6f248e4b451aa4df1f60f66035da9bc44ebc03c2b4d740c36756b9a24ea8",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-pirate-cannon.txt",
+        "bytes": 4837,
+        "sha256": "33d24902c5271303e19931808696b1222860904c1eff04e208acaefe873d868f",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-rhythm.docx",
+        "bytes": 40901,
+        "sha256": "52f54463ee2200711fb3c734ab2f2855041b9df6373371d44138b02cf39d843b",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-rhythm.txt",
+        "bytes": 4714,
+        "sha256": "418e5a5ec03e71b8f6b65d0710c55c9a66835e6df894dfec7e8863dae5fc2f19",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-signals.docx",
+        "bytes": 40919,
+        "sha256": "1523758f14191a2a64473fe15e33da53a401f65a08e62f1c6ca63e6464ce0667",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-signals.txt",
+        "bytes": 4808,
+        "sha256": "2d7f0636c18fbc918c225fca0b91f0b31239eb8a4cb68ac8a1d1ce59a441529e",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/adventure-treasure-map.docx",
+        "bytes": 40981,
+        "sha256": "ca95f3692d5d628a48f552d2a6118135cdea782da537489aa58328b8a46bda75",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/adventure-treasure-map.txt",
+        "bytes": 4936,
+        "sha256": "b966116147823c3a141d37a015fa23cbe2bc1a23f12d9718b8398424b67576a1",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/expedition-tilt.docx",
+        "bytes": 41445,
+        "sha256": "ea98437b64213966c2ef961f040ff2829a05a328ae2a7d79f11b4e6e1a72c638",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/expedition-tilt.txt",
+        "bytes": 5882,
+        "sha256": "2ae50d2deeecaec67276ac861fd0e78b37e9ec061bc3130af91d1b43988235e7",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/expedition-triples.docx",
+        "bytes": 41284,
+        "sha256": "9be7ab1627899db2b47af0017d2f6cc82dc0a13655487aa1bfa09b4fd67ec1ee",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/expedition-triples.txt",
+        "bytes": 5634,
+        "sha256": "0ad1bc5e0a60d1d1e08af8e0d6bf78b73e53f77fbb316c4d3d445302067f1860",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-balance.docx",
+        "bytes": 41290,
+        "sha256": "8c367f2e1f96d47f5b2b5a934d0c68678eee61d068e3409ed5a33c0acc278a99",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-balance.txt",
+        "bytes": 5619,
+        "sha256": "5a0481c8d75ef0aa21887114e78b54fc5f7acf2a6537ced8f120f79f8e377d76",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-cooking.docx",
+        "bytes": 41400,
+        "sha256": "50d8b6ccb6174c79b272fae2a0e4ecaadace01635535e367657ac6aebcdd6e98",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-cooking.txt",
+        "bytes": 5883,
+        "sha256": "27c1dfb0f95f959c586fe3bcf31f887fb5f0a973610a291fa6aa6eceffb83863",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-crabs.docx",
+        "bytes": 41290,
+        "sha256": "475d83d38572a7cc48e8fe83dd177f9088038c16aad393114fefefaa15f8ae0e",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-crabs.txt",
+        "bytes": 5598,
+        "sha256": "5f130f2826ed21e9ad05da0576b48ea5f6f908f09f902b8e9d46a286ed0c58e5",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-deduction.docx",
+        "bytes": 41324,
+        "sha256": "57f7568d4c2a1c97c06c6d8c3729280f178b84306090817b9a1debdb6d8bcd08",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-deduction.txt",
+        "bytes": 5703,
+        "sha256": "fd2763078bc6715f97dc1fdb4e425464f56d08092b9f2cbb771e6039be536b69",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-gears.docx",
+        "bytes": 41312,
+        "sha256": "2dd8399c63d284f494a3bde0ff295a1800e54a2f60949dba5d1ea981d513a5a4",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-gears.txt",
+        "bytes": 5708,
+        "sha256": "32d2b82ed7d5703425bed1f6cb727deec4e9c41627e59954f2478640cc951c88",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-gull.docx",
+        "bytes": 41333,
+        "sha256": "234303ec6a07e76f4f458052d8ece9f2657af53043e650348f4ad3d6a56ad762",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-gull.txt",
+        "bytes": 5641,
+        "sha256": "eb5885df830b136e55b3dcac342e55eccbe069527be4e4f4695d88a3277c0b03",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-harbor-routes.docx",
+        "bytes": 41600,
+        "sha256": "f763e8e45b9bfda6fa549184d0af42039b6d673caf393ca654be9feeb61f40f7",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-harbor-routes.txt",
+        "bytes": 6166,
+        "sha256": "d50316fc3829a80723f2fc013edbd4503c5671463deaa8ac550aed2a882ec221",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-hidden-objects.docx",
+        "bytes": 41355,
+        "sha256": "debbd58e557686b39c9f9f0faba55aea8d57fdf1509dc95c9f68d347871a492c",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-hidden-objects.txt",
+        "bytes": 5710,
+        "sha256": "1f5afcbadf480c24f7f27de58dacd7e3bf5ae06b576c36e729e5ef8346b41fa8",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-hotel.docx",
+        "bytes": 41289,
+        "sha256": "28bdf6395e170c6c12b0b7d8cc8425ac8f6d46ed550e684a7dff3706da71ade6",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-hotel.txt",
+        "bytes": 5590,
+        "sha256": "ffa4fe64810e6dccaa389dd96860b6f5c26cb8568374076296a5eff765caaeda",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-invention.docx",
+        "bytes": 41373,
+        "sha256": "560f8e3d9eac27059eef3d9cadc949ae79471c4b49d99556d2ab9cdd02fad9b3",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-invention.txt",
+        "bytes": 5745,
+        "sha256": "4ff6aceb1785de6583248191f16097f60a84264da14fc43ccfbfb67777886c85",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-magnets.docx",
+        "bytes": 41315,
+        "sha256": "3d60d9bf633d5d7fe3f8441d24d5c6d9a3b8c8ecf0ce01d36682deae389a6d20",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-magnets.txt",
+        "bytes": 5612,
+        "sha256": "2aadcc2120eac4deff447eed3ba7c444dd2a40c4db7b4b545d9561ecb9d076d3",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-marble-maze.docx",
+        "bytes": 41691,
+        "sha256": "32f93defaf474e416aa2b657b6acc6057d9d1630d5ac5c9aaba623fb18d23eda",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-marble-maze.txt",
+        "bytes": 6274,
+        "sha256": "4479c4e87c08d075046e93fd3d5619e7c5216ddfe4c0b834896b3cde964313a9",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-memory-triples.docx",
+        "bytes": 41523,
+        "sha256": "dd1d7c7f287168e78845e406787bcb3dd721dde0e600c086217962303b7680d0",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-memory-triples.txt",
+        "bytes": 6092,
+        "sha256": "17bd850d38cbd0c780ab5fbb8450a9c58711d0cc510a45d860d90826d3079ccb",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-navigation.docx",
+        "bytes": 41369,
+        "sha256": "a93c9fc894dfedd270ee6a33b2fb188ba6cd48ac120b87f98d652ea3fc60902b",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-navigation.txt",
+        "bytes": 5733,
+        "sha256": "5139bcf7e5c4fca91ba796fe004d37fb5bad211d4847d9406a7d98587e1cfdd4",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-optics.docx",
+        "bytes": 41290,
+        "sha256": "a4a4967f626b39050ee572f530ec9936934076d90e3d07bf82fa5264fa7cf33d",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-optics.txt",
+        "bytes": 5628,
+        "sha256": "b97a1dde10e7884daa71d5bf83b0f455aaf941b61fa62b442381266858913f73",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-packing.docx",
+        "bytes": 41406,
+        "sha256": "053a34d465d2f84ae2e3a64ccdd5482cb0bef6813f72bca807319a2014071a49",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-packing.txt",
+        "bytes": 5807,
+        "sha256": "e26d48be6612e43cc55723feecda6c6738f9b95ff788dcd99105b8cba90e1663",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-paper-fold.docx",
+        "bytes": 41335,
+        "sha256": "92fbc7f7d24f5a8cca7af0321dc69eadb037b4979163537364276ac7cd83af60",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-paper-fold.txt",
+        "bytes": 5682,
+        "sha256": "5d13741f60970d5b16e5cebf215f6c50ba02f7819a31f34dec9a11240bd8894f",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-parrot.docx",
+        "bytes": 41265,
+        "sha256": "75cc5d2bbc798ddc8a883c85a1e804b8281d8df6f39b8d246d7938b8192bb80f",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-parrot.txt",
+        "bytes": 5575,
+        "sha256": "9833fbad5fea01dbd0b462e582ce84eeea61f38fcba83738f06f412506256e1d",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-photo.docx",
+        "bytes": 41341,
+        "sha256": "a5624ad9977a6ba9b3e6ef0eb60483f727f25ff77061ae94d7ddf48b463ddf4e",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-photo.txt",
+        "bytes": 5722,
+        "sha256": "8d6bdb6f31abd02fa3a2c1ca12a1ec9a73f05bd38eb39f77d4ea10798a0154ea",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-scheduling.docx",
+        "bytes": 41362,
+        "sha256": "a83843c569bc847dd6920de7d71dcfb6fd4977cfc680c7fecee3cfa8111494aa",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-scheduling.txt",
+        "bytes": 5769,
+        "sha256": "a4186073f1b576884d5363ebb6141c474cfe90f43d39443acce8cc1de9d7d44e",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-signal-line.docx",
+        "bytes": 41748,
+        "sha256": "ed44d04e8b10a283de2a6980c36c931f8e4d250e0f84fd4b33f0479035227648",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-signal-line.txt",
+        "bytes": 6484,
+        "sha256": "95793bffeef6868a7610ca2781bb2f5885bc9f7eaaaac476400788cf927c02f7",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-signals-decode.docx",
+        "bytes": 41303,
+        "sha256": "af013b9b52f4fc9c831723e00cf10a98045290e96cdd247a0d029f9acbcfdb6f",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-signals-decode.txt",
+        "bytes": 5635,
+        "sha256": "291d3b15b952f1bc8da0eaf13f849c2e09116931921533ff9210e358e20d544a",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-tides.docx",
+        "bytes": 41339,
+        "sha256": "578370386b1e4513f4f112892550ccf3500434369023c20f49e3513fa3b96bec",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-tides.txt",
+        "bytes": 5665,
+        "sha256": "4fe97b4472ac45fe88cd82f180fbe871e1e257f57d4f1314c7f282c4aeceda9e",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/puzzle-untangle.docx",
+        "bytes": 41282,
+        "sha256": "f46134f73e7895c8f06e4c955d5f27b70b64cdfd1a32034e24a8f4fc408eeec0",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/puzzle-untangle.txt",
+        "bytes": 5612,
+        "sha256": "5a5f55610ea6f4bd5fa2e3b91e35b94836e9c683384529d711275f013cd61348",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-above-storm.docx",
+        "bytes": 43926,
+        "sha256": "8fc648518e0be1604f41d57bc41f7282fee84ff70f9306a80cabf82dc85e065b",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-above-storm.txt",
+        "bytes": 13801,
+        "sha256": "ee65c5b1e07ad47ef64e3b18c6a62e9ba65841384dc580ab7f78d9405f4981ef",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-bottle-message.docx",
+        "bytes": 43649,
+        "sha256": "af5665204c93e2cd8f60608de5879fc5c4d8f912d1d7b970a2f44c9484227a3d",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-bottle-message.txt",
+        "bytes": 12727,
+        "sha256": "78fa08aac82aa297f66ebb5e30779a34b9435071109eaa7fa6af287a1c9db0b4",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-captainless-ship.docx",
+        "bytes": 44006,
+        "sha256": "b22b525b7cba1684378ccc26fcc54906330fcc91338009dd81cefda3f2799ac3",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-captainless-ship.txt",
+        "bytes": 13870,
+        "sha256": "46bfa7f1de6e5d3c8e49272dedcbc84ec4e4457c5a37fb80547c6c6d1dd82422",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-cliff-treasury.docx",
+        "bytes": 43883,
+        "sha256": "c31c3a253da860c3b502ea5b2233d63e6e31bf8a3f47d327035171bb7e97b3e5",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-cliff-treasury.txt",
+        "bytes": 13759,
+        "sha256": "d2bf6ac43f883fa4b3719b4aace1d0825307e00d8377358adde62661f979443b",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-closed-lighthouse.docx",
+        "bytes": 43880,
+        "sha256": "4c0e3bcc277b029e2956edc7becb1ba60c9484faa4d4b337f01be3c4aa631d3d",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-closed-lighthouse.txt",
+        "bytes": 14000,
+        "sha256": "a8fb6d1f7560bdd1f8537c772fcfc0819dda857be1adb917363cae352f81d0ca",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-first-light.docx",
+        "bytes": 43743,
+        "sha256": "ba76ddfb9320f2dc70eb2f77a75e3037a1c53d958350a9004d182aea96cce2fa",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-first-light.txt",
+        "bytes": 13388,
+        "sha256": "4bf0266d48d20ec08ea5050118a9c62f93a20a0afe40e31cab14bf3a250eddb3",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-fog-convoy.docx",
+        "bytes": 44752,
+        "sha256": "acc45f12faa05e262d326701085c9bf957977a470b0dbb47771092833e33ffca",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-fog-convoy.txt",
+        "bytes": 15958,
+        "sha256": "94da5cea6f4ed52367816330d8ebde7a3be900be923b30adce974ea7d079a06c",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-harbor-opening.docx",
+        "bytes": 44082,
+        "sha256": "f7fc165e869a69b74e7292b77359d21d76961b9b1d16acf6baf2cc94f447ba25",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-harbor-opening.txt",
+        "bytes": 14255,
+        "sha256": "a3a9610f2984ab31818a39b549ca97877d8a753d3449c7c3008070b53cdcb2eb",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-homecoming.docx",
+        "bytes": 43892,
+        "sha256": "ad62cb0a8063e02fbea9157fa0c3a209931da944664c33d7bb1247e3cbf59aaa",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-homecoming.txt",
+        "bytes": 13837,
+        "sha256": "4c296bd2bc9c81548f98547803b84cf215c32d59901440cacedbdddb405f73fd",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-keeper-map.docx",
+        "bytes": 43667,
+        "sha256": "3a34f68d2f9f7ae7e82b8fa6aaa98a98ed74cf03d2244b6d5ea51275ee783d18",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-keeper-map.txt",
+        "bytes": 12826,
+        "sha256": "cc0c433af6cb8050ff971b3d98d059addc425d6e008342699496ec7387035d88",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-lost-performance.docx",
+        "bytes": 43826,
+        "sha256": "163b2ea255981673437d294a93f165049701d6110a1ee3f96494540bf57761fc",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-lost-performance.txt",
+        "bytes": 13833,
+        "sha256": "8b48672e8e55923db4de16b9fc1d7c7102b92521678212cec80a241d85c8c975",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-merchant-rescue.docx",
+        "bytes": 44082,
+        "sha256": "5d586b63e53dca6519a1c6c22471d4370ec59f703dfe6b22e4fbef06063a9cf5",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-merchant-rescue.txt",
+        "bytes": 13869,
+        "sha256": "888c42e55954d2acf45466fe4fe8402265a95cd84b03a41f034217422bce1984",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-nothing-wasted.docx",
+        "bytes": 43756,
+        "sha256": "933f388694fd07749cdb56fdbd07cfa4be109ce9e33a25b53d6aabef8d645c34",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-nothing-wasted.txt",
+        "bytes": 13159,
+        "sha256": "87215a3ebd5a97c2056cdbd937801626845c3334fd46d69acd1f605eed77dcc8",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-ocean-visitors.docx",
+        "bytes": 43680,
+        "sha256": "99805c4ddea3a11a91996486879c6481b70570be892597ceab92e9d4bdeed2a2",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-ocean-visitors.txt",
+        "bytes": 12679,
+        "sha256": "3f9d55940de4ff6b1700a663fe4434d9ce5797c943523022c9063b402e942fce",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-sail-gathering.docx",
+        "bytes": 43969,
+        "sha256": "d8a4e1bb295f674bad313975df598afa08b89dd73fc6be86822a3fc2ef43d144",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-sail-gathering.txt",
+        "bytes": 13753,
+        "sha256": "7c7ce1755fd303adc6da3a753347325d2412779aef4b437b5eea2346aad5f5ec",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-sea-festival.docx",
+        "bytes": 43951,
+        "sha256": "633e42e9a117a2b48e05a23405b91c4fafcf19b3208a5bbca1df1a4dbc121e5d",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-sea-festival.txt",
+        "bytes": 13896,
+        "sha256": "72f2cc65e1b2e63c3195a4918c43226b7c1036e03fd6f84884c4729217ae3f9e",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-second-shore.docx",
+        "bytes": 43615,
+        "sha256": "4ff6ab88cab4dc614ed66c60c4e870a84178150fc9d1becd8f9b8b86556cde94",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-second-shore.txt",
+        "bytes": 12735,
+        "sha256": "f57fd64ffe768ed64cd649cb1d507ddfa3d1d3b71045ba8f314d9d34024d8ba4",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-star-guests.docx",
+        "bytes": 43666,
+        "sha256": "fae46e216b8595238ae43183cafb83386e4ec05c6e10a85fcd832bb7cc3cfed2",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-star-guests.txt",
+        "bytes": 12916,
+        "sha256": "faf608597a1c8baf15bae0a6d524b314fd42a8e46cf65b3fd71401acb8f853a3",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-storm-shelter.docx",
+        "bytes": 43658,
+        "sha256": "25ac9347a2c3865be723d66cc296d33615b1b65c2020634f40480b7e13121e4c",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-storm-shelter.txt",
+        "bytes": 12907,
+        "sha256": "a347eac4deae97e2fbbb836057b18297e65a9560c3f009894f285de7288a2d89",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/docs/story-supply-voyage.docx",
+        "bytes": 43763,
+        "sha256": "625b2b2405e33e6b924ac035d80edbf8ef40132d8646a58ca7d7d1a5a16841fd",
+        "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      {
+        "path": "minigames/docs/story-supply-voyage.txt",
+        "bytes": 13015,
+        "sha256": "622335f559b7213fafd4fad4ff6ad73ff6d98ad2b5df6cfe0995f36f144bf850",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/documents.json",
+        "bytes": 40784,
+        "sha256": "59d1a107f20c40caeaccbb832967ad7f76547d50514fb9f9fc9d5265f623948f",
+        "mime": "application/json"
+      },
+      {
+        "path": "minigames/index.html",
+        "bytes": 7407,
+        "sha256": "028d125c926e6fcfe0cc862b1958a828c87703d59f1d823c72d1c3fa4822c576",
+        "mime": "text/html; charset=utf-8"
+      },
+      {
+        "path": "minigames/linki.txt",
+        "bytes": 22933,
+        "sha256": "5023eb91987a5cce7cc2b0d0276f5fdf97179cbab6b7900cf9a6e46bc1b749e9",
+        "mime": "text/plain; charset=utf-8"
+      },
+      {
+        "path": "minigames/styles.css",
+        "bytes": 10635,
+        "sha256": "f58777cd175e79bd8b6dbf04715fdd81e42c9451614ed52d1bf1b89e48c2c448",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "path": "release.json",
+        "bytes": 32352,
+        "sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
+        "mime": "application/json"
+      }
+    ]
+  },
+  "account_preservation": {
+    "status": "PASS",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "normal_TLS": true,
+    "account_and_game_writes": false,
+    "accounts": [
+      {
+        "uid": "dev-admin1",
+        "generation": 2,
+        "island_exists": true,
+        "revision_before": 54,
+        "revision_after": 54,
+        "saved_payload_unchanged": true
+      },
+      {
+        "uid": "dev-admin2",
+        "generation": 2,
+        "island_exists": true,
+        "revision_before": 9,
+        "revision_after": 9,
+        "saved_payload_unchanged": true
+      },
+      {
+        "uid": "dev-admin3",
+        "generation": 2,
+        "island_exists": true,
+        "revision_before": 591,
+        "revision_after": 591,
+        "saved_payload_unchanged": true
+      }
+    ],
+    "three_identities_and_existing_islands_preserved": true,
+    "all_three_saved_payloads_identical": true,
+    "isolation": {
+      "accounts": 3,
+      "existingSaves": 3,
+      "emptyIslands": 0,
+      "foreignReadsDenied": 6,
+      "anonymousReadsDenied": 3,
+      "apiReads": 3,
+      "ownedDirectReadsDenied": 3,
+      "anonymousApiReadsDenied": 3
+    }
+  },
+  "DEV_tag": {
+    "status": "PASS",
+    "name": "dev-0.15.2.0-20261118",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "object": "8e896679845498da472156697c1a412635cf8443",
+    "remote_verified": true,
+    "remote_refs": [
+      "8e896679845498da472156697c1a412635cf8443\trefs/tags/dev-0.15.2.0-20261118",
+      "dda2fa1793e49ec23811ccffb147a7e56a366692\trefs/tags/dev-0.15.2.0-20261118^{}"
+    ]
+  },
+  "PREPROD_tag": {
+    "status": "PASS",
+    "name": "preprod-0.15.2.0-20261118",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "object": "99899f7585b0fd9adb4686b5dfd0c331a19ca089",
+    "remote_verified": true,
+    "remote_refs": [
+      "99899f7585b0fd9adb4686b5dfd0c331a19ca089\trefs/tags/preprod-0.15.2.0-20261118",
+      "dda2fa1793e49ec23811ccffb147a7e56a366692\trefs/tags/preprod-0.15.2.0-20261118^{}"
+    ]
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "PROD_DNS_reset": "NO_ACTION"
+}

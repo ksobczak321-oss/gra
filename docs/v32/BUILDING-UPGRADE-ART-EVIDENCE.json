@@ -4,7 +4,7 @@
   "scope": "DEV_THEN_AUTHORIZED_PREPROD",
   "application_version": "0.15.2.0",
   "cache": "frontend-v32-17",
-  "status": "CACHE17_LOCAL_VALIDATION_PASS_PUBLICATION_PENDING",
+  "status": "ACCEPTED_DEV_AND_PREPROD",
   "authorization": {
     "initial": "10 wersji każdego budynku oraz średniowieczny żuraw w czasie budowy",
     "development_GO": "wrzuć na deva",
@@ -88,7 +88,7 @@
   "theatre_visual_level_follows": "townhall",
   "crane_condition": "matching ordinary or premium project; stage === building; buildRemaining > 0",
   "existing_sailing_boat": "PRESERVE",
-  "source_sha": null,
+  "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
   "local_tests": {
     "pure_presentation_tests": {
       "status": "PASS",
@@ -131,17 +131,60 @@
     "all20_rechecked_after_component_frames": true,
     "report": "gallery-independent-review-recheck.json"
   },
-  "full_regression": "PENDING",
+  "full_regression": {
+    "status": "PASS_OWN_EXACT_SOURCE_CI",
+    "frontend_node": 1492,
+    "backend_node": 170,
+    "boardgame_node": 7,
+    "total_node": 1669,
+    "python": 167,
+    "Chromium_programs": 70,
+    "Chromium_groups": {
+      "standalone_minigames": 1,
+      "main_game": 51,
+      "cloud_accounts": 18
+    }
+  },
   "CI": {
-    "status": "PENDING_NEW_SOURCE",
-    "run_id": null
+    "status": "SUCCESS",
+    "run_id": 44287093749,
+    "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44287093749",
+    "created_at_utc": "2026-11-18T10:37:04Z",
+    "completed_at_utc": "2026-11-18T11:12:19Z",
+    "duration": "35m15s",
+    "job_duration": "34m54s",
+    "steps_success": 35,
+    "steps_skipped_diagnostics": 2,
+    "steps_failed": 0
   },
   "Pages": {
-    "status": "PENDING_NEW_SOURCE",
-    "run_id": null
+    "status": "SUCCESS",
+    "run_id": 44287093698,
+    "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44287093698",
+    "duration": "41s",
+    "job_duration": "26s"
   },
-  "public_file_audit": "PENDING",
-  "native_public_browser": "PENDING_NO_RESULT_CLAIMED",
+  "public_file_audit": {
+    "status": "PASS",
+    "checked_at_utc": "2026-11-18T10:41:25.833899+00:00",
+    "origin": "https://ksobczak321-oss.github.io/gra/",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "normal_TLS": true,
+    "file_count": 254,
+    "total_bytes": 69262846,
+    "Pages_index_compared_to_Git": true,
+    "generated_Firebase_release_manifest_not_claimed_on_Pages": true,
+    "account_requests_or_writes": false,
+    "native_browser_claimed": false
+  },
+  "native_public_browser": {
+    "status": "BLOCKED_ERR_CERT_AUTHORITY_INVALID",
+    "normal_TLS": true,
+    "TLS_bypass": false,
+    "native_PASS_claimed": false
+  },
   "workbook_refresh": {
     "status": "PASS_BUILD_AND_FRESH_VALIDATION",
     "master": {
@@ -166,18 +209,247 @@
     }
   },
   "tag": {
-    "name": null,
-    "object": null,
-    "remote_verified": false
+    "status": "PASS",
+    "name": "dev-0.15.2.0-20261118",
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "object": "8e896679845498da472156697c1a412635cf8443",
+    "remote_verified": true
   },
   "manual_user_acceptance": "NOT_RUN",
   "PREPROD": {
-    "status": "AUTHORIZED_AFTER_NEW_EXACT_SOURCE_DEV_CI_SUCCESS",
+    "status": "ACCEPTED",
     "workflow": "google-cloud-dev.yml",
-    "source_sha": null,
-    "run_id": null,
+    "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "run_id": 44292700743,
     "preserve_accounts_and_progress": true,
-    "reset": false
+    "reset": false,
+    "attempt": 1,
+    "created_at_utc": "2026-11-18T11:13:25Z",
+    "gate": "SUCCESS",
+    "deploy": "SUCCESS",
+    "successful_receipt_confirmed": true,
+    "accepted": true,
+    "tag_confirmed": true,
+    "before_readonly_account_audit": {
+      "status": "PASS",
+      "normal_TLS": true,
+      "tokens_or_passwords_saved": false,
+      "island_writes": false,
+      "accounts": [
+        {
+          "uid": "dev-admin1",
+          "generation": 2,
+          "island_exists": true,
+          "island_generation": 2,
+          "revision": 54
+        },
+        {
+          "uid": "dev-admin2",
+          "generation": 2,
+          "island_exists": true,
+          "island_generation": 2,
+          "revision": 9
+        },
+        {
+          "uid": "dev-admin3",
+          "generation": 2,
+          "island_exists": true,
+          "island_generation": 2,
+          "revision": 591
+        }
+      ],
+      "totals": {
+        "accounts": 3,
+        "existingSaves": 3,
+        "emptyIslands": 0,
+        "foreignReadsDenied": 6,
+        "anonymousReadsDenied": 3,
+        "apiReads": 3,
+        "ownedDirectReadsDenied": 3,
+        "anonymousApiReadsDenied": 3
+      }
+    },
+    "completed_at_utc": "2026-11-18T11:20:16Z",
+    "duration": "6m51s",
+    "gate_duration": "7s",
+    "gate_steps_success": 7,
+    "deploy_duration": "6m35s",
+    "deploy_steps_success": 32,
+    "deploy_steps_skipped_diagnostics": 1,
+    "deploy_steps_failed": 0,
+    "workflow_successful_receipt_published": true,
+    "original_artifacts_independent_audit": {
+      "status": "PASS",
+      "checked_at_utc": "2026-11-18T11:23:17.961266+00:00",
+      "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "run": 44292700743,
+      "attempt": 1,
+      "ci_run": 44287093749,
+      "receipt_member": {
+        "member": "release.json",
+        "bytes": 989,
+        "sha256": "1592cd79a805025f2729522b75ef5a103ee3d2590894ae70a895766d2586d932"
+      },
+      "frontend_member": {
+        "member": "harborlight-frontend.tar.gz",
+        "bytes": 65299733,
+        "sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4"
+      },
+      "standard_verify_receipt": {
+        "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+        "source_image": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
+        "image_digest": "sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
+        "ci_run_id": "44287093749",
+        "frontend_artifact_name": "harborlight-dev-frontend-44292700743-1",
+        "frontend_archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+        "frontend_manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf"
+      },
+      "receipt_checks": {
+        "ci": true,
+        "dev_smoke": true,
+        "frontend_smoke": true,
+        "account_api": true
+      },
+      "committed_package_comparison": "PASS_ALL_FIVE_CONTENT_PINS_AND_EXACT_MANIFEST",
+      "normal_TLS": true,
+      "credentials_or_signed_URLs_saved": false,
+      "external_mutations": false,
+      "original_artifacts": [
+        {
+          "kind": "release",
+          "artifact_id": 14421683768,
+          "name": "harborlight-dev-release-44292700743-1",
+          "bytes": 615,
+          "sha256": "771a278063fcd44856f4aaed3018dccf66d4b819c34599f54957d11507bcd984",
+          "metadata_size_and_digest_verified": true,
+          "download_method": "existing_original_zip_reverified"
+        },
+        {
+          "kind": "frontend",
+          "artifact_id": 14422886201,
+          "name": "harborlight-dev-frontend-44292700743-1",
+          "bytes": 65318475,
+          "sha256": "59c5a1779d5cc75b1bcde4b15976cd0aca873c6554d9d9146ecea1e603f0b0c4",
+          "metadata_size_and_digest_verified": true,
+          "download_method": "existing_original_zip_reverified"
+        }
+      ],
+      "standard_frontend_verification": {
+        "archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+        "commit": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+        "file_count": 255,
+        "manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
+        "total_bytes": 69289150
+      },
+      "transport_provenance": {
+        "method": "GitHub connector download and FileService materialization; exact REST metadata size/digest reverified",
+        "first_transport_block": "Direct GitHub signed CDN CONNECT rejected by environment proxy403; initial failed transport preserved in private evidence",
+        "TLS_bypass": false,
+        "secret_or_signed_URL_saved": false
+      }
+    },
+    "public_file_audit": {
+      "status": "PASS",
+      "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "origin": "https://harborlight-dev.web.app/",
+      "checked_at_utc": "2026-11-18T11:24:00.014373+00:00",
+      "normal_TLS": true,
+      "file_count": 255,
+      "total_bytes": 69289150,
+      "includes_generated_release_json": true,
+      "account_requests_or_writes": false,
+      "native_browser_claimed": false
+    },
+    "native_minigames": {
+      "status": "PASS",
+      "bootstrap_routes": 3,
+      "boards": 110,
+      "story_variants": 100,
+      "documents": 110,
+      "native": true
+    },
+    "native_existing_signed_in_island": {
+      "status": "PASS",
+      "exact_asset_hashes": 254,
+      "all_browser_writes_blocked": true,
+      "actual_existing_saved_island": true,
+      "gameplay_claims_or_upgrades_or_resets": false
+    },
+    "account_isolation": {
+      "status": "PASS",
+      "accounts": 3,
+      "existingSaves": 3,
+      "emptyIslands": 0,
+      "foreignReadsDenied": 6,
+      "anonymousReadsDenied": 3,
+      "apiReads": 3,
+      "ownedDirectReadsDenied": 3,
+      "anonymousApiReadsDenied": 3,
+      "island_writes": false
+    },
+    "independent_account_preservation": {
+      "status": "PASS",
+      "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "normal_TLS": true,
+      "account_and_game_writes": false,
+      "accounts": [
+        {
+          "uid": "dev-admin1",
+          "generation": 2,
+          "island_exists": true,
+          "revision_before": 54,
+          "revision_after": 54,
+          "saved_payload_unchanged": true
+        },
+        {
+          "uid": "dev-admin2",
+          "generation": 2,
+          "island_exists": true,
+          "revision_before": 9,
+          "revision_after": 9,
+          "saved_payload_unchanged": true
+        },
+        {
+          "uid": "dev-admin3",
+          "generation": 2,
+          "island_exists": true,
+          "revision_before": 591,
+          "revision_after": 591,
+          "saved_payload_unchanged": true
+        }
+      ],
+      "three_identities_and_existing_islands_preserved": true,
+      "all_three_saved_payloads_identical": true,
+      "isolation": {
+        "accounts": 3,
+        "existingSaves": 3,
+        "emptyIslands": 0,
+        "foreignReadsDenied": 6,
+        "anonymousReadsDenied": 3,
+        "apiReads": 3,
+        "ownedDirectReadsDenied": 3,
+        "anonymousApiReadsDenied": 3
+      }
+    },
+    "acceptance_document": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json",
+    "standard_check_dev": {
+      "status": "PASS",
+      "standard_check_dev": {
+        "dev_run_id": "44292700743",
+        "dev_run_attempt": "1",
+        "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+        "artifact_name": "harborlight-dev-release-44292700743-1",
+        "frontend_artifact_name": "harborlight-dev-frontend-44292700743-1"
+      },
+      "credentials_saved": false
+    },
+    "tag": {
+      "status": "PASS",
+      "name": "preprod-0.15.2.0-20261118",
+      "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "object": "99899f7585b0fd9adb4686b5dfd0c331a19ca089",
+      "remote_verified": true
+    }
   },
   "PROD_DNS": "NO_ACTION",
   "account_reset": false,
@@ -185,9 +457,11 @@
   "world_schema": 9,
   "ruleset": 32,
   "notes": [
-    "This initial record describes the authorized scope and pending acceptance, not a completed deployment.",
-    "Prior version tests and publication do not establish this candidate's success.",
-    "Asset hashes, actual file sizes and exact-source results must be added after source freeze and verification."
+    "DEV and PRE-PROD are accepted for exact publication source dda2fa1793e49ec23811ccffb147a7e56a366692: own full CI, Pages, standard PRE-PROD, native hosted tests, both original artifacts, receipt, independent full public TLS audit, preserved accounts and both immutable remote-verified tags all passed.",
+    "Prior failed or cancelled attempts and local failures remain recorded separately; no older result substitutes the current exact-source CI.",
+    "The application/export and standalone minigame provenance source6a27649b is intentionally distinct from current publication sourceDDA.",
+    "Native public HTTPS Chromium is blocked by certificate authority trust in this infrastructure; normal-TLS byte audit and local replay are separate PASS evidence, without TLS bypass.",
+    "The original signed-CDN transport was blocked by the environment proxy; the GitHub connector supplied both original ZIPs, whose REST metadata sizes and digests were independently reverified without TLS bypass. The initial transport failure remains preserved separately."
   ],
   "assets": {
     "provenance": "BUILDING-UPGRADE-ART-ASSETS.json",
@@ -265,7 +539,11 @@
     "cache": "frontend-v32-16",
     "CI": {
       "run_id": 44281835207,
-      "status": "IN_PROGRESS_AT_FIX_FREEZE"
+      "status": "CANCELLED",
+      "status_at_fix_freeze": "IN_PROGRESS_AT_FIX_FREEZE",
+      "conclusion": "cancelled",
+      "created_at_utc": "2026-11-18T10:04:13Z",
+      "completed_at_utc": "2026-11-18T10:37:21Z"
     },
     "Pages": {
       "run_id": 44281851093,
@@ -293,5 +571,60 @@
     "unchanged_other_placements": 38,
     "placement": "Lighthouse at side of base in fixed world coordinates; all other families unchanged",
     "report": "/workspace/work/building-upgrade-release-20261118-r2/crane-visibility-fixed/comparison.json"
-  }
+  },
+  "accepted_DEV_publication_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+  "source_roles": {
+    "publication_and_current_CI": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "application_and_export_source_preserved": "6a27649b12bff223d35889f875fca1bc23564daa",
+    "minigame_provenance_source": "6a27649b12bff223d35889f875fca1bc23564daa"
+  },
+  "release_bundle": {
+    "archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+    "commit": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "file_count": 255,
+    "manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
+    "total_bytes": 69289150
+  },
+  "public_bytes_local_replay": {
+    "status": "PASS",
+    "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "game_runtime_widths": [
+      1440,
+      390
+    ],
+    "accepted_front_widths": [
+      1672,
+      1440,
+      390,
+      320
+    ],
+    "startup_cases": 26,
+    "crane_actual_DOM_alpha_cases": 160,
+    "variants": 200,
+    "synthetic_images_are_art_approval": false,
+    "cloud_writes": false,
+    "native_public_browser_claimed": false
+  },
+  "public_workbook_audit": {
+    "status": "PASS",
+    "normal_TLS": true,
+    "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "workbooks": [
+      {
+        "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+        "sha256": "8ffb684be465bb2237bb74584cc24c79a445a2eecc67b042c02cf4017dba98e3",
+        "bytes": 7732244,
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "status": 200
+      },
+      {
+        "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "sha256": "1b88f79ae91517fbe34f1a6536c12cd909ebb2c24ff654f7ee9cb7017f8be56c",
+        "bytes": 60329,
+        "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "status": 200
+      }
+    ]
+  },
+  "acceptance_document": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
 }

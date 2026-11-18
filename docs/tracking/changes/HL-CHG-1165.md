@@ -9,13 +9,13 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `CACHE17_LOCAL_PASS_NEW_SOURCE_CI_PENDING` |
-| CI | `PENDING_OWN_EXACT_SOURCE` |
-| PRE-PROD | `authorized_after_own_new_exact_source_CI_and_DEV_acceptance` |
+| DEV | `ACCEPTED_DDA_PAGES_AND_TAG` |
+| CI | `SUCCESS44287093749` |
+| PRE-PROD | `SUCCESS44292700743_ATTEMPT1` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
-**Tagi:** `v32`, `building-art`, `construction`, `dev-only`.
+**Tagi:** `v32`, `building-art`, `construction`, `dev-preprod`.
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -26,11 +26,11 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - Zakończenie, anulowanie,ponownewejście,nieobecność i krótkausługa płatna odtwarzają lub usuwają żuraw według rzeczywistego stanu.
 - Nakładka nie przechwytuje kliknięć, nie zapisuje postępu i nie zmienia zegara,czasów,kosztów lub modelu; istniejący stały efektKamieniołomu jest odrębny.
 - Odbiór sprawdza faktyczne przejścia etapów zlecenia, a nie samą klasęCSS under-construction.
-- Wyniki mają własne źródło i CI; publikacja wyłącznieDEV bez resetu lub nowej promocjiPRE-PROD/PROD.
+- Własny dokładny SHA i CI oraz odbiórDEV poprzedzają standardowyPRE-PROD; bez resetu,PROD lub zmiany symulacji.
 
 ## Źródło
 
-Po zamówieniu10wersji każdego budynku i żurawia użytkownik zatwierdził implementację naDEV, a następnie objął zasadą wszystkie budynki wyspy.
+Po zamówieniu10wersji każdego budynku i żurawia użytkownik zatwierdził implementację naDEV, a następnie objął zasadą wszystkie budynki wyspy. Późniejsze GO obejmuje promocję kompletnej paczki do PRE-PROD wraz ze zmianami z Excela.
 
 Odniesienie: `chat:2026-11-18:building-upgrade-art-all-island-buildings; docs/v32/GO-BUILDING-UPGRADE-ART.md`.
 
@@ -38,12 +38,15 @@ Data pierwotnej wiadomości: 2026-11-18. Bieżące GO oraz doprecyzowanie zakres
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-BUILDING-UPGRADE-ART.md](../../v32/GO-BUILDING-UPGRADE-ART.md), [docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json](../../v32/BUILDING-UPGRADE-ART-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-BUILDING-UPGRADE-ART.md](../../v32/GO-BUILDING-UPGRADE-ART.md), [docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json](../../v32/BUILDING-UPGRADE-ART-EVIDENCE.json), [docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json](../../v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json)
 - **Kod:** [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-ambient.js](../../../harborlight-v1-ambient.js)
-- **Scenariusze automatyczne:** nie przypisano.
+- **Scenariusze automatyczne:** [tests/harborlight-building-stages.test.mjs](../../../tests/harborlight-building-stages.test.mjs), [tests/harborlight-building-stages-v32-smoke.py](../../../tests/harborlight-building-stages-v32-smoke.py), [tests/harborlight-accepted-front-v32-smoke.py](../../../tests/harborlight-accepted-front-v32-smoke.py), [tests/harborlight-startup-no-flash-v32-smoke.py](../../../tests/harborlight-startup-no-flash-v32-smoke.py), [tests/harborlight-hosted-v18-smoke.py](../../../tests/harborlight-hosted-v18-smoke.py)
+- **Kod dowodowy:** `dda2fa1793e49ec23811ccffb147a7e56a366692`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44287093749.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/44292700743.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-Implementacja w przygotowaniu; rzeczywiste przejścia budowy oraz własneCI/publicznyDEV pozostająPENDING. Brak zmiany symulacji lub danych.
+DEV and PRE-PROD0.15.2.0/cache17 acceptedDDA with Advisor, short intro, approved Excel edits,200buildingvariants and constructioncranes. Accounts/progress preserved; manualNOT_RUN; noPROD/DNS/reset.
 
 ## Relacje
 

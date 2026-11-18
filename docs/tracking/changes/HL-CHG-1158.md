@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `six_real_slashless_HTTP200_routes_PASS_new_source_pending` |
-| CI | `pending_new_exact_source_CI` |
-| PRE-PROD | `first_attempt_FAILURE_new_standard_promotion_pending` |
+| DEV | `accepted_DDA_with_own_CI_Pages_and_tag` |
+| CI | `SUCCESS44287093749_exact_DDA` |
+| PRE-PROD | `SUCCESS44292700743_DDA_SUBSEQUENT_PROMOTION_PRESERVED_ORIGINAL_HISTORY` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 

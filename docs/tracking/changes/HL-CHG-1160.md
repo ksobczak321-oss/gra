@@ -11,7 +11,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `implemented` |
 | DEV | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` |
 | CI | `SUCCESS_44164876130_exact_4dcc34e` |
-| PRE-PROD | `not_authorized_for_this_change` |
+| PRE-PROD | `SUCCESS44292700743_DDA_SUBSEQUENT_PROMOTION_PRESERVED_ORIGINAL_HISTORY` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
