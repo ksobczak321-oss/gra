@@ -257,8 +257,9 @@ def prepare(exports, source_sha):
                   'Bieżące tabele v15 mają pierwszeństwo. 100 wcześniejszych kart zachowano jako ukryte archiwum. Pełna treść warunków i źródeł jest dostępna w dodatkach. Każdy wynik symulacji ma własny horyzont i założenia.',
                   ['Temat', 'Aktualna informacja', 'Źródło / granica'], [45, 140, 100], table_id='readme')
     guide.add(['Kod gry', '0.15.2.0 / ruleset32', source_sha])
-    guide.add(['Wdrożone DEV i PRE-PROD', RELEASE_SOURCE, 'Własny CI43850690541 i PRE-PROD43854387444 SUCCESS; aktualizacja Excela nie wdraża gry.'])
-    guide.add(['Źródło aplikacji', APP_SOURCE, 'Arkusz odczytuje aktualny kod; nie modyfikuje parametrów.'])
+    guide.add(['Historyczny wspólny odbiór DEV/PRE-PROD 0.15.0.2', RELEASE_SOURCE, 'CI43850690541 i PRE-PROD43854387444 SUCCESS. To historyczny punkt odniesienia, nie źródło bieżących tabel.'])
+    guide.add(['Źródło historycznej aplikacji 0.15.0.2', APP_SOURCE, 'Bieżący kod i jego odciski wskazuje pierwszy wiersz Kod gry. Aktualizacja Excela nie wdraża gry.'])
+    guide.add(['Odebrany DEV przed tą paczką 0.15.2.0', '4dcc34ec3b462992330f88a22062070fcc0f7092', 'DEV0.15.1.0: CI44164876130 i Pages44164876499 SUCCESS. PRE-PROD pozostaje przy historycznym wspólnym odbiorze0.15.0.2.'])
     guide.add(['Nawigacja', 'Spis treści zawiera odnośnik do każdej bieżącej tabeli i jej źródła.', 'Filtrowanie od wiersza5; nagłówki zamrożone.'])
     guide.add(['Teksty', 'Pełny tour, samouczek, katalog tekstów i warunkowe literały/szablony z kodu.', 'Zmienne i warunki zachowane; liczba możliwych komunikatów z podstawieniami nie jest skończona.'])
     guide.add(['Scenariusze', 'Katalogi mechanik, scenariusze i deterministyczne przykłady generatorów.', 'Przykłady plansz nie oznaczają wyliczenia wszystkich kombinacji losowych.'])
@@ -453,6 +454,7 @@ def validate(exports, sheets, source_sha, write_report=True):
     report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': '0.15.2.0', 'ruleset': 32,
               'file': str(OUTPUT.relative_to(ROOT)), 'sha256': digest(OUTPUT), 'bytes': OUTPUT.stat().st_size,
               'source_git_commit': source_sha, 'accepted_application_source': APP_SOURCE, 'accepted_publication_source': RELEASE_SOURCE,
+              'accepted_reference_scope': 'Historical shared DEV/PRE-PROD0.15.0.2; current tables and fingerprints use source_git_commit, not these historical reference fields.',
               'historical_master': str(BASE.relative_to(ROOT)), 'historical_master_sha256': BASE_SHA,
               'historical_sheets_unchanged': 100, 'historical_zip_parts_unchanged': len(preserved), 'historical_comments_unchanged': comments,
               'historical_cached_formulas_unchanged': old_formulas,

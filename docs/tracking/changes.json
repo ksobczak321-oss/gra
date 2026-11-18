@@ -30417,8 +30417,8 @@
         "reference": "chat:2026-11-18:building-upgrade-art-all-island-buildings; docs/v32/GO-BUILDING-UPGRADE-ART.md"
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_0.15.2.0_cache16",
+        "implementation": "implemented",
+        "dev": "LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16",
         "ci": "PENDING_OWN_EXACT_SOURCE",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",
@@ -30500,8 +30500,8 @@
         "reference": "chat:2026-11-18:building-upgrade-art-all-island-buildings; docs/v32/GO-BUILDING-UPGRADE-ART.md"
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_0.15.2.0_cache16",
+        "implementation": "implemented",
+        "dev": "LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16",
         "ci": "PENDING_OWN_EXACT_SOURCE",
         "preprod": "not_authorized_for_this_change",
         "prod": "postponed_by_user",

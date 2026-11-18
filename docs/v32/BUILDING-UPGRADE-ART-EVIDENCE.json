@@ -138,7 +138,29 @@
   },
   "public_file_audit": "PENDING",
   "native_public_browser": "PENDING_NO_RESULT_CLAIMED",
-  "workbook_refresh": "PENDING_SOURCE_FREEZE",
+  "workbook_refresh": {
+    "status": "PASS_BUILD_AND_FRESH_VALIDATION",
+    "master": {
+      "source": "8c363bcea4ebf2e577a035d97b97c2a0b21d547f",
+      "sha256": "f39b8c70149b00e1fb49595ae7650be28dce485e92b24fb97f574652aa9c81af",
+      "bytes": 7731615,
+      "sheets": 158,
+      "current_sheets": 58,
+      "current_rows": 62491,
+      "source_fingerprints": 120,
+      "building_stage_rows": 200,
+      "historical_sheets_unchanged": 100,
+      "actual_simulation_profiles": 3
+    },
+    "editorial": {
+      "source": "c4f883d5a83fc3ce9f4a3649f1dccd466ec1cbcf",
+      "sha256": "4371cd3efeef39d4117c3bb73736bed4da02381d2aa7874b238c35f9e1a756ab",
+      "sheets": 6,
+      "rows": 413,
+      "C_all_blank": true,
+      "source_fingerprints": 105
+    }
+  },
   "tag": {
     "name": null,
     "object": null,
@@ -170,5 +192,21 @@
     "max_members": 256,
     "expected_actual_members": 255,
     "allowlist": "EXPLICIT_CLOSED"
+  },
+  "application_source_sha": "c4f883d5a83fc3ce9f4a3649f1dccd466ec1cbcf",
+  "workbook_export_source_sha": "8c363bcea4ebf2e577a035d97b97c2a0b21d547f",
+  "source_scope_audit": {
+    "status": "PASS",
+    "substantive_root_js": [
+      "harborlight-v1-ambient.js",
+      "harborlight-v1-building-stages.js",
+      "harborlight-v1-development-ui.js",
+      "harborlight-v1-map-art.js",
+      "harborlight-v1-play.js",
+      "harborlight-v1-smoke.js",
+      "harborlight-version.js"
+    ],
+    "cache_only_existing_root_js": 53,
+    "existing_economic_fact_tables_identical": 14
   }
 }

@@ -8,8 +8,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `in_progress` |
-| DEV | `PENDING_0.15.2.0_cache16` |
+| Implementacja | `implemented` |
+| DEV | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` |
 | CI | `PENDING_OWN_EXACT_SOURCE` |
 | PRE-PROD | `not_authorized_for_this_change` |
 | PROD | `postponed_by_user` |
