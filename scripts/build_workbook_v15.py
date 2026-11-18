@@ -259,7 +259,7 @@ def prepare(exports, source_sha):
     guide.add(['Kod gry', '0.15.2.0 / ruleset32', source_sha])
     guide.add(['Historyczny wspólny odbiór DEV/PRE-PROD 0.15.0.2', RELEASE_SOURCE, 'CI43850690541 i PRE-PROD43854387444 SUCCESS. To historyczny punkt odniesienia, nie źródło bieżących tabel.'])
     guide.add(['Źródło historycznej aplikacji 0.15.0.2', APP_SOURCE, 'Bieżący kod i jego odciski wskazuje pierwszy wiersz Kod gry. Aktualizacja Excela nie wdraża gry.'])
-    guide.add(['Odebrany DEV przed tą paczką 0.15.2.0', '4dcc34ec3b462992330f88a22062070fcc0f7092', 'DEV0.15.1.0: CI44164876130 i Pages44164876499 SUCCESS. PRE-PROD pozostaje przy historycznym wspólnym odbiorze0.15.0.2.'])
+    guide.add(['Odebrany DEV przed tą paczką 0.15.2.0', '4dcc34ec3b462992330f88a22062070fcc0f7092', 'Odbiory sprzed tej paczki: DEV0.15.1.0 — CI44164876130 i Pages44164876499 SUCCESS; PRE-PROD0.15.0.2 — historyczny wspólny odbiór wskazany wyżej.'])
     guide.add(['Nawigacja', 'Spis treści zawiera odnośnik do każdej bieżącej tabeli i jej źródła.', 'Filtrowanie od wiersza5; nagłówki zamrożone.'])
     guide.add(['Teksty', 'Pełny tour, samouczek, katalog tekstów i warunkowe literały/szablony z kodu.', 'Zmienne i warunki zachowane; liczba możliwych komunikatów z podstawieniami nie jest skończona.'])
     guide.add(['Scenariusze', 'Katalogi mechanik, scenariusze i deterministyczne przykłady generatorów.', 'Przykłady plansz nie oznaczają wyliczenia wszystkich kombinacji losowych.'])

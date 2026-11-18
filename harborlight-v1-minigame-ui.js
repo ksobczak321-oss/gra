@@ -1,4 +1,4 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-16';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-17';
 // Browser controls and artwork for the two expedition games. The activity model
 // owns every card, collision, goal and deadline; this module only sends input.
 
@@ -145,7 +145,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   const cleanup = [];
   let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
   const timeOffer=element('div',{class:'minigame-v32-time-offer',hidden:true,'data-expedition-time-offer':''});root.append(timeOffer);
-  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-16',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
+  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-17',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
   const v32Help=element('div',{class:'minigame-v32-help','data-expedition-v32-help':''});root.append(v32Help);let helpKey='';
   function renderHelp(){const key=`${run.id}:${run.status}:${status.canUseHelp}:${status.hintUsed}:${status.hint}`;if(key===helpKey)return;helpKey=key;v32Help.replaceChildren();if(status.canUseHelp){if(run.status==='active'&&!status.hintUsed){const b=element('button',{type:'button'},language==='en'?'Free hint':developmentText('UI-056'));b.addEventListener('click',()=>onAction?.({type:'expeditionHint',runId:run.id}));v32Help.append(b);}if(run.status==='lost'){const b=element('button',{type:'button'},language==='en'?'Easier attempt · 50% reward':developmentText('UI-057')+' · 50% nagrody');b.addEventListener('click',()=>onAction?.({type:'expeditionRestartEasier',runId:run.id}));v32Help.append(b);}}if(status.hint)v32Help.append(element('p',{role:'status'},status.hint));}
   let offerKey='';

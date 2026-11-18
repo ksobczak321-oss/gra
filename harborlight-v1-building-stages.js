@@ -101,6 +101,16 @@ export function buildingStagePlacement(manifest,id,level,placement) {
   const scale = Math.min(bounds[2]/Math.max(...family.bboxes.map(b => b[2])),bounds[3]/Math.max(...family.bboxes.map(b => b[3])));
   return {...frame,scale,x:anchor[0]-frame.bbox[2]*scale/2,y:anchor[1]-frame.bbox[3]*scale,w:frame.bbox[2]*scale,h:frame.bbox[3]*scale};
 }
+export function buildingCranePlacement(manifest,id,level,placement) {
+  const frame=buildingStagePlacement(manifest,id,level,placement);
+  if (!frame) return null;
+  const width=Math.max(34,Math.min(100,frame.w*.8)),height=width*manifest.crane.frameRect[3]/manifest.crane.frameRect[2];
+  // A tall Lighthouse already reaches the top of the island. A roof-mounted
+  // crane would disappear beneath the HUD. Stand it beside the tower's base
+  // in world coordinates instead, independent of viewport size and panning.
+  return {width,height,left:id==='lighthouse'?frame.x-width*.5:frame.x+frame.w*.55-width/2,
+    top:id==='lighthouse'?frame.y+frame.h-height*.95:frame.y-height*.65};
+}
 export function buildingStageSmokeSources(manifest,state) {
   if (!manifest?.enabled || state?.ruleset !== 32) return null;
   const sources = [];
@@ -205,8 +215,8 @@ export function createBuildingStageScene({getState,manifest=catalog,host}={}) {
           crane.setAttribute('viewBox',manifest.crane.frameRect.join(' '));crane.setAttribute('preserveAspectRatio','xMidYMid meet');crane.append(image);
           crane.dataset.buildingConstructionCrane=spec.family;crane.style.pointerEvents='none';root.append(crane);cranes.set(spec.key,crane);
         }
-        const width=Math.max(34,Math.min(100,frame.w*.8)),height=width*manifest.crane.frameRect[3]/manifest.crane.frameRect[2];
-        Object.assign(crane.style,{position:'absolute',display:'block',width:`${width}px`,height:`${height}px`,left:`${frame.x+frame.w*.55-width/2}px`,top:`${frame.y-height*.65}px`,zIndex:String(depth+1)});
+        const position=buildingCranePlacement(manifest,spec.family,level);
+        Object.assign(crane.style,{position:'absolute',display:'block',width:`${position.width}px`,height:`${position.height}px`,left:`${position.left}px`,top:`${position.top}px`,zIndex:String(depth+1)});
         crane.dataset.projectOrder=String(project.order ?? '');
       } else if (crane) {crane.remove();cranes.delete(spec.key);}
     }

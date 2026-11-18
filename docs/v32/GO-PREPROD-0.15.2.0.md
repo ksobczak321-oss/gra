@@ -2,7 +2,7 @@
 
 Po przygotowaniu DEV użytkownik zlecił: „wrzuć na pre prod dla ścisłości wprowadzasz doradcę z królestwa, uproszczony tutorial i samouczek, zmieniające się budynki co drugi poziom wraz z rozwojem, żuraw konstrukcyjny na czas budowy”, a następnie doprecyzował: „+zmiany z excela”. To późniejsze GO rozszerza pierwotny zakres samego DEV.
 
-Paczka 0.15.2.0 / cache16 obejmuje:
+Paczka 0.15.2.0 / cache17 obejmuje:
 
 - Doradcę Królestwa: dobrowolne rady i rozmowę o dalszym rozwoju wyspy.
 - Trzy kroki pierwszego wprowadzenia: górny pasek → dolne menu → Gospodarstwo. Pełny katalog i 25 dalszych lekcji pozostają dobrowolne w Pomocy, z zachowaniem historii i nagród.

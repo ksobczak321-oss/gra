@@ -1,16 +1,18 @@
 # HARBORLIGHT — stan środowisk
 
-## Rozbudowa grafiki wszystkich budynków — DEV 0.15.2.0 / cache16, w przygotowaniu
+## Rozbudowa grafiki wszystkich budynków — DEV 0.15.2.0 / cache17, w przygotowaniu
 
 GO użytkownika obejmuje wszystkie 20 funkcji wyspy i dekoracyjną chatkę: 10 wyglądów dla par poziomów 1–2 do 19–20, wspólne warianty na mapie i w menu, średniowieczny żuraw tylko podczas rzeczywistej budowy. Powyżej poziomu 20 pozostaje ostatni wygląd; limit poziomów i model gospodarki bez zmian. Ozdobna chatka nie ma funkcji ani przycisku, a jej wygląd podąża za Ratuszem. Teatr zachowuje funkcjonalny poziom1 i również zmienia wygląd według Ratusza. Port zachowuje istniejący statek.
 
-Przygotowano 200 wariantów, 22 obrazy WebP bez strat (32 305 562 bajty; potwierdzona identyczność pikseli RGBA z wygenerowanymi PNG), 26 masek terenu i osobną galerię. Pakiet ma zamkniętą listę 255 plików; limit 80 MiB zachowuje pełną jakość i dotychczasową granicę 256 wpisów. Nowe testy modelu prezentacji: 15/15 PASS. Przegląd 200 wariantów i kierunkowy program rzeczywistego runtime PASS; pełny startup po lokalnym timeout wymaga końcowego CI. Końcowy odbiór obrazu, pełny CI, publikacja Pages i niezmienny tag nowego źródła pozostają **PENDING**. Arkusze odświeżone i świeżo zwalidowane: master ma 158 kart (100 archiwalnych i 58 bieżących), 62 491 bieżących wierszy i 120 odcisków źródeł, w tym tabelę 200 wariantów. Redakcyjny Excel zachowuje 6 kart, 413 wierszy i pustą kolumnę C. **Późniejsze GO: DEV → PRE-PROD po zielonym CI, razem z Doradcą Królestwa, krótkim wprowadzeniem i zaakceptowanymi zmianami z Excela. Konta i postęp zachowane; PROD/DNS/reset poza zakresem.**
+Przygotowano 200 wariantów, 22 obrazy WebP bez strat (32 305 562 bajty; potwierdzona identyczność pikseli RGBA z wygenerowanymi PNG), 26 masek terenu i osobną galerię. Pakiet ma zamkniętą listę 255 plików; limit 80 MiB zachowuje pełną jakość i dotychczasową granicę 256 wpisów. Nowe testy modelu prezentacji: 17/17 PASS. Przegląd 200 wariantów i kierunkowy program rzeczywistego runtime PASS; pełny startup po lokalnym timeout wymaga końcowego CI. Końcowy odbiór obrazu, pełny CI, publikacja Pages i niezmienny tag nowego źródła pozostają **PENDING**. Arkusze odświeżone i świeżo zwalidowane: master ma 158 kart (100 archiwalnych i 58 bieżących), 62 491 bieżących wierszy i 120 odcisków źródeł, w tym tabelę 200 wariantów. Redakcyjny Excel zachowuje 6 kart, 413 wierszy i pustą kolumnę C. **Późniejsze GO: DEV → PRE-PROD po zielonym CI, razem z Doradcą Królestwa, krótkim wprowadzeniem i zaakceptowanymi zmianami z Excela. Konta i postęp zachowane; PROD/DNS/reset poza zakresem.**
 
 [Zakres](v32/GO-BUILDING-UPGRADE-ART.md) · [Dowody](v32/BUILDING-UPGRADE-ART-EVIDENCE.json) · [Grafiki](v32/BUILDING-UPGRADE-ART-ASSETS.json).
 
-[Gra DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-16) · [Galeria 200 wariantów](https://ksobczak321-oss.github.io/gra/harborlight-building-gallery.html?v=frontend-v32-16).
+[Gra DEV](https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?profile=new-player&v=frontend-v32-17) · [Galeria 200 wariantów](https://ksobczak321-oss.github.io/gra/harborlight-building-gallery.html?v=frontend-v32-17).
 
 Pierwszy CI44279863651 dla9fc8cb1 zakończył się FAILURE na odciskach katalogu minigier. Odświeżono katalog i110 instrukcji bez zmian treści poza źródłowymSHA; kolejny SHA wymaga własnego pełnego CI. [GO PRE-PROD](v32/GO-PREPROD-0.15.2.0.md).
+
+Dodatkowy odbiór wykrył zasłonięcie żurawia wysokiej Latarni przez HUD w cache16. Cache17 przenosi go obok podstawy wieży: 160/160 przypadków DOM/alpha i 4 kontrole negatywne PASS, 38 pozycji innych rodzin bez zmiany. Cache16 nie jest promowany do PRE-PROD.
 
 ## Doradca Królestwa — DEV 0.15.1.0 / cache15, odebrany
 

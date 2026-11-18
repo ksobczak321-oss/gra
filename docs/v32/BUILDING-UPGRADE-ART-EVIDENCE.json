@@ -3,8 +3,8 @@
   "as_of": "2026-11-18",
   "scope": "DEV_THEN_AUTHORIZED_PREPROD",
   "application_version": "0.15.2.0",
-  "cache": "frontend-v32-16",
-  "status": "PROVENANCE_REFRESH_LOCAL_PASS_NEW_CI_PENDING",
+  "cache": "frontend-v32-17",
+  "status": "CRANE_VISIBILITY_FIX_LOCAL_PASS_CANONICAL_REFRESH_PENDING",
   "authorization": {
     "initial": "10 wersji każdego budynku oraz średniowieczny żuraw w czasie budowy",
     "development_GO": "wrzuć na deva",
@@ -140,29 +140,7 @@
   },
   "public_file_audit": "PENDING",
   "native_public_browser": "PENDING_NO_RESULT_CLAIMED",
-  "workbook_refresh": {
-    "status": "PASS_BUILD_AND_FRESH_VALIDATION",
-    "master": {
-      "source": "8c363bcea4ebf2e577a035d97b97c2a0b21d547f",
-      "sha256": "f39b8c70149b00e1fb49595ae7650be28dce485e92b24fb97f574652aa9c81af",
-      "bytes": 7731615,
-      "sheets": 158,
-      "current_sheets": 58,
-      "current_rows": 62491,
-      "source_fingerprints": 120,
-      "building_stage_rows": 200,
-      "historical_sheets_unchanged": 100,
-      "actual_simulation_profiles": 3
-    },
-    "editorial": {
-      "source": "c4f883d5a83fc3ce9f4a3649f1dccd466ec1cbcf",
-      "sha256": "4371cd3efeef39d4117c3bb73736bed4da02381d2aa7874b238c35f9e1a756ab",
-      "sheets": 6,
-      "rows": 413,
-      "C_all_blank": true,
-      "source_fingerprints": 105
-    }
-  },
+  "workbook_refresh": "PENDING_FRESH_CACHE17_SOURCE",
   "tag": {
     "name": null,
     "object": null,
@@ -261,6 +239,41 @@
     "txt_documents_only_source_header_changed": 55,
     "docx_documents_only_source_header_changed": 55,
     "docx_uncompressed_parts_compared": 1045,
-    "minigames_app_js_unchanged": true
+    "minigames_app_js_unchanged": true,
+    "next_refresh": "REQUIRED_AFTER_CACHE17_CODE_COMMIT"
+  },
+  "second_attempt": {
+    "source_sha": "05d049dc1a8aca53b011879d4163355791f89a85",
+    "cache": "frontend-v32-16",
+    "CI": {
+      "run_id": 44281835207,
+      "status": "IN_PROGRESS_AT_FIX_FREEZE"
+    },
+    "Pages": {
+      "run_id": 44281851093,
+      "status": "SUCCESS"
+    },
+    "public_audit": {
+      "status": "PASS",
+      "files": 254,
+      "bytes": 69262104
+    },
+    "quality_gate": "FAIL_Lighthouse19_crane_66.87percent_hidden_by_HUD_NO_TAG_OR_PREPROD"
+  },
+  "crane_visibility_fix": {
+    "status": "PASS_LOCAL",
+    "pure_tests": 17,
+    "actual_DOM_alpha_cases": 160,
+    "viewport_widths": [
+      1672,
+      1440,
+      901,
+      390
+    ],
+    "negative_controls": 4,
+    "independent_before_after_cases": 43,
+    "unchanged_other_placements": 38,
+    "placement": "Lighthouse at side of base in fixed world coordinates; all other families unchanged",
+    "report": "/workspace/work/building-upgrade-release-20261118-r2/crane-visibility-fixed/comparison.json"
   }
 }

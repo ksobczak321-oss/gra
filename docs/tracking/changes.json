@@ -30418,7 +30418,7 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16",
+        "dev": "CACHE17_LOCAL_PASS_NEW_SOURCE_CI_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE",
         "preprod": "authorized_after_own_new_exact_source_CI_and_DEV_acceptance",
         "prod": "postponed_by_user",
@@ -30501,7 +30501,7 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16",
+        "dev": "CACHE17_LOCAL_PASS_NEW_SOURCE_CI_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE",
         "preprod": "authorized_after_own_new_exact_source_CI_and_DEV_acceptance",
         "prod": "postponed_by_user",
@@ -33698,8 +33698,8 @@
     "building_upgrade_art_task": {
       "as_of": "2026-11-18",
       "version": "0.15.2.0",
-      "cache": "frontend-v32-16",
-      "status": "PROVENANCE_REFRESH_NEW_CI_PENDING",
+      "cache": "frontend-v32-17",
+      "status": "CRANE_FIX_LOCAL_PASS_CANONICAL_REFRESH_PENDING",
       "DEV_only": false,
       "PREPROD_authorized": true,
       "PROD_DNS": "NO_ACTION",

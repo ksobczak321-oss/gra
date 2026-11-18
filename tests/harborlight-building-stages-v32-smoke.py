@@ -156,7 +156,7 @@ with sync_playwright() as p:
     # not by modifying the application's private game state.
     context,page=context_for(browser);loaded(page)
     result=page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-16'),m=api.getBuildingStages();
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17'),m=api.getBuildingStages();
         const make=color=>{const c=document.createElement('canvas');c.width=1672;c.height=941;const x=c.getContext('2d');x.fillStyle=color;x.fillRect(0,0,1672,941);return c};
         const composed=api.composeBuildingTerrain(make('rgb(200,10,20)'),make('rgb(12,34,56)'),m),ctx=composed.getContext('2d');
         const pixel=(x,y)=>[...ctx.getImageData(x,y,1,1).data];
@@ -177,7 +177,7 @@ with sync_playwright() as p:
     print('PASS compositor pixels, protected boat, state replacement and depth',flush=True)
     page.clock.resume()
     clip=page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-16');
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17');
         const wrapper=document.createElement('span');api.applyBuildingStageArtwork(wrapper,'house',1);
         const svg=wrapper.firstElementChild,image=svg.querySelector('image'),atlas=api.getBuildingStageImage(image.getAttribute('href'));
         const original=document.createElement('canvas');original.width=atlas.naturalWidth;original.height=atlas.naturalHeight;original.getContext('2d').drawImage(atlas,0,0);
@@ -219,7 +219,7 @@ with sync_playwright() as p:
     assert actual_manifest.get('enabled') is True,'The real release must enable its complete staged artwork'
     context,page=context_for(browser,synthetic=False);loaded(page)
     real=page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-16'),m=api.getBuildingStages();
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17'),m=api.getBuildingStages();
         let variants=0;const failures=[];
         for(const id of api.BUILDING_STAGE_IDS){
             const spec=m.buildings[id],img=api.getBuildingStageImage(spec.src),c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
@@ -239,6 +239,68 @@ with sync_playwright() as p:
     }''')
     assert real['variants']==200 and not real['failures'],real
     assert real['sprites']==20+len(actual_manifest.get('decorations',[{}])) and real['actualTheatre']==1 and real['source']=='3',real
-    page.screenshot(path=str(OUTPUT/'real-atlases-level5-active-crane.png'));context.close();browser.close()
-(OUTPUT/'report.json').write_text(json.dumps({'runtime':report,'compositor_and_recovery':result,'atlas_clip_negative_control':clip,'startup_hold_and_corruption':'PASS','real_atlases':real,'synthetic_images_not_art_approval':True},indent=2)+'\n')
+    page.screenshot(path=str(OUTPUT/'real-atlases-level5-active-crane.png'))
+    # Geometry fixtures do not modify the application's model or save. Theatre
+    # construction is hypothetical here (its actual building level stays1).
+    # Derive the ink bounds from the actual crane pixels, not its transparent
+    # outer SVG box: the old Lighthouse19 hid its working arm below the HUD.
+    page.evaluate('''async()=>{
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17'),m=api.getBuildingStages();
+        const original=document.querySelector('[data-building-stage-scene]'),img=api.getBuildingStageImage(m.crane.src),[x,y,w,h]=m.crane.frameRect;
+        const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,x,y,w,h,0,0,w,h);
+        const pixels=ctx.getImageData(0,0,w,h).data;let left=w,top=h,right=-1,bottom=-1;
+        for(let yy=0;yy<h;yy++)for(let xx=0;xx<w;xx++)if(pixels[(yy*w+xx)*4+3]>16){left=Math.min(left,xx);right=Math.max(right,xx);top=Math.min(top,yy);bottom=Math.max(bottom,yy);}
+        const fixture={ruleset:32,buildings:Object.fromEntries(api.BUILDING_STAGE_IDS.map(id=>[id,{level:1}])),constructionProjects:[]};
+        const audit={api,m,original,world:fixture,ink:[left,top,right-left+1,bottom-top+1]};
+        audit.scene=api.createBuildingStageScene({manifest:m,getState:()=>audit.world,host:document.querySelector('#stage')});
+        original.hidden=true;window.stageCraneGeometry=audit;
+    }''')
+    crane_geometry=[];world_positions={}
+    for width,height in [(1672,941),(1440,1000),(901,1000),(390,844)]:
+        page.set_viewport_size({'width':width,'height':height})
+        # Let the ordinary HUD populate the responsive menu after resizing;
+        # then hide only its original visual layer beneath this test fixture.
+        page.clock.run_for(1100)
+        page.evaluate('stageCraneGeometry.original.hidden=true')
+        for level in [1,19]:
+            for identity in actual_manifest['buildings']:
+                row=page.evaluate('''([level,id])=>{
+                    const a=stageCraneGeometry;
+                    a.world={ruleset:32,buildings:Object.fromEntries(a.api.BUILDING_STAGE_IDS.map(k=>[k,{level:k==='theatre'?1:level}])),constructionProjects:[{building:id,stage:'building',buildRemaining:300,order:1}]};
+                    a.scene.update();window.dispatchEvent(new CustomEvent('island-tour-focus',{detail:{region:a.m.buildings[id].mapRect}}));
+                    const node=a.scene.element.querySelector('[data-building-construction-crane="'+id+'"]'),r=node.getBoundingClientRect(),[x,y,w,h]=a.ink,[,,fw,fh]=a.m.crane.frameRect;
+                    const inkBounds=r=>({left:r.left+x/fw*r.width,top:r.top+y/fh*r.height,right:r.left+(x+w)/fw*r.width,bottom:r.top+(y+h)/fh*r.height});
+                    const paint=inkBounds(r);
+                    const box=n=>n.getBoundingClientRect().toJSON(),visible=s=>[...document.querySelectorAll(s)].filter(n=>n.getClientRects().length).map(box);
+                    const viewport=box(document.querySelector('#viewport')),stage=box(document.querySelector('#stage')),hud=visible('.island-topbar,.mobile-island-hud');
+                    let oldWouldClip=false;
+                    if(id==='lighthouse'&&level===19){
+                        const saved=node.style.cssText,f=a.api.buildingStagePlacement(a.m,id,level),cw=parseFloat(node.style.width),ch=parseFloat(node.style.height);
+                        node.style.left=`${f.x+f.w*.55-cw/2}px`;node.style.top=`${f.y-ch*.65}px`;
+                        const previous=inkBounds(node.getBoundingClientRect());
+                        oldWouldClip=previous.top<Math.max(viewport.top,stage.top)-1||hud.some(h=>Math.min(previous.right,h.right)-Math.max(previous.left,h.left)>1&&Math.min(previous.bottom,h.bottom)-Math.max(previous.top,h.top)>1);
+                        node.style.cssText=saved;
+                    }
+                    return{id,level,paint,viewport,stage,hud,oldWouldClip,world:[node.style.left,node.style.top,node.style.width,node.style.height]};
+                }''',[level,identity])
+                paint=row['paint'];vp=row['viewport'];stage_box=row['stage']
+                assert paint['left']>=max(vp['left'],stage_box['left'],0)-1,(width,identity,level,row)
+                assert paint['right']<=min(vp['right'],stage_box['right'],width)+1,(width,identity,level,row)
+                assert paint['top']>=max(vp['top'],stage_box['top'],0)-1,(width,identity,level,row)
+                assert paint['bottom']<=min(vp['bottom'],stage_box['bottom'],height)+1,(width,identity,level,row)
+                for hud in row['hud']:
+                    overlap_width=min(paint['right'],hud['right'])-max(paint['left'],hud['left'])
+                    overlap_height=min(paint['bottom'],hud['bottom'])-max(paint['top'],hud['top'])
+                    assert overlap_width<=1 or overlap_height<=1,(width,identity,level,'Crane working arm beneath HUD',row)
+                key=(identity,level)
+                assert world_positions.setdefault(key,row['world'])==row['world'],'World placement changed with viewport or panning'
+                if identity=='lighthouse' and level==19:
+                    assert row['oldWouldClip'],'Negative control failed to recreate the former Lighthouse HUD clipping'
+                crane_geometry.append({'width':width,'height':height,**row})
+                if identity=='lighthouse' and level==19 and width in [1672,390]:
+                    page.screenshot(path=str(OUTPUT/f'real-lighthouse-crane19-{width}.png'))
+    page.evaluate('stageCraneGeometry.scene.destroy();stageCraneGeometry.original.hidden=false;delete window.stageCraneGeometry')
+    print('PASS160actual crane alpha-bounds:20families×min/max×1672/1440/901/390, fixed world placement and no HUD clipping',flush=True)
+    context.close();browser.close()
+(OUTPUT/'report.json').write_text(json.dumps({'runtime':report,'compositor_and_recovery':result,'atlas_clip_negative_control':clip,'startup_hold_and_corruption':'PASS','real_atlases':real,'crane_alpha_geometry':crane_geometry,'synthetic_images_not_art_approval':True},indent=2)+'\n')
 print('PASS staged-building runtime:20families+noninteractive decoration,real model finish,cranes,ground order,same frame across views,physical taps,live ocean/waterfall,strict startup and protected pixels. Synthetic test images only.')

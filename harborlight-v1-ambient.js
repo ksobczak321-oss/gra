@@ -2,7 +2,7 @@ import { drawWater } from './harborlight-v1-water.js?v=living-world-3';
 import { drawLife } from './harborlight-v1-life.js?v=living-world-3';
 import { drawSmoke } from './harborlight-v1-smoke.js?v=living-world-3';
 import { createInhabitantsBackground } from './harborlight-v1-inhabitants.js?v=living-world-3';
-import { composeBuildingTerrain, getBuildingStageImage, buildingStageSmokeSources } from './harborlight-v1-building-stages.js?v=frontend-v32-16';
+import { composeBuildingTerrain, getBuildingStageImage, buildingStageSmokeSources } from './harborlight-v1-building-stages.js?v=frontend-v32-17';
 
 const WIDTH = 1672;
 const HEIGHT = 941;

@@ -2,7 +2,7 @@
 
 Użytkownik zamówił dziesięć wersji każdego budynku i średniowieczny żuraw widoczny w czasie budowy. Po pierwszych planszach zatwierdził implementację słowami „wrzuć na deva”, a następnie doprecyzował: **„zasada ma dotyczyć wszystkich budynków na wyspie”**. Zakres obejmuje wszystkie 20 istniejących funkcji budynków, również Ratusz, Dom, Port, Latarnię i Kamieniołom.
 
-Przygotowywany kandydat ma wersję **0.15.2.0** i cache modułów **`frontend-v32-16`**. Pierwotne GO obejmowało DEV, Git i Pages. Późniejsze jawne GO rozszerza paczkę o standardową promocję PRE-PROD po zielonym CI, razem z Doradcą Królestwa, krótkim wprowadzeniem i zaakceptowanymi zmianami z Excela. [Dokładny zakres promocji](GO-PREPROD-0.15.2.0.md). Konta i postęp zostają zachowane; PROD, DNS i reset pozostają poza operacją. Własne CI, Pages, odbiór opublikowanych bajtów i niezmienny tag nowego źródła są **PENDING**; wyniki wcześniejszej wersji 0.15.1.0 ich nie zastępują.
+Przygotowywany kandydat ma wersję **0.15.2.0** i cache modułów **`frontend-v32-17`**. Pierwotne GO obejmowało DEV, Git i Pages. Późniejsze jawne GO rozszerza paczkę o standardową promocję PRE-PROD po zielonym CI, razem z Doradcą Królestwa, krótkim wprowadzeniem i zaakceptowanymi zmianami z Excela. [Dokładny zakres promocji](GO-PREPROD-0.15.2.0.md). Konta i postęp zostają zachowane; PROD, DNS i reset pozostają poza operacją. Własne CI, Pages, odbiór opublikowanych bajtów i niezmienny tag nowego źródła są **PENDING**; wyniki wcześniejszej wersji 0.15.1.0 ich nie zastępują.
 
 ## Dziesięć wyglądów
 
@@ -56,7 +56,7 @@ Teatr jest wyjątkiem wynikającym z istniejącego modelu: ma `maxLevel: 1`, a n
 
 Średniowieczny drewniany żuraw kołowrotowy jest warstwą grafiki, bez przechwytywania kliknięć. Pojawia się przy budynku tylko wtedy, gdy istniejące zwykłe lub płatne zlecenie faktycznie jest w etapie `building` i ma dodatni pozostały czas `buildRemaining`.
 
-Kolejka, kompletowanie materiałów i transport nie wystarczają do pokazania żurawia. W trakcie budowy pozostaje aktualny wygląd budynku; docelowy etap pojawia się dopiero po zakończeniu rozbudowy przez istniejący model. Anulowanie, dokończenie po nieobecności, ponowne wejście i krótka usługa płatna muszą usuwać lub odtwarzać nakładkę zgodnie z rzeczywistym stanem. Renderer nie przyspiesza zegara i nie zapisuje nowego postępu.
+Kolejka, kompletowanie materiałów i transport nie wystarczają do pokazania żurawia. W trakcie budowy pozostaje aktualny wygląd budynku; docelowy etap pojawia się dopiero po zakończeniu rozbudowy przez istniejący model. Anulowanie, dokończenie po nieobecności, ponowne wejście i krótka usługa płatna muszą usuwać lub odtwarzać nakładkę zgodnie z rzeczywistym stanem. Renderer nie przyspiesza zegara i nie zapisuje nowego postępu. Przy wysokiej Latarni żuraw stoi obok podstawy na stałych współrzędnych wyspy, aby górny pasek nie zasłaniał ramienia. Pozostałe rodziny zachowują położenie nad budynkiem.
 
 ## Wspólny obraz mapy i menu
 

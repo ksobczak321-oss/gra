@@ -9,7 +9,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `LOCAL_PASS_PUBLICATION_PENDING_0.15.2.0_cache16` |
+| DEV | `CACHE17_LOCAL_PASS_NEW_SOURCE_CI_PENDING` |
 | CI | `PENDING_OWN_EXACT_SOURCE` |
 | PRE-PROD | `authorized_after_own_new_exact_source_CI_and_DEV_acceptance` |
 | PROD | `postponed_by_user` |
