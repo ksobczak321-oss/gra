@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "encoding": "lossless WebP; exact RGBA pixel identity checked for all22",
+  "assets": [
+    {
+      "id": "crane",
+      "source_png": "exec-28afa1d8-3e72-4632-a693-e337d6acdd2d.png",
+      "source_sha256": "aa900114f8cb6bf170acaac46a53ab29b2f3b432352c020ffc6a30499397b7d3",
+      "webp_sha256": "f3f5c7da67c8e1bcc66fbc5a97eecbb8ca9ac08ae1037ccd739a0599c476ea2b",
+      "width": 2172,
+      "height": 724,
+      "png_bytes": 1444830,
+      "webp_bytes": 1065926,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "townhall",
+      "source_png": "exec-3e587936-cda9-4bb4-9298-165631035aa5.png",
+      "source_sha256": "c0545c778fe5b99d187c54391d68b4d8396967bb0ee851c71932b15d76ca88a1",
+      "webp_sha256": "836f5dd91db45e8e9adc4d8488cad1679e72a2fd34af03d23e2ee9cda086c749",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 1840298,
+      "webp_bytes": 1382070,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "terrain",
+      "source_png": "exec-82f865cd-57c4-48f0-baf0-12d1f4ca5da9.png",
+      "source_sha256": "4c194856c319f8a56cadb68768349309f69532f0645dbbc33cf229c950c52652",
+      "webp_sha256": "020defe85185be91348fbac308c1f8f0fd419dcbb2a0484716153a5c938b52a5",
+      "width": 1672,
+      "height": 941,
+      "png_bytes": 3101554,
+      "webp_bytes": 2388598,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "house",
+      "source_png": "exec-805e2504-71ba-48fb-8c75-f792fdf4e9a6.png",
+      "source_sha256": "a383c6901310ea51fbf28f639205e9ed3a6c1c9e40b96ab7cc3c29bc6b845315",
+      "webp_sha256": "ed7076142a816e2a06ace1030002d9387a3c6fdefb51deb61ec2f9bf02485c6f",
+      "width": 1774,
+      "height": 887,
+      "png_bytes": 1898144,
+      "webp_bytes": 1409766,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "farm",
+      "source_png": "exec-464d5d3c-09bc-46e7-b79f-8215abd84346.png",
+      "source_sha256": "e7e283d9d6b03e7bb4ffc71c7346c6205f2d2984885a0da7f0e2540c0a4e3d8d",
+      "webp_sha256": "29eebdb2537c8ff52b7fb59e85c5b202d5b0126fa39ffb1ee68b50a2d31c84ca",
+      "width": 1774,
+      "height": 887,
+      "png_bytes": 1747185,
+      "webp_bytes": 1297138,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "windmill",
+      "source_png": "exec-f466feff-a9e1-4613-a7f3-061688714056.png",
+      "source_sha256": "8d85e6a7c46dd23e097689500e025e853c898a17ce4e7a2fb34477b0d7c3b094",
+      "webp_sha256": "33d798b4c8286ac92851d0e760bd499205e9638809ea91d2942048bb3a091a7c",
+      "width": 1752,
+      "height": 897,
+      "png_bytes": 2164027,
+      "webp_bytes": 1523898,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "lumber",
+      "source_png": "exec-2d7a10e5-5999-4585-83dd-76a07646d5bf.png",
+      "source_sha256": "4f248cb080f9d5b511396d0be566e427b6a8acf09d654fcc92224a9cf19d2540",
+      "webp_sha256": "6eaea52bdfb4f159b4726a64950c8b4520fb76df0e33fc8781c885dc766543a8",
+      "width": 1774,
+      "height": 887,
+      "png_bytes": 1870854,
+      "webp_bytes": 1351288,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "quarry",
+      "source_png": "exec-b1ca627d-94f5-44cb-9fb0-30c174be4e63.png",
+      "source_sha256": "f4f6c389931937592968eff01eb0bfef28e5187b414061f0464f0bb0051e1274",
+      "webp_sha256": "5cffdb713941e13393c35debd1807712ef7574ee8d18b897f95cd3e570160f52",
+      "width": 1774,
+      "height": 887,
+      "png_bytes": 2236410,
+      "webp_bytes": 1618108,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "sawmill",
+      "source_png": "exec-59174908-3d5f-42bd-ac15-0dcfc2170c40.png",
+      "source_sha256": "41cab1503e1c7ecc2fa26ce1e36fc53f99c6b4512356f081210d4e798a3054df",
+      "webp_sha256": "89b9a1d98383e077724da351630454112a66a03ac86f6c1739d7e3a3c141d07b",
+      "width": 1774,
+      "height": 887,
+      "png_bytes": 2248802,
+      "webp_bytes": 1581556,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "warehouse",
+      "source_png": "exec-ac6165cf-636d-4835-a9cd-573f1c4c42b6.png",
+      "source_sha256": "f1204140cfa2d92d6dc6cda02fd926e4ccbdde18c0d5c881c08532617291235b",
+      "webp_sha256": "04a41d01b670bd2a4427f040cdf22232bbac2b59ef75744193c8032652508613",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 1995780,
+      "webp_bytes": 1526370,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "bakery",
+      "source_png": "exec-28563d5d-a789-4987-9a8e-b298cd595b1c.png",
+      "source_sha256": "9f7b7170967711630ed943d206d3019f9c6f83b0efbac0428da1f40fb6727c1c",
+      "webp_sha256": "b49104a2fed07b937656a4b145f468a09be1fc34af2c6aa800194834c3152725",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 2399082,
+      "webp_bytes": 1832714,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "dairy",
+      "source_png": "exec-d2dfb480-ce98-4859-871a-8cccddec1f15.png",
+      "source_sha256": "6a6634baf120aa8f47e43e148b0a563e698b3ab11414e519c70af9d03e23a502",
+      "webp_sha256": "19b19eff5b21c64236d003da7470a95f6d1b66d34c3cb1c62ac7f8916c0abcde",
+      "width": 1774,
+      "height": 887,
+      "png_bytes": 1992964,
+      "webp_bytes": 1505702,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "slaughterhouse",
+      "source_png": "exec-830cf741-a8fb-46b6-a5ae-c81d208d4f2e.png",
+      "source_sha256": "2cb87006711579d520fa4ea70da66643503a396a3bc480355a96304b939f07a7",
+      "webp_sha256": "dfa0728500cb5abfd67e7c0b9a8f9a29e270b58378cec51f64b2f200484411b8",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 2027655,
+      "webp_bytes": 1390064,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "academy",
+      "source_png": "exec-d915649c-4099-45e8-b623-ac27905fe596.png",
+      "source_sha256": "3d89e01cb075f6ef5b834d53f77ec644610992550d74a374724707064eb4fff0",
+      "webp_sha256": "033ac371270313c8e2edfd863b81d63423f5d12bd7b6a304053d95f633c851b6",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 2108980,
+      "webp_bytes": 1561998,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "leatherworks",
+      "source_png": "exec-cb0911ff-e16b-4d07-b1a8-a60a2082e337.png",
+      "source_sha256": "d978de7e651e25adca11db580d333209a0e594e59bf6287f68e5a863d0ca21ba",
+      "webp_sha256": "065c57e2a2e4c68a60ee1685fc6a4182696a7bfcb25a5f1bda099483e7819da9",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 2008273,
+      "webp_bytes": 1392062,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "fisher",
+      "source_png": "exec-59061b6c-e2fd-4e04-adc3-9e7843070b73.png",
+      "source_sha256": "c7be8169b00c63b3715b76c2fb9ca14f56b3d5bbf9300927613e05eceb0035dd",
+      "webp_sha256": "6e536a2bb0f9d4b9f8e22dd0a29a42608d2894fa3d042c2d22fff77bd213adea",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 2688750,
+      "webp_bytes": 1548386,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "chapel",
+      "source_png": "exec-2ef22b9b-7d57-4338-ab03-0571e7f4beff.png",
+      "source_sha256": "5e3608ab11bd778282831692e2feeb2564c8c63a0856eb35786863b8d954f865",
+      "webp_sha256": "a91c3ab69174ca5f1171186c112c198ea030aa249154ff5a0cb7b8b7dbaf1424",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 1710832,
+      "webp_bytes": 1260658,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "barracks",
+      "source_png": "exec-ebfd478f-c95f-460a-b662-37bf594cc67d.png",
+      "source_sha256": "5d725e0c98cf20f4befdd44bfb9a73f23e6bec05655114b15227558625128547",
+      "webp_sha256": "774d535a5678bd5af9ad292763d8d94ad040d521e630feb515bf2d2fc5d3d86b",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 1729836,
+      "webp_bytes": 1283968,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "theatre",
+      "source_png": "exec-5896bb2b-8644-4d62-815c-d78d4c8d811f.png",
+      "source_sha256": "ac0d1b5a150bea6ddbf36f1c773f38ec2b15a2329479dcc0884d4bd3446952fb",
+      "webp_sha256": "bf683735c1677cb59ba47f956513f79cf3ec9a26c335cb7f6edcddf8249881c3",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 2067162,
+      "webp_bytes": 1502016,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "lighthouse",
+      "source_png": "exec-16b7a1df-2939-4df6-ae6a-2ef86d154061.png",
+      "source_sha256": "76f91c8d481118632591b3a2846f1bd1468f25658432d279a370f5184cf4cadc",
+      "webp_sha256": "a26e720dd846cada16b904531c1efb392188e324ad5fa3c7fb533b59cfb2f50f",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 1561505,
+      "webp_bytes": 1061526,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "market",
+      "source_png": "exec-f2037238-dbd7-4cc3-a6c2-24b419d5733b.png",
+      "source_sha256": "78525a50b43a76ff7269a1ffa89948a24217720f1f3eb628de25638080013807",
+      "webp_sha256": "559f7f44ab8449725e5751dccfd7a39cc599d24acabcb153c1e0459de2dccb7e",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 3116003,
+      "webp_bytes": 1679422,
+      "rgba_pixel_identity": true
+    },
+    {
+      "id": "dock",
+      "source_png": "exec-2358b7fb-8b83-4bf7-a739-b5ace80f1712.png",
+      "source_sha256": "5b9657d2350c39d5e7407371d0330a3c3435d737f99e059dc9b96ca1544d3e82",
+      "webp_sha256": "de4fd4687a30e71f3a0b4e98e255442b97df3825232d2ac31c2f5fc04d631409",
+      "width": 1983,
+      "height": 793,
+      "png_bytes": 1576493,
+      "webp_bytes": 1142328,
+      "rgba_pixel_identity": true
+    }
+  ],
+  "asset_bytes": 32305562,
+  "decoded_rgba_bytes": 138405596,
+  "alpha_bbox_threshold": 16,
+  "frame_layout": {
+    "columns": 5,
+    "rows": 2,
+    "count": 10
+  },
+  "image_generation_sources": "User-approved architectural direction and current map; generated PNG originals retained outside repository",
+  "smoke_anchor_families": [
+    "house",
+    "bakery"
+  ],
+  "frame_bounds_method": "Read-only alpha>16 connected-component analysis over the complete unchanged atlas, ten main objects ordered5x2; per-object frames with3px margin. Explicit bounds prevent neighbouring art or next-row flags entering a frame."
+}

@@ -13,6 +13,7 @@ from pathlib import Path, PurePosixPath
 import re
 import time
 from urllib.parse import quote, urlsplit
+from helpers.building_stage_acceptance import staged_manifest, assert_scene, assert_art
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -81,8 +82,14 @@ def assert_modern_hosted_front(page, manifest, expected_version):
     assert version >= (0, 15, 0, 0), 'Unsupported application version for hosted UI acceptance'
     assert isinstance(manifest.get('files'), dict), 'The verified release manifest is required for hosted UI acceptance'
     assert page.locator('body').get_attribute('data-ruleset') == '32', 'The actual authenticated island rendered the old UI instead of the current v32 front'
-    page.wait_for_function('''()=>document.querySelectorAll('[data-accepted-artwork]').length===4&&
-      [...document.querySelectorAll('[data-accepted-map-art] img')].every(image=>image.complete&&image.naturalWidth>0)''', timeout=30000)
+    stages = staged_manifest(Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',ROOT)))
+    if stages:
+        page.wait_for_function('''()=>document.querySelectorAll('[data-building-stage-map]:not([data-building-stage-decoration])').length===20&&document.querySelector('#island-ambient')?.dataset.ready==='true' ''', timeout=30000)
+        stage_report=assert_scene(page,stages)
+    else:
+        page.wait_for_function('''()=>document.querySelectorAll('[data-accepted-artwork]').length===4&&
+          [...document.querySelectorAll('[data-accepted-map-art] img')].every(image=>image.complete&&image.naturalWidth>0)''', timeout=30000)
+        stage_report=None
     snapshot = page.evaluate('''()=>{
       const all=selector=>[...document.querySelectorAll(selector)];
       const region=node=>[node.style.left,node.style.top,node.style.width,node.style.height].map(parseFloat);
@@ -114,7 +121,10 @@ def assert_modern_hosted_front(page, manifest, expected_version):
     assert len(markers) == 7 and set(markers) == {'bakery','dairy','slaughterhouse','fisher','leatherworks','academy','barracks'}, ('Authenticated v32 map is missing its seven new building markers', markers)
     assert all(item['hit'] == 1 for item in snapshot['markers']), 'Each new map marker must retain its native hit target'
     assert snapshot['acceptedLayers'] == 1 and snapshot['acceptedOcean'] == 1, 'Authenticated v32 map lacks the accepted artwork and ocean layers'
-    assert len(snapshot['acceptedPatches']) == 4 and set(snapshot['acceptedPatches']) == {'farm','lumber','slaughterhouse','fisher'}, ('Authenticated v32 map lacks the four accepted art patches', snapshot['acceptedPatches'])
+    if stages:
+        assert snapshot['acceptedPatches'] == [], 'Old patches would repaint outdated building levels'
+    else:
+        assert len(snapshot['acceptedPatches']) == 4 and set(snapshot['acceptedPatches']) == {'farm','lumber','slaughterhouse','fisher'}, ('Authenticated v32 map lacks the four accepted art patches', snapshot['acceptedPatches'])
     theatre = next(item for item in snapshot['functions'] if item['id'] == 'theatre')
     assert theatre['region'] == [634,360,112,66] and snapshot['oldTheatreScenes'] == 0, ('Authenticated Theatre must use its accepted native region', theatre)
     groups = {
@@ -124,6 +134,11 @@ def assert_modern_hosted_front(page, manifest, expected_version):
     cards = snapshot['dockCards']
     assert len(cards) == 19 and {item['id'] for item in cards} == groups['administration'] | groups['economy'], ('Authenticated dock must retain nine Administration and ten Economy entries regardless of locks', cards)
     assert all(item['art'] == item['id'] for item in cards), 'Authenticated dock thumbnails must show their accepted building artwork'
+    if stages:
+        levels=page.locator('[data-building-stage-scene] [data-building-stage-map]:not([data-building-stage-decoration])').evaluate_all('ns=>Object.fromEntries(ns.map(n=>[n.dataset.mapBuildingArt,Number(n.dataset.level)]))')
+        for card in page.locator('[data-building-dock] [data-dock-building]').all():
+            identity=card.get_attribute('data-dock-building')
+            assert_art(card.locator('[data-map-building-art]'),stages,identity,levels[identity])
     assert snapshot['tabs'] == ['administration','economy','resources','decorations','paths'], ('Authenticated v32 dock must retain all five categories', snapshot['tabs'])
     active = snapshot['dockCategory']
     assert active in groups and {item['id'] for item in cards if not item['hidden']} == groups[active], ('Authenticated dock must show its complete selected building group', active, cards)
@@ -145,7 +160,7 @@ def assert_modern_hosted_front(page, manifest, expected_version):
     for item in resources:
         assert item['icon'] == item['id'] and item['role'] == 'img' and item['label'] and 'harborlight-goods-v32.png' in (item['background'] or '') and not item['fallback'] and not item['oldSvg'], ('Authenticated resource dock must use the current labeled product atlas', item)
     assert len({item['position'] for item in resources}) == len(resources), 'Authenticated resource dock must use distinct product atlas tiles'
-    return {'required': True, 'app_version': expected_version, 'map_functions':20,'new_markers':7,'accepted_art_patches':4,'administration_entries':9,'economy_entries':10,'native_theatre':True,'dock_right_edge_aligned':True,'ship_clear':True,'dark_ui':True,'current_product_icons':len(products)}
+    return {'required': True, 'app_version': expected_version, 'map_functions':20,'new_markers':7,'accepted_art_patches':0 if stages else 4,'building_stages':stage_report,'administration_entries':9,'economy_entries':10,'native_theatre':True,'dock_right_edge_aligned':True,'ship_clear':True,'dark_ui':True,'current_product_icons':len(products)}
 
 
 def existing_identity(http, base, project, config, api_enabled=False):

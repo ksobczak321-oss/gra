@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HARBORLIGHT — rozbudowa budynków</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,sans-serif;background:#092231;color:#d7e7ed}body{margin:0 auto;max-width:1440px;padding:24px}h1,h2,strong{color:#ffdb8a}h1{margin:0}p{max-width:900px}a{color:#ffdb8a}nav{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}nav a{padding:7px 12px;border:1px solid #547b8d;border-radius:8px;text-decoration:none;background:#15384a}section{scroll-margin-top:20px;border:1px solid #547b8d;border-radius:16px;margin:24px 0;padding:16px;background:#103041}h2{margin:0 0 16px}.variants{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.variant{min-width:0;background:#092534;border:1px solid #365564;border-radius:10px;padding:10px;text-align:center}.art{height:180px}.variant p{margin:8px 0 0;font-size:14px}#status{padding:14px;border:1px solid #62899c;border-radius:10px}footer{margin:32px 0}@media(max-width:800px){.variants{grid-template-columns:repeat(2,minmax(0,1fr))}.art{height:150px}body{padding:12px}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+<h1>HARBORLIGHT — rozbudowa budynków</h1>
+<p>Wszystkie budynki wyspy: dziesięć wyglądów dla poziomów 1–20. Każdy wygląd obowiązuje przez dwa poziomy. Powyżej poziomu 20 pozostaje ostatni wariant.</p>
+<p><a href="harborlight-v1-layered.html">Przejdź do gry na DEV</a></p>
+<div id="status" role="status">Wczytywanie grafik…</div><nav aria-label="Budynki"></nav><main></main>
+<footer>Podgląd grafiki. Wygląd Teatru i ozdobnej chatki podąża za poziomem Ratusza. Żuraw w grze pojawia się tylko podczas trwającej budowy; istniejący statek pozostaje bez zmian.</footer>
+<script type="module">
+import {loadBuildingStages,applyBuildingStageArtwork,BUILDING_STAGE_IDS} from './harborlight-v1-building-stages.js?v=frontend-v32-16';
+const names={townhall:'Ratusz',house:'Dom',farm:'Gospodarstwo',lumber:'Drwale',quarry:'Kamieniołom',windmill:'Młyn',sawmill:'Tartak',warehouse:'Magazyn',bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary',chapel:'Kaplica',lighthouse:'Latarnia',theatre:'Teatr',market:'Targ',dock:'Port'};
+try{
+ const manifest=await loadBuildingStages();if(!manifest.enabled)throw Error('Podgląd grafik jest jeszcze przygotowywany.');
+ for(const id of BUILDING_STAGE_IDS){
+  const link=document.createElement('a');link.href='#'+id;link.textContent=names[id];document.querySelector('nav').append(link);
+  const section=document.createElement('section');section.id=id;const title=document.createElement('h2');title.textContent=names[id];section.append(title);
+  const grid=document.createElement('div');grid.className='variants';
+  for(let i=0;i<10;i++){const card=document.createElement('article');card.className='variant';const art=document.createElement('div');art.className='art';applyBuildingStageArtwork(art,id,i*2+1,manifest);const label=document.createElement('p');label.textContent=`${id==='theatre'?'Ratusz':'Poziom'} ${i*2+1}–${i*2+2}`;card.append(art,label);grid.append(card);}
+  section.append(grid);document.querySelector('main').append(section);
+ }
+ document.querySelector('#status').textContent='Wczytano 20 budynków i 200 wariantów.';
+}catch(error){document.querySelector('#status').textContent=error.message;}
+</script>
+</html>

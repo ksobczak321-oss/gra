@@ -1,4 +1,4 @@
-import { developmentText, developmentResearchDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-15';
+import { developmentText, developmentResearchDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-16';
 // DEV v32. Pure education/research model; all persistent identity is keyed by personUid.
 // This module never advances the world's clock or calls a network service.
 const HOUR = 3600, DAY = 86400, EPS = 1e-8;

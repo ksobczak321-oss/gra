@@ -11,9 +11,11 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.building_stage_acceptance import staged_manifest, assert_scene, assert_art
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
+STAGES = staged_manifest(ROOT)
 BASE = 'http://127.0.0.1:47482'
 OUTPUT = Path(os.environ.get('HARBORLIGHT_FRONT_OUTPUT', '/tmp/harborlight-accepted-front-v32'))
 OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -95,12 +97,14 @@ with sync_playwright() as p:
         page.on('response',lambda r:failed.append((r.status,r.url)) if r.status>=400 else None)
         page.add_init_script('localStorage.setItem("harborlight-language","pl")')
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5',wait_until='networkidle')
+        page.wait_for_function('document.getElementById("loading").hidden',timeout=30000)
         before = page.evaluate('Object.fromEntries(Object.entries(window.__HARBORLIGHT_DEV_STATE__.buildings).map(([id,b])=>[id,{level:b.level,workers:b.workers||0}]))')
         assert before['townhall']['level']==5
         actual = page.locator('.world-hotspot[id^="hit-world-"]').evaluate_all('nodes=>nodes.map(n=>n.id.slice(10))')
         assert set(actual)==FUNCTIONS and len(actual)==20,actual
         assert page.locator('[data-accepted-map-art]').count()==1
-        assert set(page.locator('[data-accepted-artwork]').evaluate_all('nodes=>nodes.map(n=>n.dataset.acceptedArtwork)')) == {'farm','lumber','slaughterhouse','fisher'}
+        if STAGES: assert_scene(page,STAGES)
+        else: assert set(page.locator('[data-accepted-artwork]').evaluate_all('nodes=>nodes.map(n=>n.dataset.acceptedArtwork)')) == {'farm','lumber','slaughterhouse','fisher'}
         assert page.locator('[data-accepted-ocean]').count()==1
         for identity,region in CHANGED.items():
             marker=page.locator('#hit-world-'+identity)
@@ -186,11 +190,13 @@ with sync_playwright() as p:
                     identity=card.get_attribute('data-dock-building')
                     art=card.locator('[data-map-building-art="'+identity+'"]')
                     assert art.count()==1,(category,identity)
-                    if category=='economy':
+                    if STAGES:
+                        assert_art(art,STAGES,identity,before[identity]['level'])
+                    elif category=='economy':
                         source,rect=ECONOMY_ART[identity]
                         assert art.get_attribute('data-map-art-source')==source,(identity,art.get_attribute('data-map-art-source'))
                         assert json.loads(art.get_attribute('data-map-art-rect'))==rect,identity
-                    assert art.locator('svg').get_attribute('preserveAspectRatio')=='xMidYMid slice'
+                    assert art.locator('svg').get_attribute('preserveAspectRatio')==('xMidYMid meet' if STAGES else 'xMidYMid slice')
                 if not touch:
                     bands=cards.evaluate_all('nodes=>nodes.map(n=>({level:n.querySelector(".building-dock-level").getBoundingClientRect().top,art:n.querySelector("[data-map-building-art]").getBoundingClientRect().top}))')
                     assert max(b['level'] for b in bands)-min(b['level'] for b in bands)<1.1,bands

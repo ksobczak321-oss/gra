@@ -8,9 +8,11 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.building_stage_acceptance import staged_manifest, assert_scene, assert_art
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
+STAGES = staged_manifest(ROOT)
 BASE = 'http://127.0.0.1:47434'
 assert hashlib.sha256((ROOT / 'assets/harborlight-v1-approved.png').read_bytes()).hexdigest() == '4063f003002f95dd7b00f77a8d6d610b04f134766e52afc97e8a10712fd6d823', 'Approved island artwork changed'
 POSITIONS = {
@@ -55,10 +57,12 @@ with sync_playwright() as p:
         page.on('pageerror', lambda e: errors.append(str(e)))
         page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
         page.goto(BASE+'/harborlight-v1-layered.html', wait_until='networkidle')
+        page.wait_for_function('document.getElementById("loading").hidden',timeout=30000)
         page.locator('[data-v32-building]').first.wait_for()
         assert page.locator('[data-v32-building]').count()==7
         assert page.locator('[data-v32-building] .v32-building-art,[data-v32-building] img,.v32-map-label').count()==0
-        assert page.locator('[data-accepted-artwork]').count()==4
+        if STAGES: assert_scene(page,STAGES)
+        else: assert page.locator('[data-accepted-artwork]').count()==4
         assert page.locator('[data-theatre-map]').count()==0, 'The native Theatre must replace the added map scene'
         for key, region in POSITIONS.items():
             marker=page.locator(f'[data-v32-building="{key}"]')
@@ -81,8 +85,10 @@ with sync_playwright() as p:
             panel.wait_for(state='visible')
             thumbnail=panel.locator('[data-native-building-art]')
             expect(thumbnail).to_have_attribute('data-native-building-art',key)
-            expect(thumbnail.locator('svg image')).to_have_attribute('href','assets/'+ART_SOURCES[key])
-            expect(thumbnail.locator('svg')).to_have_attribute('preserveAspectRatio','xMidYMid slice')
+            if STAGES: assert_art(thumbnail,STAGES,key,fixture['buildings'][key]['level'])
+            else:
+                expect(thumbnail.locator('svg image')).to_have_attribute('href','assets/'+ART_SOURCES[key])
+                expect(thumbnail.locator('svg')).to_have_attribute('preserveAspectRatio','xMidYMid slice')
             page.locator('#island-dialog .dialog-close').click()
         for key, region, title in [('theatre',[634,360,112,66],'Teatr'),('market',[747,345,80,67],'Targ')]:
             marker=page.locator('#hit-world-'+key)
@@ -95,8 +101,8 @@ with sync_playwright() as p:
             page.locator('#island-dialog .dialog-close').click()
         assert not errors,errors
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
-        report.append({'width':width,'native_buildings':7,'accepted_art_patches':4,'transparent_map_targets':True,'clicks':9,'native_theatre_and_market':True,'hover_labels':not touch,'errors':errors})
+        report.append({'width':width,'native_buildings':7,'accepted_art_patches':0 if STAGES else 4,'staged_families':20 if STAGES else 0,'transparent_map_targets':True,'clicks':9,'native_theatre_and_market':True,'hover_labels':not touch,'errors':errors})
         context.close()
     browser.close()
 print(json.dumps(report,ensure_ascii=False))
-print('PASS native island buildings: seven reassigned targets, four accepted art patches, hover-only names, matching dock/header crops; desktop/mobile.')
+print('PASS native island buildings: seven reassigned targets, complete current artwork, hover-only names, matching dock/header variants; desktop/mobile.')

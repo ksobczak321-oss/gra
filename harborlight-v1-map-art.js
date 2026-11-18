@@ -1,5 +1,6 @@
 // Presentation coordinates only. Building IDs, inventories, crews and saves keep
 // their existing identities when a painted building receives a different role.
+import { applyBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-16';
 const freezeRows=rows=>Object.freeze(Object.fromEntries(Object.entries(rows).map(([id,value])=>[id,Object.freeze(value)])));
 
 export const MAP_BUILDING_REGIONS=freezeRows({
@@ -63,7 +64,7 @@ export const mapRegionFor=(id,fallback)=>MAP_BUILDING_REGIONS[id]||fallback;
 export const mapFootprintFor=id=>MAP_BUILDING_FOOTPRINTS[id]||'inset(0)';
 
 /** Crop the unchanged accepted PNG uniformly, including in resizable cards. */
-export function buildingArtwork(id,{className='building-dock-picture',width,height}={}){
+export function buildingArtwork(id,{className='building-dock-picture',width,height,level=1}={}){
   const spec=MAP_BUILDING_ART[id]||MAP_BUILDING_ART.house;
   const source=MAP_ART_SOURCES[spec.source];
   const wrapper=document.createElement('span');
@@ -83,7 +84,7 @@ export function buildingArtwork(id,{className='building-dock-picture',width,heig
   Object.assign(svg.style,{display:'block',width:'100%',height:'100%',overflow:'hidden'});
   const image=document.createElementNS(ns,'image');
   image.setAttribute('href',source.url);image.setAttribute('width',String(source.width));image.setAttribute('height',String(source.height));
-  svg.append(image);wrapper.append(svg);return wrapper;
+  svg.append(image);wrapper.append(svg);applyBuildingStageArtwork(wrapper,id,level);return wrapper;
 }
 
 const scale=540/1536;
@@ -96,7 +97,7 @@ export const ACCEPTED_MAP_PATCHES=Object.freeze([
 ]);
 
 /** Mount above ambient repainting (6/8), below actual island controls (10). */
-export function createAcceptedMapLayer({dockLeft=474}={}){
+export function createAcceptedMapLayer({dockLeft=474,includeBuildings=true}={}){
   const layer=document.createElement('div');
   layer.className='accepted-map-art-layer';layer.dataset.acceptedMapArt='';
   layer.setAttribute('aria-hidden','true');
@@ -107,7 +108,7 @@ export function createAcceptedMapLayer({dockLeft=474}={}){
     loading.push(image.decode());
     return image;
   };
-  for(const spec of ACCEPTED_MAP_PATCHES){
+  for(const spec of includeBuildings ? ACCEPTED_MAP_PATCHES : []){
     const [sx,sy,sw,sh]=spec.rect,[x,y,w,h]=spec.region,source=MAP_ART_SOURCES[spec.source];
     const patch=document.createElement('div');
     patch.className='accepted-map-art-patch';patch.dataset.acceptedArtwork=spec.id;

@@ -1,5 +1,13 @@
 # HARBORLIGHT
 
+## Rozbudowa grafiki wszystkich budynków — DEV 0.15.2.0 / cache16, w przygotowaniu
+
+GO użytkownika obejmuje wszystkie 20 funkcji wyspy i dekoracyjną chatkę: 10 wyglądów dla par poziomów 1–2 do 19–20, wspólne warianty na mapie i w menu, średniowieczny żuraw tylko podczas rzeczywistej budowy. Powyżej poziomu 20 pozostaje ostatni wygląd; limit poziomów i model gospodarki bez zmian. Ozdobna chatka nie ma funkcji ani przycisku, a jej wygląd podąża za Ratuszem. Teatr zachowuje funkcjonalny poziom1 i również zmienia wygląd według Ratusza. Port zachowuje istniejący statek.
+
+Przygotowano 200 wariantów, 22 obrazy WebP bez strat (32 305 562 bajty; potwierdzona identyczność pikseli RGBA z wygenerowanymi PNG), 26 masek terenu i osobną galerię. Pakiet ma zamkniętą listę 255 plików; limit 80 MiB zachowuje pełną jakość i dotychczasową granicę 256 wpisów. Nowe testy modelu prezentacji: 15/15 PASS. Przegląd 200 wariantów i kierunkowy program rzeczywistego runtime PASS; pełny startup po lokalnym timeout wymaga końcowego CI. Końcowy odbiór obrazu, pełny CI, publikacja Pages i niezmienny tag nowego źródła pozostają **PENDING**. Arkusze wymagają odświeżenia po zamrożeniu źródła. **Tylko DEV; bez PRE-PROD, PROD, DNS, resetów lub zmian kont.**
+
+[Zakres](docs/v32/GO-BUILDING-UPGRADE-ART.md) · [Dowody](docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json) · [Grafiki](docs/v32/BUILDING-UPGRADE-ART-ASSETS.json).
+
 ## Doradca Królestwa — DEV 0.15.1.0 / cache15, odebrany
 
 Pierwsze wprowadzenie ma trzy kroki: **górny pasek → dolne menu → Gospodarstwo**. Dalsze rady i rozmowa z doradcą są dobrowolne. Pełny katalog i 25 lekcji pozostają w Pomocy, z zachowaną historią i nagrodami.

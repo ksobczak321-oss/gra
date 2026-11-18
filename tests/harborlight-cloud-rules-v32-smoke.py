@@ -158,7 +158,10 @@ def run(api_enabled):
             (output/'bootstrap.json').write_text(json.dumps({'origin': BASE, 'account_api': api_enabled, 'legacy_buildings': list(original['buildings']), 'rendered_functions': actual, 'errors': errors}, ensure_ascii=False, indent=2)+'\n')
             assert len(actual) == 20, 'Authenticated legacy cloud save rendered %d functions instead of modern20: %s' % (len(actual), actual)
             expect(page.locator('[data-v32-building]')).to_have_count(7)
-            expect(page.locator('[data-accepted-artwork]')).to_have_count(4)
+            from helpers.building_stage_acceptance import staged_manifest, assert_scene
+            stages=staged_manifest(ROOT)
+            if stages: assert_scene(page,stages)
+            else: expect(page.locator('[data-accepted-artwork]')).to_have_count(4)
             helper_spec = importlib.util.spec_from_file_location('hosted_acceptance', SOURCE/'tests/harborlight-hosted-v18-smoke.py')
             helper = importlib.util.module_from_spec(helper_spec)
             helper_spec.loader.exec_module(helper)
@@ -214,7 +217,7 @@ def run(api_enabled):
             assert reopened['resources'] == saved['resources'], 'Reload altered the preserved inventory'
             assert not errors, errors
             (output/'report.json').write_text(json.dumps({'mode': 'isolated normal hosted Auth and cloud bootstrap', 'account_api': api_enabled, 'origin': BASE, 'legacy_read': True, 'modern_front': modern_front, 'cloud_saves': len(writes), 'resident_identities_preserved': len(before_people), 'clocks_preserved': True, 'migrated_cloud_reload': True, 'requests': requests}, ensure_ascii=False, indent=2)+'\n')
-            print('PASS existing authenticated legacy cloud save (%s): 20 modern functions, 7 new buildings, 4 approved patches; two normal cloud saves and reload preserve identities, stocks, levels and clocks without reset or browser save.' % ('Account API' if api_enabled else 'Firestore CAS'))
+            print('PASS existing authenticated legacy cloud save (%s): 20 modern functions, 7 new building functions and complete current artwork; two normal cloud saves and reload preserve identities, stocks, levels and clocks without reset or browser save.' % ('Account API' if api_enabled else 'Firestore CAS'))
         except Exception:
             page.screenshot(path=str(output/'failure.png'))
             raise

@@ -1,5 +1,5 @@
-import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v32-15';
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v32-15';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v32-16';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v32-16';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */

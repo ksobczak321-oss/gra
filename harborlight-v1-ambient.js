@@ -2,6 +2,7 @@ import { drawWater } from './harborlight-v1-water.js?v=living-world-3';
 import { drawLife } from './harborlight-v1-life.js?v=living-world-3';
 import { drawSmoke } from './harborlight-v1-smoke.js?v=living-world-3';
 import { createInhabitantsBackground } from './harborlight-v1-inhabitants.js?v=living-world-3';
+import { composeBuildingTerrain, getBuildingStageImage, buildingStageSmokeSources } from './harborlight-v1-building-stages.js?v=frontend-v32-16';
 
 const WIDTH = 1672;
 const HEIGHT = 941;
@@ -136,7 +137,7 @@ function drawCrane(ctx, t, extraWork) {
   ctx.globalAlpha = 1;
 }
 
-export function createAmbientScene(stage, getState) {
+export function createAmbientScene(stage, getState, {buildingStagesReady=Promise.resolve(null)}={}) {
   const surface = canvas(WIDTH, HEIGHT);
   surface.id = 'island-ambient';
   surface.setAttribute('aria-hidden', 'true');
@@ -149,7 +150,7 @@ export function createAmbientScene(stage, getState) {
   let ctx = surface.getContext('2d', { alpha: true });
   const media = matchMedia('(prefers-reduced-motion: reduce)');
   const clouds = [cloudSprite(1), cloudSprite(3), cloudSprite(7)];
-  let source, plate, inhabitants;
+  let source, plate, inhabitants, stagedInhabitants, stagesManifest;
   let time = 0, frames = 0, frame = 0, last = 0, lastPaint = 0;
   let destroyed = false, contextLost = false, pageSuspended = false;
   let scale = 1;
@@ -180,12 +181,13 @@ export function createAmbientScene(stage, getState) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.save();
     clipWorld(ctx);
-    ctx.drawImage(inhabitants, 0, 0);
+    const staged = stagesManifest?.enabled && getState()?.ruleset === 32;
+    ctx.drawImage(staged ? stagedInhabitants : inhabitants, 0, 0);
     drawWater(ctx, source, time);
     drawClouds(ctx, clouds, time);
-    drawWindmill(ctx, plate, time);
-    drawSmoke(ctx, time);
-    drawCrane(ctx, time, !!document.querySelector('.world-pulse'));
+    if (!staged) drawWindmill(ctx, plate, time);
+    drawSmoke(ctx, time, staged ? buildingStageSmokeSources(stagesManifest,getState()) : undefined);
+    if (!staged) drawCrane(ctx, time, !!document.querySelector('.world-pulse'));
     drawLife(ctx, time, { motion: true, construction: true });
     ctx.restore();
     surface.dataset.time = time.toFixed(3);
@@ -264,13 +266,15 @@ export function createAmbientScene(stage, getState) {
   stage.addEventListener('island-statechange', syncMode);
   surface.addEventListener('contextlost', loseContext);
   surface.addEventListener('contextrestored', restoreContext);
-  const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png'), image('./assets/harborlight-inhabitants-clean.png')]).then(values => {
+  const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png'), image('./assets/harborlight-inhabitants-clean.png'),buildingStagesReady]).then(values => {
     // All texture sampling must use the clean world too: sampling the old
     // reference could paint blue clothing or baked smoke back into the scene.
     if (destroyed) return;
     source = values[2];
     plate = makeWindmillPlate(values[1]);
     inhabitants = createInhabitantsBackground(values[2]);
+    stagesManifest = values[3];
+    if (stagesManifest?.enabled) stagedInhabitants = createInhabitantsBackground(composeBuildingTerrain(values[2],getBuildingStageImage(stagesManifest.terrain.src),stagesManifest));
     size();
     // size() paints synchronously, including in a background tab. A lost
     // context cannot count as a ready clean frame over the reference image.

@@ -20,6 +20,31 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_FILES = (
+    "harborlight-v1-building-stages.js",
+    "harborlight-building-gallery.html",
+    "assets/building-upgrades-v1/manifest.json",
+    "assets/building-upgrades-v1/townhall.webp",
+    "assets/building-upgrades-v1/house.webp",
+    "assets/building-upgrades-v1/farm.webp",
+    "assets/building-upgrades-v1/lumber.webp",
+    "assets/building-upgrades-v1/quarry.webp",
+    "assets/building-upgrades-v1/windmill.webp",
+    "assets/building-upgrades-v1/sawmill.webp",
+    "assets/building-upgrades-v1/warehouse.webp",
+    "assets/building-upgrades-v1/bakery.webp",
+    "assets/building-upgrades-v1/dairy.webp",
+    "assets/building-upgrades-v1/slaughterhouse.webp",
+    "assets/building-upgrades-v1/fisher.webp",
+    "assets/building-upgrades-v1/leatherworks.webp",
+    "assets/building-upgrades-v1/academy.webp",
+    "assets/building-upgrades-v1/barracks.webp",
+    "assets/building-upgrades-v1/chapel.webp",
+    "assets/building-upgrades-v1/lighthouse.webp",
+    "assets/building-upgrades-v1/theatre.webp",
+    "assets/building-upgrades-v1/market.webp",
+    "assets/building-upgrades-v1/dock.webp",
+    "assets/building-upgrades-v1/crane.webp",
+    "assets/building-upgrades-v1/terrain.webp",
     "harborlight-v1-advisor.js",
     "harborlight-v1-advisor-ui.js",
     "harborlight-v1-advisor-intro.js",
@@ -211,9 +236,9 @@ ARCHIVE_FILES = CONTENT_FILES | {"release.json"}
 VERIFICATION_PROFILES = {
     "preprod-0.14.0.0-20261104": ROOT / "infra/google-cloud/frontend-profiles/preprod-0.14.0.0-20261104.json",
 }
-# 55 separately downloadable Word/TXT documents plus their convenience ZIP.
-# Keep finite size/member limits around the expanded exact allowlist.
-MAX_BYTES = 48 * 1024 * 1024
+# The exact allowlist also includes 200 lossless building variants in20atlases.
+# Keep their original RGBA pixels and a finite80MiB cap; member cap stays256.
+MAX_BYTES = 80 * 1024 * 1024
 MAX_MEMBERS = 256
 MAX_TAR_BYTES = MAX_BYTES + MAX_MEMBERS * 1024
 COMMIT = re.compile(r"[a-f0-9]{40}\Z")

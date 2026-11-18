@@ -319,7 +319,8 @@ class HistoricalFrontendProfileTests(unittest.TestCase):
 
     def test_no_profile_keeps_default_current_allowlist_strict(self):
         self.reject(name=None)
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
+        # 22 lossless art images, manifest, renderer and standalone gallery.
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
         self.assertIn("harborlight-v1-runtime-upgrade.js", BUNDLE.CONTENT_FILES)
 
     def test_unknown_or_path_supplied_profile_is_rejected(self):

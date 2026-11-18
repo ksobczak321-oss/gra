@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-18",
+  "scope": "DEV_ONLY",
+  "application_version": "0.15.2.0",
+  "cache": "frontend-v32-16",
+  "status": "LOCAL_VALIDATION_PASS_PUBLICATION_PENDING",
+  "authorization": {
+    "initial": "10 wersji każdego budynku oraz średniowieczny żuraw w czasie budowy",
+    "development_GO": "wrzuć na deva",
+    "latest_scope": "zasada ma dotyczyć wszystkich budynków na wyspie"
+  },
+  "functional_buildings": [
+    "townhall",
+    "house",
+    "farm",
+    "lumber",
+    "quarry",
+    "windmill",
+    "sawmill",
+    "warehouse",
+    "bakery",
+    "dairy",
+    "slaughterhouse",
+    "fisher",
+    "leatherworks",
+    "academy",
+    "barracks",
+    "chapel",
+    "lighthouse",
+    "theatre",
+    "market",
+    "dock"
+  ],
+  "functional_building_count": 20,
+  "variants_per_family": 10,
+  "total_functional_variants": 200,
+  "level_pairs": [
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      11,
+      12
+    ],
+    [
+      13,
+      14
+    ],
+    [
+      15,
+      16
+    ],
+    [
+      17,
+      18
+    ],
+    [
+      19,
+      20
+    ]
+  ],
+  "above_level_20": "USE_LAST_VISUAL_WITHOUT_CHANGING_GAME_LEVEL_LIMIT",
+  "locked_level_0": "PRESERVE_LOCKED_PREVIEW_AND_UNLOCK_RULES",
+  "decorative_hut": {
+    "economic_function": false,
+    "click_target": false,
+    "visual_level_follows": "townhall"
+  },
+  "theatre_visual_level_follows": "townhall",
+  "crane_condition": "matching ordinary or premium project; stage === building; buildRemaining > 0",
+  "existing_sailing_boat": "PRESERVE",
+  "source_sha": null,
+  "local_tests": {
+    "pure_presentation_tests": {
+      "status": "PASS",
+      "count": 15,
+      "after_cache16": true
+    },
+    "new_runtime_program": {
+      "status": "PASS",
+      "report": "/tmp/harborlight-building-stages-contract/report.json",
+      "scopes": [
+        "real model premium completion2_to3",
+        "crane removal",
+        "1440_and390",
+        "ocean_and_waterfall_animation",
+        "physical Warehouse_Port_boat_taps",
+        "menu_map_header_consistency",
+        "startup_hold_corruption",
+        "200_real_alpha_bounds",
+        "clip_positive_and_negative_control"
+      ]
+    },
+    "existing_tests": {
+      "native_latest": "PASS1440/390",
+      "accepted_front": "PASS1672/1440/390/320 before final frame metadata",
+      "cloud_rules": "PASS FirestoreCAS andAccountAPI before final frame metadata",
+      "full_startup_local": "PARTIAL_FAILURE_intro390_timeout; isolated samecasePASS; full exact-sourceCIrequired"
+    },
+    "frontend_bundle": {
+      "status": "PASS",
+      "count": 27
+    }
+  },
+  "visual_review": {
+    "status": "PASS",
+    "variants": 200,
+    "independent_report": "/workspace/artifacts/building-upgrades-20261118/gallery-independent-review-recheck.json",
+    "manifest_sha256": "aeb8d176511228f3321859425aa3aec82f1bb7dae8354f055fe25f6f8225606c",
+    "known_nonblocking": "Lighthouse19–20 slightly softer when enlarged; readable at actual100px game size"
+  },
+  "full_regression": "PENDING",
+  "CI": {
+    "status": "PENDING",
+    "run_id": null
+  },
+  "Pages": {
+    "status": "PENDING",
+    "run_id": null
+  },
+  "public_file_audit": "PENDING",
+  "native_public_browser": "PENDING_NO_RESULT_CLAIMED",
+  "workbook_refresh": "PENDING_SOURCE_FREEZE",
+  "tag": {
+    "name": null,
+    "object": null,
+    "remote_verified": false
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "PREPROD": "NOT_AUTHORIZED_FOR_THIS_CHANGE",
+  "PROD_DNS": "NO_ACTION",
+  "account_reset": false,
+  "economic_model_change": false,
+  "world_schema": 9,
+  "ruleset": 32,
+  "notes": [
+    "This initial record describes the authorized scope and pending acceptance, not a completed deployment.",
+    "Prior version tests and publication do not establish this candidate's success.",
+    "Asset hashes, actual file sizes and exact-source results must be added after source freeze and verification."
+  ],
+  "assets": {
+    "provenance": "BUILDING-UPGRADE-ART-ASSETS.json",
+    "count": 22,
+    "lossless_webp_bytes": 32305562,
+    "decoded_rgba_bytes": 138405596,
+    "all_exact_rgba_pixels": true,
+    "individual_global_frame_bounds": 200,
+    "terrain_masks": 26
+  },
+  "bundle_limits": {
+    "max_bytes": 83886080,
+    "max_members": 256,
+    "expected_actual_members": 255,
+    "allowlist": "EXPLICIT_CLOSED"
+  }
+}

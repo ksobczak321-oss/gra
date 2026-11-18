@@ -1,57 +1,58 @@
-import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-15';
-import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-15';
-import { createAdvisorIntroduction } from './harborlight-v1-advisor-intro.js?v=frontend-v32-15';
-import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-15';
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-15';
-import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-15';
-import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-15';
-import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-15';
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-15';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-15';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-15';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-15';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-15';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-15';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-15';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-15';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-15';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-15';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-15';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-15';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-15';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-15';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-15';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-15';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-15';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-15';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-15';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-15';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-15';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-15';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-15';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-15';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-15';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-15';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-15';
-import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-15';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-15';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-15';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-15';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-15';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-15';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-15';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-15';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-15';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-15';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-15';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-15';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-15';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-15';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-15';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-15';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-15';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-15';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-15';
+import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-16';
+import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-16';
+import { createAdvisorIntroduction } from './harborlight-v1-advisor-intro.js?v=frontend-v32-16';
+import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-16';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-16';
+import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-16';
+import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-16';
+import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-16';
+import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-16';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-16';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-16';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-16';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-16';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-16';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-16';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-16';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-16';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-16';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-16';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-16';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-16';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-16';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-16';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-16';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-16';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-16';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-16';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-16';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-16';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-16';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-16';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-16';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-16';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-16';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-16';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-16';
+import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-16';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-16';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-16';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-16';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-16';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-16';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-16';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-16';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-16';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-16';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-16';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-16';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-16';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-16';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-16';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-16';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-16';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-16';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-16';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -184,7 +185,7 @@ if (devTimeController) {
 }
 const simulationNow = () => devTimeStatus ? devTimeController.now() : Date.now();
 let devSpeedControls = null, devSpeedBusy = false;
-let developmentUI = null, kingdomController = null, originalPuzzleController = null, serverKingdomStatus = null, serverGiftStatus = null;
+let developmentUI = null, kingdomController = null, originalPuzzleController = null, serverKingdomStatus = null, serverGiftStatus = null, buildingStageScene = null;
 let state, archipelago, activeDevPreview = null;
 let pendingJourneySuspension = null;
 const foregroundInterruptions = new Map();
@@ -847,7 +848,7 @@ const buildingDock = el('nav', { class: 'building-dock-cards', 'aria-label': 'Bu
 for (const id of BUILDING_DOCK_ORDER) {
   if (DEVELOPMENT_BUILDINGS[id]) {
     const control=button('',()=>openPanel('building',id),{id:`hit-dock-${id}`,class:'building-dock-card','data-dock-building':id,'aria-label':titleOf(id),title:buildingMenuCopy(id,language(),state)});
-    control.append(el('small',{class:'building-dock-level','data-dock-level':id},`Lv. ${state.buildings[id]?.level||0}`),developmentBuildingArt(id),el('span',{class:'building-dock-name'},titleOf(id)));
+    control.append(el('small',{class:'building-dock-level','data-dock-level':id},`Lv. ${state.buildings[id]?.level||0}`),developmentBuildingArt(id,state.buildings[id]?.level),el('span',{class:'building-dock-name'},titleOf(id)));
     if(WORKPLACE_IDS.includes(id))control.append(el('span',{class:'building-dock-workers','data-dock-workers':id}));
     buildingDock.append(control);continue;
   }
@@ -856,7 +857,7 @@ for (const id of BUILDING_DOCK_ORDER) {
   const scale = Math.max(frameWidth / w, frameHeight / h);
   const offsetX = x * scale + (w * scale - frameWidth) / 2;
   const offsetY = y * scale + (h * scale - frameHeight) * (id === 'lighthouse' ? .2 : .5);
-  const picture = Development.isDevelopment(state) ? buildingArtwork(id) : el('span', { class: 'building-dock-picture', 'aria-hidden': 'true', style: { backgroundImage: 'url("assets/harborlight-v1-approved.png")', backgroundSize: `${1672 * scale}px ${941 * scale}px`, backgroundPosition: `${-offsetX}px ${-offsetY}px`, width: `${frameWidth}px`, height: `${frameHeight}px` } });
+  const picture = Development.isDevelopment(state) ? buildingArtwork(id,{level:state.buildings[id]?.level}) : el('span', { class: 'building-dock-picture', 'aria-hidden': 'true', style: { backgroundImage: 'url("assets/harborlight-v1-approved.png")', backgroundSize: `${1672 * scale}px ${941 * scale}px`, backgroundPosition: `${-offsetX}px ${-offsetY}px`, width: `${frameWidth}px`, height: `${frameHeight}px` } });
   const control = button('', () => openPanel('building', id), { id: `hit-dock-${id}`, class: 'building-dock-card', 'data-dock-building': id, 'aria-label': `${titleOf(id)} — construction and upgrades`, title:buildingMenuCopy(id,language(),state) });
   control.append(el('small', { class: 'building-dock-level', 'data-dock-level': id }, `Lv. ${state.buildings[id].level}`), picture, el('span', { class: 'building-dock-name' }, titleOf(id)));
   if (WORKPLACE_IDS.includes(id)) control.append(el('span', { class: 'building-dock-workers', 'data-dock-workers': id }));
@@ -1067,6 +1068,8 @@ const localProductionRate = id => `${Math.round((Logistics.effectiveWorkerCount?
 const spendable = id => id === 'coins' ? state.resources.coins : Logistics.availableGoods?.(state, id) ?? state.resources[id];
 const transportRate = id => `${activeCrew(id)} carriers · ${Logistics.haulCapacity?.(state, id) ?? 120} per trip`;
 function renderHUD() {
+  buildingStageScene?.update();
+  refreshBuildingStageArtwork(document,state);
   developmentUI?.update(); if(!dialog.contains(document.activeElement)||!['INPUT','SELECT'].includes(document.activeElement?.tagName))kingdomController?.update(); originalPuzzleController?.update();
   const chatDescription = uiCopy('Here you can chat online with other players.', 'Tu możesz rozmawiać online z innymi graczami.');
   chatControl.title = chatDescription;
@@ -3629,6 +3632,13 @@ function renderPanel() {
     el('div', { class: 'dialog-heading' }, el('span', { class: 'eyebrow', 'data-i18n-ignore': '' }, `HARBORLIGHT · ${uiCopy('ISLAND', 'WYSPA')} ${archipelago.activeIslandId.slice(7).padStart(2, '0')}`), el('h2', { id: 'dialog-title', 'data-i18n-ignore': ['home', 'menu'].includes(panel.kind) && !!state.islandName }, title)),
     el('div', { class: 'dialog-header-feedback', role: 'status', 'aria-live': 'polite', 'data-panel-notice': '', 'data-i18n-ignore': '' }, text(panelNotice || '')),
     button('×', closePanel, { class: 'dialog-close', 'aria-label': 'Close window' })), el('div', { class: 'dialog-body' }, body));
+  const headerBuilding = panel.kind === 'theatre' ? 'theatre' : ['building','building-details','building-locked'].includes(panel.kind) ? panel.id : null;
+  if (Development.isDevelopment(state) && getBuildingStages()?.enabled && headerBuilding && state.buildings[headerBuilding]) {
+    const picture=buildingArtwork(headerBuilding,{level:buildingStageLevel(state,headerBuilding),width:44,height:32});
+    picture.dataset.buildingStageHeader=headerBuilding;
+    Object.assign(picture.style,{display:'inline-block',verticalAlign:'middle',marginRight:'8px'});
+    dialog.querySelector('#dialog-title').prepend(picture);
+  }
   if (rosterOpen) {
     const roster = dialog.querySelector('[data-resident-roster]');
     if (roster) { roster.open = true; refreshResidentRosters(); roster.querySelector('[data-resident-list]').scrollTop = rosterScroll; }
@@ -4372,11 +4382,15 @@ updateDevCloudStatus();
 setDockCategory('administration');
 mountDevelopmentSpeedControls();
 renderHUD();
-const startupVisuals = [window.harborlightStartup.sourceReady, createAmbientScene(stage, () => state).ready];
+const buildingStagesReady = Development.isDevelopment(state) ? loadBuildingStages() : Promise.resolve(null);
+const startupVisuals = [window.harborlightStartup.sourceReady, createAmbientScene(stage, () => state,{buildingStagesReady}).ready];
 if (Development.isDevelopment(state)) {
-  const acceptedMapArt = createAcceptedMapLayer();
-  stage.append(acceptedMapArt);
-  startupVisuals.push(acceptedMapArt.ready);
+  startupVisuals.push(buildingStagesReady.then(async manifest => {
+    const acceptedMapArt = createAcceptedMapLayer({includeBuildings:!manifest?.enabled});
+    stage.append(acceptedMapArt);await acceptedMapArt.ready;
+    if (manifest?.enabled) buildingStageScene=createBuildingStageScene({getState:()=>state,manifest,host:stage});
+    renderHUD();
+  }));
 }
 try {
   await Promise.all(startupVisuals);

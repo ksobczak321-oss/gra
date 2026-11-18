@@ -1,7 +1,8 @@
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-15';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation, developmentProductDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-15';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-15';
-import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-15';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-16';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation, developmentProductDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-16';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-16';
+import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-16';
+import { refreshBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-16';
 
 // All views share the approved presentation mapping; model IDs stay unchanged.
 export const DEVELOPMENT_BUILDINGS = Object.freeze(Object.fromEntries(Object.entries({
@@ -52,8 +53,8 @@ function controlColumns(root,secondaryNodes=[]){
 }
 
 /** The same native building, cropped with CSS for its dock and panel thumbnail. */
-export function developmentBuildingArt(id){
-  const wrapper=buildingArtwork(id,{className:'v32-building-art v32-building-art--native'});
+export function developmentBuildingArt(id,level=1){
+  const wrapper=buildingArtwork(id,{className:'v32-building-art v32-building-art--native',level});
   wrapper.dataset.nativeBuildingArt=id;
   return wrapper;
 }
@@ -263,7 +264,7 @@ export function renderTheatreControls(options={}){
 export function renderDevelopmentBuildingPanel(id,options={}){
   const state=stateOf(options),b=state.buildings?.[id]||{},config=DEVELOPMENT_BUILDINGS[id];
   const root=node('div',{class:'v32-building-body','data-v32-panel':id});
-  root.append(node('div',{class:'v32-building-summary v32-building-overview'},config?developmentBuildingArt(id):null,node('div',{},p(`Poziom ${whole(b.level)}`,'v32-eyebrow'),p(developmentBuildingCopy(id,state),'v32-building-description'))));
+  root.append(node('div',{class:'v32-building-summary v32-building-overview'},config?developmentBuildingArt(id,b.level):null,node('div',{},p(`Poziom ${whole(b.level)}`,'v32-eyebrow'),p(developmentBuildingCopy(id,state),'v32-building-description'))));
   const producer=Boolean(FALLBACK_RECIPES[id])&&num(b.level)>0;
   const paragraphs=developmentBuildingInformation(id,state).map(text=>p(text));
   if(id==='farm'&&!(num(state.buildings?.farm?.level)>=6&&state.education?.discoveries?.cheese))paragraphs.push(p(developmentText('MSG-CHEESE-LOCKED'),'v32-muted'));
@@ -305,10 +306,10 @@ export function createDevelopmentUI(options={}){
   const mapButtons=new Map(),dockButtons=new Map();
   for(const [id,config]of Object.entries(DEVELOPMENT_BUILDINGS)){
     const marker=node('button',{type:'button',class:'island-hotspot world-hotspot v32-map-building',style:`left:${config.x}px;top:${config.y}px;width:${config.width}px;height:${config.height}px`,'data-v32-building':id,'data-label':config.name,'aria-label':config.name,onClick:()=>open(id)},node('span',{class:'v32-native-hit','aria-hidden':'true',style:`clip-path:${config.footprint}`}));
-    const card=node('button',{type:'button',class:'v32-dock-building','data-v32-dock-building':id,'aria-label':config.name,onClick:()=>open(id)},developmentBuildingArt(id),node('span',{text:config.name}),node('small',{'data-v32-building-level':''}));
+    const card=node('button',{type:'button',class:'v32-dock-building','data-v32-dock-building':id,'aria-label':config.name,onClick:()=>open(id)},developmentBuildingArt(id,stateOf(options).buildings?.[id]?.level),node('span',{text:config.name}),node('small',{'data-v32-building-level':''}));
     mapButtons.set(id,marker);dockButtons.set(id,card);mapLayer.append(marker);dock.append(card);
   }
-  function update(){const state=stateOf(options);for(const [id,button]of mapButtons){const level=whole(state.buildings?.[id]?.level),requiredLevel=NEW_BUILDINGS[id].unlockLevel,unlocked=num(state.buildings?.townhall?.level)>=requiredLevel;button.dataset.locked=String(!unlocked);button.dataset.level=String(level);button.dataset.label=`${DEVELOPMENT_BUILDINGS[id].name} — ${unlocked?`Poziom ${level}`:`Ratusz ${requiredLevel}`}`;button.setAttribute('aria-label',`${DEVELOPMENT_BUILDINGS[id].name}, ${unlocked?`poziom ${level}`:`odblokowanie na poziomie Ratusza ${requiredLevel}`}`);const card=dockButtons.get(id);card.dataset.locked=String(!unlocked);card.querySelector('[data-v32-building-level]').textContent=unlocked?`Poz. ${level}`:`Ratusz ${requiredLevel}`;}if(dialog){const active=document.activeElement;if(active&&dialog.contains(active)&&/^(INPUT|SELECT)$/.test(active.tagName))return;renderOpen();}}
+  function update(){const state=stateOf(options);refreshBuildingStageArtwork(dock,state);for(const [id,button]of mapButtons){const level=whole(state.buildings?.[id]?.level),requiredLevel=NEW_BUILDINGS[id].unlockLevel,unlocked=num(state.buildings?.townhall?.level)>=requiredLevel;button.dataset.locked=String(!unlocked);button.dataset.level=String(level);button.dataset.label=`${DEVELOPMENT_BUILDINGS[id].name} — ${unlocked?`Poziom ${level}`:`Ratusz ${requiredLevel}`}`;button.setAttribute('aria-label',`${DEVELOPMENT_BUILDINGS[id].name}, ${unlocked?`poziom ${level}`:`odblokowanie na poziomie Ratusza ${requiredLevel}`}`);const card=dockButtons.get(id);card.dataset.locked=String(!unlocked);card.querySelector('[data-v32-building-level]').textContent=unlocked?`Poz. ${level}`:`Ratusz ${requiredLevel}`;}if(dialog){const active=document.activeElement;if(active&&dialog.contains(active)&&/^(INPUT|SELECT)$/.test(active.tagName))return;renderOpen();}}
   document.addEventListener('keydown',keydown);update();
   return {element,mapLayer,dock,open,close,update,renderBuildingPanel:id=>renderDevelopmentBuildingPanel(id,fullOptions),destroy(){disposed=true;close();document.removeEventListener('keydown',keydown);element.remove();mapLayer.remove();dock.remove();}};
 }

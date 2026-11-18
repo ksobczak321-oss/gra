@@ -45,9 +45,9 @@ export function smokeParticle(source, age, phase = 0) {
 }
 
 // Birth identifiers let tests follow the SAME visible billow between frames.
-export function sampleSmoke(t) {
+export function sampleSmoke(t,sources=SMOKE_SOURCES) {
   const particles=[];
-  for(const [index,source] of SMOKE_SOURCES.entries()) {
+  for(const [index,source] of sources.entries()) {
     const shifted=t+index*.19;
     const latest=Math.floor(shifted/INTERVAL);
     for(let n=0;n<6;n++) {
@@ -62,17 +62,17 @@ export function sampleSmoke(t) {
   return particles;
 }
 
-export function drawSmoke(ctx,t) {
+export function drawSmoke(ctx,t,sources=SMOKE_SOURCES) {
   if(!Number.isFinite(t))return;
   const puff=smokeSprite();
   ctx.save();
-  for(const [index,source] of SMOKE_SOURCES.entries()) {
+  for(const [index,source] of sources.entries()) {
     // Short stem follows the chimney mouth; it never replaces the flying puffs.
     ctx.strokeStyle='rgba(187,196,185,.45)';ctx.lineWidth=1.7*source.scale;ctx.lineCap='round';
     ctx.beginPath();ctx.moveTo(source.x,source.y+1);
     ctx.quadraticCurveTo(source.x+Math.sin(t*3+index),source.y-3,source.x+Math.sin(t*2+index)*1.8,source.y-7);ctx.stroke();
   }
-  for(const particle of sampleSmoke(t)) {
+  for(const particle of sampleSmoke(t,sources)) {
     ctx.save();ctx.globalAlpha=particle.alpha;
     ctx.translate(particle.x,particle.y);ctx.rotate(particle.angle);
     ctx.drawImage(puff,-particle.size/2,-particle.size/2,particle.size,particle.size);

@@ -14,9 +14,12 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.building_stage_acceptance import staged_manifest, assert_scene
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
+STAGES = staged_manifest(ROOT)
+PHASES = ('module','auth','cloud','manifest','atlases','terrain','crane','accepted','ambient','css') if STAGES else ('module','auth','cloud','accepted','ambient','css')
 OUTPUT = Path(os.environ.get('HARBORLIGHT_STARTUP_QA_OUTPUT', '/tmp/harborlight-startup-no-flash-v32'))
 OUTPUT.mkdir(parents=True, exist_ok=True)
 spec = importlib.util.spec_from_file_location('startup_cloud_fixture', SOURCE/'tests/harborlight-dev-game-smoke.py')
@@ -42,7 +45,8 @@ FRAME_PROBE = r'''(() => {
   window.__qaStartupSnapshot=()=>{
     const loader=document.querySelector('#loading'),v=document.querySelector('#viewport');
     const accepted=[...document.querySelectorAll('[data-accepted-map-art] img')];
-    const artReady=document.querySelectorAll('[data-accepted-artwork]').length===4&&accepted.length>=4&&accepted.every(n=>n.complete&&n.naturalWidth>0);
+    const stageRequired=__BUILDING_STAGES_REQUIRED__;
+    const artReady=(stageRequired ? document.querySelectorAll('[data-building-stage-scene] [data-building-stage-map]:not([data-building-stage-decoration])').length===20&&document.querySelectorAll('[data-building-stage-decoration]').length>=1&&document.querySelectorAll('[data-accepted-artwork]').length===0&&accepted.length===1 : document.querySelectorAll('[data-accepted-artwork]').length===4&&accepted.length>=4)&&accepted.every(n=>n.complete&&n.naturalWidth>0);
     const ready=artReady&&document.querySelector('#island-ambient')?.dataset.ready==='true'&&document.querySelectorAll('.world-hotspot[id^="hit-world-"]').length===20;
     const rect=loader?.getBoundingClientRect();
     return {at:performance.now(),ready,viewportVisible:visible(v),loaderVisible:visible(loader),loaderRole:loader?.getAttribute('role'),loaderLive:loader?.getAttribute('aria-live'),
@@ -54,7 +58,7 @@ FRAME_PROBE = r'''(() => {
   };
   function frame(){const s=window.__qaStartupSnapshot();if(s.viewportVisible||s.paintedGame.length||s.loaderVisible){window.__qaStartupFrames.push(s);if(typeof window.__qaReportStartupFrame==='function')void window.__qaReportStartupFrame(s).catch(()=>{});}requestAnimationFrame(frame);}
   requestAnimationFrame(frame);
-})();'''
+})();'''.replace('__BUILDING_STAGES_REQUIRED__',json.dumps(bool(STAGES)))
 
 
 class Startup:
@@ -63,7 +67,7 @@ class Startup:
         self.cloud_failure = cloud_failure
         self.held, self.requests, self.errors = {}, [], []
         self.frames=[]
-        self.released = set() if staged else {'module', 'auth', 'cloud', 'accepted', 'ambient', 'css'}
+        self.released = set() if staged else set(PHASES)
         saved = cloud.starter(321, 'Wyspa bez starej klatki')
         if intro:
             code="import {createState} from './harborlight-v1-state.js';console.log(JSON.stringify(createState(%d,{ruleset:32,onboarding:true})));" % int(cloud.NOW.timestamp()*1000)
@@ -107,7 +111,9 @@ class Startup:
         self.requests.append([request.method, parsed.hostname, parsed.path])
         if request.method == 'OPTIONS':
             return route.fulfill(status=204, headers={'access-control-allow-origin':cloud.ORIGIN,'access-control-allow-headers':'authorization,content-type','access-control-allow-methods':'GET,POST,OPTIONS'})
-        phase = 'auth' if parsed.hostname=='securetoken.googleapis.com' else 'cloud' if parsed.hostname=='firestore.googleapis.com' and request.method=='GET' else 'module' if name=='harborlight-v1-play.js' else 'accepted' if name in ACCEPTED else 'ambient' if name in AMBIENT else 'css' if name=='harborlight-v1-adventures.css' else None
+        building_asset = '/assets/building-upgrades-v1/' in parsed.path
+        stage_phase = ('manifest' if name=='manifest.json' else 'terrain' if name=='terrain.webp' else 'crane' if name=='crane.webp' else 'atlases') if building_asset else None
+        phase = 'auth' if parsed.hostname=='securetoken.googleapis.com' else 'cloud' if parsed.hostname=='firestore.googleapis.com' and request.method=='GET' else 'module' if name=='harborlight-v1-play.js' else stage_phase if stage_phase else 'accepted' if name in ACCEPTED else 'ambient' if name in AMBIENT else 'css' if name=='harborlight-v1-adventures.css' else None
         if phase and phase not in self.released:
             self.held.setdefault(phase,[]).append(route);return
         self.deliver(route)
@@ -168,8 +174,16 @@ class Startup:
         assert cloud.DOCUMENTS[UID]['payload']==self.original and len(cloud.WRITES)==self.writes_before, 'Startup barrier changed an island or awarded a reward'
 
     def ready(self):
-        self.page.wait_for_function('window.__qaStartupSnapshot().ready && window.__qaStartupSnapshot().viewportVisible && !window.__qaStartupSnapshot().loaderVisible',timeout=30000)
+        try:
+            self.page.wait_for_function('window.__qaStartupSnapshot().ready && window.__qaStartupSnapshot().viewportVisible && !window.__qaStartupSnapshot().loaderVisible',timeout=30000)
+        except Exception:
+            diagnostic={'width':self.width,'snapshot':self.page.evaluate('window.__qaStartupSnapshot()'),'errors':self.errors,'held_phases':list(self.held),'loading_text':self.page.locator('#loading').inner_text()}
+            (OUTPUT/f'ready-timeout-{self.width}.json').write_text(json.dumps(diagnostic,indent=2)+'\n')
+            self.page.screenshot(path=str(OUTPUT/f'ready-timeout-{self.width}.png'))
+            print('STARTUP TIMEOUT:',json.dumps(diagnostic),flush=True)
+            raise
         expect(self.page.locator('[data-v32-building]')).to_have_count(7)
+        if STAGES: assert_scene(self.page,STAGES)
         assert not self.page.evaluate('window.__qaStartupFrames.some(s=>!s.ready&&(s.viewportVisible||s.paintedGame.length))'), 'A sampled pre-ready paint exposed the reference or interactive game'
         assert not any(not frame.get('ready') and (frame['viewportVisible'] or frame['paintedGame']) for frame in self.frames), 'An earlier document exposed the game before readiness'
         assert self.page.evaluate('typeof window.__HARBORLIGHT_DEV_STATE__ === "undefined" && typeof window.__HARBORLIGHT_DEV_FIXTURE__ === "undefined"')
@@ -194,7 +208,7 @@ def run():
                 app=Startup(browser,width,height,staged=True)
                 try:
                     app.start()
-                    for phase in ('module','auth','cloud','accepted','ambient','css'):
+                    for phase in PHASES:
                         app.wait_held(phase)
                         if phase=='module':
                             app.page.wait_for_function('document.querySelector("#worldLayer canvas") || getComputedStyle(document.querySelector("#viewport")).visibility === "hidden" || getComputedStyle(document.querySelector("#viewport")).display === "none"')
@@ -207,14 +221,16 @@ def run():
                         app.page.locator('#hit-world-warehouse .map-hitshape').click()
                     expect(app.page.locator('[data-building-panel="warehouse"]')).to_be_visible()
                     app.page.screenshot(path=str(OUTPUT/f'ready-{width}.png'))
-                    report.append({'width':width,'delayed_phases':['module','auth','cloud','accepted','ambient','css'],'no_exposed_pre_ready_frames':True,'functional_current_game':True,'sampled_frames':len(app.frames)})
+                    report.append({'width':width,'delayed_phases':list(PHASES),'no_exposed_pre_ready_frames':True,'functional_current_game':True,'sampled_frames':len(app.frames)})
                     print('PASS startup phases and functional game:',width,flush=True)
                 finally:app.close()
                 app=Startup(browser,width,height,staged=True,intro=True)
                 try:
-                    for phase in ('module','auth','cloud','ambient','css'):app.released.add(phase)
-                    app.start();app.wait_held('accepted');app.blocked('intro-art')
-                    app.release('accepted');app.ready()
+                    art_phase='atlases' if STAGES else 'accepted'
+                    for phase in PHASES:
+                        if phase!=art_phase:app.released.add(phase)
+                    app.start();app.wait_held(art_phase);app.blocked('intro-art')
+                    app.release(art_phase);app.ready()
                     expect(app.page.locator('[data-island-onboarding]')).to_be_visible()
                     assert cloud.cloud_state(UID)['population']==18 and cloud.cloud_state(UID)['welcomeWorkers']['granted']==0, 'Asset readiness must not complete the introduction or grant its welcome resident'
                     report.append({'width':width,'intro_waits_for_complete_art':True,'intro_reachable_after_reveal':True})
@@ -222,7 +238,8 @@ def run():
                 finally:app.close()
                 app=Startup(browser,width,height,staged=True)
                 try:
-                    for phase in ('module','auth','cloud','accepted','css'):app.released.add(phase)
+                    for phase in PHASES:
+                        if phase!='ambient':app.released.add(phase)
                     app.start();app.wait_held('ambient')
                     canvas=app.page.locator('#island-ambient')
                     canvas.dispatch_event('contextlost',{'cancelable':True})
@@ -236,7 +253,8 @@ def run():
                     report.append({'width':width,'canvas_presentation_event':'contextlost before ambient assets ready','accessible_error':True,'retry_recovers_current_game':True,'sampled_frames':len(app.frames)})
                     print('PASS canvas context-loss presentation/retry:',width,flush=True)
                 finally:app.close()
-                for failed in ('harborlight-v1-play.js','harborlight-v1-approved.png','harborlight-farm-forest-approved-v32.png','harborlight-windmill-clean.png','harborlight-v1-play.css'):
+                failed_assets=('harborlight-v1-play.js','harborlight-v1-approved.png','manifest.json','house.webp','terrain.webp','crane.webp','harborlight-windmill-clean.png','harborlight-v1-play.css') if STAGES else ('harborlight-v1-play.js','harborlight-v1-approved.png','harborlight-farm-forest-approved-v32.png','harborlight-windmill-clean.png','harborlight-v1-play.css')
+                for failed in failed_assets:
                     app=Startup(browser,width,height,fail=failed)
                     try:
                         app.start()

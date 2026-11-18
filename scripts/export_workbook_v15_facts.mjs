@@ -23,6 +23,7 @@ import * as Archipelago from '../harborlight-v1-archipelago.js';
 import * as Housing from '../harborlight-v1-housing.js';
 import * as I18n from '../harborlight-v1-i18n.js';
 import * as Residents from '../harborlight-v1-residents.js';
+import * as BuildingStages from '../harborlight-v1-building-stages.js';
 import { DEVELOPMENT_NAMES } from '../harborlight-v1-development-copy.js';
 import { SESSION_IDLE_TIMEOUT_MS } from '../harborlight-dev-cloud.js';
 import { LEGAL_DOCUMENT_VERSIONS, threeMonthDeadline } from '../backend/account-service.mjs';
@@ -35,7 +36,8 @@ const sourceCommit = process.env.HARBORLIGHT_WORKBOOK_SOURCE_SHA || execFileSync
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const clone = value => structuredClone(value);
 const sourceFiles = [...readdirSync(ROOT).filter(name => /^harborlight.*\.js$/.test(name)),
-  ...readdirSync(resolve(ROOT, 'backend')).filter(name => /\.(?:m?js)$/.test(name)).map(name => 'backend/' + name)].sort();
+  ...readdirSync(resolve(ROOT, 'backend')).filter(name => /\.(?:m?js)$/.test(name)).map(name => 'backend/' + name),
+  BuildingStages.BUILDING_STAGE_MANIFEST].sort();
 const sourceHashes = Object.fromEntries(sourceFiles.map(name => [name, sha256(readFileSync(resolve(ROOT, name)))]));
 const tables = [];
 const columns = pairs => pairs.map(([key, label]) => ({ key, label }));
@@ -66,6 +68,45 @@ const unlockTownhall = id => {
   return null;
 };
 const unlocks = Object.fromEntries(buildingIds.map(id => [id, unlockTownhall(id)]));
+// Presentation is quoted from the same pure resolver and manifest as the UI.
+// These isolated fixtures do not request upgrades or change any live world.
+const buildingStageManifest = BuildingStages.normalizeBuildingStageManifest(JSON.parse(readFileSync(resolve(ROOT, BuildingStages.BUILDING_STAGE_MANIFEST), 'utf8')));
+assert.equal(buildingStageManifest.enabled, true, 'Current building artwork must be enabled');
+assert.equal(BuildingStages.BUILDING_STAGE_IDS.length, 20);
+const buildingStageRows = [];
+for (const id of BuildingStages.BUILDING_STAGE_IDS) {
+  const family = buildingStageManifest.buildings[id];
+  assert.ok(State.ALL_BUILDINGS[id], id);
+  for (let tier = 0; tier < 10; tier++) {
+    const from = tier * 2 + 1, to = from + 1;
+    const before = fixture(from), after = fixture(to);
+    const visualFrom = BuildingStages.buildingStageLevel(before, id), visualTo = BuildingStages.buildingStageLevel(after, id);
+    const first = BuildingStages.buildingStageFrame(buildingStageManifest, id, visualFrom);
+    const second = BuildingStages.buildingStageFrame(buildingStageManifest, id, visualTo);
+    assert.equal(first.index, tier, `${id}/${from}`);
+    assert.equal(second.index, tier, `${id}/${to}`);
+    assert.deepEqual(first.rect, second.rect, `${id}: pair must use one frame`);
+    const levelSource = id === 'theatre' ? 'townhall' : id;
+    assert.equal(visualFrom, before.buildings[levelSource].level, `${id}: actual visual level source`);
+    assert.equal(visualTo, after.buildings[levelSource].level, `${id}: actual visual level source`);
+    const above20 = BuildingStages.buildingStageIndex(21), at100 = BuildingStages.buildingStageIndex(100);
+    assert.equal(above20, 9); assert.equal(at100, 9);
+    assert.equal(BuildingStages.buildingStageIndex(0), 0);
+    if (id === 'theatre') assert.equal(before.buildings.theatre.level, 1);
+    buildingStageRows.push({ id: `${id}:${tier + 1}`, buildingId: id, buildingPl: nameOf(id),
+      modelMaximumLevel: State.ALL_BUILDINGS[id].maxLevel,
+      visualLevelSourceId: levelSource, visualLevelSourcePl: nameOf(levelSource),
+      minimumVisualLevel: from, maximumVisualLevel: to,
+      exampleModelLevel: before.buildings[id].level, effectiveVisualLevel: visualFrom,
+      frameNumber: first.index + 1, image: first.src, imageSize: [first.width, first.height],
+      frameRect: first.rect, alphaBoundsInFrame: first.bbox, viewBox: first.viewBox,
+      mapRect: family.mapRect, groundAnchor: family.groundAnchor,
+      lockedLevel0FrameNumber: BuildingStages.buildingStageIndex(0) + 1,
+      level21FrameNumber: above20 + 1, level100FrameNumber: at100 + 1,
+      source_file: 'harborlight-v1-building-stages.js; ' + BuildingStages.BUILDING_STAGE_MANIFEST });
+  }
+}
+assert.equal(buildingStageRows.length, 200);
 const academyUnlock = Array.from({ length: 100 }, (_, index) => index + 1).find(level => Education.educationStatus(fixture(level)).unlocked);
 const routeUnlock = Array.from({ length: 100 }, (_, index) => index + 1).find(level => Education.researchQuote(fixture(level), 'route:workbook-probe', {}, { source: 'farm', target: 'windmill', product: 'grain' }).ok);
 function recipeTownhallMinimum(row) {
@@ -334,6 +375,8 @@ const buildingColumns = tables.find(table => table.id === 'building-levels').col
 buildingColumns.find(column => column.key === 'crewTotal').label = 'Pracownicy bez odkryć';
 buildingColumns.push(...columns([['crewTotalAfterDiscoveries','Pracownicy po odkryciach'],['productsAfterDiscoveries','Produkty po odkryciach']]));
 
+add('building-art-stages', 'Wygląd budynków — poziomy', 'Dwadzieścia rodzin × dziesięć wyglądów, odczytanych z aktualnego manifestu i czystego resolvera interfejsu. Pary dotyczą poziomu wskazanego w kolumnie źródła wyglądu. Teatr ma nadal poziom funkcjonalny1, a jego wygląd śledzi Ratusz.', [['id','ID wariantu'],['buildingId','ID budynku'],['buildingPl','Budynek'],['modelMaximumLevel','Maksymalny poziom w modelu'],['visualLevelSourceId','ID źródła poziomu wyglądu'],['visualLevelSourcePl','Poziom wyglądu pochodzi z'],['minimumVisualLevel','Poziom wyglądu od'],['maximumVisualLevel','Poziom wyglądu do'],['exampleModelLevel','Poziom budynku w przykładzie'],['effectiveVisualLevel','Poziom użyty przez resolver'],['frameNumber','Wariant1–10'],['image','Obraz'],['imageSize','Wymiary atlasu [px]'],['frameRect','Klatka w atlasie [x,y,w,h]'],['alphaBoundsInFrame','Obwiednia alfa w klatce'],['viewBox','Kadr SVG'],['mapRect','Prostokąt mapy'],['groundAnchor','Kotwica gruntu'],['lockedLevel0FrameNumber','Podgląd zablokowanego poziomu0'],['level21FrameNumber','Wariant przy poziomie21'],['level100FrameNumber','Wariant przy poziomie100'],['source_file','Źródło']], buildingStageRows, ['harborlight-v1-building-stages.js', BuildingStages.BUILDING_STAGE_MANIFEST], ['Zmiana wyglądu nie odblokowuje budynku i nie zmienia kosztów, czasów, limitów ani zapisanego poziomu.','Przy poziomie0 pozostaje podgląd pierwszego wariantu, z zachowaniem blokady funkcji; powyżej20 pozostaje wariant10.','Ozdobna chatka także śledzi Ratusz, ale nie jest dwudziestą pierwszą funkcją gospodarczą. Żuraw jest odrębną nakładką rzeczywistej budowy.']);
+
 const result = { meta: { appVersion: GAME_VERSION, ruleset: Development.DEVELOPMENT_RULESET, sourceCommit, fixedEpoch: AT,
   fixedEpochIso: new Date(AT).toISOString(), acceptedApplicationSource: '37061c43139f32dfba61e4d837b133ed9d2d7da8',
   acceptedPublicationSource: 'c4f752142c0421aad1dc0490a2f5139c277e6ee5', sourceHashes,
@@ -351,7 +394,8 @@ const result = { meta: { appVersion: GAME_VERSION, ruleset: Development.DEVELOPM
   ], sheet_tables: tables, checks: { passed: true, physicalRecipeExamples: recipeIds.length, numericExamples: examples.length,
     buildingLevelRows: buildingLevels.length, recipeLevelRows: recipeLevels.length, researchLevelRows: researchLevels.length,
     directRouteRows: directRoutes.length, trainingQuoteRows: studyMilitary.length, militaryLifecycleCases: militaryOutcomes.length,
-    sourceConditionRows: conditions.length },
+    sourceConditionRows: conditions.length, buildingArtStageRows: buildingStageRows.length,
+    buildingArtFamilies: BuildingStages.BUILDING_STAGE_IDS.length },
   limitations: ['Tabele są eksportem reguł i cytatów, nie zapisem użytkownika ani dowodem wdrożenia.','Scenariusze kosztów zakładają duże zapasy bieżących towarów; efekty mnożników i ograniczenia logistyczne opisano oddzielnie.'] };
 assert.equal(GAME_VERSION, '0.15.1.0'); assert.equal(fresh.ruleset, 32); assert.equal(fresh.population, 18);
 const json = JSON.stringify(result, (key, value) => typeof value === 'number' && !Number.isFinite(value) ? null : value, 2) + '\n';
