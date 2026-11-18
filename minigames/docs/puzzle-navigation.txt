@@ -110,7 +110,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-navigation.
 
-Źródło katalogu: 9fc8cb1a4fe7f58811a3404682d00f83b72c413e.
+Źródło katalogu: 6a27649b12bff223d35889f875fca1bc23564daa.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

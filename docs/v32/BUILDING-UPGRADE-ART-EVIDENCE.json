@@ -4,7 +4,7 @@
   "scope": "DEV_THEN_AUTHORIZED_PREPROD",
   "application_version": "0.15.2.0",
   "cache": "frontend-v32-17",
-  "status": "CRANE_VISIBILITY_FIX_LOCAL_PASS_CANONICAL_REFRESH_PENDING",
+  "status": "CACHE17_LOCAL_VALIDATION_PASS_PUBLICATION_PENDING",
   "authorization": {
     "initial": "10 wersji każdego budynku oraz średniowieczny żuraw w czasie budowy",
     "development_GO": "wrzuć na deva",
@@ -92,8 +92,8 @@
   "local_tests": {
     "pure_presentation_tests": {
       "status": "PASS",
-      "count": 15,
-      "after_cache16": true
+      "count": 17,
+      "after_cache17": true
     },
     "new_runtime_program": {
       "status": "PASS",
@@ -127,7 +127,9 @@
     "variants": 200,
     "independent_report": "/workspace/artifacts/building-upgrades-20261118/gallery-independent-review-recheck.json",
     "manifest_sha256": "aeb8d176511228f3321859425aa3aec82f1bb7dae8354f055fe25f6f8225606c",
-    "known_nonblocking": "Lighthouse19–20 slightly softer when enlarged; readable at actual100px game size"
+    "known_nonblocking": "Lighthouse19–20 slightly softer when enlarged; readable at actual100px game size",
+    "all20_rechecked_after_component_frames": true,
+    "report": "gallery-independent-review-recheck.json"
   },
   "full_regression": "PENDING",
   "CI": {
@@ -140,7 +142,29 @@
   },
   "public_file_audit": "PENDING",
   "native_public_browser": "PENDING_NO_RESULT_CLAIMED",
-  "workbook_refresh": "PENDING_FRESH_CACHE17_SOURCE",
+  "workbook_refresh": {
+    "status": "PASS_BUILD_AND_FRESH_VALIDATION",
+    "master": {
+      "source": "6a27649b12bff223d35889f875fca1bc23564daa",
+      "sha256": "8ffb684be465bb2237bb74584cc24c79a445a2eecc67b042c02cf4017dba98e3",
+      "bytes": 7732244,
+      "sheets": 158,
+      "current_sheets": 58,
+      "current_rows": 62497,
+      "source_fingerprints": 120,
+      "building_stage_rows": 200,
+      "historical_sheets_unchanged": 100,
+      "actual_simulation_profiles": 3
+    },
+    "editorial": {
+      "source": "6a27649b12bff223d35889f875fca1bc23564daa",
+      "sha256": "1b88f79ae91517fbe34f1a6536c12cd909ebb2c24ff654f7ee9cb7017f8be56c",
+      "sheets": 6,
+      "rows": 413,
+      "C_all_blank": true,
+      "source_fingerprints": 105
+    }
+  },
   "tag": {
     "name": null,
     "object": null,
@@ -180,8 +204,8 @@
     "expected_actual_members": 255,
     "allowlist": "EXPLICIT_CLOSED"
   },
-  "application_source_sha": "c4f883d5a83fc3ce9f4a3649f1dccd466ec1cbcf",
-  "workbook_export_source_sha": "8c363bcea4ebf2e577a035d97b97c2a0b21d547f",
+  "application_source_sha": "6a27649b12bff223d35889f875fca1bc23564daa",
+  "workbook_export_source_sha": "6a27649b12bff223d35889f875fca1bc23564daa",
   "source_scope_audit": {
     "status": "PASS",
     "substantive_root_js": [
@@ -228,19 +252,13 @@
   },
   "minigame_provenance_refresh": {
     "status": "PASS",
-    "source_commit": "9fc8cb1a4fe7f58811a3404682d00f83b72c413e",
-    "previous_source_commit": "44bc5381e9e29aaf5c9786492f54fdb996cda507",
+    "source_commit": "6a27649b12bff223d35889f875fca1bc23564daa",
     "entries_semantically_byte_identical": 55,
-    "changed_catalog_top_level_keys": [
-      "sourceCommit",
-      "sourceHashes"
-    ],
     "canonical_semantic_sha256": "344c77c26aad1daf696172e1fa47ba011e7371c81ff70031fa9d22c481d7ddd4",
     "txt_documents_only_source_header_changed": 55,
     "docx_documents_only_source_header_changed": 55,
     "docx_uncompressed_parts_compared": 1045,
-    "minigames_app_js_unchanged": true,
-    "next_refresh": "REQUIRED_AFTER_CACHE17_CODE_COMMIT"
+    "minigames_app_js_unchanged": true
   },
   "second_attempt": {
     "source_sha": "05d049dc1a8aca53b011879d4163355791f89a85",
