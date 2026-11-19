@@ -240,8 +240,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1163 — Odsuń zwiniętą kartę doradcy od mapy i dolnego menu](changes/HL-CHG-1163.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 | [HL-CHG-1164 — Dodaj10wyglądów wszystkich20budynków i zgodne miniatury](changes/HL-CHG-1164.md) | Story | `accepted` | `ACCEPTED_DDA_PAGES_AND_TAG` | `SUCCESS44292700743_ATTEMPT1` |
 | [HL-CHG-1165 — Pokazuj średniowieczny żuraw tylko podczas rzeczywistej budowy](changes/HL-CHG-1165.md) | Story | `accepted` | `ACCEPTED_DDA_PAGES_AND_TAG` | `SUCCESS44292700743_ATTEMPT1` |
-| [HL-CHG-1166 — Ogranicz ładowanie grafik i koszt rysowania morza powodujące zawieszanie Chrome](changes/HL-CHG-1166.md) | Bug | `accepted` | `local_candidate_pending_comparative_QA` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1167 — Odsłoń Zakład skórzany zasłonięty przez Kamieniołom](changes/HL-CHG-1167.md) | Bug | `accepted` | `local_candidate_pending_comparative_QA` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
+| [HL-CHG-1166 — Ogranicz ładowanie grafik i koszt rysowania morza powodujące zawieszanie Chrome](changes/HL-CHG-1166.md) | Bug | `accepted` | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
+| [HL-CHG-1167 — Odsłoń Zakład skórzany zasłonięty przez Kamieniołom](changes/HL-CHG-1167.md) | Bug | `accepted` | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 
 <a id="hl-epic-tut"></a>
 

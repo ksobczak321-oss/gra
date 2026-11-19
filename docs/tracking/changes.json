@@ -30660,8 +30660,8 @@
         "reference": "chat:2026-11-19:slow-start-chrome-freeze; docs/v32/GO-CHROME-PERFORMANCE.md"
       },
       "status": {
-        "implementation": "implemented_pending_final_validation",
-        "dev": "local_candidate_pending_comparative_QA",
+        "implementation": "implemented",
+        "dev": "LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING",
         "ci": "pending_own_exact_source",
         "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
         "prod": "postponed_by_user",
@@ -30688,7 +30688,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
-          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-building-stages.js",
@@ -30700,12 +30701,14 @@
         ],
         "automated_tests": [
           "tests/harborlight-building-stages.test.mjs",
-          "tests/harborlight-water.test.mjs"
+          "tests/harborlight-water.test.mjs",
+          "tests/harborlight-performance-v32-smoke.py"
         ],
         "source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Poprawka0.15.2.1/cache18 w przygotowaniu; własnyCI i publikacjePENDING. Zachowane grafiki, mechaniki, konta i postęp."
+        "release_note": "Poprawka0.15.2.1/cache18 w przygotowaniu; własnyCI i publikacjePENDING. Zachowane grafiki, mechaniki, konta i postęp.",
+        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
       },
       "notes": [
         "Stare20atlasów pozostają w pakiecie dla wcześniejszych klientów i odniesień; dodatkowe200małych plików zwiększa całe archiwum, lecz zmniejsza transfer i pamięć bieżącej gry.",
@@ -30741,8 +30744,8 @@
         "reference": "chat:2026-11-19:leatherworks-hidden-behind-quarry; docs/v32/GO-CHROME-PERFORMANCE.md"
       },
       "status": {
-        "implementation": "implemented_pending_final_validation",
-        "dev": "local_candidate_pending_comparative_QA",
+        "implementation": "implemented",
+        "dev": "LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING",
         "ci": "pending_own_exact_source",
         "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
         "prod": "postponed_by_user",
@@ -30765,19 +30768,22 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
-          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-building-stages.js",
           "assets/building-upgrades-v1/manifest.json"
         ],
         "automated_tests": [
-          "tests/harborlight-building-stages.test.mjs"
+          "tests/harborlight-building-stages.test.mjs",
+          "tests/harborlight-performance-v32-smoke.py"
         ],
         "source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "W poprawce0.15.2.1/cache18 ustawiono jawny paintDepth500 zamiast automatycznego481 dla Zakładu skórzanego; odbiórUI/CI/PRE-PROD PENDING."
+        "release_note": "W poprawce0.15.2.1/cache18 ustawiono jawny paintDepth500 zamiast automatycznego481 dla Zakładu skórzanego; odbiórUI/CI/PRE-PROD PENDING.",
+        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
       },
       "notes": [
         "Przed poprawką Kamieniołom(z972) przykrywał Zakład skórzany(z962); z1000 stawia fasadę Zakładu przed skałami.",
@@ -34287,14 +34293,44 @@
       "change": "HL-CHG-1166",
       "version": "0.15.2.1",
       "cache": "frontend-v32-18",
-      "status": "LOCAL_CANDIDATE_COMPARATIVE_QA_PENDING",
+      "status": "LOCAL_QA_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING",
       "source_sha": null,
       "CI": "PENDING_OWN_EXACT_SOURCE",
       "Pages": "PENDING_OWN_SOURCE",
       "PREPROD": "PENDING_AFTER_VERIFIED_DEV_AND_CI",
       "PROD_DNS_reset": "NO_ACTION",
       "accounts_and_progress": "PRESERVE",
-      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+      "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "local_acceptance": "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json",
+      "local_frontend_full_first": "1500of1501PASS_legacyWatchdogTimeout_original10000ms",
+      "local_watchdog_isolated": "PASS9335ms",
+      "local_backend": 170,
+      "local_browser": "performance4_building200alpha160DOM_startup26_front4widthPASS",
+      "same_economy14tables": true,
+      "canonical_artifacts": {
+        "source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "master": {
+          "sheets": 158,
+          "current_sheets": 58,
+          "rows": 62568,
+          "source_files": 120,
+          "bytes": 7744332,
+          "sha256": "cc210463afe2df74774569125d77d7da171c303d928d77fe291dbb2ee8196c85",
+          "validation": "BUILD_AND_FRESH_VALIDATE_PASS"
+        },
+        "editorial": {
+          "sheets": 6,
+          "rows": 413,
+          "C_all_blank": true,
+          "bytes": 60331,
+          "sha256": "13f895feb3283ae1c4b47afaffbd4a2cc93446e4bf6dcbfa1c3225b6d6109502",
+          "validation": "PASS"
+        },
+        "minigames": "55entries110docs_PROVENANCE_ONLY_SEMANTICS_UNCHANGED",
+        "economy": "14tables_UNCHANGED",
+        "simulations": "REAL24h24h72h_CANONICAL_START_NO_INJECTION_PASS"
+      }
     }
   }
 }

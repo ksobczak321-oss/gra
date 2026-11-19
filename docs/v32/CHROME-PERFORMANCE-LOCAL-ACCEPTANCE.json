@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-19",
+  "status": "LOCAL_BROWSER_PIXELS_AND_MODEL_IDENTITY_PASS_EXACT_PUBLICATION_CI_PENDING",
+  "code_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+  "version": "0.15.2.1",
+  "cache": "frontend-v32-18",
+  "final_functional_QA": {
+    "status": "PASS",
+    "application_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "version": "0.15.2.1",
+    "cache": "frontend-v32-18",
+    "code_freeze_hashes_verified": {
+      "harborlight-version.js": "2f2689da8b998f027f98d3ab8e992d0e684619a8f8c27c64eceb78aeefa0778e",
+      "harborlight-v1-layered.html": "b89b008a1662b99c077dc0a1c1355d9906e9cf899dd3212fb7cb2be78d9ef9f4",
+      "harborlight-v1-building-stages.js": "38845803ef32b0adafa12a53ee8f764f938e07dce426589fe1f58b5c87fd9fa5",
+      "harborlight-v1-play.js": "11bb1b4a9503a3b97941c732ff85034a5bdb79010ab245429df654a5e08ffda8",
+      "harborlight-v1-map-art.js": "144535bad54af60625a82a86ea361a8ee3d2ac029a845585c1ffc980a198fa0e",
+      "harborlight-v1-ambient.js": "31b0190d1f93f04d335b1d4a2961a18fdef2b98d626edd13561088200c6de40f",
+      "harborlight-v1-water.js": "966c524a4b0da37ecfff7e3151c518991829feb4a0a59c45ea323dd0041a346f",
+      "assets/building-upgrades-v1/manifest.json": "3626243a2bb564d1ceb84473650b902454022f316762b0d1a3d9e783977a1e03",
+      "tests/harborlight-performance-v32-smoke.py": "bba918aea4da44bbb5cd7442566a5940a256179cd3e1293d99d8c46370113f77",
+      "tests/harborlight-building-stages-v32-smoke.py": "85ae43f0f162d470c2fc678b1224532d3997d45cd0b0472fb60281deded795f6",
+      "tests/harborlight-startup-no-flash-v32-smoke.py": "56b014e94efe9cff7e84eb0e2c5b29b4266ea573b1ba18aca2f782f0cd509899",
+      "tests/harborlight-accepted-front-v32-smoke.py": "213e6e9985c9a1546bacd3a030d1bd969dfb9b1625dff1ac38d97b3bca2da851",
+      "tests/helpers/building_stage_acceptance.py": "e52f95921698bc22bc825ba5fc44273567c9e2478cc2a68e488244602d35d7e2"
+    },
+    "real_asset_performance_cases": 4,
+    "current_functional_frames": 20,
+    "additional_current_decoration_frames": 1,
+    "startup_image_bytes": 12749925,
+    "startup_image_limit_bytes": 20971520,
+    "full_atlas_or_old_farm_harbor_windmill_requests": 0,
+    "unchanged_tick_new_image_requests": 0,
+    "current404_and_retry": "PASS",
+    "unused_future404_independence": "PASS",
+    "actual_Leatherworks_Quarry_zindex": [
+      1000,
+      972
+    ],
+    "building_runtime_widths": [
+      1440,
+      390
+    ],
+    "building_real200_alpha_bounds": "PASS",
+    "crane_actual_DOM_alpha_geometry_cases": 160,
+    "Lighthouse_HUD_negative_controls": 4,
+    "atlas_letterbox_negative_control": "PASS",
+    "startup_cases": 26,
+    "conditional_active_crane_error_retry_cases": 2,
+    "accepted_front_widths": [
+      1672,
+      1440,
+      390,
+      320
+    ],
+    "no_real_account_or_cloud_writes": true,
+    "no_application_JS_errors": true,
+    "all_browsers_closed": true,
+    "no_repository_edits_this_final_run": true,
+    "timing_benchmark_repeated": false,
+    "prior_pre_cache_bump_timing_comparison": "before-after-comparison.json",
+    "logs": {
+      "performance": {
+        "file": "/workspace/work/perf-20261119/final-cache18-performance.log",
+        "bytes": 2691,
+        "sha256": "78820518e37e994d4010e2fee503d21d716501547661e09ae031f8127f493bbf"
+      },
+      "buildings": {
+        "file": "/workspace/work/perf-20261119/final-cache18-buildings.log",
+        "bytes": 682,
+        "sha256": "c9aca191b57a573e7976a66e793e9306624c2cc3cbf9a7b5897a284a84f4bc6a"
+      },
+      "startup": {
+        "file": "/workspace/work/perf-20261119/final-cache18-startup.log",
+        "bytes": 1413,
+        "sha256": "fd76c6d45ef5deb25f3f9955cd7223cb01a5ed299b87533abb84bfeb2a957291"
+      },
+      "front": {
+        "file": "/workspace/work/perf-20261119/final-cache18-front.log",
+        "bytes": 1768,
+        "sha256": "9ee2862498ad2645c23d01721541802f0567863da11ebf4d2053374293828759"
+      }
+    }
+  },
+  "performance_measured_working_candidate_before_final_cache_freeze": {
+    "status": "MEASURED",
+    "baseline_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
+    "candidate_working_tree": "/workspace/gra-performance",
+    "candidate_uncommitted_at_measurement": true,
+    "same_harness": true,
+    "solo_agent_browser_window": true,
+    "real_assets": true,
+    "network": "local HTTP",
+    "no_real_account_or_cloud_writes": true,
+    "comparisons": [
+      {
+        "scenario": "desktop",
+        "ready_wall_ms": {
+          "before": 3599.6851769999694,
+          "after": 2460.641095000028,
+          "reduction_percent": 31.64
+        },
+        "image_body_bytes": {
+          "before": 52630275,
+          "after": 12749925,
+          "reduction_percent": 75.77
+        },
+        "rss_peak_bytes": {
+          "before": 1266704384,
+          "after": 1031999488,
+          "reduction_percent": 18.53
+        },
+        "renderer_peak_bytes": {
+          "before": 747520000,
+          "after": 553406464
+        },
+        "idle_p95_raf_ms": {
+          "before": 33.399999999999636,
+          "after": 33.29999999999927
+        },
+        "before_idle6s_script_seconds": 3.189813,
+        "before_idle6s_task_seconds": 4.594619,
+        "after_idle6s_script_seconds": 0.483079,
+        "after_idle6s_task_seconds": 3.6396369999999996,
+        "new_JS_errors": []
+      },
+      {
+        "scenario": "mobile2x",
+        "ready_wall_ms": {
+          "before": 2983.5692200000494,
+          "after": 1676.0335409999243,
+          "reduction_percent": 43.82
+        },
+        "image_body_bytes": {
+          "before": 52630275,
+          "after": 12749925,
+          "reduction_percent": 75.77
+        },
+        "rss_peak_bytes": {
+          "before": 1191374848,
+          "after": 961552384,
+          "reduction_percent": 19.29
+        },
+        "renderer_peak_bytes": {
+          "before": 717320192,
+          "after": 515616768
+        },
+        "idle_p95_raf_ms": {
+          "before": 33.399999999999636,
+          "after": 16.800000000000182
+        },
+        "before_idle6s_script_seconds": 3.1399179999999998,
+        "before_idle6s_task_seconds": 3.825505,
+        "after_idle6s_script_seconds": 0.489979,
+        "after_idle6s_task_seconds": 2.10067,
+        "new_JS_errors": []
+      }
+    ],
+    "limitations": [
+      "Local HTTP excludes public latency",
+      "Headless software raster; summed RSS may include shared pages",
+      "Budget/ready/404 behavior is asserted separately by the new browser contract; RSS is not a CI pass threshold"
+    ]
+  },
+  "original_artwork_identity": {
+    "status": "PASS",
+    "baseline": "e5d76110365c77d5c026b53b6195e56a3a327542",
+    "code_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "original_images": [
+      {
+        "path": "assets/building-upgrades-v1/townhall.webp",
+        "bytes": 1382070,
+        "sha256": "836f5dd91db45e8e9adc4d8488cad1679e72a2fd34af03d23e2ee9cda086c749"
+      },
+      {
+        "path": "assets/building-upgrades-v1/house.webp",
+        "bytes": 1409766,
+        "sha256": "ed7076142a816e2a06ace1030002d9387a3c6fdefb51deb61ec2f9bf02485c6f"
+      },
+      {
+        "path": "assets/building-upgrades-v1/farm.webp",
+        "bytes": 1297138,
+        "sha256": "29eebdb2537c8ff52b7fb59e85c5b202d5b0126fa39ffb1ee68b50a2d31c84ca"
+      },
+      {
+        "path": "assets/building-upgrades-v1/windmill.webp",
+        "bytes": 1523898,
+        "sha256": "33d798b4c8286ac92851d0e760bd499205e9638809ea91d2942048bb3a091a7c"
+      },
+      {
+        "path": "assets/building-upgrades-v1/lumber.webp",
+        "bytes": 1351288,
+        "sha256": "6eaea52bdfb4f159b4726a64950c8b4520fb76df0e33fc8781c885dc766543a8"
+      },
+      {
+        "path": "assets/building-upgrades-v1/quarry.webp",
+        "bytes": 1618108,
+        "sha256": "5cffdb713941e13393c35debd1807712ef7574ee8d18b897f95cd3e570160f52"
+      },
+      {
+        "path": "assets/building-upgrades-v1/sawmill.webp",
+        "bytes": 1581556,
+        "sha256": "89b9a1d98383e077724da351630454112a66a03ac86f6c1739d7e3a3c141d07b"
+      },
+      {
+        "path": "assets/building-upgrades-v1/warehouse.webp",
+        "bytes": 1526370,
+        "sha256": "04a41d01b670bd2a4427f040cdf22232bbac2b59ef75744193c8032652508613"
+      },
+      {
+        "path": "assets/building-upgrades-v1/bakery.webp",
+        "bytes": 1832714,
+        "sha256": "b49104a2fed07b937656a4b145f468a09be1fc34af2c6aa800194834c3152725"
+      },
+      {
+        "path": "assets/building-upgrades-v1/dairy.webp",
+        "bytes": 1505702,
+        "sha256": "19b19eff5b21c64236d003da7470a95f6d1b66d34c3cb1c62ac7f8916c0abcde"
+      },
+      {
+        "path": "assets/building-upgrades-v1/slaughterhouse.webp",
+        "bytes": 1390064,
+        "sha256": "dfa0728500cb5abfd67e7c0b9a8f9a29e270b58378cec51f64b2f200484411b8"
+      },
+      {
+        "path": "assets/building-upgrades-v1/academy.webp",
+        "bytes": 1561998,
+        "sha256": "033ac371270313c8e2edfd863b81d63423f5d12bd7b6a304053d95f633c851b6"
+      },
+      {
+        "path": "assets/building-upgrades-v1/leatherworks.webp",
+        "bytes": 1392062,
+        "sha256": "065c57e2a2e4c68a60ee1685fc6a4182696a7bfcb25a5f1bda099483e7819da9"
+      },
+      {
+        "path": "assets/building-upgrades-v1/fisher.webp",
+        "bytes": 1548386,
+        "sha256": "6e536a2bb0f9d4b9f8e22dd0a29a42608d2894fa3d042c2d22fff77bd213adea"
+      },
+      {
+        "path": "assets/building-upgrades-v1/chapel.webp",
+        "bytes": 1260658,
+        "sha256": "a91c3ab69174ca5f1171186c112c198ea030aa249154ff5a0cb7b8b7dbaf1424"
+      },
+      {
+        "path": "assets/building-upgrades-v1/barracks.webp",
+        "bytes": 1283968,
+        "sha256": "774d535a5678bd5af9ad292763d8d94ad040d521e630feb515bf2d2fc5d3d86b"
+      },
+      {
+        "path": "assets/building-upgrades-v1/theatre.webp",
+        "bytes": 1502016,
+        "sha256": "bf683735c1677cb59ba47f956513f79cf3ec9a26c335cb7f6edcddf8249881c3"
+      },
+      {
+        "path": "assets/building-upgrades-v1/lighthouse.webp",
+        "bytes": 1061526,
+        "sha256": "a26e720dd846cada16b904531c1efb392188e324ad5fa3c7fb533b59cfb2f50f"
+      },
+      {
+        "path": "assets/building-upgrades-v1/market.webp",
+        "bytes": 1679422,
+        "sha256": "559f7f44ab8449725e5751dccfd7a39cc599d24acabcb153c1e0459de2dccb7e"
+      },
+      {
+        "path": "assets/building-upgrades-v1/dock.webp",
+        "bytes": 1142328,
+        "sha256": "de4fd4687a30e71f3a0b4e98e255442b97df3825232d2ac31c2f5fc04d631409"
+      },
+      {
+        "path": "assets/building-upgrades-v1/crane.webp",
+        "bytes": 1065926,
+        "sha256": "f3f5c7da67c8e1bcc66fbc5a97eecbb8ca9ac08ae1037ccd739a0599c476ea2b"
+      },
+      {
+        "path": "assets/building-upgrades-v1/terrain.webp",
+        "bytes": 2388598,
+        "sha256": "020defe85185be91348fbac308c1f8f0fd419dcbb2a0484716153a5c938b52a5"
+      }
+    ],
+    "all22_original_images_byte_identical": true,
+    "all_original_manifest_fields_equal_except_declared_changes": true,
+    "declared_changes": [
+      "200lossless_sprites_metadata",
+      "Leatherworks.paintDepth500"
+    ],
+    "positions_scale_anchors_and_hit_regions_unchanged": true,
+    "sprites_pixel_identity": "building-sprites-final-check.json:200/200PASS"
+  },
+  "lossless_sprites": {
+    "all_runtime_sprites": {
+      "bytes": 27167928,
+      "files": 200,
+      "rgba_bytes": 82590860
+    },
+    "check_only": true,
+    "encoder": {
+      "Pillow": "13.0.0",
+      "exact_transparent_RGB": true,
+      "libwebp": "1.6.0",
+      "lossless": true,
+      "method": 6
+    },
+    "exact_RGBA_identity": "PASS_ALL200",
+    "families": 20,
+    "first_stage_runtime_sprites": {
+      "bytes": 2075264,
+      "files": 20,
+      "rgba_bytes": 6586756
+    },
+    "original_atlases": {
+      "bytes": 28851038,
+      "files": 20,
+      "rgba_bytes": 125822076,
+      "sha256": {
+        "academy": "033ac371270313c8e2edfd863b81d63423f5d12bd7b6a304053d95f633c851b6",
+        "bakery": "b49104a2fed07b937656a4b145f468a09be1fc34af2c6aa800194834c3152725",
+        "barracks": "774d535a5678bd5af9ad292763d8d94ad040d521e630feb515bf2d2fc5d3d86b",
+        "chapel": "a91c3ab69174ca5f1171186c112c198ea030aa249154ff5a0cb7b8b7dbaf1424",
+        "dairy": "19b19eff5b21c64236d003da7470a95f6d1b66d34c3cb1c62ac7f8916c0abcde",
+        "dock": "de4fd4687a30e71f3a0b4e98e255442b97df3825232d2ac31c2f5fc04d631409",
+        "farm": "29eebdb2537c8ff52b7fb59e85c5b202d5b0126fa39ffb1ee68b50a2d31c84ca",
+        "fisher": "6e536a2bb0f9d4b9f8e22dd0a29a42608d2894fa3d042c2d22fff77bd213adea",
+        "house": "ed7076142a816e2a06ace1030002d9387a3c6fdefb51deb61ec2f9bf02485c6f",
+        "leatherworks": "065c57e2a2e4c68a60ee1685fc6a4182696a7bfcb25a5f1bda099483e7819da9",
+        "lighthouse": "a26e720dd846cada16b904531c1efb392188e324ad5fa3c7fb533b59cfb2f50f",
+        "lumber": "6eaea52bdfb4f159b4726a64950c8b4520fb76df0e33fc8781c885dc766543a8",
+        "market": "559f7f44ab8449725e5751dccfd7a39cc599d24acabcb153c1e0459de2dccb7e",
+        "quarry": "5cffdb713941e13393c35debd1807712ef7574ee8d18b897f95cd3e570160f52",
+        "sawmill": "89b9a1d98383e077724da351630454112a66a03ac86f6c1739d7e3a3c141d07b",
+        "slaughterhouse": "dfa0728500cb5abfd67e7c0b9a8f9a29e270b58378cec51f64b2f200484411b8",
+        "theatre": "bf683735c1677cb59ba47f956513f79cf3ec9a26c335cb7f6edcddf8249881c3",
+        "townhall": "836f5dd91db45e8e9adc4d8488cad1679e72a2fd34af03d23e2ee9cda086c749",
+        "warehouse": "04a41d01b670bd2a4427f040cdf22232bbac2b59ef75744193c8032652508613",
+        "windmill": "33d798b4c8286ac92851d0e760bd499205e9638809ea91d2942048bb3a091a7c"
+      }
+    },
+    "originals_changed": false,
+    "pixels_resized_or_retouched": false,
+    "sprites": 200,
+    "status": "PASS"
+  },
+  "local_unit_results": {
+    "frontend_full_first": {
+      "tests": 1501,
+      "pass": 1500,
+      "fail": 1,
+      "failure": "unchanged legacy96hcatchup subprocess10000ms watchdog under concurrent suites",
+      "log": "frontend-node-cache18.log"
+    },
+    "same_watchdog_isolated": {
+      "status": "PASS",
+      "tests": 1,
+      "elapsed_ms": 9335.864,
+      "original10000ms_limit_unchanged": true,
+      "log": "catchup-isolated-cache18.log"
+    },
+    "backend": {
+      "status": "PASS",
+      "tests": 170
+    },
+    "building_and_water_targeted": {
+      "status": "PASS",
+      "tests": 26
+    },
+    "full_exact_source_CI": "PENDING"
+  },
+  "economic_identity": {
+    "status": "PASS",
+    "before_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
+    "after_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "unchanged_economic_tables": [
+      "building-levels",
+      "conditional-rules",
+      "direct-routes",
+      "levels",
+      "military-outcomes",
+      "parameters",
+      "population",
+      "products",
+      "recipe-levels",
+      "research",
+      "research-levels",
+      "roads",
+      "study-and-military",
+      "validated-examples"
+    ],
+    "unchanged_economic_table_count": 14,
+    "catalogs_rules_initial_state_pending_and_checks_identical": true,
+    "art_rows": 200,
+    "presentation_only_changes": [
+      "lossless frame URLs and local crop coordinates",
+      "explicit original atlas provenance",
+      "Leatherworks paintDepth500; positions and bounds preserved"
+    ],
+    "gameplay_or_account_mutation": false
+  },
+  "PROD_DNS_account_mutations": "NO_ACTION",
+  "manual_user_acceptance": "NOT_RUN"
+}

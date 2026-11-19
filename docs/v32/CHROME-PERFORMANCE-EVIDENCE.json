@@ -3,12 +3,10 @@
   "as_of": "2026-11-19",
   "timezone": "Europe/Warsaw",
   "scope": "PERFORMANCE_FIX_DEV_THEN_STANDARD_PREPROD",
-  "status": "LOCAL_IMPLEMENTATION_AND_ISOLATED_MEASUREMENTS_PASS_FINAL_SOURCE_AND_ACCEPTANCE_PENDING",
+  "status": "READY_FOR_OWN_PUBLICATION_CI_LOCAL_QA_AND_CANONICAL_ARTIFACTS_PASS",
   "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
-  "planned_application_version": "0.15.2.1",
-  "planned_cache": "frontend-v32-18",
-  "source_sha": null,
-  "source_frozen": false,
+  "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+  "source_frozen": true,
   "baseline": {
     "source_sha": "e5d76110365c77d5c026b53b6195e56a3a327542",
     "status": "MEASURED_ISOLATED",
@@ -69,7 +67,7 @@
     "sprites": 200,
     "generator": "scripts/build_building_sprites.py",
     "build_report": "/workspace/work/perf-20261119/building-sprites-build.json",
-    "fresh_check_report": "/workspace/work/perf-20261119/building-sprites-check.json",
+    "fresh_check_report": "/workspace/work/perf-20261119/building-sprites-final-check.json",
     "original_identity_report": "/workspace/work/perf-20261119/building-originals-identity.json",
     "exact_RGBA_identity": "PASS_ALL200",
     "original_WebP_files_byte_identical": 22,
@@ -105,7 +103,20 @@
       "Added per-frame sprites entries for all20 families.",
       "Added leatherworks.paintDepth=500 to repair painter order."
     ],
-    "map_positions_scale_ground_anchors_alpha_bboxes_and_hotspots_unchanged": true
+    "map_positions_scale_ground_anchors_alpha_bboxes_and_hotspots_unchanged": true,
+    "final_identity_checkpoint": {
+      "status": "PASS",
+      "baseline": "e5d76110365c77d5c026b53b6195e56a3a327542",
+      "code_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "all22_original_images_byte_identical": true,
+      "all_original_manifest_fields_equal_except_declared_changes": true,
+      "declared_changes": [
+        "200lossless_sprites_metadata",
+        "Leatherworks.paintDepth500"
+      ],
+      "positions_scale_anchors_and_hit_regions_unchanged": true,
+      "sprites_pixel_identity": "building-sprites-final-check.json:200/200PASS"
+    }
   },
   "prepared_loading_changes": {
     "current_variants_only": true,
@@ -116,7 +127,7 @@
     "legacy_menu_images_not_requested_before_catalog": true,
     "unused_staged_windmill_not_loaded": true,
     "gallery_loads_near_visible_area": true,
-    "after_real_runtime_validation": "MEASURED_ISOLATED_WORKING_TREE_BEFORE_FINAL_SOURCE_FREEZE",
+    "after_real_runtime_validation": "FINAL_CACHE18_4_REAL_ASSET_CASES_PASS",
     "current_visible_sprites_upper_bound": 21,
     "decorative_house_note": "20 functional families plus one decorative House frame if its TownHall-dependent tier differs from the actual House tier."
   },
@@ -189,7 +200,8 @@
       "byte_identical_water_raster_claimed": false,
       "note": "Rasterization/antialiasing differences remain at fractional scales; sprite RGBA identity is independently exact."
     },
-    "final_exact_source_CI": "PENDING"
+    "final_exact_source_CI": "PENDING",
+    "final_implementation_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
   },
   "after_measurements": {
     "status": "MEASURED_ISOLATED_WORKING_TREE_CANDIDATE",
@@ -257,11 +269,11 @@
     ]
   },
   "CI": {
-    "status": "PENDING_EXACT_FINAL_SOURCE",
+    "status": "PENDING_EXACT_PUBLICATION_SOURCE",
     "run_id": null
   },
   "Pages": {
-    "status": "PENDING_EXACT_FINAL_SOURCE",
+    "status": "PENDING_EXACT_PUBLICATION_SOURCE",
     "run_id": null
   },
   "DEV_tag": {
@@ -278,7 +290,49 @@
     "original_artifacts_verified": false,
     "existing_account_UI_verified": false,
     "account_preservation_verified": false,
-    "accepted": false
+    "accepted": false,
+    "before_readonly_account_audit": {
+      "status": "PASS",
+      "project": "harborlight-dev",
+      "normal_TLS": true,
+      "system_CA_and_proxy": true,
+      "tokens_or_passwords_saved": false,
+      "island_writes": false,
+      "totals": {
+        "accounts": 3,
+        "existingSaves": 3,
+        "emptyIslands": 0,
+        "foreignReadsDenied": 6,
+        "anonymousReadsDenied": 3,
+        "apiReads": 3,
+        "ownedDirectReadsDenied": 3,
+        "anonymousApiReadsDenied": 3
+      },
+      "accounts": [
+        {
+          "uid": "dev-admin1",
+          "generation": 2,
+          "island_exists": true,
+          "island_generation": 2,
+          "revision": 107
+        },
+        {
+          "uid": "dev-admin2",
+          "generation": 2,
+          "island_exists": true,
+          "island_generation": 2,
+          "revision": 34
+        },
+        {
+          "uid": "dev-admin3",
+          "generation": 2,
+          "island_exists": true,
+          "island_generation": 2,
+          "revision": 591
+        }
+      ],
+      "report": "/workspace/work/perf-20261119/preprod-before-account-metadata.json"
+    }
   },
   "previous_accepted_release": {
     "version": "0.15.2.0",
@@ -295,7 +349,7 @@
   "leatherworks_painter_order": {
     "user_report": "co tu się stało z tym domkiem producenta skór",
     "tracking_change": "HL-CHG-1167",
-    "status": "IMPLEMENTED_ANALYTICAL_DIAGNOSIS_AND_UNIT_PASS_REAL_UI_QA_PENDING",
+    "status": "IMPLEMENTED_ANALYTICAL_AND_FINAL_CACHE18_REAL_UI_PASS",
     "report": "/workspace/work/perf-leather-depth.json",
     "cause": "quarry groundY486 gives z972, leatherworks groundY481 gives z962; foreground quarry covers current house",
     "before": {
@@ -322,12 +376,275 @@
       "quarry_coverage_of_leatherworks": 0.0,
       "geometry_and_RGBA_unchanged": true
     },
-    "real_UI_check": "PENDING"
+    "real_UI_check": {
+      "status": "PASS",
+      "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "actual_Leatherworks_Quarry_zindex": [
+        1000,
+        972
+      ],
+      "widths": [
+        1440,
+        390
+      ],
+      "report": "/workspace/work/perf-20261119/final-cache18-summary.json"
+    }
   },
   "local_focused_Node": {
     "status": "PASS",
     "building": 21,
     "water": 5,
     "total": 26
-  }
+  },
+  "application_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+  "publication_source_sha": null,
+  "application_version": "0.15.2.1",
+  "cache": "frontend-v32-18",
+  "final_cache18_local_QA": {
+    "status": "PASS",
+    "application_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "version": "0.15.2.1",
+    "cache": "frontend-v32-18",
+    "code_freeze_hashes_verified": {
+      "harborlight-version.js": "2f2689da8b998f027f98d3ab8e992d0e684619a8f8c27c64eceb78aeefa0778e",
+      "harborlight-v1-layered.html": "b89b008a1662b99c077dc0a1c1355d9906e9cf899dd3212fb7cb2be78d9ef9f4",
+      "harborlight-v1-building-stages.js": "38845803ef32b0adafa12a53ee8f764f938e07dce426589fe1f58b5c87fd9fa5",
+      "harborlight-v1-play.js": "11bb1b4a9503a3b97941c732ff85034a5bdb79010ab245429df654a5e08ffda8",
+      "harborlight-v1-map-art.js": "144535bad54af60625a82a86ea361a8ee3d2ac029a845585c1ffc980a198fa0e",
+      "harborlight-v1-ambient.js": "31b0190d1f93f04d335b1d4a2961a18fdef2b98d626edd13561088200c6de40f",
+      "harborlight-v1-water.js": "966c524a4b0da37ecfff7e3151c518991829feb4a0a59c45ea323dd0041a346f",
+      "assets/building-upgrades-v1/manifest.json": "3626243a2bb564d1ceb84473650b902454022f316762b0d1a3d9e783977a1e03",
+      "tests/harborlight-performance-v32-smoke.py": "bba918aea4da44bbb5cd7442566a5940a256179cd3e1293d99d8c46370113f77",
+      "tests/harborlight-building-stages-v32-smoke.py": "85ae43f0f162d470c2fc678b1224532d3997d45cd0b0472fb60281deded795f6",
+      "tests/harborlight-startup-no-flash-v32-smoke.py": "56b014e94efe9cff7e84eb0e2c5b29b4266ea573b1ba18aca2f782f0cd509899",
+      "tests/harborlight-accepted-front-v32-smoke.py": "213e6e9985c9a1546bacd3a030d1bd969dfb9b1625dff1ac38d97b3bca2da851",
+      "tests/helpers/building_stage_acceptance.py": "e52f95921698bc22bc825ba5fc44273567c9e2478cc2a68e488244602d35d7e2"
+    },
+    "real_asset_performance_cases": 4,
+    "current_functional_frames": 20,
+    "additional_current_decoration_frames": 1,
+    "startup_image_bytes": 12749925,
+    "startup_image_limit_bytes": 20971520,
+    "full_atlas_or_old_farm_harbor_windmill_requests": 0,
+    "unchanged_tick_new_image_requests": 0,
+    "current404_and_retry": "PASS",
+    "unused_future404_independence": "PASS",
+    "actual_Leatherworks_Quarry_zindex": [
+      1000,
+      972
+    ],
+    "building_runtime_widths": [
+      1440,
+      390
+    ],
+    "building_real200_alpha_bounds": "PASS",
+    "crane_actual_DOM_alpha_geometry_cases": 160,
+    "Lighthouse_HUD_negative_controls": 4,
+    "atlas_letterbox_negative_control": "PASS",
+    "startup_cases": 26,
+    "conditional_active_crane_error_retry_cases": 2,
+    "accepted_front_widths": [
+      1672,
+      1440,
+      390,
+      320
+    ],
+    "no_real_account_or_cloud_writes": true,
+    "no_application_JS_errors": true,
+    "all_browsers_closed": true,
+    "no_repository_edits_this_final_run": true,
+    "timing_benchmark_repeated": false,
+    "prior_pre_cache_bump_timing_comparison": "before-after-comparison.json",
+    "logs": {
+      "performance": {
+        "file": "/workspace/work/perf-20261119/final-cache18-performance.log",
+        "bytes": 2691,
+        "sha256": "78820518e37e994d4010e2fee503d21d716501547661e09ae031f8127f493bbf"
+      },
+      "buildings": {
+        "file": "/workspace/work/perf-20261119/final-cache18-buildings.log",
+        "bytes": 682,
+        "sha256": "c9aca191b57a573e7976a66e793e9306624c2cc3cbf9a7b5897a284a84f4bc6a"
+      },
+      "startup": {
+        "file": "/workspace/work/perf-20261119/final-cache18-startup.log",
+        "bytes": 1413,
+        "sha256": "fd76c6d45ef5deb25f3f9955cd7223cb01a5ed299b87533abb84bfeb2a957291"
+      },
+      "front": {
+        "file": "/workspace/work/perf-20261119/final-cache18-front.log",
+        "bytes": 1768,
+        "sha256": "9ee2862498ad2645c23d01721541802f0567863da11ebf4d2053374293828759"
+      }
+    }
+  },
+  "local_Node_regression": {
+    "frontend_full_first": {
+      "tests": 1501,
+      "pass": 1500,
+      "fail": 1,
+      "failure": "unchanged legacy96hcatchup subprocess10000ms watchdog under concurrent suites",
+      "log": "frontend-node-cache18.log"
+    },
+    "same_watchdog_isolated": {
+      "status": "PASS",
+      "tests": 1,
+      "elapsed_ms": 9335.864,
+      "original10000ms_limit_unchanged": true,
+      "log": "catchup-isolated-cache18.log"
+    },
+    "backend": {
+      "status": "PASS",
+      "tests": 170
+    },
+    "building_and_water_targeted": {
+      "status": "PASS",
+      "tests": 26
+    },
+    "full_exact_source_CI": "PENDING",
+    "full_frontend_PASS_claimed": false,
+    "failure_not_suppressed_or_timeout_relaxed": true
+  },
+  "canonical_artifact_refresh": {
+    "status": "PASS",
+    "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "report": "/workspace/work/perf-20261119/artifacts/canonical-artifacts-summary.json",
+    "master": {
+      "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+      "sha256": "cc210463afe2df74774569125d77d7da171c303d928d77fe291dbb2ee8196c85",
+      "bytes": 7744332,
+      "sheets": 158,
+      "current_sheets": 58,
+      "rows_current": 62568,
+      "historical_sheets_unchanged": 100,
+      "historical_zip_parts_unchanged": 220,
+      "historical_comments_unchanged": 48,
+      "historical_cached_formulas_unchanged": 4982,
+      "new_cached_formulas": 12,
+      "formula_samples_against_code": 160,
+      "source_files": 120,
+      "building_art_rows": 200,
+      "fresh_build": "PASS",
+      "fresh_validate_only": "PASS",
+      "validation_report_sha256": "4df79199c4d0449367d3a53ee9ee4c5fc319fd60f1f16a39714f834353b4e253",
+      "simulation_snapshot_sha256": "31c54b6b4ca471a733bdb21f01fe893fdd4d00b6c7cf5e426e47a69729e51a24"
+    },
+    "editorial": {
+      "status": "PASS",
+      "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+      "bytes": 60331,
+      "sha256": "13f895feb3283ae1c4b47afaffbd4a2cc93446e4bf6dcbfa1c3225b6d6109502",
+      "source_git_commit": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "source_fingerprint": "e478575a5bb31deb4a10e72f21dd4318e0673f644d1a6488df016febcd1a54b0",
+      "source_files_fingerprinted": 105,
+      "rows": 413,
+      "sheets": {
+        "Tutorial": 55,
+        "Budynki — opisy": 24,
+        "Budynki — informacje": 30,
+        "Dolny pasek": 24,
+        "Komunikaty": 215,
+        "Przyciski": 65
+      },
+      "C_all_blank": true,
+      "exact_three_columns": true
+    },
+    "facts_economic_identity": {
+      "status": "PASS",
+      "before_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
+      "after_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "unchanged_economic_tables": [
+        "building-levels",
+        "conditional-rules",
+        "direct-routes",
+        "levels",
+        "military-outcomes",
+        "parameters",
+        "population",
+        "products",
+        "recipe-levels",
+        "research",
+        "research-levels",
+        "roads",
+        "study-and-military",
+        "validated-examples"
+      ],
+      "unchanged_economic_table_count": 14,
+      "catalogs_rules_initial_state_pending_and_checks_identical": true,
+      "art_rows": 200,
+      "presentation_only_changes": [
+        "lossless frame URLs and local crop coordinates",
+        "explicit original atlas provenance",
+        "Leatherworks paintDepth500; positions and bounds preserved"
+      ],
+      "gameplay_or_account_mutation": false
+    },
+    "actual_simulations": {
+      "profiles": [
+        {
+          "id": "bez-pracy",
+          "hours": 24,
+          "canonical_population": 18,
+          "after_introduction_population": 19,
+          "no_injected_resources_or_levels": true,
+          "no_real_accounts": true
+        },
+        {
+          "id": "produkcja-24h",
+          "hours": 24,
+          "canonical_population": 18,
+          "after_introduction_population": 19,
+          "no_injected_resources_or_levels": true,
+          "no_real_accounts": true
+        },
+        {
+          "id": "rozwoj-3d",
+          "hours": 72,
+          "canonical_population": 18,
+          "after_introduction_population": 19,
+          "no_injected_resources_or_levels": true,
+          "no_real_accounts": true
+        }
+      ],
+      "checks": {
+        "puzzleExamples": 120,
+        "solverSolved": 115,
+        "layoutsValidated": 120,
+        "storyVariants": 100,
+        "storyRooms": 560,
+        "campaignSteps": 152,
+        "theatrePricePoints": 1030,
+        "theatreShowCases": 10,
+        "currentSimulationProfiles": 3,
+        "allSimulationsCanonicalStart": true,
+        "noInjectedResourcesOrLevels": true
+      }
+    },
+    "minigames": {
+      "status": "PASS",
+      "source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "all5_steps_returncode0": true,
+      "catalog": {
+        "total": 55,
+        "puzzle": 24,
+        "story": 20,
+        "adventure": 9,
+        "expedition": 2,
+        "storyVariants": 100
+      },
+      "entries": 55,
+      "TXT": 55,
+      "DOCX": 55,
+      "semantic_catalog_sha256": "344c77c26aad1daf696172e1fa47ba011e7371c81ff70031fa9d22c481d7ddd4",
+      "semantics_unchanged": true,
+      "provenance_changes_only": true,
+      "archive_sha256": "dc90537169a65c941d9f54bec21c22b164f90b6a14527f7504647c47056b790d",
+      "archive_bytes": 2390770
+    },
+    "gameplay_or_account_writes": false,
+    "code_modified_after_source_pin": false,
+    "final_publication_source": null,
+    "generators_edited_by_documentation_task": false
+  },
+  "local_acceptance_document": "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json"
 }

@@ -114,7 +114,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-packing.
 
-Źródło katalogu: 6a27649b12bff223d35889f875fca1bc23564daa.
+Źródło katalogu: bf2f4ac12c1ef1cd69adb8c3e572649fdc975190.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

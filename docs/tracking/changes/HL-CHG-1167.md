@@ -8,8 +8,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `implemented_pending_final_validation` |
-| DEV | `local_candidate_pending_comparative_QA` |
+| Implementacja | `implemented` |
+| DEV | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` |
 | CI | `pending_own_exact_source` |
 | PRE-PROD | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 | PROD | `postponed_by_user` |
@@ -36,9 +36,9 @@ Data pierwotnej wiadomości: 2026-11-19. Europe/Warsaw
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-CHROME-PERFORMANCE.md](../../v32/GO-CHROME-PERFORMANCE.md), [docs/v32/CHROME-PERFORMANCE-EVIDENCE.json](../../v32/CHROME-PERFORMANCE-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-CHROME-PERFORMANCE.md](../../v32/GO-CHROME-PERFORMANCE.md), [docs/v32/CHROME-PERFORMANCE-EVIDENCE.json](../../v32/CHROME-PERFORMANCE-EVIDENCE.json), [docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json](../../v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json)
 - **Kod:** [harborlight-v1-building-stages.js](../../../harborlight-v1-building-stages.js), [assets/building-upgrades-v1/manifest.json](../../../assets/building-upgrades-v1/manifest.json)
-- **Scenariusze automatyczne:** [tests/harborlight-building-stages.test.mjs](../../../tests/harborlight-building-stages.test.mjs)
+- **Scenariusze automatyczne:** [tests/harborlight-building-stages.test.mjs](../../../tests/harborlight-building-stages.test.mjs), [tests/harborlight-performance-v32-smoke.py](../../../tests/harborlight-performance-v32-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 W poprawce0.15.2.1/cache18 ustawiono jawny paintDepth500 zamiast automatycznego481 dla Zakładu skórzanego; odbiórUI/CI/PRE-PROD PENDING.

@@ -1,6 +1,6 @@
 # Naprawa ładowania i obciążenia Chrome — 19 listopada 2026
 
-Użytkownik zgłosił: „gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw”. Zakres obejmuje diagnozę rzeczywistego startu, poprawkę na DEV, pomiar przed/po oraz standardową promocję sprawdzonej poprawki do PRE-PROD. Planowana wersja to **0.15.2.1 / `frontend-v32-18`**. Końcowe źródło nie jest jeszcze zamrożone; własne CI, Pages, tag i nowa promocja pozostają PENDING.
+Użytkownik zgłosił: „gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw”. Zakres obejmuje diagnozę rzeczywistego startu, poprawkę na DEV, pomiar przed/po oraz standardową promocję sprawdzonej poprawki do PRE-PROD. Kod **0.15.2.1 / `frontend-v32-18`** jest zamrożony na `bf2f4ac12c1ef1cd69adb8c3e572649fdc975190`. Źródło publikacji z odświeżonymi artefaktami, jego własne CI, Pages, tag i nowa promocja pozostają PENDING.
 
 Późniejsze zgłoszenie ze screenem — „co tu się stało z tym domkiem producenta skór” — obejmuje także naprawę kolejności rysowania Zakładu skórzanego. Jego grafika i geometria są zachowane; naprawiany jest porządek nakładania budynków.
 
@@ -41,7 +41,25 @@ Próba wody z wymuszonym odczytem pikseli, 40 iteracji dla każdej skali, obniż
 
 Analityczna kontrola dokładnych pikseli alfa wykazała, że grunt Kamieniołomu na wysokości 486 dawał mu `z-index:972`, a grunt Zakładu skórzanego na wysokości 481 — `z-index:962`. Kamieniołom zasłaniał około 44% nieprzezroczystych pikseli pierwszego wariantu domku; dla 100 kombinacji wariantów obu budynków było to 42,6–57,5%.
 
-Manifest otrzymuje wyłącznie `buildings.leatherworks.paintDepth=500`, co daje Zakładowi skórzanemu `z-index:1000`. Normalizer ściśle sprawdza tę wartość. Pozycje, skala, kotwice, kadry, obwiednie alfa i hotspot pozostają bez zmiany. Wcześniejszy dowód identyczności metadanych dotyczył etapu przed tą poprawką; bieżące wyjątki to dodane `sprites` i ten jeden porządek rysowania. Analityczny wynik obejmuje wszystkie 100 kombinacji, a odbiór rzeczywistego UI pozostaje PENDING. Łącznie kierunkowe testy Node: **26/26 PASS** — 21 grafiki budynków i 5 wody.
+Manifest otrzymuje wyłącznie `buildings.leatherworks.paintDepth=500`, co daje Zakładowi skórzanemu `z-index:1000`. Normalizer ściśle sprawdza tę wartość. Pozycje, skala, kotwice, kadry, obwiednie alfa i hotspot pozostają bez zmiany. Wcześniejszy dowód identyczności metadanych dotyczył etapu przed tą poprawką; bieżące wyjątki to dodane `sprites` i ten jeden porządek rysowania. Analityczny wynik obejmuje wszystkie 100 kombinacji; końcowy test rzeczywistego UI cache18 potwierdził kolejność Zakład/Kamieniołom 1000/972. Łącznie kierunkowe testy Node: **26/26 PASS** — 21 grafiki budynków i 5 wody.
+
+## Lokalny odbiór zamrożonego cache18
+
+Na dokładnym kodzie `bf2f4ac12c1ef1cd69adb8c3e572649fdc975190` wszystkie cztery końcowe programy przeglądarkowe przeszły: wydajność z prawdziwymi obrazami (4 przypadki), pełny runtime budynków (200 obwiedni alfa, 160 przypadków geometrii żurawi i 4 kontrole negatywne), bramka startu (26 przypadków) oraz zaakceptowany front w szerokościach 1672/1440/390/320. Nie było błędów JS ani operacji na prawdziwych kontach. Rzeczywisty start pobrał 12 749 925 bajtów, nie pobrał pełnych atlasów ani starych grafik gospodarstwa, portu i wiatraka; niezmieniony tick nie żądał kolejnych obrazów. Sprawdzono także niezależność od błędu przyszłego nieużywanego wariantu oraz blokadę i retry błędu bieżącego kadru i aktywnego żurawia.
+
+Nowy dowód zgodności potwierdził 22 niezmienione oryginalne WebP oraz zgodność wcześniejszych pól manifestu po odjęciu wyłącznie `sprites` i `leatherworks.paintDepth=500`. Ponowna kontrola wszystkich 200 pochodnych kadrów RGBA PASS. Końcowe QA cache18 nie powtarzało benchmarku czasu; wcześniejsze izolowane porównanie czasów pozostaje osobnym pomiarem roboczego kandydata.
+
+Pierwszy pełny lokalny frontend Node zakończył się wynikiem **1500/1501 PASS**: niezmieniony test długiego nadrabiania 96 godzin przekroczył limit subprocessu 10 000 ms podczas równoległych zestawów. Ten sam przypadek uruchomiony osobno przeszedł w **9335,864 ms**, z zachowanym oryginalnym limitem. Nie oznaczamy z tego powodu całego lokalnego zestawu jako PASS. Backend: **170/170 PASS**. Własny pełny CI dokładnego źródła publikacji nadal jest wymagany.
+
+Odczyt kontrolny obecnego PRE-PROD przed nową publikacją potwierdził 3 logowania, 3 istniejące wyspy, generacje 2/2/2 i izolację dostępu; nie zapisywał wysp. To punkt odniesienia do porównania po wdrożeniu, a nie dowód nowej promocji lub zachowania danych po niej.
+
+## Paczka gotowa do własnego CI publikacji
+
+Artefakty odświeżono z dokładnego kodu `bf2f4ac12c1ef1cd69adb8c3e572649fdc975190`. Master ma 158 kart, w tym 58 bieżących i 62 568 bieżących wierszy, 120 odcisków źródeł i 200 wierszy wyglądów budynków; budowa i świeża walidacja PASS. Redakcyjny Excel zachowuje 6 kart, 413 wierszy, kolumny ABC i pustą C, ze 105 odciskami źródeł; budowa i walidacja PASS. Sprawdzono także zachowanie archiwum i świeże rzeczywiste symulacje 24/24/72 h. Wszystkie 14 tabel gospodarki jest identyczne z poprzednim źródłem.
+
+Katalog 55 minigier oraz 55 DOCX i 55 TXT przeszedł wszystkie pięć kroków eksportu, budowy i kontroli. Semantyka gier i instrukcji pozostała identyczna; zmieniła się proweniencja dokładnego źródła. Paczka jest gotowa do commita publikacji i jego własnego CI. Nie wymaga dopisywania przyszłego SHA do jego własnego drzewa; opublikowany SHA i rzeczywiste wyniki przebiegów zostaną zapisane po ich powstaniu.
+
+[Zbiorczy lokalny odbiór](CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json). To dowód lokalnej gotowości, nie udanego CI lub nowej promocji PRE-PROD.
 
 ## Odbiór i granice
 
