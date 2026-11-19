@@ -1,6 +1,24 @@
 # Zasady pracy nad HARBORLIGHT
 
-## Admin3 — C5 wstrzymany, C6 zamrożony / 0.15.2.4 / cache21
+## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
+
+Naprawa admin3 jest wdrożona i automatycznie odebrana na **DEV i PRE-PROD**. Kod aplikacji i źródła artefaktów: `e394ea8fe369f9dfc6615b7a96da1c3e499672e6`; odebrana publikacja: `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`, **0.15.2.4 / `frontend-v32-21`**. [Gra PRE-PROD](https://harborlight-dev.web.app/harborlight-v1-layered.html?v=frontend-v32-21).
+
+Własny [CI44569674535](https://github.com/ksobczak321-oss/gra/actions/runs/44569674535) ma **SUCCESS, 39 min 02 s**: 1784 Node, 173 Python i wszystkie 73 programy Chromium; niezmieniony watchdog 96 h przeszedł w 8084,649 ms przy limicie 10 000 ms. [Pages44569674475](https://github.com/ksobczak321-oss/gra/actions/runs/44569674475) ma **SUCCESS, 31 s**; normalny TLS potwierdził wszystkie 459 plików treści i osobno oba XLSX zgodne z Git. Standardowy [PRE-PROD44577083312/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1) ma **SUCCESS, 12 min 34 s**, 39 kroków SUCCESS, 1 pominiętą diagnostykę i 0 FAIL.
+
+Rzeczywisty admin3 uruchomił się w **280 120,832 ms** z obserwowanym Workerem: 2762 heartbeatów, maksymalna przerwa 498,2 ms. Przez następne 10 s zwykłej gry 1× zachował gotowy ekran: 91 heartbeatów, maksymalna przerwa 541,2 ms. Admin1 uruchomił się w 4695,791 ms. Wszystkie zapisy testowej przeglądarki były blokowane. Trzy istniejące profile są identyczne bajtowo przed i po wdrożeniu: UID, generacje 2, początki wysp, rewizje 120/373/591 i zegary pozostały zachowane. Pierwsze wejście właściciela nadal rozliczy nieobecność, ponieważ QA nie zapisywał przeliczonego świata.
+
+Oba oryginalne ZIP-y, wszystkie 4 warunki receipt, obraz API po digest oraz pełne archiwum 460 plików / 96 565 038 bajtów mają niezależny PASS. Wszystkie 460 plików PRE-PROD pobrano przez normalny TLS i porównano z oryginalnym archiwum. Manifest budynków ma właściwe bajty i `Cache-Control: public, max-age=0, must-revalidate`. Niezmienne tagi `dev-0.15.2.4-20261119` i `preprod-0.15.2.4-20261119` są zdalnie potwierdzone na tej samej publikacji.
+
+Pełne 47,885 h rzeczywistej kopii admin3 na C6 rozliczono w 356 697,123 ms: cały odkodowany model 849 981 bajtów jest identyczny z ukończonym C4 i C5, a zapis 345 429 bajtów mieści się w niezmienionym limicie 700 000. Potwierdzono 111 plików źródłowych i 43 źródła faktycznie skompilowane przez V8. Zachowano wszystkie historie i zasady; krótkie ticki i panel misji mają osobne kontrole responsywności. Oryginalny pełny B94 zatrzymał się na limicie CPU po 32,18 h symulacji, bez pełnego wyniku — nie jest opisany jako pełny PASS.
+
+Świeże arkusze i minigry pozostają przypięte do kodu e394: master 158 kart / 58 bieżących / 63 921 wierszy / 128 źródeł / 200 wariantów, redakcyjny Excel 6 kart / 413 wierszy / ABC / pusta C / 110 odcisków. Trzynaście tabel gospodarki i rzeczywiste symulacje 24/24/72 h zachowują wyniki; 55 minigier i 110 instrukcji zachowuje treść. Ręczny odbiór użytkownika: **NOT_RUN**. Bez resetu, zmian zegara lub działań PROD/DNS. Końcowe uzupełnienie metadanych nie zmienia aplikacji, artefaktów ani tagów; jego ewentualny CI jest odrębnym przebiegiem.
+
+[Zakres i historia](docs/v32/GO-CHROME-PERFORMANCE.md) · [Dowody odbioru](docs/v32/CHROME-PERFORMANCE-EVIDENCE.json).
+
+Poniższe snapshoty zachowują wcześniejsze PENDING, błędy i QUALITY HOLD w ich pierwotnym kontekście. Bieżący odebrany stan opisano powyżej.
+
+## Historia C6 — snapshot lokalny przed publikacją d5ad
 
 Bieżący kandydat C6 jest **SOURCE_FROZEN / NOT_DEPLOYED**. Kod aplikacji i źródła eksportów **0.15.2.4 / `frontend-v32-21`** są zamrożone w `e394ea8fe369f9dfc6615b7a96da1c3e499672e6`. Własna publikacja, CI, Pages i PRE-PROD tego źródła pozostają oczekujące. PRE-PROD pozostaje b94 / 0.15.2.1 / cache18, z dawnym workflow SUCCESS i ponownie otwartym odbiorem jakości. Ostatnie w pełni odebrane wydanie to DDA / cache17. C5 / cache20 otrzymuje **QUALITY HOLD** po wykryciu regresji zwykłej gry po starcie; nie wolno go tagować jako odebrany ani kierować do GCP na podstawie samego sukcesu CI.
 

@@ -4,7 +4,7 @@ Każdy wiersz prowadzi do osobnego scenariusza. Wszystkie wyniki startowe to **N
 
 Najwygodniej otworzyć [interaktywną listę](qa-checklist.html): wynik PASS / FAIL / BLOCKED, notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.
 
-**Bieżąca paczka DEV 0.14.0.0:** zacznij od TC0148–0179. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **179**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
+**Bieżąca paczka DEV 0.15.2.4:** zacznij od TC0148–0179. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **179**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
 
 1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.
 2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, dostępu albo zatwierdzonej reguły to **BLOCKED** z przyczyną.

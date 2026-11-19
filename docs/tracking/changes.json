@@ -30661,9 +30661,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -30689,7 +30689,8 @@
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
           "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
-          "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json"
+          "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-building-stages.js",
@@ -30704,21 +30705,48 @@
           "tests/harborlight-water.test.mjs",
           "tests/harborlight-performance-v32-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "manual_execution": "DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN",
-        "release_note": "Poprawka0.15.2.1/cache18 w przygotowaniu; własnyCI i publikacjePENDING. Zachowane grafiki, mechaniki, konta i postęp.",
-        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
         "subsequent_user_PREPROD_GO": {
           "date": "2026-11-19",
           "quote": "wrzuć na preprod",
           "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        },
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        },
+        "historical_cache18_evidence": {
+          "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+          "manual_execution": "DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN",
+          "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+          "release_note": "Poprawka0.15.2.1/cache18 w przygotowaniu; własnyCI i publikacjePENDING. Zachowane grafiki, mechaniki, konta i postęp.",
+          "subsequent_user_PREPROD_GO": {
+            "date": "2026-11-19",
+            "quote": "wrzuć na preprod",
+            "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+          }
         }
       },
       "notes": [
         "Stare20atlasów pozostają w pakiecie dla wcześniejszych klientów i odniesień; dodatkowe200małych plików zwiększa całe archiwum, lecz zmniejsza transfer i pamięć bieżącej gry.",
-        "Zamknięta lista455elementów, limit512wpisów/128MiB; nie są to zasoby pobierane wszystkie przy starcie."
+        "Historyczny pakiet cache18:455elementów; aktualny C6:460plików/96 565 038bajtów, ten sam limit512wpisów/128MiB. To nie są zasoby pobierane wszystkie przy starcie.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -30751,9 +30779,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -30775,7 +30803,8 @@
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
           "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
-          "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json"
+          "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-building-stages.js",
@@ -30785,21 +30814,48 @@
           "tests/harborlight-building-stages.test.mjs",
           "tests/harborlight-performance-v32-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "manual_execution": "DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN",
-        "release_note": "W poprawce0.15.2.1/cache18 ustawiono jawny paintDepth500 zamiast automatycznego481 dla Zakładu skórzanego; odbiórUI/CI/PRE-PROD PENDING.",
-        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
         "subsequent_user_PREPROD_GO": {
           "date": "2026-11-19",
           "quote": "wrzuć na preprod",
           "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        },
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        },
+        "historical_cache18_evidence": {
+          "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+          "manual_execution": "DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN",
+          "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+          "release_note": "W poprawce0.15.2.1/cache18 ustawiono jawny paintDepth500 zamiast automatycznego481 dla Zakładu skórzanego; odbiórUI/CI/PRE-PROD PENDING.",
+          "subsequent_user_PREPROD_GO": {
+            "date": "2026-11-19",
+            "quote": "wrzuć na preprod",
+            "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+          }
         }
       },
       "notes": [
         "Przed poprawką Kamieniołom(z972) przykrywał Zakład skórzany(z962); z1000 stawia fasadę Zakładu przed skałami.",
-        "Analityczny pomiar wykazał43.99%zasłoniętych pikseli pierwszego wariantu,42.61–57.53%we100kombinacjach; to nie jest sam w sobie odbiór przeglądarkowy."
+        "Analityczny pomiar wykazał43.99%zasłoniętych pikseli pierwszego wariantu,42.61–57.53%we100kombinacjach; to nie jest sam w sobie odbiór przeglądarkowy.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -30829,9 +30885,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "historical_cache19_failed_new_cache20_pending",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -30851,7 +30907,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
-          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-building-stages.js",
@@ -30860,12 +30917,12 @@
         "automated_tests": [
           "tests/harborlight-building-cache-v32-smoke.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD.",
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
         "subsequent_user_PREPROD_GO": {
           "date": "2026-11-19",
           "quote": "wrzuć na preprod",
@@ -30879,11 +30936,27 @@
           "pages_run": 44544378307,
           "pages_result": "SUCCESS",
           "new_gcp_dispatch": false
+        },
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
         }
       },
       "notes": [
         "B94: workflow CI i PRE-PROD SUCCESS pozostają w historii; późniejszy raport użytkownika ponownie otworzył odbiór jakości.",
-        "Prywatne kopie zapisów służą wyłącznie lokalnemu odczytowemu testowi i nie trafiają do Git."
+        "Prywatne kopie zapisów służą wyłącznie lokalnemu odczytowemu testowi i nie trafiają do Git.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -30912,9 +30985,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "historical_cache19_failed_new_cache20_pending",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -30960,12 +31033,12 @@
           "tests/harborlight-hosted-v18-smoke.py",
           "tests/harborlight-runtime-config.test.py"
         ],
-        "source_sha": null,
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD.",
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
         "subsequent_user_PREPROD_GO": {
           "date": "2026-11-19",
           "quote": "wrzuć na preprod",
@@ -30979,13 +31052,29 @@
           "pages_run": 44544378307,
           "pages_result": "SUCCESS",
           "new_gcp_dispatch": false
+        },
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
         }
       },
       "notes": [
         "B94: workflow CI i PRE-PROD SUCCESS pozostają w historii; późniejszy raport użytkownika ponownie otworzył odbiór jakości.",
         "Prywatne kopie zapisów służą wyłącznie lokalnemu odczytowemu testowi i nie trafiają do Git.",
         "Wcześniejszy test zalogowanej wyspy obejmował ekran admin1. Nowy wymagany test obejmuje osobno wyłącznie istniejące admin3, bez fallbacku i bez zapisów, z kontrolą responsywności podczas Worker.",
-        "Wynik Workera jest przypięty do UID, generacji, rewizji/CAS, epoki adopcji, wyspy oraz generacji/rewizji/tempa zegara."
+        "Wynik Workera jest przypięty do UID, generacji, rewizji/CAS, epoki adopcji, wyspy oraz generacji/rewizji/tempa zegara.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -31014,9 +31103,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31036,7 +31125,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
-          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-provisions.js",
@@ -31048,14 +31138,31 @@
           "tests/harborlight-diet-accumulator.test.mjs",
           "tests/harborlight-diet-history-fastpath.test.mjs"
         ],
-        "source_sha": null,
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD."
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        }
       },
       "notes": [
-        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania."
+        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -31084,9 +31191,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31105,7 +31212,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
-          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-play.js"
@@ -31114,14 +31222,31 @@
           "tests/harborlight-startup-replay-v32-smoke.py",
           "tests/harborlight-missions-game-v27-smoke.py"
         ],
-        "source_sha": null,
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD."
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        }
       },
       "notes": [
-        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania."
+        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -31150,9 +31275,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31172,7 +31297,8 @@
       "evidence": {
         "documents": [
           "docs/v32/GO-CHROME-PERFORMANCE.md",
-          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
         ],
         "code": [
           "harborlight-v1-save-packing.js",
@@ -31190,14 +31316,31 @@
           "backend/test/provisions-save-packing.test.mjs",
           "backend/test/account-api.test.mjs"
         ],
-        "source_sha": null,
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD."
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        }
       },
       "notes": [
-        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania."
+        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -31226,9 +31369,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31261,16 +31404,33 @@
           "tests/harborlight-adaptive-history-scope.test.mjs",
           "tests/harborlight-diet-history-fastpath.test.mjs"
         ],
-        "source_sha": null,
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD."
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        }
       },
       "notes": [
         "C5 pełny wynik47,885h jest zgodny z C4, a jego szybki długi replay pozostaje zachowany.",
         "Pierwszy C6 mikrobenchmark mógł zaimportować mieszany graf20/21 podczas zmiany wersji; nie stanowi dowodu wydajności. Czysty graf21 wymaga osobnego pomiaru.",
-        "Bez resetu kont, zmiany zegara, usuwania posiłków lub pomijania nieobecności."
+        "Bez resetu kont, zmiany zegara, usuwania posiłków lub pomijania nieobecności.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -31299,9 +31459,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "dev": "ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS",
+        "ci": "SUCCESS_44569674535_EXACT_d5ad35c",
+        "preprod": "ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31338,15 +31498,32 @@
           "tests/harborlight-hosted-v18-smoke.py",
           "tests/harborlight-runtime-config.test.py"
         ],
-        "source_sha": null,
+        "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
         "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
-        "release_note": "C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD."
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+        "manual_execution": "NOT_RUN_CURRENT_C6",
+        "release_note": "C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1",
+        "manual_scope": "Current C6 manual user acceptance and all 179 manual cases NOT_RUN. Earlier user DEV observation is retained only as historical evidence.",
+        "subsequent_C6_acceptance": {
+          "version": "0.15.2.4",
+          "cache": "frontend-v32-21",
+          "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "CI": 44569674535,
+          "PREPROD": 44577083312,
+          "attempt": 1,
+          "DEV_tag": "dev-0.15.2.4-20261119",
+          "PREPROD_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "accounts_and_progress": "PRESERVED",
+          "PROD_DNS_reset": "NO_ACTION"
+        }
       },
       "notes": [
         "Wcześniejsze rzeczywiste FAIL4017ms oraz C5QUALITYHOLD pozostają w dowodach.",
-        "Bez pomijania czasu, zmian modelu gospodarki, resetu kont, zmiany grafik lub usuwania historii."
+        "Bez pomijania czasu, zmian modelu gospodarki, resetu kont, zmiany grafik lub usuwania historii.",
+        "Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN."
       ],
       "tags": [
         "v32",
@@ -31363,15 +31540,15 @@
   ],
   "current_environment": {
     "as_of": "2026-11-19",
-    "preprod_application_version": "0.15.2.0",
-    "preprod_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-    "preprod_ci_run_id": 44287093749,
-    "preprod_deployment_run_id": 44292700743,
+    "preprod_application_version": "0.15.2.4",
+    "preprod_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "preprod_ci_run_id": 44569674535,
+    "preprod_deployment_run_id": 44577083312,
     "preprod_deployment_attempt": 1,
-    "preprod_status": "ACCEPTED_DDA_NATIVE_EXISTING_UI_RECEIPT_ORIGINAL_ARCHIVE_ALL_TLS_FILES_AND_ACCOUNT_PRESERVATION_PASS",
+    "preprod_status": "ACCEPTED_C6_NATIVE_ADMIN1_ADMIN3_ORIGINAL_RECEIPT_ARCHIVE_ALL_TLS_FILES_AND_ACCOUNT_PRESERVATION_PASS",
     "prod_status": "postponed_by_user",
     "full_test_account_reset": "earlier_RESET_SUCCESS_INDEPENDENTLY_VERIFIED_not_repeated_by_this_deployment",
-    "note": "C6/0.15.2.4/cache21 źródłoe394: wszystkie lokalne1599+178+7Node,173Python oraz świeże kanoniczne artefaktyPASS; po gotowości79heartbeatów/max814ms w10s1×. Nowa publikacja,własnyCI/Pages,oficjalny pełnyC6 i standardowyPRE-PROD wymagają osobnego potwierdzenia. FizycznyPRE-PROD nadalB94; C5 ma CI SUCCESS, lecz QUALITYHOLD bezpromocji. Bez resetu/PROD/DNS.",
+    "note": "DEV i PRE-PROD 0.15.2.4/cache21 przyjęte automatycznie na publikacji d5ad35c, kod e394ea8. Własne CI 44569674535 SUCCESS: 1784 Node, 173 Python, 73 programy Chromium; Pages 44569674475 SUCCESS. Standardowy PRE-PROD 44577083312/1 SUCCESS, oryginalne dwa ZIP/receipt/TAR i wszystkie 460 plików HTTPS zgodne. Rzeczywisty admin3: start 280,121 s, responsywny Worker i 10 s gotowej gry; trzy konta, postęp i zegary zachowane. Ręczny odbiór użytkownika i 179 przypadków NOT RUN. Historyczne DDA, B94 QUALITY FAIL, C4 CI FAIL i C5 QUALITY HOLD pozostają odrębne. Bez resetu, PROD i DNS.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -31398,8 +31575,8 @@
         "dev_tag": "dev-0.13.0.0-20261103"
       }
     },
-    "preprod_promotion_status": "completed_success_source_DDA",
-    "preprod_promotion_target": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "preprod_promotion_status": "completed_success_source_C6_d5ad35c",
+    "preprod_promotion_target": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
       "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
@@ -31408,93 +31585,53 @@
       "preprod_deployment_attempt": 1,
       "preprod_status": "previous_release_verified"
     },
-    "preprod_pages_run_id": 44287093698,
+    "preprod_pages_run_id": 44569674475,
     "preprod_bridge_run_id": null,
-    "preprod_tag": "preprod-0.15.2.0-20261118",
-    "preprod_tag_remote_object": "99899f7585b0fd9adb4686b5dfd0c331a19ca089",
+    "preprod_tag": "preprod-0.15.2.4-20261119",
+    "preprod_tag_remote_object": "6a3e833440117e6f80e530f4281241761847cb88",
     "preprod_artifacts": {
-      "status": "PASS",
-      "checked_at_utc": "2026-11-18T11:23:17.961266+00:00",
-      "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-      "repository": "ksobczak321-oss/gra",
-      "repository_id": 1428128759,
-      "run": 44292700743,
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "run": 44577083312,
       "attempt": 1,
-      "ci_run": 44287093749,
-      "original_artifacts": [
+      "original_ZIPs": [
         {
           "kind": "release",
-          "artifact_id": 14421683768,
-          "name": "harborlight-dev-release-44292700743-1",
-          "bytes": 615,
-          "sha256": "771a278063fcd44856f4aaed3018dccf66d4b819c34599f54957d11507bcd984",
-          "metadata_size_and_digest_verified": true,
-          "download_method": "existing_original_zip_reverified",
-          "path": "/workspace/work/building-upgrade-release-20261118-r3/release-44292700743-1.zip"
+          "artifact_id": 14556888714,
+          "name": "harborlight-dev-release-44577083312-1",
+          "bytes": 616,
+          "sha256": "9c5306b7f21d09b099719c1a88b5d983ebdb801391b49e709df12c61b27ce119"
         },
         {
           "kind": "frontend",
-          "artifact_id": 14422886201,
-          "name": "harborlight-dev-frontend-44292700743-1",
-          "bytes": 65318475,
-          "sha256": "59c5a1779d5cc75b1bcde4b15976cd0aca873c6554d9d9146ecea1e603f0b0c4",
-          "metadata_size_and_digest_verified": true,
-          "download_method": "existing_original_zip_reverified",
-          "path": "/workspace/work/building-upgrade-release-20261118-r3/frontend-44292700743-1.zip"
+          "artifact_id": 14557818037,
+          "name": "harborlight-dev-frontend-44577083312-1",
+          "bytes": 92553081,
+          "sha256": "2f7f5a0d45f33c0c7c631db9fa9b45e53723fa523fa69622e8785ab6b844d537"
         }
       ],
-      "receipt_member": {
-        "member": "release.json",
-        "bytes": 989,
-        "sha256": "1592cd79a805025f2729522b75ef5a103ee3d2590894ae70a895766d2586d932"
-      },
-      "frontend_member": {
-        "member": "harborlight-frontend.tar.gz",
-        "bytes": 65299733,
-        "sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4"
-      },
-      "standard_verify_receipt": {
-        "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-        "source_image": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
-        "image_digest": "sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
-        "ci_run_id": "44287093749",
-        "frontend_artifact_name": "harborlight-dev-frontend-44292700743-1",
-        "frontend_archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
-        "frontend_manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf"
-      },
       "receipt_checks": {
         "ci": true,
         "dev_smoke": true,
         "frontend_smoke": true,
         "account_api": true
       },
-      "standard_frontend_verification": {
-        "archive": "/workspace/work/building-upgrade-release-20261118-r3/original-frontend-44292700743-1/harborlight-frontend.tar.gz",
-        "archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
-        "commit": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-        "file_count": 255,
-        "manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
-        "total_bytes": 69289150
+      "receipt_member": {
+        "member": "release.json",
+        "bytes": 989,
+        "sha256": "6604f9ecec6e2677377427f2ca83b469338bf025cd69ef2654c6500b730542ba"
       },
-      "committed_package_comparison": "PASS_ALL_FIVE_CONTENT_PINS_AND_EXACT_MANIFEST",
-      "normal_TLS": true,
-      "credentials_or_signed_URLs_saved": false,
-      "external_mutations": false,
-      "account_or_GCP_requests": false,
-      "transport_provenance": {
-        "method": "mcp__codex_apps__github_download_workflow_artifact_then_reusable_FileService_reference",
-        "repository": "ksobczak321-oss/gra",
-        "artifact_ids": {
-          "release": 14421683768,
-          "frontend": 14422886201
-        },
-        "materialization": "anonymous HTTPS with system CA and existing proxy; signed references in memory and non-echo stdin only",
-        "rest_metadata_compared_before_and_after_materialization": true,
-        "first_transport_failure_report": "original-artifact-audit-44292700743-1-first-transport-failure.json",
-        "first_transport_block": "GitHub returned 302, environment proxy rejected CDN CONNECT with 403",
-        "TLS_bypass": false,
-        "secret_or_signed_URL_saved": false
-      }
+      "frontend_member": {
+        "member": "harborlight-frontend.tar.gz",
+        "bytes": 92526359,
+        "sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b"
+      },
+      "archive_sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b",
+      "manifest_sha256": "679f47bfa1a7d0fb412fd6bf919f43834fcd8c599f16ac59d4996a5805c6733c",
+      "files": 460,
+      "bytes": 96565038,
+      "five_content_pins": "PASS",
+      "image_digest": "sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda"
     },
     "previous_accepted_dev_v30": {
       "dev_application_version": "0.13.1.0",
@@ -31551,16 +31688,16 @@
       ]
     },
     "preprod_bridge_duration": null,
-    "preprod_deployment_duration": "411s_total;395s_deploy_job",
+    "preprod_deployment_duration": "754s_total;721s_deploy_job",
     "dev_application_version": "0.15.2.4",
-    "dev_status": "C6_FROZEN_LOCAL_1599_178_7_NODE_173_PYTHON_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-    "dev_ci": "pending_own_C6_publication_SHA",
-    "dev_source_sha": null,
+    "dev_status": "ACCEPTED_EXACT_PUBLICATION_CI_PAGES_ALL_TLS_FILES_AND_CANONICAL_ARTIFACTS_PASS",
+    "dev_ci": "SUCCESS",
+    "dev_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
     "dev_implementation_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-    "dev_ci_run_id": null,
-    "dev_pages_run_id": null,
-    "dev_pages_conclusion": "PENDING",
-    "dev_tag": null,
+    "dev_ci_run_id": 44569674535,
+    "dev_pages_run_id": 44569674475,
+    "dev_pages_conclusion": "SUCCESS",
+    "dev_tag": "dev-0.15.2.4-20261119",
     "dev_cache": "frontend-v32-21",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
@@ -31570,10 +31707,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": null,
-    "frontend_manifest_sha256": null,
+    "frontend_archive_sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b",
+    "frontend_manifest_sha256": "679f47bfa1a7d0fb412fd6bf919f43834fcd8c599f16ac59d4996a5805c6733c",
     "frontend_file_count": 460,
-    "frontend_total_bytes": null,
+    "frontend_total_bytes": 96565038,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -31634,15 +31771,15 @@
       "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
       "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
     },
-    "public_asset_file_count": 254,
-    "public_asset_total_bytes": 69262846,
-    "current_directory_scope": "C6 sourcee394/cache21:1599front+178backend+7board,173Python, actualsteady79beats/max814ms and freshcanonicalartifactsPASS; ownpublicationCI and officialfullC6/GCPPENDING.",
-    "dev_tag_remote_object": null,
-    "dev_tag_remote_verified": false,
-    "dev_ci_completed_at": null,
-    "dev_ci_duration": null,
-    "dev_ci_successful_steps": null,
-    "dev_ci_failed_steps": null,
+    "public_asset_file_count": 459,
+    "public_asset_total_bytes": 96509270,
+    "current_directory_scope": "C6 e394/cache21; accepted publication d5ad35c; own CI1784Node/173Python/73Chromium and DEV/PREPROD exact TLS/artifact/account checks PASS; manual NOT_RUN",
+    "dev_tag_remote_object": "19102cafa5794c2193084f479a8b5d23fd4e7f38",
+    "dev_tag_remote_verified": true,
+    "dev_ci_completed_at": "2026-11-19T17:24:27Z",
+    "dev_ci_duration": "39m02s_workflow;38m59s_validate_job",
+    "dev_ci_successful_steps": 36,
+    "dev_ci_failed_steps": 0,
     "previous_accepted_dev_cache8": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "cache8_accepted_own_ci_pages_immutable_tag_and_tls_public_byte_local_render_verified",
@@ -31702,8 +31839,8 @@
       "preprod_bridge_duration": "13s",
       "preprod_deployment_duration": "2m12s"
     },
-    "preprod_tag_scope": "immutable_accepted_publication_DDA",
-    "dev_tag_scope": "PENDING_NEW_EXACT_SOURCE",
+    "preprod_tag_scope": "immutable_exact_C6_accepted_publication",
+    "dev_tag_scope": "immutable_exact_C6_accepted_publication",
     "latest_fix_candidate_failure": {
       "source_sha": "b268bd6d2a4bb7e91c615370bca273e3873dba8f",
       "version": "0.15.0.1",
@@ -31762,22 +31899,23 @@
       "preprod_account_API_enabled": false,
       "preprod_tag_scope": "historical source and artifact verification; functional acceptance reopened"
     },
-    "preprod_application_source_sha": "6a27649b12bff223d35889f875fca1bc23564daa",
-    "preprod_gate_duration": "7s",
+    "preprod_application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "preprod_gate_duration": "24s",
     "preprod_tag_remote_verified": true,
-    "preprod_public_content_files": 254,
-    "preprod_public_content_bytes": 69262846,
-    "preprod_public_including_manifest_files": 255,
+    "preprod_public_content_files": 459,
+    "preprod_public_content_bytes": 96509270,
+    "preprod_public_including_manifest_files": 460,
     "preprod_public_HTTPS_hash_audit": {
-      "result": "PASS",
+      "status": "PASS",
+      "checked_at_utc": "2026-11-19T17:40:59.910810+00:00",
       "normal_TLS": true,
-      "files": 255,
-      "bytes": 69289150,
-      "checked_at_utc": "2026-11-18T11:24:00.014373+00:00",
-      "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-      "evidence": "docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json"
+      "all_files": 460,
+      "total_bytes": 96565038,
+      "matches_original_frontend_archive": true,
+      "runtime_manifest": "max-age=0, must-revalidate; exact current body",
+      "warm_browser_cache_acceptance_claimed_by_TLS_audit": false
     },
-    "preprod_next_promotion_status": "COMPLETED_AUTHORIZED_DDA_NO_PROD",
+    "preprod_next_promotion_status": "COMPLETED_AUTHORIZED_C6_NO_PROD",
     "owner_reset_report": {
       "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
       "deployment_run_id": 43768861718,
@@ -33374,13 +33512,13 @@
       "subsequent_promotion_as_of": "2026-11-18"
     },
     "preprod_observed_candidate": {
-      "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
-      "run_id": 44093734171,
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "version": "0.15.2.4",
+      "status": "ACCEPTED_C6_NATIVE_ADMIN1_ADMIN3_ALL_INDEPENDENT_AUDITS_PASS",
+      "run": 44577083312,
       "attempt": 1,
-      "status": "FAILURE_HOSTING_PUBLISHED_NATIVE_ACCEPTANCE_REJECTED",
-      "previous_accepted_publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
-      "successful_receipt": false,
-      "tag_created": false
+      "manual_user_acceptance": "NOT_RUN"
     },
     "advisor_task": {
       "as_of": "2026-11-17",
@@ -34723,65 +34861,57 @@
     },
     "pending_next_source": null,
     "active_promotion_request": {
-      "status": "COMPLETED_DEV_THEN_PREPROD_0_15_2_0",
-      "scope": [
-        "advisor",
-        "three_step_intro",
-        "accepted_Excel",
-        "200_building_variants",
-        "active_construction_cranes"
-      ],
+      "status": "COMPLETED_DEV_THEN_PREPROD_0_15_2_4",
+      "scope": "Chrome loading, warm cache, Leatherworks occlusion and existing admin3 offline/steady performance; preserve graphics/economy/accounts",
       "PROD_game_deployed": false,
       "DNS_edited": false,
       "reset_repeated": false
     },
     "CI_test_totals": {
-      "run": 44287093749,
-      "head_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "run": 44569674535,
+      "head_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
       "conclusion": "success",
-      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44287093749",
-      "created_at": "2026-11-18T10:37:04Z",
-      "job_started_at": "2026-11-18T10:37:24Z",
-      "job_completed_at": "2026-11-18T11:12:18Z",
-      "workflow_updated_at": "2026-11-18T11:12:19Z",
-      "workflow_seconds": 2115,
-      "job_seconds": 2094,
-      "workflow_duration": "35m15s",
-      "job_duration": "34m54s",
+      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44569674535",
+      "created_at": "2026-11-19T16:45:25Z",
+      "job_started_at": "2026-11-19T16:45:28Z",
+      "job_completed_at": "2026-11-19T17:24:27Z",
+      "workflow_updated_at": "2026-11-19T17:24:27Z",
+      "workflow_seconds": 2342,
+      "job_seconds": 2339,
+      "workflow_duration": "39m02s",
+      "job_duration": "38m59s",
       "step_status_counts": {
-        "success": 35,
+        "success": 36,
         "skipped": 2
       },
-      "node_total": 1669,
-      "unit_tests_total": 1836,
-      "full_log_sha256": "e5a413e54dbd095f111050a4843111cc0774f32bcf3e71d215ad195a6a288f9e",
+      "node_total": 1784,
+      "unit_tests_total": 1957,
       "node": {
-        "frontend": 1492,
-        "backend": 170,
-        "board": 7
+        "Test game rules and release promotion gates": 1599,
+        "Test API infrastructure endpoints": 178,
+        "Test standalone physical game scenario": 7
       },
-      "python_tests": 167,
-      "chromium_programs": {
-        "total": 70,
-        "standalone": 1,
-        "main": 51,
-        "cloud": 18
-      },
+      "python_tests": 173,
+      "chromium_programs": 73,
+      "full_log_sha256": "53938d4e8ef250875a89b2cfae69af6ab6b54bd046b1c81dc287138b6ae30acb",
       "failure_steps": 0,
-      "skipped_steps": "Two conditional failure-diagnostics steps only"
+      "skipped_steps": "Two conditional failure-diagnostics steps only",
+      "legacy_96h_watchdog_ms": 8084.648811,
+      "watchdog_limit_ms": 10000
     },
     "latest_DEV_ci_observation": {
-      "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-      "run_id": 44287093749,
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "run_id": 44569674535,
       "conclusion": "success"
     },
     "dev_ci_failure_reason": null,
     "current_preprod_fix": {
-      "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
-      "status": "ACCEPTED",
-      "run": 44292700743,
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "status": "ACCEPTED_C6_ALL_INDEPENDENT_AUDITS_PASS",
+      "run": 44577083312,
       "attempt": 1,
-      "evidence": "docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json"
+      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
     },
     "current_workbook": {
       "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
@@ -34800,7 +34930,7 @@
       "selected_six_sheet_read_and_merge_scope_preserved": true
     },
     "master_workbook15_task": {
-      "status": "C6_BUILD_AND_FRESH_VALIDATE_PASS_OWN_PUBLICATION_CI_PENDING",
+      "status": "C6_BUILD_FRESH_VALIDATE_OWN_CI_AND_PUBLICATION_PASS",
       "source_freeze_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
       "output_workbook": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
       "output_sha256": "1ccb89d1f168682a93271abb564f8566a26ad6c0c73131c983b23331539914ff",
@@ -34815,12 +34945,16 @@
       "historical_comments_unchanged": 48,
       "historical_cached_formulas_unchanged": 4982,
       "validation": "PASS",
-      "new_reset_executed": false
+      "new_reset_executed": false,
+      "historical_prepublication_status": "C6_BUILD_AND_FRESH_VALIDATE_PASS_OWN_PUBLICATION_CI_PENDING",
+      "publication_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "ci_run": 44569674535,
+      "public_workbook_TLS": "EXACT_PUBLICATION_GIT_PASS_SEPARATE_FROM_GAME_MANIFEST"
     },
     "metadata_only_followup": {
-      "as_of": "2026-11-18",
-      "scope": "Acceptance evidence and tracking only; app and both workbook bytes remain identical to accepted DDA. A subsequent metadata CI does not redefine the accepted CI/tag/deployment source.",
-      "accepted_publication_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "as_of": "2026-11-19",
+      "scope": "Reconcile final C6 CI/Pages/PREPROD receipts, immutable tags and manual scope; no application or artifact regeneration",
+      "accepted_publication_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
       "new_GCP_deployment": false,
       "new_reset": false
     },
@@ -34843,84 +34977,94 @@
         "errors": 0,
         "network_writes": false
       },
-      "official_full_C6": "PENDING_separate_source_run_after_publication",
+      "official_full_C6": "PASS_47.88518666666667h_356697.123ms_849981B_DECODED_EXACT_C4_C5_C6_345429B_PACKED",
       "historical_C5_full": "PASS_EXACT_C4",
       "canonical_actual_profiles": "24/24/72h all checkpoints and commands identical separately BF2,C4,C5",
-      "new_reset": false
+      "new_reset": false,
+      "original_B94_full": "CPU_GUARD5400.86S_INCOMPLETE_NO_COMPLETE_RESULT_NOT_FULL_PASS"
     },
     "performance_fix_task": {
       "as_of": "2026-11-19",
       "change": "HL-CHG-1166",
-      "version": "0.15.2.1",
-      "cache": "frontend-v32-18",
-      "status": "LOCAL_QA_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING",
-      "source_sha": null,
-      "CI": "IN_PROGRESS",
+      "version": "0.15.2.4",
+      "cache": "frontend-v32-21",
+      "status": "AUTOMATED_DEV_AND_PREPROD_ACCEPTED",
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "CI": "SUCCESS",
+      "CI_run": 44569674535,
       "Pages": "SUCCESS",
-      "PREPROD": "PENDING_AFTER_VERIFIED_DEV_AND_CI",
+      "Pages_run": 44569674475,
+      "PREPROD": "ACCEPTED_ALL_INDEPENDENT_AUDITS_PASS",
+      "PREPROD_run": 44577083312,
+      "PREPROD_attempt": 1,
       "PROD_DNS_reset": "NO_ACTION",
-      "accounts_and_progress": "PRESERVE",
+      "accounts_and_progress": "PRESERVED_THREE_BYTE_IDENTICAL_EXISTING_PROFILES",
       "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
-      "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
       "local_acceptance": "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json",
-      "local_frontend_full_first": "1500of1501PASS_legacyWatchdogTimeout_original10000ms",
-      "local_watchdog_isolated": "PASS9335ms",
-      "local_backend": 170,
-      "local_browser": "performance4_building200alpha160DOM_startup26_front4widthPASS",
-      "same_economy14tables": true,
+      "same_economy13_numeric_tables": true,
+      "canonical_actual_profiles_24_24_72h": "EXACT_BF2_C4_C5_ALL_CHECKPOINTS_COMMANDS_AND_NUMERIC_TYPES",
+      "actual_full_model": "COMPLETE_C4_C5_C6_IDENTICAL_NOT_COMPLETE_B94",
+      "native_admin3": {
+        "start_ms": 280120.832,
+        "worker_observed": true,
+        "replay_heartbeats": 2762,
+        "replay_max_gap_ms": 498.2,
+        "post_ready_observed_ms": 10000,
+        "post_ready_heartbeats": 91,
+        "post_ready_max_gap_ms": 541.2,
+        "ready_retained": true,
+        "all_browser_writes_blocked": true
+      },
       "canonical_artifacts": {
-        "source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
         "master": {
+          "path": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+          "sha256": "1ccb89d1f168682a93271abb564f8566a26ad6c0c73131c983b23331539914ff",
           "sheets": 158,
-          "current_sheets": 58,
-          "rows": 62568,
-          "source_files": 120,
-          "bytes": 7744332,
-          "sha256": "cc210463afe2df74774569125d77d7da171c303d928d77fe291dbb2ee8196c85",
-          "validation": "BUILD_AND_FRESH_VALIDATE_PASS"
+          "current_rows": 63921,
+          "source_files": 128,
+          "historical_sheets_preserved": 100,
+          "historical_OOXML_parts_preserved": 220
         },
         "editorial": {
+          "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+          "sha256": "047e5324175151aac52c3d95236e2a263d499d073a8bd4dcc05adc22eaea4517",
           "sheets": 6,
           "rows": 413,
-          "C_all_blank": true,
-          "bytes": 60331,
-          "sha256": "13f895feb3283ae1c4b47afaffbd4a2cc93446e4bf6dcbfa1c3225b6d6109502",
-          "validation": "PASS"
+          "source_files": 110,
+          "C_all_blank": true
         },
-        "minigames": "55entries110docs_PROVENANCE_ONLY_SEMANTICS_UNCHANGED",
-        "economy": "14tables_UNCHANGED",
-        "simulations": "REAL24h24h72h_CANONICAL_START_NO_INJECTION_PASS"
+        "minigames": "55_entries_110_documents_unchanged_gameplay_fresh_source_provenance",
+        "canonical_profiles": "real24h_24h_72h_exact_BF2_C4_C5"
       },
-      "manual_DEV_acceptance": "PASS_USER_REPORTED_TAK_JEST_OK_2026-11-19",
+      "manual_DEV_acceptance": "NOT_RUN_CURRENT_C6",
       "manual_PREPROD_acceptance": "NOT_RUN",
       "PREPROD_authorized": true,
-      "PREPROD_authorization_quote": "wrzuć na preprod",
-      "PREPROD_authorization_date": "2026-11-19",
-      "publication_source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
-      "CI_run": 44520278661,
-      "Pages_run": 44520278629
+      "historical_attempts": "historical_cache18_performance_task;cache19_admin3_hotfix;cache20_publication_quality_hold"
     },
     "cache19_admin3_hotfix": {
       "as_of": "2026-11-19",
       "version": "0.15.2.2",
       "cache": "frontend-v32-19",
-      "status": "CODE_FROZEN_LOCAL_NODE_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_PENDING",
-      "source": null,
-      "CI": "PENDING",
-      "PREPROD": "PENDING",
+      "status": "HISTORICAL_C4_CI_FAILURE_NO_GCP_NOT_ACCEPTED",
+      "source": "0bbe8c66c1f5a2c834ea7128968710e9f8662924",
+      "CI": "FAILURE_MISSION_FROZEN_RAF",
+      "PREPROD": "NOT_DEPLOYED",
       "manual_user_acceptance": "NOT_RUN",
       "accounts_and_progress": "PRESERVE",
       "clock_changes": false,
       "reset": false,
       "model_candidate": "C4",
-      "actual_full_47_885h": "PENDING",
+      "actual_full_47_885h": "PHYSICAL_MODEL_PASS_PERFORMANCE_FAIL_36M40S_849981B_OVER700000",
       "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
       "full_frontend_node": 1548,
       "backend_node": 170,
       "board_node": 7,
-      "full_reference": "PENDING",
+      "full_reference": "COMPLETE_C4_EXACT_C5_C6_NOT_COMPLETE_B94",
       "canonical_profiles_24_24_72h": "STRICT_IDENTICAL_BF2",
-      "package_expected_files": 458
+      "package_expected_files": 458,
+      "ci_run": 44544378145
     },
     "prior_current_before_cache19": {
       "as_of": "2026-11-18",
@@ -34974,29 +35118,42 @@
       }
     },
     "actually_deployed_preprod": {
-      "version": "0.15.2.1",
-      "source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
-      "run": 44526548282,
+      "version": "0.15.2.4",
+      "cache": "frontend-v32-21",
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "run": 44577083312,
       "attempt": 1,
       "workflow": "SUCCESS",
-      "original_artifacts_and_all455_normal_TLS_files": "PASS",
-      "quality": "REOPENED_WARM_CACHE_AND_ADMIN3_REPORT",
-      "accepted_tag": null
+      "original_two_ZIPs_standard_receipt_four_checks_archive_five_pins": "PASS",
+      "all460_normal_TLS_files": "PASS",
+      "native_admin1_startup_ms": 4695.791,
+      "native_admin3": {
+        "start_ms": 280120.832,
+        "worker_observed": true,
+        "replay_heartbeats": 2762,
+        "replay_max_gap_ms": 498.2,
+        "post_ready_observed_ms": 10000,
+        "post_ready_heartbeats": 91,
+        "post_ready_max_gap_ms": 541.2,
+        "ready_retained": true,
+        "all_browser_writes_blocked": true
+      },
+      "quality": "AUTOMATED_ACCEPTANCE_PASS_MANUAL_USER_NOT_RUN",
+      "accepted_tag": "preprod-0.15.2.4-20261119",
+      "accounts_and_progress": "THREE_EXISTING_PROFILES_BYTE_IDENTICAL",
+      "PROD_DNS_reset": "NO_ACTION"
     },
-    "CI_test_totals_pending_next": {
-      "node_frontend_expected": 1585,
-      "node_backend_local_pass": 178,
-      "node_board_local_pass": 7,
-      "old_CI_test_totals_are_historical": true
-    },
+    "CI_test_totals_pending_next": null,
     "candidate_next_release": {
       "version": "0.15.2.4",
       "cache": "frontend-v32-21",
-      "status": "FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_AND_DEPLOY_PENDING",
+      "status": "PROMOTED_AND_AUTOMATED_DEV_PREPROD_ACCEPTED",
       "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-      "publication_sha": null,
-      "ci": null,
-      "preprod": null
+      "publication_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "ci": 44569674535,
+      "preprod": 44577083312,
+      "manual_user_acceptance": "NOT_RUN"
     },
     "historical_cache19_candidate_fields": {
       "dev_application_version": "0.15.2.2",
@@ -35078,6 +35235,190 @@
       "ci_node": 1770,
       "ci_python": 172,
       "ci_browser_programs": 73
+    },
+    "previous_fully_accepted_DDA": {
+      "preprod_application_version": "0.15.2.0",
+      "preprod_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "preprod_application_source_sha": "6a27649b12bff223d35889f875fca1bc23564daa",
+      "preprod_ci_run_id": 44287093749,
+      "preprod_deployment_run_id": 44292700743,
+      "preprod_deployment_attempt": 1,
+      "preprod_status": "ACCEPTED_DDA_NATIVE_EXISTING_UI_RECEIPT_ORIGINAL_ARCHIVE_ALL_TLS_FILES_AND_ACCOUNT_PRESERVATION_PASS",
+      "preprod_pages_run_id": 44287093698,
+      "preprod_tag": "preprod-0.15.2.0-20261118",
+      "preprod_tag_remote_object": "99899f7585b0fd9adb4686b5dfd0c331a19ca089",
+      "preprod_tag_remote_verified": true,
+      "preprod_artifacts": {
+        "status": "PASS",
+        "checked_at_utc": "2026-11-18T11:23:17.961266+00:00",
+        "source": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+        "repository": "ksobczak321-oss/gra",
+        "repository_id": 1428128759,
+        "run": 44292700743,
+        "attempt": 1,
+        "ci_run": 44287093749,
+        "original_artifacts": [
+          {
+            "kind": "release",
+            "artifact_id": 14421683768,
+            "name": "harborlight-dev-release-44292700743-1",
+            "bytes": 615,
+            "sha256": "771a278063fcd44856f4aaed3018dccf66d4b819c34599f54957d11507bcd984",
+            "metadata_size_and_digest_verified": true,
+            "download_method": "existing_original_zip_reverified",
+            "path": "/workspace/work/building-upgrade-release-20261118-r3/release-44292700743-1.zip"
+          },
+          {
+            "kind": "frontend",
+            "artifact_id": 14422886201,
+            "name": "harborlight-dev-frontend-44292700743-1",
+            "bytes": 65318475,
+            "sha256": "59c5a1779d5cc75b1bcde4b15976cd0aca873c6554d9d9146ecea1e603f0b0c4",
+            "metadata_size_and_digest_verified": true,
+            "download_method": "existing_original_zip_reverified",
+            "path": "/workspace/work/building-upgrade-release-20261118-r3/frontend-44292700743-1.zip"
+          }
+        ],
+        "receipt_member": {
+          "member": "release.json",
+          "bytes": 989,
+          "sha256": "1592cd79a805025f2729522b75ef5a103ee3d2590894ae70a895766d2586d932"
+        },
+        "frontend_member": {
+          "member": "harborlight-frontend.tar.gz",
+          "bytes": 65299733,
+          "sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4"
+        },
+        "standard_verify_receipt": {
+          "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+          "source_image": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
+          "image_digest": "sha256:4578061388c68ba91548f51b441b95cc7f3854c55385c38034594448b1758da0",
+          "ci_run_id": "44287093749",
+          "frontend_artifact_name": "harborlight-dev-frontend-44292700743-1",
+          "frontend_archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+          "frontend_manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf"
+        },
+        "receipt_checks": {
+          "ci": true,
+          "dev_smoke": true,
+          "frontend_smoke": true,
+          "account_api": true
+        },
+        "standard_frontend_verification": {
+          "archive": "/workspace/work/building-upgrade-release-20261118-r3/original-frontend-44292700743-1/harborlight-frontend.tar.gz",
+          "archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+          "commit": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+          "file_count": 255,
+          "manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
+          "total_bytes": 69289150
+        },
+        "committed_package_comparison": "PASS_ALL_FIVE_CONTENT_PINS_AND_EXACT_MANIFEST",
+        "normal_TLS": true,
+        "credentials_or_signed_URLs_saved": false,
+        "external_mutations": false,
+        "account_or_GCP_requests": false,
+        "transport_provenance": {
+          "method": "mcp__codex_apps__github_download_workflow_artifact_then_reusable_FileService_reference",
+          "repository": "ksobczak321-oss/gra",
+          "artifact_ids": {
+            "release": 14421683768,
+            "frontend": 14422886201
+          },
+          "materialization": "anonymous HTTPS with system CA and existing proxy; signed references in memory and non-echo stdin only",
+          "rest_metadata_compared_before_and_after_materialization": true,
+          "first_transport_failure_report": "original-artifact-audit-44292700743-1-first-transport-failure.json",
+          "first_transport_block": "GitHub returned 302, environment proxy rejected CDN CONNECT with 403",
+          "TLS_bypass": false,
+          "secret_or_signed_URL_saved": false
+        }
+      },
+      "preprod_deployment_duration": "411s_total;395s_deploy_job",
+      "preprod_gate_duration": "7s",
+      "preprod_public_content_files": 254,
+      "preprod_public_content_bytes": 69262846,
+      "preprod_public_including_manifest_files": 255,
+      "preprod_public_HTTPS_hash_audit": {
+        "result": "PASS",
+        "normal_TLS": true,
+        "files": 255,
+        "bytes": 69289150,
+        "checked_at_utc": "2026-11-18T11:24:00.014373+00:00",
+        "source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+        "evidence": "docs/v32/BUILDING-UPGRADE-ART-EVIDENCE.json"
+      },
+      "note": "Ostatnie pełne przyjęcie przed serią wydajnościową: DDA/0.15.2.0; późniejszy B94 miał udany workflow, ale ponownie otwarty odbiór jakości."
+    },
+    "previous_physically_deployed_preprod_B94": {
+      "version": "0.15.2.1",
+      "source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "run": 44526548282,
+      "attempt": 1,
+      "workflow": "SUCCESS",
+      "original_artifacts_and_all455_normal_TLS_files": "PASS",
+      "quality": "REOPENED_WARM_CACHE_AND_ADMIN3_REPORT",
+      "accepted_tag": null
+    },
+    "historical_cache18_performance_task": {
+      "as_of": "2026-11-19",
+      "change": "HL-CHG-1166",
+      "version": "0.15.2.1",
+      "cache": "frontend-v32-18",
+      "status": "CI_AND_TECHNICAL_PREPROD_SUCCESS_QUALITY_REOPENED_WARM_CACHE_AND_ADMIN3",
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "CI": "SUCCESS",
+      "Pages": "SUCCESS",
+      "PREPROD": "WORKFLOW_SUCCESS_QUALITY_REOPENED_NO_ACCEPTED_TAG",
+      "PROD_DNS_reset": "NO_ACTION",
+      "accounts_and_progress": "PRESERVE",
+      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+      "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "local_acceptance": "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json",
+      "local_frontend_full_first": "1500of1501PASS_legacyWatchdogTimeout_original10000ms",
+      "local_watchdog_isolated": "PASS9335ms",
+      "local_backend": 170,
+      "local_browser": "performance4_building200alpha160DOM_startup26_front4widthPASS",
+      "same_economy14tables": true,
+      "canonical_artifacts": {
+        "source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "master": {
+          "sheets": 158,
+          "current_sheets": 58,
+          "rows": 62568,
+          "source_files": 120,
+          "bytes": 7744332,
+          "sha256": "cc210463afe2df74774569125d77d7da171c303d928d77fe291dbb2ee8196c85",
+          "validation": "BUILD_AND_FRESH_VALIDATE_PASS"
+        },
+        "editorial": {
+          "sheets": 6,
+          "rows": 413,
+          "C_all_blank": true,
+          "bytes": 60331,
+          "sha256": "13f895feb3283ae1c4b47afaffbd4a2cc93446e4bf6dcbfa1c3225b6d6109502",
+          "validation": "PASS"
+        },
+        "minigames": "55entries110docs_PROVENANCE_ONLY_SEMANTICS_UNCHANGED",
+        "economy": "14tables_UNCHANGED",
+        "simulations": "REAL24h24h72h_CANONICAL_START_NO_INJECTION_PASS"
+      },
+      "manual_DEV_acceptance": "PASS_USER_REPORTED_TAK_JEST_OK_2026-11-19",
+      "manual_PREPROD_acceptance": "NOT_RUN",
+      "PREPROD_authorized": true,
+      "PREPROD_authorization_quote": "wrzuć na preprod",
+      "PREPROD_authorization_date": "2026-11-19",
+      "publication_source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "CI_run": 44520278661,
+      "Pages_run": 44520278629
+    },
+    "dev_pages_duration": "31s",
+    "historical_preprod_observed_candidate_before_C6": {
+      "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
+      "run_id": 44093734171,
+      "attempt": 1,
+      "status": "FAILURE_HOSTING_PUBLISHED_NATIVE_ACCEPTANCE_REJECTED",
+      "previous_accepted_publication_sha": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
+      "successful_receipt": false,
+      "tag_created": false
     }
   }
 }

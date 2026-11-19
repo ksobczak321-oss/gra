@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` |
-| CI | `pending_own_exact_source` |
-| PRE-PROD | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
+| DEV | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` |
+| CI | `SUCCESS_44569674535_EXACT_d5ad35c` |
+| PRE-PROD | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -36,12 +36,15 @@ Data pierwotnej wiadomości: 2026-11-19. Europe/Warsaw
 
 ## Dowody
 
-- **Dokumenty:** [docs/v32/GO-CHROME-PERFORMANCE.md](../../v32/GO-CHROME-PERFORMANCE.md), [docs/v32/CHROME-PERFORMANCE-EVIDENCE.json](../../v32/CHROME-PERFORMANCE-EVIDENCE.json)
+- **Dokumenty:** [docs/v32/GO-CHROME-PERFORMANCE.md](../../v32/GO-CHROME-PERFORMANCE.md), [docs/v32/CHROME-PERFORMANCE-EVIDENCE.json](../../v32/CHROME-PERFORMANCE-EVIDENCE.json), [docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json](../../v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json)
 - **Kod:** [harborlight-v1-provisions.js](../../../harborlight-v1-provisions.js), [harborlight-v1-diet-history-index.js](../../../harborlight-v1-diet-history-index.js), [harborlight-v1-diet-accumulator.js](../../../harborlight-v1-diet-accumulator.js)
 - **Scenariusze automatyczne:** [tests/harborlight-diet-history-index.test.mjs](../../../tests/harborlight-diet-history-index.test.mjs), [tests/harborlight-diet-accumulator.test.mjs](../../../tests/harborlight-diet-accumulator.test.mjs), [tests/harborlight-diet-history-fastpath.test.mjs](../../../tests/harborlight-diet-history-fastpath.test.mjs)
-- **Ręczne wykonanie przypadku:** `NOT_RUN`.
+- **Kod dowodowy:** `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44569674535.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/44577083312/attempts/1.
+- **Ręczne wykonanie przypadku:** `NOT_RUN_CURRENT_C6`.
 
-C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD.
+C6/0.15.2.4/cache21, kod e394ea8, publikacja d5ad35c: własne CI44569674535 SUCCESS (1784Node/173Python/73Chromium), Pages44569674475 SUCCESS i PRE-PROD44577083312/1 SUCCESS. Dwa oryginalne ZIP, cztery kontrole receipt, pięć pinów TAR i wszystkie460 plików normalnym TLS PASS. Admin1 start4,696s; rzeczywisty admin3 start280,121s, Worker2762heartbeatów/max498,2ms, gotowy ekran10s:91heartbeatów/max541,2ms. Pełne47,885h C6 zgodne z kompletnymi C4/C5; B94 ma nieukończony limit CPU, bez twierdzenia o pełnej zgodności. Trzy istniejące profile i zegary zachowane. Ręczne przypadki NOT RUN; bez resetu/PROD/DNS. Historyczne nieprzyjęte B94-warm/C4-CI/C5-steady pozostają w dowodach.
 
 ## Relacje
 
@@ -52,6 +55,7 @@ C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusz
 ## Uwagi
 
 - Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania.
+- Bieżące przyjęcie dotyczy C6/0.15.2.4/cache21 i osobno udokumentowanego PRE-PROD44577083312/1; wcześniejsze próby zachowują swoje pierwotne wyniki. Ręczny odbiór użytkownika NOT_RUN.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

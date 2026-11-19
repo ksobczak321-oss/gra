@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.2.4**: `C6_FROZEN_LOCAL_1599_178_7_NODE_173_PYTHON_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING`; CI `pending_own_C6_publication_SHA`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
-- Odebrany PRE-PROD **0.15.2.0**: źródło `dda2fa1793e49ec23811ccffb147a7e56a366692`; [deploy 44292700743](https://github.com/ksobczak321-oss/gra/actions/runs/44292700743), próba 1.
+- Nowy DEV **0.15.2.4**: `ACCEPTED_EXACT_PUBLICATION_CI_PAGES_ALL_TLS_FILES_AND_CANONICAL_ARTIFACTS_PASS`; CI `SUCCESS`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Odebrany PRE-PROD **0.15.2.4**: źródło `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`; [deploy 44577083312](https://github.com/ksobczak321-oss/gra/actions/runs/44577083312), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-C6/0.15.2.4/cache21 źródłoe394: wszystkie lokalne1599+178+7Node,173Python oraz świeże kanoniczne artefaktyPASS; po gotowości79heartbeatów/max814ms w10s1×. Nowa publikacja,własnyCI/Pages,oficjalny pełnyC6 i standardowyPRE-PROD wymagają osobnego potwierdzenia. FizycznyPRE-PROD nadalB94; C5 ma CI SUCCESS, lecz QUALITYHOLD bezpromocji. Bez resetu/PROD/DNS.
+DEV i PRE-PROD 0.15.2.4/cache21 przyjęte automatycznie na publikacji d5ad35c, kod e394ea8. Własne CI 44569674535 SUCCESS: 1784 Node, 173 Python, 73 programy Chromium; Pages 44569674475 SUCCESS. Standardowy PRE-PROD 44577083312/1 SUCCESS, oryginalne dwa ZIP/receipt/TAR i wszystkie 460 plików HTTPS zgodne. Rzeczywisty admin3: start 280,121 s, responsywny Worker i 10 s gotowej gry; trzy konta, postęp i zegary zachowane. Ręczny odbiór użytkownika i 179 przypadków NOT RUN. Historyczne DDA, B94 QUALITY FAIL, C4 CI FAIL i C5 QUALITY HOLD pozostają odrębne. Bez resetu, PROD i DNS.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -242,15 +242,15 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1163 — Odsuń zwiniętą kartę doradcy od mapy i dolnego menu](changes/HL-CHG-1163.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 | [HL-CHG-1164 — Dodaj10wyglądów wszystkich20budynków i zgodne miniatury](changes/HL-CHG-1164.md) | Story | `accepted` | `ACCEPTED_DDA_PAGES_AND_TAG` | `SUCCESS44292700743_ATTEMPT1` |
 | [HL-CHG-1165 — Pokazuj średniowieczny żuraw tylko podczas rzeczywistej budowy](changes/HL-CHG-1165.md) | Story | `accepted` | `ACCEPTED_DDA_PAGES_AND_TAG` | `SUCCESS44292700743_ATTEMPT1` |
-| [HL-CHG-1166 — Ogranicz ładowanie grafik i koszt rysowania morza powodujące zawieszanie Chrome](changes/HL-CHG-1166.md) | Bug | `accepted` | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1167 — Odsłoń Zakład skórzany zasłonięty przez Kamieniołom](changes/HL-CHG-1167.md) | Bug | `accepted` | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1168 — Odśwież katalog budynków z ciepłego cache Chrome](changes/HL-CHG-1168.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1169 — Usuń zawieszanie startu admin3 po długiej nieobecności](changes/HL-CHG-1169.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1170 — Przyspiesz pełne rozliczenie rozrośniętej historii posiłków](changes/HL-CHG-1170.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1171 — Uruchamiaj Worker bez oczekiwania na requestAnimationFrame](changes/HL-CHG-1171.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1172 — Pakuj pełną historię diety bez przekraczania granicy dokumentu](changes/HL-CHG-1172.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1173 — Dobieraj indeks historii do długości całego przeliczenia](changes/HL-CHG-1173.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1174 — Usuń kosztowne niewykorzystywane prognozy z paska misji](changes/HL-CHG-1174.md) | Bug | `accepted` | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
+| [HL-CHG-1166 — Ogranicz ładowanie grafik i koszt rysowania morza powodujące zawieszanie Chrome](changes/HL-CHG-1166.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1167 — Odsłoń Zakład skórzany zasłonięty przez Kamieniołom](changes/HL-CHG-1167.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1168 — Odśwież katalog budynków z ciepłego cache Chrome](changes/HL-CHG-1168.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1169 — Usuń zawieszanie startu admin3 po długiej nieobecności](changes/HL-CHG-1169.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1170 — Przyspiesz pełne rozliczenie rozrośniętej historii posiłków](changes/HL-CHG-1170.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1171 — Uruchamiaj Worker bez oczekiwania na requestAnimationFrame](changes/HL-CHG-1171.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1172 — Pakuj pełną historię diety bez przekraczania granicy dokumentu](changes/HL-CHG-1172.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1173 — Dobieraj indeks historii do długości całego przeliczenia](changes/HL-CHG-1173.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
+| [HL-CHG-1174 — Usuń kosztowne niewykorzystywane prognozy z paska misji](changes/HL-CHG-1174.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
 
 <a id="hl-epic-tut"></a>
 

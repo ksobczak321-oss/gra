@@ -1,20 +1,20 @@
 {
   "schema_version": 1,
-  "as_of": "2026-11-19",
+  "as_of": "2026-11-19T17:42:53.173939+00:00",
   "timezone": "Europe/Warsaw",
   "scope": "ROUTINE_PERFORMANCE_LEATHERWORKS_CACHE_AND_ADMIN3_STARTUP_HOTFIX_DEV_THEN_PREPROD",
-  "status": "C6_E394_LOCAL_READY_NODE1599_BACKEND178_BOARD7_PYTHON173_CANONICAL_ARTIFACTS_FINAL_GAP0_UI_PASS_OFFICIAL_FULL_REPLAY_OWN_PUBLICATION_CI_PAGES_PREPROD_PENDING",
+  "status": "AUTOMATED_DEV_AND_PREPROD_ACCEPTED",
   "application_version": "0.15.2.4",
   "cache": "frontend-v32-21",
-  "version_and_cache_status": "BUMPED_RUNTIME_SOURCE_FROZEN_NOT_PUBLISHED",
+  "version_and_cache_status": "DEPLOYED_AND_AUTOMATED_ACCEPTED_DEV_AND_PREPROD",
   "candidate": "C6",
-  "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+  "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
   "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
   "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
   "export_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-  "publication_source_sha": null,
+  "publication_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
   "source_frozen": true,
-  "source_freeze_scope": "APPLICATION_RUNTIME_AND_EXPORT_SOURCE_E394; PUBLICATION_PENDING",
+  "source_freeze_scope": "ACCEPTED_APPLICATION_AND_ARTIFACT_SOURCE_E394_AND_PUBLICATION_D5AD; FINAL_METADATA_ONLY_UPDATE",
   "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
   "additional_user_report": "co tu się stało z tym domkiem producenta skór",
   "additional_user_reports": [
@@ -68,12 +68,14 @@
     "raw_save_or_credentials_committed": false
   },
   "physical_current_PREPROD": {
-    "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
-    "version": "0.15.2.1",
-    "cache": "frontend-v32-18",
-    "workflow": "SUCCESS44526548282",
-    "quality_acceptance": "REOPENED_WARM_CACHE_AND_ADMIN3_STARTUP",
-    "accepted_tag": false
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "version": "0.15.2.4",
+    "cache": "frontend-v32-21",
+    "workflow": "SUCCESS44577083312_ATTEMPT1",
+    "quality_acceptance": "AUTOMATED_ACCEPTED",
+    "accepted_tag": "preprod-0.15.2.4-20261119",
+    "URL": "https://harborlight-dev.web.app"
   },
   "previous_accepted_release": {
     "version": "0.15.2.0",
@@ -82,12 +84,9 @@
     "acceptance": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
   },
   "main_hold": {
-    "source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
-    "reason": "Old own C5 CI completedSUCCESS without cancellation; main remains3d until new C6 local preparation and publication. No active old-CI hold.",
-    "CI_run": 44559674101,
-    "CI_status": "SUCCESS",
-    "CI_not_cancelled": true,
-    "old_CI_completed": true
+    "status": "CLOSED_STANDARD_GCP_AND_ALL_AUDITS_COMPLETE",
+    "accepted_publication_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "subsequent_metadata_only_commit_does_not_change_app_artifacts_or_tags": true
   },
   "C5_quality_hold": {
     "status": "CONFIRMED_MATERIAL_STEADY_TICK_REGRESSION",
@@ -98,10 +97,11 @@
     "raw_private_harness_FAIL_preserved": true,
     "taggable": false,
     "GCP_dispatch_allowed": false,
-    "CI_green_would_not_close_quality_hold": true
+    "CI_green_would_not_close_quality_hold": true,
+    "applies_to": "HISTORICAL_C5_ONLY; DOES_NOT_BLOCK_ACCEPTED_C6"
   },
   "planned_admin3_fix": {
-    "status": "C6_FROZEN_IMPLEMENTED_TARGETED_AND_GAP0_UI_PASS_FULL_OFFICIAL_MODEL_PENDING",
+    "status": "IMPLEMENTED_AND_AUTOMATED_ACCEPTED_DEV_AND_PREPROD",
     "strategy": "Enable indexed history plus certified diet accumulator only when the outer public elapsed interval is >60seconds; short public ticks retain C4 memo and legacy loops; nested calls inherit the outer scope.",
     "history_index_outer_elapsed_threshold_seconds": 60,
     "threshold_comparison": ">",
@@ -110,10 +110,10 @@
     "simulation_step_or_clock_change": false,
     "arithmetic_or_EPS_change": false,
     "history_removal": false,
-    "short_tick_whole_model_exactness": "TARGETED_SCOPE71_AND_RESOURCE5_PASS_FINAL_FULL_OFFICIAL_MODEL_PENDING",
-    "gap_zero_actual_private_UI_postready10s": "PASS_FINAL_CODE_E394_COLD_START3_589S_79BEATS_MAX814_1MS",
-    "full_replay_equivalence": "PENDING_C6_FULL47_885H",
-    "original_B94_full_reference": "PENDING_NOT_CLAIMED_PASS",
+    "short_tick_whole_model_exactness": "PASS_SCOPE_RESOURCE_DIFFERENTIAL_AND_COMPLETE_OFFICIAL_MODEL",
+    "gap_zero_actual_private_UI_postready10s": "PASS_FINAL_E394_79HEARTBEATS_MAX814_1MS",
+    "full_replay_equivalence": "PASS_COMPLETE_OFFICIAL_C4_C5_C6_ALL849981_DECODED_BYTES",
+    "original_B94_full_reference": "STOPPED_AT_UNCHANGED_CPU_GUARD_WITHOUT_COMPLETE_RESULT_NOT_FULL_PASS",
     "no_reset": true,
     "no_account_writes": true,
     "source_frozen": true,
@@ -128,7 +128,8 @@
       "profile_cost_percent_approx": 36.56,
       "effect_scope": "Sidebar headline presentation only"
     },
-    "scope_tests_PASS": 71
+    "scope_tests_PASS": 71,
+    "native_hosted_admin3_startup_and_10s_postready": "PASS_STANDARD_REQUIRED_JOB"
   },
   "C5_private_UI_evidence": {
     "status": "HISTORICAL_C5_STARTUP_GATES_PASS_RAW_HARNESS_FAIL_STEADY_QUALITY_HOLD",
@@ -177,16 +178,20 @@
     "member_limit": 512,
     "byte_limit": 134217728,
     "explicit_closed_file_list": true,
-    "final_file_count": null,
-    "final_total_bytes": null,
-    "final_archive_sha256": null,
-    "final_manifest_sha256": null,
-    "validation": "PASS_LOCAL_STABLE_UNMODIFIED28_AFTER_ENOSPC_RECOVERY; FINAL_COMMITTED_PUBLICATION_ARCHIVE_PENDING",
+    "final_file_count": 460,
+    "final_total_bytes": 96565038,
+    "final_archive_sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b",
+    "final_manifest_sha256": "679f47bfa1a7d0fb412fd6bf919f43834fcd8c599f16ac59d4996a5805c6733c",
+    "validation": "PASS_EXACT_ORIGINAL_ARCHIVE_AND_ALL460_NORMAL_TLS_PUBLIC_BYTES",
     "historical_C5_package_reference": "previous_cache20_attempt.frontend_package",
     "local_tests_PASS": 28,
     "member_limit_unchanged": 512,
     "byte_limit_unchanged": 134217728,
-    "original_ENOSPC_failure_preserved": true
+    "original_ENOSPC_failure_preserved": true,
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "committed_package_report": "/workspace/work/perf-20261119/r4/release/committed-package.json",
+    "original_archive_report": "/workspace/work/perf-20261119/r4/release/original-artifact-audit-44577083312-1.json",
+    "all_public_byte_report": "/workspace/work/perf-20261119/r4/release/preprod-public-byte-audit.json"
   },
   "canonical_artifact_refresh": {
     "status": "PASS",
@@ -869,19 +874,20 @@
       "source_line_changes_count": 53
     },
     "manual_user_acceptance": "NOT_RUN",
-    "CI_and_deploy": "PENDING_ROOT_OWN_EXACT_PUBLICATION_SOURCE",
+    "CI_and_deploy": "SUBSEQUENT_OWN_CI_AND_STANDARD_PREPROD_SUCCESS_NO_ARTIFACT_REGENERATION",
     "earlier_attempt_evidence_preserved": true,
     "all_heavy_processes_finished": true,
     "report": "/workspace/work/perf-20261119/r4/artifacts/canonical-artifacts-summary.json",
-    "historical_CODE41_PASS_reference": "previous_cache20_attempt.canonical_artifact_refresh"
+    "historical_CODE41_PASS_reference": "previous_cache20_attempt.canonical_artifact_refresh",
+    "subsequent_acceptance_reference": "final_acceptance_report"
   },
   "local_QA": {
-    "status": "PASS_LOCAL_C6_NODE1599_BACKEND178_BOARD7_PYTHON173_ARTIFACTS_AND_FINAL_GAP0_UI; OFFICIAL47_885H_AND_NEW_REMOTE_CI_DEPLOY_PENDING",
-    "official10_sequential1s_ticks_whole_model_and_cost": "TARGETED_SCOPE71_RESOURCE5_PASS_FINAL_FULL_OFFICIAL_MODEL_PENDING",
+    "status": "PASS_LOCAL_NODE_AND_CANONICAL_ARTIFACTS_WITH_SUBSEQUENT_OWN_CI_AND_HOSTED_ACCEPTANCE",
+    "official10_sequential1s_ticks_whole_model_and_cost": "PASS_TARGETED_SCOPE_RESOURCE_AND_FINAL_GAP0_UI; COMPLETE_OFFICIAL_MODEL_EXACT",
     "gap_zero_private_UI_10s_postready1x": "PASS_FINAL9_CODE_FINGERPRINTS",
-    "full_actual_replay_and_complete_equivalence": "PENDING_OFFICIAL_C6_FULL47_885H",
+    "full_actual_replay_and_complete_equivalence": "PASS_OFFICIAL_C6_FULL47_885H_EXACT_C4_C5",
     "frozen_source_regression": "PASS_LOCAL_FRONTEND1599_BACKEND178_BOARD7_PYTHON173",
-    "canonical_artifacts": "PASS_FRESH_BUILD_VALIDATE_FROM_E394",
+    "canonical_artifacts": "PASS_FRESH_BUILD_VALIDATE_FROZEN_E394",
     "historical_C5_proofs_reference": "previous_cache20_attempt.local_QA",
     "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
     "targeted_C6": {
@@ -960,75 +966,226 @@
       "wall_seconds": 1.159,
       "first_private_fixture_failure_preserved": true,
       "correction": "Private test ROOT binding points to actual gra-perf-cache19 worktree; no application or game-test change."
-    }
+    },
+    "hosted_actual_admin3": "PASS_STARTUP600S_WORKER_HEARTBEATS_AND_10S_NORMAL_POSTREADY"
   },
   "CI": {
-    "status": "PENDING_C6_NEW_EXACT_PUBLICATION_SOURCE",
-    "run_id": null,
-    "C5_previous_own_run": 44559674101,
-    "C5_previous_own_status": "SUCCESS_QUALITY_HOLD_NOT_CANCELLED",
-    "C5_green_does_not_resolve_quality_hold": true
+    "status": "SUCCESS",
+    "run_id": 44569674535,
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "workflow_seconds": 2342,
+    "job_seconds": 2339,
+    "Node_PASS": 1784,
+    "frontend_Node_PASS": 1599,
+    "backend_Node_PASS": 178,
+    "board_Node_PASS": 7,
+    "Python_PASS": 173,
+    "browser_programs_PASS": 73,
+    "browser_groups": {
+      "standalone": 1,
+      "main": 54,
+      "cloud": 18
+    },
+    "step_status_counts": {
+      "success": 36,
+      "skipped": 2,
+      "failure": 0
+    },
+    "two_skips_conditional_failure_diagnostics_only": true,
+    "unchanged_96h_watchdog_limit_ms": 10000,
+    "watchdog_PASS_ms": 8084.648811,
+    "watchdog_source_sha256_unchanged": "de48ed0b4e096cdbecf4c451770aacf97af0f1f15174e9e2b48835ce96cdbaf5",
+    "summary": "/workspace/work/perf-20261119/r4/release/CI-summary.json",
+    "full_log_bytes": 598377,
+    "full_log_sha256": "53938d4e8ef250875a89b2cfae69af6ab6b54bd046b1c81dc287138b6ae30acb",
+    "all_source_program_crosschecks": "PASS"
   },
   "Pages": {
-    "status": "PENDING_C6_NEW_EXACT_PUBLICATION_SOURCE",
-    "run_id": null,
-    "C5_previous_own_run": 44559673862,
-    "C5_previous_own_status": "SUCCESS34S_AND_ALL459_PLUS2_XLSX_PUBLIC_BYTES_PASS_NOT_C6_ACCEPTANCE"
+    "status": "SUCCESS",
+    "run_id": 44569674475,
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "workflow_seconds": 31,
+    "job_seconds": 26,
+    "summary": "/workspace/work/perf-20261119/r4/release/Pages-summary.json",
+    "public_byte_audit": {
+      "status": "PASS",
+      "report": "/workspace/work/perf-20261119/r4/release/pages-public-byte-audit.json",
+      "files": 459,
+      "bytes": 96509270,
+      "normal_TLS": true,
+      "exact_Git_publication": true,
+      "warm_browser_cache_acceptance_claimed": false
+    },
+    "separate_workbook_audit": {
+      "status": "PASS",
+      "report": "/workspace/work/perf-20261119/r4/release/pages-workbook-byte-audit.json",
+      "workbooks": 2,
+      "separate_from_closed_frontend_manifest": true,
+      "normal_TLS": true,
+      "exact_Git_publication": true
+    }
   },
   "DEV": {
-    "status": "E394_FROZEN_NOT_PUBLISHED_MAIN_STILL_C5_3D_QUALITY_HOLD",
-    "source_sha": null,
+    "status": "AUTOMATED_ACCEPTED",
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
     "manual_user_acceptance": "NOT_RUN",
-    "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6"
+    "own_CI": "SUCCESS44569674535",
+    "Pages": "SUCCESS44569674475",
+    "all459_normal_TLS_and_two_workbooks_exact": true,
+    "accepted_tag": "dev-0.15.2.4-20261119"
   },
   "DEV_tag": {
-    "status": "NOT_CREATED",
-    "name": null
+    "status": "PASS_REMOTE_VERIFIED_IMMUTABLE",
+    "name": "dev-0.15.2.4-20261119",
+    "object": "19102cafa5794c2193084f479a8b5d23fd4e7f38",
+    "peeled_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d"
   },
   "PREPROD": {
-    "status": "NOT_DISPATCHED_C6_PENDING_AND_C5_QUALITY_HOLD",
+    "status": "AUTOMATED_ACCEPTED",
     "workflow": "google-cloud-dev.yml",
     "project": "harborlight-dev",
     "url": "https://harborlight-dev.web.app",
-    "source_sha": null,
-    "run_id": null,
-    "attempt": null,
-    "accepted": false,
-    "receipt_verified": false,
-    "original_artifacts_verified": false,
-    "existing_account_UI_verified": false,
-    "account_preservation_verified": false,
-    "tag_created": false,
-    "tag_verified": false,
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "run_id": 44577083312,
+    "attempt": 1,
+    "workflow_seconds": 754,
+    "gate_seconds": 24,
+    "deploy_seconds": 721,
+    "started_at_utc": "2026-11-19T17:25:49Z",
+    "completed_at_utc": "2026-11-19T17:38:23Z",
+    "step_status_counts": {
+      "success": 39,
+      "skipped": 1,
+      "failure": 0
+    },
+    "skipped_diagnostic_only": true,
+    "accepted": true,
+    "summary": "/workspace/work/perf-20261119/r4/release/GCP-summary.json",
+    "receipt_verified": true,
+    "receipt_checks": {
+      "ci": true,
+      "dev_smoke": true,
+      "frontend_smoke": true,
+      "account_api": true
+    },
+    "receipt_condition_count_unchanged": 4,
+    "original_artifacts_verified": true,
+    "original_artifact_count": 2,
+    "original_artifact_audit": "/workspace/work/perf-20261119/r4/release/original-artifact-audit-44577083312-1.json",
+    "original_artifacts": [
+      {
+        "kind": "release",
+        "artifact_id": 14556888714,
+        "name": "harborlight-dev-release-44577083312-1",
+        "file_name": "release-44577083312-1.zip",
+        "bytes": 616,
+        "sha256": "9c5306b7f21d09b099719c1a88b5d983ebdb801391b49e709df12c61b27ce119",
+        "path": "/workspace/work/perf-20261119/r4/release/release-44577083312-1.zip",
+        "metadata_size_and_digest_verified": true
+      },
+      {
+        "kind": "frontend",
+        "artifact_id": 14557818037,
+        "name": "harborlight-dev-frontend-44577083312-1",
+        "file_name": "frontend-44577083312-1.zip",
+        "bytes": 92553081,
+        "sha256": "2f7f5a0d45f33c0c7c631db9fa9b45e53723fa523fa69622e8785ab6b844d537",
+        "path": "/workspace/work/perf-20261119/r4/release/frontend-44577083312-1.zip",
+        "metadata_size_and_digest_verified": true
+      }
+    ],
+    "image_digest": "sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda",
+    "standard_receipt_verification": {
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "source_image": "europe-central2-docker.pkg.dev/harborlight-dev/harborlight/api@sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda",
+      "image_digest": "sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda",
+      "ci_run_id": "44569674535",
+      "frontend_artifact_name": "harborlight-dev-frontend-44577083312-1",
+      "frontend_archive_sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b",
+      "frontend_manifest_sha256": "679f47bfa1a7d0fb412fd6bf919f43834fcd8c599f16ac59d4996a5805c6733c"
+    },
+    "existing_account_UI_verified": true,
+    "account_preservation_verified": true,
+    "account_preservation_report": "/workspace/work/perf-20261119/release21-account-preservation.json",
+    "tag_created": true,
+    "tag_verified": true,
+    "tag": {
+      "name": "preprod-0.15.2.4-20261119",
+      "object": "6a3e833440117e6f80e530f4281241761847cb88",
+      "peeled_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "remote_verified": true,
+      "immutable": true
+    },
+    "native_admin1": {
+      "status": "PASS",
+      "startup_ms": 4695.791,
+      "unchanged_timeout_ms": 30000
+    },
     "additional_required_admin3_UI_gate": {
-      "status": "IMPLEMENTED_CONFIG13PASS_NOT_RUN_ON_C6_DEPLOYMENT",
+      "status": "PASS_NATIVE_ACTUAL_EXISTING_ACCOUNT_IN_SAME_REQUIRED_STANDARD_JOB",
       "selected_account_only": "admin3",
       "uid": "dev-admin3",
       "startup_timeout_ms": 600000,
-      "admin1_default_timeout_ms_unchanged": 30000,
+      "startup_elapsed_ms": 280120.832,
       "if_start_exceeds_30s_require_observed_Worker": true,
-      "heartbeat_required_while_replay": true,
+      "Worker_observed": true,
+      "replay_heartbeats": 2762,
+      "replay_max_gap_ms": 498.2,
       "max_heartbeat_gap_limit_ms": 1500,
+      "post_ready_normal_1x_observation_seconds": 10,
+      "post_ready_heartbeats": 91,
+      "post_ready_max_gap_ms": 541.2,
+      "post_ready_ready_retained": true,
       "all_browser_writes_blocked": true,
-      "same_standard_job_timeout_minutes": 25,
+      "test_game_clock_changed": false,
       "receipt_schema_condition_count_unchanged": 4,
       "configuration_unit_tests": {
         "status": "PASS",
         "tests": 13
-      },
-      "actual_existing_admin3_render": "PENDING_NEW_C6_STANDARD_DEPLOY",
-      "post_ready_normal_1x_observation_seconds": 10,
-      "post_ready_heartbeat_max_gap_ms": 1500,
-      "same_required_standard_job": true,
-      "test_game_clock_changed": false,
-      "actual_account_writes": false
-    }
+      }
+    },
+    "all_public_files": {
+      "status": "PASS_NORMAL_TLS_ALL460",
+      "files": 460,
+      "bytes": 96565038,
+      "checked_at_utc": "2026-11-19T17:40:59.910810+00:00",
+      "report": "/workspace/work/perf-20261119/r4/release/preprod-public-byte-audit.json"
+    },
+    "building_manifest": {
+      "status": "PASS",
+      "at": "2026-11-19T17:28:49.405874+00:00",
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "public_path": "assets/building-upgrades-v1/manifest.json?v=frontend-v32-21",
+      "http": 200,
+      "cache_control": "public, max-age=0, must-revalidate",
+      "bytes": 83922,
+      "sha256": "3626243a2bb564d1ceb84473650b902454022f316762b0d1a3d9e783977a1e03",
+      "normal_tls": true,
+      "exact_source_bytes": true,
+      "warm_browser_proof": false
+    },
+    "account_isolation": {
+      "status": "PASS",
+      "accounts": 3,
+      "existing_saves": 3,
+      "empty_islands": 0,
+      "foreign_reads_denied": 6,
+      "anonymous_direct_reads_denied": 3,
+      "own_API_reads": 3,
+      "own_direct_reads_denied": 3,
+      "anonymous_API_reads_denied": 3
+    },
+    "QA_island_or_clock_writes": false,
+    "manual_user_acceptance": "NOT_RUN"
   },
-  "manual_user_acceptance": "C6_DEV_AND_PREPROD_NOT_RUN",
+  "manual_user_acceptance": "NOT_RUN",
   "manual_DEV_acceptance": {
     "status": "NOT_RUN",
     "version": "0.15.2.4",
     "cache": "frontend-v32-21",
+    "automated_acceptance": "PASS",
     "previous_user_pass_scope": "previous_cache18_attempt.manual_DEV_acceptance"
   },
   "manual_PREPROD_acceptance": "NOT_RUN",
@@ -3556,5 +3713,291 @@
     "frozen_code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
     "full_official_C6_model_acceptance_claimed": false,
     "older_C6_max_gap4017_FAIL_and_C5_raw27_FAIL_preserved": true
+  },
+  "previous_cache21_local_snapshot": {
+    "status": "C6_E394_LOCAL_READY_NODE1599_BACKEND178_BOARD7_PYTHON173_CANONICAL_ARTIFACTS_FINAL_GAP0_UI_PASS_OFFICIAL_FULL_REPLAY_OWN_PUBLICATION_CI_PAGES_PREPROD_PENDING",
+    "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "export_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "publication_source_sha": null,
+    "source_frozen": true,
+    "source_freeze_scope": "APPLICATION_RUNTIME_AND_EXPORT_SOURCE_E394; PUBLICATION_PENDING",
+    "main_hold": {
+      "source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
+      "reason": "Old own C5 CI completedSUCCESS without cancellation; main remains3d until new C6 local preparation and publication. No active old-CI hold.",
+      "CI_run": 44559674101,
+      "CI_status": "SUCCESS",
+      "CI_not_cancelled": true,
+      "old_CI_completed": true
+    },
+    "local_QA": {
+      "status": "PASS_LOCAL_C6_NODE1599_BACKEND178_BOARD7_PYTHON173_ARTIFACTS_AND_FINAL_GAP0_UI; OFFICIAL47_885H_AND_NEW_REMOTE_CI_DEPLOY_PENDING",
+      "official10_sequential1s_ticks_whole_model_and_cost": "TARGETED_SCOPE71_RESOURCE5_PASS_FINAL_FULL_OFFICIAL_MODEL_PENDING",
+      "gap_zero_private_UI_10s_postready1x": "PASS_FINAL9_CODE_FINGERPRINTS",
+      "full_actual_replay_and_complete_equivalence": "PENDING_OFFICIAL_C6_FULL47_885H",
+      "frozen_source_regression": "PASS_LOCAL_FRONTEND1599_BACKEND178_BOARD7_PYTHON173",
+      "canonical_artifacts": "PASS_FRESH_BUILD_VALIDATE_FROM_E394",
+      "historical_C5_proofs_reference": "previous_cache20_attempt.local_QA",
+      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "targeted_C6": {
+        "scope_tests_PASS": 71,
+        "ordered_resource_history_tests_PASS": 5,
+        "mission_sidebar_and_full_action_tests_PASS": 52,
+        "configuration_contract_Python_tests_PASS": 13,
+        "new_total_Python_expected": 173,
+        "full_Python173_PASS_claimed": true
+      },
+      "full_frontend_Node": {
+        "status": "PASS",
+        "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+        "tests": 1599,
+        "pass": 1599,
+        "fail": 0,
+        "exit_code": 0,
+        "wall_seconds": 211.1375288963318,
+        "runner_duration_ms": 210999.438184,
+        "summary": "/workspace/work/perf-20261119/r4/node-frontend-full-summary.json",
+        "log_sha256": "a9d0a5e7cc366b23e1df94eca1c7f46b7ec3c5f44f0b7bbc8148e2b2b2df3506",
+        "watchdog_source_sha256_unchanged": "de48ed0b4e096cdbecf4c451770aacf97af0f1f15174e9e2b48835ce96cdbaf5",
+        "watchdog_limit_ms_unchanged": 10000,
+        "watchdog_PASS_ms": 8737.606059
+      },
+      "backend_Node": {
+        "status": "PASS",
+        "tests": 178,
+        "pass": 178,
+        "fail": 0,
+        "runner_duration_ms": 7565.132765,
+        "wall_seconds": 7.686291456222534,
+        "summary": "/workspace/work/perf-20261119/r4/node-backend-board-summary.json"
+      },
+      "board_Node": {
+        "status": "PASS",
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "runner_duration_ms": 80.846341,
+        "wall_seconds": 0.11362075805664062
+      },
+      "Python_checks": {
+        "status": "PASS_ALL173_AFTER_UNMODIFIED_BUNDLE_SPACE_RETRY",
+        "independent_programs": 11,
+        "independent_tests_PASS": 145,
+        "summary": "/workspace/work/perf-20261119/r4/python-independent-summary.json",
+        "frontend_bundle_stable_unmodified28": "PASS",
+        "expected_total173": 173,
+        "full_173_PASS_claimed": true,
+        "artifact_generation_complete_before_bundle_retry": true,
+        "total_tests_PASS": 173,
+        "stable_frontend_tests_PASS": 28,
+        "stable_frontend_wall_seconds": 11.539,
+        "stable_frontend_log": "/workspace/work/perf-20261119/r4/python-frontend-bundle-space-retry.log",
+        "source_or_test_assertions_changed_for_retry": false,
+        "first_bundle_infrastructure_failure": {
+          "status": "FAIL_PRESERVED_ENOSPC",
+          "tests": 28,
+          "fail": 1,
+          "errors": 1,
+          "duration_seconds": 12.697,
+          "log": "/workspace/work/perf-20261119/r4/python-frontend-bundle-stable.log",
+          "production_bug_claimed": false
+        },
+        "space_recovery": {
+          "report": "/workspace/work/perf-20261119/r4/repro-cache-space-recovery.json",
+          "freed_MB_approx": 847,
+          "only_manifest_and_hash_pinned_reproducible_build_copies_removed": true,
+          "all_original_ZIP_TAR_manifests_verified_dirs_reports_private_gold_retained": true
+        }
+      },
+      "private_release_audit_helpers": {
+        "status": "PASS_READINESS_NOT_NEW_PUBLICATION_ACCEPTANCE",
+        "tests": 60,
+        "wall_seconds": 1.159,
+        "first_private_fixture_failure_preserved": true,
+        "correction": "Private test ROOT binding points to actual gra-perf-cache19 worktree; no application or game-test change."
+      }
+    },
+    "CI": {
+      "status": "PENDING_C6_NEW_EXACT_PUBLICATION_SOURCE",
+      "run_id": null,
+      "C5_previous_own_run": 44559674101,
+      "C5_previous_own_status": "SUCCESS_QUALITY_HOLD_NOT_CANCELLED",
+      "C5_green_does_not_resolve_quality_hold": true
+    },
+    "Pages": {
+      "status": "PENDING_C6_NEW_EXACT_PUBLICATION_SOURCE",
+      "run_id": null,
+      "C5_previous_own_run": 44559673862,
+      "C5_previous_own_status": "SUCCESS34S_AND_ALL459_PLUS2_XLSX_PUBLIC_BYTES_PASS_NOT_C6_ACCEPTANCE"
+    },
+    "DEV": {
+      "status": "E394_FROZEN_NOT_PUBLISHED_MAIN_STILL_C5_3D_QUALITY_HOLD",
+      "source_sha": null,
+      "manual_user_acceptance": "NOT_RUN",
+      "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6"
+    },
+    "DEV_tag": {
+      "status": "NOT_CREATED",
+      "name": null
+    },
+    "PREPROD": {
+      "status": "NOT_DISPATCHED_C6_PENDING_AND_C5_QUALITY_HOLD",
+      "workflow": "google-cloud-dev.yml",
+      "project": "harborlight-dev",
+      "url": "https://harborlight-dev.web.app",
+      "source_sha": null,
+      "run_id": null,
+      "attempt": null,
+      "accepted": false,
+      "receipt_verified": false,
+      "original_artifacts_verified": false,
+      "existing_account_UI_verified": false,
+      "account_preservation_verified": false,
+      "tag_created": false,
+      "tag_verified": false,
+      "additional_required_admin3_UI_gate": {
+        "status": "IMPLEMENTED_CONFIG13PASS_NOT_RUN_ON_C6_DEPLOYMENT",
+        "selected_account_only": "admin3",
+        "uid": "dev-admin3",
+        "startup_timeout_ms": 600000,
+        "admin1_default_timeout_ms_unchanged": 30000,
+        "if_start_exceeds_30s_require_observed_Worker": true,
+        "heartbeat_required_while_replay": true,
+        "max_heartbeat_gap_limit_ms": 1500,
+        "all_browser_writes_blocked": true,
+        "same_standard_job_timeout_minutes": 25,
+        "receipt_schema_condition_count_unchanged": 4,
+        "configuration_unit_tests": {
+          "status": "PASS",
+          "tests": 13
+        },
+        "actual_existing_admin3_render": "PENDING_NEW_C6_STANDARD_DEPLOY",
+        "post_ready_normal_1x_observation_seconds": 10,
+        "post_ready_heartbeat_max_gap_ms": 1500,
+        "same_required_standard_job": true,
+        "test_game_clock_changed": false,
+        "actual_account_writes": false
+      }
+    },
+    "manual_user_acceptance": "C6_DEV_AND_PREPROD_NOT_RUN"
+  },
+  "final_acceptance_report": "/workspace/work/perf-20261119/r4/release/FINAL-ACCEPTANCE.json",
+  "full_actual_C6_replay": {
+    "status": "PASS",
+    "method": "Only unpack compressed save sections, sort object keys and preserve arrays. No normalization, ticking, field exclusion or rewriting. Same original payload, fixed target and online flags.",
+    "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "whole_decoded_model_c4_c5_c6_exact": true,
+    "decoded_bytes": 849981,
+    "decoded_sha256": {
+      "c4": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+      "c5": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+      "c6": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388"
+    },
+    "packed_C5_C6_bytes_and_hash_identical": true,
+    "all_111_source_files_stable_pre_post_run": true,
+    "all_43_compiled_model_sources_match_frozen_snapshot": true,
+    "timing_scope": "Single private local Node simulation; minor publication gzip/hash I/O allowed. This is not a controlled timing-ratio comparison.",
+    "local_advance_below_600_seconds": true,
+    "c6_summary": {
+      "phase": "complete",
+      "name": "admin3-candidate6-final-full-online",
+      "root": "/workspace/gra-perf-cache19",
+      "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "code_fingerprints": {
+        "harborlight-v1-state.js": "71e12beda25824c9e109581e2d2540e4abc170e513967775eaa2cb88196ea055",
+        "harborlight-v1-provisions.js": "bcb0116a8f61611ab49b893304bc3b449f0105878d61b10d4e3d74af9e2f5c5d",
+        "harborlight-v1-residents.js": "87788aafac83710c3ed81847cd4c2c6827b3f54b85cb711a0f555e43216664d2",
+        "harborlight-v1-development-logistics.js": "efb70146f0c4f9fe4a0c478518c433505f8d82e7b3c85d1ccdab7bb39438062a",
+        "harborlight-v1-logistics.js": "e3ae6feed06c9ea6c00571699c3ea3ca17a149a075b6014e2759dcb5e042d232",
+        "harborlight-v1-diet-history-index.js": "a54470cf15e738f85c66ae9436c446ea4a81993a2ba611edbbcfbbfd34190437",
+        "harborlight-v1-diet-accumulator.js": "cf985045ff6b8da92057b2997123acfa1960cdbb8b434e34f32b3416ca739072",
+        "harborlight-v1-save-packing.js": "d5927f18acde235ffede78913223b1ecb9265aebc31176c665af4a4c0726f852",
+        "harborlight-v1-archipelago.js": "84113a2c8f5633a4e023aa46ab798113ca98afeded55df5208a13e72481d1706"
+      },
+      "restoreMs": 129.33240999999998,
+      "advanceMs": 356697.122751,
+      "cpuMs": 363611.153,
+      "simulated_hours": 47.88518666666667,
+      "now": 1795113034733,
+      "population": 135,
+      "payload_bytes": 345429,
+      "single_world_payload_within_700k": true,
+      "payload_sha256": "755c12e30fd669f5d2900b1767dc69db7f899c23a675ebbb98166c8f334dedd6",
+      "runtimeOnline": true,
+      "network_writes": false,
+      "exact_reference_case": true
+    },
+    "actual_island_or_clock_writes": false,
+    "original_B94_full_reference": "STOPPED_AT_UNCHANGED_CPU_GUARD_WITHOUT_COMPLETE_RESULT_NOT_FULL_PASS",
+    "report": "/workspace/work/perf-20261119/admin3-candidate6-full-equivalence.json"
+  },
+  "original_B94_full_reference": {
+    "status": "STOPPED_AT_UNCHANGED_CPU_GUARD_WITHOUT_COMPLETE_RESULT",
+    "CPU_seconds": 5400.86,
+    "completed_simulation_hours_approx": 32.18,
+    "requested_hours": 47.88518666666667,
+    "full_PASS_claimed": false,
+    "completed_C4_C5_C6_equivalence_is_separate": true
+  },
+  "account_preservation": {
+    "status": "PASS",
+    "before_at": "2026-11-19T17:25:21.680Z",
+    "after_at": "2026-11-19T17:39:02.491Z",
+    "same_three_UIDs": true,
+    "all_persistent_profiles_byte_exact_and_no_reset": true,
+    "records": [
+      {
+        "uid": "dev-admin1",
+        "same_generation": true,
+        "same_island_origin": true,
+        "same_payload_hash": true,
+        "before_revision": 120,
+        "after_revision": 120,
+        "before_population": 35,
+        "after_population": 35,
+        "clock_scope_rate_revision_generation_unchanged": true
+      },
+      {
+        "uid": "dev-admin2",
+        "same_generation": true,
+        "same_island_origin": true,
+        "same_payload_hash": true,
+        "before_revision": 373,
+        "after_revision": 373,
+        "before_population": 21,
+        "after_population": 21,
+        "clock_scope_rate_revision_generation_unchanged": true
+      },
+      {
+        "uid": "dev-admin3",
+        "same_generation": true,
+        "same_island_origin": true,
+        "same_payload_hash": true,
+        "before_revision": 591,
+        "after_revision": 591,
+        "before_population": 97,
+        "after_population": 97,
+        "clock_scope_rate_revision_generation_unchanged": true
+      }
+    ],
+    "clock_now_expected_to_advance_normally_at_rate1": true,
+    "method": "Read-only account metadata snapshots; compare full payload SHA, revisions, UID, generations, island-origin timestamps and clock metadata. Auth sign-in POST only; no island/clock mutations.",
+    "actual_island_or_clock_writes": false,
+    "admin3_clock_rate": 1,
+    "admin3_clock_revision": 12,
+    "admin3_clock_generation": 2,
+    "all_three_generations": 2
+  },
+  "metadata_update_scope": {
+    "status": "FINAL_METADATA_ONLY_AFTER_GCP_AND_ALL_AUDITS_COMPLETE",
+    "application_source_unchanged": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "canonical_artifact_source_unchanged": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "accepted_publication_unchanged": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "runtime_generator_XLSX_or_exports_modified": false,
+    "immutable_tags_not_moved": true,
+    "later_metadata_CI_is_separate_not_new_application_acceptance": true,
+    "QA_did_not_save_catchup_result": "Owner first login still settles elapsed absence; no model time or progress skipped."
   }
 }

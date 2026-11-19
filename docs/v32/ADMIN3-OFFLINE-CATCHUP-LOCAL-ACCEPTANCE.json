@@ -3,9 +3,9 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.2.4",
   "cache": "frontend-v32-21",
-  "status": "LOCAL_C6_STEADY_PASS_CURRENT_FULL_OFFLINE_AND_OWN_RELEASE_PENDING",
+  "status": "ACCEPTED_C6_PREPROD_OFFICIAL_NATIVE_AND_ACCOUNT_PRESERVATION_PASS",
   "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-  "publication_source": null,
+  "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
   "diagnosis": {
     "account": "admin3",
     "existing_save_valid": true,
@@ -15,7 +15,8 @@
     "initial_population": 97,
     "initial_absence_hours": 47.88518666666667,
     "browser_main_thread_block_reproduced_on_local_private_copy": true,
-    "cause": "Synchronous startup replay; repeated per-resident production and meal-history derivation at many natural event boundaries."
+    "cause": "Synchronous long-absence replay, repeated production/meal-history derivation, and unused construction forecasts plus history scans in the HUD.",
+    "actual_admin3_absence_hours_at_predeployment_snapshot": 52.245981111111114
   },
   "implementation": {
     "worker": "One unchanged advanceArchipelago call for the initial fixed target. Subsequent elapsed real time is handled as ordinary subsequent ticks on Workers before atomic adoption. No minute chunks of the initial absence.",
@@ -78,8 +79,16 @@
       "source_scope": "HISTORICAL_C4"
     },
     "full_47_885h": {
-      "status": "C5_FULL_DECOMPRESSED_MODEL_IDENTICAL_TO_COMPLETED_C4_ORIGINAL_B94_PENDING",
-      "original_B94_reference": "PENDING_ORIGINAL_PROCESS_PRESERVED_NO_FULL_RESULT_NO_PASS",
+      "status": "C4_C5_C6_COMPLETE_DECODED_MODELS_STRICTLY_IDENTICAL_ORIGINAL_B94_BOUNDED_INCOMPLETE",
+      "original_B94_reference": {
+        "status": "ORIGINAL_B94_FULL_NOT_COMPLETED_WITHIN_CPU_BUDGET",
+        "CPU_seconds": 5400.86,
+        "CPU_limit_seconds": 5400,
+        "last_safe_remaining_seconds": 56554.53581793589,
+        "complete_output": false,
+        "no_full_B94_equivalence_claim": true,
+        "evidence": "admin3-baseline-reference-bounded-result.json"
+      },
       "C4": {
         "status": "COMPLETE_QUALITY_FAIL_TIME_AND_PERSISTENCE_SIZE",
         "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
@@ -114,7 +123,33 @@
         "timing_scope": "Local Node computation, no Chrome/network benchmark; one brief read-only debugger progress checkpoint and source capture. Authenticated hosted startup still requires its own gate.",
         "local_safe_report": "admin3-candidate5-full-equivalence.json"
       },
-      "superseded_C1_C2_C3_full_runs": "NO_FULL_RESULT_NO_PASS"
+      "superseded_C1_C2_C3_full_runs": "NO_FULL_RESULT_NO_PASS",
+      "C6": {
+        "status": "FULL_MODEL_AND_PACKING_PASS",
+        "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+        "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+        "fixed_target": 1795113034733,
+        "simulated_hours": 47.88518666666667,
+        "runtimeOnline": true,
+        "result_population": 135,
+        "wall_ms": 356697.122751,
+        "cpu_ms": 363611.153,
+        "local_model_under_600000ms": true,
+        "packed_bytes": 345429,
+        "packed_limit": 700000,
+        "packed_limit_pass": true,
+        "packed_sha256": "755c12e30fd669f5d2900b1767dc69db7f899c23a675ebbb98166c8f334dedd6",
+        "complete_decoded_C4_C5_C6_exact": true,
+        "decoded_bytes": 849981,
+        "decoded_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "packed_C5_C6_bytes_and_hash_identical": true,
+        "method": "Only unpack compressed save sections, sort object keys and preserve arrays. No normalization, ticking, field exclusion or rewriting. Same original payload, fixed target and online flags.",
+        "all_111_source_files_stable_pre_post_run": true,
+        "all_43_compiled_model_sources_match_frozen_snapshot": true,
+        "timing_scope": "Single private local Node simulation; minor publication gzip/hash I/O allowed. This is not a controlled timing-ratio comparison.",
+        "actual_island_or_clock_writes": false,
+        "evidence": "admin3-candidate6-full-equivalence.json"
+      }
     },
     "C5_short_checkpoints_before_packing_and_cache20_bump": {
       "one-hour": {
@@ -165,7 +200,7 @@
       "max_heartbeat_gap_ms": 74,
       "cloud_reads": 2,
       "JS_errors": 0,
-      "model_scope": "C3 working component; final C4 full CI remains pending"
+      "model_scope": "Historical C3 component observation; current C6 full CI and native acceptance are separate below."
     },
     "existing_startup_cases": 26,
     "performance_cases": 4,
@@ -189,7 +224,7 @@
     "backend_node": 170,
     "board_node": 7,
     "frontend_package_cases": 28,
-    "source_scope": "HISTORICAL_COMPONENT_OBSERVATIONS_C3_C4_NOT_FINAL_C5_RELEASE"
+    "source_scope": "HISTORICAL_COMPONENT_OBSERVATIONS_C3_C4; CURRENT_C6_OWN_CI_AND_NATIVE_ACCEPTANCE_RECORDED_SEPARATELY"
   },
   "model_fingerprints": {
     "harborlight-v1-state.js": "71e12beda25824c9e109581e2d2540e4abc170e513967775eaa2cb88196ea055",
@@ -203,24 +238,79 @@
     "harborlight-v1-archipelago.js": "84113a2c8f5633a4e023aa46ab798113ca98afeded55df5208a13e72481d1706"
   },
   "release": {
-    "CI": "PENDING_OWN_EXACT_C5_SOURCE",
-    "Pages": "PENDING_C5_PUBLICATION",
-    "DEV_tag": "PENDING_C5",
-    "PREPROD": "PENDING_STANDARD_C5_WORKFLOW",
-    "required_actual_admin3_browser": "NOT_RUN_ON_C5_HOSTING",
+    "CI": {
+      "run": 44569674535,
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "status": "SUCCESS",
+      "duration_seconds": 2342,
+      "Node_tests": 1784,
+      "Python_tests": 173,
+      "browser_programs": 73
+    },
+    "Pages": {
+      "run": 44569674475,
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "status": "SUCCESS",
+      "duration_seconds": 31
+    },
+    "DEV_tag": {
+      "name": "dev-0.15.2.4-20261119",
+      "tag_object": "19102cafa5794c2193084f479a8b5d23fd4e7f38",
+      "target": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d"
+    },
+    "PREPROD": {
+      "workflow": 44577083312,
+      "attempt": 1,
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "status": "ACCEPTED_STANDARD_GCP_AND_ALL_FINAL_ARTIFACT_PUBLIC_BYTE_GATES_PASS",
+      "completed_at": "2026-11-19T17:38:22Z",
+      "workflow_seconds": 754,
+      "deploy_seconds": 721
+    },
+    "required_actual_admin3_browser": "PASS_OFFICIAL_LIVE_AUTHENTICATED_EXISTING_SAVE_NATIVE_WORKER_AND_POST_READY_10S",
     "ordinary_hosted_startup_ms": 30000,
     "selected_admin3_startup_ms": 600000,
     "slow_admin3_requires_observed_worker": true,
     "main_thread_heartbeat_max_gap_ms": 1500,
     "PROD_DNS": "NO_ACTION",
-    "private_actual_worker_and_post_ready": "Historical C5 full private Worker completed; final C6 actual-final-save gap0 steady1x PASS79heartbeats/max814.1ms. Current C6 full official Node and hosted startup+post-ready gates remain pending."
+    "private_actual_worker_and_post_ready": "Historical C5 full private Worker completed; final C6 private gap0 UI79beats/max814.1ms PASS; current C6 official full47.885h Node exact PASS; official native hosted admin3 startup and post-ready PASS.",
+    "accepted_PREPROD_tag": {
+      "name": "preprod-0.15.2.4-20261119",
+      "tag_object": "6a3e833440117e6f80e530f4281241761847cb88",
+      "peeled_remote_target": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "remote_confirmed_at": "2026-11-19T17:41Z",
+      "immutable": true
+    },
+    "original_artifacts_receipt_and_final_TLS": {
+      "status": "PASS",
+      "original_artifact_audit": "r4/release/original-artifact-audit-44577083312-1.json",
+      "original_two_ZIPs_materialized": true,
+      "standard_receipt_checks": {
+        "ci": true,
+        "dev_smoke": true,
+        "frontend_smoke": true,
+        "account_api": true
+      },
+      "TAR_pin_checks": 5,
+      "artifact_file_checks": 460,
+      "image_digest": "sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda",
+      "original_audit_completed_at": "2026-11-19T17:40:31Z",
+      "public_byte_audit": "r4/release/preprod-public-byte-audit.json",
+      "normal_TLS": true,
+      "exact_original_public_files": 460,
+      "exact_public_bytes": 96565038,
+      "public_audit_completed_at": "2026-11-19T17:40:59Z",
+      "runtime_manifest_cache": "frontend-v32-21",
+      "runtime_manifest_exact_bytes": 83922,
+      "runtime_manifest_headers": "max-age=0, must-revalidate"
+    }
   },
   "data_boundaries": {
     "private_world_payloads_in_repo": false,
     "real_game_writes": false,
     "clock_writes": false,
     "reset": false,
-    "accounts_and_progress": "PRESERVE",
+    "accounts_and_progress": "ALL_THREE_PERSISTENT_PROFILES_BYTE_EXACT_BEFORE_AFTER_DEPLOYMENT_NO_RESET",
     "storage_compression_lossless_exact_model": true,
     "history_dropped_or_elapsed_skipped": false
   },
@@ -278,9 +368,60 @@
   },
   "current_code_verification": {
     "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-    "full_private_model_and_packing": "C6_NOT_RUN_WAIT_OWN_REMOTE_CI_WINDOW; C5 complete full decoded model/packing PASS retained historically",
-    "private_actual_worker_replay": "C5 historical complete308.680s; C6 current official full47.885h Node and hostednativeWorker still pending",
+    "full_private_model_and_packing": {
+      "status": "PASS",
+      "evidence": "admin3-candidate6-full-equivalence.json",
+      "complete_decoded_C4_C5_C6_exact": true,
+      "decoded_bytes": 849981,
+      "packed_bytes": 345429,
+      "model_wall_ms": 356697.122751
+    },
+    "private_actual_worker_replay": "Historical C5 loopback private full Worker evidence remains separate; current C6 official actual hosted admin3 Native Worker acceptance PASS below.",
     "post_ready_10s_realtime_1x_heartbeat": {
+      "status": "PASS",
+      "scope": "Official live existing admin3 after native full catchup; normal1x",
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "ready": true,
+      "ticks": 91,
+      "elapsed_ms": 10000.20000000007,
+      "max_gap_ms": 541.2000000000698,
+      "all_browser_writes_blocked": true
+    },
+    "full_frontend_backend_board_node": "PASS_OWN_EXACT_SOURCE_CI_1784_NODE_TESTS",
+    "own_exact_source_CI": {
+      "status": "SUCCESS",
+      "run": 44569674535,
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d"
+    },
+    "actual_hosted_admin3": {
+      "status": "PASS",
+      "workflow": 44577083312,
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "startup_elapsed_ms": 280120.8317810001,
+      "startup_timeout_ms": 600000,
+      "worker_observed": true,
+      "replay_heartbeat": {
+        "observed": true,
+        "ticks": 2762,
+        "max_gap_ms": 498.19999999995343
+      },
+      "post_ready_10s": {
+        "ready": true,
+        "ticks": 91,
+        "elapsed_ms": 10000.20000000007,
+        "max_gap_ms": 541.2000000000698
+      },
+      "exact_hashed_assets": 459,
+      "official_existing_save_not_loopback_fixture": true,
+      "all_browser_writes_blocked": true
+    },
+    "publication_source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "actual_hosted_admin1": {
+      "status": "PASS",
+      "startup_elapsed_ms": 4695.7909810000165,
+      "startup_timeout_ms": 30000
+    },
+    "local_final_gap0_private_UI": {
       "status": "PASS",
       "source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
       "mode": "actual C4 full finalstate copy, gap0, loopback normalizer; no live account access or writes",
@@ -290,14 +431,12 @@
       "simulation_ms": 10093,
       "source_fingerprints_stable": true,
       "evidence": "admin3-candidate6-final-steady-ui.json"
-    },
-    "full_frontend_backend_board_node": "C6_IN_PROGRESS_BY_ROOT",
-    "own_exact_source_CI": "C6_NOT_STARTED",
-    "actual_hosted_admin3": "C6_NOT_RUN"
+    }
   },
   "canonical_artifacts_C5": {
     "source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "status": "PENDING_FRESH_GENERATION_AND_VALIDATION"
+    "status": "HISTORICAL_FRESH_GENERATION_AND_VALIDATION_PASS_SUPERSEDED_BY_CURRENT_C6",
+    "evidence": "r3/artifacts/canonical-artifacts-summary.json"
   },
   "historical_C5_model_fingerprints": {
     "harborlight-v1-state.js": "d7c9303a257e5539653b98be92dda63efb49b951e058233a8bd0b90a2847a194",
@@ -336,6 +475,38 @@
   },
   "canonical_artifacts_C6": {
     "source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-    "status": "WAIT_FRESH_EXPORTS_BY_ROOT"
+    "status": "FRESH_EXPORTS_VALIDATION_ORIGINAL_DEPLOYED_ZIPS_AND_PUBLIC_TLS_BYTES_PASS",
+    "master_sha256": "1ccb89d1f168682a93271abb564f8566a26ad6c0c73131c983b23331539914ff",
+    "master_bytes": 7880490,
+    "master_sheets": 158,
+    "current_rows": 63921,
+    "editorial_sha256": "047e5324175151aac52c3d95236e2a263d499d073a8bd4dcc05adc22eaea4517",
+    "editorial_bytes": 60329,
+    "economic_numeric_tables_identical": 13,
+    "canonical_24_24_72h_profiles_strict_JSON_types_order": "PASS",
+    "original_zip_and_final_TLS": "PASS_ALL460_FILES_96565038_BYTES_EXACT_TO_ORIGINAL_STANDARD_GCP_ARTIFACT"
+  },
+  "verified_at": "2026-11-19T17:41Z",
+  "account_preservation_before_after": {
+    "status": "PASS",
+    "before_at": "2026-11-19T17:25:21.680Z",
+    "after_at": "2026-11-19T17:39:02.491Z",
+    "same_UIDs_generations_island_origins_revisions_payload_hashes": true,
+    "all_profiles_entire_payload_byte_exact": true,
+    "generations": [
+      2,
+      2,
+      2
+    ],
+    "revisions": [
+      120,
+      373,
+      591
+    ],
+    "admin3_rate": 1,
+    "admin3_clock_revision": 12,
+    "admin3_clock_generation": 2,
+    "island_or_clock_writes": false,
+    "evidence": "release21-account-preservation.json"
   }
 }
