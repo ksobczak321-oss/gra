@@ -128,12 +128,62 @@ test('disabled asset loader requests no atlas, terrain or crane',async()=>{
   const result=await readBuildingStageAssets({fetcher:async()=>({ok:true,json:async()=>({version:1,enabled:false})}),imageLoader:()=>{images++;}});
   assert.equal(images,0);assert.equal(result.manifest.enabled,false);assert.equal(result.images.size,0);
 });
-test('enabled loader waits for all22actual image decodes before publishing a ready result',async()=>{
+test('legacy loader bounds concurrent decodes and waits for all22required images',async()=>{
   const pending=[];let settled=false;
   const result=readBuildingStageAssets({fetcher:async()=>({ok:true,json:async()=>buildingStageFixture()}),imageLoader:spec=>new Promise(resolve=>pending.push(()=>resolve({naturalWidth:spec.width,naturalHeight:spec.height})))}).then(value=>{settled=true;return value;});
-  await new Promise(resolve=>setImmediate(resolve));assert.equal(pending.length,22);
-  pending.slice(0,21).forEach(resolve=>resolve());await new Promise(resolve=>setImmediate(resolve));assert.equal(settled,false);
+  await new Promise(resolve=>setImmediate(resolve));assert.equal(pending.length,3);
+  let cursor=0;
+  for(let turn=0;turn<10&&cursor<21;turn++){
+    while(cursor<pending.length&&cursor<21)pending[cursor++]();
+    await new Promise(resolve=>setImmediate(resolve));
+  }
+  assert.equal(pending.length,22);assert.equal(settled,false);
   pending[21]();const ready=await result;assert.equal(ready.images.size,22);
+});
+function spriteFixture(){
+  const raw=buildingStageFixture();
+  for(const [id,family]of Object.entries(raw.buildings))family.sprites=family.frameRects.map((r,i)=>({src:`assets/building-upgrades-v1/frame-${id}-${String(i+1).padStart(2,'0')}.webp`,width:r[2],height:r[3]}));
+  return raw;
+}
+test('current-world loader fetches only20families plus the distinct visible decorative tier, no future tiers or idle crane',async()=>{
+  const raw=spriteFixture(),requested=[],state={ruleset:32,buildings:{townhall:{level:19},house:{level:7},farm:{level:4},theatre:{level:1}}},before=json(state);
+  const ready=await readBuildingStageAssets({state,fetcher:async()=>({ok:true,json:async()=>raw}),imageLoader:async spec=>{
+    requested.push(spec.src);assert.ok(!/\/house\.webp$/.test(spec.src),'The legacy atlas must never load');
+    return {naturalWidth:spec.width,naturalHeight:spec.height};
+  }});
+  assert.equal(requested.length,22);assert.equal(ready.images.size,22);
+  assert.ok(requested.includes(raw.buildings.townhall.sprites[9].src));
+  assert.ok(requested.includes(raw.buildings.theatre.sprites[9].src));
+  assert.ok(requested.includes(raw.buildings.house.sprites[3].src));
+  assert.ok(requested.includes(raw.buildings.house.sprites[9].src),'The decorative House follows TownHall19, independently of House7');
+  assert.ok(requested.includes(raw.buildings.farm.sprites[1].src));
+  assert.ok(!requested.includes(raw.crane.src));assert.equal(json(state),before);
+});
+test('Leatherworks explicit paint depth prevents Quarry occlusion without moving or resizing either building',()=>{
+  const raw=JSON.parse(readFileSync(new URL('../assets/building-upgrades-v1/manifest.json',import.meta.url),'utf8'));
+  const m=normalizeBuildingStageManifest(raw),before=structuredClone(raw);delete before.buildings.leatherworks.paintDepth;
+  const original=normalizeBuildingStageManifest(before);
+  assert.ok(m.buildings.leatherworks.paintDepth>m.buildings.quarry.groundAnchor[1]);
+  for(let level=1;level<=20;level++)assert.deepEqual(buildingStagePlacement(m,'leatherworks',level),buildingStagePlacement(original,'leatherworks',level));
+  const bad=spriteFixture();bad.buildings.leatherworks.paintDepth=Infinity;
+  assert.throws(()=>normalizeBuildingStageManifest(bad),/kolejność warstw/);
+});
+test('actual construction includes crane while optional gallery metadata decodes no images',async()=>{
+  const raw=spriteFixture(),requested=[],options={fetcher:async()=>({ok:true,json:async()=>raw}),imageLoader:async spec=>{requested.push(spec.src);return {naturalWidth:spec.width,naturalHeight:spec.height};}};
+  await readBuildingStageAssets({...options,state:{constructionProjects:[{building:'farm',stage:'building',buildRemaining:4}]}});
+  assert.equal(requested.length,22);assert.ok(requested.includes(raw.crane.src));requested.length=0;
+  const metadata=await readBuildingStageAssets({...options,preload:false});assert.equal(requested.length,0);assert.equal(metadata.images.size,0);
+});
+test('cropped sprites preserve alpha bounds, placement and smoke; malformed sizes/remote URLs reject',()=>{
+  const raw=spriteFixture(),m=normalizeBuildingStageManifest(raw),legacy=manifest();
+  for(const id of BUILDING_STAGE_IDS)for(let tier=0;tier<10;tier++){
+    const f=buildingStageFrame(m,id,tier*2+1),a=buildingStagePlacement(m,id,tier*2+1),b=buildingStagePlacement(legacy,id,tier*2+1);
+    assert.equal(f.src,raw.buildings[id].sprites[tier].src);assert.deepEqual(f.viewBox,f.bbox);
+    for(const key of ['x','y','w','h','scale'])assert.equal(a[key],b[key]);
+  }
+  const bad=spriteFixture();bad.buildings.house.sprites[0].width++;
+  assert.throws(()=>normalizeBuildingStageManifest(bad),/wymiary/);
+  bad.buildings.house.sprites[0].src='https://invalid.example/image.webp';assert.throws(()=>normalizeBuildingStageManifest(bad),/lokalnego pakietu/);
 });
 test('a failed or wrongly-sized atlas rejects rather than accepting mixed old/new art',async()=>{
   const options={fetcher:async()=>({ok:true,json:async()=>buildingStageFixture()}),imageLoader:async spec=>({naturalWidth:spec.width,naturalHeight:spec.height})};

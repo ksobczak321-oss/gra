@@ -1,4 +1,4 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-17';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-18';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.

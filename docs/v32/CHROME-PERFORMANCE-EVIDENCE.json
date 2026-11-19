@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-19",
+  "timezone": "Europe/Warsaw",
+  "scope": "PERFORMANCE_FIX_DEV_THEN_STANDARD_PREPROD",
+  "status": "LOCAL_IMPLEMENTATION_AND_ISOLATED_MEASUREMENTS_PASS_FINAL_SOURCE_AND_ACCEPTANCE_PENDING",
+  "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
+  "planned_application_version": "0.15.2.1",
+  "planned_cache": "frontend-v32-18",
+  "source_sha": null,
+  "source_frozen": false,
+  "baseline": {
+    "source_sha": "e5d76110365c77d5c026b53b6195e56a3a327542",
+    "status": "MEASURED_ISOLATED",
+    "report": "/workspace/work/perf-20261119/baseline-summary.json",
+    "real_assets": true,
+    "transport": "local HTTP",
+    "cold_cache": true,
+    "real_accounts_or_cloud_writes": false,
+    "browser_crash_reproduced": false,
+    "image_requests": 29,
+    "image_unique_URLs": 29,
+    "image_body_bytes": 52630275,
+    "desktop": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "device_scale_factor": 1,
+      "ready_wall_ms": 3599.6851769999694,
+      "renderer_RSS_peak_bytes": 747520000,
+      "all_Chrome_process_RSS_peak_bytes": 1266704384,
+      "JS_heap_after_start_bytes": 13960988,
+      "idle_6s_script_duration_s": 3.189813,
+      "idle_6s_task_duration_s": 4.594619,
+      "idle_longtasks_over50ms": 0
+    },
+    "mobile2x": {
+      "viewport": [
+        390,
+        844
+      ],
+      "device_scale_factor": 2,
+      "ready_wall_ms": 2983.5692200000494,
+      "renderer_RSS_peak_bytes": 717320192,
+      "all_Chrome_process_RSS_peak_bytes": 1191374848,
+      "JS_heap_after_start_bytes": 13843916,
+      "idle_6s_script_duration_s": 3.1399179999999998,
+      "idle_6s_task_duration_s": 3.825505,
+      "idle_longtasks_over50ms": 0
+    },
+    "limitations": [
+      "Headless Chromium with software rendering; absolute FPS is not a hardware GPU prediction.",
+      "Summed process RSS may include shared pages; renderer RSS is recorded separately.",
+      "Local HTTP timing excludes public network latency.",
+      "Initial overlapping browser runs remain auxiliary evidence and are not the isolated before/after baseline."
+    ]
+  },
+  "confirmed_causes": [
+    "Startup eagerly decoded all ten variants in every building atlas rather than only the currently visible variants.",
+    "Legacy thumbnails and the unused old windmill caused additional image downloads before the staged catalog was available.",
+    "The reference PNG was requested under both a bare and versioned URL.",
+    "Water animation repeatedly blended and copied a full-screen intermediate canvas, creating a measured main-thread rasterization hotspot.",
+    "Quarry painter order covered the Leatherworks building; source pixels and geometry were intact."
+  ],
+  "runtime_sprites": {
+    "status": "GENERATED_AND_FRESH_CHECK_PASS",
+    "families": 20,
+    "sprites": 200,
+    "generator": "scripts/build_building_sprites.py",
+    "build_report": "/workspace/work/perf-20261119/building-sprites-build.json",
+    "fresh_check_report": "/workspace/work/perf-20261119/building-sprites-check.json",
+    "original_identity_report": "/workspace/work/perf-20261119/building-originals-identity.json",
+    "exact_RGBA_identity": "PASS_ALL200",
+    "original_WebP_files_byte_identical": 22,
+    "resized_or_retouched": false,
+    "encoder": {
+      "Pillow": "13.0.0",
+      "libwebp": "1.6.0",
+      "lossless": true,
+      "exact_transparent_RGB": true,
+      "method": 6
+    },
+    "full_original20_atlases": {
+      "files": 20,
+      "bytes": 28851038,
+      "RGBA_bytes": 125822076
+    },
+    "first_stage_all20_runtime_sprites": {
+      "files": 20,
+      "bytes": 2075264,
+      "RGBA_bytes": 6586756,
+      "scope": "Building artwork for tier1 only; not a measured total game startup transfer."
+    },
+    "all200_runtime_sprites": {
+      "files": 200,
+      "bytes": 27167928,
+      "RGBA_bytes": 82590860
+    },
+    "prior_manifest_identity_checkpoint": {
+      "report": "/workspace/work/perf-20261119/building-originals-identity.json",
+      "scope": "Before the later Leatherworks paint-order fix, all old manifest fields were identical after removing new sprites."
+    },
+    "current_metadata_exceptions": [
+      "Added per-frame sprites entries for all20 families.",
+      "Added leatherworks.paintDepth=500 to repair painter order."
+    ],
+    "map_positions_scale_ground_anchors_alpha_bboxes_and_hotspots_unchanged": true
+  },
+  "prepared_loading_changes": {
+    "current_variants_only": true,
+    "terrain_required": true,
+    "crane_required_for_actual_construction": true,
+    "decode_concurrency": 3,
+    "startup_requires_complete_current_scene": true,
+    "legacy_menu_images_not_requested_before_catalog": true,
+    "unused_staged_windmill_not_loaded": true,
+    "gallery_loads_near_visible_area": true,
+    "after_real_runtime_validation": "MEASURED_ISOLATED_WORKING_TREE_BEFORE_FINAL_SOURCE_FREEZE",
+    "current_visible_sprites_upper_bound": 21,
+    "decorative_house_note": "20 functional families plus one decorative House frame if its TownHall-dependent tier differs from the actual House tier."
+  },
+  "frontend_package": {
+    "public_entry_count": 455,
+    "member_limit": 512,
+    "byte_limit": 134217728,
+    "explicit_closed_file_list": true,
+    "original_atlases_retained_for_legacy_code": true,
+    "larger_full_artifact_does_not_mean_larger_startup_transfer": true,
+    "Python_bundle_tests": {
+      "status": "PASS",
+      "passed": 28,
+      "total": 28,
+      "log": "/workspace/work/perf-20261119/frontend-bundle-tests.log"
+    },
+    "final_archive_sha256": null,
+    "final_manifest_sha256": null,
+    "final_total_bytes": null
+  },
+  "water_optimization": {
+    "status": "LOCAL_IMPLEMENTATION_UNIT_AND_COASTAL_CHECKS_PASS",
+    "implementation": "Cached binary Path2D masks and direct drawing replace full-screen intermediate blends and copy; animation source and parameters retained.",
+    "source_file": "harborlight-v1-water.js",
+    "unit_tests": {
+      "passed": 5,
+      "total": 5
+    },
+    "coastal_sectors_passed": 13,
+    "coastal_log": "/workspace/work/perf-20261119/water-coastal.log",
+    "forced_flush_microbenchmark": {
+      "report": "/workspace/work/perf-20261119/water-direct-forced-flush.json",
+      "scope": "40iterations per scale with forced pixel readback; local headless Chromium, not a user-GPU FPS promise.",
+      "cases": [
+        {
+          "scale": 0.4,
+          "iterations": 40,
+          "before_frame_ms": 23.642500000001746,
+          "after_frame_ms": 12.297500000000582,
+          "reduction_percent": 47.99
+        },
+        {
+          "scale": 0.861244019,
+          "iterations": 40,
+          "before_frame_ms": 23.2875,
+          "after_frame_ms": 14.042500000001747,
+          "reduction_percent": 39.7
+        },
+        {
+          "scale": 1,
+          "iterations": 40,
+          "before_frame_ms": 20.62749999999942,
+          "after_frame_ms": 13.194999999998254,
+          "reduction_percent": 36.03
+        }
+      ]
+    },
+    "pixel_comparison": {
+      "report": "/workspace/work/perf-20261119/water-pixel-comparison.json",
+      "cases": 9,
+      "scales": [
+        1,
+        0.861244019,
+        0.4
+      ],
+      "all_cases_alpha_difference_pixels": 0,
+      "mean_abs_channel_difference_min": 0.006190763414671351,
+      "mean_abs_channel_difference_max": 0.15566163374996025,
+      "channel_scale": 255,
+      "byte_identical_water_raster_claimed": false,
+      "note": "Rasterization/antialiasing differences remain at fractional scales; sprite RGBA identity is independently exact."
+    },
+    "final_exact_source_CI": "PENDING"
+  },
+  "after_measurements": {
+    "status": "MEASURED_ISOLATED_WORKING_TREE_CANDIDATE",
+    "source_frozen": false,
+    "report_files": [
+      "/workspace/work/perf-20261119/after-isolated-desktop.json",
+      "/workspace/work/perf-20261119/after-isolated-mobile2x.json"
+    ],
+    "same_harness": "/workspace/work/perf-20261119/measure_runtime.py",
+    "real_assets": true,
+    "transport": "local HTTP",
+    "cold_cache": true,
+    "isolated": true,
+    "cache_in_measured_resources": "frontend-v32-17 before final cache/source freeze",
+    "not_a_public_deployment_or_final_source_acceptance": true,
+    "scenarios": [
+      {
+        "scenario": "desktop",
+        "viewport": [
+          1440,
+          900
+        ],
+        "device_scale_factor": 1,
+        "ready_wall_ms": 2460.641095000028,
+        "before_ready_wall_ms": 3599.6851769999694,
+        "image_body_bytes": 12749925,
+        "image_unique_URLs": 25,
+        "before_image_body_bytes": 52630275,
+        "image_transfer_reduction_percent": 75.77,
+        "renderer_RSS_peak_bytes": 553406464,
+        "before_renderer_RSS_peak_bytes": 747520000,
+        "idle_6s_script_duration_s": 0.483079,
+        "idle_6s_task_duration_s": 3.6396369999999996,
+        "JS_errors": [],
+        "blocked_network_requests": [],
+        "account_or_cloud_writes": false
+      },
+      {
+        "scenario": "mobile2x",
+        "viewport": [
+          390,
+          844
+        ],
+        "device_scale_factor": 2,
+        "ready_wall_ms": 1676.0335409999243,
+        "before_ready_wall_ms": 2983.5692200000494,
+        "image_body_bytes": 12749925,
+        "image_unique_URLs": 25,
+        "before_image_body_bytes": 52630275,
+        "image_transfer_reduction_percent": 75.77,
+        "renderer_RSS_peak_bytes": 515616768,
+        "before_renderer_RSS_peak_bytes": 717320192,
+        "idle_6s_script_duration_s": 0.489979,
+        "idle_6s_task_duration_s": 2.10067,
+        "JS_errors": [],
+        "blocked_network_requests": [],
+        "account_or_cloud_writes": false
+      }
+    ],
+    "limitations": [
+      "Headless Chromium with software rendering; absolute FPS is not a hardware GPU prediction.",
+      "Summed process RSS may include shared pages; renderer RSS is recorded separately.",
+      "Local HTTP timing excludes public network latency.",
+      "Initial overlapping browser runs remain auxiliary evidence and are not the isolated before/after baseline."
+    ]
+  },
+  "CI": {
+    "status": "PENDING_EXACT_FINAL_SOURCE",
+    "run_id": null
+  },
+  "Pages": {
+    "status": "PENDING_EXACT_FINAL_SOURCE",
+    "run_id": null
+  },
+  "DEV_tag": {
+    "status": "PENDING_AFTER_ACCEPTANCE",
+    "name": null
+  },
+  "PREPROD": {
+    "status": "PENDING_DEV_ACCEPTANCE_AND_STANDARD_WORKFLOW",
+    "project": "harborlight-dev",
+    "url": "https://harborlight-dev.web.app",
+    "run_id": null,
+    "attempt": null,
+    "receipt_verified": false,
+    "original_artifacts_verified": false,
+    "existing_account_UI_verified": false,
+    "account_preservation_verified": false,
+    "accepted": false
+  },
+  "previous_accepted_release": {
+    "version": "0.15.2.0",
+    "cache": "frontend-v32-17",
+    "publication_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+    "acceptance": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "game_rules_changes": false,
+  "accepted_artwork_changes": false,
+  "account_or_progress_reset": false,
+  "PROD_DNS": "NO_ACTION",
+  "additional_user_report": "co tu się stało z tym domkiem producenta skór",
+  "leatherworks_painter_order": {
+    "user_report": "co tu się stało z tym domkiem producenta skór",
+    "tracking_change": "HL-CHG-1167",
+    "status": "IMPLEMENTED_ANALYTICAL_DIAGNOSIS_AND_UNIT_PASS_REAL_UI_QA_PENDING",
+    "report": "/workspace/work/perf-leather-depth.json",
+    "cause": "quarry groundY486 gives z972, leatherworks groundY481 gives z962; foreground quarry covers current house",
+    "before": {
+      "leatherworks_depth": 962,
+      "quarry_depth": 972,
+      "frame01_opaque_coverage_by_quarry": 0.43988112768065113,
+      "frame01_roof_band_covered": 0.5305972883840234,
+      "all100_pair_coverage_min": 0.426093009557977,
+      "all100_pair_coverage_max": 0.5752850075285008
+    },
+    "fix": {
+      "manifest_field": "buildings.leatherworks.paintDepth",
+      "value": 500,
+      "resolved_z_index": 1000,
+      "quarry_z_index": 972,
+      "normalizer_validates_finite_world_bounded_value": true,
+      "map_position_scale_sprite_RGBA_and_hotspot_changes": false
+    },
+    "analytical_after": {
+      "leatherworks_paintDepth": 500,
+      "leatherworks_depth": 1000,
+      "quarry_depth": 972,
+      "leatherworks_foreground_for_all100_pairs": true,
+      "quarry_coverage_of_leatherworks": 0.0,
+      "geometry_and_RGBA_unchanged": true
+    },
+    "real_UI_check": "PENDING"
+  },
+  "local_focused_Node": {
+    "status": "PASS",
+    "building": 21,
+    "water": 5,
+    "total": 26
+  }
+}

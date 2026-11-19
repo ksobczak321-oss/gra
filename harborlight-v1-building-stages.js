@@ -66,7 +66,17 @@ export function normalizeBuildingStageManifest(raw) {
     const groundAnchor = point(input.groundAnchor || [mapRect[0]+mapRect[2]/2,mapRect[1]+mapRect[3]],`${id} grunt`);
     const smoke = (input.smoke || []).map((entry,i) => entry ? point(entry,`${id}/${i} komin`) : null);
     requireValue(smoke.length <= 10,`${id}: zbyt wiele kominów`);
-    result.buildings[id] = {...image,frameRects,bboxes,mapRect,groundAnchor,smoke};
+    let sprites;
+    if (input.sprites) {
+      requireValue(Array.isArray(input.sprites) && input.sprites.length === 10,`${id}: potrzeba dziesięciu osobnych grafik`);
+      sprites=input.sprites.map((spec,i)=>{
+        const sprite=asset(spec,`${id}/${i} grafika`);
+        requireValue(sprite.width===frameRects[i][2] && sprite.height===frameRects[i][3],`${id}/${i}: wymiary osobnej grafiki nie zgadzają się z kadrem`);
+        return sprite;
+      });
+    }
+    if(input.paintDepth!==undefined)requireValue(finite(input.paintDepth)&&input.paintDepth>=0&&input.paintDepth<=WORLD_SIZE[1],`${id}: nieprawidłowa kolejność warstw`);
+    result.buildings[id] = {...image,frameRects,bboxes,mapRect,groundAnchor,smoke,...(sprites?{sprites}:{}),...(input.paintDepth!==undefined?{paintDepth:input.paintDepth}:{})};
   }
   result.crane = asset(raw.crane,'żuraw');
   result.crane.frameRect = rectangle(raw.crane.frameRect || raw.crane.rect || [0,0,result.crane.width,result.crane.height],'kadr żurawia',[result.crane.width,result.crane.height]);
@@ -90,8 +100,8 @@ export function normalizeBuildingStageManifest(raw) {
 export function buildingStageFrame(manifest,id,level) {
   const family = manifest?.enabled && manifest.buildings?.[id];
   if (!family) return null;
-  const index = buildingStageIndex(level),rect = family.frameRects[index],bbox = family.bboxes[index];
-  return {id,index,level:Number(level)||0,src:family.src,width:family.width,height:family.height,rect,bbox,
+  const index = buildingStageIndex(level),sprite=family.sprites?.[index],rect = sprite?[0,0,sprite.width,sprite.height]:family.frameRects[index],bbox = family.bboxes[index];
+  return {id,index,level:Number(level)||0,src:sprite?.src||family.src,width:sprite?.width||family.width,height:sprite?.height||family.height,rect,bbox,
     viewBox:[rect[0]+bbox[0],rect[1]+bbox[1],bbox[2],bbox[3]]};
 }
 export function buildingStagePlacement(manifest,id,level,placement) {
@@ -128,15 +138,30 @@ function decodeImage(spec) {
 }
 export function getBuildingStages() {return catalog;}
 export function getBuildingStageImage(src) {return loadedImages.get(src) || null;}
-export async function readBuildingStageAssets({fetcher=globalThis.fetch,imageLoader=decodeImage,url=BUILDING_STAGE_MANIFEST}={}) {
+export async function readBuildingStageAssets({fetcher=globalThis.fetch,imageLoader=decodeImage,url=BUILDING_STAGE_MANIFEST,state,preload=true,concurrency=3}={}) {
     const response = await fetcher(url,{credentials:'same-origin'});
     requireValue(response?.ok,'nie udało się wczytać manifestu');
     const next = normalizeBuildingStageManifest(await response.json());
     if (!next.enabled) return {manifest:next,images:new Map()};
-    const entries = [...Object.values(next.buildings),next.crane,next.terrain],images = new Map();
-    await Promise.all(entries.map(async spec => {const image = await imageLoader(spec);requireValue(image && image.naturalWidth === spec.width && image.naturalHeight === spec.height,`${spec.src}: wymiary nie zgadzają się z manifestem`);images.set(spec.src,image);}));
-    // Publish the catalog only after every required image has decoded. A failed
-    // atlas must never produce a half-old, half-new island behind the gate.
+    const images = new Map();
+    if (!preload) return {manifest:next,images};
+    // Download only the visible variant, never all ten levels of each family.
+    // Legacy fixture/manifests still use their original atlas contract.
+    const visible=[...BUILDING_STAGE_IDS.map(id=>({id,level:buildingStageLevel(state,id)})),
+      ...next.decorations.map(decoration=>({id:decoration.family,level:buildingStageLevel(state,decoration.family,true)}))];
+    const entries = [...new Map(visible.map(({id,level})=>{
+      const family=next.buildings[id],frame=buildingStageFrame(next,id,level);
+      const spec=family.sprites?{src:frame.src,width:frame.width,height:frame.height}:family;
+      return [spec.src,spec];
+    })).values(),next.terrain];
+    if (!BUILDING_STAGE_IDS.every(id=>next.buildings[id].sprites) || BUILDING_STAGE_IDS.some(id=>activeBuildingConstruction(state,id))) entries.push(next.crane);
+    let cursor=0;
+    async function worker(){
+      while(cursor<entries.length){const spec=entries[cursor++],image=await imageLoader(spec);
+        requireValue(image && image.naturalWidth===spec.width && image.naturalHeight===spec.height,`${spec.src}: wymiary nie zgadzają się z manifestem`);images.set(spec.src,image);}
+    }
+    await Promise.all(Array.from({length:Math.min(entries.length,Math.max(1,Math.min(4,Math.floor(Number(concurrency)||3))))},worker));
+    // The complete current scene must be decoded before revealing the island.
     return {manifest:next,images};
 }
 export function loadBuildingStages(options={}) {
@@ -147,9 +172,9 @@ export function loadBuildingStages(options={}) {
 export function applyBuildingStageArtwork(wrapper,id,level,manifest=catalog) {
   const frame = buildingStageFrame(manifest,id,level);
   if (!frame) return false;
-  wrapper.style.backgroundImage='none';
   const signature = `${id}:${frame.index}:${frame.src}`;
   if (wrapper.dataset.buildingStageSignature === signature) return true;
+  wrapper.style.backgroundImage='none';
   const svg=document.createElementNS(NS,'svg'),image=document.createElementNS(NS,'image');
   svg.setAttribute('viewBox',frame.viewBox.join(' '));svg.setAttribute('preserveAspectRatio','xMidYMid meet');
   svg.setAttribute('width','100%');svg.setAttribute('height','100%');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');
@@ -202,9 +227,12 @@ export function createBuildingStageScene({getState,manifest=catalog,host}={}) {
     for (const spec of specs) {
       const level=buildingStageLevel(state,spec.family,spec.decoration);
       const frame=buildingStagePlacement(manifest,spec.family,level,spec.decoration?spec:null),node=nodes.get(spec.key);
-      const depth=Math.round((frame.y+frame.h)*2);
-      Object.assign(node.style,{left:`${frame.x}px`,top:`${frame.y}px`,width:`${frame.w}px`,height:`${frame.h}px`,zIndex:String(depth)});
-      node.dataset.level=String(level);applyBuildingStageArtwork(node,spec.family,level,manifest);
+      const depth=Math.round((manifest.buildings[spec.family].paintDepth??(frame.y+frame.h))*2);
+      if(node.dataset.level!==String(level)){
+        Object.assign(node.style,{left:`${frame.x}px`,top:`${frame.y}px`,width:`${frame.w}px`,height:`${frame.h}px`,zIndex:String(depth)});
+        node.dataset.level=String(level);
+      }
+      applyBuildingStageArtwork(node,spec.family,level,manifest);
       const project=!spec.decoration && activeBuildingConstruction(state,spec.family);let crane=cranes.get(spec.key);
       if (project) {
         if (!crane) {

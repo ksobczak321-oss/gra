@@ -139,6 +139,58 @@
       "groundAnchor": [
         597.5,
         390
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-01.webp",
+          "width": 320,
+          "height": 343
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-02.webp",
+          "width": 323,
+          "height": 342
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-03.webp",
+          "width": 328,
+          "height": 342
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-04.webp",
+          "width": 329,
+          "height": 345
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-05.webp",
+          "width": 384,
+          "height": 348
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-06.webp",
+          "width": 361,
+          "height": 360
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-07.webp",
+          "width": 363,
+          "height": 360
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-08.webp",
+          "width": 359,
+          "height": 362
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-09.webp",
+          "width": 377,
+          "height": 363
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-townhall-10.webp",
+          "width": 401,
+          "height": 388
+        }
       ]
     },
     "house": {
@@ -320,6 +372,58 @@
           157,
           43
         ]
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-house-01.webp",
+          "width": 340,
+          "height": 296
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-02.webp",
+          "width": 333,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-03.webp",
+          "width": 331,
+          "height": 301
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-04.webp",
+          "width": 332,
+          "height": 297
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-05.webp",
+          "width": 345,
+          "height": 298
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-06.webp",
+          "width": 342,
+          "height": 297
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-07.webp",
+          "width": 334,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-08.webp",
+          "width": 336,
+          "height": 298
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-09.webp",
+          "width": 339,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-house-10.webp",
+          "width": 344,
+          "height": 310
+        }
       ]
     },
     "farm": {
@@ -459,6 +563,58 @@
       "groundAnchor": [
         235.0,
         418
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-01.webp",
+          "width": 324,
+          "height": 272
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-02.webp",
+          "width": 318,
+          "height": 273
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-03.webp",
+          "width": 335,
+          "height": 273
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-04.webp",
+          "width": 378,
+          "height": 274
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-05.webp",
+          "width": 361,
+          "height": 273
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-06.webp",
+          "width": 334,
+          "height": 276
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-07.webp",
+          "width": 337,
+          "height": 280
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-08.webp",
+          "width": 342,
+          "height": 279
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-09.webp",
+          "width": 371,
+          "height": 282
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-farm-10.webp",
+          "width": 381,
+          "height": 288
+        }
       ]
     },
     "windmill": {
@@ -598,6 +754,58 @@
       "groundAnchor": [
         284.5,
         338
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-01.webp",
+          "width": 277,
+          "height": 354
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-02.webp",
+          "width": 284,
+          "height": 356
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-03.webp",
+          "width": 308,
+          "height": 355
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-04.webp",
+          "width": 318,
+          "height": 355
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-05.webp",
+          "width": 329,
+          "height": 354
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-06.webp",
+          "width": 312,
+          "height": 375
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-07.webp",
+          "width": 311,
+          "height": 374
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-08.webp",
+          "width": 329,
+          "height": 377
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-09.webp",
+          "width": 344,
+          "height": 376
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-windmill-10.webp",
+          "width": 374,
+          "height": 378
+        }
       ]
     },
     "lumber": {
@@ -737,6 +945,58 @@
       "groundAnchor": [
         660.0,
         246
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-01.webp",
+          "width": 318,
+          "height": 306
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-02.webp",
+          "width": 313,
+          "height": 306
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-03.webp",
+          "width": 316,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-04.webp",
+          "width": 338,
+          "height": 305
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-05.webp",
+          "width": 343,
+          "height": 310
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-06.webp",
+          "width": 330,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-07.webp",
+          "width": 332,
+          "height": 293
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-08.webp",
+          "width": 333,
+          "height": 292
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-09.webp",
+          "width": 340,
+          "height": 292
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lumber-10.webp",
+          "width": 348,
+          "height": 295
+        }
       ]
     },
     "quarry": {
@@ -876,6 +1136,58 @@
       "groundAnchor": [
         1134.0,
         486
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-01.webp",
+          "width": 344,
+          "height": 261
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-02.webp",
+          "width": 338,
+          "height": 264
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-03.webp",
+          "width": 342,
+          "height": 265
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-04.webp",
+          "width": 349,
+          "height": 263
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-05.webp",
+          "width": 358,
+          "height": 271
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-06.webp",
+          "width": 344,
+          "height": 289
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-07.webp",
+          "width": 341,
+          "height": 293
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-08.webp",
+          "width": 345,
+          "height": 291
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-09.webp",
+          "width": 355,
+          "height": 295
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-quarry-10.webp",
+          "width": 358,
+          "height": 306
+        }
       ]
     },
     "sawmill": {
@@ -1015,6 +1327,58 @@
       "groundAnchor": [
         794.0,
         285
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-01.webp",
+          "width": 347,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-02.webp",
+          "width": 329,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-03.webp",
+          "width": 353,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-04.webp",
+          "width": 359,
+          "height": 306
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-05.webp",
+          "width": 353,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-06.webp",
+          "width": 353,
+          "height": 311
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-07.webp",
+          "width": 343,
+          "height": 318
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-08.webp",
+          "width": 344,
+          "height": 319
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-09.webp",
+          "width": 351,
+          "height": 328
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-sawmill-10.webp",
+          "width": 364,
+          "height": 332
+        }
       ]
     },
     "warehouse": {
@@ -1154,6 +1518,58 @@
       "groundAnchor": [
         618.0,
         678
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-01.webp",
+          "width": 352,
+          "height": 291
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-02.webp",
+          "width": 353,
+          "height": 295
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-03.webp",
+          "width": 349,
+          "height": 293
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-04.webp",
+          "width": 400,
+          "height": 293
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-05.webp",
+          "width": 408,
+          "height": 296
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-06.webp",
+          "width": 353,
+          "height": 289
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-07.webp",
+          "width": 355,
+          "height": 291
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-08.webp",
+          "width": 352,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-09.webp",
+          "width": 394,
+          "height": 308
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-warehouse-10.webp",
+          "width": 432,
+          "height": 326
+        }
       ]
     },
     "bakery": {
@@ -1335,6 +1751,58 @@
           123,
           55
         ]
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-01.webp",
+          "width": 342,
+          "height": 302
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-02.webp",
+          "width": 348,
+          "height": 303
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-03.webp",
+          "width": 347,
+          "height": 303
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-04.webp",
+          "width": 372,
+          "height": 304
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-05.webp",
+          "width": 405,
+          "height": 314
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-06.webp",
+          "width": 372,
+          "height": 318
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-07.webp",
+          "width": 388,
+          "height": 317
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-08.webp",
+          "width": 386,
+          "height": 318
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-09.webp",
+          "width": 386,
+          "height": 362
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-bakery-10.webp",
+          "width": 407,
+          "height": 368
+        }
       ]
     },
     "dairy": {
@@ -1474,6 +1942,58 @@
       "groundAnchor": [
         495.5,
         388
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-01.webp",
+          "width": 319,
+          "height": 287
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-02.webp",
+          "width": 318,
+          "height": 286
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-03.webp",
+          "width": 317,
+          "height": 287
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-04.webp",
+          "width": 352,
+          "height": 287
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-05.webp",
+          "width": 364,
+          "height": 290
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-06.webp",
+          "width": 342,
+          "height": 298
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-07.webp",
+          "width": 339,
+          "height": 298
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-08.webp",
+          "width": 346,
+          "height": 297
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-09.webp",
+          "width": 363,
+          "height": 301
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dairy-10.webp",
+          "width": 378,
+          "height": 309
+        }
       ]
     },
     "slaughterhouse": {
@@ -1613,6 +2133,58 @@
       "groundAnchor": [
         352.0,
         330
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-01.webp",
+          "width": 285,
+          "height": 255
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-02.webp",
+          "width": 319,
+          "height": 261
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-03.webp",
+          "width": 316,
+          "height": 271
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-04.webp",
+          "width": 327,
+          "height": 281
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-05.webp",
+          "width": 355,
+          "height": 294
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-06.webp",
+          "width": 363,
+          "height": 288
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-07.webp",
+          "width": 360,
+          "height": 292
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-08.webp",
+          "width": 367,
+          "height": 290
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-09.webp",
+          "width": 371,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-slaughterhouse-10.webp",
+          "width": 395,
+          "height": 322
+        }
       ]
     },
     "academy": {
@@ -1752,6 +2324,58 @@
       "groundAnchor": [
         492.5,
         595
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-01.webp",
+          "width": 328,
+          "height": 256
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-02.webp",
+          "width": 334,
+          "height": 269
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-03.webp",
+          "width": 354,
+          "height": 275
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-04.webp",
+          "width": 365,
+          "height": 287
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-05.webp",
+          "width": 366,
+          "height": 291
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-06.webp",
+          "width": 374,
+          "height": 298
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-07.webp",
+          "width": 385,
+          "height": 307
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-08.webp",
+          "width": 387,
+          "height": 323
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-09.webp",
+          "width": 386,
+          "height": 330
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-academy-10.webp",
+          "width": 384,
+          "height": 337
+        }
       ]
     },
     "leatherworks": {
@@ -1891,7 +2515,60 @@
       "groundAnchor": [
         1244.0,
         481
-      ]
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-01.webp",
+          "width": 298,
+          "height": 215
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-02.webp",
+          "width": 325,
+          "height": 222
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-03.webp",
+          "width": 336,
+          "height": 242
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-04.webp",
+          "width": 350,
+          "height": 255
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-05.webp",
+          "width": 366,
+          "height": 265
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-06.webp",
+          "width": 361,
+          "height": 272
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-07.webp",
+          "width": 359,
+          "height": 280
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-08.webp",
+          "width": 371,
+          "height": 284
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-09.webp",
+          "width": 380,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-leatherworks-10.webp",
+          "width": 390,
+          "height": 311
+        }
+      ],
+      "paintDepth": 500
     },
     "fisher": {
       "src": "assets/building-upgrades-v1/fisher.webp",
@@ -2030,6 +2707,58 @@
       "groundAnchor": [
         405.0,
         636
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-01.webp",
+          "width": 252,
+          "height": 236
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-02.webp",
+          "width": 283,
+          "height": 255
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-03.webp",
+          "width": 300,
+          "height": 265
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-04.webp",
+          "width": 327,
+          "height": 272
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-05.webp",
+          "width": 346,
+          "height": 284
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-06.webp",
+          "width": 338,
+          "height": 289
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-07.webp",
+          "width": 344,
+          "height": 288
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-08.webp",
+          "width": 349,
+          "height": 297
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-09.webp",
+          "width": 372,
+          "height": 303
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-fisher-10.webp",
+          "width": 373,
+          "height": 326
+        }
       ]
     },
     "chapel": {
@@ -2169,6 +2898,58 @@
       "groundAnchor": [
         1338.0,
         262
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-01.webp",
+          "width": 300,
+          "height": 264
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-02.webp",
+          "width": 301,
+          "height": 306
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-03.webp",
+          "width": 304,
+          "height": 313
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-04.webp",
+          "width": 320,
+          "height": 327
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-05.webp",
+          "width": 329,
+          "height": 331
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-06.webp",
+          "width": 337,
+          "height": 334
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-07.webp",
+          "width": 348,
+          "height": 341
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-08.webp",
+          "width": 353,
+          "height": 350
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-09.webp",
+          "width": 369,
+          "height": 361
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-chapel-10.webp",
+          "width": 378,
+          "height": 374
+        }
       ]
     },
     "barracks": {
@@ -2308,6 +3089,58 @@
       "groundAnchor": [
         485.0,
         530
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-01.webp",
+          "width": 215,
+          "height": 210
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-02.webp",
+          "width": 275,
+          "height": 235
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-03.webp",
+          "width": 305,
+          "height": 249
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-04.webp",
+          "width": 347,
+          "height": 266
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-05.webp",
+          "width": 362,
+          "height": 280
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-06.webp",
+          "width": 349,
+          "height": 277
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-07.webp",
+          "width": 352,
+          "height": 286
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-08.webp",
+          "width": 364,
+          "height": 294
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-09.webp",
+          "width": 377,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-barracks-10.webp",
+          "width": 390,
+          "height": 314
+        }
       ]
     },
     "theatre": {
@@ -2447,6 +3280,58 @@
       "groundAnchor": [
         687.5,
         451
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-01.webp",
+          "width": 298,
+          "height": 257
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-02.webp",
+          "width": 309,
+          "height": 263
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-03.webp",
+          "width": 334,
+          "height": 270
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-04.webp",
+          "width": 345,
+          "height": 282
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-05.webp",
+          "width": 355,
+          "height": 288
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-06.webp",
+          "width": 357,
+          "height": 303
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-07.webp",
+          "width": 358,
+          "height": 314
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-08.webp",
+          "width": 368,
+          "height": 320
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-09.webp",
+          "width": 370,
+          "height": 332
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-theatre-10.webp",
+          "width": 388,
+          "height": 351
+        }
       ]
     },
     "lighthouse": {
@@ -2586,6 +3471,58 @@
       "groundAnchor": [
         1288.5,
         211
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-01.webp",
+          "width": 212,
+          "height": 312
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-02.webp",
+          "width": 233,
+          "height": 316
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-03.webp",
+          "width": 249,
+          "height": 325
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-04.webp",
+          "width": 265,
+          "height": 332
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-05.webp",
+          "width": 267,
+          "height": 343
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-06.webp",
+          "width": 276,
+          "height": 352
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-07.webp",
+          "width": 288,
+          "height": 353
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-08.webp",
+          "width": 293,
+          "height": 356
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-09.webp",
+          "width": 304,
+          "height": 359
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-lighthouse-10.webp",
+          "width": 312,
+          "height": 376
+        }
       ]
     },
     "market": {
@@ -2725,6 +3662,58 @@
       "groundAnchor": [
         790.0,
         422
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-market-01.webp",
+          "width": 273,
+          "height": 251
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-02.webp",
+          "width": 292,
+          "height": 255
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-03.webp",
+          "width": 304,
+          "height": 266
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-04.webp",
+          "width": 319,
+          "height": 269
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-05.webp",
+          "width": 334,
+          "height": 285
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-06.webp",
+          "width": 329,
+          "height": 287
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-07.webp",
+          "width": 332,
+          "height": 290
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-08.webp",
+          "width": 353,
+          "height": 315
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-09.webp",
+          "width": 364,
+          "height": 332
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-market-10.webp",
+          "width": 376,
+          "height": 350
+        }
       ]
     },
     "dock": {
@@ -2864,6 +3853,58 @@
       "groundAnchor": [
         508,
         704
+      ],
+      "sprites": [
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-01.webp",
+          "width": 225,
+          "height": 193
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-02.webp",
+          "width": 263,
+          "height": 202
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-03.webp",
+          "width": 282,
+          "height": 251
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-04.webp",
+          "width": 304,
+          "height": 267
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-05.webp",
+          "width": 350,
+          "height": 288
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-06.webp",
+          "width": 340,
+          "height": 293
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-07.webp",
+          "width": 350,
+          "height": 300
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-08.webp",
+          "width": 358,
+          "height": 308
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-09.webp",
+          "width": 342,
+          "height": 317
+        },
+        {
+          "src": "assets/building-upgrades-v1/frame-dock-10.webp",
+          "width": 387,
+          "height": 347
+        }
       ]
     }
   },

@@ -71,7 +71,7 @@ class FrontendBundleTests(unittest.TestCase):
         for name, data in payload.items():
             if not name.endswith((".js", ".html", ".css")):
                 continue
-            for match in re.findall(r'''["']((?:\./)?(?:harborlight-[\w.-]+|assets/[\w./-]+)\.(?:js|css|html|png)(?:\?[^"']*)?)["']''', data.decode()):
+            for match in re.findall(r'''["']((?:\./)?(?:harborlight-[\w.-]+|assets/[\w./-]+)\.(?:js|css|html|png|webp)(?:\?[^"']*)?)["']''', data.decode()):
                 references.add(match.split("?", 1)[0].removeprefix("./"))
         self.assertTrue(references)
         self.assertFalse(references - payload.keys(), references - payload.keys())
@@ -89,6 +89,34 @@ class FrontendBundleTests(unittest.TestCase):
         next_metadata = self.build()
         self.assertEqual(first, self.archive.read_bytes())
         self.assertEqual(metadata, next_metadata)
+
+    def test_runtime_building_frames_are_explicit_complete_and_bounded(self):
+        manifest = json.loads((ROOT / "assets/building-upgrades-v1/manifest.json").read_text())
+        expected = {
+            f"assets/building-upgrades-v1/frame-{identity}-{stage:02d}.webp"
+            for identity in manifest["buildings"] for stage in range(1, 11)
+        }
+        declared = {
+            name for name in BUNDLE.PUBLIC_FILES
+            if name.startswith("assets/building-upgrades-v1/frame-")
+        }
+        self.assertEqual(len(manifest["buildings"]), 20)
+        self.assertEqual(len(expected), 200)
+        self.assertEqual(declared, expected)
+        actual_manifest_frames = set()
+        for identity, family in manifest["buildings"].items():
+            self.assertEqual(len(family["sprites"]), 10, identity)
+            self.assertIn(family["src"], BUNDLE.PUBLIC_FILES)
+            for stage, sprite in enumerate(family["sprites"], 1):
+                self.assertEqual(sprite["src"], f"assets/building-upgrades-v1/frame-{identity}-{stage:02d}.webp")
+                self.assertTrue((ROOT / sprite["src"]).is_file(), sprite["src"])
+                actual_manifest_frames.add(sprite["src"])
+        self.assertEqual(actual_manifest_frames, declared)
+        self.assertEqual(len(BUNDLE.PUBLIC_FILES), len(set(BUNDLE.PUBLIC_FILES)))
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 455)
+        self.assertEqual(BUNDLE.MAX_MEMBERS, 512)
+        self.assertEqual(BUNDLE.MAX_BYTES, 128 * 1024 * 1024)
+        self.assertLess(len(BUNDLE.ARCHIVE_FILES), BUNDLE.MAX_MEMBERS)
 
     def test_every_catalog_game_has_both_downloads_in_the_public_release(self):
         catalog = json.loads((ROOT / "docs/minigames/catalog.json").read_text())
@@ -138,7 +166,8 @@ class FrontendBundleTests(unittest.TestCase):
         ])
 
     def test_unknown_source_files_and_secrets_never_enter_release(self):
-        for name in [".env", ".git/config", "docs/private.txt", "backend/server.mjs"]:
+        for name in [".env", ".git/config", "docs/private.txt", "backend/server.mjs",
+                     "assets/building-upgrades-v1/frame-private-01.webp"]:
             path = self.source / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("must never be public")
@@ -319,8 +348,8 @@ class HistoricalFrontendProfileTests(unittest.TestCase):
 
     def test_no_profile_keeps_default_current_allowlist_strict(self):
         self.reject(name=None)
-        # 22 lossless art images, manifest, renderer and standalone gallery.
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
+        # Original22 art images, manifest, renderer/gallery and200 runtime frames.
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + 200 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
         self.assertIn("harborlight-v1-runtime-upgrade.js", BUNDLE.CONTENT_FILES)
 
     def test_unknown_or_path_supplied_profile_is_rejected(self):

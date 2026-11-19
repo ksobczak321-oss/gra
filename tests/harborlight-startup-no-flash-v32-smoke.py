@@ -19,15 +19,17 @@ from helpers.building_stage_acceptance import staged_manifest, assert_scene
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
 STAGES = staged_manifest(ROOT)
-PHASES = ('module','auth','cloud','manifest','atlases','terrain','crane','accepted','ambient','css') if STAGES else ('module','auth','cloud','accepted','ambient','css')
+SPRITES = bool(STAGES and all(family.get('sprites') for family in STAGES['buildings'].values()))
+STAGE_IMAGE_PHASE = 'current-frames' if SPRITES else 'atlases'
+PHASES = ('module','auth','cloud','manifest',STAGE_IMAGE_PHASE,'terrain',*(() if SPRITES else ('crane',)),'accepted','ambient','css') if STAGES else ('module','auth','cloud','accepted','ambient','css')
 OUTPUT = Path(os.environ.get('HARBORLIGHT_STARTUP_QA_OUTPUT', '/tmp/harborlight-startup-no-flash-v32'))
 OUTPUT.mkdir(parents=True, exist_ok=True)
 spec = importlib.util.spec_from_file_location('startup_cloud_fixture', SOURCE/'tests/harborlight-dev-game-smoke.py')
 cloud = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cloud)
 UID = 'dev-admin2'
-ACCEPTED = {'harborlight-farm-forest-approved-v32.png', 'harborlight-harbor-approved-v32.png', 'harborlight-ocean-approved-v32.png'}
-AMBIENT = {'harborlight-windmill-clean.png', 'harborlight-inhabitants-clean.png'}
+ACCEPTED = {'harborlight-ocean-approved-v32.png'} if SPRITES else {'harborlight-farm-forest-approved-v32.png', 'harborlight-harbor-approved-v32.png', 'harborlight-ocean-approved-v32.png'}
+AMBIENT = {'harborlight-inhabitants-clean.png'} if SPRITES else {'harborlight-windmill-clean.png', 'harborlight-inhabitants-clean.png'}
 GAME_UI = '.island-topbar,.mobile-island-hud,.mobile-bottom-dock,dialog[open],[data-island-onboarding]'
 
 # Pure DOM telemetry, installed before the first inline script. It cannot read
@@ -62,13 +64,25 @@ FRAME_PROBE = r'''(() => {
 
 
 class Startup:
-    def __init__(self, browser, width, height, *, staged=False, fail=None, authenticated=True, cloud_failure=False, intro=False):
+    def __init__(self, browser, width, height, *, staged=False, fail=None, authenticated=True, cloud_failure=False, intro=False, construction=False):
         self.width, self.staged, self.fail = width, staged, fail
         self.cloud_failure = cloud_failure
         self.held, self.requests, self.errors = {}, [], []
         self.frames=[]
-        self.released = set() if staged else set(PHASES)
+        # A non-staged construction test may need the conditional crane phase,
+        # even though an idle island correctly excludes it from PHASES.
+        self.released = set() if staged else set(PHASES) | {'crane'}
         saved = cloud.starter(321, 'Wyspa bez starej klatki')
+        if construction:
+            # A real model request creates the fixture's building stage. The
+            # ordinary idle island must not preload a crane; this island must.
+            code="""import {createState,requestUpgrade} from './harborlight-v1-state.js';
+              const state=createState(%d,{ruleset:32,onboarding:false});
+              state.tutorial.autoOpenDisabled=true;state.buildings.townhall.level=2;
+              const result=requestUpgrade(state,{building:'farm',premiumService:true,paidMaterials:true,paidCoins:true});
+              if(!result.ok || !state.premiumServices.some(p=>p.building==='farm'&&p.stage==='building'&&p.buildRemaining>0))throw Error('Missing real construction fixture');
+              console.log(JSON.stringify(state));""" % int(cloud.NOW.timestamp()*1000)
+            saved=cloud.acknowledge_daily_offer(json.loads(subprocess.check_output(['node','--input-type=module','-e',code],cwd=SOURCE)))
         if intro:
             code="import {createState} from './harborlight-v1-state.js';console.log(JSON.stringify(createState(%d,{ruleset:32,onboarding:true})));" % int(cloud.NOW.timestamp()*1000)
             saved=json.loads(subprocess.check_output(['node','--input-type=module','-e',code],cwd=SOURCE))
@@ -112,7 +126,7 @@ class Startup:
         if request.method == 'OPTIONS':
             return route.fulfill(status=204, headers={'access-control-allow-origin':cloud.ORIGIN,'access-control-allow-headers':'authorization,content-type','access-control-allow-methods':'GET,POST,OPTIONS'})
         building_asset = '/assets/building-upgrades-v1/' in parsed.path
-        stage_phase = ('manifest' if name=='manifest.json' else 'terrain' if name=='terrain.webp' else 'crane' if name=='crane.webp' else 'atlases') if building_asset else None
+        stage_phase = ('manifest' if name=='manifest.json' else 'terrain' if name=='terrain.webp' else 'crane' if name=='crane.webp' else STAGE_IMAGE_PHASE) if building_asset else None
         phase = 'auth' if parsed.hostname=='securetoken.googleapis.com' else 'cloud' if parsed.hostname=='firestore.googleapis.com' and request.method=='GET' else 'module' if name=='harborlight-v1-play.js' else stage_phase if stage_phase else 'accepted' if name in ACCEPTED else 'ambient' if name in AMBIENT else 'css' if name=='harborlight-v1-adventures.css' else None
         if phase and phase not in self.released:
             self.held.setdefault(phase,[]).append(route);return
@@ -226,7 +240,7 @@ def run():
                 finally:app.close()
                 app=Startup(browser,width,height,staged=True,intro=True)
                 try:
-                    art_phase='atlases' if STAGES else 'accepted'
+                    art_phase=STAGE_IMAGE_PHASE if STAGES else 'accepted'
                     for phase in PHASES:
                         if phase!=art_phase:app.released.add(phase)
                     app.start();app.wait_held(art_phase);app.blocked('intro-art')
@@ -253,7 +267,8 @@ def run():
                     report.append({'width':width,'canvas_presentation_event':'contextlost before ambient assets ready','accessible_error':True,'retry_recovers_current_game':True,'sampled_frames':len(app.frames)})
                     print('PASS canvas context-loss presentation/retry:',width,flush=True)
                 finally:app.close()
-                failed_assets=('harborlight-v1-play.js','harborlight-v1-approved.png','manifest.json','house.webp','terrain.webp','crane.webp','harborlight-windmill-clean.png','harborlight-v1-play.css') if STAGES else ('harborlight-v1-play.js','harborlight-v1-approved.png','harborlight-farm-forest-approved-v32.png','harborlight-windmill-clean.png','harborlight-v1-play.css')
+                current_house=Path(STAGES['buildings']['house']['sprites'][0]['src']).name if SPRITES else 'house.webp'
+                failed_assets=('harborlight-v1-play.js','harborlight-v1-approved.png','manifest.json',current_house,'terrain.webp','harborlight-inhabitants-clean.png','harborlight-v1-play.css') if SPRITES else ('harborlight-v1-play.js','harborlight-v1-approved.png','manifest.json','house.webp','terrain.webp','crane.webp','harborlight-windmill-clean.png','harborlight-v1-play.css') if STAGES else ('harborlight-v1-play.js','harborlight-v1-approved.png','harborlight-farm-forest-approved-v32.png','harborlight-windmill-clean.png','harborlight-v1-play.css')
                 for failed in failed_assets:
                     app=Startup(browser,width,height,fail=failed)
                     try:
@@ -266,6 +281,18 @@ def run():
                         app.ready()
                         report.append({'width':width,'failed_asset':failed,'accessible_error':True,'retry_recovers_current_game':True,'sampled_frames':len(app.frames)})
                         print('PASS startup error/retry:',width,failed,flush=True)
+                    finally:app.close()
+                if SPRITES:
+                    app=Startup(browser,width,height,fail=Path(STAGES['crane']['src']).name,construction=True)
+                    try:
+                        app.start()
+                        expect(app.page.locator('#loading[role="alert"]')).to_be_visible(timeout=30000)
+                        app.blocked('active-construction-crane-error',alert=True)
+                        app.page.get_by_role('button',name='Spróbuj ponownie',exact=True).click()
+                        app.ready()
+                        expect(app.page.locator('[data-building-construction-crane="farm"]')).to_have_count(1)
+                        report.append({'width':width,'active_construction_crane_is_required':True,'accessible_error':True,'retry_recovers_current_game':True,'sampled_frames':len(app.frames)})
+                        print('PASS active-construction crane error/retry:',width,flush=True)
                     finally:app.close()
                 app=Startup(browser,width,height,cloud_failure=True)
                 try:

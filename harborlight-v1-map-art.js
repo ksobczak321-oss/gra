@@ -1,6 +1,6 @@
 // Presentation coordinates only. Building IDs, inventories, crews and saves keep
 // their existing identities when a painted building receives a different role.
-import { applyBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-17';
+import { applyBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-18';
 const freezeRows=rows=>Object.freeze(Object.fromEntries(Object.entries(rows).map(([id,value])=>[id,Object.freeze(value)])));
 
 export const MAP_BUILDING_REGIONS=freezeRows({
@@ -75,6 +75,9 @@ export function buildingArtwork(id,{className='building-dock-picture',width,heig
   wrapper.dataset.mapArtRect=JSON.stringify(spec.rect);
   if(width!=null)wrapper.style.width=typeof width==='number'?`${width}px`:width;
   if(height!=null)wrapper.style.height=typeof height==='number'?`${height}px`:height;
+  // The staged catalog is ready before mounting menus. Avoid creating legacy
+  // SVGs first: even detached image hrefs can start multi-megabyte downloads.
+  if(applyBuildingStageArtwork(wrapper,id,level))return wrapper;
   const ns='http://www.w3.org/2000/svg';
   const svg=document.createElementNS(ns,'svg');
   svg.setAttribute('viewBox',spec.rect.join(' '));

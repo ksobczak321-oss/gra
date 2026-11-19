@@ -12,15 +12,16 @@
 <div id="status" role="status">Wczytywanie grafik…</div><nav aria-label="Budynki"></nav><main></main>
 <footer>Podgląd grafiki. Wygląd Teatru i ozdobnej chatki podąża za poziomem Ratusza. Żuraw w grze pojawia się tylko podczas trwającej budowy; istniejący statek pozostaje bez zmian.</footer>
 <script type="module">
-import {loadBuildingStages,applyBuildingStageArtwork,BUILDING_STAGE_IDS} from './harborlight-v1-building-stages.js?v=frontend-v32-17';
+import {loadBuildingStages,applyBuildingStageArtwork,BUILDING_STAGE_IDS} from './harborlight-v1-building-stages.js?v=frontend-v32-18';
 const names={townhall:'Ratusz',house:'Dom',farm:'Gospodarstwo',lumber:'Drwale',quarry:'Kamieniołom',windmill:'Młyn',sawmill:'Tartak',warehouse:'Magazyn',bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary',chapel:'Kaplica',lighthouse:'Latarnia',theatre:'Teatr',market:'Targ',dock:'Port'};
 try{
- const manifest=await loadBuildingStages();if(!manifest.enabled)throw Error('Podgląd grafik jest jeszcze przygotowywany.');
+ const manifest=await loadBuildingStages({preload:false});if(!manifest.enabled)throw Error('Podgląd grafik jest jeszcze przygotowywany.');
+ const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){const node=entry.target;applyBuildingStageArtwork(node,node.dataset.family,Number(node.dataset.level),manifest);observer.unobserve(node);}},{rootMargin:'250px'});
  for(const id of BUILDING_STAGE_IDS){
   const link=document.createElement('a');link.href='#'+id;link.textContent=names[id];document.querySelector('nav').append(link);
   const section=document.createElement('section');section.id=id;const title=document.createElement('h2');title.textContent=names[id];section.append(title);
   const grid=document.createElement('div');grid.className='variants';
-  for(let i=0;i<10;i++){const card=document.createElement('article');card.className='variant';const art=document.createElement('div');art.className='art';applyBuildingStageArtwork(art,id,i*2+1,manifest);const label=document.createElement('p');label.textContent=`${id==='theatre'?'Ratusz':'Poziom'} ${i*2+1}–${i*2+2}`;card.append(art,label);grid.append(card);}
+  for(let i=0;i<10;i++){const card=document.createElement('article');card.className='variant';const art=document.createElement('div');art.className='art';art.dataset.family=id;art.dataset.level=String(i*2+1);observer.observe(art);const label=document.createElement('p');label.textContent=`${id==='theatre'?'Ratusz':'Poziom'} ${i*2+1}–${i*2+2}`;card.append(art,label);grid.append(card);}
   section.append(grid);document.querySelector('main').append(section);
  }
  document.querySelector('#status').textContent='Wczytano 20 budynków i 200 wariantów.';

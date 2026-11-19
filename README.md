@@ -1,5 +1,17 @@
 # HARBORLIGHT
 
+## Naprawa wydajności Chrome i warstw — 0.15.2.1 / cache18 w przygotowaniu
+
+Zgłoszenia z 19 listopada obejmują wolny start, okresowe zawieszanie Chrome i zasłonięty domek producenta skór. Izolowane porównanie rzeczywistych obrazów obniżyło transfer startowy z 52 630 275 do 12 749 925 bajtów (−75,8%). Lokalny start desktop zmienił się z 3,60 na 2,46 s, telefon 2× z 2,98 na 1,68 s; renderer RSS odpowiednio z około 748 do 553 MB i z 717 do 516 MB. To roboczy kandydat przed zamrożeniem źródła, lokalny HTTP i headless Chromium; czasy nie obejmują publicznej sieci, a RSS nie jest samą stertą JS. Nie odtworzono crashu procesu.
+
+200 osobnych kadrów ma ścisłą zgodność RGBA, a 22 oryginalne WebP pozostają zachowane. Loader pobiera bieżące warianty 20 rodzin i ewentualny dodatkowy kadr dekoracyjnej chatki zależnej od Ratusza, z ograniczonym dekodowaniem. Woda rysowana bezpośrednio przez przygotowane maski usuwa koszt pośredniej pełnoekranowej kopii; 5 testów wody i 13 sektorów wybrzeża PASS. Jawny pakiet zachowuje stare atlasy dla zgodności i dodaje nowe kadry: 455 plików, limit 512 wpisów / 128 MiB, 28 testów pakietu PASS. Cały artefakt jest większy, lecz start pobiera mniejszy podzbiór.
+
+Kamieniołom zasłaniał około 44% pierwszego wariantu Zakładu skórzanego przez błędną kolejność rysowania. Jedyny dodatkowy wyjątek w dawnych metadanych to `leatherworks.paintDepth=500`; bez przesunięcia, skalowania lub zmiany grafiki i hotspotu. Analityczna kontrola obejmuje 100 kombinacji wariantów; rzeczywisty odbiór poprawki warstw jeszcze PENDING. Łącznie kierunkowe Node: 26/26 PASS (21 budynków + 5 wody).
+
+Planowana wersja to **0.15.2.1 / `frontend-v32-18`**. Dokładny końcowy SHA, pełne własne CI, Pages, tag i promocja PRE-PROD pozostają **PENDING**. Obowiązuje DEV → zielony CI końcowego źródła → standardowy PRE-PROD. Konta, postęp, zasady i zaakceptowane grafiki zachowane; bez PROD, DNS lub resetu. Ręczny odbiór użytkownika **NOT_RUN**. Wcześniejsze odebrane 0.15.2.0 pozostaje poniżej jako historia.
+
+[Zakres](docs/v32/GO-CHROME-PERFORMANCE.md) · [Dowody i bieżący status](docs/v32/CHROME-PERFORMANCE-EVIDENCE.json).
+
 ## DEV i PRE-PROD 0.15.2.0 / cache17 — odebrane
 
 GO użytkownika obejmuje wszystkie 20 funkcji wyspy i dekoracyjną chatkę: 10 wyglądów dla par poziomów 1–2 do 19–20, wspólne warianty na mapie i w menu, średniowieczny żuraw tylko podczas rzeczywistej budowy. Powyżej poziomu 20 pozostaje ostatni wygląd; limit poziomów i model gospodarki bez zmian. Ozdobna chatka nie ma funkcji ani przycisku, a jej wygląd podąża za Ratuszem. Teatr zachowuje funkcjonalny poziom1 i również zmienia wygląd według Ratusza. Port zachowuje istniejący statek.

@@ -32,6 +32,10 @@ def frame(manifest, identity, level):
     index = min(9,max(0,(max(1,int(level))-1)//2))
     family = manifest['buildings'][identity]
     rect,bbox = family['frameRects'][index],family['bboxes'][index]
+    if family.get('sprites'):
+        # Standalone frames preserve the atlas pixels, with a local origin.
+        sprite=family['sprites'][index]
+        return index+1,sprite['src'],[bbox[0],bbox[1],bbox[2],bbox[3]]
     return index+1,family['src'],[rect[0]+bbox[0],rect[1]+bbox[1],bbox[2],bbox[3]]
 
 

@@ -1,8 +1,8 @@
-import { drawWater } from './harborlight-v1-water.js?v=living-world-3';
+import { drawWater } from './harborlight-v1-water.js?v=frontend-v32-18';
 import { drawLife } from './harborlight-v1-life.js?v=living-world-3';
 import { drawSmoke } from './harborlight-v1-smoke.js?v=living-world-3';
 import { createInhabitantsBackground } from './harborlight-v1-inhabitants.js?v=living-world-3';
-import { composeBuildingTerrain, getBuildingStageImage, buildingStageSmokeSources } from './harborlight-v1-building-stages.js?v=frontend-v32-17';
+import { composeBuildingTerrain, getBuildingStageImage, buildingStageSmokeSources } from './harborlight-v1-building-stages.js?v=frontend-v32-18';
 
 const WIDTH = 1672;
 const HEIGHT = 941;
@@ -266,15 +266,18 @@ export function createAmbientScene(stage, getState, {buildingStagesReady=Promise
   stage.addEventListener('island-statechange', syncMode);
   surface.addEventListener('contextlost', loseContext);
   surface.addEventListener('contextrestored', restoreContext);
-  const ready = Promise.all([image('./assets/harborlight-v1-approved.png'), image('./assets/harborlight-windmill-clean.png'), image('./assets/harborlight-inhabitants-clean.png'),buildingStagesReady]).then(values => {
+  const ready = Promise.all([image('./assets/harborlight-inhabitants-clean.png'),buildingStagesReady]).then(async ([clean,manifest]) => {
     // All texture sampling must use the clean world too: sampling the old
     // reference could paint blue clothing or baked smoke back into the scene.
     if (destroyed) return;
-    source = values[2];
-    plate = makeWindmillPlate(values[1]);
-    inhabitants = createInhabitantsBackground(values[2]);
-    stagesManifest = values[3];
-    if (stagesManifest?.enabled) stagedInhabitants = createInhabitantsBackground(composeBuildingTerrain(values[2],getBuildingStageImage(stagesManifest.terrain.src),stagesManifest));
+    source = clean;
+    stagesManifest = manifest;
+    if (stagesManifest?.enabled) stagedInhabitants = createInhabitantsBackground(composeBuildingTerrain(clean,getBuildingStageImage(stagesManifest.terrain.src),stagesManifest));
+    else {
+      plate = makeWindmillPlate(await image('./assets/harborlight-windmill-clean.png'));
+      if(destroyed)return;
+      inhabitants = createInhabitantsBackground(clean);
+    }
     size();
     // size() paints synchronously, including in a background tab. A lost
     // context cannot count as a ready clean frame over the reference image.

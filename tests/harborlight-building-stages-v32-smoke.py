@@ -156,7 +156,7 @@ with sync_playwright() as p:
     # not by modifying the application's private game state.
     context,page=context_for(browser);loaded(page)
     result=page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17'),m=api.getBuildingStages();
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-18'),m=api.getBuildingStages();
         const make=color=>{const c=document.createElement('canvas');c.width=1672;c.height=941;const x=c.getContext('2d');x.fillStyle=color;x.fillRect(0,0,1672,941);return c};
         const composed=api.composeBuildingTerrain(make('rgb(200,10,20)'),make('rgb(12,34,56)'),m),ctx=composed.getContext('2d');
         const pixel=(x,y)=>[...ctx.getImageData(x,y,1,1).data];
@@ -177,7 +177,7 @@ with sync_playwright() as p:
     print('PASS compositor pixels, protected boat, state replacement and depth',flush=True)
     page.clock.resume()
     clip=page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17');
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-18');
         const wrapper=document.createElement('span');api.applyBuildingStageArtwork(wrapper,'house',1);
         const svg=wrapper.firstElementChild,image=svg.querySelector('image'),atlas=api.getBuildingStageImage(image.getAttribute('href'));
         const original=document.createElement('canvas');original.width=atlas.naturalWidth;original.height=atlas.naturalHeight;original.getContext('2d').drawImage(atlas,0,0);
@@ -219,13 +219,19 @@ with sync_playwright() as p:
     assert actual_manifest.get('enabled') is True,'The real release must enable its complete staged artwork'
     context,page=context_for(browser,synthetic=False);loaded(page)
     real=page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17'),m=api.getBuildingStages();
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-18'),m=api.getBuildingStages();
         let variants=0;const failures=[];
         for(const id of api.BUILDING_STAGE_IDS){
-            const spec=m.buildings[id],img=api.getBuildingStageImage(spec.src),c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
-            c.getContext('2d').drawImage(img,0,0);const pixels=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+            const spec=m.buildings[id];
             for(let tier=0;tier<10;tier++){
-                const [x,y,w,h]=spec.frameRects[tier];let left=w,top=h,right=-1,bottom=-1,transparent=0;
+                // This independent audit deliberately decodes all200 shipped
+                // files. Normal startup loads only the visible scene.
+                const asset=spec.sprites?.[tier]||spec;
+                let img=api.getBuildingStageImage(asset.src);
+                if(!img){img=new Image();img.src=asset.src;await img.decode();}
+                const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
+                c.getContext('2d').drawImage(img,0,0);const pixels=c.getContext('2d').getImageData(0,0,c.width,c.height).data;
+                const [x,y,w,h]=spec.sprites?[0,0,asset.width,asset.height]:spec.frameRects[tier];let left=w,top=h,right=-1,bottom=-1,transparent=0;
                 for(let yy=0;yy<h;yy++)for(let xx=0;xx<w;xx++){const a=pixels[((y+yy)*c.width+x+xx)*4+3];
                     if(a>16){left=Math.min(left,xx);top=Math.min(top,yy);right=Math.max(right,xx);bottom=Math.max(bottom,yy);}else transparent++;}
                 const actual=[left,top,right-left+1,bottom-top+1];
@@ -245,7 +251,7 @@ with sync_playwright() as p:
     # Derive the ink bounds from the actual crane pixels, not its transparent
     # outer SVG box: the old Lighthouse19 hid its working arm below the HUD.
     page.evaluate('''async()=>{
-        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-17'),m=api.getBuildingStages();
+        const api=await import('./harborlight-v1-building-stages.js?v=frontend-v32-18'),m=api.getBuildingStages();
         const original=document.querySelector('[data-building-stage-scene]'),img=api.getBuildingStageImage(m.crane.src),[x,y,w,h]=m.crane.frameRect;
         const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,x,y,w,h,0,0,w,h);
         const pixels=ctx.getImageData(0,0,w,h).data;let left=w,top=h,right=-1,bottom=-1;

@@ -85,7 +85,7 @@ body[data-ruleset="32"] .resource-dock-cards:not(.leisure-dock-cards)>.resource-
 @media(max-width:600px){.v32-button,.v32-field input:not([type=checkbox]),.v32-field select,.v32-food-row>input,.v32-form>select{min-height:44px}.v32-recipe .v32-field input,.v32-recipe>.v32-button{height:44px;min-height:44px}.v32-order .v32-button{min-height:32px}}
 
 /* Thumbnails show the exact existing building selected on the island. */
-.v32-building-art--native{background-image:url('assets/harborlight-v1-approved.png?v=frontend-v32-17');background-repeat:no-repeat;aspect-ratio:1;border-radius:10px}
+.v32-building-art--native{background-image:url('assets/harborlight-v1-approved.png');background-repeat:no-repeat;aspect-ratio:1;border-radius:10px}
 .v32-building-summary>.v32-building-art--native{width:128px;flex:0 0 128px}
 #island-dialog .v32-section h3,#island-dialog .v32-section h4{color:#ffe0a0}
 #island-dialog .v32-section input:not([type=checkbox]):not([type=radio]),#island-dialog .v32-section select{background:#092b3e;color:#eef7f5;border-color:#718e9f}

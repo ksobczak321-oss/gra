@@ -72,10 +72,43 @@ function ensurePaths() {
   if (!fallClips) fallClips=FALLS.map(fall=>polygonPath(fall.polygon));
 }
 
+// Exact binary shore pixels become cached rectangles. Merge identical runs in
+// adjacent rows so the clip has a small, stable geometry instead of carrying
+// three full-world intermediate canvases through every animation frame.
+export function waterMaskRectangles(mask, width, height) {
+  if (!Number.isInteger(width) || width < 1 || !Number.isInteger(height) || height < 1 || mask?.length !== width * height) {
+    throw new Error('Invalid water mask dimensions.');
+  }
+  const rectangles = [];
+  let active = new Map();
+  for (let y = 0; y < height; y++) {
+    const next = new Map();
+    for (let x = 0; x < width;) {
+      if (!mask[y * width + x]) { x++; continue; }
+      const left = x;
+      while (x < width && mask[y * width + x]) x++;
+      const runWidth = x - left, key = `${left}:${runWidth}`;
+      const rectangle = active.get(key) || [left, y, runWidth, 0];
+      rectangle[3]++;
+      next.set(key, rectangle);
+    }
+    for (const [key, rectangle] of active) if (!next.has(key)) rectangles.push(rectangle);
+    active = next;
+  }
+  rectangles.push(...active.values());
+  return rectangles;
+}
+
+function maskPath(mask) {
+  const path = new Path2D();
+  for (const rectangle of waterMaskRectangles(mask, 1672, 941)) path.rect(...rectangle);
+  return path;
+}
+
 function waterAssets(source) {
   if (!source?.complete || !source.naturalWidth) return null;
   if (cached.has(source)) return cached.get(source);
-  const mask=makeCanvas(),textureMask=makeCanvas(),layer=makeCanvas();
+  const mask=makeCanvas();
   const m=mask.getContext('2d',{willReadFrequently:true});
   for (const points of SEA_REGIONS) m.fill(polygonPath(points));
   // A second independent guard removes every fixed UI region.
@@ -90,16 +123,18 @@ function waterAssets(source) {
     [[520,598],[696,598],[696,649],[520,649]],
   ]) {m.save();m.globalCompositeOperation='destination-out';m.fill(polygonPath(points));m.restore();}
   const envelope=m.getImageData(0,0,1672,941);
+  mask.width=mask.height=0;
   const sourceCanvas=makeCanvas();
   const s=sourceCanvas.getContext('2d',{willReadFrequently:true});s.drawImage(source,0,0,1672,941);
   const pixels=s.getImageData(0,0,1672,941).data;
+  sourceCanvas.width=sourceCanvas.height=0;
   const blue=new Uint8Array(1672*941);
   for(let i=0;i<blue.length;i++) {
     if(!envelope.data[i*4+3])continue;
     const r=pixels[i*4],g=pixels[i*4+1],b=pixels[i*4+2];
     if(b-r>16 && g-r>10 && b>g*.86)blue[i]=1;
   }
-  const output=m.createImageData(1672,941),inner=m.createImageData(1672,941);
+  const output=new Uint8Array(1672*941),inner=new Uint8Array(1672*941);
   for(let y=1;y<940;y++)for(let x=1;x<1671;x++){
     const i=y*1672+x,offset=i*4;
     let wet=blue[i];
@@ -108,13 +143,11 @@ function waterAssets(source) {
     if(!wet && envelope.data[offset+3] && r>190 && g>205 && b>210 && b>=r*.98)
       wet=blue[i-1]||blue[i+1]||blue[i-1672]||blue[i+1672];
     if(!wet)continue;
-    output.data[offset]=output.data[offset+1]=output.data[offset+2]=255;
-    output.data[offset+3]=255;
+    output[i]=1;
     const inland=blue[i-2]&&blue[i+2]&&blue[i-3344]&&blue[i+3344];
-    if(inland){inner.data[offset]=inner.data[offset+1]=inner.data[offset+2]=255;inner.data[offset+3]=255;}
+    if(inland)inner[i]=1;
   }
-  m.putImageData(output,0,0);textureMask.getContext('2d').putImageData(inner,0,0);
-  const value={mask,textureMask,layer,ctx:layer.getContext('2d')};
+  const value={maskPath:maskPath(output),texturePath:maskPath(inner)};
   cached.set(source,value);return value;
 }
 
@@ -156,14 +189,17 @@ function coastalWash(ctx,t) {
 
 function seaSurface(ctx,source,t) {
   const assets=waterAssets(source);if(!assets)return;
-  const surface=assets.ctx;
-  surface.clearRect(0,0,1672,941);
+  // Draw directly through cached shore clips. Copying a freshly rasterized
+  // 1672 × 941 intermediate canvas used to synchronously stall Chrome on
+  // every frame, even when the final island canvas was much smaller.
+  ctx.save();ctx.clip(assets.maskPath);
+  const surface=ctx;
+  surface.save();surface.clip(assets.texturePath);
   // A tiny continuous drift makes the painted water itself shimmer everywhere
   // in the water mask. The eroded mask prevents sampled land entering the sea.
   surface.globalAlpha=.25;
   surface.drawImage(source,Math.sin(t*.72)*1.35,Math.cos(t*.57)*1.15,1672,941);
-  surface.globalAlpha=1;surface.globalCompositeOperation='destination-in';
-  surface.drawImage(assets.textureMask,0,0);surface.globalCompositeOperation='source-over';
+  surface.restore();
   coastalWash(surface,t);
   surface.lineCap='round';
   WAVE_BANKS.forEach(([x,y,width,amplitude,period,phase])=>{
@@ -176,9 +212,7 @@ function seaSurface(ctx,source,t) {
       surface.bezierCurveTo(left+width*.8,top-amplitude*.5,left+width*.92,top+amplitude*.2,left+width,top+2);surface.stroke();
     }
   });
-  surface.globalCompositeOperation='destination-in';surface.drawImage(assets.mask,0,0);
-  surface.globalCompositeOperation='source-over';
-  ctx.drawImage(assets.layer,0,0);
+  ctx.restore();
 }
 
 function waterfall(ctx, source, fall, clip, t) {
