@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING` |
-| CI | `pending_own_exact_source` |
+| DEV | `FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` |
+| CI | `historical_cache19_failed_new_cache20_pending` |
 | PRE-PROD | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -40,7 +40,7 @@ Data pierwotnej wiadomości: 2026-11-19. Europe/Warsaw
 - **Scenariusze automatyczne:** [tests/harborlight-building-cache-v32-smoke.py](../../../tests/harborlight-building-cache-v32-smoke.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-0.15.2.2/cache19: implementacja i odbiór własnego źródła w toku.
+0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING.
 
 ## Relacje
 

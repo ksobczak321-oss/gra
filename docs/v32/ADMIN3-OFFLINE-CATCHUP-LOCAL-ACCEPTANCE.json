@@ -1,10 +1,10 @@
 {
   "as_of": "2026-11-19",
   "timezone": "Europe/Warsaw",
-  "version": "0.15.2.2",
-  "cache": "frontend-v32-19",
-  "status": "LOCAL_COMPONENTS_AND_ACTUAL_SHORT_MODEL_EQUIVALENCE_PASS_FULL_RELEASE_PENDING",
-  "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+  "version": "0.15.2.3",
+  "cache": "frontend-v32-20",
+  "status": "LOCAL_C5_FULL_MODEL_AND_PACKING_PASS_ACTUAL_WORKER_STEADY_AND_RELEASE_PENDING",
+  "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
   "publication_source": null,
   "diagnosis": {
     "account": "admin3",
@@ -40,9 +40,10 @@
       "newer restore",
       "changed cloud revision or clock"
     ],
-    "model": "Scoped derived quotes and immutable catalog indexes. C4 diet memo shared only within one atomic population settlement with exact keys and explicit history mutation invalidation. No state cache is saved or retained between public advances.",
+    "model": "Scoped derived quotes and immutable catalog indexes; bounded per-advance memo, exact indexed history pruning and certified integer diet-penalty decisions with the original fold as fallback. No event subdivision, skipped elapsed time, food arithmetic or persistent model cache.",
     "resources_histories_arithmetic_events_and_clock_rules_preserved": true,
-    "old_bundle_released_after_worker_dispose": true
+    "old_bundle_released_after_worker_dispose": true,
+    "lossless_storage": "Explicit bounded LZW provisions section. Compression representation may differ; full C4/C5 decoded model equality was checked without normalization or excluded fields. Server write compatibility fencing requires own final-source validation."
   },
   "actual_private_model_comparisons": {
     "first_hour": {
@@ -54,7 +55,8 @@
       "baseline_local_ms": 32350.872504,
       "candidate_local_ms": 14603.158926,
       "C3_local_ms": 11102.924989000001,
-      "note": "C4 is slower than C3 in this cold case. Local Node timings are not a Chrome/network benchmark."
+      "note": "C4 is slower than C3 in this cold case. Local Node timings are not a Chrome/network benchmark.",
+      "source_scope": "HISTORICAL_C4"
     },
     "later_history_one_hour": {
       "status": "STRICT_BYTE_IDENTICAL",
@@ -70,13 +72,82 @@
       "normalized_again": false,
       "candidate_wall_ms": 17261.188877,
       "candidate_cpu_ms": 20777.546,
-      "reference_timing": "Contains a pause; no isolated speed ratio claimed."
+      "reference_timing": "Contains a pause; no isolated speed ratio claimed.",
+      "source_scope": "HISTORICAL_C4"
     },
     "full_47_885h": {
-      "status": "PENDING",
-      "original_B94_reference": "INCOMPLETE_PAUSED_STATE_PRESERVED",
-      "C4": "NOT_STARTED",
+      "status": "C5_FULL_DECOMPRESSED_MODEL_IDENTICAL_TO_COMPLETED_C4_ORIGINAL_B94_PENDING",
+      "original_B94_reference": "PENDING_ORIGINAL_PROCESS_PRESERVED_NO_FULL_RESULT_NO_PASS",
+      "C4": {
+        "status": "COMPLETE_QUALITY_FAIL_TIME_AND_PERSISTENCE_SIZE",
+        "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+        "wall_ms": 2200644.6143460004,
+        "cpu_ms": 2133560.808,
+        "result_population": 135,
+        "packed_bytes": 849981,
+        "historical_payload_limit": 700000,
+        "packed_limit_pass": false,
+        "sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "PREPROD_promotion": "NOT_PERFORMED_FOR_C4"
+      },
+      "C5": {
+        "status": "FULL_MODEL_AND_PACKING_PASS",
+        "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "fixed_target": 1795113034733,
+        "simulated_hours": 47.88518666666667,
+        "runtimeOnline": true,
+        "result_population": 135,
+        "wall_ms": 366650.233052,
+        "cpu_ms": 373478.478,
+        "local_model_under_600000ms": true,
+        "packed_bytes": 345429,
+        "packed_limit": 700000,
+        "packed_limit_pass": true,
+        "decompressed_compared_bytes": 849981,
+        "decompressed_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "method": "Unpack compressed sections only; no normalize, no tick, no field exclusions. Sort object keys; preserve array order.",
+        "complete_decompressed_model_exact_equal": true,
+        "actual_island_or_clock_writes": false,
+        "source_graph_files_checked": 43,
+        "timing_scope": "Local Node computation, no Chrome/network benchmark; one brief read-only debugger progress checkpoint and source capture. Authenticated hosted startup still requires its own gate.",
+        "local_safe_report": "admin3-candidate5-full-equivalence.json"
+      },
       "superseded_C1_C2_C3_full_runs": "NO_FULL_RESULT_NO_PASS"
+    },
+    "C5_short_checkpoints_before_packing_and_cache20_bump": {
+      "one-hour": {
+        "status": "STRICT_BYTE_IDENTICAL",
+        "source_scope": "candidate5-model-helpers-before-packing-and-cache20-bump",
+        "case": "actual-original-first1h",
+        "compared_bytes": 239055,
+        "sha256": "2fa608692053b4e1ac941d8074b011af0736ef8494fde43a24ddd6c574ae2d07",
+        "candidate_wall_ms": 6523.727613,
+        "candidate_cpu_ms": 7748.661,
+        "local_safe_report": "admin3-candidate5-one-hour-equivalence.json",
+        "actual_island_or_clock_writes": false
+      },
+      "midstate": {
+        "status": "STRICT_BYTE_IDENTICAL",
+        "source_scope": "candidate5-model-helpers-before-packing-and-cache20-bump",
+        "case": "actual-safe9.78h-checkpoint-next1h",
+        "compared_bytes": 9226855,
+        "sha256": "fefe14fee581c77e325d0ce3c4c400eadb7f8206d67ff660f39e600a704b84f2",
+        "candidate_wall_ms": 8147.078196,
+        "candidate_cpu_ms": 9436.226,
+        "local_safe_report": "admin3-candidate5-midstate-equivalence.json",
+        "actual_island_or_clock_writes": false
+      },
+      "late": {
+        "status": "STRICT_BYTE_IDENTICAL",
+        "source_scope": "candidate5-model-helpers-before-packing-and-cache20-bump",
+        "case": "actual-safe26.27h-checkpoint-next1h",
+        "compared_bytes": 23458927,
+        "sha256": "7633793b5ce81efaea093d2090d93865cf285ab3b77cf8218abb0e6fd476f6b5",
+        "candidate_wall_ms": 10838.062956,
+        "candidate_cpu_ms": 12777.251,
+        "local_safe_report": "admin3-candidate5-late-equivalence.json",
+        "actual_island_or_clock_writes": false
+      }
     }
   },
   "local_components": {
@@ -110,37 +181,46 @@
       "fail": 0,
       "duration_ms": 210141.044269,
       "unchanged_96h_watchdog_ms": 10000,
-      "watchdog_pass_ms": 8418.450522
+      "watchdog_pass_ms": 8418.450522,
+      "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4"
     },
     "backend_node": 170,
     "board_node": 7,
-    "frontend_package_cases": 28
+    "frontend_package_cases": 28,
+    "source_scope": "HISTORICAL_COMPONENT_OBSERVATIONS_C3_C4_NOT_FINAL_C5_RELEASE"
   },
   "model_fingerprints": {
-    "harborlight-v1-state.js": "705f4b89831d2d801d78ce2f5909a564c445b6679079fe220ed10419559f2f67",
-    "harborlight-v1-provisions.js": "ba76961466313cf73588b03f3e65cac6fba14d39366aad7a590a3643cf912629",
-    "harborlight-v1-residents.js": "3f9d818267fbacd359d3500a77a8dddf806f288079109105ad7bf2b37a051f22",
-    "harborlight-v1-development-logistics.js": "4daaa08b677addc0f65263d919cf1284013704cc4083a9f3a3c30f9e5f7b1966",
-    "harborlight-v1-logistics.js": "54039af2c1b6922c23aec66ce4e355bafc85087cef7f0fe9ae90661a44b1ba35"
+    "harborlight-v1-state.js": "d7c9303a257e5539653b98be92dda63efb49b951e058233a8bd0b90a2847a194",
+    "harborlight-v1-provisions.js": "efd94da3fb5a1dce3318517013ef09598bba30c14124973a1bed9893faf38998",
+    "harborlight-v1-residents.js": "7c044818a3c3b80f1cb111eae71991642c0ca6bd5782ca53cc7573a6139ad53a",
+    "harborlight-v1-development-logistics.js": "a554c3859f503f3b0efc2f1a93ef2a0138e5b9e2ed399fc53f6113495c83535c",
+    "harborlight-v1-logistics.js": "6e39fbe37c474c1452cc842b8ee04b997814c9899710bba4d16125a7371b55d9",
+    "harborlight-v1-diet-history-index.js": "a54470cf15e738f85c66ae9436c446ea4a81993a2ba611edbbcfbbfd34190437",
+    "harborlight-v1-diet-accumulator.js": "cf985045ff6b8da92057b2997123acfa1960cdbb8b434e34f32b3416ca739072",
+    "harborlight-v1-save-packing.js": "d5927f18acde235ffede78913223b1ecb9265aebc31176c665af4a4c0726f852",
+    "harborlight-v1-archipelago.js": "5e685ead8a3241d8940707b9bacb513e65e588594e7d5fb5998cfb653faed590"
   },
   "release": {
-    "CI": "PENDING_OWN_EXACT_SOURCE",
-    "Pages": "PENDING_NEW_SOURCE",
-    "DEV_tag": "PENDING",
-    "PREPROD": "PENDING_STANDARD_WORKFLOW",
-    "required_actual_admin3_browser": "ADDED_NOT_YET_RUN_ON_HOSTING",
+    "CI": "PENDING_OWN_EXACT_C5_SOURCE",
+    "Pages": "PENDING_C5_PUBLICATION",
+    "DEV_tag": "PENDING_C5",
+    "PREPROD": "PENDING_STANDARD_C5_WORKFLOW",
+    "required_actual_admin3_browser": "NOT_RUN_ON_C5_HOSTING",
     "ordinary_hosted_startup_ms": 30000,
     "selected_admin3_startup_ms": 600000,
     "slow_admin3_requires_observed_worker": true,
     "main_thread_heartbeat_max_gap_ms": 1500,
-    "PROD_DNS": "NO_ACTION"
+    "PROD_DNS": "NO_ACTION",
+    "private_actual_worker_and_post_ready": "NOT_RUN"
   },
   "data_boundaries": {
     "private_world_payloads_in_repo": false,
     "real_game_writes": false,
     "clock_writes": false,
     "reset": false,
-    "accounts_and_progress": "PRESERVE"
+    "accounts_and_progress": "PRESERVE",
+    "storage_compression_lossless_exact_model": true,
+    "history_dropped_or_elapsed_skipped": false
   },
   "canonical_artifacts": {
     "source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
@@ -166,7 +246,8 @@
     "economic_numeric_tables_identical": 13,
     "actual_canonical_profiles": "24h/24h/72h_ALL_CHECKPOINTS_COMMANDS_TYPES_NUMBERS_AND_SERIALIZATION_IDENTICAL_TO_BF2",
     "minigames": "55/110_PROVENANCE_ONLY_SOURCE_ANCHOR1127_TO1129",
-    "archive": "100sheets/220parts/48comments/4982cachedformulas_UNCHANGED;12newformulas/160comparisonsPASS"
+    "archive": "100sheets/220parts/48comments/4982cachedformulas_UNCHANGED;12newformulas/160comparisonsPASS",
+    "source_scope": "HISTORICAL_C4_ARTIFACTS_NOT_CURRENT_C5"
   },
   "local_test_failure_history": {
     "frontend_package_first": {
@@ -176,6 +257,34 @@
       "preserved_log": "frontend-package-first-expected455-failure.log",
       "correction": "Exact count458 and all three required modules; caps512/128MiB and historical profile pins unchanged",
       "new_result": "28/28_PASS"
+    },
+    "C4_full_quality": {
+      "status": "QUALITY_FAIL_NOT_DEPLOYED",
+      "local_model_wall_ms": 2200644.6143460004,
+      "local_model_cpu_ms": 2133560.808,
+      "packed_bytes": 849981,
+      "limit": 700000,
+      "reason": "Completed C4 exposed excessive local catch-up time and a real over-limit future save; C5 therefore adds exact faster history handling and lossless packing. This is not a C4 hosted-browser acceptance."
     }
+  },
+  "historical_C4_model_fingerprints": {
+    "harborlight-v1-state.js": "705f4b89831d2d801d78ce2f5909a564c445b6679079fe220ed10419559f2f67",
+    "harborlight-v1-provisions.js": "ba76961466313cf73588b03f3e65cac6fba14d39366aad7a590a3643cf912629",
+    "harborlight-v1-residents.js": "3f9d818267fbacd359d3500a77a8dddf806f288079109105ad7bf2b37a051f22",
+    "harborlight-v1-development-logistics.js": "4daaa08b677addc0f65263d919cf1284013704cc4083a9f3a3c30f9e5f7b1966",
+    "harborlight-v1-logistics.js": "54039af2c1b6922c23aec66ce4e355bafc85087cef7f0fe9ae90661a44b1ba35"
+  },
+  "current_code_verification": {
+    "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+    "full_private_model_and_packing": "PASS",
+    "private_actual_worker_replay": "NOT_RUN_WAIT_LOCAL_CHECKS_THEN_REMOTE_CI_WINDOW",
+    "post_ready_10s_realtime_1x_heartbeat": "NOT_RUN",
+    "full_frontend_backend_board_node": "PENDING_ROOT_ISOLATED_FINAL_SOURCE_CHECKS",
+    "own_exact_source_CI": "PENDING",
+    "actual_hosted_admin3": "NOT_RUN_PENDING_STANDARD_GCP_WORKFLOW"
+  },
+  "canonical_artifacts_C5": {
+    "source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+    "status": "PENDING_FRESH_GENERATION_AND_VALIDATION"
   }
 }

@@ -30829,8 +30829,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
+        "dev": "FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
+        "ci": "historical_cache19_failed_new_cache20_pending",
         "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30863,13 +30863,22 @@
         "source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "0.15.2.2/cache19: implementacja i odbiór własnego źródła w toku.",
-        "code_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+        "release_note": "0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING.",
+        "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
         "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
         "subsequent_user_PREPROD_GO": {
           "date": "2026-11-19",
           "quote": "wrzuć na preprod",
           "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        },
+        "historical_cache19_attempt": {
+          "source": "0bbe8c66c1f5a2c834ea7128968710e9f8662924",
+          "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+          "ci_run": 44544378145,
+          "ci_result": "FAILURE",
+          "pages_run": 44544378307,
+          "pages_result": "SUCCESS",
+          "new_gcp_dispatch": false
         }
       },
       "notes": [
@@ -30903,8 +30912,8 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
+        "dev": "FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
+        "ci": "historical_cache19_failed_new_cache20_pending",
         "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -30954,13 +30963,22 @@
         "source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "0.15.2.2/cache19: C4 ma 18 kierunkowych prób PASS; 23 testy Workera Node i 12 natywnych przypadków przeglądarkowych są dowodami komponentu. Pierwsza godzina rzeczywistego admin3 ma identyczny pełny JSON z B94 (239055B), a dalsza godzina przy rozrośniętej historii ma identyczny pełny JSON z C3 (9226855B). Pełne47,885h i własne CI/Pages/PRE-PROD pozostają PENDING.",
-        "code_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+        "release_note": "0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING.",
+        "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
         "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
         "subsequent_user_PREPROD_GO": {
           "date": "2026-11-19",
           "quote": "wrzuć na preprod",
           "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        },
+        "historical_cache19_attempt": {
+          "source": "0bbe8c66c1f5a2c834ea7128968710e9f8662924",
+          "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+          "ci_run": 44544378145,
+          "ci_result": "FAILURE",
+          "pages_run": 44544378307,
+          "pages_result": "SUCCESS",
+          "new_gcp_dispatch": false
         }
       },
       "notes": [
@@ -30968,6 +30986,218 @@
         "Prywatne kopie zapisów służą wyłącznie lokalnemu odczytowemu testowi i nie trafiają do Git.",
         "Wcześniejszy test zalogowanej wyspy obejmował ekran admin1. Nowy wymagany test obejmuje osobno wyłącznie istniejące admin3, bez fallbacku i bez zapisów, z kontrolą responsywności podczas Worker.",
         "Wynik Workera jest przypięty do UID, generacji, rewizji/CAS, epoki adopcji, wyspy oraz generacji/rewizji/tempa zegara."
+      ],
+      "tags": [
+        "v32",
+        "performance",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-outcomes"
+      ]
+    },
+    {
+      "id": "HL-CHG-1170",
+      "epic": "HL-EPIC-UI",
+      "area": "Historia posiłków i czas nadrabiania",
+      "type": "Bug",
+      "title": "Przyspiesz pełne rozliczenie rozrośniętej historii posiłków",
+      "source": {
+        "kind": "user_chat_GO",
+        "date": "2026-11-19",
+        "date_note": "Europe/Warsaw",
+        "summary": "Naprawa zgłoszonego zawieszania rzeczywistego admin3 na PRE-PROD, bez resetowania kont lub pomijania czasu.",
+        "reference": "chat:2026-11-19:1170; docs/v32/GO-CHROME-PERFORMANCE.md"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
+        "ci": "pending_own_exact_source",
+        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Indeks zachowuje wszystkie wartości, kolejność wierszy i dotychczasowe działania częściowego przycinania.",
+        "Szybka klasyfikacja diety jest używana wyłącznie przy ścisłym potwierdzeniu dotychczasowego wyniku IEEE; przypadki niejednoznaczne wracają do pełnego algorytmu.",
+        "Cache i indeks istnieją tylko w obrębie jednego atomowego advancePopulation i nie trafiają do zapisu.",
+        "Pełny rzeczywisty zapis admin3 kończy rozliczenie i daje ten sam wynik fizycznego świata co dotychczasowy model."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "related_changes": [
+        "HL-CHG-1169"
+      ],
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-CHROME-PERFORMANCE.md",
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-diet-history-index.js",
+          "harborlight-v1-diet-accumulator.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-diet-history-index.test.mjs",
+          "tests/harborlight-diet-accumulator.test.mjs",
+          "tests/harborlight-diet-history-fastpath.test.mjs"
+        ],
+        "source_sha": null,
+        "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING."
+      },
+      "notes": [
+        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania."
+      ],
+      "tags": [
+        "v32",
+        "performance",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-outcomes"
+      ]
+    },
+    {
+      "id": "HL-CHG-1171",
+      "epic": "HL-EPIC-UI",
+      "area": "Start przy zatrzymanych klatkach przeglądarki",
+      "type": "Bug",
+      "title": "Uruchamiaj Worker bez oczekiwania na requestAnimationFrame",
+      "source": {
+        "kind": "user_chat_GO",
+        "date": "2026-11-19",
+        "date_note": "Europe/Warsaw",
+        "summary": "Naprawa zgłoszonego zawieszania rzeczywistego admin3 na PRE-PROD, bez resetowania kont lub pomijania czasu.",
+        "reference": "chat:2026-11-19:1171; docs/v32/GO-CHROME-PERFORMANCE.md"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
+        "ci": "pending_own_exact_source",
+        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Przygotowanie Workera nie czeka na RAF lub timer, które może zatrzymać karta w tle albo testowy zegar.",
+        "Anulowanie przez MutationObserver następuje przed utworzeniem Workera; rzeczywisty start pozostaje responsywny.",
+        "Dotychczasowy scenariusz misji i jego limit30s przechodzą bez pompowania lub zmiany zegara gry."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "related_changes": [
+        "HL-CHG-1169"
+      ],
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-CHROME-PERFORMANCE.md",
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-startup-replay-v32-smoke.py",
+          "tests/harborlight-missions-game-v27-smoke.py"
+        ],
+        "source_sha": null,
+        "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING."
+      },
+      "notes": [
+        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania."
+      ],
+      "tags": [
+        "v32",
+        "performance",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-outcomes"
+      ]
+    },
+    {
+      "id": "HL-CHG-1172",
+      "epic": "HL-EPIC-UI",
+      "area": "Rozmiar kompletnego zapisu",
+      "type": "Bug",
+      "title": "Pakuj pełną historię diety bez przekraczania granicy dokumentu",
+      "source": {
+        "kind": "user_chat_GO",
+        "date": "2026-11-19",
+        "date_note": "Europe/Warsaw",
+        "summary": "Naprawa zgłoszonego zawieszania rzeczywistego admin3 na PRE-PROD, bez resetowania kont lub pomijania czasu.",
+        "reference": "chat:2026-11-19:1172; docs/v32/GO-CHROME-PERFORMANCE.md"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
+        "ci": "pending_own_exact_source",
+        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Kompletny wynik rzeczywistego admin3 mieści się w istniejącym limicie700000bajtów na świat.",
+        "Bezstratne pakowanie zachowuje wszystkie wiersze i istniejące liczby oraz korzysta z dotychczasowego ograniczonego kodeka.",
+        "Stary klient odrzuca nieobsługiwaną sekcję przed normalizacją i nie może zapisać świata z utraconą historią.",
+        "Frontend i wszystkie serwerowe operacje odczytują i zapisują spakowane sekcje bez utraty danych."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "related_changes": [
+        "HL-CHG-1169"
+      ],
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-CHROME-PERFORMANCE.md",
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-save-packing.js",
+          "harborlight-v1-provisions.js",
+          "backend/trade-rules-v32.mjs",
+          "harborlight-dev-cloud.js",
+          "backend/account-service.mjs",
+          "backend/server.mjs",
+          "backend/player-trade.mjs"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-save-packing.test.mjs",
+          "tests/harborlight-provisions-save-packing.test.mjs",
+          "tests/harborlight-save-format-cloud.test.mjs",
+          "backend/test/provisions-save-packing.test.mjs",
+          "backend/test/account-api.test.mjs"
+        ],
+        "source_sha": null,
+        "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING."
+      },
+      "notes": [
+        "Prywatne dane konta nie trafiają do Git. Kontrole są odczytowe. Nie zmieniono postępu, zegara, reguł lub horyzontu nadrabiania."
       ],
       "tags": [
         "v32",
@@ -30992,7 +31222,7 @@
     "preprod_status": "ACCEPTED_DDA_NATIVE_EXISTING_UI_RECEIPT_ORIGINAL_ARCHIVE_ALL_TLS_FILES_AND_ACCOUNT_PRESERVATION_PASS",
     "prod_status": "postponed_by_user",
     "full_test_account_reset": "earlier_RESET_SUCCESS_INDEPENDENTLY_VERIFIED_not_repeated_by_this_deployment",
-    "note": "Nowy kod0.15.2.2/cache19 jest zamrożony na62db46b; własneCI/Pages/PRE-PROD PENDING. Fizycznie naPRE-PROD pozostajeB94/0.15.2.1 z workflow44526548282 SUCCESS, po którym warm-cache i zgłoszenieadmin3 ponownie otworzyły odbiór jakości; nie ma jego zaakceptowanego taguPRE-PROD. DDA/0.15.2.0 poniżej jest ostatnim pełnym historycznym odbiorem. Konta, postęp i zegary zachowane; bezPROD/DNS/resetu.",
+    "note": "Bieżący kandydat0.15.2.3/cache20 źródło41e0f8e ma pełne47,885h admin3 i kanoniczne eksportyPASS. WłasneCI/Pages i standardowyPRE-PROD wymagają potwierdzenia. FizycznyPRE-PROD toB94/0.15.2.1 po workflowSUCCESS, z odbiorem jakości ponownie otwartym. Pola zaakceptowanegoPRE-PROD DDA pozostają historią do zamknięcia nowego odbioru.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -31173,16 +31403,16 @@
     },
     "preprod_bridge_duration": null,
     "preprod_deployment_duration": "411s_total;395s_deploy_job",
-    "dev_application_version": "0.15.2.2",
-    "dev_status": "CODE_FROZEN_62DB46B_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_PENDING",
+    "dev_application_version": "0.15.2.3",
+    "dev_status": "CODE_FROZEN_LOCAL_MODEL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
     "dev_ci": "pending_own_publication_SHA",
     "dev_source_sha": null,
-    "dev_implementation_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+    "dev_implementation_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
     "dev_ci_run_id": null,
     "dev_pages_run_id": null,
     "dev_pages_conclusion": "PENDING",
     "dev_tag": null,
-    "dev_cache": "frontend-v32-19",
+    "dev_cache": "frontend-v32-20",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -31191,10 +31421,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
-    "frontend_manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
-    "frontend_file_count": 255,
-    "frontend_total_bytes": 69289150,
+    "frontend_archive_sha256": null,
+    "frontend_manifest_sha256": null,
+    "frontend_file_count": 460,
+    "frontend_total_bytes": null,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -31257,7 +31487,7 @@
     },
     "public_asset_file_count": 254,
     "public_asset_total_bytes": 69262846,
-    "current_directory_scope": "0.15.2.2/cache19/C4 frozen code62; canonical artifacts and local1548frontend/170backend/7board PASS; publication, own CI/Pages and new standard PRE-PROD pending.",
+    "current_directory_scope": "C5/0.15.2.3/cache20 source41e0f8e: actualcomplete47.885h exactmodelC4PASS; canonicalexportsPASS; frontendfull1583/1585(2oldcontractexpectations corrected targeted42PASS), ownpublicationCI/PREPRODpending.",
     "dev_tag_remote_object": null,
     "dev_tag_remote_verified": false,
     "dev_ci_completed_at": null,
@@ -34447,21 +34677,21 @@
     },
     "next_dev_scope": null,
     "latest_local_validation": {
-      "scope": "building presentation and downloaded-public-byte replay",
-      "pure_cases": 17,
-      "DOM_alpha_cases": 160,
-      "negative_controls": 4,
-      "independent_before_after_cases": 43,
-      "public_front_widths": [
-        1672,
-        1440,
-        390,
-        320
-      ],
-      "startup_cases": 26,
-      "result": "PASS",
-      "native_Pages_TLS_browser": "BLOCKED_CERT_AUTHORITY_without_bypass",
-      "full_CI_separate": "CI44287093749:1669Node/167Python/70ChromiumPASS"
+      "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "frontend_first_full": {
+        "tests": 1585,
+        "pass": 1583,
+        "fail": 2,
+        "cause": "oldtestexpectationsfornewcapabilityandpackedprovisions",
+        "targeted_fixed_test_files": 2,
+        "targeted_tests": 42,
+        "targeted_pass": 42
+      },
+      "backend": 178,
+      "board": 7,
+      "actual_admin3_complete_model": "PASS_EXACT_C4_47.885h_366650ms_345429B",
+      "canonical_artifacts": "PASS_SOURCE41",
+      "new_reset": false
     },
     "performance_fix_task": {
       "as_of": "2026-11-19",
@@ -34599,10 +34829,82 @@
       "accepted_tag": null
     },
     "CI_test_totals_pending_next": {
-      "node_frontend_local": 1548,
-      "node_backend_local": 170,
-      "node_board_local": 7,
+      "node_frontend_expected": 1585,
+      "node_backend_local_pass": 178,
+      "node_board_local_pass": 7,
       "old_CI_test_totals_are_historical": true
+    },
+    "candidate_next_release": {
+      "version": "0.15.2.3",
+      "cache": "frontend-v32-20",
+      "status": "FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_AND_DEPLOY_PENDING",
+      "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "publication_sha": null,
+      "ci": null,
+      "preprod": null
+    },
+    "historical_cache19_candidate_fields": {
+      "dev_application_version": "0.15.2.2",
+      "dev_status": "CODE_FROZEN_62DB46B_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_PENDING",
+      "dev_ci": "pending_own_publication_SHA",
+      "dev_implementation_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+      "dev_cache": "frontend-v32-19",
+      "frontend_archive_sha256": "d6cf515c38a07d662ed5ce57f60b2ce4acb3eeee2341b85ee76d48410ca00af4",
+      "frontend_manifest_sha256": "1ce4159dc532f4f25075a0377c2e1ad34b46a8a69f88d1508e23c68793581eaf",
+      "frontend_file_count": 255,
+      "frontend_total_bytes": 69289150,
+      "current_directory_scope": "0.15.2.2/cache19/C4 frozen code62; canonical artifacts and local1548frontend/170backend/7board PASS; publication, own CI/Pages and new standard PRE-PROD pending.",
+      "current_workbook": {
+        "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+        "sheets": 6,
+        "rows": 413,
+        "columns": [
+          "A",
+          "B",
+          "C"
+        ],
+        "C_all_blank": true,
+        "validation": "PASS",
+        "sha256": "7250f176b7e8e7f2b0717b0f587a2b868a64a5cc53f51b406891715673edac7f",
+        "source_files": 108
+      },
+      "master_workbook15_task": {
+        "as_of": "2026-11-19",
+        "status": "BUILD_AND_FRESH_VALIDATE_PASS_OWN_CI_PENDING",
+        "source_freeze_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+        "output_workbook": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+        "output_sha256": "3a94bf8397a09c0eef2e890e32fee3acf1133e2bc0c7e9ade0b1d103d26472d7",
+        "output_bytes": 7789221,
+        "final_sheet_count": 158,
+        "final_current_sheet_count": 58,
+        "final_row_count": 62998,
+        "source_files": 123,
+        "building_visual_rows": 200,
+        "historical_sheets_unchanged": 100,
+        "historical_ZIP_parts_unchanged": 220,
+        "historical_comments_unchanged": 48,
+        "historical_cached_formulas_unchanged": 4982,
+        "validation": "PASS",
+        "new_reset_executed": false
+      },
+      "latest_local_validation": {
+        "scope": "building presentation and downloaded-public-byte replay",
+        "pure_cases": 17,
+        "DOM_alpha_cases": 160,
+        "negative_controls": 4,
+        "independent_before_after_cases": 43,
+        "public_front_widths": [
+          1672,
+          1440,
+          390,
+          320
+        ],
+        "startup_cases": 26,
+        "result": "PASS",
+        "native_Pages_TLS_browser": "BLOCKED_CERT_AUTHORITY_without_bypass",
+        "full_CI_separate": "CI44287093749:1669Node/167Python/70ChromiumPASS"
+      }
     }
   }
 }

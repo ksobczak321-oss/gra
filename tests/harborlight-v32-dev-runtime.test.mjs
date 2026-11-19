@@ -14,6 +14,7 @@ import { createDevSync } from '../harborlight-dev-sync.js';
 import { kingdomServiceAction } from '../harborlight-v1-kingdom-client.js';
 import { GOODS, normalizeProvisions, compactDietHistories } from '../harborlight-v1-provisions.js';
 import { compactResidentSnapshot } from '../harborlight-v1-archipelago.js';
+import { unpackAdventureSave } from '../harborlight-v1-save-packing.js';
 
 class MetadataStorage {
   records = new Map();
@@ -445,7 +446,7 @@ test('Kingdom, gifts and trade preserve the compact 3600-person diet codec at th
   await Promise.all([enter(a, 'admin1'), enter(b, 'admin2')]);
   const assertCodec = island => {
     assert.ok(Buffer.byteLength(island.payload) < 700000, `API bytes=${Buffer.byteLength(island.payload)}`);
-    const saved = JSON.parse(island.payload); assert.equal(saved.population, 3600); assert.equal(saved.provisions.peopleFormat, 2);
+    const saved = unpackAdventureSave(JSON.parse(island.payload)); assert.equal(saved.population, 3600); assert.equal(saved.provisions.peopleFormat, 2);
     normalizeProvisions(saved, saved, { now: at });
     const person = saved.provisions.people['max-resident-1'];
     assert.equal(person.coverage, .625); assert.equal(person.clothingRemaining, 12345.5);

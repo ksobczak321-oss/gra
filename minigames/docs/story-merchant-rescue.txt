@@ -370,7 +370,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-merchant-rescue.
 
-Źródło katalogu: 62db46b75cbda3c74264504ebca15cade7b4e1e4.
+Źródło katalogu: 41e0f8e103e00b18779ecd04645bca21a450cdc8.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

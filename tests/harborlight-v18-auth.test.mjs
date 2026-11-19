@@ -78,7 +78,7 @@ test('PROD island writes use the generation-aware server API and never direct cl
   await h.client.signIn(EMAIL, 'captain-password');
   const loaded = await h.client.loadIsland(); assert.equal(loaded.generation, 2);
   assert.deepEqual(await h.client.saveIsland(islandPayload(110), version), { revision: 2, updateTime: T2 });
-  assert.deepEqual(JSON.parse(h.calls[3].options.body), { payload: islandPayload(110), expectedRevision: 1, generation: 2 });
+  assert.deepEqual(JSON.parse(h.calls[3].options.body), { payload: islandPayload(110), expectedRevision: 1, generation: 2, savePackingVersion: 1 });
   assert.equal(h.calls[3].options.method, 'PUT');
   assert.equal(h.calls[3].options.headers.Authorization, 'Bearer ' + token());
   await h.client.recordActivity(); assert.deepEqual(JSON.parse(h.calls[4].options.body), { generation: 2 });
