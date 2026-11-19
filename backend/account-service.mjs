@@ -6,6 +6,7 @@ import { createCharityLedgerStore, coinTotalFromIslandDocument, normalizedWallet
 import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
 import { validateIslandName, validateStoredIslandName } from './island-name.mjs';
 import { changeDevAccountClock, devAccountClockStatus } from './dev-account-clock.mjs';
+import { unpackArchipelagoSave, packArchipelagoSave } from './harborlight-v1-save-packing.js';
 const DAY = 86400000;
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const RESOURCES = ['coins', ...MATERIALS];
@@ -97,7 +98,7 @@ function clockValue(value) {
 function islandPayload(value) {
   if (typeof value !== 'string' || Buffer.byteLength(value, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 400);
   let state;
-  try { state = JSON.parse(value); } catch { fail('invalid-island', 400); }
+  try { state = unpackArchipelagoSave(JSON.parse(value)); } catch { fail('invalid-island', 400); }
   if (!object(state) || !object(state.resources) || RESOURCES.some(id => !Number.isFinite(state.resources[id]) || state.resources[id] < 0 || state.resources[id] > Number.MAX_SAFE_INTEGER)) fail('invalid-island', 400);
   if (state.archipelago !== undefined) {
     const group = state.archipelago;
@@ -115,6 +116,11 @@ function islandPayload(value) {
     if (group.activeIslandId !== 'island-1' && !children[group.activeIslandId]) fail('invalid-island', 400);
   }
   return state;
+}
+function packedProvisionsPayload(value) {
+  let state;try{state=JSON.parse(value);}catch{fail('invalid-island',400);}
+  const packed=world=>Array.isArray(world?.adventuresPacked?.sections)&&world.adventuresPacked.sections.includes('provisions');
+  return packed(state)||Object.values(daughterWorlds(state)||{}).some(packed);
 }
 function rewardValue(value) {
   if (!object(value) || Object.keys(value).some(id => !RESOURCES.includes(id)) || RESOURCES.some(id => value[id] !== undefined && !nonnegative(value[id]))) fail('invalid-promotion-reward', 500);
@@ -271,7 +277,8 @@ export function createAccountService({ store, now = () => Date.now(), environmen
 
   // The HTTP adapter authenticates uid and passes the expected generation. This
   // is the only save path that can enforce account tombstones atomically.
-  async function saveIsland({ uid, payload, expectedRevision, generation }) {
+  async function saveIsland({ uid, payload, expectedRevision, generation, savePackingVersion }) {
+    if(savePackingVersion!==undefined&&savePackingVersion!==1)fail('unsupported-save-format',400);
     const state = islandPayload(payload);
     if ((state.islandGeneration ?? 1) !== generation) fail('island-expired', 410);
     if (!nonnegative(expectedRevision) || expectedRevision >= Number.MAX_SAFE_INTEGER) fail('invalid-revision', 400);
@@ -285,6 +292,10 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       // the trusted POST starter may create islands; PUT always updates one.
       if (!island) fail('island-not-initialized', 409);
       if ((island?.revision || 0) !== expectedRevision) fail('island-conflict', 409);
+      // A cached old tab can adopt the current CAS before its old normalizer
+      // rejects a newly packed section. The stored format therefore fences
+      // subsequent writes independently of the browser's local reload state.
+      if(savePackingVersion!==1&&packedProvisionsPayload(island.payload))fail('unsupported-save-format',409);
       if (!island && account.islandExpiredAt) fail('island-expired', 410);
       if (environment === 'production') {
         const trustedState = islandPayload(island.payload), trustedCommerce = trustedState.commerce;
@@ -307,7 +318,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         const required = 10 + 3 * (Number(id.slice(7)) - 2);
         if ((previousState.buildings?.townhall?.level || 0) < required) fail('second-island-locked', 409);
       }
-      const nextPayload = JSON.stringify(state);
+      const nextPayload = JSON.stringify(packArchipelagoSave(state));
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
       const next = { schemaVersion: 1, revision: expectedRevision + 1, generation, payload: nextPayload, updatedAt: at };
       await tx.set(key, next);
@@ -328,7 +339,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
         if (object(account.islandAccountProgress[field])) state[field] = structuredClone(account.islandAccountProgress[field]);
       }
       state.islandGeneration = generation;
-      const nextPayload = JSON.stringify(state);
+      const nextPayload = JSON.stringify(packArchipelagoSave(state));
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
       const nextAccount = { ...(account || {}), createdAt: nonnegative(account?.createdAt) ? account.createdAt : at,
         activePlayDays: activityDays(account?.activePlayDays, at), islandGeneration: generation, islandExpiredAt: null, lastPlayedAt: at };
@@ -398,7 +409,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       const receipt = { id: requestId, kind: 'ship-capacity-coins', units, coins, payerIslandId: islandId, at };
       group.capacityReceipts.push(receipt); group.shipCapacity += additionalCapacity;
       state.commerce = { ...(object(state.commerce) ? state.commerce : {}), capacityPurchases: [...purchases, receipt] };
-      const nextPayload = JSON.stringify(state);
+      const nextPayload = JSON.stringify(packArchipelagoSave(state));
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
       const next = { ...island, payload: nextPayload, revision: island.revision + 1, updatedAt: at };
       await tx.set(walletPath(uid), wallet);
@@ -442,7 +453,7 @@ export function createAccountService({ store, now = () => Date.now(), environmen
       state.bonusInventoryVersion = 1;
       if (reward.coins) syncSharedCoinWallet(state);
       const claim = { code: normalized, reward, claimedNumber: claimedCount + 1, at, generation };
-      const nextPayload = JSON.stringify(state);
+      const nextPayload = JSON.stringify(packArchipelagoSave(state));
       if (Buffer.byteLength(nextPayload, 'utf8') > MAX_PAYLOAD_BYTES) fail('invalid-island', 409);
       await tx.set(`promotions/${normalized}`, { ...promotion, claimedCount: claimedCount + 1 });
       await tx.set(claimKey, claim);

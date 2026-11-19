@@ -23,6 +23,8 @@ PUBLIC_FILES = (
     "harborlight-v1-startup-replay.js",
     "harborlight-v1-startup-replay-model.js",
     "harborlight-v1-startup-replay-worker.js",
+    "harborlight-v1-diet-history-index.js",
+    "harborlight-v1-diet-accumulator.js",
     "harborlight-v1-building-stages.js",
     "harborlight-building-gallery.html",
     "assets/building-upgrades-v1/manifest.json",

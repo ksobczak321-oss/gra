@@ -13,6 +13,7 @@ import { createCharityService } from './charity-service.mjs';
 import { changeDevAccountClock, devAccountClockStatus, normalizeDevAccountClock } from './dev-account-clock.mjs';
 import { createState } from '../harborlight-v1-state.js';
 import { createIslandDocumentStore } from './island-document-store.mjs';
+import { packArchipelagoSave } from '../harborlight-v1-save-packing.js';
 import { createCharityLedgerStore } from './charity-ledger.mjs';
 import { advanceKingdom, kingdomAction, kingdomStatus, normalizeKingdom } from '../harborlight-v1-kingdom.js';
 import { personKey, educationRecord, educationBusy } from '../harborlight-v1-education.js';
@@ -143,7 +144,7 @@ const allWorlds = state => [state, ...Object.values(state.archipelago?.version =
 const serializeDevState = state => {
   const saved = clone(state);
   for (const world of allWorlds(saved)) if (world.ruleset === 32) compactDietHistories(world);
-  return JSON.stringify(saved);
+  return JSON.stringify(packArchipelagoSave(saved));
 };
 const synchronizeWallet = state => {
   if (state.archipelago?.sharedWallet) state.archipelago.sharedWallet.coins = state.resources.coins;

@@ -157,6 +157,29 @@ def run():
     with sync_playwright() as pw:
         browser=pw.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
         try:
+            app=Replay(browser)
+            try:
+                # Match the unchanged legacy missions acceptance clock: game
+                # time, animation frames and window timers stay paused. Worker
+                # launch/completion must not require manually pumping them.
+                app.page.clock.install(time=cloud.NOW-timedelta(seconds=1))
+                app.page.clock.pause_at(cloud.NOW)
+                app.context.add_init_script('''window.__qaReplayFrameRan=false;window.__qaReplayTimerRan=false;
+                  requestAnimationFrame(()=>window.__qaReplayFrameRan=true);
+                  setTimeout(()=>window.__qaReplayTimerRan=true,1);''')
+                app.start(wait_loading=False)
+                expect(app.page.locator('html')).to_have_attribute('data-game-startup','ready',timeout=30000)
+                qa=app.page.evaluate('window.__qaReplay')
+                assert qa['workers']==qa['terminations']==1 and qa['done'],qa
+                assert qa['messages'][0]['targetNow']==NOW and qa['messages'][0]['from'][0]==NOW-600000,qa
+                assert all(w['lastSimulatedAt']==NOW and w['worldTimeMs']==NOW for w in qa['result']),qa
+                assert app.page.evaluate('Date.now()')==NOW
+                assert app.page.evaluate('!window.__qaReplayFrameRan&&!window.__qaReplayTimerRan'), 'The clock regression must keep both window scheduling APIs paused'
+                assert app.cloud_reads==2 and not app.errors,app.errors
+                report.append({'case':'paused-browser-clock-worker-start-and-completion','workers':1,'fixed_target':NOW,'clock_pumped':False,'cloud_reads':2,'js_errors':0})
+                print('PASS paused browser clock launches/completes Worker without frame/timer pumping',flush=True)
+            finally:app.close()
+
             app=Replay(browser,intro=True)
             try:
                 app.start();app.page.wait_for_function('document.documentElement.dataset.gameStartup==="ready"',timeout=30000)

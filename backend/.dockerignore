@@ -7,6 +7,9 @@
 !harborlight-v1-provisions.js
 !harborlight-v1-economy.js
 !harborlight-v1-development-copy.js
+!harborlight-v1-diet-history-index.js
+!harborlight-v1-diet-accumulator.js
+!harborlight-v1-save-packing.js
 !account-service.mjs
 !dev-account-clock.mjs
 !island-name.mjs

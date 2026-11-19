@@ -99,8 +99,10 @@ function decompress(packed, expectedBytes) {
   if (written !== expectedBytes || bucket !== 0 || crc32(output) !== checksum) throw invalid();
   return output;
 }
-const fields = Object.freeze(['adventures', 'expeditionHour', 'adventureBudget', 'effectNotificationState']);
-/** Mutates only the caller's serialization clone; resources and people stay plain.
+const fields = Object.freeze(['adventures', 'expeditionHour', 'adventureBudget', 'effectNotificationState', 'provisions']);
+/** Mutates only the caller's serialization clone. Provisions retain every
+ * existing compact-history row and number; compression changes only transport.
+ * Older readers reject the explicitly named new section before normalization.
  * Account ledgers are packed only on the mother to keep daughter saves separate. */
 export function packAdventureSave(world) {
   if (!plain(world)) return world;
@@ -110,8 +112,15 @@ export function packAdventureSave(world) {
   if (!plain(world.adventures)) return world;
   if(world.adventures.version!==1)throw invalid();
   const account=world.islandRole!=='daughter'&&(!world.islandId||world.islandId==='island-1');
-  const sections=fields.filter(id=>plain(world[id])&&(id==='adventures'||id==='effectNotificationState'||account));
-  const values=Object.fromEntries(sections.map(id=>[id,world[id]])), bytes=encoder.encode(JSON.stringify(values));
+  const packProvisions=plain(world.provisions)&&encoder.encode(JSON.stringify(world.provisions)).length>=ADVENTURE_PACKING_RULES.thresholdBytes;
+  let sections=fields.filter(id=>plain(world[id])&&(id!=='provisions'||packProvisions)&&(id==='adventures'||id==='effectNotificationState'||id==='provisions'||account));
+  let values=Object.fromEntries(sections.map(id=>[id,world[id]])), bytes=encoder.encode(JSON.stringify(values));
+  // Preserve the previous accepted domain near the adventure expansion cap:
+  // a large plain provisions section must not make an otherwise valid older
+  // adventure-only stream exceed its unchanged four-million-byte boundary.
+  if(bytes.length>MAX&&sections.includes('provisions')){
+    sections=sections.filter(id=>id!=='provisions');values=Object.fromEntries(sections.map(id=>[id,world[id]]));bytes=encoder.encode(JSON.stringify(values));
+  }
   if (bytes.length > MAX) throw invalid();
   if (bytes.length < ADVENTURE_PACKING_RULES.thresholdBytes) return world;
   const packed={version:1,codec:ADVENTURE_PACKING_RULES.codec,sections,data:base64(compress(bytes)),uncompressedBytes:bytes.length};
@@ -133,3 +142,34 @@ export function unpackAdventureSave(raw) {
      Object.keys(values).some(id=>!packed.sections.includes(id))||values.adventures.version!==1)throw invalid();
   const copy={...raw,...values};delete copy.adventuresPacked;return copy;
 }
+
+// Backend operations may update inventories without constructing the complete
+// simulation model. Decode/re-encode each world at that boundary so a trade or
+// account mutation never feeds an opaque provisions section into a normalizer.
+// Neither helper mutates its input, including when a later daughter is invalid.
+function mapSavedWorlds(raw, transform) {
+  if (!plain(raw)) return raw;
+  const world=transform(raw),group=world.archipelago;
+  if (group?.version===2 && plain(group.islands)) {
+    const entries=Object.entries(group.islands);
+    if (entries.length>19) throw invalid();
+    const islands=Object.fromEntries(entries.map(([id,child])=>[id,transform(child)]));
+    if(world===raw && entries.every(([id,child])=>islands[id]===child)) return raw;
+    return {...world,archipelago:{...group,islands}};
+  }
+  if (group?.version===1 && plain(group.secondIsland)) {
+    const secondIsland=transform(group.secondIsland);
+    return world===raw&&secondIsland===group.secondIsland?raw:{...world,archipelago:{...group,secondIsland}};
+  }
+  return world;
+}
+export const unpackArchipelagoSave = raw => mapSavedWorlds(raw,unpackAdventureSave);
+export const packArchipelagoSave = raw => {
+  const saved=mapSavedWorlds(raw,world=>plain(world)?packAdventureSave({...world}):world);
+  // serializeArchipelago adds this envelope after compacting the mother. Keep
+  // that same insertion order for exact-payload uncertain-commit recovery.
+  if(plain(saved)&&own(saved,'archipelago')){
+    const {archipelago,...world}=saved;return {...world,archipelago};
+  }
+  return saved;
+};

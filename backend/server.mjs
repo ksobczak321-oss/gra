@@ -166,7 +166,9 @@ export function createServer({
         send(201, await accountService.readIsland({ uid })); return;
       }
       if (path === '/api/v1/island') {
-        const saved = await accountService.saveIsland({ uid, payload: body.payload, expectedRevision: body.expectedRevision, generation: body.generation });
+        if (body.savePackingVersion !== undefined && body.savePackingVersion !== 1) throw new AccountServiceError('unsupported-save-format', 400);
+        const saved = await accountService.saveIsland({ uid, payload: body.payload, expectedRevision: body.expectedRevision, generation: body.generation,
+          ...(body.savePackingVersion === undefined ? {} : { savePackingVersion: body.savePackingVersion }) });
         send(200, { ...saved, updateTime: new Date(saved.updatedAt).toISOString() }); return;
       }
       if (path === '/api/v1/activity') { send(200, await accountService.recordActivity({ uid, generation: body.generation })); return; }

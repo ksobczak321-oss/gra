@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stage exact, public, dependency-free trade rules into the isolated API.
 
-Only these three reviewed model/catalog files may enter the Docker context.
+Only these reviewed model/catalog files and their pure helpers may enter the Docker context.
 No execution, credentials, build rewriting or external dependencies are used.
 """
 import argparse
@@ -15,6 +15,9 @@ FILES = (
     "harborlight-v1-provisions.js",
     "harborlight-v1-economy.js",
     "harborlight-v1-development-copy.js",
+    "harborlight-v1-diet-history-index.js",
+    "harborlight-v1-diet-accumulator.js",
+    "harborlight-v1-save-packing.js",
 )
 
 
@@ -28,7 +31,9 @@ def main():
         if source.is_symlink() or target.is_symlink():
             raise ValueError("Model source and staged files must be ordinary files")
         data = source.read_bytes()
-        for dependency in re.findall(r"(?:from\s*|import\s*)['\"]([^'\"]+)['\"]", data.decode()):
+        # `from` in a declaration requires whitespace. A quoted history key
+        # named 'from' is ordinary data, not an import specifier.
+        for dependency in re.findall(r"(?:\bfrom\s+|\bimport\s*)['\"]([^'\"]+)['\"]", data.decode()):
             if not dependency.startswith("./") or dependency[2:].split("?", 1)[0] not in FILES:
                 raise ValueError(f"Review the public model dependency before staging: {dependency}")
         if args.check:

@@ -1,4 +1,7 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-19';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-20';
+import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-20';
+import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-20';
+import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-20';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.
@@ -22,6 +25,7 @@ export const GOODS = Object.freeze({
 });
 export const MATERIAL_IDS = Object.freeze(Object.keys(GOODS));
 export const FOOD_IDS = Object.freeze(MATERIAL_IDS.filter(id => GOODS[id].edible));
+const foodIds = new Set(FOOD_IDS);
 export const NEW_BUILDINGS = Object.freeze({
   bakery: Object.freeze({ name: 'Piekarnia', unlockLevel: 2, production: 'bread' }), dairy: Object.freeze({ name: 'Mleczarnia', unlockLevel: 2, production: 'pasteurizedMilk' }),
   slaughterhouse: Object.freeze({ name: 'Rzeźnia', unlockLevel: 1, production: 'meat' }), fisher: Object.freeze({ name: 'Rybak', unlockLevel: 1, production: 'fish' }),
@@ -130,8 +134,10 @@ function decodePerson(state,value,source,now=0) {
  if(typeof value[10]==='string')person.historyRef=value[10];else person.history=Array.isArray(value[10])?value[10]:[];return person;
 }
 export function normalizeProvisions(state, raw = state, context = {}) {
+  const decoded=unpackAdventureSave(raw);
+  if(raw===state&&decoded!==raw){Object.assign(state,decoded);delete state.adventuresPacked;}
   invalidateDietMemo(state);
-  const source = object(raw.provisions) ? raw.provisions : {}, now = Number.isFinite(context.now) ? context.now : finite(state.worldTimeMs);
+  const source = object(decoded.provisions) ? decoded.provisions : {}, now = Number.isFinite(context.now) ? context.now : finite(state.worldTimeMs);
   const sourcePeople=Object.fromEntries(Object.entries(source.people||{}).slice(0,10000).map(([id,p])=>[id,source.peopleFormat===2?decodePerson(state,p,source,now):p]));
   state.resources ||= {};
   for (const id of MATERIAL_IDS) state.resources[id] = finite(state.resources[id]);
@@ -170,6 +176,8 @@ export function normalizeProvisions(state, raw = state, context = {}) {
 // Serialization helper: call only on the host's save clone. Hydration below
 // always creates separate mutable histories for individual people.
 export function compactDietHistories(state) {
+ const decoded=unpackAdventureSave(state);
+ if(decoded!==state){Object.assign(state,decoded);delete state.adventuresPacked;}
  invalidateDietMemo(state);
  const p=state.provisions;if(!p?.people)return {people:0,histories:0};const groups=new Map(),source={dietHistories:p.dietHistories};
  if(p.peopleFormat===2)p.people=Object.fromEntries(Object.entries(p.people).map(([id,value])=>[id,decodePerson(state,value,p,p.clockMs)]));
@@ -207,12 +215,13 @@ const currentDietMemo = state => readScopes.get(state)?.dietMemo || settlementSc
 export function withProvisionsSettlementScope(state, settle) {
   const previous=settlementScopes.get(state);
   const dietMemo=previous?.dietMemo || readScopes.get(state)?.dietMemo || {values:new WeakMap()};
+  const historyMemo=previous?.historyMemo || {values:new WeakMap()};
   if(!previous)dietMemo.values=new WeakMap();
-  settlementScopes.set(state,{dietMemo});
+  settlementScopes.set(state,{dietMemo,historyMemo});
   try{return settle();}
   finally{
     if(previous)settlementScopes.set(state,previous);
-    else{settlementScopes.delete(state);dietMemo.values=new WeakMap();}
+    else{settlementScopes.delete(state);dietMemo.values=new WeakMap();historyMemo.values=new WeakMap();}
   }
 }
 export function withProvisionsReadScope(state, read) {
@@ -225,8 +234,29 @@ export function withProvisionsReadScope(state, read) {
 function invalidateDietMemo(state, person=null) {
   const memo=currentDietMemo(state);
   if(memo){if(person)memo.values.delete(person);else memo.values=new WeakMap();}
-  if(!person){const scope=readScopes.get(state);if(scope)scope.provisions=null;}
+  if(!person){
+    const scope=readScopes.get(state);if(scope)scope.provisions=null;
+    const settlement=settlementScopes.get(state);if(settlement)settlement.historyMemo.values=new WeakMap();
+  }
 }
+function historyWork(state,person) {
+  const memo=settlementScopes.get(state)?.historyMemo;
+  if(!memo)return null;
+  const previous=memo.values.get(person);
+  if(previous?.index.isCurrent())return previous;
+  memo.values.delete(person);
+  // The index validates the complete history before doing anything. If its
+  // domain is unsupported, the original loops below remain the only writers.
+  let accumulator;
+  const index=createHistoryIndex(person,{epsilon:EPS,isKnownResource:resource=>foodIds.has(resource),
+    onAdd:row=>accumulator.add(row.resource,row.satiety),
+    onRemove:row=>accumulator.remove(row.resource,row.satiety),
+    onChange:(row,oldSatiety,newSatiety)=>accumulator.replace(row.resource,oldSatiety,newSatiety)});
+  if(!index)return null;
+  accumulator=createDietAccumulator(person.history);
+  const work={index,accumulator};memo.values.set(person,work);return work;
+}
+function discardHistoryWork(state,person) {settlementScopes.get(state)?.historyMemo.values.delete(person);}
 function ensure(state, context = {}) {
   const scope = readScopes.get(state), now = nowOf(state, context), required = requiredFoodTypes(state);
   if (scope && state.provisions?.version===1 && state.provisions.peopleFormat!==2 &&
@@ -301,26 +331,51 @@ function consume(state,id,n,context={}) {
 }
 function pruneHistory(person, now, state) {
   invalidateDietMemo(state,person);
+  const work=historyWork(state,person);
+  if(work?.index.prune(now))return;
+  discardHistoryWork(state,person);
   const cutoff=now-DAY*1000;
   person.history=person.history.filter(h=>h.at>cutoff+EPS);
   for(const h of person.history)if(Number.isFinite(h.from)&&h.from<cutoff&&h.at>cutoff){h.satiety*=Math.max(0,(h.at-cutoff)/(h.at-h.from));h.from=cutoff;}
 }
 function aggregateHistory(p) { const map={};for(const h of p.history)map[h.resource]=finite(map[h.resource])+h.satiety;return map; }
+const sameDietInputs=(previous,p,now,required)=>previous?.now===now&&previous.required===required&&
+  previous.history===p.history&&previous.length===p.history.length&&previous.graceUntil===p.dietGraceUntil;
+const dietMemoEntry=(p,now,required,extra)=>({now,required,history:p.history,length:p.history.length,graceUntil:p.dietGraceUntil,...extra});
 function readDietStatus(state, person, context={}) {
   const p=ensure(state,context).people[keyOf(person)],now=nowOf(state,context);if(!p)return {requiredTypes:requiredFoodTypes(state),types:0,penalty:0,protected:true};
   const memo=currentDietMemo(state),previous=memo?.values.get(p),required=requiredFoodTypes(state);
-  if(previous?.now===now&&previous.required===required&&previous.history===p.history&&
-     previous.length===p.history.length&&previous.graceUntil===p.dietGraceUntil)return previous.value;
+  if(sameDietInputs(previous,p,now,required)&&previous.value)return previous.value;
   pruneHistory(p,now,state);const shares=aggregateHistory(p),total=Object.values(shares).reduce((a,b)=>a+b,0),types=Object.values(shares).filter(n=>total>EPS&&n+EPS>=total*.2).length,requiredTypes=requiredFoodTypes(state),protectedNow=now<p.dietGraceUntil;
   const value={requiredTypes,types,shares,total,protected:protectedNow,graceUntil:p.dietGraceUntil,penalty:protectedNow?0:Math.max(0,requiredTypes-types)*10};
-  if(memo)memo.values.set(p,{now,required:requiredTypes,history:p.history,length:p.history.length,graceUntil:p.dietGraceUntil,value});
+  if(memo)memo.values.set(p,dietMemoEntry(p,now,requiredTypes,{value}));
   return value;
 }
 export function dietStatus(state,person,context={}) {
   const value=readDietStatus(state,person,context);
   return value.shares?{...value,shares:{...value.shares}}:{...value};
 }
-export const dietPenalty=(state,person,context={})=>readDietStatus(state,person,context).penalty;
+export function dietPenalty(state,person,context={}) {
+  if(!settlementScopes.has(state))return readDietStatus(state,person,context).penalty;
+  const p=ensure(state,context).people[keyOf(person)];if(!p)return 0;
+  const now=nowOf(state,context),required=requiredFoodTypes(state),memo=currentDietMemo(state),previous=memo?.values.get(p);
+  if(sameDietInputs(previous,p,now,required)){
+    if(previous.value)return previous.value.penalty;
+    if(previous.penalty!==undefined)return previous.penalty;
+  }
+  pruneHistory(p,now,state);
+  let penalty=null;
+  if(now<p.dietGraceUntil)penalty=0;
+  else{
+    const types=historyWork(state,p)?.accumulator.typeCount(EPS,PROVISIONS_RULES.varietyShare);
+    // Only a certified integer may replace the old ordered floating-point
+    // aggregate. Uncertain bounds, clamp domains and unsupported rows use it.
+    if(Number.isInteger(types)&&types>=0&&types<=FOOD_IDS.length)penalty=Math.max(0,required-types)*10;
+  }
+  if(penalty===null)return readDietStatus(state,person,context).penalty;
+  if(memo)memo.values.set(p,dietMemoEntry(p,now,required,{penalty}));
+  return penalty;
+}
 export function feedingMultiplier(state,person=null) {
   const p=ensure(state);
   if(person)return .5+.5*Math.min(1,finite(p.people[keyOf(person)]?.coverage,1));
@@ -333,6 +388,9 @@ export function mealStatus(state, person=null, context={}) {
 function writeHistory(p,resource,points,from,at,state) {
   if(points<=EPS)return;
   invalidateDietMemo(state,p);
+  const work=historyWork(state,p);
+  if(work?.index.write(resource,points,from,at))return;
+  discardHistoryWork(state,p);
   // Consecutive intervals with the same real intake rate merge losslessly.
   // A day of stable meals is a few runs/person, not1440 duplicated minute rows.
   let previous=null;for(let i=p.history.length-1;i>=0;i--)if(p.history[i].resource===resource){previous=p.history[i];break;}

@@ -1,5 +1,5 @@
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-19';
-import { APPROVED_TOUR_IDS } from './harborlight-v1-approved-copy.js?v=frontend-v32-19';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-20';
+import { APPROVED_TOUR_IDS } from './harborlight-v1-approved-copy.js?v=frontend-v32-20';
 
 // Keep the full, reviewed catalogue and its stable persisted positions intact.
 // Only the initial presentation is shortened; Help can still replay the catalogue.

@@ -73,6 +73,19 @@ test('optimistic saves use explicit revisions/generations and expose a cloud ver
   assert.deepEqual(calls[0], ['save', { uid: 'signed-in-user', payload: '{}', expectedRevision: 4, generation: 2 }]);
 });
 
+test('save packing capability is bounded and forwarded with the verified identity', async t => {
+  const { request, calls } = await fixture(t);
+  for (const savePackingVersion of [null, false, 0, 2, '1', {}, []]) {
+    const result = await request('/api/v1/island', 'PUT', { payload: '{}', expectedRevision: 4, generation: 2, savePackingVersion });
+    assert.equal(result.status, 400);
+    assert.equal(result.body.error, 'unsupported-save-format');
+  }
+  assert.equal(calls.length, 0);
+  const result = await request('/api/v1/island', 'PUT', { payload: '{}', expectedRevision: 4, generation: 2, savePackingVersion: 1, uid: 'other-user' });
+  assert.equal(result.status, 200);
+  assert.deepEqual(calls[0], ['save', { uid: 'signed-in-user', payload: '{}', expectedRevision: 4, generation: 2, savePackingVersion: 1 }]);
+});
+
 test('legal confirmations are authenticated, UID-scoped and never accept caller timestamps', async t => {
   const { request, calls } = await fixture(t);
   assert.equal((await request('/api/v1/legal','GET',undefined,null)).status,401);

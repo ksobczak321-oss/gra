@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { AccountServiceError, threeMonthDeadline } from './account-service.mjs';
 import { createIslandDocumentStore, MAX_ARCHIPELAGO_BYTES } from './island-document-store.mjs';
 import { createCharityLedgerStore } from './charity-ledger.mjs';
+import { unpackArchipelagoSave, packArchipelagoSave } from './harborlight-v1-save-packing.js';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const DAY = 86400000, MAX_BYTES = MAX_ARCHIPELAGO_BYTES, MAX_OPEN = 10;
@@ -33,7 +34,7 @@ const hash = text => createHash('sha256').update(text).digest('hex');
 const openIds = account => (Array.isArray(account?.openTradeOfferIds) ? account.openTradeOfferIds : []).filter(id => /^trade_[a-f0-9]{40}$/.test(id)).slice(0, MAX_OPEN);
 function readState(island) {
   if (!island || typeof island.payload !== 'string' || Buffer.byteLength(island.payload) > MAX_BYTES) fail('trade-island-unavailable');
-  let state; try { state = JSON.parse(island.payload); } catch { fail('invalid-island', 400); }
+  let state; try { state = unpackArchipelagoSave(JSON.parse(island.payload)); } catch { fail('invalid-island', 400); }
   if (!object(state) || !object(state.resources) || !object(state.buildings)) fail('invalid-island', 400);
   return state;
 }
@@ -152,7 +153,7 @@ export function createPlayerTradeService({ store, now = () => Date.now(), enviro
     }
     const saved = v32 ? structuredClone(state) : state;
     if (v32) for (const world of [saved, ...Object.values(saved.archipelago?.version === 2 ? saved.archipelago.islands || {} : saved.archipelago?.secondIsland ? { 'island-2': saved.archipelago.secondIsland } : {})]) if (world.ruleset === 32) v32.compactDietHistories(world);
-    const payload = JSON.stringify(saved); if (Buffer.byteLength(payload) > MAX_BYTES) fail('invalid-island');
+    const payload = JSON.stringify(packArchipelagoSave(saved)); if (Buffer.byteLength(payload) > MAX_BYTES) fail('invalid-island');
     return { ...island, payload, revision: island.revision + 1, updatedAt: at };
   }
   const fingerprint = data => hash(JSON.stringify(data));

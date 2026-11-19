@@ -1,6 +1,6 @@
 // Firebase owns credentials and verifies access to the UID-scoped documents.
 // Hosting selects the isolated project; runtime Firebase config never contains secrets.
-import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-19';
+import { validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-20';
 import { LEGAL_DOCUMENTS, validLegalAcceptance } from './harborlight-legal.js?v=legal-v4';
 export const DEV_PROJECT = 'harborlight-dev';
 export const PROD_PROJECT = 'harborlight-prod';
@@ -20,6 +20,7 @@ const HOST_PROJECTS = new Map([
 ]);
 const MAX_PAYLOAD_BYTES = 14_000_000;
 const MAX_WORLD_DOCUMENT_BYTES = 700_000;
+const SUPPORTED_SAVE_PACKING_VERSION = 1;
 const MAX_TOKEN_LENGTH = 16_000;
 const safeUid = uid => typeof uid === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(uid);
 const validEmail = email => typeof email === 'string' && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -45,6 +46,7 @@ const MESSAGES = {
   offline: 'Nie można połączyć się z chmurą. Spróbuj ponownie.',
   'invalid-state': 'Nie można wysłać nieprawidłowego lub zbyt dużego zapisu.',
   'invalid-cloud-data': 'Zapis w chmurze ma nieprawidłowy format.',
+  'unsupported-save-format': 'Odśwież stronę, aby wczytać aktualną wersję zapisu gry.',
   conflict: 'Wyspa została zapisana w innym oknie lub na innym urządzeniu.',
   'island-expired': 'Ta wyspa wygasła po okresie nieaktywności. Wczytaj konto ponownie, aby rozpocząć nową wyspę.',
   'invalid-code': 'Kod jest nieprawidłowy lub niedostępny.',
@@ -476,7 +478,7 @@ export function createDevCloud({
     // concurrent-write conflict. Never expose arbitrary provider diagnostics.
     const apiError = typeof result.body.error === 'string' ? result.body.error : null;
     if (apiError && (/^(?:trade|community|charity|ship-capacity)-[a-z-]{1,64}$/.test(apiError) || ['second-island-locked', 'archipelago-island-loss', 'unverified-ship-capacity'].includes(apiError))) throw fail(apiError);
-    if (apiError && ['island-expired', 'invalid-island-name', 'inappropriate-island-name', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
+    if (apiError && ['unsupported-save-format', 'island-expired', 'invalid-island-name', 'inappropriate-island-name', 'invalid-code', 'promotion-not-started', 'promotion-ended', 'promotion-exhausted', 'unsupported-promotion-verification', 'legal-required'].includes(apiError)) throw fail(apiError);
     if (apiError && ['invalid-island', 'invalid-generation', 'invalid-revision', 'inventory-overflow'].includes(apiError)) throw fail('invalid-state');
     if ([409, 412].includes(result.status) || result.body.error?.status === 'FAILED_PRECONDITION' ||
         result.body.error?.status === 'ALREADY_EXISTS') throw fail('conflict');
@@ -656,7 +658,7 @@ export function createDevCloud({
     if (accountApiEnabled) {
       if (!version || !Number.isSafeInteger(islandGeneration)) throw fail('invalid-state');
       const result = await firestoreRequest('/api/v1/island', { method: 'PUT', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ payload, expectedRevision: version.revision, generation: islandGeneration }) });
+        body: JSON.stringify({ payload, expectedRevision: version.revision, generation: islandGeneration, savePackingVersion: SUPPORTED_SAVE_PACKING_VERSION }) });
       if (!result.ok || !integer(result.body.revision) || !timestamp(result.body.updateTime) || result.body.generation !== islandGeneration) throw fail('invalid-cloud-data');
       return { revision: result.body.revision, updateTime: result.body.updateTime };
     }
@@ -752,6 +754,7 @@ function createLocalDevCloud({ fetcher, storage, now }) {
       const code = typeof data.error === 'string' ? data.error : '';
       if (response.status === 401) { if (authenticated) clear(); throw fail(authenticated ? 'auth-required' : 'invalid-credentials'); }
       if (response.status === 403) throw fail('permission');
+      if (code === 'unsupported-save-format') throw fail(code);
       if (code === 'island-conflict' || [409, 412].includes(response.status) && !/^(?:trade|community|charity|kingdom|gift)-/.test(code)) throw fail('conflict');
       if (code === 'invalid-island' || code === 'invalid-generation' || code === 'invalid-revision') throw fail('invalid-state');
       if (/^(?:trade|community|charity|kingdom|gift|ship-capacity)-[a-z-]{1,64}$/.test(code) || MESSAGES[code]) throw fail(code);
@@ -822,7 +825,7 @@ function createLocalDevCloud({ fetcher, storage, now }) {
   const createIsland = async () => readIsland(await authenticated('/api/v1/island', {}));
   async function saveIsland(payload, version = null) {
     if (!validIslandPayload(payload) || !versionValid(version) || !integer(generation)) throw fail('invalid-state');
-    const body = await authenticated('/api/v1/island', { payload, expectedRevision: version.revision, generation }, 'PUT');
+    const body = await authenticated('/api/v1/island', { payload, expectedRevision: version.revision, generation, savePackingVersion: SUPPORTED_SAVE_PACKING_VERSION }, 'PUT');
     if (!integer(body.revision) || !timestamp(body.updateTime) || body.generation !== generation) throw fail('invalid-cloud-data');
     return { revision: body.revision, updateTime: body.updateTime };
   }
