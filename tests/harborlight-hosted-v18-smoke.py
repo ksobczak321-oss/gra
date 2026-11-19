@@ -8,6 +8,7 @@ upgrade, promotion claim or reset is performed by this test.
 import base64
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -20,6 +21,52 @@ ROOT = Path(__file__).resolve().parents[1]
 HOST_PROJECTS = {'harborlight-dev.web.app':'harborlight-dev', 'harborlight-dev.firebaseapp.com':'harborlight-dev',
                  'harborlight-prod.web.app':'harborlight-prod', 'harborlight-prod.firebaseapp.com':'harborlight-prod',
                  'harborlight.pl':'harborlight-prod', 'www.harborlight.pl':'harborlight-prod'}
+
+
+def selected_preprod_account(project):
+    selected = os.environ.get('HARBORLIGHT_HOSTED_PREPROD_ACCOUNT', '')
+    if selected and (project != 'harborlight-dev' or selected not in ('admin1', 'admin2', 'admin3')):
+        raise ValueError('An explicit PRE-PROD smoke account must be admin1, admin2 or admin3 in harborlight-dev only.')
+    return selected or None
+
+
+def startup_timeout_ms(project, selected):
+    # Preserve the ordinary hosted startup bound. Only the separate, explicitly
+    # selected admin3 case may replay its real multi-day existing save longer.
+    return 600000 if project == 'harborlight-dev' and selected == 'admin3' else 30000
+
+
+def assert_replay_observation(observation):
+    assert isinstance(observation, dict) and isinstance(observation.get('observed'), bool), 'Missing startup observation'
+    if observation['observed']:
+        assert isinstance(observation.get('ticks'), int) and observation['ticks'] > 0, 'The observed replay has no browser heartbeat'
+        gap = observation.get('max_gap_ms')
+        assert isinstance(gap, (int, float)) and not isinstance(gap, bool) and 0 <= gap <= 1500, 'The offline replay blocked the hosted browser main thread'
+    return observation
+
+
+def assert_replay_startup(observation, elapsed_ms):
+    observation = assert_replay_observation(observation)
+    assert isinstance(elapsed_ms, (int, float)) and not isinstance(elapsed_ms, bool) and math.isfinite(elapsed_ms) and 0 <= elapsed_ms <= 600000, 'The explicit admin3 startup exceeded its separate offline replay bound'
+    assert elapsed_ms <= 30000 or observation['observed'], 'A slow admin3 startup must show the responsive offline replay rather than block synchronously'
+    return observation
+
+
+STARTUP_OBSERVER = '''(()=>{
+  const observation={observed:false,ticks:0,max_gap_ms:0,last_at:null};
+  Object.defineProperty(window,'__HARBORLIGHT_HOSTED_STARTUP_OBSERVATION__',{value:observation});
+  setInterval(()=>{
+    const now=performance.now();
+    const replay=document.querySelector('#loading[data-startup-replay="running"]');
+    if(replay){
+      if(observation.last_at!==null)observation.max_gap_ms=Math.max(observation.max_gap_ms,now-observation.last_at);
+      observation.observed=true;observation.ticks++;observation.last_at=now;
+    }else if(observation.last_at!==null){
+      observation.max_gap_ms=Math.max(observation.max_gap_ms,now-observation.last_at);
+      observation.last_at=null;
+    }
+  },100);
+})()'''
 
 
 def origin_project(base):
@@ -164,8 +211,9 @@ def assert_modern_hosted_front(page, manifest, expected_version):
 
 
 def existing_identity(http, base, project, config, api_enabled=False):
+    selected = selected_preprod_account(project)
     if project == 'harborlight-dev':
-        candidates = [(login, login + '@dev.harborlight.pl', login) for login in ('admin1','admin2','admin3')]
+        candidates = [(login, login + '@dev.harborlight.pl', login) for login in ((selected,) if selected else ('admin1','admin2','admin3'))]
     else:
         email = os.environ.get('HARBORLIGHT_PROD_SMOKE_EMAIL','')
         password = os.environ.get('HARBORLIGHT_PROD_SMOKE_PASSWORD','')
@@ -221,12 +269,14 @@ def run():
     from playwright.sync_api import expect, sync_playwright
     base = os.environ.get('HARBORLIGHT_BASE_URL','').rstrip('/')
     project = origin_project(base)
+    selected = selected_preprod_account(project)
+    startup_timeout = startup_timeout_ms(project, selected)
     frontend = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',str(ROOT/'build/frontend')))
     manifest_bytes = (frontend/'release.json').read_bytes()
     manifest = json.loads(manifest_bytes)
     expected_version = package_app_version(frontend, manifest)
     enabled = os.environ.get('HARBORLIGHT_ACCOUNT_API_ENABLED','false').lower() in ('true','1')
-    errors, blocked_writes, island_reads, api_reads = [], [], [], []
+    errors, blocked_writes, island_reads, api_reads, island_read_uids = [], [], [], [], []
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
         http = pw.request.new_context(extra_http_headers={'Cache-Control':'no-cache'})
@@ -270,27 +320,60 @@ def run():
             context.route('**/*',prohibit_writes)
             session_key = 'harborlight-dev-auth-v1' if project == 'harborlight-dev' else 'harborlight-prod-auth-v1'
             context.add_init_script('(value=>localStorage.setItem(value.key,JSON.stringify(value.session)))('+json.dumps({'key':session_key,'session':identity})+')')
+            if selected == 'admin3':
+                context.add_init_script(STARTUP_OBSERVER)
             page = context.new_page()
             page.on('pageerror',lambda error: errors.append(str(error)))
             page.on('response',lambda response: island_reads.append(response.status) if response.request.method == 'GET' and (urlsplit(response.url).path == '/api/v1/island' or '/documents/islands/' in urlsplit(response.url).path) else None)
             page.on('response',lambda response: api_reads.append(response.status) if response.request.method == 'GET' and urlsplit(response.url).path == '/api/v1/island' else None)
+            def observe_island_identity(response):
+                path = urlsplit(response.url).path
+                if response.request.method != 'GET' or response.status != 200:
+                    return
+                if path == '/api/v1/island':
+                    # Inspect only the authenticated read's UID; never retain or
+                    # print its token, headers or the private response payload.
+                    authorization = response.request.header_value('authorization') or ''
+                    try:
+                        encoded = authorization.removeprefix('Bearer ').split('.')[1]
+                        claims = json.loads(base64.urlsafe_b64decode(encoded + '=' * (-len(encoded) % 4)))
+                        island_read_uids.append(claims.get('sub'))
+                    except (IndexError, ValueError, json.JSONDecodeError):
+                        island_read_uids.append(None)
+                elif '/documents/islands/' in path:
+                    island_read_uids.append(path.rsplit('/',1)[-1])
+            page.on('response', observe_island_identity)
+            startup_started = time.monotonic()
             page.goto(base+'/harborlight-v1-layered.html',wait_until='domcontentloaded')
-            page.wait_for_function('document.getElementById("loading").hidden',timeout=30000)
+            remaining_startup = max(1, startup_timeout - (time.monotonic() - startup_started) * 1000) if selected == 'admin3' else startup_timeout
+            page.wait_for_function('document.getElementById("loading").hidden',timeout=remaining_startup)
+            startup_elapsed = (time.monotonic() - startup_started) * 1000
             expect(page.locator('[data-hud="working"]')).to_have_text(re.compile(r'\d'))
             assert 200 in island_reads, 'The rendered game did not read its authenticated island successfully'
+            assert island_read_uids and set(island_read_uids) == {identity['uid']}, 'The rendered game did not read the selected identity\'s actual island'
+            assert page.evaluate('(key)=>JSON.parse(localStorage.getItem(key))?.uid', session_key) == identity['uid'], 'The rendered session changed away from its selected identity'
             if enabled:
                 assert 200 in api_reads, 'The enabled account API was not actually used by the hosted signed-in game'
             assert urlsplit(page.url).path == '/harborlight-v1-layered.html', 'Authenticated game redirected away from its island'
             assert page.evaluate('typeof window.__HARBORLIGHT_SET_DEV_STATE__ === "undefined"'), 'Hosted QA fixture injection is not allowed'
             assert page.evaluate('!Object.keys(localStorage).some(k=>/^(harborlight-(?:dev|prod)-island-|harborlight-v1-(?:interactive|new-player)-save)/.test(k))'), 'Game progress must not be written to browser storage'
             modern_front = assert_modern_hosted_front(page, manifest, expected_version)
+            replay_observation = None
+            if selected == 'admin3':
+                replay_observation = assert_replay_startup(page.evaluate('''()=>{
+                  const value=window.__HARBORLIGHT_HOSTED_STARTUP_OBSERVATION__;
+                  if(!value)return null;
+                  return {observed:value.observed,ticks:value.ticks,max_gap_ms:Math.max(value.max_gap_ms,value.last_at===null?0:performance.now()-value.last_at)};
+                }'''), startup_elapsed)
             assert not errors, 'Hosted browser raised an unexpected application error'
             context.close()
-            evidence = {'project':project,'commit':manifest['commit'],'app_version':expected_version,'account_api':enabled,'authenticated_island_render':True,'hosted_assets':count,'modern_front':modern_front}
+            evidence = {'project':project,'commit':manifest['commit'],'app_version':expected_version,'account_api':enabled,'authenticated_island_render':True,'hosted_assets':count,'modern_front':modern_front,
+                        'uid':identity['uid'],'selected_preprod_account':selected,'startup_timeout_ms':startup_timeout,'startup_elapsed_ms':startup_elapsed,'startup_replay_observation':replay_observation,'all_browser_writes_blocked':True}
             evidence_path = os.environ.get('HARBORLIGHT_HOSTED_EVIDENCE_PATH')
             if evidence_path:
                 Path(evidence_path).write_text(json.dumps(evidence)+'\n',encoding='utf-8')
             print('PASS hosted: '+str(count)+' exact asset hashes, anonymous Auth entry, isolated runtime/API routing, actual existing signed-in island render; all browser writes blocked; no gameplay claims/upgrades/resets performed')
+            print('PASS hosted identity and startup: '+json.dumps({'uid':identity['uid'],'selected_preprod_account':selected,'startup_timeout_ms':startup_timeout,'startup_elapsed_ms':startup_elapsed,'replay':replay_observation}))
         finally:
             http.dispose()
             browser.close()

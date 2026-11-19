@@ -30706,9 +30706,15 @@
         ],
         "source_sha": null,
         "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
+        "manual_execution": "DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN",
         "release_note": "Poprawka0.15.2.1/cache18 w przygotowaniu; własnyCI i publikacjePENDING. Zachowane grafiki, mechaniki, konta i postęp.",
-        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
+        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "subsequent_user_PREPROD_GO": {
+          "date": "2026-11-19",
+          "quote": "wrzuć na preprod",
+          "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        }
       },
       "notes": [
         "Stare20atlasów pozostają w pakiecie dla wcześniejszych klientów i odniesień; dodatkowe200małych plików zwiększa całe archiwum, lecz zmniejsza transfer i pamięć bieżącej gry.",
@@ -30781,9 +30787,15 @@
         ],
         "source_sha": null,
         "ci_run_url": null,
-        "manual_execution": "NOT_RUN",
+        "manual_execution": "DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN",
         "release_note": "W poprawce0.15.2.1/cache18 ustawiono jawny paintDepth500 zamiast automatycznego481 dla Zakładu skórzanego; odbiórUI/CI/PRE-PROD PENDING.",
-        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
+        "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "subsequent_user_PREPROD_GO": {
+          "date": "2026-11-19",
+          "quote": "wrzuć na preprod",
+          "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        }
       },
       "notes": [
         "Przed poprawką Kamieniołom(z972) przykrywał Zakład skórzany(z962); z1000 stawia fasadę Zakładu przed skałami.",
@@ -30800,6 +30812,173 @@
         "ART:unchanged-source-pixels-and-placement",
         "OPS:DEV-then-PREPROD",
         "OPS:no-reset"
+      ]
+    },
+    {
+      "id": "HL-CHG-1168",
+      "epic": "HL-EPIC-UI",
+      "area": "Pamięć katalogu budynków",
+      "type": "Bug",
+      "title": "Odśwież katalog budynków z ciepłego cache Chrome",
+      "source": {
+        "kind": "user_chat_GO",
+        "date": "2026-11-19",
+        "date_note": "Europe/Warsaw",
+        "summary": "Dodatkowy rzeczywisty test wykrył, że świeży cache starego manifestu przywracał ciężkie atlasy i zasłonięty Zakład skórzany mimo udanego wdrożenia.",
+        "reference": "chat:2026-11-19:1168; docs/v32/GO-CHROME-PERFORMANCE.md"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "LOCAL_QA_IN_PROGRESS",
+        "ci": "pending_own_exact_source",
+        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Wcześniej zapisany manifest z max-age=86400 nie może przywracać starych atlasów ani kolejności warstw.",
+        "Wersjonowany adres, rewalidacja fetch i szczegółowy nagłówek Hostingu działają bez ręcznego czyszczenia pamięci.",
+        "Rzeczywisty HTTP i cache przeglądarki obejmują negatywne kontrole starej wersji oraz trzy poprawione starty, bez routingu Playwright i operacji na kontach."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "related_changes": [
+        "HL-CHG-1166",
+        "HL-CHG-1167"
+      ],
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-CHROME-PERFORMANCE.md",
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+        ],
+        "code": [
+          "harborlight-v1-building-stages.js",
+          "firebase.json"
+        ],
+        "automated_tests": [
+          "tests/harborlight-building-cache-v32-smoke.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "0.15.2.2/cache19: implementacja i odbiór własnego źródła w toku.",
+        "code_source_sha": null,
+        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "subsequent_user_PREPROD_GO": {
+          "date": "2026-11-19",
+          "quote": "wrzuć na preprod",
+          "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        }
+      },
+      "notes": [
+        "B94: workflow CI i PRE-PROD SUCCESS pozostają w historii; późniejszy raport użytkownika ponownie otworzył odbiór jakości.",
+        "Prywatne kopie zapisów służą wyłącznie lokalnemu odczytowemu testowi i nie trafiają do Git."
+      ],
+      "tags": [
+        "v32",
+        "performance",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-outcomes"
+      ]
+    },
+    {
+      "id": "HL-CHG-1169",
+      "epic": "HL-EPIC-UI",
+      "area": "Nadrabianie nieobecności",
+      "type": "Bug",
+      "title": "Usuń zawieszanie startu admin3 po długiej nieobecności",
+      "source": {
+        "kind": "user_chat_GO",
+        "date": "2026-11-19",
+        "date_note": "Europe/Warsaw",
+        "summary": "Admin3 na PRE-PROD zawiesza się, pozostałe konta działają. Odczyt, zegar 1× i zapis są poprawne; rzeczywista kopia ze 97 mieszkańcami blokuje główny wątek przy nadrabianiu prawie 48 godzin.",
+        "reference": "chat:2026-11-19:1169; docs/v32/GO-CHROME-PERFORMANCE.md"
+      },
+      "status": {
+        "implementation": "implemented",
+        "dev": "LOCAL_COMPONENTS_AND_ACTUAL_SHORT_EQUIVALENCE_PASS_FULL_SOURCE_RELEASE_PENDING",
+        "ci": "pending_own_exact_source",
+        "preprod": "authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Admin3 kończy nadrabianie całej rzeczywistej nieobecności bez resetu, zmiany zegara, zasobów lub pomijania czasu.",
+        "Wynik pełnego jednorazowego przeliczenia pozostaje identyczny z dotychczasowym modelem; cache pochodnych nie przekracza naturalnej granicy zmiany stanu.",
+        "Długie przeliczenie pozostawia responsywny ekran; wynik jest przyjmowany atomowo tylko dla niezmienionej sesji, wersji zapisu i świata.",
+        "Wylogowanie, zmiana sesji, opuszczenie strony, błąd Workera lub nowszy restore nie mogą zapisać częściowego lub spóźnionego wyniku.",
+        "DEV i standardowy PRE-PROD wymagają własnego zielonego CI oraz sprawdzenia rzeczywistego istniejącego zapisu; żadnego resetu kont."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "related_changes": [
+        "HL-CHG-1166",
+        "HL-CHG-1167"
+      ],
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-CHROME-PERFORMANCE.md",
+          "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+          "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
+        ],
+        "code": [
+          "harborlight-v1-state.js",
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-development-logistics.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-archipelago.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-logistics.js",
+          "harborlight-v1-startup-replay.js",
+          "harborlight-v1-startup-replay-model.js",
+          "harborlight-v1-startup-replay-worker.js",
+          ".github/workflows/google-cloud-dev.yml"
+        ],
+        "automated_tests": [
+          "tests/harborlight-simulation-transfer.test.mjs",
+          "tests/harborlight-resident-read-scopes.test.mjs",
+          "tests/harborlight-startup-replay.test.mjs",
+          "tests/harborlight-startup-replay-v32-smoke.py",
+          "tests/harborlight-hosted-v18-smoke.py",
+          "tests/harborlight-runtime-config.test.py"
+        ],
+        "source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "0.15.2.2/cache19: C4 ma 18 kierunkowych prób PASS; 23 testy Workera Node i 12 natywnych przypadków przeglądarkowych są dowodami komponentu. Pierwsza godzina rzeczywistego admin3 ma identyczny pełny JSON z B94 (239055B), a dalsza godzina przy rozrośniętej historii ma identyczny pełny JSON z C3 (9226855B). Pełne47,885h i własne CI/Pages/PRE-PROD pozostają PENDING.",
+        "code_source_sha": null,
+        "manual_scope": "User confirmed the new DEV works; not a manual execution of every historical QA case.",
+        "subsequent_user_PREPROD_GO": {
+          "date": "2026-11-19",
+          "quote": "wrzuć na preprod",
+          "same_DEV_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08"
+        }
+      },
+      "notes": [
+        "B94: workflow CI i PRE-PROD SUCCESS pozostają w historii; późniejszy raport użytkownika ponownie otworzył odbiór jakości.",
+        "Prywatne kopie zapisów służą wyłącznie lokalnemu odczytowemu testowi i nie trafiają do Git.",
+        "Wcześniejszy test zalogowanej wyspy obejmował ekran admin1. Nowy wymagany test obejmuje osobno wyłącznie istniejące admin3, bez fallbacku i bez zapisów, z kontrolą responsywności podczas Worker.",
+        "Wynik Workera jest przypięty do UID, generacji, rewizji/CAS, epoki adopcji, wyspy oraz generacji/rewizji/tempa zegara."
+      ],
+      "tags": [
+        "v32",
+        "performance",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-outcomes"
       ]
     }
   ],
@@ -34295,8 +34474,8 @@
       "cache": "frontend-v32-18",
       "status": "LOCAL_QA_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING",
       "source_sha": null,
-      "CI": "PENDING_OWN_EXACT_SOURCE",
-      "Pages": "PENDING_OWN_SOURCE",
+      "CI": "IN_PROGRESS",
+      "Pages": "SUCCESS",
       "PREPROD": "PENDING_AFTER_VERIFIED_DEV_AND_CI",
       "PROD_DNS_reset": "NO_ACTION",
       "accounts_and_progress": "PRESERVE",
@@ -34330,7 +34509,30 @@
         "minigames": "55entries110docs_PROVENANCE_ONLY_SEMANTICS_UNCHANGED",
         "economy": "14tables_UNCHANGED",
         "simulations": "REAL24h24h72h_CANONICAL_START_NO_INJECTION_PASS"
-      }
+      },
+      "manual_DEV_acceptance": "PASS_USER_REPORTED_TAK_JEST_OK_2026-11-19",
+      "manual_PREPROD_acceptance": "NOT_RUN",
+      "PREPROD_authorized": true,
+      "PREPROD_authorization_quote": "wrzuć na preprod",
+      "PREPROD_authorization_date": "2026-11-19",
+      "publication_source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "CI_run": 44520278661,
+      "Pages_run": 44520278629
+    },
+    "cache19_admin3_hotfix": {
+      "as_of": "2026-11-19",
+      "version": "0.15.2.2",
+      "cache": "frontend-v32-19",
+      "status": "LOCAL_SHORT_ACTUAL_EQUIVALENCE_PASS_CODE_FREEZE_PENDING",
+      "source": null,
+      "CI": "PENDING",
+      "PREPROD": "PENDING",
+      "manual_user_acceptance": "NOT_RUN",
+      "accounts_and_progress": "PRESERVE",
+      "clock_changes": false,
+      "reset": false,
+      "model_candidate": "C4",
+      "actual_full_47_885h": "PENDING"
     }
   }
 }

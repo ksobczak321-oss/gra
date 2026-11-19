@@ -1,0 +1,134 @@
+{
+  "as_of": "2026-11-19",
+  "timezone": "Europe/Warsaw",
+  "version": "0.15.2.2",
+  "cache": "frontend-v32-19",
+  "status": "LOCAL_COMPONENTS_AND_ACTUAL_SHORT_MODEL_EQUIVALENCE_PASS_FULL_RELEASE_PENDING",
+  "code_source": null,
+  "publication_source": null,
+  "diagnosis": {
+    "account": "admin3",
+    "existing_save_valid": true,
+    "auth_and_island_API_reads": true,
+    "generation": 2,
+    "clock_rate": 1,
+    "initial_population": 97,
+    "initial_absence_hours": 47.88518666666667,
+    "browser_main_thread_block_reproduced_on_local_private_copy": true,
+    "cause": "Synchronous startup replay; repeated per-resident production and meal-history derivation at many natural event boundaries."
+  },
+  "implementation": {
+    "worker": "One unchanged advanceArchipelago call for the initial fixed target. Subsequent elapsed real time is handled as ordinary subsequent ticks on Workers before atomic adoption. No minute chunks of the initial absence.",
+    "lossless_transport": "Normalized bundle graph, shared wallet/accessors, aliases, hidden runtime flags and puzzle histories preserved without save compaction or normalization.",
+    "adoption_guards": [
+      "UID",
+      "account generation",
+      "revision and updateTime/CAS",
+      "world adoption epoch",
+      "active island",
+      "clock generation",
+      "clock revision",
+      "clock rate",
+      "fresh authoritative island read",
+      "fresh admin3 clock read"
+    ],
+    "cancellation": [
+      "session change",
+      "pagehide",
+      "logout",
+      "worker error",
+      "newer restore",
+      "changed cloud revision or clock"
+    ],
+    "model": "Scoped derived quotes and immutable catalog indexes. C4 diet memo shared only within one atomic population settlement with exact keys and explicit history mutation invalidation. No state cache is saved or retained between public advances.",
+    "resources_histories_arithmetic_events_and_clock_rules_preserved": true,
+    "old_bundle_released_after_worker_dispose": true
+  },
+  "actual_private_model_comparisons": {
+    "first_hour": {
+      "status": "STRICT_BYTE_IDENTICAL",
+      "baseline": "B94",
+      "candidate": "C4",
+      "bytes": 239055,
+      "sha256": "2fa608692053b4e1ac941d8074b011af0736ef8494fde43a24ddd6c574ae2d07",
+      "baseline_local_ms": 32350.872504,
+      "candidate_local_ms": 14603.158926,
+      "C3_local_ms": 11102.924989000001,
+      "note": "C4 is slower than C3 in this cold case. Local Node timings are not a Chrome/network benchmark."
+    },
+    "later_history_one_hour": {
+      "status": "STRICT_BYTE_IDENTICAL",
+      "baseline": "C3 frozen private snapshot",
+      "candidate": "C4",
+      "checkpoint_hours": 9.78,
+      "initial_population": 100,
+      "history_rows": 77636,
+      "bytes": 9226855,
+      "sha256": "fefe14fee581c77e325d0ce3c4c400eadb7f8206d67ff660f39e600a704b84f2",
+      "target": 1794979443023.2,
+      "result_population": 101,
+      "normalized_again": false,
+      "candidate_wall_ms": 17261.188877,
+      "candidate_cpu_ms": 20777.546,
+      "reference_timing": "Contains a pause; no isolated speed ratio claimed."
+    },
+    "full_47_885h": {
+      "status": "PENDING",
+      "original_B94_reference": "INCOMPLETE_PAUSED_STATE_PRESERVED",
+      "C4": "NOT_STARTED",
+      "superseded_C1_C2_C3_full_runs": "NO_FULL_RESULT_NO_PASS"
+    }
+  },
+  "local_components": {
+    "scoped_model_cases": 18,
+    "simulation_transfer_cases": 5,
+    "worker_node_cases": 23,
+    "native_worker_browser_cases": 12,
+    "worker_browser_proof": {
+      "fixture": "synthetic 97 people, 35 workers, 48 hours",
+      "native_workers": 1,
+      "full_fixed_target": true,
+      "pending_heartbeats": 602,
+      "max_heartbeat_gap_ms": 74,
+      "cloud_reads": 2,
+      "JS_errors": 0,
+      "model_scope": "C3 working component; final C4 full CI remains pending"
+    },
+    "existing_startup_cases": 26,
+    "performance_cases": 4,
+    "warm_cache": {
+      "negative_controls": 2,
+      "actual_game_boots": 3,
+      "manifest_requests": 5,
+      "real_HTTP_cache_no_Playwright_route": true
+    },
+    "hosted_configuration_unit_cases": 12,
+    "source_scope_note": "Separate component observations, with source fingerprints. These do not substitute for own exact-source CI or actual hosted admin3 acceptance."
+  },
+  "model_fingerprints": {
+    "harborlight-v1-state.js": "705f4b89831d2d801d78ce2f5909a564c445b6679079fe220ed10419559f2f67",
+    "harborlight-v1-provisions.js": "ba76961466313cf73588b03f3e65cac6fba14d39366aad7a590a3643cf912629",
+    "harborlight-v1-residents.js": "3f9d818267fbacd359d3500a77a8dddf806f288079109105ad7bf2b37a051f22",
+    "harborlight-v1-development-logistics.js": "4daaa08b677addc0f65263d919cf1284013704cc4083a9f3a3c30f9e5f7b1966",
+    "harborlight-v1-logistics.js": "54039af2c1b6922c23aec66ce4e355bafc85087cef7f0fe9ae90661a44b1ba35"
+  },
+  "release": {
+    "CI": "PENDING_OWN_EXACT_SOURCE",
+    "Pages": "PENDING_NEW_SOURCE",
+    "DEV_tag": "PENDING",
+    "PREPROD": "PENDING_STANDARD_WORKFLOW",
+    "required_actual_admin3_browser": "ADDED_NOT_YET_RUN_ON_HOSTING",
+    "ordinary_hosted_startup_ms": 30000,
+    "selected_admin3_startup_ms": 600000,
+    "slow_admin3_requires_observed_worker": true,
+    "main_thread_heartbeat_max_gap_ms": 1500,
+    "PROD_DNS": "NO_ACTION"
+  },
+  "data_boundaries": {
+    "private_world_payloads_in_repo": false,
+    "real_game_writes": false,
+    "clock_writes": false,
+    "reset": false,
+    "accounts_and_progress": "PRESERVE"
+  }
+}

@@ -42,7 +42,7 @@ Data pierwotnej wiadomości: 2026-11-19. Europe/Warsaw
 - **Dokumenty:** [docs/v32/GO-CHROME-PERFORMANCE.md](../../v32/GO-CHROME-PERFORMANCE.md), [docs/v32/CHROME-PERFORMANCE-EVIDENCE.json](../../v32/CHROME-PERFORMANCE-EVIDENCE.json), [docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json](../../v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json)
 - **Kod:** [harborlight-v1-building-stages.js](../../../harborlight-v1-building-stages.js), [harborlight-v1-water.js](../../../harborlight-v1-water.js), [harborlight-v1-ambient.js](../../../harborlight-v1-ambient.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-map-art.js](../../../harborlight-v1-map-art.js), [scripts/build_building_sprites.py](../../../scripts/build_building_sprites.py)
 - **Scenariusze automatyczne:** [tests/harborlight-building-stages.test.mjs](../../../tests/harborlight-building-stages.test.mjs), [tests/harborlight-water.test.mjs](../../../tests/harborlight-water.test.mjs), [tests/harborlight-performance-v32-smoke.py](../../../tests/harborlight-performance-v32-smoke.py)
-- **Ręczne wykonanie przypadku:** `NOT_RUN`.
+- **Ręczne wykonanie przypadku:** `DEV_PASS_USER_REPORTED_TAK_JEST_OK;PREPROD_NOT_RUN`.
 
 Poprawka0.15.2.1/cache18 w przygotowaniu; własnyCI i publikacjePENDING. Zachowane grafiki, mechaniki, konta i postęp.
 

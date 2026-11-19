@@ -1,17 +1,17 @@
-import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-18';
-import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-18';
-import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-18';
-import * as Education from './harborlight-v1-education.js?v=frontend-v32-18';
-import * as Military from './harborlight-v1-military.js?v=frontend-v32-18';
+import { packAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-19';
+import { reconcileExpeditionOutcomes } from './harborlight-v1-expedition-hour.js?v=frontend-v32-19';
+import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-19';
+import * as Education from './harborlight-v1-education.js?v=frontend-v32-19';
+import * as Military from './harborlight-v1-military.js?v=frontend-v32-19';
 // The client snapshot keeps a mother-root account revision with up to twenty
 // worlds. Cloud adapters persist bounded per-world documents atomically.
 // Simulation is injected: this module does not import the state coordinator.
-import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-18';
-import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-18';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-18';
-import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-18';
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-18';
-import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-18';
+import { MATERIAL_IDS, availableGoods, stockRoom } from './harborlight-v1-logistics.js?v=frontend-v32-19';
+import { bonusStock, consumeMaterial, grantBonusMaterials, centralAvailable, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-19';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-19';
+import { residentAtHome, residentPopulationMinimum, residentSegments, advanceResidents } from './harborlight-v1-residents.js?v=frontend-v32-19';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-19';
+import { residentFoodMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-19';
 
 export const ISLAND_IDS = Object.freeze(Array.from({ length: 20 }, (_, index) => `island-${index + 1}`));
 export const ARCHIPELAGO_RULES = Object.freeze({ version: 2, secondIslandLevel: 10, maximumIslands: 20, islandLevelStep: 3, colonists: 6,
@@ -254,6 +254,46 @@ export function serializeArchipelago(bundle) {
 }
 export const activeIsland = bundle => worldFor(bundle, bundle.activeIslandId);
 export const isPrimaryIsland = bundle => bundle.activeIslandId === 'island-1';
+
+// In-memory transport only. A save deliberately compacts histories and restores
+// defaults; transferring a running simulation must do neither. Keep references
+// in the descriptor ledger so structuredClone preserves even shared hidden data.
+export function captureSimulationBundle(bundle) {
+  if (!adaptersFor.has(bundle)) throw new Error('Restore the archipelago before transferring it.');
+  const hiddenProperties = [], seen = new WeakSet();
+  function visit(value) {
+    if (!value || typeof value !== 'object' || seen.has(value)) return;
+    seen.add(value);
+    for (const key of Object.getOwnPropertyNames(value)) {
+      if (Array.isArray(value) && key === 'length') continue;
+      const descriptor = Object.getOwnPropertyDescriptor(value, key);
+      if (!descriptor.enumerable && Object.hasOwn(descriptor, 'value')) {
+        hiddenProperties.push({target:value, key, descriptor});
+      }
+      visit(Object.hasOwn(descriptor, 'value') ? descriptor.value : value[key]);
+    }
+  }
+  visit(bundle);
+  return {bundle, hiddenProperties};
+}
+
+export function restoreSimulationBundle(packet, adapters) {
+  const bundle = packet?.bundle;
+  if (!bundle?.worlds?.['island-1'] || typeof adapters?.advanceTo !== 'function' || !Array.isArray(packet.hiddenProperties)) {
+    throw new Error('A running archipelago and simulation adapters are required.');
+  }
+  for (const {target, key, descriptor} of packet.hiddenProperties) Object.defineProperty(target, key, descriptor);
+  for (const [field,id] of [['primary','island-1'],['secondary','island-2']]) {
+    Object.defineProperty(bundle,field,{enumerable:true,configurable:true,get:()=>bundle.worlds[id]||null,set:value=>{if(value)bundle.worlds[id]=value;else delete bundle.worlds[id];}});
+  }
+  if (bundle.primary.ruleset === 32) {
+    for (const world of Object.values(bundle.worlds)) {
+      Object.defineProperty(world.resources,'coins',{enumerable:true,configurable:true,get:()=>bundle.sharedWallet.coins,set:value=>{bundle.sharedWallet.coins=Math.min(Number.MAX_SAFE_INTEGER,Math.max(0,Math.floor(value)||0));}});
+    }
+  }
+  adaptersFor.set(bundle, adapters);
+  return bundle;
+}
 
 export function advanceArchipelago(bundle, now = Date.now()) {
   const adapters = adaptersFor.get(bundle);

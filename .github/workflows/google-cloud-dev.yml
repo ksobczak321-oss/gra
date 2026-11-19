@@ -384,6 +384,48 @@ jobs:
           appendFileSync(process.env.GITHUB_ENV, `HARBORLIGHT_ACCOUNT_API_VERIFIED=${evidence.account_api ? 'true' : 'false'}\n`);
           JS
           fi
+          # A successful admin1 render must not conceal the admin3-only
+          # offline-start regression. This second required invocation selects
+          # that existing account exclusively and keeps its evidence separate.
+          if (( browser_status == 0 )); then
+            set +e
+            HARBORLIGHT_HOSTED_PREPROD_ACCOUNT=admin3 \
+              HARBORLIGHT_HOSTED_EVIDENCE_PATH="$RUNNER_TEMP/harborlight-hosted-admin3-evidence.json" \
+              python3 -u tests/harborlight-hosted-v18-smoke.py 2>&1 | tee "$RUNNER_TEMP/harborlight-hosted-admin3-browser.log"
+            browser_status=${PIPESTATUS[0]}
+            set -e
+            if (( browser_status != 0 )); then
+              node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-admin3-browser.log" <<'JS' || true
+          import { readFileSync } from 'node:fs';
+          const text = readFileSync(process.argv[2], 'utf8') || 'Hosted admin3 acceptance failed without output.';
+          let escaped = '';
+          for (const character of Array.from(text.slice(-6000)).reverse()) {
+            const piece = character === '%' ? '%25' : character === '\r' ? '%0D' : character === '\n' ? '%0A' : character;
+            if (escaped.length + piece.length > 6000) break;
+            escaped = piece + escaped;
+          }
+          console.log(`::error title=Hosted admin3 acceptance failed::${escaped}`);
+          JS
+            else
+              node --input-type=module - "$RUNNER_TEMP/harborlight-hosted-admin3-evidence.json" <<'JS'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          const evidence = JSON.parse(readFileSync(process.argv[2], 'utf8'));
+          if (evidence.project !== 'harborlight-dev' || evidence.commit !== process.env.GITHUB_SHA ||
+              evidence.authenticated_island_render !== true || evidence.account_api !== true ||
+              evidence.selected_preprod_account !== 'admin3' || evidence.uid !== 'dev-admin3' ||
+              evidence.all_browser_writes_blocked !== true || evidence.startup_timeout_ms !== 600000 ||
+              !Number.isFinite(evidence.startup_elapsed_ms) || evidence.startup_elapsed_ms < 0 || evidence.startup_elapsed_ms > 600000 ||
+              !evidence.startup_replay_observation ||
+              !evidence.startup_replay_observation.observed && evidence.startup_elapsed_ms > 30000 ||
+              evidence.startup_replay_observation.observed &&
+                (!(evidence.startup_replay_observation.ticks > 0) ||
+                 !(evidence.startup_replay_observation.max_gap_ms >= 0 && evidence.startup_replay_observation.max_gap_ms <= 1500))) {
+            throw new Error('Hosted evidence did not confirm the existing admin3 island and responsive startup');
+          }
+          appendFileSync(process.env.GITHUB_ENV, 'HARBORLIGHT_ADMIN3_BROWSER_VERIFIED=true\n');
+          JS
+            fi
+          fi
           exit "$browser_status"
 
       - name: Publish hosted browser failure diagnostics
@@ -393,6 +435,9 @@ jobs:
           name: hosted-browserfailure-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/harborlight-hosted-browser.log
+            ${{ runner.temp }}/harborlight-hosted-evidence.json
+            ${{ runner.temp }}/harborlight-hosted-admin3-browser.log
+            ${{ runner.temp }}/harborlight-hosted-admin3-evidence.json
             /tmp/harborlight-v18-*.png
           if-no-files-found: error
           retention-days: 7
@@ -419,13 +464,14 @@ jobs:
 
       # The receipt is created only after the immutable API image and exact
       # frontend bundle were deployed, every hosted asset matched the package,
-      # and an existing authenticated island rendered with writes blocked.
+      # and both existing authenticated island checks passed with writes blocked.
       - name: Write successful DEV release receipt
         env:
           HARBORLIGHT_RECEIPT_PATH: ${{ runner.temp }}/harborlight-release/release.json
         shell: bash
         run: |
           set -euo pipefail
+          [[ "$HARBORLIGHT_ADMIN3_BROWSER_VERIFIED" == true ]]
           mkdir -p "$RUNNER_TEMP/harborlight-release"
           node infra/google-cloud/promotion.mjs write-receipt
 

@@ -1,58 +1,59 @@
-import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-18';
-import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-18';
-import { createAdvisorIntroduction } from './harborlight-v1-advisor-intro.js?v=frontend-v32-18';
-import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-18';
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-18';
-import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-18';
-import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-18';
-import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-18';
-import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-18';
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-18';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-18';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-18';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-18';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-18';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-18';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-18';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-18';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-18';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-18';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-18';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-18';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-18';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-18';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-18';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-18';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-18';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-18';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-18';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-18';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-18';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-18';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-18';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-18';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-18';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-18';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-18';
-import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-18';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-18';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-18';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-18';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-18';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-18';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-18';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-18';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-18';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-18';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-18';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-18';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-18';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-18';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-18';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-18';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-18';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-18';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-18';
+import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-19';
+import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-19';
+import { createAdvisorIntroduction } from './harborlight-v1-advisor-intro.js?v=frontend-v32-19';
+import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-19';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-19';
+import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-19';
+import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-19';
+import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-19';
+import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-19';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-19';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-19';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-19';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-19';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-19';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-19';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-19';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-19';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-19';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-19';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-19';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-19';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-19';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-19';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-19';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-19';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-19';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-19';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-19';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-19';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-19';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-19';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-19';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-19';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-19';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-19';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-19';
+import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-19';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-19';
+import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-19';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-19';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-19';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-19';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-19';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-19';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-19';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-19';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-19';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-19';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-19';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-19';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-19';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-19';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-19';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-19';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-19';
+import { createStartupReplayClient, startupReplayGap, startupReplayIdentityKey, STARTUP_REPLAY_MIN_GAP_MS, STARTUP_REPLAY_RESIDUAL_MS } from './harborlight-v1-startup-replay.js?v=frontend-v32-19';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -144,6 +145,11 @@ function currentPopulationRate(happiness) {return populationRateForState(state,h
 const devCloud = createDevCloud();
 let devAccount = null, devSync = null, devSyncStatus = 'loading';
 let devCloudUiReady = false, devCloudAlert = null, devSigningOut = false;
+let startupReplayClient = null, startupPreparing = true, startupReplayCancelled = false, startupReplayPrepared = false;
+function cancelStartupReplay(code='startup-replay-cancelled') {
+  startupReplayCancelled = true;
+  startupReplayClient?.cancel(code);
+}
 try { devAccount = await devCloud.restoreSession(); }
 catch {
   // A rejected stored identity must not fall back to another island profile.
@@ -155,6 +161,20 @@ const NEW_PLAYER_PROFILE = currentProfile.newPlayer;
 const NEW_PLAYER_SLOT = currentProfile.slot;
 const OFFICIAL_GAME_URL = 'https://harborlight.pl/';
 const SAVE_KEY = currentProfile.saveKey;
+// These must exist before any long startup await. A result from an old page or
+// another account must never be adopted later, even before UI setup finishes.
+window.addEventListener('storage',event=>{
+  if (!devAccount || event.key!==devCloud.sessionKey) return;
+  let nextUid;
+  try {nextUid=JSON.parse(event.newValue)?.uid;} catch { /* Removed identity. */ }
+  if (nextUid!==devAccount.uid) {
+    cancelStartupReplay('startup-identity-changed');devSigningOut=true;devSync?.dispose();
+    location.assign('harborlight-auth.html?mode=login');
+  }
+});
+window.addEventListener('pagehide',()=>{
+  if (startupPreparing) {cancelStartupReplay();devSync?.dispose();}
+});
 document.documentElement.dataset.profile = NEW_PLAYER_PROFILE ? 'new-player' : 'preview';
 if (NEW_PLAYER_SLOT) document.documentElement.dataset.profileSlot = NEW_PLAYER_SLOT;
 const stage = document.getElementById('stage');
@@ -212,10 +232,95 @@ function setDevelopmentRuntime(world) {
 }
 const worldAdapters = { normalizeState: (raw,now) => setDevelopmentRuntime(normalizeRuntimeWorld(raw,now,{upgradeRules:CLOUD_CURRENT_RULES,normalizeState})), createState: (now,options={}) => {const world=setDevelopmentRuntime(createState(now,{...options,...(USE_DEVELOPMENT_RULES?{ruleset:32}:{})}));if(USE_DEVELOPMENT_RULES)world.settings.language='pl';return world;}, advanceTo: State.advanceTo };
 function readWorldPayload(raw) {
+  startupReplayClient?.cancel('startup-state-changed');startupReplayPrepared=false;
   charityAdapter = null; worldAdoptionEpoch += 1;
   archipelago = Archipelago.restoreArchipelago(raw, worldAdapters, simulationNow());
   state = Archipelago.activeIsland(archipelago);
   return state;
+}
+function startupIdentity() {
+  const version=devSync?.version;
+  return {uid:devAccount?.uid??null,generation:devCloud.accountStatus?.generation??null,
+    revision:version?.revision??null,updateTime:version?.updateTime??null,
+    adoptionEpoch:worldAdoptionEpoch,activeIslandId:archipelago?.activeIslandId??null,
+    clockGeneration:devTimeStatus?.generation??null,clockRevision:devTimeStatus?.clockRevision??null,clockRate:devTimeStatus?.rate??null};
+}
+function showStartupReplayProgress() {
+  const loader=document.getElementById('loading'),message=loader.querySelector('p');
+  let english=false;try {english=localStorage.getItem('harborlight-language')==='en';} catch {}
+  const copy=(pl,en)=>english?en:pl;
+  const previous=message?.textContent;
+  if (message) message.textContent=copy('Rozliczamy czas Twojej nieobecności. Możesz poczekać albo wrócić do logowania.','We are catching up your island while you were away. You can wait or return to sign-in.');
+  loader.dataset.startupReplay='running';
+  const counter=document.createElement('p');counter.dataset.startupReplayElapsed='';counter.setAttribute('aria-live','off');
+  const exit=document.createElement('button');exit.type='button';exit.dataset.startupReplayExit='';exit.textContent=copy('Wróć do logowania','Back to sign-in');
+  exit.addEventListener('click',()=>{
+    cancelStartupReplay('startup-identity-changed');
+    if (devAccount) finishDevSignout();else location.assign('harborlight-auth.html?mode=login');
+  });
+  loader.firstElementChild.append(counter,exit);
+  const began=Date.now();
+  const update=()=>{
+    const seconds=Math.max(0,Math.floor((Date.now()-began)/1000));
+    counter.textContent=copy(`Rozliczanie trwa ${seconds} s.`,`Catching up: ${seconds} s.`);
+    if (devAccount && devCloud.sessionIdleExpired) {cancelStartupReplay('startup-identity-changed');finishDevSignout();}
+  };
+  update();const timer=setInterval(update,1000);
+  return ()=>{clearInterval(timer);counter.remove();exit.remove();delete loader.dataset.startupReplay;if(message)message.textContent=previous;};
+}
+async function replayInitialAbsence() {
+  if (startupReplayCancelled) throw Object.assign(new Error('Startup cancelled.'),{code:'startup-replay-cancelled'});
+  if (State.onboardingStatus(state).pending) return;
+  const eligible=world=>!State.onboardingStatus(world).pending;
+  let targetNow=Math.floor(simulationNow());
+  if (startupReplayGap(archipelago,targetNow,eligible)<STARTUP_REPLAY_MIN_GAP_MS) return;
+  const original=archipelago,identity=startupIdentity(),identityKey=startupReplayIdentityKey(identity);
+  const isCurrent=()=>!startupReplayCancelled&&!devSigningOut&&archipelago===original&&
+    startupReplayIdentityKey(startupIdentity())===identityKey&&(!devAccount||!devCloud.sessionIdleExpired)&&(!devSync||devSync.writable);
+  startupReplayClient=createStartupReplayClient({isCurrent});
+  const cleanup=showStartupReplayProgress();
+  try {
+    // Give the progress UI an actual paint before transferring a possibly
+    // large snapshot. All model advancement remains on the dedicated worker.
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    let packet=Archipelago.captureSimulationBundle(original),recovery=true,nextBundle,serverChecked=false,clockChecked=false;
+    for (;;) {
+      if (!isCurrent()) throw Object.assign(new Error('The startup state changed.'),{code:'startup-state-changed'});
+      const context={accountId:devAccount?.uid||'preview',online:!document.hidden&&document.hasFocus(),
+        capabilities:Commerce.runtimeCapabilities(),simulatedActionClock:devTimeStatus?.canSetRate===true};
+      const result=await startupReplayClient.run({packet,targetNow,realNow:Date.now(),identity,context,recoverInterruptions:recovery});
+      nextBundle=Archipelago.restoreSimulationBundle(result.packet,worldAdapters);
+      const nextTarget=Math.floor(simulationNow());
+      if (startupReplayGap(nextBundle,nextTarget,eligible)<=STARTUP_REPLAY_RESIDUAL_MS) {
+        if (!isCurrent()) throw Object.assign(new Error('The startup state changed.'),{code:'startup-state-changed'});
+        if (devAccount && !serverChecked) {
+          // Recheck server truth once before adoption. A slow GET can itself
+          // add elapsed time; the next loop handles that time on the worker.
+          const remote=await devCloud.loadIsland();
+          if (!remote || remote.version?.revision!==identity.revision || remote.version?.updateTime!==identity.updateTime ||
+              identity.generation!==null && remote.generation!==identity.generation || !isCurrent()) {
+            throw Object.assign(new Error('The confirmed cloud state changed.'),{code:'startup-state-changed'});
+          }
+          serverChecked=true;
+        }
+        if (devTimeController && !clockChecked) {
+          const clock=await devTimeController.status();
+          if ((clock.generation??null)!==identity.clockGeneration || (clock.clockRevision??null)!==identity.clockRevision ||
+              (clock.rate??null)!==identity.clockRate || !isCurrent()) {
+            throw Object.assign(new Error('The confirmed simulation clock changed.'),{code:'startup-state-changed'});
+          }
+          devTimeStatus=clock;devTimeOffsetSeconds=Number(clock.offsetSeconds)||0;clockChecked=true;
+        }
+        if (startupReplayGap(nextBundle,Math.floor(simulationNow()),eligible)<=STARTUP_REPLAY_RESIDUAL_MS) break;
+      }
+      // This is the next ordinary elapsed-time tick, not a subdivision of the
+      // initial absence. No partial result has been adopted or queued to save.
+      packet=Archipelago.captureSimulationBundle(nextBundle);targetNow=Math.floor(simulationNow());recovery=false;
+    }
+    if (!isCurrent()) throw Object.assign(new Error('The startup state changed.'),{code:'startup-state-changed'});
+    archipelago=nextBundle;state=Archipelago.activeIsland(archipelago);
+    charityAdapter=null;worldAdoptionEpoch+=1;startupReplayPrepared=true;
+  } finally {cleanup();startupReplayClient.dispose();startupReplayClient=null;}
 }
 function worldPayload() {
   archipelago.worlds[archipelago.activeIslandId] = state;
@@ -291,6 +396,9 @@ if (devAccount) {
   await new Promise(()=>{});
 }
 if(LOOPBACK_PREVIEW&&devCloud.local){Object.defineProperty(window,'__HARBORLIGHT_DEV_STATE__',{configurable:true,get:()=>structuredClone(state)});Object.defineProperty(window,'__HARBORLIGHT_DEV_ARCHIPELAGO__',{configurable:true,get:()=>structuredClone(worldPayload())});}
+try { const preferred = localStorage.getItem('harborlight-language'); if (['en','pl'].includes(preferred)) state.settings.language = preferred; } catch {}
+try {await replayInitialAbsence();}
+catch(error){console.error(error);window.harborlightStartup.fail();await new Promise(()=>{});}
 // Restore the actual island first, then decode its visible building variants.
 // Menu construction must not briefly request the superseded atlas/PNG artwork.
 const buildingStagesReady = Development.isDevelopment(state) ? loadBuildingStages({state}) : Promise.resolve(null);
@@ -308,7 +416,6 @@ const BUILDINGS = Development.isDevelopment(state) ? (State.ALL_BUILDINGS || LEG
 const RESOURCES = Development.isDevelopment(state) ? (State.ALL_RESOURCES || LEGACY_RESOURCES) : LEGACY_RESOURCES;
 const MATERIAL_IDS = Development.isDevelopment(state) ? Development.developmentResourceIds.filter(id=>!Development.Provisions.GOODS[id]?.legacy||uiOwnsLegacyGood(id)) : LEGACY_MATERIAL_IDS;
 const WORKPLACE_IDS = Development.isDevelopment(state) ? (State.ALL_WORKPLACE_IDS || LEGACY_WORKPLACE_IDS) : LEGACY_WORKPLACE_IDS;
-try { const preferred = localStorage.getItem('harborlight-language'); if (['en','pl'].includes(preferred)) state.settings.language = preferred; } catch {}
 let panel = null;
 let placement = null;
 let puzzle = null;
@@ -353,6 +460,7 @@ stage.append(worldAdditions);
 let worldSignature = '';
 
 function settleActiveTick() {
+  if (startupPreparing || startupReplayCancelled) return;
   if (onboardingFlow?.active && !worldExperienceReady) return;
   if (devSync && !devSync.writable || tradeMutationBusy || shipMutationPreparing || uncertainShipPurchase) return;
   const now = simulationNow();
@@ -587,6 +695,7 @@ function smoothSceneAction(action) {
   return smoothSceneActions.has(action?.type) || typeof action?.type === 'string' && action.type.startsWith('adventure') && action.type !== 'adventureBridgeExtra';
 }
 function act(...args) {
+  if (startupPreparing || startupReplayCancelled) return {ok:false,message:'Poczekaj na zakończenie wczytywania wyspy.'};
   if (tradeMutationBusy || (shipMutationPreparing || uncertainShipPurchase) && !['userActivity', 'heartbeat'].includes(args[1]?.type)) return { ok: false, message: uiCopy('Wait for this operation to be confirmed.', 'Poczekaj na potwierdzenie tej operacji.') };
   if (devSync && (!devSync.writable || devSync.saving && !smoothSceneAction(args[1]))) return {ok:false,message:'Cloud confirmation is required before another action.'};
   if (devTimeStatus?.canSetRate) args[2] = simulationNow();
@@ -602,6 +711,7 @@ function act(...args) {
   return result;
 }
 function save(immediate=false, { allowShipPreparation = false } = {}) {
+  if (startupPreparing || startupReplayCancelled) return Promise.resolve(false);
   if (tradeMutationBusy || uncertainShipPurchase || shipMutationPreparing && !allowShipPreparation) return Promise.resolve(false);
   if (devSigningOut || !devSync) return Promise.resolve(!devSigningOut);
   if (!devSync.queue(JSON.stringify(worldPayload()))) return Promise.resolve(false);
@@ -2442,6 +2552,7 @@ function islandNameFor(id) {
   return world ? islandDisplayName(world, language()) : uiCopy('Second island', 'Druga wyspa');
 }
 function allowIslandMutation() {
+  if (startupPreparing || startupReplayCancelled) return false;
   if (tradeMutationBusy || shipMutationPreparing || uncertainShipPurchase || devSync && (!devSync.writable || devSync.status === 'saving')) { toast(devSync ? devSyncMessage() : uiCopy('Wait for the exchange confirmation.', 'Poczekaj na potwierdzenie wymiany.')); return false; }
   return true;
 }
@@ -3272,6 +3383,7 @@ function updateDevCloudStatus() {
   if(failure) { miniController?.dispose(); miniController=null; }
 }
 function finishDevSignout() {
+  cancelStartupReplay('startup-identity-changed');devSigningOut=true;
   foregroundInterruptions.clear();
   pendingJourneySuspension = null;
   devSync?.dispose();devCloud.signOut();
@@ -4176,9 +4288,12 @@ function beginWorldExperience() {
   if (worldExperienceReady || State.onboardingStatus(state).pending) return;
   worldExperienceReady = true;
   lastTick = simulationNow(); foregroundAnchor = Date.now();
-  recoverInterruptedStandardAd();
-  if (state.theatre?.pendingUpgrade) act(state, { type: 'theatreCancelUpgradeAd', nonce: state.theatre.pendingUpgrade.nonce });
-  settleActiveTick();
+  if (!startupReplayPrepared) {
+    recoverInterruptedStandardAd();
+    if (state.theatre?.pendingUpgrade) act(state, { type: 'theatreCancelUpgradeAd', nonce: state.theatre.pendingUpgrade.nonce });
+    settleActiveTick();
+  }
+  startupReplayPrepared=false;
   if (!NEW_PLAYER_PROFILE && !activeDevPreview) State.applyBuildTestStock?.(state);
   recordVisit(state); save();
   const restoredExpedition = expeditionSession();
@@ -4197,6 +4312,7 @@ let idleSignoutStarted = false;
 function settleForegroundTime() {
   const now = Date.now(), seconds = Math.max(0, (now - foregroundAnchor) / 1000);
   foregroundAnchor = now;
+  if (startupPreparing || startupReplayCancelled) {foregroundWasActive=!document.hidden&&document.hasFocus();return;}
   if (onboardingFlow?.active || State.onboardingStatus(state).pending || devSync && !devSync.writable) {
     foregroundWasActive = !document.hidden && document.hasFocus(); return;
   }
@@ -4397,6 +4513,7 @@ mountDevelopmentSpeedControls();
 renderHUD();
 try {
   await Promise.all(startupVisuals);
+  if (startupReplayCancelled) throw new Error('Startup cancelled.');
   if (!await window.harborlightStartup.reveal()) await new Promise(() => {});
 } catch (error) {
   console.error(error);
@@ -4405,6 +4522,7 @@ try {
 }
 // Introductory dialogs use the browser's top layer. Open them only after the
 // actual island is ready, so they cannot escape the startup visibility gate.
+startupPreparing=false;
 if (State.onboardingStatus(state).pending) await beginOnboarding();
 else beginWorldExperience();
 renderHUD();
@@ -4422,12 +4540,3 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('online', () => { if (devSync) void devSync.recover(); });
 window.addEventListener('focus', () => { if (devSync) void devSync.recover(); });
-window.addEventListener('storage', event => {
-  if (!devAccount || event.key !== devCloud.sessionKey) return;
-  let nextUid;
-  try { nextUid = JSON.parse(event.newValue)?.uid; } catch { /* A removed session signs out this tab as well. */ }
-  if (nextUid !== devAccount.uid) {
-    devSync.dispose();
-    location.assign('harborlight-auth.html?mode=login');
-  }
-});

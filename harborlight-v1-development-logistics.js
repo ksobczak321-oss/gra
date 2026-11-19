@@ -1,12 +1,24 @@
 // Ruleset32 physical production. No imports from state, residents or logistics.
 // Timers remain in the host event loop; every job consumes local ingredients.
-import { GOODS, MATERIAL_IDS, RECIPE_CATALOG, availableRecipes, productionAssignments, localStorageStatus, normalizeProvisions, withdrawMilk, depositMilk } from './harborlight-v1-provisions.js?v=frontend-v32-18';
+import { GOODS, MATERIAL_IDS, RECIPE_CATALOG, availableRecipes, productionAssignments, localStorageStatus, normalizeProvisions, withdrawMilk, depositMilk, withProvisionsReadScope } from './harborlight-v1-provisions.js?v=frontend-v32-19';
 const EPS=1e-7;
 const amount=n=>Number.isFinite(n)?Math.max(0,n):0;
 const whole=n=>Math.floor(amount(n));
 const uid=p=>String(p?.personUid||`resident-${p?.id??'unknown'}`);
 const cloneLots=lots=>(Array.isArray(lots)?lots:[]).filter(l=>amount(l.amount)>EPS).map(l=>({amount:amount(l.amount),centralSeconds:Math.min(259200,amount(l.centralSeconds))}));
-export const developmentProducerIds=state=>[...new Set(Object.values(RECIPE_CATALOG).map(r=>r.building))].filter(id=>state.buildings?.[id]);
+const producerIds=Object.freeze([...new Set(Object.values(RECIPE_CATALOG).map(r=>r.building))]);
+export const developmentProducerIds=state=>producerIds.filter(id=>state.buildings?.[id]);
+const productionReadScopes = new WeakMap();
+// Resident quotes repeatedly ask about the same unchanging production inputs.
+// A fresh, synchronous scope ends before any assignment, stock, person timer or
+// model clock can change. Keep all caches outside the serializable world.
+export function withDevelopmentProductionReadScope(state, read) {
+ if(state.ruleset!==32)return read();
+ const previous=productionReadScopes.get(state);
+ productionReadScopes.set(state,{buildings:new Map(),recipes:new Map()});
+ try{return withProvisionsReadScope(state,read);}
+ finally{if(previous)productionReadScopes.set(state,previous);else productionReadScopes.delete(state);}
+}
 const local=(state,id)=>state.provisions.localStock[id]||=( {} );
 export function normalizeDevelopmentLogistics(state,raw=state) {
  if(state.provisions?.version!==1)normalizeProvisions(state,raw);
@@ -46,9 +58,27 @@ export function developmentProductionBlocked(state,building,recipeId=null) {
  return rows.length>0&&rows.every(row=>!canProduce(state,row.recipeId));
 }
 export function developmentWorkerProductionBlocked(state,person) {
- if(!person?.workplace||!developmentProducerIds(state).includes(person.workplace)||person.arrivalRemaining>EPS)return false;
- ensure(state);const ready=(state.residents||[]).filter(p=>p.workplace===person.workplace&&!p.pendingRelease&&!(p.arrivalRemaining>EPS)&&!p.visitGroup&&!p.visiting&&!(p.returnRemaining>EPS)),index=ready.indexOf(person);if(index<0)return false;
- let cursor=0;for(const row of productionAssignments(state,person.workplace)){if(index>=cursor&&index<cursor+row.workers)return !canProduce(state,row.recipeId);cursor+=row.workers;}return false;
+ const scope=productionReadScopes.get(state);
+ if(!scope){
+  if(!person?.workplace||!developmentProducerIds(state).includes(person.workplace)||person.arrivalRemaining>EPS)return false;
+  ensure(state);const ready=(state.residents||[]).filter(p=>p.workplace===person.workplace&&!p.pendingRelease&&!(p.arrivalRemaining>EPS)&&!p.visitGroup&&!p.visiting&&!(p.returnRemaining>EPS)),index=ready.indexOf(person);if(index<0)return false;
+  let cursor=0;for(const row of productionAssignments(state,person.workplace)){if(index>=cursor&&index<cursor+row.workers)return !canProduce(state,row.recipeId);cursor+=row.workers;}return false;
+ }
+ scope.producers||=new Set(developmentProducerIds(state));
+ if(!person?.workplace||!scope.producers.has(person.workplace)||person.arrivalRemaining>EPS)return false;
+ ensure(state);
+ let crew=scope?.buildings.get(person.workplace);
+ if(!crew){
+  const ready=(state.residents||[]).filter(p=>p.workplace===person.workplace&&!p.pendingRelease&&!(p.arrivalRemaining>EPS)&&!p.visitGroup&&!p.visiting&&!(p.returnRemaining>EPS));
+  crew={indices:new Map(ready.map((p,index)=>[p,index])),rows:null};
+  if(scope)scope.buildings.set(person.workplace,crew);
+ }
+ const index=crew.indices.get(person);if(index===undefined)return false;
+ crew.rows||=productionAssignments(state,person.workplace);
+ let cursor=0;for(const row of crew.rows){if(index>=cursor&&index<cursor+row.workers){
+   if(scope?.recipes.has(row.recipeId))return scope.recipes.get(row.recipeId);
+   const blocked=!canProduce(state,row.recipeId);if(scope)scope.recipes.set(row.recipeId,blocked);return blocked;
+  }cursor+=row.workers;}return false;
 }
 function canProduce(state,recipeId) {
  const r=RECIPE_CATALOG[recipeId];if(!r)return false;const stock=local(state,r.building),status=localStorageStatus(state,r.building,stock);
@@ -57,6 +87,11 @@ function canProduce(state,recipeId) {
  return remaining+made<=status.total+EPS&&Object.entries(r.outputs).every(([id,n])=>amount(stock[id])-(r.inputs[id]||0)+n<=status.perProduct+EPS);
 }
 export function developmentProductionJobs(state,context={}) {
+ // The host may opt its known-pure speed quote into a bounded read phase.
+ // Other callers retain the ordinary callback contract, including mutations.
+ return context.readOnlyQuote===true?withProvisionsReadScope(state,()=>developmentProductionJobsQuote(state,context)):developmentProductionJobsQuote(state,context);
+}
+function developmentProductionJobsQuote(state,context={}) {
  const p=ensure(state),jobs=[];
  for(const building of developmentProducerIds(state)) {
   const people=(state.residents||[]).filter(x=>x.workplace===building),ready=typeof context.activeWorkerIndices==='function'?context.activeWorkerIndices(building):Array.from({length:whole(state.buildings[building].workers)},(_,i)=>i);

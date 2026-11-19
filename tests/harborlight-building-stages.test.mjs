@@ -128,6 +128,13 @@ test('disabled asset loader requests no atlas, terrain or crane',async()=>{
   const result=await readBuildingStageAssets({fetcher:async()=>({ok:true,json:async()=>({version:1,enabled:false})}),imageLoader:()=>{images++;}});
   assert.equal(images,0);assert.equal(result.manifest.enabled,false);assert.equal(result.images.size,0);
 });
+test('catalog fetch uses a release-specific URL and conditional revalidation instead of a fresh legacy HTTP cache entry',async()=>{
+  let request;
+  await readBuildingStageAssets({fetcher:async(url,options)=>{request={url,options};return {ok:true,json:async()=>({version:1,enabled:false})};}});
+  assert.match(request.url,/^assets\/building-upgrades-v1\/manifest\.json\?v=frontend-v32-\d+$/);
+  assert.equal(request.options.cache,'no-cache');
+  assert.equal(request.options.credentials,'same-origin');
+});
 test('legacy loader bounds concurrent decodes and waits for all22required images',async()=>{
   const pending=[];let settled=false;
   const result=readBuildingStageAssets({fetcher:async()=>({ok:true,json:async()=>buildingStageFixture()}),imageLoader:spec=>new Promise(resolve=>pending.push(()=>resolve({naturalWidth:spec.width,naturalHeight:spec.height})))}).then(value=>{settled=true;return value;});

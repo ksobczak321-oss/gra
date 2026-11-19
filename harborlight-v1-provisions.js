@@ -1,4 +1,4 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-18';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-19';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.
@@ -38,6 +38,14 @@ export const RECIPE_CATALOG = Object.freeze({
   civilianClothes: recipe('leatherworks', { leather: 4 }, { civilianClothes: 1 }), militaryClothes: recipe('leatherworks', { leather: 8 }, { militaryClothes: 1 }), professorRobes: recipe('leatherworks', { leather: 8 }, { professorRobes: 1 }, 1, { academy: true }),
   wood: recipe('lumber', {}, { wood: 1 }), stone: recipe('quarry', {}, { stone: 1 }), planks: recipe('sawmill', { wood: 2 }, { planks: 1 })
 });
+// Definitions are frozen. Index their immutable membership once, preserving
+// catalog order; levels and research are still read afresh on every quote.
+const recipesByBuilding = new Map();
+for (const entry of Object.entries(RECIPE_CATALOG)) {
+  const building=entry[1].building;
+  if(!recipesByBuilding.has(building))recipesByBuilding.set(building,[]);
+  recipesByBuilding.get(building).push(entry);
+}
 // Explicit DEV calibration: rates count recipe batches, not arbitrary outputs.
 // Advanced Academy/research multipliers are supplied by the production host.
 export const DEV_RECIPE_RATES = Object.freeze({ farmGrain: 40, farmVegetables: 40, farmLivestock: 40, farmMilk: 40, farmCheese: 40, flour: 40, bread: 40, cake: 40, pasteurizedMilk: 40, meat: 20, leather: 40, fish: 40, smokedFish: 40, fishPreserves: 40, civilianClothes: 40, militaryClothes: 40, professorRobes: 40, wood: 40, stone: 40, planks: 40 });
@@ -52,7 +60,7 @@ function hasResearch(state, id, context = {}) { return typeof context.hasResearc
 export function availableRecipes(state, building, context = {}) {
   const level = finite(state.buildings?.[building]?.level), th = townhall(state), unlock = NEW_BUILDINGS[building]?.unlockLevel || 1;
   if (th < unlock || !level) return [];
-  return Object.entries(RECIPE_CATALOG).filter(([, r]) => r.building === building && level >= r.level && (!r.discovery || hasResearch(state, r.discovery, context)) && (!r.academy || th >= 4 && finite(state.buildings?.academy?.level) > 0)).map(([id, r]) => ({ id, ...r }));
+  return (recipesByBuilding.get(building)||[]).filter(([, r]) => level >= r.level && (!r.discovery || hasResearch(state, r.discovery, context)) && (!r.academy || th >= 4 && finite(state.buildings?.academy?.level) > 0)).map(([id, r]) => ({ id, ...r }));
 }
 export function crewCapacity(state, building, context = {}) {
   const level = whole(state.buildings?.[building]?.level), recipes = availableRecipes(state, building, context), count = recipes.length;
@@ -86,9 +94,10 @@ export function localStockRoom(state, building, resource, local = null) {
 }
 export function productionAssignments(state, building, context = {}) {
   const recipes = availableRecipes(state, building, context), cap = crewCapacity(state, building, context), crew = Math.min(whole(state.buildings?.[building]?.workers), cap.total), selected = state.provisions?.assignments?.[building] || {};
+  const hasSelection=Object.keys(selected).length>0;
   let left = crew;
   return recipes.map((r, index) => {
-    const requested = Object.keys(selected).length ? whole(selected[r.id]) : left;
+    const requested = hasSelection ? whole(selected[r.id]) : left;
     const workers = Math.min(left, cap.perRecipe?.[r.id] ?? cap.perProduct, requested); left -= workers;
     return { recipeId: r.id, building, workers, inputs: { ...r.inputs }, outputs: { ...r.outputs }, ratePerWorkerHour: recipeRatePerWorkerHour(state, r.id) };
   });
@@ -121,6 +130,7 @@ function decodePerson(state,value,source,now=0) {
  if(typeof value[10]==='string')person.historyRef=value[10];else person.history=Array.isArray(value[10])?value[10]:[];return person;
 }
 export function normalizeProvisions(state, raw = state, context = {}) {
+  invalidateDietMemo(state);
   const source = object(raw.provisions) ? raw.provisions : {}, now = Number.isFinite(context.now) ? context.now : finite(state.worldTimeMs);
   const sourcePeople=Object.fromEntries(Object.entries(source.people||{}).slice(0,10000).map(([id,p])=>[id,source.peopleFormat===2?decodePerson(state,p,source,now):p]));
   state.resources ||= {};
@@ -160,6 +170,7 @@ export function normalizeProvisions(state, raw = state, context = {}) {
 // Serialization helper: call only on the host's save clone. Hydration below
 // always creates separate mutable histories for individual people.
 export function compactDietHistories(state) {
+ invalidateDietMemo(state);
  const p=state.provisions;if(!p?.people)return {people:0,histories:0};const groups=new Map(),source={dietHistories:p.dietHistories};
  if(p.peopleFormat===2)p.people=Object.fromEntries(Object.entries(p.people).map(([id,value])=>[id,decodePerson(state,value,p,p.clockMs)]));
  for(const entry of Object.values(p.people)) {
@@ -186,7 +197,46 @@ export function compactDietHistories(state) {
  if(profileSequence)p.personProfiles=profiles;else delete p.personProfiles;
  p.peopleFormat=2;return {people:Object.keys(p.people).length,histories:roots.size,nodes:sequence};
 }
+// Ensure and production reads remain bounded to unchanged quote phases. Diet
+// aggregates may also be reused within one atomic model advance, with exact
+// input keys and explicit history-write invalidation. Neither cache is saved
+// on a world or retained between public advances / external commands.
+const readScopes = new WeakMap();
+const settlementScopes = new WeakMap();
+const currentDietMemo = state => readScopes.get(state)?.dietMemo || settlementScopes.get(state)?.dietMemo;
+export function withProvisionsSettlementScope(state, settle) {
+  const previous=settlementScopes.get(state);
+  const dietMemo=previous?.dietMemo || readScopes.get(state)?.dietMemo || {values:new WeakMap()};
+  if(!previous)dietMemo.values=new WeakMap();
+  settlementScopes.set(state,{dietMemo});
+  try{return settle();}
+  finally{
+    if(previous)settlementScopes.set(state,previous);
+    else{settlementScopes.delete(state);dietMemo.values=new WeakMap();}
+  }
+}
+export function withProvisionsReadScope(state, read) {
+  const previous = readScopes.get(state);
+  const dietMemo=settlementScopes.get(state)?.dietMemo || previous?.dietMemo || {values:new WeakMap()};
+  readScopes.set(state, { dietMemo });
+  try { return read(); }
+  finally { if (previous) readScopes.set(state, previous); else readScopes.delete(state); }
+}
+function invalidateDietMemo(state, person=null) {
+  const memo=currentDietMemo(state);
+  if(memo){if(person)memo.values.delete(person);else memo.values=new WeakMap();}
+  if(!person){const scope=readScopes.get(state);if(scope)scope.provisions=null;}
+}
 function ensure(state, context = {}) {
+  const scope = readScopes.get(state), now = nowOf(state, context), required = requiredFoodTypes(state);
+  if (scope && state.provisions?.version===1 && state.provisions.peopleFormat!==2 &&
+      scope.provisions === state.provisions && scope.residents === state.residents &&
+      scope.population === state.residents?.length && scope.now === now && scope.required === required) return scope.provisions;
+  const provisions = ensureUncached(state, context);
+  if (scope) Object.assign(scope, { provisions, residents:state.residents, population:state.residents?.length, now, required });
+  return provisions;
+}
+function ensureUncached(state, context = {}) {
   if (state.provisions?.version !== 1 || state.provisions.peopleFormat===2) return normalizeProvisions(state, state, context);
   state.provisions.foodSettings ||= { priorities: [...FOOD_IDS], enabled: {}, limits: {} };state.provisions.people ||= {};
   const now = nowOf(state, context), required = requiredFoodTypes(state);
@@ -249,29 +299,40 @@ function consume(state,id,n,context={}) {
   if(id==='rawMilk'){withdrawMilk(state,n);if(state.bonusMaterials)state.bonusMaterials.rawMilk=Math.max(0,finite(state.bonusMaterials.rawMilk)-n);return n;}
   state.resources[id]=Math.max(0,finite(state.resources[id])-n);return n;
 }
-function pruneHistory(person, now) {
+function pruneHistory(person, now, state) {
+  invalidateDietMemo(state,person);
   const cutoff=now-DAY*1000;
   person.history=person.history.filter(h=>h.at>cutoff+EPS);
   for(const h of person.history)if(Number.isFinite(h.from)&&h.from<cutoff&&h.at>cutoff){h.satiety*=Math.max(0,(h.at-cutoff)/(h.at-h.from));h.from=cutoff;}
 }
 function aggregateHistory(p) { const map={};for(const h of p.history)map[h.resource]=finite(map[h.resource])+h.satiety;return map; }
-export function dietStatus(state, person, context={}) {
+function readDietStatus(state, person, context={}) {
   const p=ensure(state,context).people[keyOf(person)],now=nowOf(state,context);if(!p)return {requiredTypes:requiredFoodTypes(state),types:0,penalty:0,protected:true};
-  pruneHistory(p,now);const shares=aggregateHistory(p),total=Object.values(shares).reduce((a,b)=>a+b,0),types=Object.values(shares).filter(n=>total>EPS&&n+EPS>=total*.2).length,requiredTypes=requiredFoodTypes(state),protectedNow=now<p.dietGraceUntil;
-  return {requiredTypes,types,shares,total,protected:protectedNow,graceUntil:p.dietGraceUntil,penalty:protectedNow?0:Math.max(0,requiredTypes-types)*10};
+  const memo=currentDietMemo(state),previous=memo?.values.get(p),required=requiredFoodTypes(state);
+  if(previous?.now===now&&previous.required===required&&previous.history===p.history&&
+     previous.length===p.history.length&&previous.graceUntil===p.dietGraceUntil)return previous.value;
+  pruneHistory(p,now,state);const shares=aggregateHistory(p),total=Object.values(shares).reduce((a,b)=>a+b,0),types=Object.values(shares).filter(n=>total>EPS&&n+EPS>=total*.2).length,requiredTypes=requiredFoodTypes(state),protectedNow=now<p.dietGraceUntil;
+  const value={requiredTypes,types,shares,total,protected:protectedNow,graceUntil:p.dietGraceUntil,penalty:protectedNow?0:Math.max(0,requiredTypes-types)*10};
+  if(memo)memo.values.set(p,{now,required:requiredTypes,history:p.history,length:p.history.length,graceUntil:p.dietGraceUntil,value});
+  return value;
 }
-export const dietPenalty=(state,person,context={})=>dietStatus(state,person,context).penalty;
+export function dietStatus(state,person,context={}) {
+  const value=readDietStatus(state,person,context);
+  return value.shares?{...value,shares:{...value.shares}}:{...value};
+}
+export const dietPenalty=(state,person,context={})=>readDietStatus(state,person,context).penalty;
 export function feedingMultiplier(state,person=null) {
   const p=ensure(state);
   if(person)return .5+.5*Math.min(1,finite(p.people[keyOf(person)]?.coverage,1));
-  const people=(state.residents||[]);return people.length?people.reduce((sum,x)=>sum+feedingMultiplier(state,x),0)/people.length:1;
+  const people=(state.residents||[]);return people.length?people.reduce((sum,x)=>sum+(.5+.5*Math.min(1,finite(p.people[keyOf(x)]?.coverage,1))),0)/people.length:1;
 }
 export function mealStatus(state, person=null, context={}) {
   const p=ensure(state,context),people=person?[person]:(state.residents||[]),coverage=people.length?people.reduce((s,x)=>s+Math.min(1,finite(p.people[keyOf(x)]?.coverage,1)),0)/people.length:1;
   return { coverage, multiplier:.5+.5*coverage, hourlySatiety:people.reduce((s,x)=>s+hourlyNeed(state,x,context),0), requiredTypes:requiredFoodTypes(state), reserve:foodReservePlan(state,context), people:people.map(x=>({id:x.id,personUid:keyOf(x),...p.people[keyOf(x)],diet:dietStatus(state,x,context)})), foodSettings:p.foodSettings };
 }
-function writeHistory(p,resource,points,from,at) {
+function writeHistory(p,resource,points,from,at,state) {
   if(points<=EPS)return;
+  invalidateDietMemo(state,p);
   // Consecutive intervals with the same real intake rate merge losslessly.
   // A day of stable meals is a few runs/person, not1440 duplicated minute rows.
   let previous=null;for(let i=p.history.length-1;i>=0;i--)if(p.history[i].resource===resource){previous=p.history[i];break;}
@@ -297,8 +358,8 @@ export function feedResidents(state, seconds, context={}) {
   for(const [id,q]of Object.entries(mix)){consume(state,id,q,context);if(p.foodSettings.limits[id]!==null&&p.foodSettings.limits[id]!==undefined)p.foodSettings.limits[id]=Math.max(0,finite(p.foodSettings.limits[id])-q);}
   for(let i=0;i<people.length;i++){
     const person=people[i],entry=p.people[keyOf(person)],share=needs[i]/required;
-    entry.coverage=coverage;pruneHistory(entry,end);
-    for(const[id,q]of Object.entries(mix)){const points=q*GOODS[id].satiety*share;writeHistory(entry,id,points,now,end);if(id==='cake')entry.cakeSatiety+=points;}
+    entry.coverage=coverage;pruneHistory(entry,end,state);
+    for(const[id,q]of Object.entries(mix)){const points=q*GOODS[id].satiety*share;writeHistory(entry,id,points,now,end,state);if(id==='cake')entry.cakeSatiety+=points;}
     if(entry.cakeSatiety+EPS>=hourlyNeed(state,person,context)){entry.cakeSatiety=Math.max(0,entry.cakeSatiety%hourlyNeed(state,person,context));entry.cakeBonusUntil=end+6*HOUR*1000;}
     if(coverage>=1-EPS){entry.fullFedSeconds=Math.min(HOUR,entry.fullFedSeconds+seconds);if(entry.fullFedSeconds>=HOUR-EPS)entry.hungerSeconds=0;}else{entry.fullFedSeconds=0;entry.hungerSeconds+=seconds*(1-coverage);}
   }
@@ -335,6 +396,7 @@ export function advanceProvisions(state,seconds,context={}) {
   p.clockMs=at;return p;
 }
 export function shiftProvisionsTime(state,deltaMs) {
+  invalidateDietMemo(state);
   const p=ensure(state);p.clockMs+=deltaMs;p.feedClockMs+=deltaMs;for(const v of Object.values(p.people)){v.joinedAt+=deltaMs;v.dietGraceUntil+=deltaMs;if(v.cakeBonusUntil)v.cakeBonusUntil+=deltaMs;for(const h of v.history){h.at+=deltaMs;if(Number.isFinite(h.from))h.from+=deltaMs;}}
 }
 export function quoteGoods(resource,quantity,direction='buy') {

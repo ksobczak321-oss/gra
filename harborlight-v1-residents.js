@@ -1,15 +1,15 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v32-18';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-18';
-import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v32-18';
-import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v32-18';
-import { educationRecord, educationBusy, educationHappiness, educationTaxable, detachPersonEducation, personKey, canDelegateProfessor, releaseProfessorResearch } from './harborlight-v1-education.js?v=frontend-v32-18';
-import { militaryRecord, militaryBusy, militaryTaxable, detachPersonMilitary } from './harborlight-v1-military.js?v=frontend-v32-18';
-import { feedingMultiplier, dietPenalty, hungerPenalty, clothingPenalty, cakeHappinessBonus } from './harborlight-v1-provisions.js?v=frontend-v32-18';
-import { theatreHappinessBonus } from './harborlight-v1-theatre.js?v=frontend-v32-18';
-import { developmentWorkerProductionBlocked } from './harborlight-v1-development-logistics.js?v=frontend-v32-18';
-import { recoverFinancialHappiness } from './harborlight-v1-kingdom.js?v=frontend-v32-18';
-export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-18';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v32-19';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-19';
+import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v32-19';
+import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v32-19';
+import { educationRecord, educationBusy, educationHappiness, educationTaxable, detachPersonEducation, personKey, canDelegateProfessor, releaseProfessorResearch } from './harborlight-v1-education.js?v=frontend-v32-19';
+import { militaryRecord, militaryBusy, militaryTaxable, detachPersonMilitary } from './harborlight-v1-military.js?v=frontend-v32-19';
+import { feedingMultiplier, dietPenalty, hungerPenalty, clothingPenalty, cakeHappinessBonus, withProvisionsReadScope } from './harborlight-v1-provisions.js?v=frontend-v32-19';
+import { theatreHappinessBonus } from './harborlight-v1-theatre.js?v=frontend-v32-19';
+import { developmentWorkerProductionBlocked, withDevelopmentProductionReadScope } from './harborlight-v1-development-logistics.js?v=frontend-v32-19';
+import { recoverFinancialHappiness } from './harborlight-v1-kingdom.js?v=frontend-v32-19';
+export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-19';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market', 'bakery', 'dairy', 'slaughterhouse', 'fisher', 'leatherworks'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;
@@ -155,7 +155,9 @@ function settlePersonLighthouseSnapshot(state, person, global) {
 }
 function settleLighthouseSnapshot(state) {
   const global = state.lighthouseRemaining > EPS;
-  for (const person of state.residents || []) settlePersonLighthouseSnapshot(state, person, global);
+  withDevelopmentProductionReadScope(state, () => {
+    for (const person of state.residents || []) settlePersonLighthouseSnapshot(state, person, global);
+  });
   state.lighthouseSnapshotActive = global;
 }
 export function beginLighthouseBonus(state, durationSeconds = 86400 * state.buildings.lighthouse.level) {
@@ -187,6 +189,10 @@ export function settleResidentEvents(state) {
   if (complete.length) state.lighthouseVisits = state.lighthouseVisits.filter(group => group.remaining > EPS);
   settleLighthouseSnapshot(state);
   settleRecalledCarriers(state);
+  // Visit returns and recalled jobs above may change production readiness.
+  // The following loop changes only happiness and its personal timers, so its
+  // production/diet quotes share the same settled inputs until the loop ends.
+  withDevelopmentProductionReadScope(state, () => {
   for (const person of state.residents || []) {
     if (person.prayerVersion === PRAYER_RULES.version && person.prayerRewardPending === true && !(person.prayerRemaining > EPS)) {
       person.prayerRewardPending = false; person.prayerBonusRemaining = PRAYER_RULES.happinessSeconds;
@@ -198,6 +204,7 @@ export function settleResidentEvents(state) {
     if (!residentHappinessFrozen(person) && person.arrivalRemaining <= EPS && person.workplace) person.unemployedSeconds = 0;
     if (!residentProductionBlocked(state, person)) person.blockedSeconds = 0;
   }
+  });
   state.returningWorkers = (state.residents || []).filter(person => !person.workplace && person.returnRemaining > EPS).map(person => person.returnRemaining);
 }
 
@@ -319,6 +326,7 @@ export function assignResidents(state, id, delta) {
 }
 
 export function settleResidentConditions(state) {
+  withProvisionsReadScope(state, () => {
   for (const person of state.residents || []) {
     const fed=personFed(state,person);
     if (residentHappinessFrozen(person)) {
@@ -329,6 +337,7 @@ export function settleResidentConditions(state) {
       if (person.workplace && person.arrivalRemaining <= EPS) person.unemployedSeconds = 0;
     }
   }
+  });
   settleResidentEvents(state);
 }
 export function residentOffset(state, person) {
@@ -408,6 +417,9 @@ export function nextResidentEvent(state) {
 
 export function residentSegments(state) {
   settleResidentEvents(state);
+  return withDevelopmentProductionReadScope(state, () => residentSegmentsQuote(state));
+}
+function residentSegmentsQuote(state) {
   let nextEvent = nextResidentEvent(state), meanSlope = 0;
   const fed = hasFoodForResidents(state);
   const people = state.residents.map(person => {
@@ -435,6 +447,13 @@ export function residentSegments(state) {
 }
 export function advanceResidents(segment, seconds) {
   const state = segment.state;
+  // An arrival/return crossing changes the ready crew seen by later residents
+  // in this same ordered loop. Reuse production quotes only when membership
+  // is stable, and always end the scope before visitor/recalled-job events.
+  const readinessChanges=state.ruleset===32&&(!Number.isFinite(seconds)||seconds<0||(state.residents||[]).some(person=>
+    person.arrivalRemaining>EPS&&elapsed(person.arrivalRemaining,seconds)<=EPS||
+    person.returnRemaining>EPS&&elapsed(person.returnRemaining,seconds)<=EPS));
+  const advancePeople=()=>{
   for (const { person, slope, frozen = residentHappinessFrozen(person), blocked, employed, praying = false, fed=segment.fed } of segment.people) {
     let gain=slope*seconds;
     if(state.ruleset===32&&gain>0&&financialPenalty(state,person)>0){const recovery=Math.min(gain,financialPenalty(state,person));recoverFinancialHappiness(state,person,recovery);gain-=recovery;}
@@ -453,6 +472,10 @@ export function advanceResidents(segment, seconds) {
     person.arrivalRemaining = elapsed(person.arrivalRemaining, seconds); person.returnRemaining = elapsed(person.returnRemaining, seconds);
     person.visitHappinessRemaining = elapsed(person.visitHappinessRemaining, seconds); person.visitCooldownRemaining = elapsed(person.visitCooldownRemaining, seconds);
   }
+  };
+  if(state.ruleset!==32)advancePeople();
+  else if(readinessChanges)withProvisionsReadScope(state,advancePeople);
+  else withDevelopmentProductionReadScope(state,advancePeople);
   for (const group of state.lighthouseVisits || []) group.remaining = elapsed(group.remaining, seconds);
   for (const bonus of state.lighthouseVisitBonuses || []) bonus.remaining = elapsed(bonus.remaining, seconds);
   for (const entry of state.visitEntryHistory || []) entry.remaining = elapsed(entry.remaining, seconds);

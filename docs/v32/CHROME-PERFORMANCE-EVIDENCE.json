@@ -2,336 +2,1195 @@
   "schema_version": 1,
   "as_of": "2026-11-19",
   "timezone": "Europe/Warsaw",
-  "scope": "PERFORMANCE_FIX_DEV_THEN_STANDARD_PREPROD",
-  "status": "READY_FOR_OWN_PUBLICATION_CI_LOCAL_QA_AND_CANONICAL_ARTIFACTS_PASS",
+  "scope": "ROUTINE_PERFORMANCE_LEATHERWORKS_CACHE_AND_ADMIN3_STARTUP_HOTFIX_DEV_THEN_PREPROD",
+  "status": "CANDIDATE_C4_SHORT_ACTUAL_EQUIVALENCE_PASS_PENDING_CODE_FREEZE_FULL_REPLAY_CI_AND_DEPLOY",
+  "application_version": "0.15.2.2",
+  "cache": "frontend-v32-19",
+  "source_sha": null,
+  "application_source_sha": null,
+  "code_source_sha": null,
+  "export_source_sha": null,
+  "publication_source_sha": null,
+  "source_frozen": false,
   "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
-  "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-  "source_frozen": true,
-  "baseline": {
-    "source_sha": "e5d76110365c77d5c026b53b6195e56a3a327542",
-    "status": "MEASURED_ISOLATED",
-    "report": "/workspace/work/perf-20261119/baseline-summary.json",
-    "real_assets": true,
-    "transport": "local HTTP",
-    "cold_cache": true,
-    "real_accounts_or_cloud_writes": false,
-    "browser_crash_reproduced": false,
-    "image_requests": 29,
-    "image_unique_URLs": 29,
-    "image_body_bytes": 52630275,
-    "desktop": {
-      "viewport": [
-        1440,
-        900
-      ],
-      "device_scale_factor": 1,
-      "ready_wall_ms": 3599.6851769999694,
-      "renderer_RSS_peak_bytes": 747520000,
-      "all_Chrome_process_RSS_peak_bytes": 1266704384,
-      "JS_heap_after_start_bytes": 13960988,
-      "idle_6s_script_duration_s": 3.189813,
-      "idle_6s_task_duration_s": 4.594619,
-      "idle_longtasks_over50ms": 0
-    },
-    "mobile2x": {
-      "viewport": [
-        390,
-        844
-      ],
-      "device_scale_factor": 2,
-      "ready_wall_ms": 2983.5692200000494,
-      "renderer_RSS_peak_bytes": 717320192,
-      "all_Chrome_process_RSS_peak_bytes": 1191374848,
-      "JS_heap_after_start_bytes": 13843916,
-      "idle_6s_script_duration_s": 3.1399179999999998,
-      "idle_6s_task_duration_s": 3.825505,
-      "idle_longtasks_over50ms": 0
-    },
-    "limitations": [
-      "Headless Chromium with software rendering; absolute FPS is not a hardware GPU prediction.",
-      "Summed process RSS may include shared pages; renderer RSS is recorded separately.",
-      "Local HTTP timing excludes public network latency.",
-      "Initial overlapping browser runs remain auxiliary evidence and are not the isolated before/after baseline."
-    ]
+  "additional_user_report": "co tu się stało z tym domkiem producenta skór",
+  "explicit_PREPROD_GO": {
+    "status": "AUTHORIZED_ROUTINE_CORRECTION_UNDER_EXISTING_GO",
+    "date": "2026-11-19",
+    "timezone": "Europe/Warsaw",
+    "user_quote": "wrzuć na preprod",
+    "previous_DEV_feedback": "tak jest ok",
+    "previous_feedback_scope": "0.15.2.1/cache18 publicationb94 only",
+    "new_hotfix_user_acceptance_claimed": false,
+    "new_confirmation_required_for_routine_fix": false,
+    "requires_new_exact_source_CI": true,
+    "PROD_DNS_reset_authorized": false
   },
-  "confirmed_causes": [
-    "Startup eagerly decoded all ten variants in every building atlas rather than only the currently visible variants.",
-    "Legacy thumbnails and the unused old windmill caused additional image downloads before the staged catalog was available.",
-    "The reference PNG was requested under both a bare and versioned URL.",
-    "Water animation repeatedly blended and copied a full-screen intermediate canvas, creating a measured main-thread rasterization hotspot.",
-    "Quarry painter order covered the Leatherworks building; source pixels and geometry were intact."
-  ],
-  "runtime_sprites": {
-    "status": "GENERATED_AND_FRESH_CHECK_PASS",
-    "families": 20,
-    "sprites": 200,
-    "generator": "scripts/build_building_sprites.py",
-    "build_report": "/workspace/work/perf-20261119/building-sprites-build.json",
-    "fresh_check_report": "/workspace/work/perf-20261119/building-sprites-final-check.json",
-    "original_identity_report": "/workspace/work/perf-20261119/building-originals-identity.json",
-    "exact_RGBA_identity": "PASS_ALL200",
-    "original_WebP_files_byte_identical": 22,
-    "resized_or_retouched": false,
-    "encoder": {
-      "Pillow": "13.0.0",
-      "libwebp": "1.6.0",
-      "lossless": true,
-      "exact_transparent_RGB": true,
-      "method": 6
+  "warm_cache_regression": {
+    "status": "FAIL_MATERIAL_WARM_CACHE_REGRESSION",
+    "report": "/workspace/work/perf-20261119/cache-warm/pilot-report.json",
+    "prior_cached_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
+    "code_source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+    "cache_control": "public, max-age=86400",
+    "manifest_network_GETs_after_prime": 1,
+    "manifest_network_GETs_after_game": 1,
+    "CDP_fromDiskCache_confirmed": true,
+    "old_manifest_has_sprites": false,
+    "old_manifest_has_paintDepth": false,
+    "actual_depths": {
+      "leatherworks": 962,
+      "quarry": 972
     },
-    "full_original20_atlases": {
-      "files": 20,
-      "bytes": 28851038,
-      "RGBA_bytes": 125822076
-    },
-    "first_stage_all20_runtime_sprites": {
-      "files": 20,
-      "bytes": 2075264,
-      "RGBA_bytes": 6586756,
-      "scope": "Building artwork for tier1 only; not a measured total game startup transfer."
-    },
-    "all200_runtime_sprites": {
-      "files": 200,
-      "bytes": 27167928,
-      "RGBA_bytes": 82590860
-    },
-    "prior_manifest_identity_checkpoint": {
-      "report": "/workspace/work/perf-20261119/building-originals-identity.json",
-      "scope": "Before the later Leatherworks paint-order fix, all old manifest fields were identical after removing new sprites."
-    },
-    "current_metadata_exceptions": [
-      "Added per-frame sprites entries for all20 families.",
-      "Added leatherworks.paintDepth=500 to repair painter order."
+    "old_full_atlas_requests": 20,
+    "cache_disabled_or_cleared": false,
+    "Playwright_routing_used": false,
+    "account_or_model_mutations": false,
+    "JS_errors": [],
+    "effect": "A retained old manifest silently restores full atlases and Leatherworks depth962 despite new cache18 JS."
+  },
+  "planned_manifest_cache_fix": {
+    "status": "IMPLEMENTED_LOCAL_WARM_HTTP_PASS_FINAL_CODE_NOT_FROZEN",
+    "parts": [
+      "A versioned manifest URL for the new runtime.",
+      "Fetch manifest with cache:no-cache so an older fresh entry must be revalidated.",
+      "An explicit Hosting cache header for the manifest overriding the general24hour assets policy."
     ],
-    "map_positions_scale_ground_anchors_alpha_bboxes_and_hotspots_unchanged": true,
-    "final_identity_checkpoint": {
-      "status": "PASS",
-      "baseline": "e5d76110365c77d5c026b53b6195e56a3a327542",
-      "code_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-      "all22_original_images_byte_identical": true,
-      "all_original_manifest_fields_equal_except_declared_changes": true,
-      "declared_changes": [
-        "200lossless_sprites_metadata",
-        "Leatherworks.paintDepth500"
-      ],
-      "positions_scale_anchors_and_hit_regions_unchanged": true,
-      "sprites_pixel_identity": "building-sprites-final-check.json:200/200PASS"
-    }
+    "user_cache_clear_required": false,
+    "accepted_artwork_or_rules_changes": false
   },
-  "prepared_loading_changes": {
-    "current_variants_only": true,
-    "terrain_required": true,
-    "crane_required_for_actual_construction": true,
-    "decode_concurrency": 3,
-    "startup_requires_complete_current_scene": true,
-    "legacy_menu_images_not_requested_before_catalog": true,
-    "unused_staged_windmill_not_loaded": true,
-    "gallery_loads_near_visible_area": true,
-    "after_real_runtime_validation": "FINAL_CACHE18_4_REAL_ASSET_CASES_PASS",
-    "current_visible_sprites_upper_bound": 21,
-    "decorative_house_note": "20 functional families plus one decorative House frame if its TownHall-dependent tier differs from the actual House tier."
+  "inherited_feature_scope": [
+    "Only current20functional building variants plus a possible extra TownHall-dependent decorativeframe are required at startup.",
+    "Lossless200derived sprites preserve exactRGBA and retain22originalWebPassets.",
+    "Direct water painting with cached masks.",
+    "Leatherworks.paintDepth500 preserves sourcepixels, geometry and hotspot.",
+    "Accounts, progress, game rules, approved Excel text and minigame semantics remain preserved."
+  ],
+  "performance_reference": {
+    "scope": "Historical measurement of the first working performance candidate, not a benchmark of0.15.2.2/cache19.",
+    "prior_source_before": "e5d76110365c77d5c026b53b6195e56a3a327542",
+    "reference": "previous_cache18_attempt.after_measurements",
+    "startup_image_bytes_before": 52630275,
+    "startup_image_bytes_after": 12749925,
+    "no_new_cache19_timing_measurement_claimed": true
+  },
+  "asset_identity_reference": {
+    "scope": "Inherited proofs from first package; no new raster artwork is planned.",
+    "reference": "previous_cache18_attempt.runtime_sprites",
+    "cache19_revalidation": "PENDING"
   },
   "frontend_package": {
-    "public_entry_count": 455,
+    "planned_public_entry_count": 458,
     "member_limit": 512,
     "byte_limit": 134217728,
     "explicit_closed_file_list": true,
-    "original_atlases_retained_for_legacy_code": true,
-    "larger_full_artifact_does_not_mean_larger_startup_transfer": true,
-    "Python_bundle_tests": {
-      "status": "PASS",
-      "passed": 28,
-      "total": 28,
-      "log": "/workspace/work/perf-20261119/frontend-bundle-tests.log"
-    },
+    "final_file_count": null,
+    "final_total_bytes": null,
     "final_archive_sha256": null,
     "final_manifest_sha256": null,
-    "final_total_bytes": null
+    "validation": "PENDING_NEW_CODE",
+    "planned_public_entry_count_note": "Anticipated closed-list total including three startup replay modules; final package verification pending."
   },
-  "water_optimization": {
-    "status": "LOCAL_IMPLEMENTATION_UNIT_AND_COASTAL_CHECKS_PASS",
-    "implementation": "Cached binary Path2D masks and direct drawing replace full-screen intermediate blends and copy; animation source and parameters retained.",
-    "source_file": "harborlight-v1-water.js",
-    "unit_tests": {
-      "passed": 5,
-      "total": 5
+  "canonical_artifact_refresh": {
+    "status": "PENDING_NEW_CODE_SOURCE",
+    "source_sha": null,
+    "generators_edited_by_documentation_task": false
+  },
+  "local_QA": {
+    "status": "COMPONENT_AND_TWO_SHORT_ACTUAL_EQUIVALENCE_PASS_FULL_GAP_FINAL_SOURCE_AND_DEPLOY_PENDING",
+    "warm_cache_real_HTTP_test_required": true,
+    "cache_disable_clear_or_Playwright_mock_not_allowed_as_warm_proof": true,
+    "warm_cache_working_code": {
+      "status": "PASS",
+      "report": "/workspace/work/perf-20261119/cache19-real-http/report.json",
+      "scope": "Workingcache19_before_final_source_freeze",
+      "negative_controls": 2,
+      "actual_game_boots": 3,
+      "manifest_network_GETs": 5,
+      "real_HTTP": true,
+      "cache_disabled_or_cleared": false,
+      "Playwright_route_used": false,
+      "full_atlas_requests": 0,
+      "JS_errors": [],
+      "account_or_cloud_writes": false,
+      "depths": {
+        "leatherworks": 1000,
+        "quarry": 972
+      },
+      "final_source_recheck": "PENDING"
     },
-    "coastal_sectors_passed": 13,
-    "coastal_log": "/workspace/work/perf-20261119/water-coastal.log",
-    "forced_flush_microbenchmark": {
-      "report": "/workspace/work/perf-20261119/water-direct-forced-flush.json",
-      "scope": "40iterations per scale with forced pixel readback; local headless Chromium, not a user-GPU FPS promise.",
+    "startup_worker_component": {
+      "status": "PASS_COMPONENT_NOT_FINAL_C4_RELEASE",
+      "code_phase": "working-cache19-worker-C3-read-scopes",
+      "not_a_frozen_release": true,
+      "C4_model_covered": false,
+      "component_proof": "/workspace/work/perf-20261119/startup-replay-C3-component-proof.json",
+      "report": "/workspace/work/perf-20261119/startup-replay-browser/report.json",
+      "Node_tests": 23,
+      "native_browser_cases": 12,
+      "native_workers": true,
+      "real_assets_and_model": true,
+      "real_account_writes": 0,
+      "dense_public_test": {
+        "population": 97,
+        "workers": 35,
+        "hours": 48,
+        "workers_created": 1,
+        "pending_heartbeats": 602,
+        "max_heartbeat_gap_ms": 74,
+        "full_fixed_target": true,
+        "JS_errors": 0,
+        "actual_private_admin3_claimed": false
+      },
       "cases": [
-        {
-          "scale": 0.4,
-          "iterations": 40,
-          "before_frame_ms": 23.642500000001746,
-          "after_frame_ms": 12.297500000000582,
-          "reduction_percent": 47.99
-        },
-        {
-          "scale": 0.861244019,
-          "iterations": 40,
-          "before_frame_ms": 23.2875,
-          "after_frame_ms": 14.042500000001747,
-          "reduction_percent": 39.7
-        },
-        {
-          "scale": 1,
-          "iterations": 40,
-          "before_frame_ms": 20.62749999999942,
-          "after_frame_ms": 13.194999999998254,
-          "reduction_percent": 36.03
-        }
-      ]
-    },
-    "pixel_comparison": {
-      "report": "/workspace/work/perf-20261119/water-pixel-comparison.json",
-      "cases": 9,
-      "scales": [
-        1,
-        0.861244019,
-        0.4
+        "paused-new-world-introduction",
+        "worker-runtime-failure",
+        "before-worker-pagehide",
+        "before-worker-storage",
+        "during-worker-pagehide",
+        "during-worker-storage",
+        "during-confirmation-pagehide",
+        "during-confirmation-storage",
+        "server-revision-changed",
+        "authoritative-developer-clock-changed",
+        "slow-confirmation-residual-remains-on-worker",
+        "dense-97-person-48h-native-worker"
       ],
-      "all_cases_alpha_difference_pixels": 0,
-      "mean_abs_channel_difference_min": 0.006190763414671351,
-      "mean_abs_channel_difference_max": 0.15566163374996025,
-      "channel_scale": 255,
-      "byte_identical_water_raster_claimed": false,
-      "note": "Rasterization/antialiasing differences remain at fractional scales; sprite RGBA identity is independently exact."
+      "hashes": {
+        "harborlight-v1-play.js": "13b7527c809697a8f54d87d0543dc31815193bc29af1fa754c5067361cd26665",
+        "harborlight-v1-startup-replay.js": "1f65c03451f374ce514f0a2ce2ef31473895d5bbd858c9928ccd0e575656eccb",
+        "harborlight-v1-startup-replay-model.js": "96d15ea2992756e27a1fbbe05d5908711d5b8025ce070e0d63cde7549c9b2154",
+        "harborlight-v1-startup-replay-worker.js": "a3931156f7a3f6b6cbef10e29051a67f55e3c4aa8ca7aad9af280428c2ff1bb6",
+        "harborlight-v1-archipelago.js": "0a20e6b2439aec90530dcbb37877ebe301a32d6f3e9a7f09b02ba94c4c351095",
+        "harborlight-v1-provisions.js": "009e865a043762213a1dc2f9fb16877e6dd714e425393b22fe56f26f13e0a910",
+        "harborlight-v1-development-logistics.js": "4daaa08b677addc0f65263d919cf1284013704cc4083a9f3a3c30f9e5f7b1966",
+        "harborlight-v1-residents.js": "3f9d818267fbacd359d3500a77a8dddf806f288079109105ad7bf2b37a051f22",
+        "harborlight-v1-economy.js": "9e90526546c5589e1aceaa79b8eab4b7f174db3d7952d420c5230a6e729c63ff",
+        "harborlight-v1-state.js": "2a57e9e37f840683098e7995ba73a21fbe99ffdbe425023ca46b9d389fba1200",
+        "tests/harborlight-startup-replay.test.mjs": "61312b505401588052d1957fdb3677c7bc3c0ff89b5681834339a63d2a57d6cb",
+        "tests/harborlight-startup-replay-v32-smoke.py": "f46a9514b03d87acf36223e5a42ad2ade4a03bcab35ae46d9c7d8426067dbd11",
+        "scripts/build_frontend.py": "deb1b153e6e6efef20ab5971a4436725ae6f6ffed8b4470b37a8d09f028f5252"
+      }
     },
-    "final_exact_source_CI": "PENDING",
-    "final_implementation_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
+    "worker_followup_UI_assets": {
+      "status": "PASS_COMPONENT_NOT_FINAL_C4_RELEASE",
+      "proof": "/workspace/work/perf-20261119/startup-replay-followup-component-proof.json",
+      "runtime_memory_cleanup_after_first12": true,
+      "not_frozen_release_or_C4_acceptance": true,
+      "startup_cases": 26,
+      "performance_cases": 4,
+      "warm_cache_negative_controls": 2,
+      "warm_cache_actual_game_boots": 3,
+      "reports": [
+        "/workspace/work/perf-20261119/cache19-final-worker-startup/report.json",
+        "/workspace/work/perf-20261119/cache19-final-worker-performance/report.json",
+        "/workspace/work/perf-20261119/cache19-final-worker-warm-cache/report.json"
+      ],
+      "end_component_hashes": {
+        "harborlight-v1-play.js": "0b86ed75a00b6246dc22b974789f082d940c34465dbeb838062ae4717b1dade7",
+        "harborlight-v1-startup-replay.js": "1f65c03451f374ce514f0a2ce2ef31473895d5bbd858c9928ccd0e575656eccb",
+        "harborlight-v1-startup-replay-model.js": "96d15ea2992756e27a1fbbe05d5908711d5b8025ce070e0d63cde7549c9b2154",
+        "harborlight-v1-startup-replay-worker.js": "a3931156f7a3f6b6cbef10e29051a67f55e3c4aa8ca7aad9af280428c2ff1bb6",
+        "harborlight-v1-archipelago.js": "0a20e6b2439aec90530dcbb37877ebe301a32d6f3e9a7f09b02ba94c4c351095",
+        "harborlight-v1-provisions.js": "ba76961466313cf73588b03f3e65cac6fba14d39366aad7a590a3643cf912629",
+        "harborlight-v1-development-logistics.js": "4daaa08b677addc0f65263d919cf1284013704cc4083a9f3a3c30f9e5f7b1966",
+        "harborlight-v1-residents.js": "3f9d818267fbacd359d3500a77a8dddf806f288079109105ad7bf2b37a051f22",
+        "harborlight-v1-economy.js": "9e90526546c5589e1aceaa79b8eab4b7f174db3d7952d420c5230a6e729c63ff",
+        "harborlight-v1-state.js": "705f4b89831d2d801d78ce2f5909a564c445b6679079fe220ed10419559f2f67"
+      },
+      "final_exact_source_recheck": "PENDING"
+    }
   },
-  "after_measurements": {
-    "status": "MEASURED_ISOLATED_WORKING_TREE_CANDIDATE",
-    "source_frozen": false,
-    "report_files": [
-      "/workspace/work/perf-20261119/after-isolated-desktop.json",
-      "/workspace/work/perf-20261119/after-isolated-mobile2x.json"
-    ],
-    "same_harness": "/workspace/work/perf-20261119/measure_runtime.py",
-    "real_assets": true,
-    "transport": "local HTTP",
-    "cold_cache": true,
-    "isolated": true,
-    "cache_in_measured_resources": "frontend-v32-17 before final cache/source freeze",
-    "not_a_public_deployment_or_final_source_acceptance": true,
-    "scenarios": [
-      {
-        "scenario": "desktop",
+  "CI": {
+    "status": "PENDING_NEW_EXACT_PUBLICATION_SOURCE",
+    "run_id": null,
+    "planned_browser_programs": {
+      "standalone": 1,
+      "main": 54,
+      "cloud": 18,
+      "total": 73
+    }
+  },
+  "Pages": {
+    "status": "PENDING_NEW_EXACT_PUBLICATION_SOURCE",
+    "run_id": null
+  },
+  "DEV": {
+    "status": "PENDING_NEW_CODE_AND_OWN_ACCEPTANCE",
+    "source_sha": null,
+    "manual_user_acceptance": "NOT_RUN"
+  },
+  "DEV_tag": {
+    "status": "PENDING_AFTER_NEW_ACCEPTANCE",
+    "name": null
+  },
+  "PREPROD": {
+    "status": "PENDING_NEW_CODE_OWN_CI_DEV_AND_STANDARD_WORKFLOW",
+    "workflow": "google-cloud-dev.yml",
+    "project": "harborlight-dev",
+    "url": "https://harborlight-dev.web.app",
+    "source_sha": null,
+    "run_id": null,
+    "attempt": null,
+    "accepted": false,
+    "receipt_verified": false,
+    "original_artifacts_verified": false,
+    "existing_account_UI_verified": false,
+    "account_preservation_verified": false,
+    "tag_created": false,
+    "tag_verified": false,
+    "additional_required_admin3_UI_gate": {
+      "status": "IMPLEMENTED_CONFIGURATION_TESTS_PASS_NOT_RUN_ON_NEW_DEPLOYMENT",
+      "selected_account_only": "admin3",
+      "uid": "dev-admin3",
+      "startup_timeout_ms": 600000,
+      "admin1_default_timeout_ms_unchanged": 30000,
+      "if_start_exceeds_30s_require_observed_Worker": true,
+      "heartbeat_required_while_replay": true,
+      "max_heartbeat_gap_limit_ms": 1500,
+      "all_browser_writes_blocked": true,
+      "same_standard_job_timeout_minutes": 25,
+      "receipt_schema_condition_count_unchanged": 4,
+      "configuration_unit_tests": {
+        "status": "PASS",
+        "tests": 12
+      },
+      "actual_existing_admin3_render": "PENDING"
+    }
+  },
+  "manual_user_acceptance": "CACHE19_DEV_AND_PREPROD_NOT_RUN",
+  "manual_DEV_acceptance": {
+    "status": "NOT_RUN",
+    "version": "0.15.2.2",
+    "cache": "frontend-v32-19",
+    "previous_pass_only_reference": "previous_cache18_attempt.manual_DEV_acceptance"
+  },
+  "manual_PREPROD_acceptance": "NOT_RUN",
+  "previous_cache18_attempt": {
+    "schema_version": 1,
+    "as_of": "2026-11-19",
+    "timezone": "Europe/Warsaw",
+    "scope": "PERFORMANCE_FIX_DEV_THEN_STANDARD_PREPROD",
+    "status": "OWN_CI_AND_STANDARD_PREPROD_SUCCESS_WARM_CACHE_QUALITY_FAIL",
+    "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
+    "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+    "source_frozen": true,
+    "baseline": {
+      "source_sha": "e5d76110365c77d5c026b53b6195e56a3a327542",
+      "status": "MEASURED_ISOLATED",
+      "report": "/workspace/work/perf-20261119/baseline-summary.json",
+      "real_assets": true,
+      "transport": "local HTTP",
+      "cold_cache": true,
+      "real_accounts_or_cloud_writes": false,
+      "browser_crash_reproduced": false,
+      "image_requests": 29,
+      "image_unique_URLs": 29,
+      "image_body_bytes": 52630275,
+      "desktop": {
         "viewport": [
           1440,
           900
         ],
         "device_scale_factor": 1,
-        "ready_wall_ms": 2460.641095000028,
-        "before_ready_wall_ms": 3599.6851769999694,
-        "image_body_bytes": 12749925,
-        "image_unique_URLs": 25,
-        "before_image_body_bytes": 52630275,
-        "image_transfer_reduction_percent": 75.77,
-        "renderer_RSS_peak_bytes": 553406464,
-        "before_renderer_RSS_peak_bytes": 747520000,
-        "idle_6s_script_duration_s": 0.483079,
-        "idle_6s_task_duration_s": 3.6396369999999996,
-        "JS_errors": [],
-        "blocked_network_requests": [],
-        "account_or_cloud_writes": false
+        "ready_wall_ms": 3599.6851769999694,
+        "renderer_RSS_peak_bytes": 747520000,
+        "all_Chrome_process_RSS_peak_bytes": 1266704384,
+        "JS_heap_after_start_bytes": 13960988,
+        "idle_6s_script_duration_s": 3.189813,
+        "idle_6s_task_duration_s": 4.594619,
+        "idle_longtasks_over50ms": 0
       },
-      {
-        "scenario": "mobile2x",
+      "mobile2x": {
         "viewport": [
           390,
           844
         ],
         "device_scale_factor": 2,
-        "ready_wall_ms": 1676.0335409999243,
-        "before_ready_wall_ms": 2983.5692200000494,
-        "image_body_bytes": 12749925,
-        "image_unique_URLs": 25,
-        "before_image_body_bytes": 52630275,
-        "image_transfer_reduction_percent": 75.77,
-        "renderer_RSS_peak_bytes": 515616768,
-        "before_renderer_RSS_peak_bytes": 717320192,
-        "idle_6s_script_duration_s": 0.489979,
-        "idle_6s_task_duration_s": 2.10067,
-        "JS_errors": [],
-        "blocked_network_requests": [],
-        "account_or_cloud_writes": false
-      }
-    ],
-    "limitations": [
-      "Headless Chromium with software rendering; absolute FPS is not a hardware GPU prediction.",
-      "Summed process RSS may include shared pages; renderer RSS is recorded separately.",
-      "Local HTTP timing excludes public network latency.",
-      "Initial overlapping browser runs remain auxiliary evidence and are not the isolated before/after baseline."
-    ]
-  },
-  "CI": {
-    "status": "PENDING_EXACT_PUBLICATION_SOURCE",
-    "run_id": null
-  },
-  "Pages": {
-    "status": "PENDING_EXACT_PUBLICATION_SOURCE",
-    "run_id": null
-  },
-  "DEV_tag": {
-    "status": "PENDING_AFTER_ACCEPTANCE",
-    "name": null
-  },
-  "PREPROD": {
-    "status": "PENDING_DEV_ACCEPTANCE_AND_STANDARD_WORKFLOW",
-    "project": "harborlight-dev",
-    "url": "https://harborlight-dev.web.app",
-    "run_id": null,
-    "attempt": null,
-    "receipt_verified": false,
-    "original_artifacts_verified": false,
-    "existing_account_UI_verified": false,
-    "account_preservation_verified": false,
-    "accepted": false,
-    "before_readonly_account_audit": {
-      "status": "PASS",
-      "project": "harborlight-dev",
-      "normal_TLS": true,
-      "system_CA_and_proxy": true,
-      "tokens_or_passwords_saved": false,
-      "island_writes": false,
-      "totals": {
-        "accounts": 3,
-        "existingSaves": 3,
-        "emptyIslands": 0,
-        "foreignReadsDenied": 6,
-        "anonymousReadsDenied": 3,
-        "apiReads": 3,
-        "ownedDirectReadsDenied": 3,
-        "anonymousApiReadsDenied": 3
+        "ready_wall_ms": 2983.5692200000494,
+        "renderer_RSS_peak_bytes": 717320192,
+        "all_Chrome_process_RSS_peak_bytes": 1191374848,
+        "JS_heap_after_start_bytes": 13843916,
+        "idle_6s_script_duration_s": 3.1399179999999998,
+        "idle_6s_task_duration_s": 3.825505,
+        "idle_longtasks_over50ms": 0
       },
-      "accounts": [
+      "limitations": [
+        "Headless Chromium with software rendering; absolute FPS is not a hardware GPU prediction.",
+        "Summed process RSS may include shared pages; renderer RSS is recorded separately.",
+        "Local HTTP timing excludes public network latency.",
+        "Initial overlapping browser runs remain auxiliary evidence and are not the isolated before/after baseline."
+      ]
+    },
+    "confirmed_causes": [
+      "Startup eagerly decoded all ten variants in every building atlas rather than only the currently visible variants.",
+      "Legacy thumbnails and the unused old windmill caused additional image downloads before the staged catalog was available.",
+      "The reference PNG was requested under both a bare and versioned URL.",
+      "Water animation repeatedly blended and copied a full-screen intermediate canvas, creating a measured main-thread rasterization hotspot.",
+      "Quarry painter order covered the Leatherworks building; source pixels and geometry were intact."
+    ],
+    "runtime_sprites": {
+      "status": "GENERATED_AND_FRESH_CHECK_PASS",
+      "families": 20,
+      "sprites": 200,
+      "generator": "scripts/build_building_sprites.py",
+      "build_report": "/workspace/work/perf-20261119/building-sprites-build.json",
+      "fresh_check_report": "/workspace/work/perf-20261119/building-sprites-final-check.json",
+      "original_identity_report": "/workspace/work/perf-20261119/building-originals-identity.json",
+      "exact_RGBA_identity": "PASS_ALL200",
+      "original_WebP_files_byte_identical": 22,
+      "resized_or_retouched": false,
+      "encoder": {
+        "Pillow": "13.0.0",
+        "libwebp": "1.6.0",
+        "lossless": true,
+        "exact_transparent_RGB": true,
+        "method": 6
+      },
+      "full_original20_atlases": {
+        "files": 20,
+        "bytes": 28851038,
+        "RGBA_bytes": 125822076
+      },
+      "first_stage_all20_runtime_sprites": {
+        "files": 20,
+        "bytes": 2075264,
+        "RGBA_bytes": 6586756,
+        "scope": "Building artwork for tier1 only; not a measured total game startup transfer."
+      },
+      "all200_runtime_sprites": {
+        "files": 200,
+        "bytes": 27167928,
+        "RGBA_bytes": 82590860
+      },
+      "prior_manifest_identity_checkpoint": {
+        "report": "/workspace/work/perf-20261119/building-originals-identity.json",
+        "scope": "Before the later Leatherworks paint-order fix, all old manifest fields were identical after removing new sprites."
+      },
+      "current_metadata_exceptions": [
+        "Added per-frame sprites entries for all20 families.",
+        "Added leatherworks.paintDepth=500 to repair painter order."
+      ],
+      "map_positions_scale_ground_anchors_alpha_bboxes_and_hotspots_unchanged": true,
+      "final_identity_checkpoint": {
+        "status": "PASS",
+        "baseline": "e5d76110365c77d5c026b53b6195e56a3a327542",
+        "code_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "all22_original_images_byte_identical": true,
+        "all_original_manifest_fields_equal_except_declared_changes": true,
+        "declared_changes": [
+          "200lossless_sprites_metadata",
+          "Leatherworks.paintDepth500"
+        ],
+        "positions_scale_anchors_and_hit_regions_unchanged": true,
+        "sprites_pixel_identity": "building-sprites-final-check.json:200/200PASS"
+      }
+    },
+    "prepared_loading_changes": {
+      "current_variants_only": true,
+      "terrain_required": true,
+      "crane_required_for_actual_construction": true,
+      "decode_concurrency": 3,
+      "startup_requires_complete_current_scene": true,
+      "legacy_menu_images_not_requested_before_catalog": true,
+      "unused_staged_windmill_not_loaded": true,
+      "gallery_loads_near_visible_area": true,
+      "after_real_runtime_validation": "FINAL_CACHE18_4_REAL_ASSET_CASES_PASS",
+      "current_visible_sprites_upper_bound": 21,
+      "decorative_house_note": "20 functional families plus one decorative House frame if its TownHall-dependent tier differs from the actual House tier."
+    },
+    "frontend_package": {
+      "public_entry_count": 455,
+      "member_limit": 512,
+      "byte_limit": 134217728,
+      "explicit_closed_file_list": true,
+      "original_atlases_retained_for_legacy_code": true,
+      "larger_full_artifact_does_not_mean_larger_startup_transfer": true,
+      "Python_bundle_tests": {
+        "status": "PASS",
+        "passed": 28,
+        "total": 28,
+        "log": "/workspace/work/perf-20261119/frontend-bundle-tests.log"
+      },
+      "final_archive_sha256": "e94f3d50012b1dfb6397a6198d041a12a74d5b5bd1f1fd15a4bb8acc7a3ef730",
+      "final_manifest_sha256": "2f5df940c48abcf24d5e146d8e08c43e26bad93d5cef6468a2a12a6dfa0e2745",
+      "final_total_bytes": 96517666,
+      "publication_source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "final_file_count": 455
+    },
+    "water_optimization": {
+      "status": "LOCAL_IMPLEMENTATION_UNIT_AND_COASTAL_CHECKS_PASS",
+      "implementation": "Cached binary Path2D masks and direct drawing replace full-screen intermediate blends and copy; animation source and parameters retained.",
+      "source_file": "harborlight-v1-water.js",
+      "unit_tests": {
+        "passed": 5,
+        "total": 5
+      },
+      "coastal_sectors_passed": 13,
+      "coastal_log": "/workspace/work/perf-20261119/water-coastal.log",
+      "forced_flush_microbenchmark": {
+        "report": "/workspace/work/perf-20261119/water-direct-forced-flush.json",
+        "scope": "40iterations per scale with forced pixel readback; local headless Chromium, not a user-GPU FPS promise.",
+        "cases": [
+          {
+            "scale": 0.4,
+            "iterations": 40,
+            "before_frame_ms": 23.642500000001746,
+            "after_frame_ms": 12.297500000000582,
+            "reduction_percent": 47.99
+          },
+          {
+            "scale": 0.861244019,
+            "iterations": 40,
+            "before_frame_ms": 23.2875,
+            "after_frame_ms": 14.042500000001747,
+            "reduction_percent": 39.7
+          },
+          {
+            "scale": 1,
+            "iterations": 40,
+            "before_frame_ms": 20.62749999999942,
+            "after_frame_ms": 13.194999999998254,
+            "reduction_percent": 36.03
+          }
+        ]
+      },
+      "pixel_comparison": {
+        "report": "/workspace/work/perf-20261119/water-pixel-comparison.json",
+        "cases": 9,
+        "scales": [
+          1,
+          0.861244019,
+          0.4
+        ],
+        "all_cases_alpha_difference_pixels": 0,
+        "mean_abs_channel_difference_min": 0.006190763414671351,
+        "mean_abs_channel_difference_max": 0.15566163374996025,
+        "channel_scale": 255,
+        "byte_identical_water_raster_claimed": false,
+        "note": "Rasterization/antialiasing differences remain at fractional scales; sprite RGBA identity is independently exact."
+      },
+      "final_exact_source_CI": "PENDING",
+      "final_implementation_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190"
+    },
+    "after_measurements": {
+      "status": "MEASURED_ISOLATED_WORKING_TREE_CANDIDATE",
+      "source_frozen": false,
+      "report_files": [
+        "/workspace/work/perf-20261119/after-isolated-desktop.json",
+        "/workspace/work/perf-20261119/after-isolated-mobile2x.json"
+      ],
+      "same_harness": "/workspace/work/perf-20261119/measure_runtime.py",
+      "real_assets": true,
+      "transport": "local HTTP",
+      "cold_cache": true,
+      "isolated": true,
+      "cache_in_measured_resources": "frontend-v32-17 before final cache/source freeze",
+      "not_a_public_deployment_or_final_source_acceptance": true,
+      "scenarios": [
         {
-          "uid": "dev-admin1",
-          "generation": 2,
-          "island_exists": true,
-          "island_generation": 2,
-          "revision": 107
+          "scenario": "desktop",
+          "viewport": [
+            1440,
+            900
+          ],
+          "device_scale_factor": 1,
+          "ready_wall_ms": 2460.641095000028,
+          "before_ready_wall_ms": 3599.6851769999694,
+          "image_body_bytes": 12749925,
+          "image_unique_URLs": 25,
+          "before_image_body_bytes": 52630275,
+          "image_transfer_reduction_percent": 75.77,
+          "renderer_RSS_peak_bytes": 553406464,
+          "before_renderer_RSS_peak_bytes": 747520000,
+          "idle_6s_script_duration_s": 0.483079,
+          "idle_6s_task_duration_s": 3.6396369999999996,
+          "JS_errors": [],
+          "blocked_network_requests": [],
+          "account_or_cloud_writes": false
         },
         {
-          "uid": "dev-admin2",
-          "generation": 2,
-          "island_exists": true,
-          "island_generation": 2,
-          "revision": 34
-        },
-        {
-          "uid": "dev-admin3",
-          "generation": 2,
-          "island_exists": true,
-          "island_generation": 2,
-          "revision": 591
+          "scenario": "mobile2x",
+          "viewport": [
+            390,
+            844
+          ],
+          "device_scale_factor": 2,
+          "ready_wall_ms": 1676.0335409999243,
+          "before_ready_wall_ms": 2983.5692200000494,
+          "image_body_bytes": 12749925,
+          "image_unique_URLs": 25,
+          "before_image_body_bytes": 52630275,
+          "image_transfer_reduction_percent": 75.77,
+          "renderer_RSS_peak_bytes": 515616768,
+          "before_renderer_RSS_peak_bytes": 717320192,
+          "idle_6s_script_duration_s": 0.489979,
+          "idle_6s_task_duration_s": 2.10067,
+          "JS_errors": [],
+          "blocked_network_requests": [],
+          "account_or_cloud_writes": false
         }
       ],
-      "report": "/workspace/work/perf-20261119/preprod-before-account-metadata.json"
+      "limitations": [
+        "Headless Chromium with software rendering; absolute FPS is not a hardware GPU prediction.",
+        "Summed process RSS may include shared pages; renderer RSS is recorded separately.",
+        "Local HTTP timing excludes public network latency.",
+        "Initial overlapping browser runs remain auxiliary evidence and are not the isolated before/after baseline."
+      ]
+    },
+    "CI": {
+      "status": "SUCCESS",
+      "run_id": 44520278661,
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44520278661",
+      "created_at_utc": "2026-11-19T12:03:08Z",
+      "completed_at_utc": "2026-11-19T12:41:28Z",
+      "duration_seconds": 2300,
+      "duration": "38m20s",
+      "job_duration_seconds": 2296,
+      "job_duration": "38m16s",
+      "successful_steps": 36,
+      "skipped_conditional_failure_diagnostics": 2,
+      "failed_steps": 0,
+      "frontend_Node": 1501,
+      "backend_Node": 170,
+      "board_Node": 7,
+      "total_Node": 1678,
+      "Python": 168,
+      "Chromium_programs": 71,
+      "Chromium_groups": {
+        "standalone": 1,
+        "main": 52,
+        "cloud": 18
+      },
+      "full_browser_stages": "SUCCESS",
+      "overall_SUCCESS_claimed": true,
+      "unchanged_legacy_watchdog": {
+        "test": "96-hour offline full-storage catch-up is bounded and matches split intervals",
+        "timeout_ms_unchanged": 10000,
+        "status": "PASS",
+        "log_line": "✔ 96-hour offline full-storage catch-up is bounded and matches split intervals (6358.099351ms)",
+        "test_duration_ms": 6358.099351
+      },
+      "summary_report": "/workspace/work/perf-20261119/release/CI-summary.json"
+    },
+    "Pages": {
+      "status": "SUCCESS",
+      "run_id": 44520278629,
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44520278629",
+      "created_at_utc": "2026-11-19T12:03:08Z",
+      "completed_at_utc": "2026-11-19T12:03:36Z",
+      "duration_seconds": 28
+    },
+    "DEV_tag": {
+      "status": "PASS",
+      "name": "dev-0.15.2.1-20261119",
+      "source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "object": "38d0bb099e7bd5fff16ba46e5aa790a2cfc2664e",
+      "remote_verified": true,
+      "remote_refs": [
+        "38d0bb099e7bd5fff16ba46e5aa790a2cfc2664e\trefs/tags/dev-0.15.2.1-20261119",
+        "b94af8befa671d936eeaf6e4be9b933cbf61ff08\trefs/tags/dev-0.15.2.1-20261119^{}"
+      ]
+    },
+    "PREPROD": {
+      "status": "WORKFLOW_SUCCESS_WARM_CACHE_QUALITY_FAIL_NOT_ACCEPTED",
+      "project": "harborlight-dev",
+      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44526548282",
+      "run_id": 44526548282,
+      "attempt": 1,
+      "receipt_verified": true,
+      "original_artifacts_verified": true,
+      "existing_account_UI_verified": true,
+      "account_preservation_verified": true,
+      "accepted": false,
+      "before_readonly_account_audit": {
+        "status": "PASS",
+        "project": "harborlight-dev",
+        "normal_TLS": true,
+        "system_CA_and_proxy": true,
+        "tokens_or_passwords_saved": false,
+        "island_writes": false,
+        "totals": {
+          "accounts": 3,
+          "existingSaves": 3,
+          "emptyIslands": 0,
+          "foreignReadsDenied": 6,
+          "anonymousReadsDenied": 3,
+          "apiReads": 3,
+          "ownedDirectReadsDenied": 3,
+          "anonymousApiReadsDenied": 3
+        },
+        "accounts": [
+          {
+            "uid": "dev-admin1",
+            "generation": 2,
+            "island_exists": true,
+            "island_generation": 2,
+            "revision": 107
+          },
+          {
+            "uid": "dev-admin2",
+            "generation": 2,
+            "island_exists": true,
+            "island_generation": 2,
+            "revision": 34
+          },
+          {
+            "uid": "dev-admin3",
+            "generation": 2,
+            "island_exists": true,
+            "island_generation": 2,
+            "revision": 591
+          }
+        ],
+        "report": "/workspace/work/perf-20261119/preprod-before-account-metadata.json"
+      },
+      "workflow": "google-cloud-dev.yml",
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "source_confirmed": true,
+      "created_at_utc": "2026-11-19T12:43:32Z",
+      "tag_verified": false,
+      "workflow_conclusion": "success",
+      "completed_at_utc": "2026-11-19T12:50:16Z",
+      "duration_seconds": 404,
+      "duration": "6m44s",
+      "gate": {
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-19T12:43:37Z",
+        "completed_at": "2026-11-19T12:43:47Z",
+        "seconds": 10,
+        "step_status_counts": {
+          "success": 7
+        }
+      },
+      "deploy": {
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-19T12:43:51Z",
+        "completed_at": "2026-11-19T12:50:15Z",
+        "seconds": 384,
+        "step_status_counts": {
+          "success": 32,
+          "skipped": 1
+        }
+      },
+      "required_steps_skipped": 0,
+      "receipt_workflow_published": true,
+      "tag_created": false,
+      "native_existing_account_UI": {
+        "status": "PASS",
+        "exact_asset_hashes": 454,
+        "actual_existing_authenticated_island": true,
+        "all_browser_writes_blocked": true,
+        "gameplay_or_reset_performed": false,
+        "log_line": "PASS hosted: 454 exact asset hashes, anonymous Auth entry, isolated runtime/API routing, actual existing signed-in island render; all browser writes blocked; no gameplay claims/upgrades/resets performed",
+        "tested_account": "admin1",
+        "does_not_prove_admin3_startup": true
+      },
+      "readonly_accounts": {
+        "permanent_accounts": 3,
+        "existing_saves": 3,
+        "empty_islands": 0,
+        "foreign_reads_denied": 6,
+        "anonymous_Firestore_reads_denied": 3,
+        "own_API_reads": 3,
+        "owned_direct_reads_denied": 3,
+        "anonymous_API_reads_denied": 3,
+        "status": "PASS",
+        "island_writes": 0,
+        "log_line": "PASS — 3 permanent DEV accounts; 3 existing saves; 0 empty islands; 6 foreign and 3 anonymous reads denied. 3 API reads; 3 owned direct reads and 3 anonymous API reads denied. No island writes performed."
+      },
+      "tag_status": "NOT_CREATED_QUALITY_REJECTED",
+      "independent_original_artifact_verification": {
+        "status": "PASS",
+        "report": "/workspace/work/perf-20261119/release/original-artifact-audit-44526548282-1.json",
+        "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+        "ci_run_id": 44520278661,
+        "deployment_run_id": 44526548282,
+        "attempt": 1,
+        "original_ZIPs": [
+          {
+            "kind": "release",
+            "artifact_id": 14533071076,
+            "bytes": 615,
+            "sha256": "b5e33a996832649a2f780a00e9d121a29311b51ee15d192b52fdbe84b38d2bb3"
+          },
+          {
+            "kind": "frontend",
+            "artifact_id": 14532261218,
+            "bytes": 92539678,
+            "sha256": "43be0e1ce31091f40d144caeba21f3cc6d42ea6eea49463f8fccbcbc0c613b5c"
+          }
+        ],
+        "receipt_checks": {
+          "ci": true,
+          "dev_smoke": true,
+          "frontend_smoke": true,
+          "account_api": true
+        },
+        "backend_image_digest": "sha256:4ab732558fe6d348fac99c24b906265c94c7717a8ca90c09fa68c4ff8f4d3ba4",
+        "frontend_archive_sha256": "e94f3d50012b1dfb6397a6198d041a12a74d5b5bd1f1fd15a4bb8acc7a3ef730",
+        "frontend_manifest_sha256": "2f5df940c48abcf24d5e146d8e08c43e26bad93d5cef6468a2a12a6dfa0e2745",
+        "verified_file_count": 455,
+        "normal_TLS": true,
+        "accepted_release_claimed": false
+      },
+      "independent_account_preservation": {
+        "status": "PASS_UID_GENERATION_AND_EXISTING_SAVES_PRESERVED",
+        "before_report": "/workspace/work/perf-20261119/preprod-before-account-metadata.json",
+        "after_report": "/workspace/work/perf-20261119/release/preprod-b94-after-account-metadata.json",
+        "UIDs": [
+          "dev-admin1",
+          "dev-admin2",
+          "dev-admin3"
+        ],
+        "generations_before": [
+          2,
+          2,
+          2
+        ],
+        "generations_after": [
+          2,
+          2,
+          2
+        ],
+        "revisions_before": [
+          107,
+          34,
+          591
+        ],
+        "revisions_after": [
+          119,
+          34,
+          591
+        ],
+        "nonempty_islands_after": 3,
+        "admin1_payload_change": "Legitimate continued play; revision increased. No unchanged-payload claim.",
+        "admin2_and_admin3_payload_SHA_unchanged": true,
+        "our_island_writes": false,
+        "normal_TLS": true
+      },
+      "quality_reopened_for": [
+        "warm_manifest_cache_regression",
+        "admin3_synchronous_offline_catchup_UI_block"
+      ]
+    },
+    "previous_accepted_release": {
+      "version": "0.15.2.0",
+      "cache": "frontend-v32-17",
+      "publication_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "acceptance": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
+    },
+    "manual_user_acceptance": "DEV_PASS_PREPROD_NOT_RUN",
+    "game_rules_changes": false,
+    "accepted_artwork_changes": false,
+    "account_or_progress_reset": false,
+    "PROD_DNS": "NO_ACTION",
+    "additional_user_report": "co tu się stało z tym domkiem producenta skór",
+    "leatherworks_painter_order": {
+      "user_report": "co tu się stało z tym domkiem producenta skór",
+      "tracking_change": "HL-CHG-1167",
+      "status": "IMPLEMENTED_ANALYTICAL_AND_FINAL_CACHE18_REAL_UI_PASS",
+      "report": "/workspace/work/perf-leather-depth.json",
+      "cause": "quarry groundY486 gives z972, leatherworks groundY481 gives z962; foreground quarry covers current house",
+      "before": {
+        "leatherworks_depth": 962,
+        "quarry_depth": 972,
+        "frame01_opaque_coverage_by_quarry": 0.43988112768065113,
+        "frame01_roof_band_covered": 0.5305972883840234,
+        "all100_pair_coverage_min": 0.426093009557977,
+        "all100_pair_coverage_max": 0.5752850075285008
+      },
+      "fix": {
+        "manifest_field": "buildings.leatherworks.paintDepth",
+        "value": 500,
+        "resolved_z_index": 1000,
+        "quarry_z_index": 972,
+        "normalizer_validates_finite_world_bounded_value": true,
+        "map_position_scale_sprite_RGBA_and_hotspot_changes": false
+      },
+      "analytical_after": {
+        "leatherworks_paintDepth": 500,
+        "leatherworks_depth": 1000,
+        "quarry_depth": 972,
+        "leatherworks_foreground_for_all100_pairs": true,
+        "quarry_coverage_of_leatherworks": 0.0,
+        "geometry_and_RGBA_unchanged": true
+      },
+      "real_UI_check": {
+        "status": "PASS",
+        "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "actual_Leatherworks_Quarry_zindex": [
+          1000,
+          972
+        ],
+        "widths": [
+          1440,
+          390
+        ],
+        "report": "/workspace/work/perf-20261119/final-cache18-summary.json"
+      }
+    },
+    "local_focused_Node": {
+      "status": "PASS",
+      "building": 21,
+      "water": 5,
+      "total": 26
+    },
+    "application_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "publication_source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+    "application_version": "0.15.2.1",
+    "cache": "frontend-v32-18",
+    "final_cache18_local_QA": {
+      "status": "PASS",
+      "application_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "version": "0.15.2.1",
+      "cache": "frontend-v32-18",
+      "code_freeze_hashes_verified": {
+        "harborlight-version.js": "2f2689da8b998f027f98d3ab8e992d0e684619a8f8c27c64eceb78aeefa0778e",
+        "harborlight-v1-layered.html": "b89b008a1662b99c077dc0a1c1355d9906e9cf899dd3212fb7cb2be78d9ef9f4",
+        "harborlight-v1-building-stages.js": "38845803ef32b0adafa12a53ee8f764f938e07dce426589fe1f58b5c87fd9fa5",
+        "harborlight-v1-play.js": "11bb1b4a9503a3b97941c732ff85034a5bdb79010ab245429df654a5e08ffda8",
+        "harborlight-v1-map-art.js": "144535bad54af60625a82a86ea361a8ee3d2ac029a845585c1ffc980a198fa0e",
+        "harborlight-v1-ambient.js": "31b0190d1f93f04d335b1d4a2961a18fdef2b98d626edd13561088200c6de40f",
+        "harborlight-v1-water.js": "966c524a4b0da37ecfff7e3151c518991829feb4a0a59c45ea323dd0041a346f",
+        "assets/building-upgrades-v1/manifest.json": "3626243a2bb564d1ceb84473650b902454022f316762b0d1a3d9e783977a1e03",
+        "tests/harborlight-performance-v32-smoke.py": "bba918aea4da44bbb5cd7442566a5940a256179cd3e1293d99d8c46370113f77",
+        "tests/harborlight-building-stages-v32-smoke.py": "85ae43f0f162d470c2fc678b1224532d3997d45cd0b0472fb60281deded795f6",
+        "tests/harborlight-startup-no-flash-v32-smoke.py": "56b014e94efe9cff7e84eb0e2c5b29b4266ea573b1ba18aca2f782f0cd509899",
+        "tests/harborlight-accepted-front-v32-smoke.py": "213e6e9985c9a1546bacd3a030d1bd969dfb9b1625dff1ac38d97b3bca2da851",
+        "tests/helpers/building_stage_acceptance.py": "e52f95921698bc22bc825ba5fc44273567c9e2478cc2a68e488244602d35d7e2"
+      },
+      "real_asset_performance_cases": 4,
+      "current_functional_frames": 20,
+      "additional_current_decoration_frames": 1,
+      "startup_image_bytes": 12749925,
+      "startup_image_limit_bytes": 20971520,
+      "full_atlas_or_old_farm_harbor_windmill_requests": 0,
+      "unchanged_tick_new_image_requests": 0,
+      "current404_and_retry": "PASS",
+      "unused_future404_independence": "PASS",
+      "actual_Leatherworks_Quarry_zindex": [
+        1000,
+        972
+      ],
+      "building_runtime_widths": [
+        1440,
+        390
+      ],
+      "building_real200_alpha_bounds": "PASS",
+      "crane_actual_DOM_alpha_geometry_cases": 160,
+      "Lighthouse_HUD_negative_controls": 4,
+      "atlas_letterbox_negative_control": "PASS",
+      "startup_cases": 26,
+      "conditional_active_crane_error_retry_cases": 2,
+      "accepted_front_widths": [
+        1672,
+        1440,
+        390,
+        320
+      ],
+      "no_real_account_or_cloud_writes": true,
+      "no_application_JS_errors": true,
+      "all_browsers_closed": true,
+      "no_repository_edits_this_final_run": true,
+      "timing_benchmark_repeated": false,
+      "prior_pre_cache_bump_timing_comparison": "before-after-comparison.json",
+      "logs": {
+        "performance": {
+          "file": "/workspace/work/perf-20261119/final-cache18-performance.log",
+          "bytes": 2691,
+          "sha256": "78820518e37e994d4010e2fee503d21d716501547661e09ae031f8127f493bbf"
+        },
+        "buildings": {
+          "file": "/workspace/work/perf-20261119/final-cache18-buildings.log",
+          "bytes": 682,
+          "sha256": "c9aca191b57a573e7976a66e793e9306624c2cc3cbf9a7b5897a284a84f4bc6a"
+        },
+        "startup": {
+          "file": "/workspace/work/perf-20261119/final-cache18-startup.log",
+          "bytes": 1413,
+          "sha256": "fd76c6d45ef5deb25f3f9955cd7223cb01a5ed299b87533abb84bfeb2a957291"
+        },
+        "front": {
+          "file": "/workspace/work/perf-20261119/final-cache18-front.log",
+          "bytes": 1768,
+          "sha256": "9ee2862498ad2645c23d01721541802f0567863da11ebf4d2053374293828759"
+        }
+      }
+    },
+    "local_Node_regression": {
+      "frontend_full_first": {
+        "tests": 1501,
+        "pass": 1500,
+        "fail": 1,
+        "failure": "unchanged legacy96hcatchup subprocess10000ms watchdog under concurrent suites",
+        "log": "frontend-node-cache18.log"
+      },
+      "same_watchdog_isolated": {
+        "status": "PASS",
+        "tests": 1,
+        "elapsed_ms": 9335.864,
+        "original10000ms_limit_unchanged": true,
+        "log": "catchup-isolated-cache18.log"
+      },
+      "backend": {
+        "status": "PASS",
+        "tests": 170
+      },
+      "building_and_water_targeted": {
+        "status": "PASS",
+        "tests": 26
+      },
+      "full_exact_source_CI": "PENDING",
+      "full_frontend_PASS_claimed": false,
+      "failure_not_suppressed_or_timeout_relaxed": true,
+      "subsequent_own_CI": {
+        "run_id": 44520278661,
+        "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+        "frontend_tests": 1501,
+        "frontend_pass": 1501,
+        "watchdog_status": "PASS",
+        "watchdog_ms": 6358.099351,
+        "watchdog_limit_ms": 10000,
+        "original_limit_unchanged": true
+      }
+    },
+    "canonical_artifact_refresh": {
+      "status": "PASS",
+      "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "report": "/workspace/work/perf-20261119/artifacts/canonical-artifacts-summary.json",
+      "master": {
+        "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+        "sha256": "cc210463afe2df74774569125d77d7da171c303d928d77fe291dbb2ee8196c85",
+        "bytes": 7744332,
+        "sheets": 158,
+        "current_sheets": 58,
+        "rows_current": 62568,
+        "historical_sheets_unchanged": 100,
+        "historical_zip_parts_unchanged": 220,
+        "historical_comments_unchanged": 48,
+        "historical_cached_formulas_unchanged": 4982,
+        "new_cached_formulas": 12,
+        "formula_samples_against_code": 160,
+        "source_files": 120,
+        "building_art_rows": 200,
+        "fresh_build": "PASS",
+        "fresh_validate_only": "PASS",
+        "validation_report_sha256": "4df79199c4d0449367d3a53ee9ee4c5fc319fd60f1f16a39714f834353b4e253",
+        "simulation_snapshot_sha256": "31c54b6b4ca471a733bdb21f01fe893fdd4d00b6c7cf5e426e47a69729e51a24"
+      },
+      "editorial": {
+        "status": "PASS",
+        "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "bytes": 60331,
+        "sha256": "13f895feb3283ae1c4b47afaffbd4a2cc93446e4bf6dcbfa1c3225b6d6109502",
+        "source_git_commit": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "source_fingerprint": "e478575a5bb31deb4a10e72f21dd4318e0673f644d1a6488df016febcd1a54b0",
+        "source_files_fingerprinted": 105,
+        "rows": 413,
+        "sheets": {
+          "Tutorial": 55,
+          "Budynki — opisy": 24,
+          "Budynki — informacje": 30,
+          "Dolny pasek": 24,
+          "Komunikaty": 215,
+          "Przyciski": 65
+        },
+        "C_all_blank": true,
+        "exact_three_columns": true
+      },
+      "facts_economic_identity": {
+        "status": "PASS",
+        "before_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
+        "after_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "unchanged_economic_tables": [
+          "building-levels",
+          "conditional-rules",
+          "direct-routes",
+          "levels",
+          "military-outcomes",
+          "parameters",
+          "population",
+          "products",
+          "recipe-levels",
+          "research",
+          "research-levels",
+          "roads",
+          "study-and-military",
+          "validated-examples"
+        ],
+        "unchanged_economic_table_count": 14,
+        "catalogs_rules_initial_state_pending_and_checks_identical": true,
+        "art_rows": 200,
+        "presentation_only_changes": [
+          "lossless frame URLs and local crop coordinates",
+          "explicit original atlas provenance",
+          "Leatherworks paintDepth500; positions and bounds preserved"
+        ],
+        "gameplay_or_account_mutation": false
+      },
+      "actual_simulations": {
+        "profiles": [
+          {
+            "id": "bez-pracy",
+            "hours": 24,
+            "canonical_population": 18,
+            "after_introduction_population": 19,
+            "no_injected_resources_or_levels": true,
+            "no_real_accounts": true
+          },
+          {
+            "id": "produkcja-24h",
+            "hours": 24,
+            "canonical_population": 18,
+            "after_introduction_population": 19,
+            "no_injected_resources_or_levels": true,
+            "no_real_accounts": true
+          },
+          {
+            "id": "rozwoj-3d",
+            "hours": 72,
+            "canonical_population": 18,
+            "after_introduction_population": 19,
+            "no_injected_resources_or_levels": true,
+            "no_real_accounts": true
+          }
+        ],
+        "checks": {
+          "puzzleExamples": 120,
+          "solverSolved": 115,
+          "layoutsValidated": 120,
+          "storyVariants": 100,
+          "storyRooms": 560,
+          "campaignSteps": 152,
+          "theatrePricePoints": 1030,
+          "theatreShowCases": 10,
+          "currentSimulationProfiles": 3,
+          "allSimulationsCanonicalStart": true,
+          "noInjectedResourcesOrLevels": true
+        }
+      },
+      "minigames": {
+        "status": "PASS",
+        "source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "all5_steps_returncode0": true,
+        "catalog": {
+          "total": 55,
+          "puzzle": 24,
+          "story": 20,
+          "adventure": 9,
+          "expedition": 2,
+          "storyVariants": 100
+        },
+        "entries": 55,
+        "TXT": 55,
+        "DOCX": 55,
+        "semantic_catalog_sha256": "344c77c26aad1daf696172e1fa47ba011e7371c81ff70031fa9d22c481d7ddd4",
+        "semantics_unchanged": true,
+        "provenance_changes_only": true,
+        "archive_sha256": "dc90537169a65c941d9f54bec21c22b164f90b6a14527f7504647c47056b790d",
+        "archive_bytes": 2390770
+      },
+      "gameplay_or_account_writes": false,
+      "code_modified_after_source_pin": false,
+      "final_publication_source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "generators_edited_by_documentation_task": false
+    },
+    "local_acceptance_document": "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json",
+    "code_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "export_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+    "public_Pages_file_audit": {
+      "status": "PASS",
+      "source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "kind": "pages",
+      "origin": "https://ksobczak321-oss.github.io/gra/",
+      "checked_at_utc": "2026-11-19T12:06:11.147559+00:00",
+      "normal_TLS": true,
+      "expected_frontend": "/workspace/work/perf-20261119/release/committed-frontend",
+      "file_count": 454,
+      "total_bytes": 96462542,
+      "Pages_index_compared_to_committed_Git_source": true,
+      "includes_original_generated_release_json": false,
+      "account_requests_or_writes": false,
+      "native_browser_claimed": false,
+      "report": "/workspace/work/perf-20261119/release/pages-public-byte-audit.json"
+    },
+    "native_Pages_browser": {
+      "source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "url": "https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-18",
+      "TLS_bypass": false,
+      "game_fixture": false,
+      "real_account_or_cloud_writes": false,
+      "status": "BLOCKED_CERT_AUTHORITY",
+      "native_HTTPS_UI": false,
+      "error": "Page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-18\nCall log:\n  - navigating to \"https://ksobczak321-oss.github.io/gra/harborlight-v1-layered.html?preview=admin1-level5&v=frontend-v32-18\", waiting until \"domcontentloaded\"\n",
+      "blocked_mutations": [],
+      "report": "/workspace/work/perf-20261119/release/native-pages-browser.json"
+    },
+    "main_freeze_during_promotion": {
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "metadata_changes_not_pushed_before_dispatch_and_source_confirmation": true,
+      "scope": "No metadata commit/push while the actual standard PRE-PROD run is in progress."
+    },
+    "manual_DEV_acceptance": {
+      "status": "PASS",
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "version": "0.15.2.1",
+      "cache": "frontend-v32-18",
+      "user_quote": "tak jest ok",
+      "date": "2026-11-19",
+      "timezone": "Europe/Warsaw",
+      "scope": "User confirmed the DEV Chrome preview; this is separate from the blocked local automated HTTPS browser."
+    },
+    "manual_PREPROD_acceptance": "NOT_RUN",
+    "explicit_PREPROD_GO": {
+      "status": "AUTHORIZED",
+      "date": "2026-11-19",
+      "timezone": "Europe/Warsaw",
+      "user_quote": "wrzuć na preprod",
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "requires_own_exact_source_CI_success": true,
+      "account_and_progress_preservation": true,
+      "PROD_DNS_reset_authorized": false
+    },
+    "DEV": {
+      "status": "REOPENED_AFTER_WARM_CACHE_QUALITY_FAIL",
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "application_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "version": "0.15.2.1",
+      "cache": "frontend-v32-18",
+      "own_CI": "SUCCESS44520278661",
+      "Pages": "SUCCESS44520278629",
+      "public_normal_TLS_file_audit": "PASS454files",
+      "manual_user_acceptance": "PASS",
+      "immutable_tag_remote_verified": true,
+      "native_local_HTTPS_automated_browser": "BLOCKED_CERT_AUTHORITY_without_TLS_bypass",
+      "previous_status_before_warm_cache_audit": "ACCEPTED"
+    },
+    "warm_cache_quality": {
+      "status": "FAIL_MATERIAL_WARM_CACHE_REGRESSION",
+      "report": "/workspace/work/perf-20261119/cache-warm/pilot-report.json",
+      "prior_cached_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
+      "code_source": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "cache_control": "public, max-age=86400",
+      "manifest_network_GETs_after_prime": 1,
+      "manifest_network_GETs_after_game": 1,
+      "CDP_fromDiskCache_confirmed": true,
+      "old_manifest_has_sprites": false,
+      "old_manifest_has_paintDepth": false,
+      "actual_depths": {
+        "leatherworks": 962,
+        "quarry": 972
+      },
+      "old_full_atlas_requests": 20,
+      "cache_disabled_or_cleared": false,
+      "Playwright_routing_used": false,
+      "account_or_model_mutations": false,
+      "JS_errors": [],
+      "effect": "A retained old manifest silently restores full atlases and Leatherworks depth962 despite new cache18 JS."
     }
   },
   "previous_accepted_release": {
@@ -340,311 +1199,133 @@
     "publication_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
     "acceptance": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
   },
-  "manual_user_acceptance": "NOT_RUN",
   "game_rules_changes": false,
   "accepted_artwork_changes": false,
   "account_or_progress_reset": false,
   "PROD_DNS": "NO_ACTION",
-  "additional_user_report": "co tu się stało z tym domkiem producenta skór",
-  "leatherworks_painter_order": {
-    "user_report": "co tu się stało z tym domkiem producenta skór",
-    "tracking_change": "HL-CHG-1167",
-    "status": "IMPLEMENTED_ANALYTICAL_AND_FINAL_CACHE18_REAL_UI_PASS",
-    "report": "/workspace/work/perf-leather-depth.json",
-    "cause": "quarry groundY486 gives z972, leatherworks groundY481 gives z962; foreground quarry covers current house",
-    "before": {
-      "leatherworks_depth": 962,
-      "quarry_depth": 972,
-      "frame01_opaque_coverage_by_quarry": 0.43988112768065113,
-      "frame01_roof_band_covered": 0.5305972883840234,
-      "all100_pair_coverage_min": 0.426093009557977,
-      "all100_pair_coverage_max": 0.5752850075285008
-    },
-    "fix": {
-      "manifest_field": "buildings.leatherworks.paintDepth",
-      "value": 500,
-      "resolved_z_index": 1000,
-      "quarry_z_index": 972,
-      "normalizer_validates_finite_world_bounded_value": true,
-      "map_position_scale_sprite_RGBA_and_hotspot_changes": false
-    },
-    "analytical_after": {
-      "leatherworks_paintDepth": 500,
-      "leatherworks_depth": 1000,
-      "quarry_depth": 972,
-      "leatherworks_foreground_for_all100_pairs": true,
-      "quarry_coverage_of_leatherworks": 0.0,
-      "geometry_and_RGBA_unchanged": true
-    },
-    "real_UI_check": {
+  "additional_user_reports": [
+    "co tu się stało z tym domkiem producenta skór",
+    "Admin3 na pre prod wisi pozostałe chodzą sprawdź"
+  ],
+  "admin3_startup_diagnosis": {
+    "status": "REPRODUCED_UI_EVENTLOOP_BLOCK_ON_UNMODIFIED_B94_PRIVATE_COPY",
+    "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+    "safe_report": "/workspace/work/perf-20261119/admin3-hang-diagnosis.json",
+    "API_and_auth": "PASS_READ_ONLY",
+    "schema": 9,
+    "ruleset": 32,
+    "generation": 2,
+    "revision": 591,
+    "population": 97,
+    "catchup_hours": 47.88518666666667,
+    "clock_rate": 1,
+    "cloud_load_ms": 943.5653230000007,
+    "restore_ms_range": [
+      121.2,
+      158.77
+    ],
+    "browser_observation_seconds": 25,
+    "browser_heartbeat_stopped_after_advance_started": true,
+    "JS_errors": [],
+    "cause": "Synchronous first advanceArchipelago blocks the main thread while nearly48hours of natural events repeatedly calculate resident/provision/production derived status.",
+    "epsilon_stall": "NOT_PROVEN_first2000events_advanced6558simulationseconds",
+    "prior_B94_UI_test_account": "admin1",
+    "three_account_auth_and_reads_are_not_admin3_UI_start_acceptance": true,
+    "account_island_or_clock_writes": false,
+    "raw_save_or_credentials_committed": false
+  },
+  "planned_admin3_fix": {
+    "status": "C4_TARGETED_AND_TWO_ACTUAL_SHORT_WHOLE_STATE_COMPARISONS_PASS_FULL_REPLAY_PENDING",
+    "parts": [
+      "Scope repeated production and provision derived reads with explicit invalidation at state mutations.",
+      "Reuse diet aggregates only within one advancePopulation; retain every meal history and unchanged math.",
+      "Run one fixed-target initial advanceArchipelago in a native Worker.",
+      "Transfer the full running bundle without save compaction or normalization side effects.",
+      "Recheck session, generation, revision, adoption and developer clock before atomic adoption; discard stale/cancelled results.",
+      "Never save partial catch-up; finish residual elapsed time on a Worker when cloud confirmation is slow.",
+      "Dispose the startup client and release its previous bundle after successful adoption."
+    ],
+    "exact_reference_equivalence_required": true,
+    "actual_admin3_local_responsive_full_replay_required": true,
+    "no_elapsed_time_skipping": true,
+    "no_clock_or_rate_change": true,
+    "no_reset": true,
+    "model_equivalence": "PASS_TWO_ACTUAL_SHORT_WHOLE_STATE_COMPARISONS_FULL47_885H_PENDING",
+    "full_admin3_UI": "PENDING_REAL_EXISTING_ACCOUNT_ON_NEW_STANDARD_PREPROD",
+    "C4_targeted_read_scope_tests": {
       "status": "PASS",
-      "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-      "actual_Leatherworks_Quarry_zindex": [
-        1000,
-        972
-      ],
-      "widths": [
-        1440,
-        390
-      ],
-      "report": "/workspace/work/perf-20261119/final-cache18-summary.json"
+      "tests": 18,
+      "log": "/workspace/work/perf-20261119/resident-read-scopes-c4-targeted.log"
+    },
+    "source_frozen": false
+  },
+  "candidate": "C4",
+  "candidate_history": {
+    "C3_actual_first_hour": {
+      "status": "EXACT_JSON_MATCH_TO_B94",
+      "reference_ms": 32351,
+      "candidate_ms": 11103,
+      "full_gap_acceptance": false
+    },
+    "C3_later_checkpoint": {
+      "simulation_hours_approx": 9.78,
+      "meal_history_rows": 77636,
+      "snapshot_MB_approx": 8.26,
+      "full_runtime_estimate_minutes_approx": 30,
+      "status": "TOO_SLOW_SUPERSEDED_BY_C4",
+      "history_removed": false
+    },
+    "C1_C2_C3_full_runs": {
+      "status": "SUPERSEDED_WITHOUT_FINAL_RESULT",
+      "PASS_claimed": false
+    },
+    "B94_full_reference": {
+      "status": "PAUSED_FOR_SHORT_C4_COMPARISONS_AND_REQUIRED_CHECKS",
+      "simulation_hours_approx": 15,
+      "CPU_minutes_approx": 21,
+      "completed": false
+    },
+    "C4_exact_comparisons": {
+      "status": "PASS_TWO_SHORT_WHOLE_STATE_COMPARISONS_NOT_FULL_GAP_ACCEPTANCE",
+      "one_hour": {
+        "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_B94",
+        "report": "/workspace/work/perf-20261119/admin3-candidate4-one-hour-equivalence.json",
+        "population": 97,
+        "simulated_hours": 1,
+        "bytes": 239055,
+        "sha256": "2fa608692053b4e1ac941d8074b011af0736ef8494fde43a24ddd6c574ae2d07",
+        "reference_B94_ms": 32350.872504,
+        "C4_ms": 14603.158926,
+        "earlier_C3_ms": 11103,
+        "C4_was_slower_than_C3_in_cold_case": true,
+        "blanket_speedup_claimed": false,
+        "actual_account_or_clock_writes": false
+      },
+      "dense_midstate_next_hour": {
+        "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_C3",
+        "report": "/workspace/work/perf-20261119/admin3-candidate4-midstate-equivalence.json",
+        "checkpoint_simulation_hours_approx": 9.78,
+        "checkpoint_population": 100,
+        "checkpoint_meal_history_rows": 77636,
+        "simulated_hours": 1,
+        "target": 1794979443023.2,
+        "result_population": 101,
+        "bytes": 9226855,
+        "sha256": "fefe14fee581c77e325d0ce3c4c400eadb7f8206d67ff660f39e600a704b84f2",
+        "C4_wall_ms": 17261.188877,
+        "C4_CPU_ms": 20777.546,
+        "C3_elapsed_ms": 163164.853574,
+        "C3_elapsed_includes_SIGSTOP": true,
+        "exact_speed_ratio_claimed": false,
+        "normalized_again": false,
+        "actual_account_or_clock_writes": false
+      },
+      "full_C4_actual_gap": {
+        "status": "NOT_YET_RUN",
+        "hours": 47.88518666666667,
+        "PASS_claimed": false
+      },
+      "repository_acceptance": "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
     }
-  },
-  "local_focused_Node": {
-    "status": "PASS",
-    "building": 21,
-    "water": 5,
-    "total": 26
-  },
-  "application_source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-  "publication_source_sha": null,
-  "application_version": "0.15.2.1",
-  "cache": "frontend-v32-18",
-  "final_cache18_local_QA": {
-    "status": "PASS",
-    "application_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-    "version": "0.15.2.1",
-    "cache": "frontend-v32-18",
-    "code_freeze_hashes_verified": {
-      "harborlight-version.js": "2f2689da8b998f027f98d3ab8e992d0e684619a8f8c27c64eceb78aeefa0778e",
-      "harborlight-v1-layered.html": "b89b008a1662b99c077dc0a1c1355d9906e9cf899dd3212fb7cb2be78d9ef9f4",
-      "harborlight-v1-building-stages.js": "38845803ef32b0adafa12a53ee8f764f938e07dce426589fe1f58b5c87fd9fa5",
-      "harborlight-v1-play.js": "11bb1b4a9503a3b97941c732ff85034a5bdb79010ab245429df654a5e08ffda8",
-      "harborlight-v1-map-art.js": "144535bad54af60625a82a86ea361a8ee3d2ac029a845585c1ffc980a198fa0e",
-      "harborlight-v1-ambient.js": "31b0190d1f93f04d335b1d4a2961a18fdef2b98d626edd13561088200c6de40f",
-      "harborlight-v1-water.js": "966c524a4b0da37ecfff7e3151c518991829feb4a0a59c45ea323dd0041a346f",
-      "assets/building-upgrades-v1/manifest.json": "3626243a2bb564d1ceb84473650b902454022f316762b0d1a3d9e783977a1e03",
-      "tests/harborlight-performance-v32-smoke.py": "bba918aea4da44bbb5cd7442566a5940a256179cd3e1293d99d8c46370113f77",
-      "tests/harborlight-building-stages-v32-smoke.py": "85ae43f0f162d470c2fc678b1224532d3997d45cd0b0472fb60281deded795f6",
-      "tests/harborlight-startup-no-flash-v32-smoke.py": "56b014e94efe9cff7e84eb0e2c5b29b4266ea573b1ba18aca2f782f0cd509899",
-      "tests/harborlight-accepted-front-v32-smoke.py": "213e6e9985c9a1546bacd3a030d1bd969dfb9b1625dff1ac38d97b3bca2da851",
-      "tests/helpers/building_stage_acceptance.py": "e52f95921698bc22bc825ba5fc44273567c9e2478cc2a68e488244602d35d7e2"
-    },
-    "real_asset_performance_cases": 4,
-    "current_functional_frames": 20,
-    "additional_current_decoration_frames": 1,
-    "startup_image_bytes": 12749925,
-    "startup_image_limit_bytes": 20971520,
-    "full_atlas_or_old_farm_harbor_windmill_requests": 0,
-    "unchanged_tick_new_image_requests": 0,
-    "current404_and_retry": "PASS",
-    "unused_future404_independence": "PASS",
-    "actual_Leatherworks_Quarry_zindex": [
-      1000,
-      972
-    ],
-    "building_runtime_widths": [
-      1440,
-      390
-    ],
-    "building_real200_alpha_bounds": "PASS",
-    "crane_actual_DOM_alpha_geometry_cases": 160,
-    "Lighthouse_HUD_negative_controls": 4,
-    "atlas_letterbox_negative_control": "PASS",
-    "startup_cases": 26,
-    "conditional_active_crane_error_retry_cases": 2,
-    "accepted_front_widths": [
-      1672,
-      1440,
-      390,
-      320
-    ],
-    "no_real_account_or_cloud_writes": true,
-    "no_application_JS_errors": true,
-    "all_browsers_closed": true,
-    "no_repository_edits_this_final_run": true,
-    "timing_benchmark_repeated": false,
-    "prior_pre_cache_bump_timing_comparison": "before-after-comparison.json",
-    "logs": {
-      "performance": {
-        "file": "/workspace/work/perf-20261119/final-cache18-performance.log",
-        "bytes": 2691,
-        "sha256": "78820518e37e994d4010e2fee503d21d716501547661e09ae031f8127f493bbf"
-      },
-      "buildings": {
-        "file": "/workspace/work/perf-20261119/final-cache18-buildings.log",
-        "bytes": 682,
-        "sha256": "c9aca191b57a573e7976a66e793e9306624c2cc3cbf9a7b5897a284a84f4bc6a"
-      },
-      "startup": {
-        "file": "/workspace/work/perf-20261119/final-cache18-startup.log",
-        "bytes": 1413,
-        "sha256": "fd76c6d45ef5deb25f3f9955cd7223cb01a5ed299b87533abb84bfeb2a957291"
-      },
-      "front": {
-        "file": "/workspace/work/perf-20261119/final-cache18-front.log",
-        "bytes": 1768,
-        "sha256": "9ee2862498ad2645c23d01721541802f0567863da11ebf4d2053374293828759"
-      }
-    }
-  },
-  "local_Node_regression": {
-    "frontend_full_first": {
-      "tests": 1501,
-      "pass": 1500,
-      "fail": 1,
-      "failure": "unchanged legacy96hcatchup subprocess10000ms watchdog under concurrent suites",
-      "log": "frontend-node-cache18.log"
-    },
-    "same_watchdog_isolated": {
-      "status": "PASS",
-      "tests": 1,
-      "elapsed_ms": 9335.864,
-      "original10000ms_limit_unchanged": true,
-      "log": "catchup-isolated-cache18.log"
-    },
-    "backend": {
-      "status": "PASS",
-      "tests": 170
-    },
-    "building_and_water_targeted": {
-      "status": "PASS",
-      "tests": 26
-    },
-    "full_exact_source_CI": "PENDING",
-    "full_frontend_PASS_claimed": false,
-    "failure_not_suppressed_or_timeout_relaxed": true
-  },
-  "canonical_artifact_refresh": {
-    "status": "PASS",
-    "source_sha": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-    "report": "/workspace/work/perf-20261119/artifacts/canonical-artifacts-summary.json",
-    "master": {
-      "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
-      "sha256": "cc210463afe2df74774569125d77d7da171c303d928d77fe291dbb2ee8196c85",
-      "bytes": 7744332,
-      "sheets": 158,
-      "current_sheets": 58,
-      "rows_current": 62568,
-      "historical_sheets_unchanged": 100,
-      "historical_zip_parts_unchanged": 220,
-      "historical_comments_unchanged": 48,
-      "historical_cached_formulas_unchanged": 4982,
-      "new_cached_formulas": 12,
-      "formula_samples_against_code": 160,
-      "source_files": 120,
-      "building_art_rows": 200,
-      "fresh_build": "PASS",
-      "fresh_validate_only": "PASS",
-      "validation_report_sha256": "4df79199c4d0449367d3a53ee9ee4c5fc319fd60f1f16a39714f834353b4e253",
-      "simulation_snapshot_sha256": "31c54b6b4ca471a733bdb21f01fe893fdd4d00b6c7cf5e426e47a69729e51a24"
-    },
-    "editorial": {
-      "status": "PASS",
-      "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-      "bytes": 60331,
-      "sha256": "13f895feb3283ae1c4b47afaffbd4a2cc93446e4bf6dcbfa1c3225b6d6109502",
-      "source_git_commit": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-      "source_fingerprint": "e478575a5bb31deb4a10e72f21dd4318e0673f644d1a6488df016febcd1a54b0",
-      "source_files_fingerprinted": 105,
-      "rows": 413,
-      "sheets": {
-        "Tutorial": 55,
-        "Budynki — opisy": 24,
-        "Budynki — informacje": 30,
-        "Dolny pasek": 24,
-        "Komunikaty": 215,
-        "Przyciski": 65
-      },
-      "C_all_blank": true,
-      "exact_three_columns": true
-    },
-    "facts_economic_identity": {
-      "status": "PASS",
-      "before_source": "e5d76110365c77d5c026b53b6195e56a3a327542",
-      "after_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-      "unchanged_economic_tables": [
-        "building-levels",
-        "conditional-rules",
-        "direct-routes",
-        "levels",
-        "military-outcomes",
-        "parameters",
-        "population",
-        "products",
-        "recipe-levels",
-        "research",
-        "research-levels",
-        "roads",
-        "study-and-military",
-        "validated-examples"
-      ],
-      "unchanged_economic_table_count": 14,
-      "catalogs_rules_initial_state_pending_and_checks_identical": true,
-      "art_rows": 200,
-      "presentation_only_changes": [
-        "lossless frame URLs and local crop coordinates",
-        "explicit original atlas provenance",
-        "Leatherworks paintDepth500; positions and bounds preserved"
-      ],
-      "gameplay_or_account_mutation": false
-    },
-    "actual_simulations": {
-      "profiles": [
-        {
-          "id": "bez-pracy",
-          "hours": 24,
-          "canonical_population": 18,
-          "after_introduction_population": 19,
-          "no_injected_resources_or_levels": true,
-          "no_real_accounts": true
-        },
-        {
-          "id": "produkcja-24h",
-          "hours": 24,
-          "canonical_population": 18,
-          "after_introduction_population": 19,
-          "no_injected_resources_or_levels": true,
-          "no_real_accounts": true
-        },
-        {
-          "id": "rozwoj-3d",
-          "hours": 72,
-          "canonical_population": 18,
-          "after_introduction_population": 19,
-          "no_injected_resources_or_levels": true,
-          "no_real_accounts": true
-        }
-      ],
-      "checks": {
-        "puzzleExamples": 120,
-        "solverSolved": 115,
-        "layoutsValidated": 120,
-        "storyVariants": 100,
-        "storyRooms": 560,
-        "campaignSteps": 152,
-        "theatrePricePoints": 1030,
-        "theatreShowCases": 10,
-        "currentSimulationProfiles": 3,
-        "allSimulationsCanonicalStart": true,
-        "noInjectedResourcesOrLevels": true
-      }
-    },
-    "minigames": {
-      "status": "PASS",
-      "source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-      "all5_steps_returncode0": true,
-      "catalog": {
-        "total": 55,
-        "puzzle": 24,
-        "story": 20,
-        "adventure": 9,
-        "expedition": 2,
-        "storyVariants": 100
-      },
-      "entries": 55,
-      "TXT": 55,
-      "DOCX": 55,
-      "semantic_catalog_sha256": "344c77c26aad1daf696172e1fa47ba011e7371c81ff70031fa9d22c481d7ddd4",
-      "semantics_unchanged": true,
-      "provenance_changes_only": true,
-      "archive_sha256": "dc90537169a65c941d9f54bec21c22b164f90b6a14527f7504647c47056b790d",
-      "archive_bytes": 2390770
-    },
-    "gameplay_or_account_writes": false,
-    "code_modified_after_source_pin": false,
-    "final_publication_source": null,
-    "generators_edited_by_documentation_task": false
-  },
-  "local_acceptance_document": "docs/v32/CHROME-PERFORMANCE-LOCAL-ACCEPTANCE.json"
+  }
 }

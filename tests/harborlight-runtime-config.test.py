@@ -71,6 +71,43 @@ class ConfigurationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 HOSTED.origin_project(value)
 
+    def test_hosted_explicit_account_selection_is_preprod_only_and_bounded(self):
+        with patch.dict(HOSTED.os.environ, {'HARBORLIGHT_HOSTED_PREPROD_ACCOUNT': ''}):
+            self.assertIsNone(HOSTED.selected_preprod_account('harborlight-dev'))
+            self.assertIsNone(HOSTED.selected_preprod_account('harborlight-prod'))
+        for login in ('admin1', 'admin2', 'admin3'):
+            with patch.dict(HOSTED.os.environ, {'HARBORLIGHT_HOSTED_PREPROD_ACCOUNT': login}):
+                self.assertEqual(HOSTED.selected_preprod_account('harborlight-dev'), login)
+                with self.assertRaises(ValueError):
+                    HOSTED.selected_preprod_account('harborlight-prod')
+        for login in ('admin4', 'other@example.invalid', 'admin3,admin1', ' admin3'):
+            with patch.dict(HOSTED.os.environ, {'HARBORLIGHT_HOSTED_PREPROD_ACCOUNT': login}):
+                with self.assertRaises(ValueError):
+                    HOSTED.selected_preprod_account('harborlight-dev')
+        for project, selected in [('harborlight-dev', None), ('harborlight-dev', 'admin1'),
+                                  ('harborlight-dev', 'admin2'), ('harborlight-prod', None)]:
+            self.assertEqual(HOSTED.startup_timeout_ms(project, selected), 30000)
+        self.assertEqual(HOSTED.startup_timeout_ms('harborlight-dev', 'admin3'), 600000)
+
+    def test_hosted_replay_requires_responsive_observed_heartbeats(self):
+        self.assertEqual(HOSTED.assert_replay_observation({'observed': False, 'ticks': 0, 'max_gap_ms': 0})['observed'], False)
+        self.assertEqual(HOSTED.assert_replay_observation({'observed': True, 'ticks': 200, 'max_gap_ms': 1499})['ticks'], 200)
+        for report in [None, {}, {'observed': True, 'ticks': 0, 'max_gap_ms': 100},
+                       {'observed': True, 'ticks': 10, 'max_gap_ms': 1501},
+                       {'observed': True, 'ticks': 10, 'max_gap_ms': float('nan')}]:
+            with self.assertRaises(AssertionError):
+                HOSTED.assert_replay_observation(report)
+
+    def test_slow_admin3_startup_cannot_pass_without_observed_offthread_replay(self):
+        recent = {'observed': False, 'ticks': 0, 'max_gap_ms': 0}
+        active = {'observed': True, 'ticks': 200, 'max_gap_ms': 120}
+        self.assertEqual(HOSTED.assert_replay_startup(recent, 2000), recent)
+        self.assertEqual(HOSTED.assert_replay_startup(active, 540000), active)
+        for report, elapsed in [(recent, 30001), (recent, 540000), (active, 600001),
+                                (active, float('nan')), (active, -1)]:
+            with self.assertRaises(AssertionError):
+                HOSTED.assert_replay_startup(report, elapsed)
+
     def test_hosted_acceptance_checks_every_asset_against_the_verified_package(self):
         data = b'approved frontend'
         manifest = json.dumps({'schema_version':1,'commit':'a'*40,'files':{'game.js':{'size':len(data),'sha256':hashlib.sha256(data).hexdigest()}}}).encode()
@@ -151,6 +188,31 @@ class ConfigurationTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'No existing smoke island'):
             HOSTED.existing_identity(Http(), 'https://harborlight-dev.web.app', 'harborlight-dev',
                 {'apiKey': 'fixture-public-api-key-123'}, api_enabled=True)
+
+    def test_hosted_selected_admin3_never_falls_back_or_starts_its_empty_world(self):
+        calls = []
+        class Response:
+            status = 200
+            def __init__(self, body): self.body = body
+            def json(self): return self.body
+        class Http:
+            def post(self, url, **options):
+                calls.append(('POST', url))
+                self.asserted_email = options['data']['email']
+                if self.asserted_email != 'admin3@dev.harborlight.pl':
+                    raise AssertionError('The selected account must not fall back')
+                return Response({'localId': 'dev-admin3', 'email': self.asserted_email,
+                    'idToken': 'fixture-token', 'refreshToken': 'fixture-refresh'})
+            def get(self, url, **options):
+                calls.append(('GET', url))
+                if url != 'https://harborlight-dev.web.app/api/v1/island':
+                    raise AssertionError('Only the existing account API may be read')
+                return Response({'account': {'expired': False}, 'island': None})
+        with patch.dict(HOSTED.os.environ, {'HARBORLIGHT_HOSTED_PREPROD_ACCOUNT': 'admin3'}):
+            with self.assertRaisesRegex(AssertionError, 'No existing smoke island'):
+                HOSTED.existing_identity(Http(), 'https://harborlight-dev.web.app', 'harborlight-dev',
+                    {'apiKey': 'fixture-public-api-key-123'}, api_enabled=True)
+        self.assertEqual([method for method, _ in calls], ['POST', 'GET'])
 
 
 if __name__ == '__main__':
