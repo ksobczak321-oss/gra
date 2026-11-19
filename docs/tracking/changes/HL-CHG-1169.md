@@ -9,7 +9,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `LOCAL_COMPONENTS_AND_ACTUAL_SHORT_EQUIVALENCE_PASS_FULL_SOURCE_RELEASE_PENDING` |
+| DEV | `LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING` |
 | CI | `pending_own_exact_source` |
 | PRE-PROD | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 | PROD | `postponed_by_user` |

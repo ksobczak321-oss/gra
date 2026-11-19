@@ -362,7 +362,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-sail-gathering.
 
-Źródło katalogu: bf2f4ac12c1ef1cd69adb8c3e572649fdc975190.
+Źródło katalogu: 62db46b75cbda3c74264504ebca15cade7b4e1e4.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
@@ -378,6 +378,6 @@ Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1127 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1129 — Rozliczenie nagród opowieści i konwersja mąki
 
 • harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy

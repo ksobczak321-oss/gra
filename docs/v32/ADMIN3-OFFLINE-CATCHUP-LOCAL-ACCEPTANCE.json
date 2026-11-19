@@ -4,7 +4,7 @@
   "version": "0.15.2.2",
   "cache": "frontend-v32-19",
   "status": "LOCAL_COMPONENTS_AND_ACTUAL_SHORT_MODEL_EQUIVALENCE_PASS_FULL_RELEASE_PENDING",
-  "code_source": null,
+  "code_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
   "publication_source": null,
   "diagnosis": {
     "account": "admin3",
@@ -103,7 +103,18 @@
       "real_HTTP_cache_no_Playwright_route": true
     },
     "hosted_configuration_unit_cases": 12,
-    "source_scope_note": "Separate component observations, with source fingerprints. These do not substitute for own exact-source CI or actual hosted admin3 acceptance."
+    "source_scope_note": "Separate component observations, with source fingerprints. These do not substitute for own exact-source CI or actual hosted admin3 acceptance.",
+    "full_frontend_node": {
+      "tests": 1548,
+      "pass": 1548,
+      "fail": 0,
+      "duration_ms": 210141.044269,
+      "unchanged_96h_watchdog_ms": 10000,
+      "watchdog_pass_ms": 8418.450522
+    },
+    "backend_node": 170,
+    "board_node": 7,
+    "frontend_package_cases": 28
   },
   "model_fingerprints": {
     "harborlight-v1-state.js": "705f4b89831d2d801d78ce2f5909a564c445b6679079fe220ed10419559f2f67",
@@ -130,5 +141,41 @@
     "clock_writes": false,
     "reset": false,
     "accounts_and_progress": "PRESERVE"
+  },
+  "canonical_artifacts": {
+    "source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+    "master": {
+      "sheets": 158,
+      "current_sheets": 58,
+      "current_rows": 62998,
+      "source_hashes": 123,
+      "art_rows": 200,
+      "bytes": 7789221,
+      "sha256": "3a94bf8397a09c0eef2e890e32fee3acf1133e2bc0c7e9ade0b1d103d26472d7",
+      "build_and_fresh_validate": "PASS"
+    },
+    "editorial": {
+      "sheets": 6,
+      "rows": 413,
+      "C_all_blank": true,
+      "source_hashes": 108,
+      "bytes": 60328,
+      "sha256": "7250f176b7e8e7f2b0717b0f587a2b868a64a5cc53f51b406891715673edac7f",
+      "validation": "PASS"
+    },
+    "economic_numeric_tables_identical": 13,
+    "actual_canonical_profiles": "24h/24h/72h_ALL_CHECKPOINTS_COMMANDS_TYPES_NUMBERS_AND_SERIALIZATION_IDENTICAL_TO_BF2",
+    "minigames": "55/110_PROVENANCE_ONLY_SOURCE_ANCHOR1127_TO1129",
+    "archive": "100sheets/220parts/48comments/4982cachedformulas_UNCHANGED;12newformulas/160comparisonsPASS"
+  },
+  "local_test_failure_history": {
+    "frontend_package_first": {
+      "tests": 28,
+      "fail": 2,
+      "reason": "stale exact expected member count455 versus458 after addition of three explicitly allowed replay modules",
+      "preserved_log": "frontend-package-first-expected455-failure.log",
+      "correction": "Exact count458 and all three required modules; caps512/128MiB and historical profile pins unchanged",
+      "new_result": "28/28_PASS"
+    }
   }
 }

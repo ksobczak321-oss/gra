@@ -3,15 +3,15 @@
   "as_of": "2026-11-19",
   "timezone": "Europe/Warsaw",
   "scope": "ROUTINE_PERFORMANCE_LEATHERWORKS_CACHE_AND_ADMIN3_STARTUP_HOTFIX_DEV_THEN_PREPROD",
-  "status": "CANDIDATE_C4_SHORT_ACTUAL_EQUIVALENCE_PASS_PENDING_CODE_FREEZE_FULL_REPLAY_CI_AND_DEPLOY",
+  "status": "CODE62_FROZEN_LOCAL_NODE_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_FULL_ADMIN3_AND_DEPLOY_PENDING",
   "application_version": "0.15.2.2",
   "cache": "frontend-v32-19",
-  "source_sha": null,
-  "application_source_sha": null,
-  "code_source_sha": null,
-  "export_source_sha": null,
+  "source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+  "application_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+  "code_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+  "export_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
   "publication_source_sha": null,
-  "source_frozen": false,
+  "source_frozen": true,
   "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
   "additional_user_report": "co tu się stało z tym domkiem producenta skór",
   "explicit_PREPROD_GO": {
@@ -87,16 +87,189 @@
     "final_total_bytes": null,
     "final_archive_sha256": null,
     "final_manifest_sha256": null,
-    "validation": "PENDING_NEW_CODE",
-    "planned_public_entry_count_note": "Anticipated closed-list total including three startup replay modules; final package verification pending."
+    "validation": "LOCAL28_TESTS_PASS_EXACT458_CLOSED_LIST_FINAL_PUBLICATION_ARCHIVE_PENDING",
+    "planned_public_entry_count_note": "Closed-list tests confirm458 entries with three explicitly required replay modules; final committed archive pins pending."
   },
   "canonical_artifact_refresh": {
-    "status": "PENDING_NEW_CODE_SOURCE",
-    "source_sha": null,
-    "generators_edited_by_documentation_task": false
+    "status": "PASS",
+    "source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+    "version": "0.15.2.2",
+    "gameplay_or_account_writes": false,
+    "code_modified_after_source_pin": false,
+    "master": {
+      "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+      "sha256": "3a94bf8397a09c0eef2e890e32fee3acf1133e2bc0c7e9ade0b1d103d26472d7",
+      "bytes": 7789221,
+      "sheets": 158,
+      "current_sheets": 58,
+      "rows_current": 62998,
+      "historical_sheets_unchanged": 100,
+      "historical_zip_parts_unchanged": 220,
+      "historical_comments_unchanged": 48,
+      "historical_cached_formulas_unchanged": 4982,
+      "new_cached_formulas": 12,
+      "formula_samples_against_code": 160,
+      "source_files": 123,
+      "building_art_rows": 200,
+      "fresh_build": "PASS",
+      "fresh_validate_only": "PASS",
+      "validation_report_sha256": "6c17afdf1f1d9c22111bda758757b5fd7249800ac53f678d364a1a21921c7de0",
+      "simulation_snapshot_sha256": "41fddda7cfa2b18122408e03bc9a38d18816b6e2b9957851b0e882bb65c100db"
+    },
+    "editorial": {
+      "status": "PASS",
+      "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+      "bytes": 60328,
+      "sha256": "7250f176b7e8e7f2b0717b0f587a2b868a64a5cc53f51b406891715673edac7f",
+      "source_git_commit": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+      "source_fingerprint": "e4c1c268086afcc7d788c26376ee903fd627217160f162853eb8fbbc68810271",
+      "source_files_fingerprinted": 108,
+      "rows": 413,
+      "sheets": {
+        "Tutorial": 55,
+        "Budynki — opisy": 24,
+        "Budynki — informacje": 30,
+        "Dolny pasek": 24,
+        "Komunikaty": 215,
+        "Przyciski": 65
+      },
+      "C_all_blank": true,
+      "exact_three_columns": true
+    },
+    "economic_outputs": {
+      "status": "PASS",
+      "before_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "before_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "after_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+      "unchanged_economic_output_table_count": 13,
+      "unchanged_economic_output_tables": [
+        "levels",
+        "building-levels",
+        "products",
+        "recipe-levels",
+        "research",
+        "research-levels",
+        "direct-routes",
+        "study-and-military",
+        "military-outcomes",
+        "roads",
+        "population",
+        "parameters",
+        "validated-examples"
+      ],
+      "unchanged_art_rows": 200,
+      "catalogs_rules_initial_state_and_pending_identical": true,
+      "conditional_source_table_changed": true,
+      "source_code_and_conditional_text_tables_required_identical": false,
+      "economic_or_presentation_value_changes": false,
+      "gameplay_or_account_mutation": false
+    },
+    "actual_canonical_simulation_identity": {
+      "status": "PASS",
+      "before_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "after_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+      "numeric_tolerance_used": false,
+      "profiles": [
+        {
+          "id": "bez-pracy",
+          "hours": 24,
+          "complete_profile_exact_json_values_and_types_equal": true,
+          "serialized_property_order_also_equal": true,
+          "before_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+          "after_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+          "checkpoints": 25,
+          "commands": 14
+        },
+        {
+          "id": "produkcja-24h",
+          "hours": 24,
+          "complete_profile_exact_json_values_and_types_equal": true,
+          "serialized_property_order_also_equal": true,
+          "before_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+          "after_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+          "checkpoints": 25,
+          "commands": 30
+        },
+        {
+          "id": "rozwoj-3d",
+          "hours": 72,
+          "complete_profile_exact_json_values_and_types_equal": true,
+          "serialized_property_order_also_equal": true,
+          "before_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+          "after_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+          "checkpoints": 73,
+          "commands": 143
+        }
+      ],
+      "difference_count": 0,
+      "first_differences": [],
+      "all_simulations_canonical_start": true,
+      "no_injected_resources_or_levels": true
+    },
+    "scenario_checks": {
+      "puzzleExamples": 120,
+      "solverSolved": 115,
+      "layoutsValidated": 120,
+      "storyVariants": 100,
+      "storyRooms": 560,
+      "campaignSteps": 152,
+      "theatrePricePoints": 1030,
+      "theatreShowCases": 10,
+      "currentSimulationProfiles": 3,
+      "allSimulationsCanonicalStart": true,
+      "noInjectedResourcesOrLevels": true
+    },
+    "text_coverage": {
+      "firstIntroductionSteps": 3,
+      "tourSteps": 56,
+      "tourVariants": 6,
+      "lessons": 25,
+      "developmentCopy": 490,
+      "buildingIds": 20,
+      "buildingVariants": 22,
+      "labels": 200,
+      "translationRows": 2553,
+      "conditionalTextCandidates": 10759,
+      "staticHtmlTexts": 388,
+      "applicationFiles": 122,
+      "astNodes": 462771,
+      "functions": 7027,
+      "constants": 9574,
+      "conditionBranches": 19299,
+      "sourceChunks": 211
+    },
+    "minigames": {
+      "status": "PASS",
+      "source_before": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+      "source_after": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+      "entries": 55,
+      "TXT": 55,
+      "DOCX": 55,
+      "DOCX_parts_compared": 1045,
+      "semantic_catalog_sha256": "f6cb7cbead2d5df6f3c67b1df84787d9e6844d73e8403b0156002efca9eb91bd",
+      "archive_sha256": "2713a94a5e37d639fcb0f12717c95d95e283c875b17b50f1530901c0df93df0c",
+      "archive_bytes": 2390416,
+      "link_index_identical": true,
+      "archive_matches_all112_generated_members": true,
+      "source_line_changed_entry_records": 53,
+      "source_line_changes_unique": [
+        {
+          "path": "harborlight-v1-state.js",
+          "old_line": 1127,
+          "new_line": 1129,
+          "anchor": "function claimStateAdventureReward(state, payload) {"
+        }
+      ],
+      "owned_changed_paths": 114,
+      "owned_only_expected": true
+    },
+    "manual_user_acceptance": "NOT_RUN",
+    "CI_and_deploy": "PENDING_ROOT_OWN_EXACT_PUBLICATION_SOURCE",
+    "first_attempt_evidence_preserved": true,
+    "report": "/workspace/work/perf-20261119/r2/artifacts/canonical-artifacts-summary.json"
   },
   "local_QA": {
-    "status": "COMPONENT_AND_TWO_SHORT_ACTUAL_EQUIVALENCE_PASS_FULL_GAP_FINAL_SOURCE_AND_DEPLOY_PENDING",
+    "status": "CODE62_FULL_FRONTEND_NODE_AND_CANONICAL_ARTIFACTS_PASS_COMPONENT_BROWSER_SCOPE_SEPARATE_FULL_PRIVATE_GAP_PENDING",
     "warm_cache_real_HTTP_test_required": true,
     "cache_disable_clear_or_Playwright_mock_not_allowed_as_warm_proof": true,
     "warm_cache_working_code": {
@@ -198,6 +371,41 @@
         "harborlight-v1-state.js": "705f4b89831d2d801d78ce2f5909a564c445b6679079fe220ed10419559f2f67"
       },
       "final_exact_source_recheck": "PENDING"
+    },
+    "full_frontend_Node": {
+      "status": "PASS",
+      "tests": 1548,
+      "pass": 1548,
+      "fail": 0,
+      "duration_ms": 210141.044269,
+      "code_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+      "unchanged_96h_watchdog_limit_ms": 10000,
+      "watchdog_PASS_ms": 8418.450522
+    },
+    "backend_Node": {
+      "status": "PASS",
+      "tests": 170
+    },
+    "board_Node": {
+      "status": "PASS",
+      "tests": 7
+    },
+    "frontend_package": {
+      "status": "PASS",
+      "tests": 28,
+      "exact_expected_members": 458,
+      "three_replay_modules_explicitly_required": true,
+      "member_cap_unchanged": 512,
+      "byte_cap_unchanged": 134217728,
+      "first_attempt": {
+        "status": "FAIL_TWO_STALE_COUNT_EXPECTATIONS",
+        "expected": 455,
+        "actual": 458,
+        "log": "/workspace/work/perf-20261119/r2/frontend-package-first-expected455-failure.log",
+        "not_suppressed": true
+      },
+      "test_only_correction_in_publication_commit": true,
+      "runtime_unchanged_after_code_source": true
     }
   },
   "CI": {
@@ -215,9 +423,10 @@
     "run_id": null
   },
   "DEV": {
-    "status": "PENDING_NEW_CODE_AND_OWN_ACCEPTANCE",
+    "status": "CODE62_LOCAL_CHECKS_PASS_PUBLICATION_AND_OWN_CI_PENDING",
     "source_sha": null,
-    "manual_user_acceptance": "NOT_RUN"
+    "manual_user_acceptance": "NOT_RUN",
+    "application_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4"
   },
   "DEV_tag": {
     "status": "PENDING_AFTER_NEW_ACCEPTANCE",
@@ -1257,7 +1466,8 @@
       "tests": 18,
       "log": "/workspace/work/perf-20261119/resident-read-scopes-c4-targeted.log"
     },
-    "source_frozen": false
+    "source_frozen": true,
+    "code_source_sha": "62db46b75cbda3c74264504ebca15cade7b4e1e4"
   },
   "candidate": "C4",
   "candidate_history": {
@@ -1280,7 +1490,7 @@
       "PASS_claimed": false
     },
     "B94_full_reference": {
-      "status": "PAUSED_FOR_SHORT_C4_COMPARISONS_AND_REQUIRED_CHECKS",
+      "status": "RESUME_REQUESTED_FULL_COMPLETION_NOT_YET_CONFIRMED",
       "simulation_hours_approx": 15,
       "CPU_minutes_approx": 21,
       "completed": false
@@ -1321,11 +1531,20 @@
         "actual_account_or_clock_writes": false
       },
       "full_C4_actual_gap": {
-        "status": "NOT_YET_RUN",
+        "status": "FULL_RUN_REQUESTED_COMPLETION_PENDING",
         "hours": 47.88518666666667,
         "PASS_claimed": false
       },
       "repository_acceptance": "docs/v32/ADMIN3-OFFLINE-CATCHUP-LOCAL-ACCEPTANCE.json"
     }
+  },
+  "source_freeze_scope": "APPLICATION_RUNTIME_AND_EXPORT_SOURCE; PUBLICATION_COMMIT_PENDING",
+  "physical_current_PREPROD": {
+    "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+    "version": "0.15.2.1",
+    "cache": "frontend-v32-18",
+    "workflow": "SUCCESS44526548282",
+    "quality_acceptance": "REOPENED_WARM_CACHE_AND_ADMIN3_STARTUP",
+    "accepted_tag": false
   }
 }

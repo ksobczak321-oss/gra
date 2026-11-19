@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.2.0**: `ACCEPTED_EXACT_DDA_CI_PAGES_TLS_REPLAY_AND_IMMUTABLE_TAG`; CI `success`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.2.2**: `CODE_FROZEN_62DB46B_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_PENDING`; CI `pending_own_publication_SHA`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.15.2.0**: źródło `dda2fa1793e49ec23811ccffb147a7e56a366692`; [deploy 44292700743](https://github.com/ksobczak321-oss/gra/actions/runs/44292700743), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-DEV and PRE-PROD0.15.2.0/cache17 acceptedDDA, exports/code6a. OwnCI1669Node+167Python+70ChromiumPASS; all255Hosting files match original archive. Existing3accounts/3saves preserved generation2 without writes or reset. ManualNOT_RUN; PROD/DNSpostponed.
+Nowy kod0.15.2.2/cache19 jest zamrożony na62db46b; własneCI/Pages/PRE-PROD PENDING. Fizycznie naPRE-PROD pozostajeB94/0.15.2.1 z workflow44526548282 SUCCESS, po którym warm-cache i zgłoszenieadmin3 ponownie otworzyły odbiór jakości; nie ma jego zaakceptowanego taguPRE-PROD. DDA/0.15.2.0 poniżej jest ostatnim pełnym historycznym odbiorem. Konta, postęp i zegary zachowane; bezPROD/DNS/resetu.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -244,8 +244,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1165 — Pokazuj średniowieczny żuraw tylko podczas rzeczywistej budowy](changes/HL-CHG-1165.md) | Story | `accepted` | `ACCEPTED_DDA_PAGES_AND_TAG` | `SUCCESS44292700743_ATTEMPT1` |
 | [HL-CHG-1166 — Ogranicz ładowanie grafik i koszt rysowania morza powodujące zawieszanie Chrome](changes/HL-CHG-1166.md) | Bug | `accepted` | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 | [HL-CHG-1167 — Odsłoń Zakład skórzany zasłonięty przez Kamieniołom](changes/HL-CHG-1167.md) | Bug | `accepted` | `LOCAL_EXACT_CACHE18_QA_PASS_PUBLICATION_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1168 — Odśwież katalog budynków z ciepłego cache Chrome](changes/HL-CHG-1168.md) | Bug | `accepted` | `LOCAL_QA_IN_PROGRESS` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
-| [HL-CHG-1169 — Usuń zawieszanie startu admin3 po długiej nieobecności](changes/HL-CHG-1169.md) | Bug | `accepted` | `LOCAL_COMPONENTS_AND_ACTUAL_SHORT_EQUIVALENCE_PASS_FULL_SOURCE_RELEASE_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
+| [HL-CHG-1168 — Odśwież katalog budynków z ciepłego cache Chrome](changes/HL-CHG-1168.md) | Bug | `accepted` | `LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
+| [HL-CHG-1169 — Usuń zawieszanie startu admin3 po długiej nieobecności](changes/HL-CHG-1169.md) | Bug | `accepted` | `LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_PUBLICATION_CI_PENDING` | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 
 <a id="hl-epic-tut"></a>
 
