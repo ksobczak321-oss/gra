@@ -1,7 +1,7 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-20';
-import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-20';
-import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-20';
-import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-20';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-21';
+import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-21';
+import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-21';
+import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-21';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.
@@ -212,12 +212,15 @@ export function compactDietHistories(state) {
 const readScopes = new WeakMap();
 const settlementScopes = new WeakMap();
 const currentDietMemo = state => readScopes.get(state)?.dietMemo || settlementScopes.get(state)?.dietMemo;
-export function withProvisionsSettlementScope(state, settle) {
+export function withProvisionsSettlementScope(state, settle, {indexHistory=true}={}) {
   const previous=settlementScopes.get(state);
   const dietMemo=previous?.dietMemo || readScopes.get(state)?.dietMemo || {values:new WeakMap()};
   const historyMemo=previous?.historyMemo || {values:new WeakMap()};
   if(!previous)dietMemo.values=new WeakMap();
-  settlementScopes.set(state,{dietMemo,historyMemo});
+  // Building the history index pays off across a long advance. Short ticks
+  // retain the exact ordered read path and avoid rebuilding that metadata.
+  // Nested phases inherit the outer advance's policy and shared invalidation.
+  settlementScopes.set(state,{dietMemo,historyMemo,indexHistory:previous?.indexHistory ?? indexHistory!==false});
   try{return settle();}
   finally{
     if(previous)settlementScopes.set(state,previous);
@@ -240,7 +243,7 @@ function invalidateDietMemo(state, person=null) {
   }
 }
 function historyWork(state,person) {
-  const memo=settlementScopes.get(state)?.historyMemo;
+  const scope=settlementScopes.get(state),memo=scope?.indexHistory ? scope.historyMemo : null;
   if(!memo)return null;
   const previous=memo.values.get(person);
   if(previous?.index.isCurrent())return previous;
@@ -356,7 +359,7 @@ export function dietStatus(state,person,context={}) {
   return value.shares?{...value,shares:{...value.shares}}:{...value};
 }
 export function dietPenalty(state,person,context={}) {
-  if(!settlementScopes.has(state))return readDietStatus(state,person,context).penalty;
+  if(!settlementScopes.get(state)?.indexHistory)return readDietStatus(state,person,context).penalty;
   const p=ensure(state,context).people[keyOf(person)];if(!p)return 0;
   const now=nowOf(state,context),required=requiredFoodTypes(state),memo=currentDietMemo(state),previous=memo?.values.get(p);
   if(sameDietInputs(previous,p,now,required)){

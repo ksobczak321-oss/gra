@@ -1,4 +1,4 @@
-import { MATERIAL_IDS as NEW_MATERIALS } from './harborlight-v1-provisions.js?v=frontend-v32-20';
+import { MATERIAL_IDS as NEW_MATERIALS } from './harborlight-v1-provisions.js?v=frontend-v32-21';
 // DEV v29 economy parameters. Pure functions: no clocks, random numbers or saves.
 export const ECONOMY_RULES = Object.freeze({
   version: 1, firstLevelSeconds: 45, maximumSeconds: 86400,

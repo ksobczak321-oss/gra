@@ -1,13 +1,13 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-20';
-import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-20';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-20';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-20';
-import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-20';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-21';
+import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-21';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-21';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-21';
+import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-21';
 
-import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-20';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-21';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];
@@ -852,6 +852,15 @@ export function campaignReadiness(state,context={}){
   });
   return{level:chapter.level,valid:steps.every(step=>step.objective.type!=='building'||step.objective.target<=100),providerIndependent:true,
     title:definition.title.en,titlePl:definition.title.pl,worldChange:clone(definition.worldChange),budget:campaignBudget(chapter.level),steps};
+}
+// The map sidebar only needs the current chapter and task heading. Quoting
+// feasibility belongs to the full mission panel and action validation; doing
+// that forecast on every HUD refresh needlessly clones the complete world.
+export function missionHeadline(state){
+  const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
+  return{available:!!(frame&&task),chapter:m.chapter?{id:m.chapter.id,status:m.chapter.status}:null,
+    ...(frame&&task?{kind:frame.kind,index:frame.index,total:frame.total,
+      task:{id:task.id,status:task.status,title:task.title,titlePl:task.titlePl}}:{})};
 }
 export function missionStatus(state,context={}){
   const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;

@@ -1,10 +1,10 @@
-import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-20';
-import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-20';
+import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-21';
+import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-21';
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-20';
-import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-20';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-20';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-21';
+import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-21';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-21';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;

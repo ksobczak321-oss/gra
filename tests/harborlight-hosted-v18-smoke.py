@@ -52,6 +52,34 @@ def assert_replay_startup(observation, elapsed_ms):
     return observation
 
 
+def assert_post_ready_observation(observation):
+    assert isinstance(observation, dict) and observation.get('ready') is True, 'The game lost readiness after startup'
+    elapsed = observation.get('elapsed_ms')
+    assert isinstance(elapsed, (int, float)) and not isinstance(elapsed, bool) and math.isfinite(elapsed) and elapsed >= 10000, 'Missing ten seconds of ordinary hosted gameplay'
+    ticks = observation.get('ticks')
+    assert isinstance(ticks, int) and not isinstance(ticks, bool) and ticks > 0, 'Ordinary hosted gameplay has no browser heartbeat'
+    gap = observation.get('max_gap_ms')
+    assert isinstance(gap, (int, float)) and not isinstance(gap, bool) and math.isfinite(gap) and 0 <= gap <= 1500, 'Ordinary hosted gameplay blocked the browser main thread'
+    return observation
+
+
+def observe_post_ready(page):
+    # Observe real browser time and ordinary game ticks. Do not install a test
+    # clock, change the account's rate, or send any gameplay command.
+    page.evaluate('''()=>{
+      const start=performance.now();let last=start;
+      const value={ticks:0,max_gap_ms:0,elapsed_ms:0,ready:false,done:false};
+      window.__HARBORLIGHT_HOSTED_POST_READY_OBSERVATION__=value;
+      const timer=setInterval(()=>{const now=performance.now();value.max_gap_ms=Math.max(value.max_gap_ms,now-last);last=now;value.ticks++;},100);
+      setTimeout(()=>{clearInterval(timer);const now=performance.now();value.max_gap_ms=Math.max(value.max_gap_ms,now-last);value.elapsed_ms=now-start;value.ready=document.getElementById('loading')?.hidden===true;value.done=true;},10000);
+    }''')
+    page.wait_for_function('window.__HARBORLIGHT_HOSTED_POST_READY_OBSERVATION__?.done === true', timeout=20000, polling=100)
+    return assert_post_ready_observation(page.evaluate('''()=>{
+      const value=window.__HARBORLIGHT_HOSTED_POST_READY_OBSERVATION__;
+      return {ticks:value.ticks,max_gap_ms:value.max_gap_ms,elapsed_ms:value.elapsed_ms,ready:value.ready};
+    }'''))
+
+
 STARTUP_OBSERVER = '''(()=>{
   const observation={observed:false,ticks:0,max_gap_ms:0,last_at:null};
   Object.defineProperty(window,'__HARBORLIGHT_HOSTED_STARTUP_OBSERVATION__',{value:observation});
@@ -359,21 +387,23 @@ def run():
             assert page.evaluate('!Object.keys(localStorage).some(k=>/^(harborlight-(?:dev|prod)-island-|harborlight-v1-(?:interactive|new-player)-save)/.test(k))'), 'Game progress must not be written to browser storage'
             modern_front = assert_modern_hosted_front(page, manifest, expected_version)
             replay_observation = None
+            post_ready_observation = None
             if selected == 'admin3':
                 replay_observation = assert_replay_startup(page.evaluate('''()=>{
                   const value=window.__HARBORLIGHT_HOSTED_STARTUP_OBSERVATION__;
                   if(!value)return null;
                   return {observed:value.observed,ticks:value.ticks,max_gap_ms:Math.max(value.max_gap_ms,value.last_at===null?0:performance.now()-value.last_at)};
                 }'''), startup_elapsed)
+                post_ready_observation = observe_post_ready(page)
             assert not errors, 'Hosted browser raised an unexpected application error'
             context.close()
             evidence = {'project':project,'commit':manifest['commit'],'app_version':expected_version,'account_api':enabled,'authenticated_island_render':True,'hosted_assets':count,'modern_front':modern_front,
-                        'uid':identity['uid'],'selected_preprod_account':selected,'startup_timeout_ms':startup_timeout,'startup_elapsed_ms':startup_elapsed,'startup_replay_observation':replay_observation,'all_browser_writes_blocked':True}
+                        'uid':identity['uid'],'selected_preprod_account':selected,'startup_timeout_ms':startup_timeout,'startup_elapsed_ms':startup_elapsed,'startup_replay_observation':replay_observation,'post_ready_observation':post_ready_observation,'all_browser_writes_blocked':True}
             evidence_path = os.environ.get('HARBORLIGHT_HOSTED_EVIDENCE_PATH')
             if evidence_path:
                 Path(evidence_path).write_text(json.dumps(evidence)+'\n',encoding='utf-8')
             print('PASS hosted: '+str(count)+' exact asset hashes, anonymous Auth entry, isolated runtime/API routing, actual existing signed-in island render; all browser writes blocked; no gameplay claims/upgrades/resets performed')
-            print('PASS hosted identity and startup: '+json.dumps({'uid':identity['uid'],'selected_preprod_account':selected,'startup_timeout_ms':startup_timeout,'startup_elapsed_ms':startup_elapsed,'replay':replay_observation}))
+            print('PASS hosted identity and startup: '+json.dumps({'uid':identity['uid'],'selected_preprod_account':selected,'startup_timeout_ms':startup_timeout,'startup_elapsed_ms':startup_elapsed,'replay':replay_observation,'post_ready':post_ready_observation}))
         finally:
             http.dispose()
             browser.close()

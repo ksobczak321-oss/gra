@@ -1,7 +1,7 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-20';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-21';
 // DEV v32 military training, housing and deterministic expedition lifecycle.
 // Public status never exposes a squad's hidden return time or outcome draws.
-import { personKey, educationRecord, isGraduate, educationBusy, addSpecialistResident, ensureFoundingProfessors, normalizeEducation, townhallBuildSeconds } from './harborlight-v1-education.js?v=frontend-v32-20';
+import { personKey, educationRecord, isGraduate, educationBusy, addSpecialistResident, ensureFoundingProfessors, normalizeEducation, townhallBuildSeconds } from './harborlight-v1-education.js?v=frontend-v32-21';
 const HOUR=3600,DAY=86400,EPS=1e-8;
 const finite=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const integer=(v,d=0,max=Number.MAX_SAFE_INTEGER)=>Math.min(max,Math.max(0,Math.floor(finite(v,d))));

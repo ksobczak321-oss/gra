@@ -1,15 +1,15 @@
 // Persistent residents and visits. Every duration is a real elapsed second.
-import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v32-20';
-import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-20';
-import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v32-20';
-import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v32-20';
-import { educationRecord, educationBusy, educationHappiness, educationTaxable, detachPersonEducation, personKey, canDelegateProfessor, releaseProfessorResearch } from './harborlight-v1-education.js?v=frontend-v32-20';
-import { militaryRecord, militaryBusy, militaryTaxable, detachPersonMilitary } from './harborlight-v1-military.js?v=frontend-v32-20';
-import { feedingMultiplier, dietPenalty, hungerPenalty, clothingPenalty, cakeHappinessBonus, withProvisionsReadScope } from './harborlight-v1-provisions.js?v=frontend-v32-20';
-import { theatreHappinessBonus } from './harborlight-v1-theatre.js?v=frontend-v32-20';
-import { developmentWorkerProductionBlocked, withDevelopmentProductionReadScope } from './harborlight-v1-development-logistics.js?v=frontend-v32-20';
-import { recoverFinancialHappiness } from './harborlight-v1-kingdom.js?v=frontend-v32-20';
-export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-20';
+import { residentLeisureBonus } from './harborlight-v1-leisure.js?v=frontend-v32-21';
+import { centralAvailable } from './harborlight-v1-inventory.js?v=frontend-v32-21';
+import { residentHasHousing } from './harborlight-v1-housing.js?v=frontend-v32-21';
+import { worldEventHappinessPenalty } from './harborlight-v1-events.js?v=frontend-v32-21';
+import { educationRecord, educationBusy, educationHappiness, educationTaxable, detachPersonEducation, personKey, canDelegateProfessor, releaseProfessorResearch } from './harborlight-v1-education.js?v=frontend-v32-21';
+import { militaryRecord, militaryBusy, militaryTaxable, detachPersonMilitary } from './harborlight-v1-military.js?v=frontend-v32-21';
+import { feedingMultiplier, dietPenalty, hungerPenalty, clothingPenalty, cakeHappinessBonus, withProvisionsReadScope } from './harborlight-v1-provisions.js?v=frontend-v32-21';
+import { theatreHappinessBonus } from './harborlight-v1-theatre.js?v=frontend-v32-21';
+import { developmentWorkerProductionBlocked, withDevelopmentProductionReadScope } from './harborlight-v1-development-logistics.js?v=frontend-v32-21';
+import { recoverFinancialHappiness } from './harborlight-v1-kingdom.js?v=frontend-v32-21';
+export { housingStatus, residentHasHousing, residentWorkMultiplier, residentFoodMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-21';
 export const RESIDENT_WORKPLACES = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry', 'warehouse', 'dock', 'market', 'bakery', 'dairy', 'slaughterhouse', 'fisher', 'leatherworks'];
 export const NEED_GRACE_SECONDS = 12 * 3600;
 export const NEED_PENALTY = 5;

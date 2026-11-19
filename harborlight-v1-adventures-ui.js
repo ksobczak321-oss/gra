@@ -1,8 +1,8 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-20';
-import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v32-20';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-20';
-import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v32-20';
-import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v32-20';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-21';
+import { adventureChoices, ADVENTURE_CATALOG, pipePorts, adventureMessage } from './harborlight-v1-adventures.js?v=frontend-v32-21';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-21';
+import { adventureArt, cargoArt, mapTileArt, shipDrawing, planeDrawing } from './harborlight-v1-adventures-art.js?v=frontend-v32-21';
+import { createExpandedAdventureScene } from './harborlight-v1-adventures-expanded-ui.js?v=frontend-v32-21';
 
 const pick = (lang, pl, en) => lang === 'en' ? en : pl;
 const text = (lang, value) => typeof value === 'string' ? value : value?.[lang === 'en' ? 'en' : 'pl'] || value?.pl || '';
@@ -22,7 +22,7 @@ function svg(tag, attributes = {}) { const result = document.createElementNS(NS,
 function setText(element, value) { if (element.textContent !== String(value)) element.textContent = String(value); }
 function stylesheet() {
   if (document.querySelector('[data-adventures-css]')) return;
-  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v32-20', import.meta.url).href, 'data-adventures-css': '' }));
+  document.head.append(node('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-adventures.css?v=frontend-v32-21', import.meta.url).href, 'data-adventures-css': '' }));
 }
 const BUILDINGS = {
   farm: ['Gospodarstwo', 'Farm'], lumber: ['Drwale', 'Lumber camp'], quarry: ['Kamieniołom', 'Quarry'], windmill: ['Młyn', 'Mill'], sawmill: ['Tartak', 'Sawmill'],
@@ -89,7 +89,7 @@ export function createAdventuresPanel({ state: initialState, language = 'pl', on
     const root = node('div', { class: 'adv-active', 'data-adventure-kind': adventure.kind, 'data-adventure-stage': adventure.stage });
     root.append(node('div', { class: 'adv-active-header' }, node('div', {}, node('span', { class: 'adv-label' }, t('Twoja przygoda', 'Your adventure')), node('h4', {}, expandedTitle || text(lang, spec.title) || t('Przygoda na wyspie', 'Island adventure'))), button(t('Wróć na wyspę', 'Return to island'), async()=>{await dispatch({type:'adventureSuspend'});onClose();}, { class: 'adv-quiet', 'data-adventure-close': '' })));
     root.append(node('p', { class: 'adv-stage-help' }, description));
-    if(adventure.data.classicAttempt){if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(node('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-20',import.meta.url).href,'data-original-puzzle-css':''}));root.append(node('div',{class:'adv-classic-time','data-classic-time':''}),node('div',{class:'adv-v32-time-offer','data-classic-time-offer':'',hidden:true}));}
+    if(adventure.data.classicAttempt){if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(node('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-21',import.meta.url).href,'data-original-puzzle-css':''}));root.append(node('div',{class:'adv-classic-time','data-classic-time':''}),node('div',{class:'adv-v32-time-offer','data-classic-time-offer':'',hidden:true}));}
     return root;
   }
   function progressLine(current, total) { const line = node('div', { class: 'adv-progress-track' }, node('span', { style: `width:${Math.max(0, Math.min(100, current / total * 100))}%` })); line.setAttribute('role', 'progressbar'); line.setAttribute('aria-valuenow', current); line.setAttribute('aria-valuemin', 0); line.setAttribute('aria-valuemax', total); return line; }

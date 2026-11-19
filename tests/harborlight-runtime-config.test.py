@@ -108,6 +108,14 @@ class ConfigurationTests(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 HOSTED.assert_replay_startup(report, elapsed)
 
+    def test_hosted_admin3_stays_responsive_after_startup(self):
+        valid = {'ready': True, 'ticks': 79, 'max_gap_ms': 814, 'elapsed_ms': 10093}
+        self.assertEqual(HOSTED.assert_post_ready_observation(valid), valid)
+        for patch in [{'ready': False}, {'ticks': 0}, {'ticks': True}, {'max_gap_ms': 4017},
+                      {'max_gap_ms': float('nan')}, {'elapsed_ms': 9999}, {'elapsed_ms': float('inf')}]:
+            with self.assertRaises(AssertionError):
+                HOSTED.assert_post_ready_observation({**valid, **patch})
+
     def test_hosted_acceptance_checks_every_asset_against_the_verified_package(self):
         data = b'approved frontend'
         manifest = json.dumps({'schema_version':1,'commit':'a'*40,'files':{'game.js':{'size':len(data),'sha256':hashlib.sha256(data).hexdigest()}}}).encode()
