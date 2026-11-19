@@ -114,7 +114,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: expedition-tilt.
 
-Źródło katalogu: 41e0f8e103e00b18779ecd04645bca21a450cdc8.
+Źródło katalogu: e394ea8fe369f9dfc6615b7a96da1c3e499672e6.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

@@ -3,18 +3,18 @@
   "as_of": "2026-11-19",
   "timezone": "Europe/Warsaw",
   "scope": "ROUTINE_PERFORMANCE_LEATHERWORKS_CACHE_AND_ADMIN3_STARTUP_HOTFIX_DEV_THEN_PREPROD",
-  "status": "CODE41_FULL_ACTUAL_MODEL_CANONICAL_ARTIFACTS_PYTHON172_BACKEND178_BOARD7_PASS_FRONTEND_FIRST_FAIL_TEST_ONLY42_PASS_OWN_CI_DEPLOY_PENDING",
-  "application_version": "0.15.2.3",
-  "cache": "frontend-v32-20",
-  "version_and_cache_status": "RUNTIME_BUMPED_SOURCE_FROZEN_NOT_PUBLISHED",
-  "candidate": "C5",
-  "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-  "application_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-  "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-  "export_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+  "status": "C6_E394_LOCAL_READY_NODE1599_BACKEND178_BOARD7_PYTHON173_CANONICAL_ARTIFACTS_FINAL_GAP0_UI_PASS_OFFICIAL_FULL_REPLAY_OWN_PUBLICATION_CI_PAGES_PREPROD_PENDING",
+  "application_version": "0.15.2.4",
+  "cache": "frontend-v32-21",
+  "version_and_cache_status": "BUMPED_RUNTIME_SOURCE_FROZEN_NOT_PUBLISHED",
+  "candidate": "C6",
+  "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+  "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+  "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+  "export_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
   "publication_source_sha": null,
   "source_frozen": true,
-  "source_freeze_scope": "APPLICATION_RUNTIME_AND_EXPORT_SOURCE_CODE41; PUBLICATION_PENDING",
+  "source_freeze_scope": "APPLICATION_RUNTIME_AND_EXPORT_SOURCE_E394; PUBLICATION_PENDING",
   "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
   "additional_user_report": "co tu się stało z tym domkiem producenta skór",
   "additional_user_reports": [
@@ -81,170 +81,96 @@
     "publication_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
     "acceptance": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
   },
-  "performance_reference": {
-    "scope": "Historical first-candidate image/Chrome measurements only; not a benchmark of C5/cache20.",
-    "reference": "previous_cache18_attempt.after_measurements",
-    "startup_image_bytes_before": 52630275,
-    "startup_image_bytes_after": 12749925,
-    "new_release_timing_claimed": false
+  "main_hold": {
+    "source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
+    "reason": "Old own C5 CI completedSUCCESS without cancellation; main remains3d until new C6 local preparation and publication. No active old-CI hold.",
+    "CI_run": 44559674101,
+    "CI_status": "SUCCESS",
+    "CI_not_cancelled": true,
+    "old_CI_completed": true
   },
-  "warm_cache_regression": {
-    "status": "HISTORICAL_CACHE18_QUALITY_FAIL",
-    "reference": "previous_cache19_attempt.warm_cache_regression"
-  },
-  "planned_manifest_cache_fix": {
-    "status": "INHERITED_IMPLEMENTED_RECHECK_FINAL_C5_SOURCE_PENDING",
-    "reference": "previous_cache19_attempt.planned_manifest_cache_fix",
-    "user_cache_clear_required": false
+  "C5_quality_hold": {
+    "status": "CONFIRMED_MATERIAL_STEADY_TICK_REGRESSION",
+    "C5_10_ticks_ms": 2869.762989,
+    "C4_10_ticks_ms": 882.7914949999999,
+    "ratio_approx": 3.25,
+    "exact_complete_final_model_equal": true,
+    "raw_private_harness_FAIL_preserved": true,
+    "taggable": false,
+    "GCP_dispatch_allowed": false,
+    "CI_green_would_not_close_quality_hold": true
   },
   "planned_admin3_fix": {
-    "status": "CODE41_FULL_ACTUAL_MODEL_AND_COMPLETE_C4_EQUIVALENCE_PASS_NATIVE_UI_AND_RELEASE_PENDING",
-    "parts": [
-      "Scope repeated production and provision derived reads with explicit invalidation at state mutations.",
-      "Reuse diet aggregates only within one advancePopulation; retain every meal history and unchanged math.",
-      "Run one fixed-target initial advanceArchipelago in a native Worker.",
-      "Transfer the full running bundle without save compaction or normalization side effects.",
-      "Recheck session, generation, revision, adoption and developer clock before atomic adoption; discard stale/cancelled results.",
-      "Never save partial catch-up; finish residual elapsed time on a Worker when cloud confirmation is slow.",
-      "Dispose the startup client and release its previous bundle after successful adoption.",
-      "Index the same ordered meal-history rows within one atomic advancePopulation; apply identical partial-row arithmetic and expiry.",
-      "Use conservative exact-dyadic interval bounds only when they certify the same integer diet classification as the legacy ordered floating-point calculation; otherwise use the legacy calculation.",
-      "Keep indexes and accumulators scoped in memory with explicit invalidation; serialize no index, BigInt or cache.",
-      "Before constructing Worker await Promise.resolve, allowing MutationObserver cancellation without a requestAnimationFrame or timer dependency.",
-      "Use lossless packed provisions; require explicit savePackingVersion1 when existing stored world is packed and stop old-client retry after rejection. Keep700k limit and complete history."
-    ],
-    "formal_model_and_index_review": "PASS",
-    "exact_reference_equivalence_required": true,
-    "full_actual_C5_replay": "PASS_CODE41_LOCAL_NODE47_885H",
-    "full_actual_reference_comparison": "PASS_COMPLETE_C4_ALL_FIELDS_B94_ORIGINAL_FULL_STILL_PENDING",
-    "no_elapsed_time_skipping": true,
-    "no_history_removal": true,
-    "no_clock_or_rate_change": true,
+    "status": "C6_FROZEN_IMPLEMENTED_TARGETED_AND_GAP0_UI_PASS_FULL_OFFICIAL_MODEL_PENDING",
+    "strategy": "Enable indexed history plus certified diet accumulator only when the outer public elapsed interval is >60seconds; short public ticks retain C4 memo and legacy loops; nested calls inherit the outer scope.",
+    "history_index_outer_elapsed_threshold_seconds": 60,
+    "threshold_comparison": ">",
+    "threshold_is_model_time_cap": false,
+    "elapsed_time_skipping": false,
+    "simulation_step_or_clock_change": false,
+    "arithmetic_or_EPS_change": false,
+    "history_removal": false,
+    "short_tick_whole_model_exactness": "TARGETED_SCOPE71_AND_RESOURCE5_PASS_FINAL_FULL_OFFICIAL_MODEL_PENDING",
+    "gap_zero_actual_private_UI_postready10s": "PASS_FINAL_CODE_E394_COLD_START3_589S_79BEATS_MAX814_1MS",
+    "full_replay_equivalence": "PENDING_C6_FULL47_885H",
+    "original_B94_full_reference": "PENDING_NOT_CLAIMED_PASS",
     "no_reset": true,
     "no_account_writes": true,
-    "frozen_clock_regression": "PASS_WORKING_QUERY19_COMPONENT_NOT_FINAL_CACHE20",
-    "unchanged_missions_regression": "PASS_FOUR_WORKING_QUERY19_SCENARIOS_PL_EN_DESKTOP_MOBILE",
-    "full_admin3_UI": "PENDING_REAL_EXISTING_ACCOUNT_ON_NEW_STANDARD_PREPROD600S",
     "source_frozen": true,
-    "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "model_equivalence": "PASS_WHOLE_C4_C5_MODEL_AFTER_ONLY_CODEC_UNPACK_AND_CANONICAL_KEYS_NO_NORMALIZE_TICK_FIELD_EXCLUSIONS",
-    "actual_private_Worker_and_10s_postready_1x": "NOT_RUN_PENDING_DURING_REMOTE_CI"
+    "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "resource_rates": {
+      "status": "IMPLEMENTED_ORDERED_ONE_PASS_SAME_IEEE_TARGETED5PASS",
+      "game_arithmetic_change": false
+    },
+    "mission_sidebar": {
+      "status": "IMPLEMENTED_STRUCTURAL_HEADLINE_SKIPS_UNUSED_FORECAST_TARGETED52PASS",
+      "full_missionStatus_and_actions_unchanged": true,
+      "profile_cost_percent_approx": 36.56,
+      "effect_scope": "Sidebar headline presentation only"
+    },
+    "scope_tests_PASS": 71
   },
-  "actual_short_C5_comparisons": {
-    "status": "PASS_THREE_STRICT_WHOLE_JSON_INTERVALS_BEFORE_PACKING_CACHE20_NOT_FULL_FINAL_GAP_ACCEPTANCE",
-    "source_fingerprint_report": "/workspace/work/perf-20261119/candidate5-model-code-fingerprints.json",
-    "one_hour": {
-      "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_B94_C4",
-      "simulated_hours": 1,
-      "bytes": 239055,
-      "sha256": "2fa608692053b4e1ac941d8074b011af0736ef8494fde43a24ddd6c574ae2d07",
-      "C5_wall_ms": 6523.727613,
-      "C5_CPU_ms": 7748.661,
-      "C4_wall_ms": 14603.158926,
-      "B94_wall_ms": 32350.872504,
-      "report": "/workspace/work/perf-20261119/admin3-candidate5-one-hour-equivalence.json"
-    },
-    "dense_midstate_next_hour": {
-      "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_C3_C4",
-      "checkpoint_simulation_hours_approx": 9.78,
-      "simulated_hours": 1,
-      "bytes": 9226855,
-      "sha256": "fefe14fee581c77e325d0ce3c4c400eadb7f8206d67ff660f39e600a704b84f2",
-      "C5_wall_ms": 8147.078196,
-      "C5_CPU_ms": 9436.226,
-      "C4_wall_ms": 17261.188877,
-      "normalized_again": false,
-      "report": "/workspace/work/perf-20261119/admin3-candidate5-midstate-equivalence.json"
-    },
-    "late_checkpoint_next_hour": {
-      "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_FROZEN_C4",
-      "report": "/workspace/work/perf-20261119/admin3-candidate5-late-equivalence.json",
-      "checkpoint_simulation_hours_approx": 26.27,
-      "simulated_hours": 1,
-      "bytes": 23458927,
-      "sha256": "7633793b5ce81efaea093d2090d93865cf285ab3b77cf8218abb0e6fd476f6b5",
-      "C5_wall_ms": 10838.062956,
-      "C5_CPU_ms": 12777.251,
-      "C4_wall_ms": 37081.082245,
-      "C4_CPU_ms": 44324.746,
-      "result_population": 111,
-      "separate_benchmarks": true,
-      "reference_B94_paused": true,
-      "normalized_again": false,
-      "working_model_before_packing_and_cache20": true,
-      "actual_account_or_clock_writes": false
-    },
-    "full_47_885h": "PASS_FROZEN_CODE41_SEE_full_actual_C5_replay; original_B94_full_pending",
-    "numeric_tolerance_used": false,
-    "actual_account_or_clock_writes": false,
-    "source_scope": "candidate5-model-helpers-before-packing-and-cache20-bump"
+  "C5_private_UI_evidence": {
+    "status": "HISTORICAL_C5_STARTUP_GATES_PASS_RAW_HARNESS_FAIL_STEADY_QUALITY_HOLD",
+    "report": "/workspace/work/perf-20261119/admin3-candidate5-private-ui-responsiveness.json",
+    "reference": "previous_cache20_attempt.private_actual_C5_UI",
+    "worker_ms": 308679.8999999985,
+    "UI_ready_observed_wall_seconds": 316.58008471599896,
+    "replay_heartbeats": 3081,
+    "replay_max_gap_ms": 234.4,
+    "postready_seconds": 10,
+    "postready_heartbeat_count": 27,
+    "postready_max_gap_ms": 1203.3,
+    "declared_startup600_and_gap1500_gates_PASS": true,
+    "raw_harness_status": "FAIL_OR_TIMEOUT",
+    "extra_minimum30_heartbeat_diagnostic_failed": true,
+    "raw_FAIL_retained": true,
+    "actual_island_or_clock_writes": false,
+    "not_C6_or_hosted_acceptance": true
   },
-  "completed_C4_full_reference": {
-    "status": "COMPLETED_QUALITY_FAIL_TOO_SLOW_AND_PACKED_OVER_LIMIT",
-    "hours": 47.88518666666667,
-    "wall_ms": 2200645,
-    "CPU_ms": 2133561,
-    "result_population": 135,
-    "idle_session_startup_expiry_ms": 1830000,
-    "packed_world_bytes": 849981,
-    "per_world_limit_bytes_unchanged": 700000,
-    "packed_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
-    "private_full_reference_preserved": true,
-    "loaded_model_files_verified": 41,
-    "complete_B94_equivalence": "PENDING",
-    "acceptance_PASS_claimed": false,
+  "C5_official_steady_regression": {
+    "status": "CONFIRMED_QUALITY_HOLD_COMPLETE_MODEL_EXACT",
+    "report": "/workspace/work/perf-20261119/admin3-candidate5-steady-equivalence.json",
+    "ticks": 10,
+    "step_ms": 1000,
+    "C4_sum_ms": 882.7914949999999,
+    "C4_max_tick_ms": 157.68721600000003,
+    "C5_sum_ms": 2869.762989,
+    "C5_max_tick_ms": 393.629044,
+    "C5_slowdown_ratio_approx": 3.25,
+    "decoded_complete_model_bytes": 850403,
+    "decoded_sha256": "e3a6ca606c088c8588e052006dd107a24fbb45a683e8d5357c62da6e708eb8a4",
+    "whole_model_exact": true,
+    "official_restore_true_both": true,
+    "field_exclusions": false,
     "actual_account_or_clock_writes": false
   },
-  "output_transport_fix": {
-    "status": "FROZEN_CODE41_PACKING_OLD_CLIENT_GATE_FULL_MODEL_ROUNDTRIP_AND_BACKEND178_PASS_DEPLOY_PENDING",
-    "completed_C4_reference_original_packed_bytes": 849981,
-    "completed_C4_reference_new_packed_bytes": 351861,
-    "per_world_limit_bytes": 700000,
-    "limit_raised": false,
-    "history_removed": false,
-    "deepStrictEqual_full_restored_model_numbers_and_history_rows": "PASS",
-    "reference_is_full_C4_not_yet_full_C5": true,
-    "new_format_old_reader_compatible_claimed": false,
-    "old_client_write_fence": {
-      "status": "FROZEN_CODE41_TARGETED_REGRESSION_PASS",
-      "explicit_PUT_savePackingVersion": 1,
-      "reject_old_unknown_client_when_stored_world_packed": true,
-      "CAS_revision_refresh_alone_insufficient": true,
-      "client_error_nonrecoverable_in_local_and_PREPROD": true,
-      "targeted_cloud_tests_PASS": 2,
-      "targeted_API_tests_PASS": 11,
-      "same_current_CAS_parent_and_daughter_rejected_before_writes": true,
-      "new_client_version1_PASS": true,
-      "shrink_to_plain_PASS": true,
-      "malformed_payload_rejected": true,
-      "backend_persisted_payload_exact_bytes": true,
-      "old_frozen_reader_fails_closed": true
-    },
-    "final_frozen_source_roundtrip": "PASS_CODE41_FULL_C5_MODEL849981B_EXACT_C4_PACKED345429B_WITHIN700K",
-    "actual_account_or_clock_writes": false,
-    "report": "/workspace/work/perf-20261119/provisions-transport-proof.json",
-    "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "codec_maximum_uncompressed_bytes_unchanged": 4000000,
-    "targeted_frontend_tests_PASS": 7,
-    "targeted_backend_tests_PASS": 7,
-    "total_targeted_tests_PASS": 14,
-    "independent_packing_and_server_fence_review": "PASS",
-    "full_backend_regression": "PASS178",
-    "canonical_reference_roundtrip": {
-      "status": "PASS",
-      "canonical_JSON_equality": true,
-      "exact_deep_world_equality": true,
-      "canonical_original_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
-      "canonical_restored_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
-      "new_packed_sha256": "a03566fa50b7e5f7a6751a07698e926875a2a39be61d826621420f496dbc01a5",
-      "history_rows_preserved": 353309,
-      "history_node_count": 4973,
-      "resident_count": 135,
-      "raw_property_order_equality_claimed": false,
-      "full_reference_scope": "C4_actual47.885h_serialization_transport_only_not_C5_replay"
-    },
-    "actual_full_C5_packed_bytes": 345429,
-    "actual_full_C5_transport_report": "/workspace/work/perf-20261119/admin3-candidate5-full-equivalence.json"
+  "inherited_proofs_not_relabelled_C6": {
+    "C5_full_actual_model": "previous_cache20_attempt.full_actual_C5_replay",
+    "C5_canonical_artifacts": "previous_cache20_attempt.canonical_artifact_refresh",
+    "C5_packing_and_write_fence": "previous_cache20_attempt.output_transport_fix",
+    "C5_committed_public_package_and_Pages": "previous_cache20_attempt.frontend_package; previous_cache20_attempt.Pages",
+    "old_C5_local_Node_first1583of1585_and_targeted42": "previous_cache20_attempt.local_QA.full_frontend_Node"
   },
   "frontend_package": {
     "planned_public_entry_count": 460,
@@ -255,22 +181,26 @@
     "final_total_bytes": null,
     "final_archive_sha256": null,
     "final_manifest_sha256": null,
-    "validation": "LOCAL_STABLE28_TESTS_PASS_EXACT460_CLOSED_LIST_FINAL_COMMITTED_PUBLICATION_ARCHIVE_PENDING",
-    "planned_public_entry_count_note": "Stable unchanged28 tests PASS for explicit460 closed list and unchanged512/128MiB caps; initial catalog-generation overlapFAIL preserved separately."
+    "validation": "PASS_LOCAL_STABLE_UNMODIFIED28_AFTER_ENOSPC_RECOVERY; FINAL_COMMITTED_PUBLICATION_ARCHIVE_PENDING",
+    "historical_C5_package_reference": "previous_cache20_attempt.frontend_package",
+    "local_tests_PASS": 28,
+    "member_limit_unchanged": 512,
+    "byte_limit_unchanged": 134217728,
+    "original_ENOSPC_failure_preserved": true
   },
   "canonical_artifact_refresh": {
     "status": "PASS",
-    "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "version": "0.15.2.3",
+    "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "version": "0.15.2.4",
     "gameplay_or_account_writes": false,
     "code_modified_after_source_pin": false,
     "master": {
       "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
-      "sha256": "55355d2daf9d968a35fb00f62f9799014c48e3911af570d5b857e60e5bf239b7",
-      "bytes": 7878083,
+      "sha256": "1ccb89d1f168682a93271abb564f8566a26ad6c0c73131c983b23331539914ff",
+      "bytes": 7880490,
       "sheets": 158,
       "current_sheets": 58,
-      "rows_current": 63897,
+      "rows_current": 63921,
       "historical_sheets_unchanged": 100,
       "historical_zip_parts_unchanged": 220,
       "historical_comments_unchanged": 48,
@@ -281,16 +211,16 @@
       "building_art_rows": 200,
       "fresh_build": "PASS",
       "fresh_validate_only": "PASS",
-      "validation_report_sha256": "970f2d374cb2c749bd2c5b190b01ae5bd0512eba16610f08aadc64d2d4150888",
-      "simulation_snapshot_sha256": "a722f071eec0cf669e546f35bf44cb13eaa95057541c5d85ff2d546fdbb05dde"
+      "validation_report_sha256": "239bdba403512605b48aad38cfbb7db19f572e49ff9a14a87a272cdd609b874d",
+      "simulation_snapshot_sha256": "3912d86e9d37d0797ad916540625e4b4f94e1997065464621c90dc59b6ad416b"
     },
     "editorial": {
       "status": "PASS",
       "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
       "bytes": 60329,
-      "sha256": "d36ad175836c078e342cee4c11b134dd7c6e91d798126a2267b7856b9a0d7552",
-      "source_git_commit": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-      "source_fingerprint": "30097b5c79439bde84b4dd04a03f7cb6f6cc0188d4477d7479f411aa97b91a5a",
+      "sha256": "047e5324175151aac52c3d95236e2a263d499d073a8bd4dcc05adc22eaea4517",
+      "source_git_commit": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "source_fingerprint": "cb319ed844f5af6dcf17fd63e24600eb63f6161325abd1022ce8d19a9626c6b1",
       "source_files_fingerprinted": 110,
       "rows": 413,
       "sheets": {
@@ -308,7 +238,7 @@
       "status": "PASS",
       "before_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
       "before_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
-      "after_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "after_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
       "unchanged_economic_output_table_count": 13,
       "unchanged_economic_output_tables": [
         "levels",
@@ -335,7 +265,7 @@
     "actual_canonical_simulation_identity": {
       "status": "PASS",
       "before_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
-      "after_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "after_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
       "numeric_tolerance_used": false,
       "profiles": [
         {
@@ -374,6 +304,92 @@
       "all_simulations_canonical_start": true,
       "no_injected_resources_or_levels": true
     },
+    "additional_canonical_baseline_identity": {
+      "C4": {
+        "status": "PASS",
+        "before_source": "62db46b75cbda3c74264504ebca15cade7b4e1e4",
+        "after_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+        "numeric_tolerance_used": false,
+        "profiles": [
+          {
+            "id": "bez-pracy",
+            "hours": 24,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+            "after_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+            "checkpoints": 25,
+            "commands": 14
+          },
+          {
+            "id": "produkcja-24h",
+            "hours": 24,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+            "after_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+            "checkpoints": 25,
+            "commands": 30
+          },
+          {
+            "id": "rozwoj-3d",
+            "hours": 72,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+            "after_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+            "checkpoints": 73,
+            "commands": 143
+          }
+        ],
+        "difference_count": 0,
+        "first_differences": [],
+        "all_simulations_canonical_start": true,
+        "no_injected_resources_or_levels": true
+      },
+      "C5": {
+        "status": "PASS",
+        "before_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "after_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+        "numeric_tolerance_used": false,
+        "profiles": [
+          {
+            "id": "bez-pracy",
+            "hours": 24,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+            "after_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+            "checkpoints": 25,
+            "commands": 14
+          },
+          {
+            "id": "produkcja-24h",
+            "hours": 24,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+            "after_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+            "checkpoints": 25,
+            "commands": 30
+          },
+          {
+            "id": "rozwoj-3d",
+            "hours": 72,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+            "after_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+            "checkpoints": 73,
+            "commands": 143
+          }
+        ],
+        "difference_count": 0,
+        "first_differences": [],
+        "all_simulations_canonical_start": true,
+        "no_injected_resources_or_levels": true
+      }
+    },
     "scenario_checks": {
       "puzzleExamples": 120,
       "solverSolved": 115,
@@ -400,218 +416,577 @@
       "conditionalTextCandidates": 10761,
       "staticHtmlTexts": 388,
       "applicationFiles": 127,
-      "astNodes": 471095,
-      "functions": 7158,
-      "constants": 9829,
-      "conditionBranches": 19792,
+      "astNodes": 471328,
+      "functions": 7159,
+      "constants": 9838,
+      "conditionBranches": 19805,
       "sourceChunks": 218
     },
     "minigames": {
       "status": "PASS",
-      "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
       "games": 55,
       "DOCX": 55,
       "TXT": 55,
       "story_variants": 100,
       "DOCX_parts_compared": 1045,
       "semantics_unchanged": true,
-      "source_line_changes": [],
+      "source_line_changes": [
+        {
+          "entry": "puzzle-signal-line",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-harbor-routes",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-gull",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-crabs",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-hidden-objects",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-parrot",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-packing",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-untangle",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-navigation",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-scheduling",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-gears",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-optics",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-tides",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-hotel",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-magnets",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-paper-fold",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-invention",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-photo",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-deduction",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-cooking",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-signals-decode",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-balance",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-memory-triples",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "puzzle-marble-maze",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-first-light",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-star-guests",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-captainless-ship",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-harbor-opening",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-storm-shelter",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-bottle-message",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-fog-convoy",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-keeper-map",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-supply-voyage",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-second-shore",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-closed-lighthouse",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-lost-performance",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-ocean-visitors",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-nothing-wasted",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-sea-festival",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-merchant-rescue",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-cliff-treasury",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-above-storm",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-sail-gathering",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "story-homecoming",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-cargo-rain",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-treasure-map",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-pirate-cannon",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-bridge",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-signals",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-letters",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-rhythm",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-garden",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        },
+        {
+          "entry": "adventure-cargo-balance",
+          "path": "harborlight-v1-state.js",
+          "description": "Rozliczenie nagród opowieści i konwersja mąki",
+          "old_line": 1129,
+          "new_line": 1140,
+          "identical_anchor_text": "function claimStateAdventureReward(state, payload) {"
+        }
+      ],
       "semantic_hash_method": "normalizes only verified source line provenance",
       "semantic_catalog_sha256": "f6cb7cbead2d5df6f3c67b1df84787d9e6844d73e8403b0156002efca9eb91bd",
-      "archive_sha256": "42f844af864b4a2f1c63d0e2d8ecccaa154291e0c5147286b50f0536696010b3",
-      "archive_bytes": 2390558,
+      "archive_sha256": "3c7b77b07e002c0f321cc72f4af4091fff682795c7b909167038fbfc6cb708d5",
+      "archive_bytes": 2390704,
       "archive_members": 112,
-      "catalog_sha256": "cd4297f44784fc402746d7b25c2f8c5362d8c995dea6ab49525f141ec65f7e09",
+      "link_index_identical": true,
+      "catalog_sha256": "bbbd68bcfd07965fa1f0c7da1b635e2941b45fc85b1dfcb44f4b09d3d17bc162",
       "five_canonical_steps": "PASS",
       "gameplay_or_account_writes": false,
-      "link_index_identical": true
+      "source_line_changes_count": 53
     },
     "manual_user_acceptance": "NOT_RUN",
     "CI_and_deploy": "PENDING_ROOT_OWN_EXACT_PUBLICATION_SOURCE",
     "earlier_attempt_evidence_preserved": true,
     "all_heavy_processes_finished": true,
-    "report": "/workspace/work/perf-20261119/r3/artifacts/canonical-artifacts-summary.json",
-    "historical_CODE62_PASS_reference": "previous_cache19_attempt.canonical_artifact_refresh"
+    "report": "/workspace/work/perf-20261119/r4/artifacts/canonical-artifacts-summary.json",
+    "historical_CODE41_PASS_reference": "previous_cache20_attempt.canonical_artifact_refresh"
   },
   "local_QA": {
-    "status": "CODE41_LOCAL_MODEL_ARTIFACTS_PYTHON172_BACKEND178_BOARD7_PASS_FRONTEND_FIRSTFAIL_TWO_TEST_ONLY_FIXES42PASS_OWN_FULL_CI_PENDING",
-    "formal_model_index_integration_review": "PASS",
-    "two_actual_short_whole_JSON_comparisons": "PASS_THREE_INTERVALS_SUPERSEDES_TWO",
-    "late_actual_checkpoint": "PASS_WORKING_HELPERS_BEFORE_PACKING_CACHE20",
-    "full_actual_C5_replay": "PASS_CODE41_LOCAL_NODE_FULL47_885H",
-    "packed_output_old_reader_roundtrip": "PASS_NEW_READER_EXACT_ROUNDTRIP_OLD_READER_FAILS_CLOSED_AND_OLD_WRITER_FENCED",
-    "frozen_clock_case": "PASS_WORKING_QUERY19_13_NATIVE_CASES",
-    "unchanged_missions_program": "PASS_FOUR_UNCHANGED_WORKING_QUERY19_SCENARIOS",
+    "status": "PASS_LOCAL_C6_NODE1599_BACKEND178_BOARD7_PYTHON173_ARTIFACTS_AND_FINAL_GAP0_UI; OFFICIAL47_885H_AND_NEW_REMOTE_CI_DEPLOY_PENDING",
+    "official10_sequential1s_ticks_whole_model_and_cost": "TARGETED_SCOPE71_RESOURCE5_PASS_FINAL_FULL_OFFICIAL_MODEL_PENDING",
+    "gap_zero_private_UI_10s_postready1x": "PASS_FINAL9_CODE_FINGERPRINTS",
+    "full_actual_replay_and_complete_equivalence": "PENDING_OFFICIAL_C6_FULL47_885H",
+    "frozen_source_regression": "PASS_LOCAL_FRONTEND1599_BACKEND178_BOARD7_PYTHON173",
+    "canonical_artifacts": "PASS_FRESH_BUILD_VALIDATE_FROM_E394",
+    "historical_C5_proofs_reference": "previous_cache20_attempt.local_QA",
+    "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "targeted_C6": {
+      "scope_tests_PASS": 71,
+      "ordered_resource_history_tests_PASS": 5,
+      "mission_sidebar_and_full_action_tests_PASS": 52,
+      "configuration_contract_Python_tests_PASS": 13,
+      "new_total_Python_expected": 173,
+      "full_Python173_PASS_claimed": true
+    },
     "full_frontend_Node": {
-      "status": "FIRST_FULL_RUN_FAIL_TWO_STALE_TEST_EXPECTATIONS_NOT_AGGREGATE_PASS",
-      "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-      "tests": 1585,
-      "pass": 1583,
-      "fail": 2,
-      "exit_code": 1,
-      "wall_seconds": 203.8995156288147,
-      "runner_duration_ms": 203752.865561,
-      "summary": "/workspace/work/perf-20261119/r3/node-frontend-full-summary.json",
-      "log_sha256": "4e4a2a3c7ec6955114f5f3b59bebc702f78a9c44e03896c5d99236eafde1801e",
-      "failures": [
-        "PROD PUT expected body omitted savePackingVersion1",
-        "3600-person codec assertion inspected compressed container without unpacking"
-      ],
-      "test_only_followup": {
-        "status": "PASS",
-        "tests": 42,
-        "duration_ms": 3171.513016,
-        "files": [
-          "tests/harborlight-v18-auth.test.mjs",
-          "tests/harborlight-v32-dev-runtime.test.mjs"
-        ],
-        "log": "/workspace/work/perf-20261119/r3/node-updated-save-contracts.log",
-        "runtime_modified_after_CODE41": false
-      },
-      "aggregate_full_PASS_claimed": false,
-      "next_full_run": "PENDING_OWN_EXACT_PUBLICATION_CI",
+      "status": "PASS",
+      "source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "tests": 1599,
+      "pass": 1599,
+      "fail": 0,
+      "exit_code": 0,
+      "wall_seconds": 211.1375288963318,
+      "runner_duration_ms": 210999.438184,
+      "summary": "/workspace/work/perf-20261119/r4/node-frontend-full-summary.json",
+      "log_sha256": "a9d0a5e7cc366b23e1df94eca1c7f46b7ec3c5f44f0b7bbc8148e2b2b2df3506",
+      "watchdog_source_sha256_unchanged": "de48ed0b4e096cdbecf4c451770aacf97af0f1f15174e9e2b48835ce96cdbaf5",
       "watchdog_limit_ms_unchanged": 10000,
-      "watchdog_PASS_ms": 8880.827613
+      "watchdog_PASS_ms": 8737.606059
     },
     "backend_Node": {
       "status": "PASS",
       "tests": 178,
       "pass": 178,
       "fail": 0,
-      "runner_duration_ms": 7231.489321,
-      "wall_seconds": 7.331945180892944,
-      "summary": "/workspace/work/perf-20261119/r3/node-backend-board-summary.json"
+      "runner_duration_ms": 7565.132765,
+      "wall_seconds": 7.686291456222534,
+      "summary": "/workspace/work/perf-20261119/r4/node-backend-board-summary.json"
     },
     "board_Node": {
       "status": "PASS",
       "tests": 7,
       "pass": 7,
       "fail": 0,
-      "runner_duration_ms": 76.488961,
-      "wall_seconds": 0.11566567420959473
+      "runner_duration_ms": 80.846341,
+      "wall_seconds": 0.11362075805664062
     },
-    "frontend_package": {
-      "status": "PASS_LOCAL_STABLE_UNMODIFIED28",
-      "tests": 28,
-      "wall_seconds": 13.875,
-      "closed_entries": 460,
-      "member_cap_unchanged": 512,
-      "byte_cap_unchanged": 134217728,
-      "first_parallel_race_failure_preserved": true,
-      "test_or_source_correction_for_rerun": false,
-      "committed_publication_archive": "PENDING"
-    },
-    "warm_cache_real_HTTP": "PENDING_FINAL_C5",
-    "historical_C4_component_proofs_reference": "previous_cache19_attempt.local_QA",
-    "startup_worker_component_C5": {
-      "status": "PASS_WORKING_QUERY19_NOT_FINAL_FROZEN_CACHE20",
-      "report": "/workspace/work/perf-20261119/c5-paused-clock/summary.json",
-      "native_cases": 13,
-      "unchanged_legacy_missions_scenarios": 4,
-      "Node_replay_tests": 23,
-      "paused_clock_worker_start_and_completion": true,
-      "clock_pumped": false,
-      "timeouts_or_deadlines_changed": false,
-      "fixture_or_legacy_program_changed": false,
-      "actual_account_writes": false,
-      "final_frozen_source_recheck": "PENDING"
-    },
-    "targeted_output_transport_cloud_API": {
-      "status": "PASS_TARGETED_NOT_FULL_REGRESSION",
-      "cloud_tests": 2,
-      "API_tests": 11,
-      "full_backend_regression": "PENDING"
-    },
-    "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "full_backend_regression": "PASS178",
-    "targeted_output_transport_frozen_CODE41": {
-      "status": "PASS",
-      "frontend_tests": 7,
-      "backend_tests": 7,
-      "independent_review": "PASS",
-      "proof": "/workspace/work/perf-20261119/provisions-transport-proof.json",
-      "proof_scope": "C4_full_reference_transport_not_full_C5_replay"
-    },
-    "complete_C4_C5_model_comparison": "PASS_AFTER_ONLY_CODEC_UNPACK_AND_KEY_CANONICALIZATION",
-    "original_B94_full_reference": "PENDING_NOT_CLAIMED_PASS",
-    "private_actual_Worker_and_10s_postready": "NOT_RUN",
-    "hosted_actual_admin3_600s_gate": "PENDING_NEW_STANDARD_DEPLOY",
-    "Python_first_partial_run": {
-      "status": "STOPPED_AT_FRONTEND_PACKAGE_FAIL_ARTIFACT_GENERATION_OVERLAP_NOT_CODE_OR_TEST_BUG",
-      "summary": "/workspace/work/perf-20261119/r3/python-ci-checks-summary.json",
-      "earlier_PASS": [
-        {
-          "program": "harborlight-backend-package.test.py",
-          "tests": 2
-        },
-        {
-          "program": "harborlight-gcp-bootstrap.test.py",
-          "tests": 12
-        },
-        {
-          "program": "harborlight-gcp-verify.test.py",
-          "tests": 10
-        }
-      ],
-      "failure": {
-        "program": "harborlight-frontend-bundle.test.py",
+    "Python_checks": {
+      "status": "PASS_ALL173_AFTER_UNMODIFIED_BUNDLE_SPACE_RETRY",
+      "independent_programs": 11,
+      "independent_tests_PASS": 145,
+      "summary": "/workspace/work/perf-20261119/r4/python-independent-summary.json",
+      "frontend_bundle_stable_unmodified28": "PASS",
+      "expected_total173": 173,
+      "full_173_PASS_claimed": true,
+      "artifact_generation_complete_before_bundle_retry": true,
+      "total_tests_PASS": 173,
+      "stable_frontend_tests_PASS": 28,
+      "stable_frontend_wall_seconds": 11.539,
+      "stable_frontend_log": "/workspace/work/perf-20261119/r4/python-frontend-bundle-space-retry.log",
+      "source_or_test_assertions_changed_for_retry": false,
+      "first_bundle_infrastructure_failure": {
+        "status": "FAIL_PRESERVED_ENOSPC",
         "tests": 28,
         "fail": 1,
-        "exit_code": 1,
-        "wall_seconds": 15.161,
-        "log_sha256": "42d04860d9d3266b668c5964742de2d472e8057cd56797e48b4eb7d191dad016",
-        "cause": "setUp captured old minigame catalog sourceCommit62db46b while artifact generation wrote sourceCommit41e0f8e during the test; raw byte change is source provenance only.",
-        "closed_list_460_and_caps_correct": true
+        "errors": 1,
+        "duration_seconds": 12.697,
+        "log": "/workspace/work/perf-20261119/r4/python-frontend-bundle-stable.log",
+        "production_bug_claimed": false
       },
-      "full_Python_PASS_claimed": false,
-      "correction_and_remaining_checks": "NO_CODE_OR_TEST_CORRECTION; UNMODIFIED_STABLE28_PASS_AND_OTHER11_PROGRAMS144PASS; FIRST_PARALLEL_FAILURE_PRESERVED",
-      "production_bug_claimed": false
+      "space_recovery": {
+        "report": "/workspace/work/perf-20261119/r4/repro-cache-space-recovery.json",
+        "freed_MB_approx": 847,
+        "only_manifest_and_hash_pinned_reproducible_build_copies_removed": true,
+        "all_original_ZIP_TAR_manifests_verified_dirs_reports_private_gold_retained": true
+      }
     },
-    "Python_safe_independent_checks": {
-      "status": "PASS_ALL172_AFTER_UNMODIFIED_STABLE_BUNDLE_RERUN",
-      "programs": 11,
-      "tests_PASS": 144,
-      "summary": "/workspace/work/perf-20261119/r3/python-safe-independent-summary.json",
-      "stable_unmodified_frontend28": "PASS",
-      "full_172_PASS_claimed": true,
-      "total_programs": 12,
-      "total_tests_PASS": 172,
-      "stable_frontend_tests_PASS": 28,
-      "stable_frontend_wall_seconds": 13.875,
-      "stable_frontend_log": "/workspace/work/perf-20261119/r3/python-frontend-bundle-stable.log",
-      "first_parallel_race_failure_preserved": true,
-      "source_test_or_caps_changed_for_retry": false
-    },
-    "canonical_artifacts": "PASS_FRESH_BUILD_AND_VALIDATE_FROM_CODE41",
     "private_release_audit_helpers": {
       "status": "PASS_READINESS_NOT_NEW_PUBLICATION_ACCEPTANCE",
       "tests": 60,
-      "original_artifact_and_public_bytes_checks_ready": true
-    },
-    "staging_tracking_manual_legal_checks": "PASS"
+      "wall_seconds": 1.159,
+      "first_private_fixture_failure_preserved": true,
+      "correction": "Private test ROOT binding points to actual gra-perf-cache19 worktree; no application or game-test change."
+    }
   },
   "CI": {
-    "status": "PENDING_NEW_EXACT_C5_PUBLICATION_SOURCE",
+    "status": "PENDING_C6_NEW_EXACT_PUBLICATION_SOURCE",
     "run_id": null,
-    "previous_C4_result": "FAILURE44544378145_NOT_RETRIED_OR_RELABELLED"
+    "C5_previous_own_run": 44559674101,
+    "C5_previous_own_status": "SUCCESS_QUALITY_HOLD_NOT_CANCELLED",
+    "C5_green_does_not_resolve_quality_hold": true
   },
   "Pages": {
-    "status": "PENDING_NEW_EXACT_C5_PUBLICATION_SOURCE",
+    "status": "PENDING_C6_NEW_EXACT_PUBLICATION_SOURCE",
     "run_id": null,
-    "previous_C4_result": "SUCCESS44544378307_NOT_C5_ACCEPTANCE"
+    "C5_previous_own_run": 44559673862,
+    "C5_previous_own_status": "SUCCESS34S_AND_ALL459_PLUS2_XLSX_PUBLIC_BYTES_PASS_NOT_C6_ACCEPTANCE"
   },
   "DEV": {
-    "status": "CODE41_LOCALLY_FROZEN_NOT_PUBLISHED",
+    "status": "E394_FROZEN_NOT_PUBLISHED_MAIN_STILL_C5_3D_QUALITY_HOLD",
     "source_sha": null,
     "manual_user_acceptance": "NOT_RUN",
-    "application_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8"
+    "application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6"
   },
   "DEV_tag": {
     "status": "NOT_CREATED",
     "name": null
   },
   "PREPROD": {
-    "status": "NOT_DISPATCHED_C5_SOURCE_CI_DEV_AND_STANDARD_WORKFLOW_PENDING",
+    "status": "NOT_DISPATCHED_C6_PENDING_AND_C5_QUALITY_HOLD",
     "workflow": "google-cloud-dev.yml",
     "project": "harborlight-dev",
     "url": "https://harborlight-dev.web.app",
@@ -626,7 +1001,7 @@
     "tag_created": false,
     "tag_verified": false,
     "additional_required_admin3_UI_gate": {
-      "status": "IMPLEMENTED_CONFIGURATION_TESTS_PASS_NOT_RUN_ON_NEW_DEPLOYMENT",
+      "status": "IMPLEMENTED_CONFIG13PASS_NOT_RUN_ON_C6_DEPLOYMENT",
       "selected_account_only": "admin3",
       "uid": "dev-admin3",
       "startup_timeout_ms": 600000,
@@ -639,19 +1014,876 @@
       "receipt_schema_condition_count_unchanged": 4,
       "configuration_unit_tests": {
         "status": "PASS",
-        "tests": 12
+        "tests": 13
       },
-      "actual_existing_admin3_render": "PENDING"
+      "actual_existing_admin3_render": "PENDING_NEW_C6_STANDARD_DEPLOY",
+      "post_ready_normal_1x_observation_seconds": 10,
+      "post_ready_heartbeat_max_gap_ms": 1500,
+      "same_required_standard_job": true,
+      "test_game_clock_changed": false,
+      "actual_account_writes": false
     }
   },
-  "manual_user_acceptance": "C5_CACHE20_DEV_AND_PREPROD_NOT_RUN",
+  "manual_user_acceptance": "C6_DEV_AND_PREPROD_NOT_RUN",
   "manual_DEV_acceptance": {
     "status": "NOT_RUN",
-    "version": "0.15.2.3",
-    "cache": "frontend-v32-20",
-    "previous_pass_only_reference": "previous_cache18_attempt.manual_DEV_acceptance"
+    "version": "0.15.2.4",
+    "cache": "frontend-v32-21",
+    "previous_user_pass_scope": "previous_cache18_attempt.manual_DEV_acceptance"
   },
   "manual_PREPROD_acceptance": "NOT_RUN",
+  "previous_cache20_attempt": {
+    "schema_version": 1,
+    "as_of": "2026-11-19",
+    "timezone": "Europe/Warsaw",
+    "scope": "ROUTINE_PERFORMANCE_LEATHERWORKS_CACHE_AND_ADMIN3_STARTUP_HOTFIX_DEV_THEN_PREPROD",
+    "status": "PUBLISHED_PAGES_AND_OWN_CI_SUCCESS_QUALITY_HOLD_CONFIRMED_STEADY_REGRESSION_NO_TAG_OR_GCP",
+    "application_version": "0.15.2.3",
+    "cache": "frontend-v32-20",
+    "version_and_cache_status": "RUNTIME_BUMPED_SOURCE_FROZEN_NOT_PUBLISHED",
+    "candidate": "C5",
+    "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+    "application_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+    "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+    "export_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+    "publication_source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
+    "source_frozen": true,
+    "source_freeze_scope": "APPLICATION_RUNTIME_AND_EXPORT_SOURCE_CODE41; PUBLICATION_PENDING",
+    "authorization": "gra się wolno ładuje i czasami zawiesza Chrome, sprawdź czemu i popraw",
+    "additional_user_report": "co tu się stało z tym domkiem producenta skór",
+    "additional_user_reports": [
+      "co tu się stało z tym domkiem producenta skór",
+      "Admin3 na pre prod wisi pozostałe chodzą sprawdź"
+    ],
+    "explicit_PREPROD_GO": {
+      "status": "AUTHORIZED_ROUTINE_CORRECTION_UNDER_EXISTING_GO",
+      "date": "2026-11-19",
+      "timezone": "Europe/Warsaw",
+      "user_quote": "wrzuć na preprod",
+      "previous_DEV_feedback": "tak jest ok",
+      "previous_feedback_scope": "0.15.2.1/cache18 publicationb94 only",
+      "new_hotfix_user_acceptance_claimed": false,
+      "new_confirmation_required_for_routine_fix": false,
+      "requires_new_exact_source_CI": true,
+      "PROD_DNS_reset_authorized": false
+    },
+    "inherited_feature_scope": [
+      "Only current20functional building variants plus a possible extra TownHall-dependent decorativeframe are required at startup.",
+      "Lossless200derived sprites preserve exactRGBA and retain22originalWebPassets.",
+      "Direct water painting with cached masks.",
+      "Leatherworks.paintDepth500 preserves sourcepixels, geometry and hotspot.",
+      "Accounts, progress, game rules, approved Excel text and minigame semantics remain preserved."
+    ],
+    "admin3_startup_diagnosis": {
+      "status": "REPRODUCED_UI_EVENTLOOP_BLOCK_ON_UNMODIFIED_B94_PRIVATE_COPY",
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "safe_report": "/workspace/work/perf-20261119/admin3-hang-diagnosis.json",
+      "API_and_auth": "PASS_READ_ONLY",
+      "schema": 9,
+      "ruleset": 32,
+      "generation": 2,
+      "revision": 591,
+      "population": 97,
+      "catchup_hours": 47.88518666666667,
+      "clock_rate": 1,
+      "cloud_load_ms": 943.5653230000007,
+      "restore_ms_range": [
+        121.2,
+        158.77
+      ],
+      "browser_observation_seconds": 25,
+      "browser_heartbeat_stopped_after_advance_started": true,
+      "JS_errors": [],
+      "cause": "Synchronous first advanceArchipelago blocks the main thread while nearly48hours of natural events repeatedly calculate resident/provision/production derived status.",
+      "epsilon_stall": "NOT_PROVEN_first2000events_advanced6558simulationseconds",
+      "prior_B94_UI_test_account": "admin1",
+      "three_account_auth_and_reads_are_not_admin3_UI_start_acceptance": true,
+      "account_island_or_clock_writes": false,
+      "raw_save_or_credentials_committed": false
+    },
+    "physical_current_PREPROD": {
+      "source_sha": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+      "version": "0.15.2.1",
+      "cache": "frontend-v32-18",
+      "workflow": "SUCCESS44526548282",
+      "quality_acceptance": "REOPENED_WARM_CACHE_AND_ADMIN3_STARTUP",
+      "accepted_tag": false
+    },
+    "previous_accepted_release": {
+      "version": "0.15.2.0",
+      "cache": "frontend-v32-17",
+      "publication_source_sha": "dda2fa1793e49ec23811ccffb147a7e56a366692",
+      "acceptance": "docs/v32/BUILDING-UPGRADE-ART-PREPROD-ACCEPTANCE.json"
+    },
+    "performance_reference": {
+      "scope": "Historical first-candidate image/Chrome measurements only; not a benchmark of C5/cache20.",
+      "reference": "previous_cache18_attempt.after_measurements",
+      "startup_image_bytes_before": 52630275,
+      "startup_image_bytes_after": 12749925,
+      "new_release_timing_claimed": false
+    },
+    "warm_cache_regression": {
+      "status": "HISTORICAL_CACHE18_QUALITY_FAIL",
+      "reference": "previous_cache19_attempt.warm_cache_regression"
+    },
+    "planned_manifest_cache_fix": {
+      "status": "INHERITED_IMPLEMENTED_RECHECK_FINAL_C5_SOURCE_PENDING",
+      "reference": "previous_cache19_attempt.planned_manifest_cache_fix",
+      "user_cache_clear_required": false
+    },
+    "planned_admin3_fix": {
+      "status": "CODE41_FULL_ACTUAL_MODEL_AND_COMPLETE_C4_EQUIVALENCE_PASS_NATIVE_UI_AND_RELEASE_PENDING",
+      "parts": [
+        "Scope repeated production and provision derived reads with explicit invalidation at state mutations.",
+        "Reuse diet aggregates only within one advancePopulation; retain every meal history and unchanged math.",
+        "Run one fixed-target initial advanceArchipelago in a native Worker.",
+        "Transfer the full running bundle without save compaction or normalization side effects.",
+        "Recheck session, generation, revision, adoption and developer clock before atomic adoption; discard stale/cancelled results.",
+        "Never save partial catch-up; finish residual elapsed time on a Worker when cloud confirmation is slow.",
+        "Dispose the startup client and release its previous bundle after successful adoption.",
+        "Index the same ordered meal-history rows within one atomic advancePopulation; apply identical partial-row arithmetic and expiry.",
+        "Use conservative exact-dyadic interval bounds only when they certify the same integer diet classification as the legacy ordered floating-point calculation; otherwise use the legacy calculation.",
+        "Keep indexes and accumulators scoped in memory with explicit invalidation; serialize no index, BigInt or cache.",
+        "Before constructing Worker await Promise.resolve, allowing MutationObserver cancellation without a requestAnimationFrame or timer dependency.",
+        "Use lossless packed provisions; require explicit savePackingVersion1 when existing stored world is packed and stop old-client retry after rejection. Keep700k limit and complete history."
+      ],
+      "formal_model_and_index_review": "PASS",
+      "exact_reference_equivalence_required": true,
+      "full_actual_C5_replay": "PASS_CODE41_LOCAL_NODE47_885H",
+      "full_actual_reference_comparison": "PASS_COMPLETE_C4_ALL_FIELDS_B94_ORIGINAL_FULL_STILL_PENDING",
+      "no_elapsed_time_skipping": true,
+      "no_history_removal": true,
+      "no_clock_or_rate_change": true,
+      "no_reset": true,
+      "no_account_writes": true,
+      "frozen_clock_regression": "PASS_WORKING_QUERY19_COMPONENT_NOT_FINAL_CACHE20",
+      "unchanged_missions_regression": "PASS_FOUR_WORKING_QUERY19_SCENARIOS_PL_EN_DESKTOP_MOBILE",
+      "full_admin3_UI": "PENDING_REAL_EXISTING_ACCOUNT_ON_NEW_STANDARD_PREPROD600S",
+      "source_frozen": true,
+      "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "model_equivalence": "PASS_WHOLE_C4_C5_MODEL_AFTER_ONLY_CODEC_UNPACK_AND_CANONICAL_KEYS_NO_NORMALIZE_TICK_FIELD_EXCLUSIONS",
+      "actual_private_Worker_and_10s_postready_1x": "RUN_COMPLETE_STARTUP_MAX_GAP_PASS_RAW_HARNESS_FAIL_PRESERVED_STEADY_REGRESSION_QUALITY_HOLD"
+    },
+    "actual_short_C5_comparisons": {
+      "status": "PASS_THREE_STRICT_WHOLE_JSON_INTERVALS_BEFORE_PACKING_CACHE20_NOT_FULL_FINAL_GAP_ACCEPTANCE",
+      "source_fingerprint_report": "/workspace/work/perf-20261119/candidate5-model-code-fingerprints.json",
+      "one_hour": {
+        "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_B94_C4",
+        "simulated_hours": 1,
+        "bytes": 239055,
+        "sha256": "2fa608692053b4e1ac941d8074b011af0736ef8494fde43a24ddd6c574ae2d07",
+        "C5_wall_ms": 6523.727613,
+        "C5_CPU_ms": 7748.661,
+        "C4_wall_ms": 14603.158926,
+        "B94_wall_ms": 32350.872504,
+        "report": "/workspace/work/perf-20261119/admin3-candidate5-one-hour-equivalence.json"
+      },
+      "dense_midstate_next_hour": {
+        "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_C3_C4",
+        "checkpoint_simulation_hours_approx": 9.78,
+        "simulated_hours": 1,
+        "bytes": 9226855,
+        "sha256": "fefe14fee581c77e325d0ce3c4c400eadb7f8206d67ff660f39e600a704b84f2",
+        "C5_wall_ms": 8147.078196,
+        "C5_CPU_ms": 9436.226,
+        "C4_wall_ms": 17261.188877,
+        "normalized_again": false,
+        "report": "/workspace/work/perf-20261119/admin3-candidate5-midstate-equivalence.json"
+      },
+      "late_checkpoint_next_hour": {
+        "status": "PASS_STRICT_FULL_STATE_BYTES_EQUAL_FROZEN_C4",
+        "report": "/workspace/work/perf-20261119/admin3-candidate5-late-equivalence.json",
+        "checkpoint_simulation_hours_approx": 26.27,
+        "simulated_hours": 1,
+        "bytes": 23458927,
+        "sha256": "7633793b5ce81efaea093d2090d93865cf285ab3b77cf8218abb0e6fd476f6b5",
+        "C5_wall_ms": 10838.062956,
+        "C5_CPU_ms": 12777.251,
+        "C4_wall_ms": 37081.082245,
+        "C4_CPU_ms": 44324.746,
+        "result_population": 111,
+        "separate_benchmarks": true,
+        "reference_B94_paused": true,
+        "normalized_again": false,
+        "working_model_before_packing_and_cache20": true,
+        "actual_account_or_clock_writes": false
+      },
+      "full_47_885h": "PASS_FROZEN_CODE41_SEE_full_actual_C5_replay; original_B94_full_pending",
+      "numeric_tolerance_used": false,
+      "actual_account_or_clock_writes": false,
+      "source_scope": "candidate5-model-helpers-before-packing-and-cache20-bump"
+    },
+    "completed_C4_full_reference": {
+      "status": "COMPLETED_QUALITY_FAIL_TOO_SLOW_AND_PACKED_OVER_LIMIT",
+      "hours": 47.88518666666667,
+      "wall_ms": 2200645,
+      "CPU_ms": 2133561,
+      "result_population": 135,
+      "idle_session_startup_expiry_ms": 1830000,
+      "packed_world_bytes": 849981,
+      "per_world_limit_bytes_unchanged": 700000,
+      "packed_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+      "private_full_reference_preserved": true,
+      "loaded_model_files_verified": 41,
+      "complete_B94_equivalence": "PENDING",
+      "acceptance_PASS_claimed": false,
+      "actual_account_or_clock_writes": false
+    },
+    "output_transport_fix": {
+      "status": "FROZEN_CODE41_PACKING_OLD_CLIENT_GATE_FULL_MODEL_ROUNDTRIP_AND_BACKEND178_PASS_DEPLOY_PENDING",
+      "completed_C4_reference_original_packed_bytes": 849981,
+      "completed_C4_reference_new_packed_bytes": 351861,
+      "per_world_limit_bytes": 700000,
+      "limit_raised": false,
+      "history_removed": false,
+      "deepStrictEqual_full_restored_model_numbers_and_history_rows": "PASS",
+      "reference_is_full_C4_not_yet_full_C5": true,
+      "new_format_old_reader_compatible_claimed": false,
+      "old_client_write_fence": {
+        "status": "FROZEN_CODE41_TARGETED_REGRESSION_PASS",
+        "explicit_PUT_savePackingVersion": 1,
+        "reject_old_unknown_client_when_stored_world_packed": true,
+        "CAS_revision_refresh_alone_insufficient": true,
+        "client_error_nonrecoverable_in_local_and_PREPROD": true,
+        "targeted_cloud_tests_PASS": 2,
+        "targeted_API_tests_PASS": 11,
+        "same_current_CAS_parent_and_daughter_rejected_before_writes": true,
+        "new_client_version1_PASS": true,
+        "shrink_to_plain_PASS": true,
+        "malformed_payload_rejected": true,
+        "backend_persisted_payload_exact_bytes": true,
+        "old_frozen_reader_fails_closed": true
+      },
+      "final_frozen_source_roundtrip": "PASS_CODE41_FULL_C5_MODEL849981B_EXACT_C4_PACKED345429B_WITHIN700K",
+      "actual_account_or_clock_writes": false,
+      "report": "/workspace/work/perf-20261119/provisions-transport-proof.json",
+      "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "codec_maximum_uncompressed_bytes_unchanged": 4000000,
+      "targeted_frontend_tests_PASS": 7,
+      "targeted_backend_tests_PASS": 7,
+      "total_targeted_tests_PASS": 14,
+      "independent_packing_and_server_fence_review": "PASS",
+      "full_backend_regression": "PASS178",
+      "canonical_reference_roundtrip": {
+        "status": "PASS",
+        "canonical_JSON_equality": true,
+        "exact_deep_world_equality": true,
+        "canonical_original_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "canonical_restored_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "new_packed_sha256": "a03566fa50b7e5f7a6751a07698e926875a2a39be61d826621420f496dbc01a5",
+        "history_rows_preserved": 353309,
+        "history_node_count": 4973,
+        "resident_count": 135,
+        "raw_property_order_equality_claimed": false,
+        "full_reference_scope": "C4_actual47.885h_serialization_transport_only_not_C5_replay"
+      },
+      "actual_full_C5_packed_bytes": 345429,
+      "actual_full_C5_transport_report": "/workspace/work/perf-20261119/admin3-candidate5-full-equivalence.json"
+    },
+    "frontend_package": {
+      "planned_public_entry_count": 460,
+      "member_limit": 512,
+      "byte_limit": 134217728,
+      "explicit_closed_file_list": true,
+      "final_file_count": 460,
+      "final_total_bytes": 96563323,
+      "final_archive_sha256": "a0801752fced3cae98004a89f5e6bd9bd0bdb6aca54bd63d1f6863860e515277",
+      "final_manifest_sha256": "2b5650307c72b96077de980da54400f6f31079d694e85466756f7ff9fb03fdcd",
+      "validation": "PASS_STRICT_LOCAL_COMMITTED_PUBLICATION_ARCHIVE_AND_PUBLIC459_CONTENT_FILES",
+      "planned_public_entry_count_note": "Stable unchanged28 tests PASS for explicit460 closed list and unchanged512/128MiB caps; initial catalog-generation overlapFAIL preserved separately.",
+      "committed_package_report": "/workspace/work/perf-20261119/r3/release/committed-package.json"
+    },
+    "canonical_artifact_refresh": {
+      "status": "PASS",
+      "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "version": "0.15.2.3",
+      "gameplay_or_account_writes": false,
+      "code_modified_after_source_pin": false,
+      "master": {
+        "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+        "sha256": "55355d2daf9d968a35fb00f62f9799014c48e3911af570d5b857e60e5bf239b7",
+        "bytes": 7878083,
+        "sheets": 158,
+        "current_sheets": 58,
+        "rows_current": 63897,
+        "historical_sheets_unchanged": 100,
+        "historical_zip_parts_unchanged": 220,
+        "historical_comments_unchanged": 48,
+        "historical_cached_formulas_unchanged": 4982,
+        "new_cached_formulas": 12,
+        "formula_samples_against_code": 160,
+        "source_files": 128,
+        "building_art_rows": 200,
+        "fresh_build": "PASS",
+        "fresh_validate_only": "PASS",
+        "validation_report_sha256": "970f2d374cb2c749bd2c5b190b01ae5bd0512eba16610f08aadc64d2d4150888",
+        "simulation_snapshot_sha256": "a722f071eec0cf669e546f35bf44cb13eaa95057541c5d85ff2d546fdbb05dde"
+      },
+      "editorial": {
+        "status": "PASS",
+        "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+        "bytes": 60329,
+        "sha256": "d36ad175836c078e342cee4c11b134dd7c6e91d798126a2267b7856b9a0d7552",
+        "source_git_commit": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "source_fingerprint": "30097b5c79439bde84b4dd04a03f7cb6f6cc0188d4477d7479f411aa97b91a5a",
+        "source_files_fingerprinted": 110,
+        "rows": 413,
+        "sheets": {
+          "Tutorial": 55,
+          "Budynki — opisy": 24,
+          "Budynki — informacje": 30,
+          "Dolny pasek": 24,
+          "Komunikaty": 215,
+          "Przyciski": 65
+        },
+        "C_all_blank": true,
+        "exact_three_columns": true
+      },
+      "economic_outputs": {
+        "status": "PASS",
+        "before_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "before_publication": "b94af8befa671d936eeaf6e4be9b933cbf61ff08",
+        "after_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "unchanged_economic_output_table_count": 13,
+        "unchanged_economic_output_tables": [
+          "levels",
+          "building-levels",
+          "products",
+          "recipe-levels",
+          "research",
+          "research-levels",
+          "direct-routes",
+          "study-and-military",
+          "military-outcomes",
+          "roads",
+          "population",
+          "parameters",
+          "validated-examples"
+        ],
+        "unchanged_art_rows": 200,
+        "catalogs_rules_initial_state_and_pending_identical": true,
+        "conditional_source_table_changed": true,
+        "source_code_and_conditional_text_tables_required_identical": false,
+        "economic_or_presentation_value_changes": false,
+        "gameplay_or_account_mutation": false
+      },
+      "actual_canonical_simulation_identity": {
+        "status": "PASS",
+        "before_source": "bf2f4ac12c1ef1cd69adb8c3e572649fdc975190",
+        "after_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "numeric_tolerance_used": false,
+        "profiles": [
+          {
+            "id": "bez-pracy",
+            "hours": 24,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+            "after_sha256": "390309d0a69955dbb3c0334e6a960de4be765f221069db077eaea55beb9739e8",
+            "checkpoints": 25,
+            "commands": 14
+          },
+          {
+            "id": "produkcja-24h",
+            "hours": 24,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+            "after_sha256": "e9b333c4678f7b3e76e997853816a86daa096e02ecf99ab915ea42ada3b59e59",
+            "checkpoints": 25,
+            "commands": 30
+          },
+          {
+            "id": "rozwoj-3d",
+            "hours": 72,
+            "complete_profile_exact_json_values_and_types_equal": true,
+            "serialized_property_order_also_equal": true,
+            "before_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+            "after_sha256": "31f37d3d1a35b7e4f0b15cd403b4e3fdd027c0151139794da5a470407baee4f0",
+            "checkpoints": 73,
+            "commands": 143
+          }
+        ],
+        "difference_count": 0,
+        "first_differences": [],
+        "all_simulations_canonical_start": true,
+        "no_injected_resources_or_levels": true
+      },
+      "scenario_checks": {
+        "puzzleExamples": 120,
+        "solverSolved": 115,
+        "layoutsValidated": 120,
+        "storyVariants": 100,
+        "storyRooms": 560,
+        "campaignSteps": 152,
+        "theatrePricePoints": 1030,
+        "theatreShowCases": 10,
+        "currentSimulationProfiles": 3,
+        "allSimulationsCanonicalStart": true,
+        "noInjectedResourcesOrLevels": true
+      },
+      "text_coverage": {
+        "firstIntroductionSteps": 3,
+        "tourSteps": 56,
+        "tourVariants": 6,
+        "lessons": 25,
+        "developmentCopy": 490,
+        "buildingIds": 20,
+        "buildingVariants": 22,
+        "labels": 200,
+        "translationRows": 2554,
+        "conditionalTextCandidates": 10761,
+        "staticHtmlTexts": 388,
+        "applicationFiles": 127,
+        "astNodes": 471095,
+        "functions": 7158,
+        "constants": 9829,
+        "conditionBranches": 19792,
+        "sourceChunks": 218
+      },
+      "minigames": {
+        "status": "PASS",
+        "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "games": 55,
+        "DOCX": 55,
+        "TXT": 55,
+        "story_variants": 100,
+        "DOCX_parts_compared": 1045,
+        "semantics_unchanged": true,
+        "source_line_changes": [],
+        "semantic_hash_method": "normalizes only verified source line provenance",
+        "semantic_catalog_sha256": "f6cb7cbead2d5df6f3c67b1df84787d9e6844d73e8403b0156002efca9eb91bd",
+        "archive_sha256": "42f844af864b4a2f1c63d0e2d8ecccaa154291e0c5147286b50f0536696010b3",
+        "archive_bytes": 2390558,
+        "archive_members": 112,
+        "catalog_sha256": "cd4297f44784fc402746d7b25c2f8c5362d8c995dea6ab49525f141ec65f7e09",
+        "five_canonical_steps": "PASS",
+        "gameplay_or_account_writes": false,
+        "link_index_identical": true
+      },
+      "manual_user_acceptance": "NOT_RUN",
+      "CI_and_deploy": "PENDING_ROOT_OWN_EXACT_PUBLICATION_SOURCE",
+      "earlier_attempt_evidence_preserved": true,
+      "all_heavy_processes_finished": true,
+      "report": "/workspace/work/perf-20261119/r3/artifacts/canonical-artifacts-summary.json",
+      "historical_CODE62_PASS_reference": "previous_cache19_attempt.canonical_artifact_refresh"
+    },
+    "local_QA": {
+      "status": "CODE41_LOCAL_MODEL_ARTIFACTS_PYTHON172_BACKEND178_BOARD7_PASS_FRONTEND_FIRSTFAIL_TWO_TEST_ONLY_FIXES42PASS_OWN_FULL_CI_PENDING",
+      "formal_model_index_integration_review": "PASS",
+      "two_actual_short_whole_JSON_comparisons": "PASS_THREE_INTERVALS_SUPERSEDES_TWO",
+      "late_actual_checkpoint": "PASS_WORKING_HELPERS_BEFORE_PACKING_CACHE20",
+      "full_actual_C5_replay": "PASS_CODE41_LOCAL_NODE_FULL47_885H",
+      "packed_output_old_reader_roundtrip": "PASS_NEW_READER_EXACT_ROUNDTRIP_OLD_READER_FAILS_CLOSED_AND_OLD_WRITER_FENCED",
+      "frozen_clock_case": "PASS_WORKING_QUERY19_13_NATIVE_CASES",
+      "unchanged_missions_program": "PASS_FOUR_UNCHANGED_WORKING_QUERY19_SCENARIOS",
+      "full_frontend_Node": {
+        "status": "FIRST_FULL_RUN_FAIL_TWO_STALE_TEST_EXPECTATIONS_NOT_AGGREGATE_PASS",
+        "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+        "tests": 1585,
+        "pass": 1583,
+        "fail": 2,
+        "exit_code": 1,
+        "wall_seconds": 203.8995156288147,
+        "runner_duration_ms": 203752.865561,
+        "summary": "/workspace/work/perf-20261119/r3/node-frontend-full-summary.json",
+        "log_sha256": "4e4a2a3c7ec6955114f5f3b59bebc702f78a9c44e03896c5d99236eafde1801e",
+        "failures": [
+          "PROD PUT expected body omitted savePackingVersion1",
+          "3600-person codec assertion inspected compressed container without unpacking"
+        ],
+        "test_only_followup": {
+          "status": "PASS",
+          "tests": 42,
+          "duration_ms": 3171.513016,
+          "files": [
+            "tests/harborlight-v18-auth.test.mjs",
+            "tests/harborlight-v32-dev-runtime.test.mjs"
+          ],
+          "log": "/workspace/work/perf-20261119/r3/node-updated-save-contracts.log",
+          "runtime_modified_after_CODE41": false
+        },
+        "aggregate_full_PASS_claimed": false,
+        "next_full_run": "PENDING_OWN_EXACT_PUBLICATION_CI",
+        "watchdog_limit_ms_unchanged": 10000,
+        "watchdog_PASS_ms": 8880.827613,
+        "subsequent_own_publication_CI": {
+          "status": "PASS",
+          "run_id": 44559674101,
+          "tests": 1585,
+          "initial_local_FAIL_still_preserved": true,
+          "watchdog_PASS_ms": 5500.521498
+        }
+      },
+      "backend_Node": {
+        "status": "PASS",
+        "tests": 178,
+        "pass": 178,
+        "fail": 0,
+        "runner_duration_ms": 7231.489321,
+        "wall_seconds": 7.331945180892944,
+        "summary": "/workspace/work/perf-20261119/r3/node-backend-board-summary.json"
+      },
+      "board_Node": {
+        "status": "PASS",
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "runner_duration_ms": 76.488961,
+        "wall_seconds": 0.11566567420959473
+      },
+      "frontend_package": {
+        "status": "PASS_LOCAL_STABLE_UNMODIFIED28",
+        "tests": 28,
+        "wall_seconds": 13.875,
+        "closed_entries": 460,
+        "member_cap_unchanged": 512,
+        "byte_cap_unchanged": 134217728,
+        "first_parallel_race_failure_preserved": true,
+        "test_or_source_correction_for_rerun": false,
+        "committed_publication_archive": "PENDING"
+      },
+      "warm_cache_real_HTTP": "PENDING_FINAL_C5",
+      "historical_C4_component_proofs_reference": "previous_cache19_attempt.local_QA",
+      "startup_worker_component_C5": {
+        "status": "PASS_WORKING_QUERY19_NOT_FINAL_FROZEN_CACHE20",
+        "report": "/workspace/work/perf-20261119/c5-paused-clock/summary.json",
+        "native_cases": 13,
+        "unchanged_legacy_missions_scenarios": 4,
+        "Node_replay_tests": 23,
+        "paused_clock_worker_start_and_completion": true,
+        "clock_pumped": false,
+        "timeouts_or_deadlines_changed": false,
+        "fixture_or_legacy_program_changed": false,
+        "actual_account_writes": false,
+        "final_frozen_source_recheck": "PENDING"
+      },
+      "targeted_output_transport_cloud_API": {
+        "status": "PASS_TARGETED_NOT_FULL_REGRESSION",
+        "cloud_tests": 2,
+        "API_tests": 11,
+        "full_backend_regression": "PENDING"
+      },
+      "code_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "full_backend_regression": "PASS178",
+      "targeted_output_transport_frozen_CODE41": {
+        "status": "PASS",
+        "frontend_tests": 7,
+        "backend_tests": 7,
+        "independent_review": "PASS",
+        "proof": "/workspace/work/perf-20261119/provisions-transport-proof.json",
+        "proof_scope": "C4_full_reference_transport_not_full_C5_replay"
+      },
+      "complete_C4_C5_model_comparison": "PASS_AFTER_ONLY_CODEC_UNPACK_AND_KEY_CANONICALIZATION",
+      "original_B94_full_reference": "PENDING_NOT_CLAIMED_PASS",
+      "private_actual_Worker_and_10s_postready": "RUN_COMPLETE_WITH_SEPARATE_DECLARED_GATE_PASS_RAW_FAIL_AND_CONFIRMED_STEADY_REGRESSION",
+      "hosted_actual_admin3_600s_gate": "PENDING_NEW_STANDARD_DEPLOY",
+      "Python_first_partial_run": {
+        "status": "STOPPED_AT_FRONTEND_PACKAGE_FAIL_ARTIFACT_GENERATION_OVERLAP_NOT_CODE_OR_TEST_BUG",
+        "summary": "/workspace/work/perf-20261119/r3/python-ci-checks-summary.json",
+        "earlier_PASS": [
+          {
+            "program": "harborlight-backend-package.test.py",
+            "tests": 2
+          },
+          {
+            "program": "harborlight-gcp-bootstrap.test.py",
+            "tests": 12
+          },
+          {
+            "program": "harborlight-gcp-verify.test.py",
+            "tests": 10
+          }
+        ],
+        "failure": {
+          "program": "harborlight-frontend-bundle.test.py",
+          "tests": 28,
+          "fail": 1,
+          "exit_code": 1,
+          "wall_seconds": 15.161,
+          "log_sha256": "42d04860d9d3266b668c5964742de2d472e8057cd56797e48b4eb7d191dad016",
+          "cause": "setUp captured old minigame catalog sourceCommit62db46b while artifact generation wrote sourceCommit41e0f8e during the test; raw byte change is source provenance only.",
+          "closed_list_460_and_caps_correct": true
+        },
+        "full_Python_PASS_claimed": false,
+        "correction_and_remaining_checks": "NO_CODE_OR_TEST_CORRECTION; UNMODIFIED_STABLE28_PASS_AND_OTHER11_PROGRAMS144PASS; FIRST_PARALLEL_FAILURE_PRESERVED",
+        "production_bug_claimed": false
+      },
+      "Python_safe_independent_checks": {
+        "status": "PASS_ALL172_AFTER_UNMODIFIED_STABLE_BUNDLE_RERUN",
+        "programs": 11,
+        "tests_PASS": 144,
+        "summary": "/workspace/work/perf-20261119/r3/python-safe-independent-summary.json",
+        "stable_unmodified_frontend28": "PASS",
+        "full_172_PASS_claimed": true,
+        "total_programs": 12,
+        "total_tests_PASS": 172,
+        "stable_frontend_tests_PASS": 28,
+        "stable_frontend_wall_seconds": 13.875,
+        "stable_frontend_log": "/workspace/work/perf-20261119/r3/python-frontend-bundle-stable.log",
+        "first_parallel_race_failure_preserved": true,
+        "source_test_or_caps_changed_for_retry": false
+      },
+      "canonical_artifacts": "PASS_FRESH_BUILD_AND_VALIDATE_FROM_CODE41",
+      "private_release_audit_helpers": {
+        "status": "PASS_READINESS_NOT_NEW_PUBLICATION_ACCEPTANCE",
+        "tests": 60,
+        "original_artifact_and_public_bytes_checks_ready": true
+      },
+      "staging_tracking_manual_legal_checks": "PASS"
+    },
+    "CI": {
+      "status": "SUCCESS",
+      "run_id": 44559674101,
+      "source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
+      "workflow_seconds": 1974,
+      "job_seconds": 1969,
+      "Node_PASS": 1770,
+      "Python_PASS": 172,
+      "frontend_Node_PASS": 1585,
+      "backend_Node_PASS": 178,
+      "board_Node_PASS": 7,
+      "browser_programs_PASS": 73,
+      "browser_groups": {
+        "standalone": 1,
+        "main": 54,
+        "cloud": 18
+      },
+      "step_status_counts": {
+        "success": 36,
+        "skipped": 2,
+        "failure": 0
+      },
+      "two_skips_conditional_failure_diagnostics_only": true,
+      "not_cancelled": true,
+      "summary": "/workspace/work/perf-20261119/r3/release/CI-summary.json",
+      "full_log_bytes": 595137,
+      "full_log_sha256": "58effe587736f8df0c80f62a1ece17a28fa9fb731b9e88bd20c2063a5c8ca121",
+      "watchdog_limit_ms_unchanged": 10000,
+      "watchdog_PASS_ms": 5500.521498,
+      "final_source_program_crosschecks": "PASS",
+      "does_not_override_quality_hold": true
+    },
+    "Pages": {
+      "status": "SUCCESS",
+      "run_id": 44559673862,
+      "source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
+      "workflow_seconds": 34,
+      "summary": "/workspace/work/perf-20261119/r3/release/Pages-summary.json",
+      "public_byte_audit": {
+        "status": "PASS",
+        "report": "/workspace/work/perf-20261119/r3/release/pages-public-byte-audit.json",
+        "files": 459,
+        "bytes": 96507555,
+        "normal_TLS": true,
+        "warm_browser_cache_acceptance_claimed": false
+      },
+      "separate_workbook_audit": {
+        "status": "PASS",
+        "report": "/workspace/work/perf-20261119/r3/release/pages-workbook-byte-audit.json",
+        "workbooks": 2,
+        "normal_TLS": true,
+        "separate_from_closed_frontend_manifest": true
+      }
+    },
+    "DEV": {
+      "status": "PAGES_AND_OWN_CI_SUCCESS_QUALITY_HOLD_STEADY_REGRESSION_NOT_ACCEPTED",
+      "source_sha": "3d0c8f001815b4dd52efcf4e43ef75ddb77e732a",
+      "manual_user_acceptance": "NOT_RUN",
+      "application_source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8"
+    },
+    "DEV_tag": {
+      "status": "NOT_CREATED_QUALITY_HOLD",
+      "name": null
+    },
+    "PREPROD": {
+      "status": "NOT_DISPATCHED_QUALITY_HOLD",
+      "workflow": "google-cloud-dev.yml",
+      "project": "harborlight-dev",
+      "url": "https://harborlight-dev.web.app",
+      "source_sha": null,
+      "run_id": null,
+      "attempt": null,
+      "accepted": false,
+      "receipt_verified": false,
+      "original_artifacts_verified": false,
+      "existing_account_UI_verified": false,
+      "account_preservation_verified": false,
+      "tag_created": false,
+      "tag_verified": false,
+      "additional_required_admin3_UI_gate": {
+        "status": "IMPLEMENTED_CONFIGURATION_TESTS_PASS_NOT_RUN_ON_NEW_DEPLOYMENT",
+        "selected_account_only": "admin3",
+        "uid": "dev-admin3",
+        "startup_timeout_ms": 600000,
+        "admin1_default_timeout_ms_unchanged": 30000,
+        "if_start_exceeds_30s_require_observed_Worker": true,
+        "heartbeat_required_while_replay": true,
+        "max_heartbeat_gap_limit_ms": 1500,
+        "all_browser_writes_blocked": true,
+        "same_standard_job_timeout_minutes": 25,
+        "receipt_schema_condition_count_unchanged": 4,
+        "configuration_unit_tests": {
+          "status": "PASS",
+          "tests": 12
+        },
+        "actual_existing_admin3_render": "PENDING"
+      }
+    },
+    "manual_user_acceptance": "C5_CACHE20_DEV_AND_PREPROD_NOT_RUN",
+    "manual_DEV_acceptance": {
+      "status": "NOT_RUN",
+      "version": "0.15.2.3",
+      "cache": "frontend-v32-20",
+      "previous_pass_only_reference": "previous_cache18_attempt.manual_DEV_acceptance"
+    },
+    "manual_PREPROD_acceptance": "NOT_RUN",
+    "game_rules_changes": false,
+    "accepted_artwork_changes": false,
+    "account_or_progress_reset": false,
+    "PROD_DNS": "NO_ACTION",
+    "full_actual_C5_replay": {
+      "status": "PASS_FULL_FIXED_TARGET_MODEL_EXACT_C4_AND_TRANSPORT_UNDER_LIMIT_NOT_NATIVE_UI_ACCEPTANCE",
+      "report": "/workspace/work/perf-20261119/admin3-candidate5-full-equivalence.json",
+      "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "execution": "LOCAL_NODE",
+      "simulated_hours": 47.88518666666667,
+      "fixed_target": 1795113034733,
+      "result_population": 135,
+      "exit_code": 0,
+      "wall_ms": 366650.233052,
+      "CPU_ms": 373478.478,
+      "C4_wall_ms": 2200644.6143460004,
+      "C4_CPU_ms": 2133560.808,
+      "packed_bytes": 345429,
+      "packed_sha256": "755c12e30fd669f5d2900b1767dc69db7f899c23a675ebbb98166c8f334dedd6",
+      "per_world_limit_bytes_unchanged": 700000,
+      "within_limit": true,
+      "comparison_method": "Only unpack compressed codec sections in both complete outputs; no normalize, tick, field exclusion or numeric tolerance. Sort object keys and preserve arrays.",
+      "compared_decompressed_bytes": 849981,
+      "complete_C4_C5_model_exact": true,
+      "canonical_C4_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+      "canonical_C5_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+      "earlier_C4_transport_probe_bytes": 351861,
+      "different_compression_input_key_order_only": true,
+      "original_B94_full_reference": "PENDING_SIGSTOP_NOT_CLAIMED_PASS",
+      "actual_island_or_clock_writes": false,
+      "native_private_actual_Worker": "STARTUP600S_AND_MAX_GAP1500_GATES_PASS_SEPARATE_RAW_HARNESS_FAIL_AND_STEADY_REGRESSION",
+      "post_ready_10s_normal_1x": "RAW_HARNESS_FAIL_DIAGNOSTIC27_BEATS_BELOW30_MAX_GAP1203_3_WITHIN1500; OFFICIAL_MODEL_STEADY_REGRESSION3_25X",
+      "hosted_actual_admin3_600s_gate": "PENDING_NEW_STANDARD_DEPLOY",
+      "local_Node_time_not_a_browser_gate_acceptance": true
+    },
+    "previous_cache19_attempt_reference": "previous_cache19_attempt",
+    "previous_cache18_attempt_reference": "previous_cache18_attempt",
+    "private_actual_C5_UI": {
+      "status": "DECLARED_STARTUP_AND_MAX_GAP_GATES_PASS_STEADY_REGRESSION_REQUIRES_REVIEW",
+      "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+      "raw_harness_status": "FAIL_OR_TIMEOUT",
+      "raw_harness_failure": "Additional diagnostic minimum30 heartbeats in10seconds; actual27. Original raw result retained unchanged.",
+      "mode": "actual-private-copy-loopback-real-frontend-and-native-worker",
+      "full_fixed_target_hours": 47.88518666666667,
+      "worker_ms": 308679.8999999985,
+      "UI_ready_observed_wall_seconds": 316.58008471599896,
+      "startup_600_seconds_gate": true,
+      "during_replay": {
+        "heartbeats": 3081,
+        "max_gap_ms": 234.39999999850988
+      },
+      "post_ready_1x": {
+        "seconds": 10,
+        "heartbeat_count": 27,
+        "max_gap_ms": 1203.300000000745,
+        "ready": true
+      },
+      "declared_max_gap_1500_ms_gate": true,
+      "errors": [],
+      "unexpected_requests": [],
+      "actual_island_or_clock_writes": false,
+      "all_external_network_blocked": true,
+      "strict_official_node_gold_comparison": "NOT_APPLICABLE_LOOPBACK_DECODER_USES_upgradeRules_false_AND_DROPS_OPTIONAL_NAMES; officialfullNodeexactproofisseparate",
+      "steady_model_followup": "Confirmed C5 3.25x slower than frozen C4 for10sequential1s ticks; entire decoded final state exact. See admin3-candidate5-steady-equivalence.json.",
+      "report": "/workspace/work/perf-20261119/admin3-candidate5-private-ui-responsiveness.json"
+    },
+    "official_steady_C5_vs_C4": {
+      "status": "PASS",
+      "method": "Same saved C4 full input, official restore true in both;10 sequential1s ticks; whole decoded model canonicalJSON without exclusions.",
+      "exact": true,
+      "decoded_bytes": 850403,
+      "c4": {
+        "status": "COMPLETE",
+        "label": "candidate4-steady",
+        "input_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "initial_anchor": 1795113034733,
+        "final_target": 1795113044733,
+        "ticks": 10,
+        "step_ms": 1000,
+        "restore_ms": 1092.916793,
+        "each_tick_ms": [
+          120.45447600000011,
+          73.16441899999995,
+          62.72004900000002,
+          74.57132899999988,
+          62.29789000000005,
+          157.68721600000003,
+          60.81439499999988,
+          102.8370030000001,
+          59.78937399999995,
+          108.45534399999997
+        ],
+        "sum_tick_ms": 882.7914949999999,
+        "max_tick_ms": 157.68721600000003,
+        "cpu_ms": 1153.261,
+        "decoded_bytes": 850403,
+        "decoded_sha256": "e3a6ca606c088c8588e052006dd107a24fbb45a683e8d5357c62da6e708eb8a4",
+        "input_policy": "same C4 full saved world, official upgradeRules:true restore in both candidates",
+        "runtimeOnline": true,
+        "actual_account_or_clock_writes": false
+      },
+      "c5": {
+        "status": "COMPLETE",
+        "label": "candidate5-steady",
+        "input_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
+        "initial_anchor": 1795113034733,
+        "final_target": 1795113044733,
+        "ticks": 10,
+        "step_ms": 1000,
+        "restore_ms": 789.611408,
+        "each_tick_ms": [
+          393.629044,
+          354.49159899999995,
+          345.147786,
+          304.3874680000001,
+          211.9054729999998,
+          248.82355499999994,
+          213.311643,
+          227.63655999999992,
+          242.5785820000001,
+          327.851279
+        ],
+        "sum_tick_ms": 2869.762989,
+        "max_tick_ms": 393.629044,
+        "cpu_ms": 3460.236,
+        "decoded_bytes": 850403,
+        "decoded_sha256": "e3a6ca606c088c8588e052006dd107a24fbb45a683e8d5357c62da6e708eb8a4",
+        "input_policy": "same C4 full saved world, official upgradeRules:true restore in both candidates",
+        "runtimeOnline": true,
+        "actual_account_or_clock_writes": false
+      },
+      "actual_island_or_clock_writes": false,
+      "report": "/workspace/work/perf-20261119/admin3-candidate5-steady-equivalence.json"
+    },
+    "quality_hold": {
+      "status": "CONFIRMED_MATERIAL_STEADY_TICK_REGRESSION",
+      "C5_10_ticks_ms": 2869.762989,
+      "C4_10_ticks_ms": 882.7914949999999,
+      "ratio_approx": 3.25,
+      "exact_complete_final_model_equal": true,
+      "raw_private_harness_FAIL_preserved": true,
+      "taggable": false,
+      "GCP_dispatch_allowed": false,
+      "CI_green_would_not_close_quality_hold": true
+    }
+  },
   "previous_cache19_attempt": {
     "schema_version": 1,
     "as_of": "2026-11-19",
@@ -2240,35 +3472,89 @@
   "accepted_artwork_changes": false,
   "account_or_progress_reset": false,
   "PROD_DNS": "NO_ACTION",
-  "full_actual_C5_replay": {
-    "status": "PASS_FULL_FIXED_TARGET_MODEL_EXACT_C4_AND_TRANSPORT_UNDER_LIMIT_NOT_NATIVE_UI_ACCEPTANCE",
-    "report": "/workspace/work/perf-20261119/admin3-candidate5-full-equivalence.json",
-    "source_sha": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "execution": "LOCAL_NODE",
-    "simulated_hours": 47.88518666666667,
-    "fixed_target": 1795113034733,
-    "result_population": 135,
-    "exit_code": 0,
-    "wall_ms": 366650.233052,
-    "CPU_ms": 373478.478,
-    "C4_wall_ms": 2200644.6143460004,
-    "C4_CPU_ms": 2133560.808,
-    "packed_bytes": 345429,
-    "packed_sha256": "755c12e30fd669f5d2900b1767dc69db7f899c23a675ebbb98166c8f334dedd6",
-    "per_world_limit_bytes_unchanged": 700000,
-    "within_limit": true,
-    "comparison_method": "Only unpack compressed codec sections in both complete outputs; no normalize, tick, field exclusion or numeric tolerance. Sort object keys and preserve arrays.",
-    "compared_decompressed_bytes": 849981,
-    "complete_C4_C5_model_exact": true,
-    "canonical_C4_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
-    "canonical_C5_sha256": "8f7ad7967394d89275aa1acd2b34c8d4ca31ef21e12d51f7784c071740ff8388",
-    "earlier_C4_transport_probe_bytes": 351861,
-    "different_compression_input_key_order_only": true,
-    "original_B94_full_reference": "PENDING_SIGSTOP_NOT_CLAIMED_PASS",
+  "final_actual_C6_gap0_UI": {
+    "status": "PASS",
+    "candidate": "candidate6-ui-final",
+    "mode": "actual-C4-full-final-state-private-copy-loopback-real-frontend-gap0-steady1x",
+    "normalizer_policy": "loopback upgradeRules:false; officialNode exact proof separate; optional name difference not hidden",
+    "startup_seconds": 3.5890601920000336,
+    "steady_seconds": 10,
+    "steady": {
+      "heartbeat_count": 79,
+      "max_gap_ms": 814.1000000014901,
+      "min_gap_ms": 27.699999999254942,
+      "ready": true,
+      "worker_count": 0,
+      "focused": true,
+      "hidden": false,
+      "observed_wall_ms": 10093.10000000149,
+      "observed_simulation_elapsed_ms": 10093,
+      "long_tasks": [
+        {
+          "start": 5568.10000000149,
+          "duration": 197
+        },
+        {
+          "start": 6568.10000000149,
+          "duration": 167
+        },
+        {
+          "start": 7568.5,
+          "duration": 140
+        },
+        {
+          "start": 8579.199999999255,
+          "duration": 719
+        },
+        {
+          "start": 9386.60000000149,
+          "duration": 54
+        },
+        {
+          "start": 9571.89999999851,
+          "duration": 153
+        },
+        {
+          "start": 10571.60000000149,
+          "duration": 211
+        },
+        {
+          "start": 11571.89999999851,
+          "duration": 132
+        },
+        {
+          "start": 12568.39999999851,
+          "duration": 163
+        },
+        {
+          "start": 13580.199999999255,
+          "duration": 617
+        }
+      ]
+    },
+    "errors": [],
+    "blocked_requests": [],
+    "normal_code_fingerprints": {
+      "harborlight-v1-state.js": "71e12beda25824c9e109581e2d2540e4abc170e513967775eaa2cb88196ea055",
+      "harborlight-v1-provisions.js": "bcb0116a8f61611ab49b893304bc3b449f0105878d61b10d4e3d74af9e2f5c5d",
+      "harborlight-v1-diet-history-index.js": "a54470cf15e738f85c66ae9436c446ea4a81993a2ba611edbbcfbbfd34190437",
+      "harborlight-v1-diet-accumulator.js": "cf985045ff6b8da92057b2997123acfa1960cdbb8b434e34f32b3416ca739072",
+      "harborlight-v1-save-packing.js": "d5927f18acde235ffede78913223b1ecb9265aebc31176c665af4a4c0726f852",
+      "harborlight-v1-play.js": "2be3e857782d113af30f65cc231f35ac203269b1c50e9deb810534b1ea1e99ea",
+      "harborlight-v1-missions.js": "1c178f43c290cbb589236ee09e5941b0ec30a3080d5b0cc30a4c3d9c5e40cfc4",
+      "harborlight-v1-advisor.js": "836a283d3a99bc1397b554055bed2e4bc4533420773f7841080fda246c8fdc9e",
+      "harborlight-v1-logistics.js": "e3ae6feed06c9ea6c00571699c3ea3ca17a149a075b6014e2759dcb5e042d232"
+    },
+    "source_fingerprints_stable_through_browser": true,
+    "payload_serialization_during_measurement": false,
+    "all_external_network_and_writes_blocked": true,
     "actual_island_or_clock_writes": false,
-    "native_private_actual_Worker": "NOT_RUN",
-    "post_ready_10s_normal_1x": "NOT_RUN",
-    "hosted_actual_admin3_600s_gate": "PENDING_NEW_STANDARD_DEPLOY",
-    "local_Node_time_not_a_browser_gate_acceptance": true
+    "clock_progression": "Date.now initially fixed to snapshot target; then progresses at real1x for local copy only",
+    "scope_note": "Final C6 graph21 with adaptive whole-tick history scope, ordered resourceRates and sidebar missionHeadline. Loopback decoder identity differs from official Node; optional names are not excluded or rewritten for comparison. Official full47.885h Node C6 remains pending.",
+    "older_cases": "C5 raw27<30 failure and C6 initial4017ms gap failure preserved; final PASS uses new fingerprinted code.",
+    "report": "/workspace/work/perf-20261119/admin3-candidate6-final-steady-ui.json",
+    "frozen_code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "full_official_C6_model_acceptance_claimed": false,
+    "older_C6_max_gap4017_FAIL_and_C5_raw27_FAIL_preserved": true
   }
 }

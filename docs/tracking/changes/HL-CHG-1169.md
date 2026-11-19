@@ -9,7 +9,7 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented` |
-| DEV | `FROZEN_MODEL_AND_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` |
+| DEV | `C6_FROZEN_LOCAL_TESTS_AND_CANONICAL_ARTIFACTS_PASS_OWN_CI_PENDING` |
 | CI | `historical_cache19_failed_new_cache20_pending` |
 | PRE-PROD | `authorized_after_verified_DEV_and_exact_source_CI_for_reported_live_bug` |
 | PROD | `postponed_by_user` |
@@ -42,7 +42,7 @@ Data pierwotnej wiadomości: 2026-11-19. Europe/Warsaw
 - **Scenariusze automatyczne:** [tests/harborlight-simulation-transfer.test.mjs](../../../tests/harborlight-simulation-transfer.test.mjs), [tests/harborlight-resident-read-scopes.test.mjs](../../../tests/harborlight-resident-read-scopes.test.mjs), [tests/harborlight-startup-replay.test.mjs](../../../tests/harborlight-startup-replay.test.mjs), [tests/harborlight-startup-replay-v32-smoke.py](../../../tests/harborlight-startup-replay-v32-smoke.py), [tests/harborlight-hosted-v18-smoke.py](../../../tests/harborlight-hosted-v18-smoke.py), [tests/harborlight-runtime-config.test.py](../../../tests/harborlight-runtime-config.test.py)
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
-0.15.2.3/cache20 źródło41e0f8e: pełne47,885h admin3 w366650ms i całkowity model identyczny z C4; zapis345429B. Kanoniczne artefakty i rzeczywiste24/24/72hPASS. Lokalny pierwszy frontend1583/1585; dwie stare asercje kontraktu poprawiono wyłącznie w testach, kierunkowe42PASS. Backend178+planszówka7PASS. WłasnyCI/Pages i nowyPRE-PROD PENDING.
+C6/0.15.2.4/cache21 e394:1599front+178backend+7board,173Python i świeże arkusze/kanoniczne24/24/72hPASS. Rzeczywisty ciężki ekran10s1×:79heartbeatów/max814ms/0błędów. Oficjalny pełnyC6 i własnyCI/Pages/PRE-PROD PENDING; C5SUCCESSCI pozostaje QUALITYHOLD.
 
 ## Relacje
 

@@ -1,10 +1,10 @@
 {
   "as_of": "2026-11-19",
   "timezone": "Europe/Warsaw",
-  "version": "0.15.2.3",
-  "cache": "frontend-v32-20",
-  "status": "LOCAL_C5_FULL_MODEL_AND_PACKING_PASS_ACTUAL_WORKER_STEADY_AND_RELEASE_PENDING",
-  "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+  "version": "0.15.2.4",
+  "cache": "frontend-v32-21",
+  "status": "LOCAL_C6_STEADY_PASS_CURRENT_FULL_OFFLINE_AND_OWN_RELEASE_PENDING",
+  "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
   "publication_source": null,
   "diagnosis": {
     "account": "admin3",
@@ -43,7 +43,9 @@
     "model": "Scoped derived quotes and immutable catalog indexes; bounded per-advance memo, exact indexed history pruning and certified integer diet-penalty decisions with the original fold as fallback. No event subdivision, skipped elapsed time, food arithmetic or persistent model cache.",
     "resources_histories_arithmetic_events_and_clock_rules_preserved": true,
     "old_bundle_released_after_worker_dispose": true,
-    "lossless_storage": "Explicit bounded LZW provisions section. Compression representation may differ; full C4/C5 decoded model equality was checked without normalization or excluded fields. Server write compatibility fencing requires own final-source validation."
+    "lossless_storage": "Explicit bounded LZW provisions section. Compression representation may differ; full C4/C5 decoded model equality was checked without normalization or excluded fields. Server write compatibility fencing requires own final-source validation.",
+    "short_tick_policy": "Index histories only when the whole public tick exceeds60seconds. Short ticks retain the exact ordered C4 path and shared diet memo; nested phases inherit the outer policy. No event-time or resource arithmetic change.",
+    "steady_HUD": "Sidebar missionHeadline reads only the fields displayed there; full missionStatus proof/forecast remains on the panel/actions. resourceRates uses one ordered traversal with the same per-resource Float64 addition sequence, replacing flattened histories and repeated per-food scans."
   },
   "actual_private_model_comparisons": {
     "first_hour": {
@@ -190,15 +192,15 @@
     "source_scope": "HISTORICAL_COMPONENT_OBSERVATIONS_C3_C4_NOT_FINAL_C5_RELEASE"
   },
   "model_fingerprints": {
-    "harborlight-v1-state.js": "d7c9303a257e5539653b98be92dda63efb49b951e058233a8bd0b90a2847a194",
-    "harborlight-v1-provisions.js": "efd94da3fb5a1dce3318517013ef09598bba30c14124973a1bed9893faf38998",
-    "harborlight-v1-residents.js": "7c044818a3c3b80f1cb111eae71991642c0ca6bd5782ca53cc7573a6139ad53a",
-    "harborlight-v1-development-logistics.js": "a554c3859f503f3b0efc2f1a93ef2a0138e5b9e2ed399fc53f6113495c83535c",
-    "harborlight-v1-logistics.js": "6e39fbe37c474c1452cc842b8ee04b997814c9899710bba4d16125a7371b55d9",
+    "harborlight-v1-state.js": "71e12beda25824c9e109581e2d2540e4abc170e513967775eaa2cb88196ea055",
+    "harborlight-v1-provisions.js": "bcb0116a8f61611ab49b893304bc3b449f0105878d61b10d4e3d74af9e2f5c5d",
+    "harborlight-v1-residents.js": "87788aafac83710c3ed81847cd4c2c6827b3f54b85cb711a0f555e43216664d2",
+    "harborlight-v1-development-logistics.js": "efb70146f0c4f9fe4a0c478518c433505f8d82e7b3c85d1ccdab7bb39438062a",
+    "harborlight-v1-logistics.js": "e3ae6feed06c9ea6c00571699c3ea3ca17a149a075b6014e2759dcb5e042d232",
     "harborlight-v1-diet-history-index.js": "a54470cf15e738f85c66ae9436c446ea4a81993a2ba611edbbcfbbfd34190437",
     "harborlight-v1-diet-accumulator.js": "cf985045ff6b8da92057b2997123acfa1960cdbb8b434e34f32b3416ca739072",
     "harborlight-v1-save-packing.js": "d5927f18acde235ffede78913223b1ecb9265aebc31176c665af4a4c0726f852",
-    "harborlight-v1-archipelago.js": "5e685ead8a3241d8940707b9bacb513e65e588594e7d5fb5998cfb653faed590"
+    "harborlight-v1-archipelago.js": "84113a2c8f5633a4e023aa46ab798113ca98afeded55df5208a13e72481d1706"
   },
   "release": {
     "CI": "PENDING_OWN_EXACT_C5_SOURCE",
@@ -211,7 +213,7 @@
     "slow_admin3_requires_observed_worker": true,
     "main_thread_heartbeat_max_gap_ms": 1500,
     "PROD_DNS": "NO_ACTION",
-    "private_actual_worker_and_post_ready": "NOT_RUN"
+    "private_actual_worker_and_post_ready": "Historical C5 full private Worker completed; final C6 actual-final-save gap0 steady1x PASS79heartbeats/max814.1ms. Current C6 full official Node and hosted startup+post-ready gates remain pending."
   },
   "data_boundaries": {
     "private_world_payloads_in_repo": false,
@@ -275,16 +277,65 @@
     "harborlight-v1-logistics.js": "54039af2c1b6922c23aec66ce4e355bafc85087cef7f0fe9ae90661a44b1ba35"
   },
   "current_code_verification": {
-    "code_source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
-    "full_private_model_and_packing": "PASS",
-    "private_actual_worker_replay": "NOT_RUN_WAIT_LOCAL_CHECKS_THEN_REMOTE_CI_WINDOW",
-    "post_ready_10s_realtime_1x_heartbeat": "NOT_RUN",
-    "full_frontend_backend_board_node": "PENDING_ROOT_ISOLATED_FINAL_SOURCE_CHECKS",
-    "own_exact_source_CI": "PENDING",
-    "actual_hosted_admin3": "NOT_RUN_PENDING_STANDARD_GCP_WORKFLOW"
+    "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "full_private_model_and_packing": "C6_NOT_RUN_WAIT_OWN_REMOTE_CI_WINDOW; C5 complete full decoded model/packing PASS retained historically",
+    "private_actual_worker_replay": "C5 historical complete308.680s; C6 current official full47.885h Node and hostednativeWorker still pending",
+    "post_ready_10s_realtime_1x_heartbeat": {
+      "status": "PASS",
+      "source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "mode": "actual C4 full finalstate copy, gap0, loopback normalizer; no live account access or writes",
+      "heartbeats": 79,
+      "max_gap_ms": 814.1000000014901,
+      "wall_ms": 10093.10000000149,
+      "simulation_ms": 10093,
+      "source_fingerprints_stable": true,
+      "evidence": "admin3-candidate6-final-steady-ui.json"
+    },
+    "full_frontend_backend_board_node": "C6_IN_PROGRESS_BY_ROOT",
+    "own_exact_source_CI": "C6_NOT_STARTED",
+    "actual_hosted_admin3": "C6_NOT_RUN"
   },
   "canonical_artifacts_C5": {
     "source": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
     "status": "PENDING_FRESH_GENERATION_AND_VALIDATION"
+  },
+  "historical_C5_model_fingerprints": {
+    "harborlight-v1-state.js": "d7c9303a257e5539653b98be92dda63efb49b951e058233a8bd0b90a2847a194",
+    "harborlight-v1-provisions.js": "efd94da3fb5a1dce3318517013ef09598bba30c14124973a1bed9893faf38998",
+    "harborlight-v1-residents.js": "7c044818a3c3b80f1cb111eae71991642c0ca6bd5782ca53cc7573a6139ad53a",
+    "harborlight-v1-development-logistics.js": "a554c3859f503f3b0efc2f1a93ef2a0138e5b9e2ed399fc53f6113495c83535c",
+    "harborlight-v1-logistics.js": "6e39fbe37c474c1452cc842b8ee04b997814c9899710bba4d16125a7371b55d9",
+    "harborlight-v1-diet-history-index.js": "a54470cf15e738f85c66ae9436c446ea4a81993a2ba611edbbcfbbfd34190437",
+    "harborlight-v1-diet-accumulator.js": "cf985045ff6b8da92057b2997123acfa1960cdbb8b434e34f32b3416ca739072",
+    "harborlight-v1-save-packing.js": "d5927f18acde235ffede78913223b1ecb9265aebc31176c665af4a4c0726f852",
+    "harborlight-v1-archipelago.js": "5e685ead8a3241d8940707b9bacb513e65e588594e7d5fb5998cfb653faed590"
+  },
+  "historical_C5_private_UI": {
+    "startup": "PASS declared600s/1500ms gates: Worker308680ms, UIready316.58s,3081heartbeats,maxgap234.4ms",
+    "steady": "Original raw harness failed extra diagnostic count27<30; actual10s maxgap1203.3ms. This failure is retained, never rewritten.",
+    "scope": "Loopback private snapshot, optional-name decoder policy differs from official Node. Full Node C4↔C5 decoded model exact is separate.",
+    "evidence": "admin3-candidate5-private-ui-responsiveness.json"
+  },
+  "C6_steady_failure_and_fix": {
+    "initial_first_run": "FAIL maxgap4017.4ms/4heartbeats over10s; preserved unchanged",
+    "profiled_repeat": "31heartbeats/maxgap1354.6ms; modeltick10.9% vs renderHUD56.57%, dominated by unused construction forecast36.56%, resourceRates7.78% and advisor snapshot6.45%; clock1x confirmed",
+    "final_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "final_actual_UI": "PASS coldstart3.589s;10s real1x79heartbeats,maxgap814.1ms;0errors/0external requests/0actualwrites;9source fingerprints stable pre/post",
+    "final_wall_and_simulation_ms": [
+      10093.10000000149,
+      10093
+    ],
+    "private_UI_exact_gold": "NOT_APPLICABLE_LOOPBACK_UPGRADE_RULES_FALSE_OPTIONAL_NAMES; official Node exact comparisons are separate",
+    "exact_short_model": "Same saved C4 full world, official restoretrue,10×1s ticks; entire decoded final model850403B exactly matches C4, no exclusions. Coherent graph21 proof precedes pure HUD/resourceRates followups.",
+    "evidence": [
+      "admin3-candidate6-steady-equivalence.json",
+      "admin3-candidate6-steady-cpu-summary.json",
+      "admin3-candidate6-steady-ui-investigation.json",
+      "admin3-candidate6-final-steady-ui.json"
+    ]
+  },
+  "canonical_artifacts_C6": {
+    "source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "status": "WAIT_FRESH_EXPORTS_BY_ROOT"
   }
 }

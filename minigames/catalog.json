@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "HARBORLIGHT — wszystkie aktywne minigry i przygody",
   "language": "pl",
-  "sourceCommit": "41e0f8e103e00b18779ecd04645bca21a450cdc8",
+  "sourceCommit": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
   "baseUrl": "https://harborlight-dev.web.app/minigames/",
   "counts": {
     "total": 55,
@@ -19,17 +19,17 @@
     "wcześniejsze makiety HARBORLIGHT"
   ],
   "sourceHashes": {
-    "harborlight-v1-activities.js": "e291bfce56e2374c6b85d51c518cf70ef35be6745b17210873e9cf3b97d135a2",
-    "harborlight-v1-adventure-journey.js": "f572f01315707a2e17313aa1492862b793d3ee9dae56dd374715644c8058a0bf",
+    "harborlight-v1-activities.js": "a1a35ce7fa7e9429acd00652d8400d0c1997a924208d10f7fbc524f1a4777b68",
+    "harborlight-v1-adventure-journey.js": "4feb6695538d435a3344c70ce69fc3261996c31a1ec9f6af7674529ab6d2c053",
     "harborlight-v1-adventure-puzzles.js": "c6f415ce50df8534357cf1d2c698b3ff436fa68f33ef80b918e79740922d7071",
-    "harborlight-v1-adventures.js": "88d971da4bbd64db59c0e7eab830866f5e0cb694956b2dd16cb79feea4bde5c1",
+    "harborlight-v1-adventures.js": "cfe35bbbd994cfa6af6db641b3ac7d91c3116422b5e3489edf3d7601c1a77101",
     "harborlight-v1-expedition-hour.js": "bc3782d63bb2f0d4f396ba63282a75a7c0d2de0a06b80ffefb3eb25d7f24495c",
-    "harborlight-v1-inventory.js": "2eff9c04d70432228395dde9e10a23e36bdba0095f3098abe43c110b99b30b9c",
-    "harborlight-v1-island-puzzles.js": "c954367989a966ec51eff24902a472ce270d1da782c2cae572f9a9a70d2fc8d7",
-    "harborlight-v1-logistics.js": "6e39fbe37c474c1452cc842b8ee04b997814c9899710bba4d16125a7371b55d9",
+    "harborlight-v1-inventory.js": "2f08bfb3f4e8690b674906a43534acace6d5bdf9943305b8a1eb922e695d4d3c",
+    "harborlight-v1-island-puzzles.js": "861f7dfa59daf579c75ae999230c6a8c3356f8d967ab418345d6839d5f5b14b1",
+    "harborlight-v1-logistics.js": "e3ae6feed06c9ea6c00571699c3ea3ca17a149a075b6014e2759dcb5e042d232",
     "harborlight-v1-minigames.js": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
-    "harborlight-v1-original-puzzles.js": "b00823fd99e732f134aa066b2bf5238d1f503476cdce646430da9522656a6943",
-    "harborlight-v1-state.js": "d7c9303a257e5539653b98be92dda63efb49b951e058233a8bd0b90a2847a194",
+    "harborlight-v1-original-puzzles.js": "a48ea425b7d6293336e65013abc9c0b71b524da7e497a6978e4ec4b8489673d9",
+    "harborlight-v1-state.js": "71e12beda25824c9e109581e2d2540e4abc170e513967775eaa2cb88196ea055",
     "harborlight-v1-story-catalog.js": "e2b4c43e345735c8b169e3e34ca130d58f3ea9598f10a54680fb548ddcb43ec4"
   },
   "entries": [
@@ -156,7 +156,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -321,7 +321,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -482,7 +482,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -612,7 +612,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -742,7 +742,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -872,7 +872,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1003,7 +1003,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1133,7 +1133,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1262,7 +1262,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1392,7 +1392,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1522,7 +1522,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1651,7 +1651,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1781,7 +1781,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -1910,7 +1910,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2040,7 +2040,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2170,7 +2170,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2301,7 +2301,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2430,7 +2430,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2561,7 +2561,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2694,7 +2694,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2825,7 +2825,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -2955,7 +2955,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -3088,7 +3088,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -3254,7 +3254,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -3794,7 +3794,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -4308,7 +4308,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -4883,7 +4883,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -5468,7 +5468,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -5982,7 +5982,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -6486,7 +6486,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -7142,7 +7142,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -7656,7 +7656,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -8175,7 +8175,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -8684,7 +8684,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -9274,7 +9274,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -9849,7 +9849,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -10358,7 +10358,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -10882,7 +10882,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -11467,7 +11467,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -12052,7 +12052,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -12637,7 +12637,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -13217,7 +13217,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -13792,7 +13792,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14372,7 +14372,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14465,7 +14465,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14564,7 +14564,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14665,7 +14665,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14768,7 +14768,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14868,7 +14868,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -14967,7 +14967,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -15067,7 +15067,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -15165,7 +15165,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
@@ -15264,7 +15264,7 @@
         },
         {
           "path": "harborlight-v1-state.js",
-          "line": 1129,
+          "line": 1140,
           "description": "Rozliczenie nagród opowieści i konwersja mąki"
         },
         {
