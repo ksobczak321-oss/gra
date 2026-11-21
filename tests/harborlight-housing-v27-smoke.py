@@ -138,6 +138,7 @@ def scenario(browser, language, mobile, completed_house):
     try:
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
         page.wait_for_function('document.getElementById("loading").hidden')
+        dismiss_player_offers(page)
         expect(page.locator('[data-hud="housing"]')).to_contain_text(str(beds))
         open_residents(page, language, mobile)
         expect(page.locator('[data-population-stat="population"]')).to_have_text('48 / 72')
@@ -223,6 +224,7 @@ def no_food_scenario(browser):
     try:
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html').ok
         page.wait_for_function('document.getElementById("loading").hidden')
+        dismiss_player_offers(page)
         open_residents(page, 'pl', False)
         assert_meals(page, 360, fed=False)
         expect(page.locator('[data-population-stat="housing"]')).to_have_text('36')

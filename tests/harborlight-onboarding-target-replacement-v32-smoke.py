@@ -47,7 +47,7 @@ with sync_playwright() as p:
         page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
         expect(page.locator('[data-island-onboarding]')).to_have_attribute('data-onboarding-step','category-administration')
-        selector='.mobile-bottom-dock' if touch else '.dock-tabs'
+        selector='[data-mobile-category="administration"]' if touch else '#hit-category-administration'
         follows_real_target(page,selector)
         before=page.evaluate(SNAPSHOT)
         page.locator(selector).evaluate('''target=>{const replacement=target.cloneNode(true);target.replaceWith(replacement);window.dispatchEvent(new Event('resize'))}''')

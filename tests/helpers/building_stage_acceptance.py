@@ -41,7 +41,24 @@ def frame(manifest, identity, level):
 
 def assert_art(node, manifest, identity, level):
     stage,src,view = frame(manifest,identity,level)
-    assert node.evaluate('n=>getComputedStyle(n).backgroundImage') == 'none', (identity,'Old map background leaks through transparent upgraded art')
+    # A mobile dock rebuild can detach the resolved handle before evaluate().
+    # Detached nodes have an empty computed style; reacquire only that stale
+    # handle, at most three times. A live wrong background is never retried.
+    for _ in range(3):
+        background = node.evaluate('''n=>({
+          computed:getComputedStyle(n).backgroundImage,connected:n.isConnected,
+          inlineStyle:n.getAttribute('style'),className:n.className,
+          signature:n.dataset.buildingStageSignature,source:n.dataset.mapArtSource,
+          stage:n.dataset.buildingStage,identity:n.dataset.mapBuildingArt,
+          href:n.querySelector('svg image')?.getAttribute('href'),
+          width:innerWidth,height:innerHeight,
+          category:n.closest('[data-building-dock]')?.dataset.buildingDock ||
+            document.querySelector('[data-mobile-category][aria-pressed="true"]')?.dataset.mobileCategory
+        })''')
+        if background['connected']:
+            break
+    assert background['connected'], (identity,'Artwork detached during all three bounded reads',background)
+    assert background['computed'] == 'none', (identity,'Old map background leaks through transparent upgraded art',background)
     assert node.get_attribute('data-map-art-source') == 'building-stages', identity
     assert node.get_attribute('data-building-stage') == str(stage), (identity,level)
     assert node.locator('svg').get_attribute('preserveAspectRatio') == 'xMidYMid meet', identity

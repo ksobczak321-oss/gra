@@ -16,6 +16,7 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -152,6 +153,7 @@ def run(api_enabled):
         try:
             page.goto(BASE + '/harborlight-v1-layered.html', wait_until='networkidle')
             page.wait_for_function('document.getElementById("loading").hidden', timeout=30000)
+            dismiss_player_offers(page)
             assert reads and reads[0] == original, 'Normal API must read the exact pre-existing legacy save'
             assert page.evaluate('typeof window.__HARBORLIGHT_DEV_FIXTURE__ === "undefined" && typeof window.__HARBORLIGHT_DEV_STATE__ === "undefined" && typeof window.__HARBORLIGHT_SET_DEV_STATE__ === "undefined"'), 'Hosted test bypass must remain unavailable'
             actual = page.locator('.world-hotspot[id^="hit-world-"]').evaluate_all('nodes=>nodes.map(n=>n.id.slice(10))')
@@ -205,6 +207,7 @@ def run(api_enabled):
             read_count = len(reads)
             page.reload(wait_until='networkidle')
             page.wait_for_function('document.getElementById("loading").hidden', timeout=30000)
+            dismiss_player_offers(page)
             assert len(reads) > read_count and reads[-1].get('ruleset') == 32, 'Reload must use the migrated cloud save'
             assert reads[-1]['resources'] == saved['resources'], 'Reload replaced the cloud inventory'
             assert [(p['id'], p['personUid'], p['name'], p.get('workplace')) for p in reads[-1]['residents']] == after_people, 'Reload changed the persisted resident identities'

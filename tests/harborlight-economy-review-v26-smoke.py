@@ -13,7 +13,7 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -74,6 +74,7 @@ def scenario(browser, language, mobile, forced):
     try:
         assert page.goto(ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
         page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__ !== undefined && document.getElementById("loading").hidden')
+        dismiss_player_offers(page)
         for building in PRODUCERS:
             face = page.locator('#hit-world-%s [data-production-penalty="%s"]' % (building, building))
             expect(face).to_have_count(1)

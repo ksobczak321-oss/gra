@@ -12,6 +12,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('missions_v27_cloud', ROOT / 'tests/harborlight-dev-game-smoke.py')
@@ -60,6 +61,7 @@ def open_game(browser, language, mobile):
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)
     assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('document.getElementById("loading").hidden')
+    dismiss_player_offers(page)
     open_missions(page, mobile)
     return context, page
 

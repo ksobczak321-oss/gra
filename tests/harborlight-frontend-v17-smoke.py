@@ -16,7 +16,7 @@ import re
 import threading
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND_ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', ROOT)).resolve()
@@ -61,6 +61,7 @@ def visit(browser, width=1366, height=768, language='pl', init_script=None):
     assert page.goto(URL).ok
     page.wait_for_function('document.getElementById("loading").hidden')
     page.wait_for_selector('[data-hud="working"]', state='attached')
+    dismiss_player_offers(page)
     return context, page
 
 
@@ -82,6 +83,7 @@ def install_save(page, state):
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden')
     page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__ !== undefined')
+    dismiss_player_offers(page)
 
 
 def fixture(page, mode='starter'):

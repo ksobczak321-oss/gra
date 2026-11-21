@@ -89,6 +89,7 @@ with sync_playwright() as playwright:
     context.route('**/*', asset)
     page = context.new_page()
     page.goto(f'https://{PAGES}/gra/harborlight-v1-layered.html?profile=new-player', wait_until='networkidle')
+    page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
     assert '18 / 36' in page.locator('body').inner_text()
     assert 'Twoja wyspa, Twoje decyzje' in page.locator('body').inner_text()
     assert page.locator('[data-dev-preview]').count() == 0

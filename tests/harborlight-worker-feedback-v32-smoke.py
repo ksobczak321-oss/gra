@@ -7,7 +7,7 @@ import json,mimetypes,os,subprocess,sys
 from pathlib import Path
 from urllib.parse import unquote,urlsplit
 from playwright.sync_api import sync_playwright
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import dismiss_player_offers, acknowledge_daily_offer
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',SOURCE)).resolve()
 BASE='http://127.0.0.1:47448'
@@ -34,6 +34,8 @@ with sync_playwright() as p:
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
   page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
+  page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+  dismiss_player_offers(page)
   print('Loaded',width,flush=True)
   for building in ['farm','warehouse','dairy']:
    print('Checking',width,building,flush=True)

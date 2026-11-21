@@ -7,6 +7,7 @@ import subprocess
 from urllib.parse import unquote,urlsplit
 
 from playwright.sync_api import expect,sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',SOURCE)).resolve()
@@ -69,6 +70,8 @@ with sync_playwright() as p:
         page.on('response',lambda r:failed.append((r.status,r.url)) if r.status>=400 else None)
         page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture['state']))
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
+        page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+        dismiss_player_offers(page)
         before=page.evaluate('window.__HARBORLIGHT_DEV_STATE__.residents.map(p=>({id:p.id,uid:p.personUid,name:p.name}))')
         assert len(before)==100,{'actual':len(before),'fixture':len(fixture['state']['residents']),'last':before[-4:]}
         if mobile:

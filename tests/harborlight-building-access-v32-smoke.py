@@ -7,7 +7,7 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import dismiss_player_offers, acknowledge_daily_offer
 
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -44,6 +44,8 @@ with sync_playwright() as p:
             errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
             page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(state))
             page.goto(BASE+'/harborlight-v1-layered.html',wait_until='networkidle')
+            page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+            dismiss_player_offers(page)
             page.locator('#hit-world-bakery').wait_for(state='attached')
             # Normal food consumption keeps running; compare command-owned stock,
             # assignments, construction and completed/claimed lesson history.

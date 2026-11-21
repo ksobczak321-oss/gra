@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 from urllib.parse import unquote, urlsplit
 from playwright.sync_api import sync_playwright
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import dismiss_player_offers, acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -40,6 +40,8 @@ with sync_playwright() as playwright:
         errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
         page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
         page.goto(BASE+'/harborlight-v1-layered.html',wait_until='networkidle')
+        page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+        dismiss_player_offers(page)
         for building in BUILDINGS:
             page.locator('#hit-world-'+building).evaluate('(e)=>e.click()')
             panel=page.locator('[data-v32-panel="'+building+'"]');panel.wait_for(state='visible')

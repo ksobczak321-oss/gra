@@ -13,7 +13,7 @@ import threading
 
 from playwright.sync_api import expect, sync_playwright
 from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 ROOT = Path(__file__).resolve().parent.parent
 FRONTEND_ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', ROOT))
@@ -42,6 +42,7 @@ def open_page(browser, width=1366, height=768):
     install_legacy_practical_course(page)
     assert page.goto(URL).ok
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
+    dismiss_player_offers(page)
     return context, page
 
 
@@ -91,6 +92,7 @@ def install(page, state):
     page.add_init_script('window.__HARBORLIGHT_DEV_FIXTURE__=' + json.dumps(state, ensure_ascii=False))
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden && !!window.__HARBORLIGHT_DEV_STATE__')
+    dismiss_player_offers(page)
     if not state.get('tutorial', {}).get('autoOpenDisabled', False):
         request_practical_guidance(page)
 
