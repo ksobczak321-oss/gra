@@ -3,6 +3,15 @@
 **Zamrożony CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`; lokalne testy, świeże artefakty i pakiet 28 mają PASS. Publikacja pozostaje PENDING.** PUB, push, własny CI 79, Pages, tagi i standardowy PRE-PROD wymagają własnych dowodów. Poprzednie odebrane DEV/PRE-PROD nadal mają 0.15.3.0/cache22/fc95, z zachowaną historią jawnie potwierdzonego restartu właściciela admin1. Obowiązuje wcześniejsza autoryzacja standardowego PRE-PROD po zweryfikowanym DEV; bez resetu, haseł, PROD lub DNS. [Dokładne dowody](ADVISOR-TASKS-EVIDENCE.json).
 
 
+
+## Druga publikacja cache23 — CI FAILURE na katalogu testu
+
+PUB `32d7d189a482b2001761c7a1c4dfb4a2b69c31fe` ma **CI44940453474 FAILURE 9 min 10 s**. Pełne 1896 Node, 173 Python i osobna przeglądarka minigier przeszły. Z 60 głównych programów przeszło **pierwszych siedem**: cache, wydajność, etapy budynków, redakcja, Doradca UI, układ i Worker. Ósmy `guidance-smoke` zakończył się **przed uruchomieniem przeglądarki**: domyślny prywatny katalog `/workspace` nie był zapisywalny na runnerze GitHub. Pozostałych **52 głównych i 18 chmurowych programów nie uruchomiono**. To nie jest pełny PASS głównych programów lub CI.
+
+Poprawka dotyczy wyłącznie portowalnej domyślnej ścieżki wyjścia testu i importu `tempfile`; pełny program guidance z nieustawionym `HARBORLIGHT_TEST_OUTPUT` ma lokalne **5/5 kontekstów PASS**, z raportem i15 zrzutami w domyślnym `/tmp`. Asercje pozostały bez zmian. Ten wynik naprawy nie jest pełnym PASS CI; nowe źródło wymaga własnego CI. Runtime, CODE ace6 i kanoniczne artefakty pozostały niezmienione.
+
+Pages44940453447 ma osobny **SUCCESS 29 s**: 466 plików treści /96 673 009 bajtów przez normalny TLS i oba XLSX zweryfikowane osobno dla własnego 32d. Nowy PUB3, własny CI i Pages są PENDING. Brak nowego tagu DEV/PRE-PROD, GCP i bazowej kontroli kont. Wcześniejsze 4f CI FAIL i 6e7 export FAIL pozostają zachowane; ace6 canonical PASS nie jest ich pełnym odbiorem. Odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22;195 ręcznych przypadków NOT RUN.
+
 ## Pierwsza publikacja cache23 — CI FAILURE, nowe źródło oczekuje
 
 PUB `4f873f489ca7332dfa32647c78cd3debe19d952a` ma własny **CI44939109067 FAILURE 8 min 38 s**. 1896 Node, 173 Python, master, redakcyjny Excel, minigry i osobny program minigier przeszły. Pierwszy główny program `building-cache` zatrzymał się przed uruchomieniem przeglądarki: aktualna fikstura oczekiwała cache22 wobec poprawnego runtime23. **60 głównych i 18 chmurowych programów nie wykonano**; nie deklarujemy pełnego CI PASS. Rzeczywiste raporty i logi pozostają zachowane.

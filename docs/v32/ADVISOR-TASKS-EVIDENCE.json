@@ -3,7 +3,7 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.3.1",
   "cache": "frontend-v32-23",
-  "status": "PUB1_OWN_CI_FAILED_CURRENT_FIXTURES_CORRECTED_NEW_PUBLICATION_PENDING",
+  "status": "PUB2_OWN_CI_FAILED_REMEDY_LOCAL_FIVE_CONTEXTS_PASS_NEW_PUBLICATION_PENDING",
   "authorization": {
     "kind": "current_user_advisor_reorganization_and_real_time_planner",
     "scope": "DEV_GIT_OWN_CI_PAGES_THEN_STANDARD_PREPROD",
@@ -26,7 +26,7 @@
     "new_release_must_have_own_account_audit": true
   },
   "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-  "publication_source_sha": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+  "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
   "implementation": {
     "status": "FROZEN_CODE_LOCAL_VERIFIED_CANONICAL_AND_POST_EXPORT_BUNDLE_PASS",
     "presence_of_working_files_is_not_acceptance": true,
@@ -939,56 +939,56 @@
     }
   },
   "CI": {
-    "run": 44939109067,
+    "run": 44940453474,
     "attempt": 1,
-    "source": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+    "source": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
     "kind": "ci",
     "event": "push",
     "status": "completed",
     "conclusion": "failure",
-    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44939109067",
-    "created_at": "2026-11-21T19:06:10Z",
-    "completed_at": "2026-11-21T19:14:48Z",
-    "workflow_seconds": 518.0,
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+    "created_at": "2026-11-21T19:20:56Z",
+    "completed_at": "2026-11-21T19:30:06Z",
+    "workflow_seconds": 550.0,
     "jobs": [
       {
-        "id": 136952173660,
+        "id": 136956261143,
         "name": "validate",
         "status": "completed",
         "conclusion": "failure",
-        "started_at": "2026-11-21T19:06:13Z",
-        "completed_at": "2026-11-21T19:14:48Z",
-        "seconds": 515.0,
+        "started_at": "2026-11-21T19:20:59Z",
+        "completed_at": "2026-11-21T19:30:06Z",
+        "seconds": 547.0,
         "steps": [
           {
             "name": "Set up job",
             "number": 1,
             "conclusion": "success",
-            "seconds": 0.0
+            "seconds": 1.0
           },
           {
             "name": "Checkout exact source commit",
             "number": 2,
             "conclusion": "success",
-            "seconds": 4.0
+            "seconds": 5.0
           },
           {
             "name": "Setup Node",
             "number": 3,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 4.0
           },
           {
             "name": "Setup Python",
             "number": 4,
             "conclusion": "success",
-            "seconds": 0.0
+            "seconds": 1.0
           },
           {
             "name": "Test game rules and release promotion gates",
             "number": 5,
             "conclusion": "success",
-            "seconds": 187.0
+            "seconds": 146.0
           },
           {
             "name": "Verify canonical API trade rules",
@@ -1006,7 +1006,7 @@
             "name": "Test isolated backend image payload",
             "number": 8,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 0.0
           },
           {
             "name": "Test cloud bootstrap safety",
@@ -1024,13 +1024,13 @@
             "name": "Test deterministic frontend release bundle",
             "number": 11,
             "conclusion": "success",
-            "seconds": 12.0
+            "seconds": 11.0
           },
           {
             "name": "Test Firebase Hosting preparation safety",
             "number": 12,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 0.0
           },
           {
             "name": "Test permanent DEV account preparation safety",
@@ -1060,7 +1060,7 @@
             "name": "Test monthly billing alert configuration safety",
             "number": 17,
             "conclusion": "success",
-            "seconds": 0.0
+            "seconds": 1.0
           },
           {
             "name": "Test dry-run tracking issue import and idempotency",
@@ -1072,7 +1072,7 @@
             "name": "Verify generated change cards and their index",
             "number": 19,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 0.0
           },
           {
             "name": "Verify generated manual QA checklist and case index",
@@ -1096,7 +1096,7 @@
             "name": "Verify historical Excel 14 against accepted 0.14.0.0 source",
             "number": 23,
             "conclusion": "success",
-            "seconds": 18.0
+            "seconds": 16.0
           },
           {
             "name": "Verify all lossless building sprites against approved atlases",
@@ -1114,19 +1114,19 @@
             "name": "Verify every standalone minigame and its Word and TXT instructions",
             "number": 26,
             "conclusion": "success",
-            "seconds": 8.0
+            "seconds": 7.0
           },
           {
             "name": "Verify full current master Excel and preserved historical rules",
             "number": 27,
             "conclusion": "success",
-            "seconds": 52.0
+            "seconds": 39.0
           },
           {
             "name": "Install browser acceptance dependencies",
             "number": 28,
             "conclusion": "success",
-            "seconds": 20.0
+            "seconds": 29.0
           },
           {
             "name": "Build the frontend release being validated",
@@ -1138,13 +1138,13 @@
             "name": "Test every standalone minigame and download in Chromium",
             "number": 30,
             "conclusion": "success",
-            "seconds": 192.0
+            "seconds": 176.0
           },
           {
             "name": "Test packaged game and both tutorial programs in Chromium",
             "number": 31,
             "conclusion": "failure",
-            "seconds": 0.0
+            "seconds": 91.0
           },
           {
             "name": "Test packaged DEV login and cloud saves in Chromium",
@@ -1156,7 +1156,7 @@
             "name": "Publish browser failure diagnostics",
             "number": 33,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 2.0
           },
           {
             "name": "Publish DEV account browser failure diagnostics",
@@ -1196,8 +1196,8 @@
       "failure": 1,
       "skipped": 4
     },
-    "full_log_bytes": 530342,
-    "full_log_sha256": "f4a0a0f03fcfca56b6b466d07eece6e23d6e15795625ff0ad7f06b7c6738354c",
+    "full_log_bytes": 550520,
+    "full_log_sha256": "bb3f14e961fc62ac179799fb270267abb1ba320a7e3e6d0d6d9e94c8ab5ca281",
     "observer_workflow_dispatches": 0,
     "observer_repository_mutations": 0,
     "observer_account_or_clock_writes": 0,
@@ -1209,7 +1209,7 @@
         "cancelled": 0,
         "skipped": 0,
         "todo": 0,
-        "duration_ms": 186429.913545
+        "duration_ms": 146035.344118
       },
       "Test API infrastructure endpoints": {
         "tests": 178,
@@ -1218,7 +1218,7 @@
         "cancelled": 0,
         "skipped": 0,
         "todo": 0,
-        "duration_ms": 3549.692697
+        "duration_ms": 2661.100193
       },
       "Test standalone physical game scenario": {
         "tests": 7,
@@ -1227,7 +1227,7 @@
         "cancelled": 0,
         "skipped": 0,
         "todo": 0,
-        "duration_ms": 72.750378
+        "duration_ms": 56.179431
       }
     },
     "node_total": 1896,
@@ -1285,7 +1285,7 @@
     "legacy_96h_watchdog": [
       {
         "step": "Test game rules and release promotion gates",
-        "elapsed_ms": 8716.843639
+        "elapsed_ms": 6483.617912
       }
     ],
     "browser_source_program_groups": [
@@ -1365,7 +1365,7 @@
         "count": 60,
         "step_conclusion": "failure",
         "completed_programs_confirmed_by_sequential_step_success": null,
-        "actual_logged_starts": 1,
+        "actual_logged_starts": 10,
         "actual_log_program_sequence_equals_source": false
       },
       {
@@ -1409,50 +1409,50 @@
     "full_CI_PASS_claimed": false
   },
   "Pages": {
-    "run": 44939109035,
+    "run": 44940453447,
     "attempt": 1,
-    "source": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+    "source": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
     "kind": "pages",
     "event": "push",
     "status": "completed",
     "conclusion": "success",
-    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44939109035",
-    "created_at": "2026-11-21T19:06:10Z",
-    "completed_at": "2026-11-21T19:06:48Z",
-    "workflow_seconds": 38.0,
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453447",
+    "created_at": "2026-11-21T19:20:56Z",
+    "completed_at": "2026-11-21T19:21:25Z",
+    "workflow_seconds": 29.0,
     "jobs": [
       {
-        "id": 136952173304,
+        "id": 136956261266,
         "name": "deploy",
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-11-21T19:06:16Z",
-        "completed_at": "2026-11-21T19:06:47Z",
-        "seconds": 31.0,
+        "started_at": "2026-11-21T19:21:01Z",
+        "completed_at": "2026-11-21T19:21:23Z",
+        "seconds": 22.0,
         "steps": [
           {
             "name": "Set up job",
             "number": 1,
             "conclusion": "success",
-            "seconds": 2.0
+            "seconds": 1.0
           },
           {
             "name": "Checkout",
             "number": 2,
             "conclusion": "success",
-            "seconds": 9.0
+            "seconds": 6.0
           },
           {
             "name": "Setup Pages",
             "number": 3,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 0.0
           },
           {
             "name": "Upload artifact",
             "number": 4,
             "conclusion": "success",
-            "seconds": 7.0
+            "seconds": 5.0
           },
           {
             "name": "Wait for uploaded Pages artifact metadata",
@@ -1464,13 +1464,13 @@
             "name": "Deploy to GitHub Pages",
             "number": 6,
             "conclusion": "success",
-            "seconds": 8.0
+            "seconds": 7.0
           },
           {
             "name": "Post Checkout",
             "number": 12,
             "conclusion": "success",
-            "seconds": 1.0
+            "seconds": 0.0
           },
           {
             "name": "Complete job",
@@ -1484,13 +1484,11 @@
     "step_status_counts": {
       "success": 8
     },
-    "full_log_bytes": 190996,
-    "full_log_sha256": "06c7c39f62fe7e2f6aa7574056bca1a8372b56f03a80e03afb71a98c92418902",
+    "full_log_bytes": 190997,
+    "full_log_sha256": "9328569ca076c887ab52bad04f06287ddf8ee3674cfb398bcaae673769d44dcb",
     "observer_workflow_dispatches": 0,
     "observer_repository_mutations": 0,
-    "observer_account_or_clock_writes": 0,
-    "public_content_audit": "/workspace/work/advisor-layout-20261121/release/pages-public-byte-audit.json",
-    "both_XLSX_audit": "/workspace/work/advisor-layout-20261121/release/pages-XLSX-independent-audit.json"
+    "observer_account_or_clock_writes": 0
   },
   "DEV_tag": {
     "status": "PENDING",
@@ -1595,6 +1593,64 @@
         "runtime_and_canonical_artifacts_unchanged": true,
         "new_publication_acceptance": false
       }
+    },
+    {
+      "status": "PUB2_CI_FAILURE_PRESERVED_NOT_ACCEPTED",
+      "publication": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
+      "CODE": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "CI": {
+        "run": 44940453474,
+        "status": "FAILURE",
+        "seconds": 550,
+        "Node_PASS": 1896,
+        "Python_PASS": 173,
+        "standalone_browser_PASS": 1,
+        "main_browser_programs_PASS": 7,
+        "main_browser_total": 60,
+        "failing_program_number": 8,
+        "failing_program": "guidance-smoke",
+        "failure_before_browser_launch": true,
+        "remaining_main_programs_not_started": 52,
+        "cloud_programs_not_run": 18,
+        "full_main_or_CI_PASS_claimed": false,
+        "cause": "Default output directory under private /workspace is not writable on GitHub runner; PermissionDenied before guidance browser launch. Root owns portable tempfile default/import fix and explicit-output-unset check.",
+        "raw_report": "/workspace/work/advisor-layout-20261121/release/CI-44940453474-1/CI-summary.json",
+        "raw_log_sha256": "bb3f14e961fc62ac179799fb270267abb1ba320a7e3e6d0d6d9e94c8ab5ca281"
+      },
+      "Pages": {
+        "run": 44940453447,
+        "status": "SUCCESS",
+        "seconds": 29,
+        "normal_TLS_content_files": 466,
+        "normal_TLS_content_bytes": 96673009,
+        "both_XLSX_separately_exact": true,
+        "proof_applies_only_to_own_source": true
+      },
+      "package_snapshot": {
+        "archive": "/workspace/work/advisor-layout-20261121/release/committed-frontend-32d7d18.tar.gz",
+        "archive_sha256": "a28a9429b8309ae52a37a67f570795f9d4bd52d2d1297a990d989aabc8c7d9bc",
+        "commit": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
+        "file_count": 467,
+        "frontend_dir": "/workspace/work/advisor-layout-20261121/release/verified-local-frontend-32d7d18",
+        "manifest_sha256": "5e0c19bb210fc0edebe27b21eb41860821b69b14df79f657d18178df859950ad",
+        "total_bytes": 96729691
+      },
+      "test_fix_verification": {
+        "status": "PASS_LOCAL_REMEDY_NOT_OWN_CI",
+        "contexts": 5,
+        "HARBORLIGHT_TEST_OUTPUT_unset": true,
+        "report": "/tmp/harborlight-advisor-guidance/report.json",
+        "screenshots": 15,
+        "log": "/workspace/work/advisor-layout-20261121/test-portability/guidance-default-output.log",
+        "fix_scope": "tempfile import and portable defaultOUT only; all assertions unchanged"
+      },
+      "new_publication_source": null,
+      "runtime_CODE_and_canonical_artifacts_unchanged": true,
+      "DEV_tag_created": false,
+      "GCP_dispatched": false,
+      "account_baseline_captured": false,
+      "PREPROD_tag_created": false,
+      "raw_reports_preserved": true
     }
   ],
   "next_publication": {
@@ -1604,6 +1660,15 @@
     "DEV_tag": "PENDING_NOT_CREATED",
     "PREPROD": "PENDING_NOT_DISPATCHED",
     "account_baseline": "NOT_CAPTURED",
-    "runtime_and_artifact_CODE": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4"
+    "runtime_and_artifact_CODE": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+    "portable_fixture_verification": {
+      "status": "PASS_LOCAL_REMEDY_NOT_OWN_CI",
+      "contexts": 5,
+      "HARBORLIGHT_TEST_OUTPUT_unset": true,
+      "report": "/tmp/harborlight-advisor-guidance/report.json",
+      "screenshots": 15,
+      "log": "/workspace/work/advisor-layout-20261121/test-portability/guidance-default-output.log",
+      "fix_scope": "tempfile import and portable defaultOUT only; all assertions unchanged"
+    }
   }
 }

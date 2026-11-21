@@ -4,14 +4,14 @@ Only the guidance module/CSS is hosted here. Tiny UI adapters represent confirme
 model values and failed/pending writes; no game account, time or reward is used.
 Full application integration has a separate acceptance scenario.
 """
-import json,mimetypes,os
+import json,mimetypes,os,tempfile
 from pathlib import Path
 from urllib.parse import unquote,urlsplit
 from playwright.sync_api import expect,sync_playwright
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',SOURCE)).resolve()
 ORIGIN='http://127.0.0.1:47452'
-OUT=Path(os.environ.get('HARBORLIGHT_TEST_OUTPUT','/workspace/work/advisor-layout-20261121/guidance-dom'))
+OUT=Path(os.environ.get('HARBORLIGHT_TEST_OUTPUT',str(Path(tempfile.gettempdir())/'harborlight-advisor-guidance')))
 OUT.mkdir(parents=True,exist_ok=True)
 DOCUMENT='''<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/harborlight-v1-advisor-guidance.css"><style>
 body{margin:0;background:#143a4b;color:#e5f0f4;font:14px system-ui}#map{display:flex;gap:14px;flex-wrap:wrap;padding:130px 18px 0}#map button{width:100px;height:64px}button,input{font:inherit;min-height:34px}dialog{position:fixed;inset:0;width:min(650px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;border:1px solid #e3c578;border-radius:10px;background:#143a4b;color:white;padding:15px;box-sizing:border-box}dialog button{margin:4px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.v32-food-row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}.v32-food-row input[type=number]{width:70px}[hidden]{display:none!important}#island-dialog h2{margin:0 0 10px}.body{min-height:180px}#spacer{height:30px}

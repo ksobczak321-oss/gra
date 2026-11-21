@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented_frozen_CODE_local_verified` |
-| DEV | `PUB1_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` |
-| CI | `FAILURE_44939109067_TEST_FIXTURE_CACHE_ASSERT` |
+| DEV | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` |
+| CI | `FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY` |
 | PRE-PROD | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -39,14 +39,14 @@ Data pierwotnej wiadomości: 2026-11-21. Europe/Warsaw
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
 - **Kod dowodowy:** `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44939109067.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44940453474.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0190 — Pokaż gdzie najpierw wskazuje budynek na mapie](../../testing/manual/HL-TC-0190.md) — `NOT RUN`.
 
-PUB4f CI44939109067FAIL8m38:1896Node/173Python/standalonePASS; firstmain cacheassertprelaunchSTOP,60main18cloudNOT_RUN. Pages44939109035PASS38s/all466TLS+bothXLSX. Fivecurrentreferencesin2tests corrected;3fullbrowserlocalPASS. CODEace6/runtime/artifacts unchanged;newPUB/CI/Pages/tag/GCPpending;195manualNOT_RUN.
+PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN.
 
 ## Relacje
 

@@ -6,11 +6,12 @@
 
 
 
-## Kandydat DEV 0.15.3.1 / cache23 — pierwszy CI FAILURE, nowa publikacja PENDING
 
-CODE ace6 / runtime/kanoniczne artefakty pozostają zamrożone i bez zmian. PUB 4f873f4 ma CI44939109067 **FAILURE 8 min 38 s** po 1896 Node/173 Python i osobnej przeglądarce minigier PASS. Pierwszy główny program zatrzymał się przed launch na starym oczekiwaniu cache22;60 głównych i18 chmurowych nie wykonano. Pięć bieżących referencji w dwóch testach poprawiono bez zmiany asercji, limitów i historycznych negatywnych kontroli; trzy pełne programy lokalne PASS.
+## Kandydat DEV 0.15.3.1 / cache23 — drugi CI FAILURE, nowa publikacja PENDING
 
-Pages44939109035 ma osobny SUCCESS 38 s,466 plików /96 673 009 bajtów przez normalny TLS i oba XLSX PASS dla własnego 4f. Nowy PUB2/CI/Pages są PENDING; brak nowego tagu DEV, GCP i bazowej kontroli kont. Faktyczne odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22. 519 kart /195 przypadków NOT RUN. [Zakres i dokładna historia](docs/v32/GO-ADVISOR-TASKS.md) · [Dowody](docs/v32/ADVISOR-TASKS-EVIDENCE.json).
+PUB 32d7d18 ma CI44940453474 **FAILURE 9 min 10 s**: 1896 Node/173 Python i osobne minigry PASS; pierwsze 7/60 głównych programów PASS. Ósmy guidance-smoke zatrzymał się przed przeglądarką na PermissionDenied prywatnego domyślnego katalogu;52 pozostałych main i 18cloud nie uruchomiono. Poprawka tylko portowalnej ścieżki testu ma lokalne5/5kontekstów PASS bez ustawiania zmiennej wyjścia; brak pełnegoCI PASS. CODE ace6/runtime/kanoniczne artefakty pozostają bez zmian, a historie 4f CI FAIL i 6e7 export FAIL zachowane.
+
+Pages44940453447 ma osobny SUCCESS 29 s dla 32d:466 plików /96 673 009 bajtów przez normalny TLS i oba XLSX PASS. Nowy PUB3/CI/Pages są PENDING; brak nowego tagu DEV, GCP i bazowej kontroli kont. Odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22. 519 kart /195 przypadków NOT RUN. [Zakres i historia](docs/v32/GO-ADVISOR-TASKS.md) · [Dowody](docs/v32/ADVISOR-TASKS-EVIDENCE.json).
 
 ## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 
