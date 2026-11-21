@@ -9,11 +9,14 @@
 
 
 
-## Kandydat DEV 0.15.3.1 / cache23 — trzeci CI FAILURE, nowa publikacja PENDING
 
-PUB5cb9e97 ma CI44941704545 **FAILURE 8 min 34 s**: 1896 Node/173 Python, osobne minigry i pierwsze 11/60 głównych programów PASS. Startup-replay jako dwunasty program zatrzymał się na globalnym stubie przejmującym również Workera porad (2/2 zamiast 1/1);48 głównych i 18 chmurowych programów nie uruchomiono. Poprawka wyłącznie roli testowego Workera zachowuje 33 asercje i limity oraz dodaje trzy ścisłe kontrole passthrough;pełne 14 przypadków replay ma lokalny PASS na bajtach 5cb. No-flash desktop/mobile nadal PENDING. Brak pełnego CI PASS.
+## DEV i PRE-PROD 0.15.3.1 / cache23 — odebrane automatycznie
 
-Pages44941704526 ma osobny SUCCESS 49 s: 466 plików /96 673 009 bajtów przez normalny TLS i oba XLSX zgodne dla 5cb. CODE ace6/runtime/wszystkie 466 publiczne pliki/kanoniczne artefakty bez zmian. Nowy PUB4/CI/Pages PENDING; brak nowych tagów/GCP/baseline. Historie 4f/32d/6e7 FAIL zachowane. Odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22.519 kart /195 przypadków NOT RUN. [Zakres i historia](v32/GO-ADVISOR-TASKS.md) · [Dowody](v32/ADVISOR-TASKS-EVIDENCE.json).
+Kod i kanoniczne artefakty: `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`; odebrana publikacja: `1e21ff1340c7327db9d63a42934547f14548294e`. Własny [CI44943513346](https://github.com/ksobczak321-oss/gra/actions/runs/44943513346) **SUCCESS 34 min 44 s**: 1896 Node, 173 Python i 79 programów Chromium. [Pages44943513266](https://github.com/ksobczak321-oss/gra/actions/runs/44943513266) ma osobny SUCCESS 0 min 26 s; normalny TLS potwierdził 466 plików treści i osobno oba XLSX. Standardowy [PRE-PROD44946821720/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/44946821720/attempts/1) ma **SUCCESS 8 min 04 s**.
+
+Rzeczywisty admin3 wystartował w 30.738 s; po gotowości przez 10 s zachował gotowy ekran, 89 heartbeatów i maksymalną przerwę 336.6 ms. Zapisy testowych przeglądarek były blokowane. Wszystkie trzy profile zachowały identyczne bajty, UID, generacje i początki wysp. Zegar admin3 pozostał zachowany. QA i wdrożenie nie zapisywały ani nie resetowały świata lub zegara. Jawnie potwierdzony restart właściciela admin1 z poprzedniego wydania pozostaje wyłącznie tamtym historycznym zdarzeniem. Oryginalne dwa ZIP-y, cztery warunki receipt, obraz API, dokładny TAR i wszystkie 467 plików PRE-PROD mają niezależny PASS. Tagi `dev-0.15.3.1-20261121` i `preprod-0.15.3.1-20261121` są zdalnie potwierdzone na tej samej publikacji.
+
+[Zakres i historia](v32/GO-ADVISOR-TASKS.md) · [Dowody](v32/ADVISOR-TASKS-EVIDENCE.json). 519 kart / 195 ręcznych przypadków; wszystkie **NOT RUN**. Końcowe metadane nie zmieniają aplikacji, kanonicznych eksportów lub tagów. Bez resetu, zmian haseł, PROD lub DNS. Poniżej zachowano wcześniejsze wydania oraz ich odrębne dowody.
 
 ## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 

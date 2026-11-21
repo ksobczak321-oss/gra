@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `implemented_frozen_CODE_local_verified` |
-| DEV | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` |
-| CI | `FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB` |
-| PRE-PROD | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| Implementacja | `implemented` |
+| DEV | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` |
+| CI | `SUCCESS_44943513346` |
+| PRE-PROD | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -38,15 +38,16 @@ Data pierwotnej wiadomości: 2026-11-21. Europe/Warsaw
 - **Dokumenty:** [docs/v32/GO-ADVISOR-TASKS.md](../../v32/GO-ADVISOR-TASKS.md), [docs/v32/ADVISOR-TASKS-EVIDENCE.json](../../v32/ADVISOR-TASKS-EVIDENCE.json)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
-- **Kod dowodowy:** `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44941704545.
+- **Kod dowodowy:** `1e21ff1340c7327db9d63a42934547f14548294e`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44943513346.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/44946821720/attempts/1.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0190 — Pokaż gdzie najpierw wskazuje budynek na mapie](../../testing/manual/HL-TC-0190.md) — `NOT RUN`.
 
-PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN.
+0.15.3.1/cache23 CODEace6 PUB1e21ff1 accepted:CI449435133461896Node/173Python/79Chromium, Pages44943513266, standardPREPROD44946821720/1; original artifacts467/publicTLS467/strictaccountauditPASS. Manual195NOT_RUN; noreset/PROD/DNS/passwordchanges. Earlier6e7FAIL and1704presteeringPASS preserved.
 
 ## Relacje
 

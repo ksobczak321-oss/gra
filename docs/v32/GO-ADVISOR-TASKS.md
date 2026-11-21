@@ -1,10 +1,8 @@
-# GO 0.15.3.1 — zadania i plan rozwoju Doradcy Królestwa
+# DEV i PRE-PROD 0.15.3.1 — zadania i plan Doradcy Królestwa
 
-**Zamrożony CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`; lokalne testy, świeże artefakty i pakiet 28 mają PASS. Publikacja pozostaje PENDING.** PUB, push, własny CI 79, Pages, tagi i standardowy PRE-PROD wymagają własnych dowodów. Poprzednie odebrane DEV/PRE-PROD nadal mają 0.15.3.0/cache22/fc95, z zachowaną historią jawnie potwierdzonego restartu właściciela admin1. Obowiązuje wcześniejsza autoryzacja standardowego PRE-PROD po zweryfikowanym DEV; bez resetu, haseł, PROD lub DNS. [Dokładne dowody](ADVISOR-TASKS-EVIDENCE.json).
+**Odebrane automatycznie 2026-11-21.** CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`, publikacja `1e21ff1340c7327db9d63a42934547f14548294e`. Własny CI44943513346, Pages44943513266 i standardowy PRE-PROD44946821720/1 mają SUCCESS; tagi DEV/PRE-PROD są zdalnie potwierdzone. Natywne istniejące admin1/admin3, oryginalne ZIP/receipt/obraz/TAR, wszystkie publiczne bajty i nowy ścisły audyt kont mają odrębne PASS w [dowodach](ADVISOR-TASKS-EVIDENCE.json). Wszystkie trzy profile zachowały identyczne bajty, UID, generacje i początki wysp. Zegar admin3 pozostał zachowany. QA i wdrożenie nie zapisywały ani nie resetowały świata lub zegara. Jawnie potwierdzony restart właściciela admin1 z poprzedniego wydania pozostaje wyłącznie tamtym historycznym zdarzeniem. Ręczny odbiór 195 przypadków nadal NOT RUN.
 
-
-
-
+Poniższe checkpointy PENDING i wcześniejszy 6e7 FAIL zachowują kontekst historyczny; końcowy pełny odbiór publikacji pochodzi z jej własnego CI, Pages i standardowego GCP. Poprzednie zezwolenie „jak skończysz wrzuć na pre prod” wykonano w standardowej kolejności DEV→CI/Pages→PRE-PROD. Brak działań PROD/DNS/reset/haseł.
 
 ## Trzecia publikacja cache23 — CI FAILURE na globalnym stubie Workera
 
@@ -30,7 +28,7 @@ Poprawiono wyłącznie pięć bieżących odwołań w dwóch plikach testów Pyt
 
 Pages44939109035 tego źródła ma osobny **SUCCESS 38 s**: 466 plików treści /96 673 009 bajtów przez normalny TLS oraz oba XLSX zweryfikowane oddzielnie. Jest to dowód publikacji własnych bajtów 4f; nie zalicza następnego źródła. Nowy PUB2, własny CI i Pages są PENDING. Nie utworzono nowego tagu DEV/PRE-PROD, nie uruchomiono GCP ani nie pobrano nowej bazowej kontroli kont. Odebrane PRE-PROD nadal fc95/cache22;195 ręcznych przypadków NOT RUN.
 
-## CODE i kanoniczne artefakty gotowe lokalnie — publikacja PENDING
+## Historia — lokalna gotowość CODE przed publikacją
 
 Źródło kodu i eksportów **`ace6fb06bb20a65b20a363722cdf35a0799fb1c4`** jest zamrożone. Względem pierwszego CODE 6e7 zmieniono wyłącznie jeden marker pochodzenia tekstu w eksporterze; runtime i testy są identyczne bajtowo. Zachowany pierwszy FAIL zatrzymał eksport tekstów przed symulacjami i nie otrzymuje świeżego PASS. Nowy pełny pipeline i świeża walidacja mają własny PASS przypięty do nowego CODE.
 
