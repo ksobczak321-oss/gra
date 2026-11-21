@@ -1,10 +1,10 @@
 # Dziennik implementacji
 
-## 21 listopada 2026 — GO DEV 0.15.3.0, integracja
+## 21 listopada 2026 — DEV 0.15.3.0, CODE zamrożony i eksporty PASS
 
 Autoryzowano tutorial 28 ze stabilnym katalogiem56, osiem tematów menu pod „i”, ukrycie zachowanego kursu 25 lekcji, bieżącego Doradcę1 cel/2–5 akcji z prawdziwymi minigrami i poprawę etykiet Kaplicy/Latarni. Dostępność misji/ofert jest oddzielona od ukrytego kursu bez przestawienia jego flag; bieżące rady mają unikać klonowania całej historii i pełnych prognoz co sekundę.
 
-Kierunkowe dowody obejmują65 testów polityki/misji,7 testów trasy28 z DOM PL/EN,9 geometrii i120 etykiet oraz domyślne ukrycie dla trzech zapisanych pozycji PL/EN. Nie są pełnym odbiorem zamrożonego źródła. CODE, eksporty, własny CI i publikacja oczekują. Dodano karty 1175–1182 i przypadki 0180–0187; dawne503 karty i179 przypadków zachowane. [Zakres i aktualizowane dowody](v32/GO-ADVISOR-GUIDANCE.md).
+CODE `f6572ee7500b42f56d1575de2e173d1bd635216c` zamrożono i potwierdzono 119 plików runtime bez zmiany bajtów. Kanoniczny pipeline ma PASS: master 161 kart / 64 876 wierszy / 130 źródeł, redakcyjny 6/413 z pustą C, minigry 55/110 i dwie rzeczywiste pełne próby symulacji 24/24/72 h z identycznym JSON 4 039 094 bajtów. Wszystkie stare wartości profili C6 są identyczne; doszły tylko dwa jawne pola pochodzenia fikstury na profil. Osobne kierunkowe UI i zachowane historyczne ścieżki przeszły; pierwotne FAIL są zachowane. Własny CI, publikacja, Pages i nowy PRE-PROD pozostają PENDING. Dodano karty 1175–1182 i przypadki 0180–0187; dawne503 karty i179 przypadków zachowane. [Zakres i aktualizowane dowody](v32/GO-ADVISOR-GUIDANCE.md).
 
 Pierwotny zakres był wyłącznie DEV. Późniejsze jawne „jak skończysz wrzuć na pre prod” rozszerza go o standardową promocję po zakończeniu DEV i własnym CI/Pages; bez kolejnego pytania o zgodę. Faktyczne PRE-PROD nadal C6/d5ad/44577083312, a nowy przebieg, natywny odbiór i artefakty są PENDING. Pierwszy lokalny frontend1644/1646 i master fresh-validation FAIL pozostają w historii; po poprawkach22copy PASS, bez deklaracji pełnego lokalnego1646PASS. Przyczyna mastera:12losowych wejściowychJSON/activitySeed fikstury, poprawka wyłącznie eksportera. Konta, hasła i postęp zachowujemy; bez resetu, PROD i DNS. Wszystkie187 ręcznych wyników NOT RUN.
 

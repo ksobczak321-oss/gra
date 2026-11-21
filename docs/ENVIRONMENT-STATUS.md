@@ -1,11 +1,12 @@
 # HARBORLIGHT — stan środowisk
 
-## Nowe GO: DEV 0.15.3.0 / cache22 w integracji
+## DEV 0.15.3.0 / cache22 — lokalnie gotowy CODE, publikacja oczekuje
 
 | Obszar | Aktualny stan |
 |---|---|
-| Roboczy DEV | Tutorial28, zachowany ukryty Samouczek 25, Doradca1 cel/2–5 akcji i widoczne etykiety; integracja. |
-| CODE / publikacja / własne CI / Pages / tag | PENDING nowego końcowego źródła. Wyniki C6 nie przyjmują nowego kodu. |
+| Roboczy DEV | Lokalny kandydat gotowy: tutorial 28, zachowany ukryty Samouczek 25, Doradca 1 cel / 2–5 akcji i czytelne etykiety. |
+| CODE i eksporty | Zamrożone `f6572ee7500b42f56d1575de2e173d1bd635216c`; 119 plików runtime zgodnych bajtowo. Master 161 i redakcyjny 6/413 oraz minigry 55/110 mają PASS. |
+| Publikacja / własny CI / Pages / tagi | PENDING nowej publikacji; brak nowego przyjętego wydania na podstawie wcześniejszego C6. |
 | Dotychczas publiczny DEV | Odebrane C6 / 0.15.2.4 / cache21 / d5ad do osobnej publikacji. |
 | PRE-PROD faktyczne | Bez zmiany: C6/d5ad, standardowy44577083312/próba1. Nowego wdrożenia jeszcze nie potwierdzono. |
 | PRE-PROD planowane | Jawnie autoryzowane poleceniem „jak skończysz wrzuć na pre prod”, po ukończeniu DEV, własnym CI/Pages i standardowym odbiorze tego samego źródła. |

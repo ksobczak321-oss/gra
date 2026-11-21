@@ -3,7 +3,7 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.3.0",
   "cache": "frontend-v32-22",
-  "status": "DEV_INTEGRATION_TARGETED_PROOFS_AND_FIXTURES_PREPROD_AUTHORIZED_AFTER_VERIFIED_SOURCE",
+  "status": "LOCAL_READY_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_PUBLICATION_OWN_CI_PAGES_PREPROD_PENDING",
   "authorization": {
     "kind": "user_chat_GO",
     "date": "2026-11-21",
@@ -31,7 +31,7 @@
     "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
     "old_success_does_not_accept_new_code": true
   },
-  "code_source_sha": null,
+  "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
   "publication_source_sha": null,
   "CI": {
     "status": "PENDING_OWN_EXACT_SOURCE",
@@ -68,7 +68,8 @@
       "all_public_package_bytes_and_account_preservation",
       "immutable_PREPROD_tag"
     ],
-    "expected_frontend_files_to_be_verified": 462
+    "expected_frontend_files_to_be_verified": 462,
+    "target_code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c"
   },
   "scope": {
     "active_tour_steps": 28,
@@ -140,7 +141,7 @@
       "final_frozen_source_rerun": "PENDING"
     },
     "advisor_live_plan": {
-      "status": "PENDING_FINAL_PARENT_REPORT"
+      "status": "PASS_REPORTED_BY_ROOT_IN_TARGETED_UI"
     },
     "menu_information": {
       "status": "PASS_REPORTED_BY_ROOT",
@@ -150,17 +151,30 @@
         "pl",
         "en"
       ],
-      "final_frozen_source_rerun": "PENDING"
+      "final_frozen_source_rerun": "PASS_REPORTED_BY_ROOT"
     },
     "root_relevant_UI": {
       "status": "PASS_REPORTED_BY_ROOT",
       "passed_programs": 7,
-      "final_own_CI_is_separate": true
+      "final_own_CI_is_separate": true,
+      "new_targeted_programs_pass": 7,
+      "archived_course_retry_PASS": true,
+      "additional_historical_programs_pass": 7,
+      "default_cache_stages_editorial_programs_pass": 3,
+      "assertions_and_timeouts_preserved": true,
+      "groups_are_not_a_claim_of_full_CI": true
     },
     "legacy_course_fixture": {
       "status": "PASS_REPORTED_BY_ROOT_AFTER_TEST_ONLY_PRELOAD_FIX",
       "production_policy_remains_disabled": true,
       "first_raw_failure_preserved": true
+    },
+    "local_harness_history": {
+      "status": "OLD_FAILURES_PRESERVED_CURRENT_TARGETED_RETRY_PASS",
+      "private_clock_had_1000x_rate": true,
+      "controller_prepend_bug_fixed": true,
+      "archived_course_Node_preload_scoped_to_test_fixture": true,
+      "runtime_source_modified_to_pass_tests": false
     }
   },
   "full_local_QA": {
@@ -189,7 +203,56 @@
       "limit_changed": false
     },
     "new_full_frontend_local_PASS_claimed": false,
-    "final_own_CI": "PENDING"
+    "final_own_CI": "PENDING",
+    "backend_Node": {
+      "status": "PASS",
+      "tests": 178,
+      "duration_ms": 8154
+    },
+    "board_Node": {
+      "status": "PASS",
+      "tests": 7,
+      "duration_ms": 138
+    },
+    "independent_Python": {
+      "status": "PASS_AFTER_HISTORICAL_FROZEN_VALIDATOR_RETRY",
+      "tests": 145,
+      "historical_failed_cases": 4,
+      "retry_reason": "historical179manualcases must be read from frozen archive source, current manual count is187",
+      "old_raw_failure_preserved": true
+    },
+    "frontend_bundle_Python": {
+      "status": "PASS_AFTER_TEST_ONLY_COUNT_CORRECTION",
+      "tests": 28,
+      "pass": 28,
+      "duration_seconds": 15.268,
+      "combined_with_independent_Python_PASS": 173,
+      "initial_attempt": {
+        "status": "FAIL_PRESERVED",
+        "pass": 27,
+        "total": 28,
+        "cause": "second outdated arithmetic assertion counted460files instead of462",
+        "log": "/workspace/work/advisor-20261121/python/frontend-bundle-stable.log"
+      },
+      "successful_retry_log": "/workspace/work/advisor-20261121/python/frontend-bundle-count-corrected.log",
+      "fix": "test_only_plus_two_new_modules_and_explicit_presence_assertions",
+      "new_modules": [
+        "harborlight-v1-learning-policy.js",
+        "harborlight-v1-map-labels.js"
+      ],
+      "member_cap": 512,
+      "byte_cap": 134217728,
+      "caps_changed": false,
+      "runtime_or_exporters_changed_for_retry": false,
+      "test_not_in_master_source_hashes": true,
+      "all173_Python_PASS_claimed": true
+    },
+    "private_offline_audit_helpers": {
+      "Python_PASS": 74,
+      "Node_PASS": 20,
+      "scope": "private_prepublication_verifier_readiness_not_app_CI_or_live_acceptance"
+    },
+    "Python_total_PASS": 173
   },
   "frontend_package": {
     "status": "PENDING_FINAL_PUBLICATION_SOURCE",
@@ -198,20 +261,129 @@
     "manifest_sha256": null
   },
   "canonical_artifacts": {
-    "status": "FIRST_FFB_FRESH_VALIDATION_FAIL_PRESERVED_DETERMINISTIC_FIXTURE_FIX_WAITING_NEW_CODE",
-    "planned_master_sheets": 161,
+    "status": "PASS_BUILD_FRESH_VALIDATE_AND_STRICT_DETERMINISTIC_REPEATS",
+    "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+    "report": "/workspace/work/advisor-20261121/artifacts/canonical-artifacts-summary.json",
+    "master": {
+      "sheets": 161,
+      "current_sheets": 61,
+      "rows": 64876,
+      "source_files": 130,
+      "bytes": 8059335,
+      "sha256": "ab4570ad897eeb2d26d3ca69fa36488afe31f435141a4636be1d5f9802c4b87b",
+      "history": {
+        "historical_sheets_unchanged": 100,
+        "historical_zip_parts_unchanged": 220,
+        "historical_comments_unchanged": 48,
+        "historical_cached_formulas_unchanged": 4982
+      },
+      "formula_samples": 160
+    },
+    "editorial": {
+      "sheets": 6,
+      "rows": 413,
+      "C_all_blank": true,
+      "source_files": 112,
+      "bytes": 60329,
+      "sha256": "75afe37fc988e9e367dd9c7f4f9da08e49cb9a169d725c3b3006542b2ca430e7"
+    },
+    "editorial_complete_cell_identity_vs_C6": {
+      "status": "PASS",
+      "accepted_C6_ref": "0705dd88638183f6e35ec23fe55e82e793430173",
+      "current_source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "all_6_sheets_ABC_values_identical": true,
+      "headers_and_data_rows_checked": 419,
+      "all_413_C_cells_blank": true
+    },
     "active_tour_rows": 28,
     "archived_full_tour_rows": 56,
     "preserved_practical_rows": 25,
-    "build_or_fresh_validation_claimed": false,
-    "first_attempt": {
-      "source_sha": "ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea",
-      "fresh_validation": "FAIL_PRESERVED",
-      "differing_input_JSONs": 12,
-      "cause": "activitySeed initialized from Date.now in export fixture constructors",
-      "fix_scope": "export_fixture_constructor_only",
-      "game_runtime_changed_by_fix": false,
-      "new_two_scenario_exports_strict_zero_diff": "PENDING"
+    "numeric_economic_tables_exact_C6": 13,
+    "all_200_art_rows_exact_C6": true,
+    "new_actual_simulations_deterministic_repeat": {
+      "status": "PASS",
+      "source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "two_actual_exports_with_full24_24_72h_profiles": true,
+      "entire_export_bytes_exact": true,
+      "before_sha256": "bfb697686e0a9b9700b58033cfa68e39b333746089df0bc699bb470238971863",
+      "after_sha256": "bfb697686e0a9b9700b58033cfa68e39b333746089df0bc699bb470238971863",
+      "bytes": 4039094,
+      "difference_count": 0,
+      "first_differences": [],
+      "profiles": [
+        {
+          "id": "bez-pracy",
+          "hours": 24,
+          "seedBasis": 1794812400000,
+          "activitySeed": 3454386051,
+          "ambientClockDuringConstruction": 1794812400000
+        },
+        {
+          "id": "produkcja-24h",
+          "hours": 24,
+          "seedBasis": 1794812400000,
+          "activitySeed": 3454386051,
+          "ambientClockDuringConstruction": 1794812400000
+        },
+        {
+          "id": "rozwoj-3d",
+          "hours": 72,
+          "seedBasis": 1794812400000,
+          "activitySeed": 3454386051,
+          "ambientClockDuringConstruction": 1794812400000
+        }
+      ],
+      "numeric_tolerance_or_fields_excluded": false
+    },
+    "C6_profile_comparison_review": {
+      "status": "ONLY_TWO_ADDED_SEED_PROVENANCE_FIELDS_PER_PROFILE",
+      "added_field_difference_count": 6,
+      "all_preexisting_profile_values_and_types_unchanged": true,
+      "full_JSON_identity_claimed": false,
+      "raw_comparison": "canonical-simulation-identity-vs-C6.json",
+      "note": "No old field was excluded from the raw comparison. The new repeated full exports are independently byte-identical."
+    },
+    "C6_raw_comparator_status": "DIFFERENCES_REQUIRE_REVIEW",
+    "C6_full_profile_JSON_identity_claimed": false,
+    "all_preexisting_C6_values_and_types_exact": true,
+    "minigames": {
+      "games": 55,
+      "entries_strict_equal_C6": true,
+      "entry_difference_count": 0,
+      "first_entry_differences": [],
+      "comparison": {
+        "catalog_gameplay_and_all_text_exact_except_verified_provenance": true,
+        "verified_source_line_updates": [],
+        "normalization_only": "Source SHA and independently verified identical-anchor line references; no text or gameplay exclusions.",
+        "TXT_and_link_index_checked": 56,
+        "DOCX_inner_parts_checked": 1045,
+        "semantic_catalog_sha256": "924f65663b1b0931966322cfe17e3560c14b472da6cf370d50e11394118db7eb"
+      },
+      "zip_bytes": 2390666,
+      "zip_sha256": "9046c7e1b9438d5eb0ea3a587a812c0f2d279cd27225333d70a237bb9f176bb0"
+    },
+    "historical_first_attempt": {
+      "status": "FIRST_FFB_FRESH_VALIDATION_FAIL_PRESERVED_DETERMINISTIC_FIXTURE_FIX_WAITING_NEW_CODE",
+      "planned_master_sheets": 161,
+      "active_tour_rows": 28,
+      "archived_full_tour_rows": 56,
+      "preserved_practical_rows": 25,
+      "build_or_fresh_validation_claimed": false,
+      "first_attempt": {
+        "source_sha": "ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea",
+        "fresh_validation": "FAIL_PRESERVED",
+        "differing_input_JSONs": 12,
+        "cause": "activitySeed initialized from Date.now in export fixture constructors",
+        "fix_scope": "export_fixture_constructor_only",
+        "game_runtime_changed_by_fix": false,
+        "new_two_scenario_exports_strict_zero_diff": "PENDING"
+      }
+    },
+    "earlier_unaccepted_attempt": {
+      "source": "ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea",
+      "status": "MASTER_BUILD_PASS_FRESH_VALIDATION_FAIL",
+      "raw_artifacts_and_six_grain_differences_preserved": "attempt-ffb54aa-uncontrolled-fixture",
+      "diagnosis": "The new full advisor fixture exposed an ambient Date.now activity seed. Only isolated fixture constructors were made deterministic; runtime and comparison assertions were not weakened."
     }
   },
   "tracking": {
@@ -265,5 +437,14 @@
     "runtime_since_reference_unchanged": true,
     "next_changes_scope": "export_fixture_deterministic_activitySeed_and_test_only_legacy_preload_plus_metadata",
     "acceptance_claimed": false
-  }
+  },
+  "code_frozen": true,
+  "runtime_verification": {
+    "status": "PASS",
+    "files": 119,
+    "bytes_exact_to_CODE": true,
+    "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+    "no_runtime_change_since_ffb_reference": true
+  },
+  "metadata_update_scope": "PRE_PUBLICATION_METADATA_ONLY_F657_RUNTIME_AND_CANONICAL_ARTIFACTS_FROZEN"
 }

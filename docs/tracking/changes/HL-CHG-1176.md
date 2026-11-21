@@ -8,8 +8,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `in_progress` |
-| DEV | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` |
+| Implementacja | `implemented` |
+| DEV | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` |
 | CI | `pending_own_exact_source` |
 | PRE-PROD | `authorized_pending_verified_DEV_and_exactCI` |
 | PROD | `postponed_by_user` |
@@ -38,13 +38,14 @@ Data pierwotnej wiadomości: 2026-11-21. Europe/Warsaw
 - **Dokumenty:** [docs/v32/GO-ADVISOR-GUIDANCE.md](../../v32/GO-ADVISOR-GUIDANCE.md), [docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json](../../v32/ADVISOR-GUIDANCE-EVIDENCE.json)
 - **Kod:** [harborlight-v1-advisor-intro.js](../../../harborlight-v1-advisor-intro.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-menu-tour-info-v32-smoke.py](../../../tests/harborlight-menu-tour-info-v32-smoke.py), [tests/harborlight-tour-guidance-v32.test.mjs](../../../tests/harborlight-tour-guidance-v32.test.mjs)
+- **Kod dowodowy:** `f6572ee7500b42f56d1575de2e173d1bd635216c`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0181 — Osiem opisów z tutoriala pozostaje pod i we właściwych menu](../../testing/manual/HL-TC-0181.md) — `NOT RUN`.
 
-Nowe GO 0.15.3.0/cache22: początkowo tylko DEV, później jawnie autoryzowana standardowa promocja PRE-PROD po ukończeniu DEV i własnym CI/Pages. Nowe źródło, publikacja i przebieg PRE-PROD pozostają PENDING; faktycznie nadal C6/d5ad/44577083312. Pierwszy lokalny frontend1644/1646 oraz master fresh-validation FAIL są zachowane;22copy PASS nie oznacza pełnego1646PASS. Bez resetu, zmiany kont/haseł, PROD i DNS.
+CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.
 
 ## Relacje
 

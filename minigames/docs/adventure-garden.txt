@@ -88,7 +88,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: adventure-garden.
 
-Źródło katalogu: e394ea8fe369f9dfc6615b7a96da1c3e499672e6.
+Źródło katalogu: f6572ee7500b42f56d1575de2e173d1bd635216c.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

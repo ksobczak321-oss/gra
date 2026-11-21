@@ -2,7 +2,7 @@
 
 ## W przygotowaniu: DEV 0.15.3.0 — Doradca i krótszy tutorial
 
-Nowe GO z 21 listopada obejmuje 28 kroków tutoriala, zachowane informacje pod „i”, tymczasowe ukrycie Samouczka i Doradcę z jednym celem oraz2–5 aktualnymi działaniami. Etykiety poziomu budynków unikają paneli. **Integracja trwa; własne CI i publikacja są PENDING.** [Zakres](docs/v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json).
+Pakiet 28 kroków tutoriala, informacji pod „i”, zachowanego ukrytego Samouczka i Doradcy z jednym celem oraz 2–5 działaniami jest lokalnie gotowy. Etykiety budynków unikają paneli. **CODE `f6572ee7500b42f56d1575de2e173d1bd635216c` jest zamrożony; eksporty i arkusze mają PASS, własne CI i publikacja pozostają PENDING.** [Zakres](docs/v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json).
 
 PRE-PROD pozostaje odebrany C6/0.15.2.4/d5ad, workflow44577083312. Po początkowym GO na DEV użytkownik polecił **„jak skończysz wrzuć na pre prod”**: autoryzowana jest standardowa promocja po ukończeniu DEV i własnym zielonym CI/Pages. Nowe wdrożenie jeszcze nie nastąpiło. Konta, hasła i postęp pozostają zachowane; bez resetu, PROD i DNS.
 

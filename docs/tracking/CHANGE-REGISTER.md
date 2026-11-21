@@ -14,7 +14,7 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.3.0**: `LOCAL_INTEGRATION_OWN_CODE_FREEZE_CI_AND_PUBLICATION_PENDING`; CI `PENDING_OWN_EXACT_SOURCE`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Nowy DEV **0.15.3.0**: `LOCAL_READY_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_CI_AND_PUBLICATION_PENDING`; CI `PENDING_OWN_EXACT_SOURCE`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
 - Odebrany PRE-PROD **0.15.2.4**: źródło `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`; [deploy 44577083312](https://github.com/ksobczak321-oss/gra/actions/runs/44577083312), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
 DEV i PRE-PROD 0.15.2.4/cache21 przyjęte automatycznie na publikacji d5ad35c, kod e394ea8. Własne CI 44569674535 SUCCESS: 1784 Node, 173 Python, 73 programy Chromium; Pages 44569674475 SUCCESS. Standardowy PRE-PROD 44577083312/1 SUCCESS, oryginalne dwa ZIP/receipt/TAR i wszystkie 460 plików HTTPS zgodne. Rzeczywisty admin3: start 280,121 s, responsywny Worker i 10 s gotowej gry; trzy konta, postęp i zegary zachowane. Ręczny odbiór użytkownika i 179 przypadków NOT RUN. Historyczne DDA, B94 QUALITY FAIL, C4 CI FAIL i C5 QUALITY HOLD pozostają odrębne. Bez resetu, PROD i DNS.
@@ -253,14 +253,14 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1172 — Pakuj pełną historię diety bez przekraczania granicy dokumentu](changes/HL-CHG-1172.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
 | [HL-CHG-1173 — Dobieraj indeks historii do długości całego przeliczenia](changes/HL-CHG-1173.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
 | [HL-CHG-1174 — Usuń kosztowne niewykorzystywane prognozy z paska misji](changes/HL-CHG-1174.md) | Bug | `accepted` | `ACCEPTED_C6_OWN_CI_PAGES_EXACT_BYTES_PASS` | `ACCEPTED_C6_44577083312_1_NATIVE_EXISTING_ADMIN1_ADMIN3_RECEIPT_ALL_BYTES_ACCOUNTS_PASS` |
-| [HL-CHG-1175 — Skróć tutorial do 28 kroków z zachowaniem pozycji katalogu 56](changes/HL-CHG-1175.md) | Story | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1176 — Zachowaj osiem pominiętych opisów tutoriala pod i we właściwych menu](changes/HL-CHG-1176.md) | Story | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1177 — Tymczasowo wyłącz samouczek 25 lekcji bez kasowania kodu i postępu](changes/HL-CHG-1177.md) | Story | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1178 — Prowadź rozwój przez jeden cel i od dwóch do pięciu aktualnych działań](changes/HL-CHG-1178.md) | Story | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1179 — Podpowiadaj prawdziwe minigry i wypłatę puli przy braku monet](changes/HL-CHG-1179.md) | Story | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1180 — Umieszczaj etykiety Kaplicy i Latarni poza górnym i prawym menu](changes/HL-CHG-1180.md) | Bug | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1181 — Oddziel dostępność misji i ofert od ukrytego kursu bez zmiany jego flag](changes/HL-CHG-1181.md) | Bug | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
-| [HL-CHG-1182 — Czytaj potrzebne dane doradcy tanio a pełne prognozy licz na żądanie](changes/HL-CHG-1182.md) | Bug | `accepted` | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1175 — Skróć tutorial do 28 kroków z zachowaniem pozycji katalogu 56](changes/HL-CHG-1175.md) | Story | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1176 — Zachowaj osiem pominiętych opisów tutoriala pod i we właściwych menu](changes/HL-CHG-1176.md) | Story | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1177 — Tymczasowo wyłącz samouczek 25 lekcji bez kasowania kodu i postępu](changes/HL-CHG-1177.md) | Story | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1178 — Prowadź rozwój przez jeden cel i od dwóch do pięciu aktualnych działań](changes/HL-CHG-1178.md) | Story | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1179 — Podpowiadaj prawdziwe minigry i wypłatę puli przy braku monet](changes/HL-CHG-1179.md) | Story | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1180 — Umieszczaj etykiety Kaplicy i Latarni poza górnym i prawym menu](changes/HL-CHG-1180.md) | Bug | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1181 — Oddziel dostępność misji i ofert od ukrytego kursu bez zmiany jego flag](changes/HL-CHG-1181.md) | Bug | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
+| [HL-CHG-1182 — Czytaj potrzebne dane doradcy tanio a pełne prognozy licz na żądanie](changes/HL-CHG-1182.md) | Bug | `accepted` | `LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING` | `authorized_pending_verified_DEV_and_exactCI` |
 
 <a id="hl-epic-tut"></a>
 

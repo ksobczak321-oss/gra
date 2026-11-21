@@ -4,7 +4,7 @@
 
 Pakiet nowego GO z 21 listopada 2026 podnosi segment C: **0.15.2.4 → 0.15.3.0**, a D wraca do0. Obejmuje spójne zmiany tutoriala, zachowanego ukrytego Samouczka, Doradcy i etykiet mapy. Schemat świata 9, ruleset 32 i archipelag 2 pozostają niezależne i bez zmiany.
 
-Nowy CODE, publikacja, własny CI, Pages i tag są PENDING. Dotychczasowe publiczne DEV i PRE-PROD pozostają odebrane C6/0.15.2.4/d5ad. Po pierwotnym GO tylko na DEV użytkownik jawnie zlecił „jak skończysz wrzuć na pre prod”, więc standardowy PRE-PROD jest autoryzowany po ukończeniu i zweryfikowaniu nowego DEV; nie jest jeszcze wdrożony. [Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Starsze zapisy wersji poniżej są historią swoich wydań.
+CODE **`f6572ee7500b42f56d1575de2e173d1bd635216c`** jest zamrożony; eksporty i oba arkusze mają świeżą walidację PASS. Publikacja, własny CI, Pages, tag DEV i nowy tag PRE-PROD są PENDING. Dotychczasowe publiczne DEV i PRE-PROD pozostają odebrane C6/0.15.2.4/d5ad. Po pierwotnym GO tylko na DEV użytkownik jawnie zlecił „jak skończysz wrzuć na pre prod”, więc standardowy PRE-PROD jest autoryzowany po ukończeniu i zweryfikowaniu nowego DEV; nie jest jeszcze wdrożony. [Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Starsze zapisy wersji poniżej są historią swoich wydań.
 
 ## DEV 0.15.1.0 — doradca i redakcja, odebrany
 

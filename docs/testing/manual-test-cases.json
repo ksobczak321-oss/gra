@@ -2471,9 +2471,9 @@
     "physical_online_integration": "excluded_by_user",
     "application_version": "0.15.3.0",
     "cache": "frontend-v32-22",
-    "dev_status": "LOCAL_INTEGRATION_CODE_FREEZE_PUBLICATION_OWN_CI_PENDING",
+    "dev_status": "LOCAL_READY_CODE_FROZEN_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
     "dev_source_sha": null,
-    "code_source_sha": null,
+    "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
     "ci_run_id": null,
     "pages_run_id": null,
     "dev_tag": null,
@@ -2488,7 +2488,7 @@
     "previous_case_range": "TC0148–0179",
     "requirements": "docs/v32/GO-ADVISOR-GUIDANCE.md",
     "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json",
-    "note": "Pierwotne GO dotyczyło DEV0.15.3.0/cache22; późniejsze jawne „jak skończysz wrzuć na pre prod” autoryzuje standardową promocję po ukończeniu DEV i własnym CI/Pages. Nowe źródło i przebieg PRE-PROD są PENDING, faktyczne PRE-PROD nadal C6/d5ad/44577083312. Wszystkie187 ręcznych wyników pozostają NOT RUN; bez resetu, zmiany kont/haseł, PROD i DNS.",
+    "note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 jest zamrożony; eksporty i arkusze mają PASS. Pierwsze lokalne1644/1646 i22kierunkowePASS pozostają osobne; pełny nowy CI, publikacja, Pages i tagi oczekują. Jawne polecenie użytkownika autoryzuje standardowy PRE-PROD po ukończeniu DEV i własnym CI/Pages, bez kolejnej zgody. Faktyczne PRE-PROD nadal C6/d5ad/44577083312. Wszystkie187 ręcznych wyników NOT RUN; bez resetu, zmiany kont/haseł, PROD i DNS.",
     "historical_C6_scope_before_guidance": {
       "date": "2026-11-19",
       "environment": "DEV_and_PREPROD",
@@ -2563,6 +2563,7 @@
     "initial_GO_scope": "DEV_ONLY",
     "followup_PREPROD_quote": "jak skończysz wrzuć na pre prod",
     "new_PREPROD_authorized": true,
-    "new_PREPROD_run_id": null
+    "new_PREPROD_run_id": null,
+    "publication_source_sha": null
   }
 }

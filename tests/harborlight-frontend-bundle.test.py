@@ -349,7 +349,9 @@ class HistoricalFrontendProfileTests(unittest.TestCase):
     def test_no_profile_keeps_default_current_allowlist_strict(self):
         self.reject(name=None)
         # Original art/runtime frames, offline replay and two pure diet helpers.
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + 200 + 3 + 2 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + 200 + 3 + 2 + 2 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
+        self.assertIn('harborlight-v1-learning-policy.js', BUNDLE.ARCHIVE_FILES)
+        self.assertIn('harborlight-v1-map-labels.js', BUNDLE.ARCHIVE_FILES)
         self.assertIn("harborlight-v1-runtime-upgrade.js", BUNDLE.CONTENT_FILES)
         for name in ("harborlight-v1-startup-replay.js", "harborlight-v1-startup-replay-model.js", "harborlight-v1-startup-replay-worker.js"):
             self.assertIn(name, BUNDLE.CONTENT_FILES)
