@@ -3,7 +3,7 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.3.0",
   "cache": "frontend-v32-22",
-  "status": "LOCAL_READY_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_PUBLICATION_OWN_CI_PAGES_PREPROD_PENDING",
+  "status": "ACCEPTED_DEV_AND_PREPROD_0_15_3_0_ALL_AUTOMATED_GATES_PASS",
   "authorization": {
     "kind": "user_chat_GO",
     "date": "2026-11-21",
@@ -18,7 +18,8 @@
     "followup_date": "2026-11-21",
     "PREPROD_condition": "authorized_pending_verified_DEV_and_exactCI",
     "preserve_accounts_passwords_progress": true,
-    "repeat_user_confirmation_required": false
+    "repeat_user_confirmation_required": false,
+    "completed_by_standard_PREPROD_run": 44929856572
   },
   "baseline": {
     "repository_base": "0705dd88638183f6e35ec23fe55e82e793430173",
@@ -32,44 +33,109 @@
     "old_success_does_not_accept_new_code": true
   },
   "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-  "publication_source_sha": null,
+  "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
   "CI": {
-    "status": "PENDING_OWN_EXACT_SOURCE",
-    "run_id": null
+    "run": 44926983827,
+    "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "status": "SUCCESS",
+    "event": "push",
+    "branch": "main",
+    "attempt": 1,
+    "seconds": 1755.0,
+    "node_frontend": 1646,
+    "node_backend": 178,
+    "node_board": 7,
+    "node_total": 1831,
+    "python": 173,
+    "browser_programs": 76,
+    "completed_at": "2026-11-21T17:22:16Z",
+    "successful_steps": 36,
+    "expected_node_frontend": 1646,
+    "expected_node_backend": 178,
+    "expected_node_board": 7,
+    "expected_node_total": 1831,
+    "expected_Python": 173,
+    "full_CI_PASS_claimed": true,
+    "unchanged96h_watchdog_pass_ms": 4410.967714,
+    "watchdog_limit_ms": 10000,
+    "watchdog_limit_changed": false,
+    "skipped_steps": 2,
+    "raw_report": "/workspace/work/advisor-20261121/release/CI-44926983827-1/CI-summary.json"
   },
   "Pages": {
-    "status": "PENDING_NEW_PUBLICATION",
-    "run_id": null
+    "run": 44926983937,
+    "attempt": 1,
+    "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "status": "SUCCESS",
+    "seconds": 33.0,
+    "content_files": 461,
+    "content_bytes": 96565813,
+    "normal_TLS_all_content_exact": true,
+    "both_XLSX_separately_exact": true,
+    "event": "push",
+    "completed_at": "2026-11-21T16:53:34Z"
   },
   "DEV_tag": {
-    "status": "NOT_CREATED",
-    "name": null
+    "name": "dev-0.15.3.0-20261121",
+    "object": "4fbbb4177a0ab375a0f47bdecee648e67cf1d596",
+    "peeled": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "remote_verified": true
   },
   "PREPROD": {
-    "status": "AUTHORIZED_PENDING_VERIFIED_DEV_EXACT_CI_STANDARD_WORKFLOW_AND_NATIVE_ACCEPTANCE",
-    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-    "run_id": 44577083312,
+    "run": 44929856572,
     "attempt": 1,
-    "new_dispatch": false,
-    "previously_observed_status": "UNCHANGED_C6_ACCEPTED_NO_NEW_PROMOTION_AUTHORIZED",
-    "actually_deployed_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-    "actually_deployed_run_id": 44577083312,
-    "target_version": "0.15.3.0",
-    "target_source_sha": null,
-    "new_run_id": null,
-    "new_deployment_accepted": false,
-    "required_gate_sequence": [
-      "finish_new_CODE_and_canonical_exports",
-      "own_exact_source_CI_and_Pages_SUCCESS",
-      "immutable_DEV_tag",
-      "standard_google_cloud_dev_workflow_exact_source",
-      "native_existing_admin1_and_admin3_startup_and_postready",
-      "original_two_ZIP_and_four_receipt_checks_image_package",
-      "all_public_package_bytes_and_account_preservation",
-      "immutable_PREPROD_tag"
-    ],
-    "expected_frontend_files_to_be_verified": 462,
-    "target_code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c"
+    "workflow": "google-cloud-dev.yml",
+    "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "status": "SUCCESS",
+    "seconds": 488.0,
+    "native": {
+      "admin1": {
+        "existing_island": true,
+        "browser_writes_blocked": true,
+        "startup_ms": 3819.9163049999925,
+        "startup_timeout_ms": 30000
+      },
+      "admin3": {
+        "existing_island": true,
+        "browser_writes_blocked": true,
+        "startup_ms": 24843.347388999973,
+        "worker_observed": true,
+        "startup_heartbeats": 197,
+        "startup_max_gap_ms": 647.8999999999069,
+        "post_ready_ms": 10000.20000000007,
+        "post_ready_heartbeats": 86,
+        "post_ready_max_gap_ms": 422.9000000000233,
+        "ready_retained": true,
+        "startup_timeout_ms": 600000
+      }
+    },
+    "gate_seconds": 15.0,
+    "deploy_seconds": 465.0,
+    "event": "workflow_dispatch",
+    "branch": "main",
+    "dispatched_at_utc": "2026-11-21T17:24:16Z",
+    "dispatch_count": 1,
+    "accepted": true,
+    "completed_at": "2026-11-21T17:32:24Z",
+    "successful_steps": 39,
+    "skipped_steps": 1,
+    "native_crosschecks": {
+      "admin1_start_below_unchanged30s": true,
+      "admin3_start_below_unchanged600s": true,
+      "admin3_Worker_observed": true,
+      "admin3_replay_positive_heartbeat_samples": true,
+      "admin3_replay_max_gap_below1500ms": true,
+      "admin3_post_ready_full10s": true,
+      "admin3_post_ready_stays_ready": true,
+      "admin3_post_ready_positive_samples": true,
+      "admin3_post_ready_max_gap_below1500ms": true
+    },
+    "tag": {
+      "name": "preprod-0.15.3.0-20261121",
+      "object": "eb15ac2f39a563d806c90e2c6fdb214740d1da60",
+      "peeled": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "remote_verified": true
+    }
   },
   "scope": {
     "active_tour_steps": 28,
@@ -255,10 +321,13 @@
     "Python_total_PASS": 173
   },
   "frontend_package": {
-    "status": "PENDING_FINAL_PUBLICATION_SOURCE",
-    "file_count": null,
-    "archive_sha256": null,
-    "manifest_sha256": null
+    "archive": "/workspace/work/advisor-20261121/release/committed-frontend-fc95a1a.tar.gz",
+    "archive_sha256": "3bba1c9265a6ab6e8cd3b2009988794fc33f946263efe8d2f886f5dd3c3d156b",
+    "commit": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "file_count": 462,
+    "manifest_sha256": "aeb67cf2465b9de38b8829a64430b3400018e03ae108a9758a692b901602b38c",
+    "total_bytes": 96621830,
+    "frontend_dir": "/workspace/work/advisor-20261121/release/verified-local-frontend-fc95a1a"
   },
   "canonical_artifacts": {
     "status": "PASS_BUILD_FRESH_VALIDATE_AND_STRICT_DETERMINISTIC_REPEATS",
@@ -446,5 +515,811 @@
     "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
     "no_runtime_change_since_ffb_reference": true
   },
-  "metadata_update_scope": "PRE_PUBLICATION_METADATA_ONLY_F657_RUNTIME_AND_CANONICAL_ARTIFACTS_FROZEN"
+  "metadata_update_scope": "FINAL_METADATA_ONLY_APP_CODE_CANONICAL_EXPORTS_AND_IMMUTABLE_TAGS_UNCHANGED",
+  "accepted_at_utc": "2026-11-21T17:46:53.470717+00:00",
+  "previous_prepublication_metadata": {
+    "status": "LOCAL_READY_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_PUBLICATION_OWN_CI_PAGES_PREPROD_PENDING",
+    "publication_source_sha": null,
+    "CI": {
+      "status": "PENDING_OWN_EXACT_SOURCE",
+      "run_id": null
+    },
+    "Pages": {
+      "status": "PENDING_NEW_PUBLICATION",
+      "run_id": null
+    },
+    "DEV_tag": {
+      "status": "NOT_CREATED",
+      "name": null
+    },
+    "PREPROD": {
+      "status": "AUTHORIZED_PENDING_VERIFIED_DEV_EXACT_CI_STANDARD_WORKFLOW_AND_NATIVE_ACCEPTANCE",
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "run_id": 44577083312,
+      "attempt": 1,
+      "new_dispatch": false,
+      "previously_observed_status": "UNCHANGED_C6_ACCEPTED_NO_NEW_PROMOTION_AUTHORIZED",
+      "actually_deployed_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "actually_deployed_run_id": 44577083312,
+      "target_version": "0.15.3.0",
+      "target_source_sha": null,
+      "new_run_id": null,
+      "new_deployment_accepted": false,
+      "required_gate_sequence": [
+        "finish_new_CODE_and_canonical_exports",
+        "own_exact_source_CI_and_Pages_SUCCESS",
+        "immutable_DEV_tag",
+        "standard_google_cloud_dev_workflow_exact_source",
+        "native_existing_admin1_and_admin3_startup_and_postready",
+        "original_two_ZIP_and_four_receipt_checks_image_package",
+        "all_public_package_bytes_and_account_preservation",
+        "immutable_PREPROD_tag"
+      ],
+      "expected_frontend_files_to_be_verified": 462,
+      "target_code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c"
+    }
+  },
+  "PREPROD_tag": {
+    "name": "preprod-0.15.3.0-20261121",
+    "object": "eb15ac2f39a563d806c90e2c6fdb214740d1da60",
+    "peeled": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "remote_verified": true
+  },
+  "independent_final_proofs": {
+    "original_two_ZIP": true,
+    "standard_receipt": true,
+    "four_receipt_checks": true,
+    "image_digest": true,
+    "original_TAR_all_pins": true,
+    "all_462_PREPROD_normal_TLS_exact": true,
+    "building_manifest_exact_max_age_0_must_revalidate": true,
+    "three_existing_accounts_progress_preserved": false,
+    "account_integrity_with_explicit_owner_restart_review": true
+  },
+  "account_preservation": {
+    "status": "PASS_WITH_OWNER_CONFIRMED_RESTART",
+    "existing": 3,
+    "QA_island_or_clock_writes": false,
+    "UID_generation_origin_preserved": false,
+    "all_profiles_byte_exact": false,
+    "before": {
+      "status": "PASS",
+      "at": "2026-11-21T17:23:56.394Z",
+      "report": "/workspace/work/advisor-20261121/release/before-release22-account-metadata.json",
+      "existing": 3,
+      "empty": 0,
+      "generations": [
+        2,
+        2,
+        2
+      ],
+      "revisions": [
+        332,
+        475,
+        597
+      ],
+      "records": [
+        {
+          "uid": "dev-admin1",
+          "generation": 2,
+          "island_generation": 2,
+          "revision": 332,
+          "island_started_at": 1794824400429,
+          "onboarding_world_started_at": 1794824400429,
+          "update_time": "2026-11-21T17:23:29.922Z",
+          "clock": {
+            "http_status": 403,
+            "denied": true
+          }
+        },
+        {
+          "uid": "dev-admin2",
+          "generation": 2,
+          "island_generation": 2,
+          "revision": 475,
+          "island_started_at": 1795093230210,
+          "onboarding_world_started_at": 1795093230210,
+          "update_time": "2026-11-21T15:34:05.561Z",
+          "clock": {
+            "http_status": 403,
+            "denied": true
+          }
+        },
+        {
+          "uid": "dev-admin3",
+          "generation": 2,
+          "island_generation": 2,
+          "revision": 597,
+          "island_started_at": 1794837111444,
+          "onboarding_world_started_at": 1794837111444,
+          "update_time": "2026-11-21T13:27:25.013Z",
+          "clock": {
+            "http_status": 200,
+            "rate": 1,
+            "clock_revision": 12,
+            "generation": 2,
+            "now": 1795301448315,
+            "real_now": 1795281836294
+          }
+        }
+      ],
+      "normal_TLS": true,
+      "actual_QA_island_or_clock_writes": false,
+      "credentials_or_raw_save_saved": false
+    },
+    "after": {
+      "at": "2026-11-21T17:34:55.775Z",
+      "report": "/workspace/work/advisor-20261121/release/after-release22-account-metadata.json",
+      "revisions": [
+        379,
+        475,
+        597
+      ],
+      "generations": [
+        2,
+        2,
+        2
+      ],
+      "existing": 3,
+      "empty": 0,
+      "actual_QA_island_or_clock_writes": false,
+      "records": [
+        {
+          "uid": "dev-admin1",
+          "same_generation": true,
+          "same_island_origin": false,
+          "revision_non_decreasing": true,
+          "island_origin_status": "ORIGIN_NOT_PRESERVED_OWNER_CONFIRMED_RESTART",
+          "origin_not_preserved_owner_confirmed": true,
+          "before_island_started_at": 1794824400429,
+          "after_island_started_at": 1795282462850,
+          "before_onboarding_world_started_at": 1794824400429,
+          "after_onboarding_world_started_at": 1795282462850,
+          "before_population": 12,
+          "after_population": 18,
+          "before_townhall_level": 1,
+          "after_townhall_level": 1,
+          "before_revision": 332,
+          "after_revision": 379,
+          "same_payload_hash": false,
+          "legitimate_newer_save_allowed": true,
+          "clock_rate_revision_generation_preserved": true,
+          "owner_confirmed_restart": {
+            "confirmation_file": "owner-confirmed-restart-admin1-release22.json",
+            "question_item_id": "[\"request_user_input_async\",\"call_07a34b5d40824a5d940b3757ae75fd88\",0]",
+            "question_verbatim": "Czy około 18:34 uruchomiłeś grę od nowa na admin1? Kontrola po wdrożeniu wykazała nowy początek tej wyspy; admin2 i admin3 zachowały identyczne zapisy.",
+            "answer_verbatim": "Tak — rozpocząłem od nowa na admin1",
+            "before_origin": 1794824400429,
+            "after_origin": 1795282462850,
+            "before_onboarding_origin": 1794824400429,
+            "after_onboarding_origin": 1795282462850
+          }
+        },
+        {
+          "uid": "dev-admin2",
+          "same_generation": true,
+          "same_island_origin": true,
+          "revision_non_decreasing": true,
+          "island_origin_status": "PRESERVED",
+          "origin_not_preserved_owner_confirmed": false,
+          "before_island_started_at": 1795093230210,
+          "after_island_started_at": 1795093230210,
+          "before_onboarding_world_started_at": 1795093230210,
+          "after_onboarding_world_started_at": 1795093230210,
+          "before_population": 72,
+          "after_population": 72,
+          "before_townhall_level": 2,
+          "after_townhall_level": 2,
+          "before_revision": 475,
+          "after_revision": 475,
+          "same_payload_hash": true,
+          "legitimate_newer_save_allowed": false,
+          "clock_rate_revision_generation_preserved": true
+        },
+        {
+          "uid": "dev-admin3",
+          "same_generation": true,
+          "same_island_origin": true,
+          "revision_non_decreasing": true,
+          "island_origin_status": "PRESERVED",
+          "origin_not_preserved_owner_confirmed": false,
+          "before_island_started_at": 1794837111444,
+          "after_island_started_at": 1794837111444,
+          "before_onboarding_world_started_at": 1794837111444,
+          "after_onboarding_world_started_at": 1794837111444,
+          "before_population": 144,
+          "after_population": 144,
+          "before_townhall_level": 4,
+          "after_townhall_level": 4,
+          "before_revision": 597,
+          "after_revision": 597,
+          "same_payload_hash": true,
+          "legitimate_newer_save_allowed": false,
+          "clock_rate_revision_generation_preserved": true,
+          "preserved_selected_rate": 1,
+          "preserved_clock_revision": 12
+        }
+      ]
+    },
+    "compare_policy": {
+      "same_UIDs_generations_and_island_origins": "STRICT_DEFAULT_REQUIRES_ALL; exact owner-confirmed admin1 restart separately accepted, no general exception",
+      "revisions_non_decreasing": true,
+      "legitimate_owner_gameplay_changes_allowed": true,
+      "no_unconditional_payload_byte_identity_requirement": true,
+      "admin3_clock_rate_revision_generation_preserved_expected": [
+        1,
+        12,
+        2
+      ]
+    },
+    "owner_activity": {
+      "uid": "dev-admin1",
+      "observed_before_deploy": "2026-11-21T17:23:29.922Z",
+      "note": "Owner actively played; legitimate state changes during deployment are allowed and must not be attributed to QA.",
+      "restart_directly_confirmed_by_owner": true,
+      "restart_answer_verbatim": "Tak — rozpocząłem od nowa na admin1",
+      "restart_provenance": {
+        "kind": "current_user_async_reply",
+        "source_tool": "request_user_input_async",
+        "tool_call_id": "call_07a34b5d40824a5d940b3757ae75fd88",
+        "question_item_id": "[\"request_user_input_async\",\"call_07a34b5d40824a5d940b3757ae75fd88\",0]",
+        "user_reply_source": "current_thread_not_uploaded_file",
+        "captured_at": "2026-11-21T17:41:30.386151+00:00",
+        "captured_at_is_not_exact_reply_received_time": true,
+        "timezone_for_question": "Europe/Warsaw",
+        "relay": "Root relayed the literal current user question and direct answer; no uploaded document instructions treated as authorization"
+      }
+    },
+    "UID_generation_preserved": true,
+    "owner_restart_record_path": "/workspace/work/advisor-20261121/release/owner-confirmed-restart-admin1-release22.json",
+    "owner_restart_record_sha256": "305334c882200c571d8cf988aa6294a6e738fb2ae9536d0a577c2264c25b5acf",
+    "preservation_report_path": "/workspace/work/advisor-20261121/release/release22-account-preservation.json",
+    "preservation_report_sha256": "1b9c7fefe5350a27e7ab0e324aaea7b7c6b01793d7a2c619cd84038c36f5c24a",
+    "unaffected_profiles_byte_identical": [
+      "dev-admin2",
+      "dev-admin3"
+    ],
+    "unaffected_revisions": {
+      "dev-admin2": 475,
+      "dev-admin3": 597
+    },
+    "admin3_clock_unchanged": true,
+    "strict_default_comparison_status": "FAIL_EXPECTED_OWNER_RESTART_RAW_PRESERVED",
+    "owner_confirmed_restart_UIDs": [
+      "dev-admin1"
+    ],
+    "owner_restart_before_after": {
+      "before": {
+        "at": "2026-11-21T17:23:56.394Z",
+        "uid": "dev-admin1",
+        "generation": 2,
+        "island_generation": 2,
+        "revision": 332,
+        "island_started_at": 1794824400429,
+        "onboarding_world_started_at": 1794824400429,
+        "population": 12,
+        "townhall_level": 1,
+        "payload_sha256": "f574bf0effcc9cc1f68fd4aa61a7edb18075c73eca0b53df495857ae6113dedf"
+      },
+      "after": {
+        "at": "2026-11-21T17:34:55.775Z",
+        "uid": "dev-admin1",
+        "generation": 2,
+        "island_generation": 2,
+        "revision": 379,
+        "island_started_at": 1795282462850,
+        "onboarding_world_started_at": 1795282462850,
+        "population": 18,
+        "townhall_level": 1,
+        "payload_sha256": "29d22a5ca81f0a815a6ccf5dd79b828c890489f9223fcb8437204310e2651daf"
+      }
+    },
+    "comparison_network_requests": 0,
+    "auditor_negative_control_Node_tests": 26,
+    "snapshots_rebaselined": false
+  },
+  "API_image_digest": "sha256:db95f55d33bc90fc0d670400c30116326aa1abc1013571f82914114c59790be1",
+  "final_report_paths": {
+    "CI": "/workspace/work/advisor-20261121/release/CI-44926983827-1/CI-summary.json",
+    "Pages": "/workspace/work/advisor-20261121/release/Pages-44926983937-1/Pages-summary.json",
+    "PREPROD": "/workspace/work/advisor-20261121/release/GCP-44929856572-1/GCP-summary.json",
+    "original_artifact_audit": "/workspace/work/advisor-20261121/release/original-artifact-audit-44929856572-1.json",
+    "public_PREPROD_bytes": "/workspace/work/advisor-20261121/release/preprod-public-byte-audit-44929856572-1.json",
+    "public_Pages_bytes": "/workspace/work/advisor-20261121/release/pages-public-byte-audit-fc95a1a.json",
+    "separate_workbook_bytes": "/workspace/work/advisor-20261121/release/pages-two-xlsx-byte-audit-fc95a1a.json",
+    "account_preservation": "/workspace/work/advisor-20261121/release/release22-account-preservation.json",
+    "before_account_metadata": "/workspace/work/advisor-20261121/release/before-release22-account-metadata.json",
+    "DEV_tag_remote": "/workspace/work/advisor-20261121/release/dev-tag-remote-proof.json",
+    "after_account_metadata": "/workspace/work/advisor-20261121/release/after-release22-account-metadata.json",
+    "owner_confirmed_restart": "/workspace/work/advisor-20261121/release/owner-confirmed-restart-admin1-release22.json",
+    "PREPROD_tag_remote": "/workspace/work/advisor-20261121/release/preprod-tag-remote-proof.json",
+    "building_manifest_header": "/workspace/work/advisor-20261121/release/preprod-runtime-manifest-header-44929856572.json"
+  },
+  "future_UI_requirements": "Subsequent advisor layout/two-minute planner/map-to-menu arrow requests are a separate next version, not included or accepted in0.15.3.0.",
+  "publication_workflow_history": [
+    {
+      "publication": "8f936e74e7e9e166dbb810e46abfcd1d76a093da",
+      "CI": {
+        "run": 44921656994,
+        "status": "CANCELLED",
+        "reason": "automatic concurrency after next main publication",
+        "manual_cancel": false,
+        "Node_PASS": 1831,
+        "Python_PASS": 173,
+        "browser_complete": false,
+        "full_CI_PASS_claimed": false
+      },
+      "Pages": {
+        "run": 44921656906,
+        "attempts": [
+          {
+            "attempt": 1,
+            "status": "FAILURE",
+            "cause": "artifact visibility"
+          },
+          {
+            "attempt": 2,
+            "status": "FAILURE",
+            "cause": "duplicate github-pages artifacts"
+          }
+        ]
+      },
+      "raw_logs_preserved": true
+    },
+    {
+      "publication": "8f936e74e7e9e166dbb810e46abfcd1d76a093da",
+      "Pages": {
+        "run": 44922041299,
+        "attempt": 1,
+        "event": "workflow_dispatch",
+        "status": "FAILURE",
+        "cause": "same old deployment artifact lookup failure"
+      },
+      "raw_logs_preserved": true
+    },
+    {
+      "publication": "b4e454769193b94a9d74c1bd4dce79bb9a324bed",
+      "scope": "workflow-only bounded exact REST artifact poll and actions read; app/export source unchanged",
+      "Pages": {
+        "run": 44922307387,
+        "status": "FAILURE",
+        "cause": "exact REST poll succeeded, old deploy-pagesv4 internal Twirp list returned zero"
+      },
+      "raw_logs_preserved": true,
+      "CI": {
+        "run": 44922307366,
+        "status": "CANCELLED",
+        "reason": "automatic concurrency after next main publication",
+        "manual_cancel": false,
+        "browser_complete": false,
+        "full_CI_PASS_claimed": false
+      }
+    },
+    {
+      "publication": "d5f67cf5eaa4f7058a022358f1a408c12f917cde",
+      "scope": "workflow-only official Pages Node24 actions, application/export code stillf657",
+      "CI": {
+        "run": 44922491921,
+        "status": "FAILURE",
+        "seconds": 738,
+        "Node_PASS": 1831,
+        "Python_PASS": 173,
+        "standalone_browser_PASS": 1,
+        "main_browser_PASS_before_failure": 11,
+        "main_browser_failure_program_number": 12,
+        "main_browser_failure_program": "cloudrules",
+        "cause": "ordinary lighthouse-story-intro dialog blocked existing test flow",
+        "cloud_programs_skipped": 18,
+        "browser_complete": false,
+        "full_CI_PASS_claimed": false
+      },
+      "Pages": {
+        "run": 44922491691,
+        "attempt": 1,
+        "status": "SUCCESS",
+        "seconds": 32,
+        "normal_TLS_content_files": 461,
+        "normal_TLS_content_bytes": 96565813,
+        "two_XLSX_separately_exact": true,
+        "proof_applies_to_own_source_only": true
+      },
+      "fix_scope": "Three-line test-helper fix only; new middle19/late26/cloud18 local cohorts pending",
+      "raw_logs_and_summary_preserved": true,
+      "tags_created": false,
+      "GCP_dispatched": false,
+      "followup_test_only_resolution": {
+        "next_publication": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "changed_test_files": 16,
+        "AST_review_PASS": true,
+        "AST_report_sha256": "3d46c88540528a4eb0f11e4fa7604c7f4dddd30550998fcf8a85c823b7cb9e62",
+        "runtime_and_canonical_sources_unchanged": true,
+        "middle19_PASS": true,
+        "late26_covered_PASS": true,
+        "cloud18_current_PASS": true,
+        "new_own_CI_acceptance_still_pending": true
+      }
+    },
+    {
+      "publication": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "scope": "Sixteen reviewed test-only integration fixes;119runtime and six canonical generator/output files unchanged fromf657",
+      "pushed_utc_reported_by_root": "2026-11-21T16:53:00Z",
+      "CI": {
+        "run": 44926983827,
+        "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "status": "SUCCESS",
+        "event": "push",
+        "branch": "main",
+        "attempt": 1,
+        "seconds": 1755.0,
+        "node_frontend": 1646,
+        "node_backend": 178,
+        "node_board": 7,
+        "node_total": 1831,
+        "python": 173,
+        "browser_programs": 76,
+        "completed_at": "2026-11-21T17:22:16Z",
+        "successful_steps": 36,
+        "expected_node_frontend": 1646,
+        "expected_node_backend": 178,
+        "expected_node_board": 7,
+        "expected_node_total": 1831,
+        "expected_Python": 173,
+        "full_CI_PASS_claimed": true,
+        "unchanged96h_watchdog_pass_ms": 4410.967714,
+        "watchdog_limit_ms": 10000,
+        "watchdog_limit_changed": false,
+        "skipped_steps": 2,
+        "raw_report": "/workspace/work/advisor-20261121/release/CI-44926983827-1/CI-summary.json"
+      },
+      "Pages": {
+        "run": 44926983937,
+        "attempt": 1,
+        "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "status": "SUCCESS",
+        "seconds": 33.0,
+        "content_files": 461,
+        "content_bytes": 96565813,
+        "normal_TLS_all_content_exact": true,
+        "both_XLSX_separately_exact": true,
+        "event": "push",
+        "completed_at": "2026-11-21T16:53:34Z"
+      },
+      "GCP_dispatched": true,
+      "tags_created": true,
+      "AST_report": "/workspace/work/advisor-20261121/ui/test-only-audit/final-test-diff-audit.json",
+      "AST_report_sha256": "3d46c88540528a4eb0f11e4fa7604c7f4dddd30550998fcf8a85c823b7cb9e62",
+      "local_exact_package_PASS": true,
+      "DEV_tag": {
+        "name": "dev-0.15.3.0-20261121",
+        "object": "4fbbb4177a0ab375a0f47bdecee648e67cf1d596",
+        "peeled": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "remote_verified": true
+      },
+      "standard_PREPROD": {
+        "run": 44929856572,
+        "attempt": 1,
+        "workflow": "google-cloud-dev.yml",
+        "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "status": "SUCCESS",
+        "seconds": 488.0,
+        "native": {
+          "admin1": {
+            "existing_island": true,
+            "browser_writes_blocked": true,
+            "startup_ms": 3819.9163049999925,
+            "startup_timeout_ms": 30000
+          },
+          "admin3": {
+            "existing_island": true,
+            "browser_writes_blocked": true,
+            "startup_ms": 24843.347388999973,
+            "worker_observed": true,
+            "startup_heartbeats": 197,
+            "startup_max_gap_ms": 647.8999999999069,
+            "post_ready_ms": 10000.20000000007,
+            "post_ready_heartbeats": 86,
+            "post_ready_max_gap_ms": 422.9000000000233,
+            "ready_retained": true,
+            "startup_timeout_ms": 600000
+          }
+        },
+        "gate_seconds": 15.0,
+        "deploy_seconds": 465.0,
+        "event": "workflow_dispatch",
+        "branch": "main",
+        "dispatched_at_utc": "2026-11-21T17:24:16Z",
+        "dispatch_count": 1,
+        "accepted": true,
+        "completed_at": "2026-11-21T17:32:24Z",
+        "successful_steps": 39,
+        "skipped_steps": 1,
+        "native_crosschecks": {
+          "admin1_start_below_unchanged30s": true,
+          "admin3_start_below_unchanged600s": true,
+          "admin3_Worker_observed": true,
+          "admin3_replay_positive_heartbeat_samples": true,
+          "admin3_replay_max_gap_below1500ms": true,
+          "admin3_post_ready_full10s": true,
+          "admin3_post_ready_stays_ready": true,
+          "admin3_post_ready_positive_samples": true,
+          "admin3_post_ready_max_gap_below1500ms": true
+        }
+      },
+      "pre_acceptance_observation": {
+        "CI": {
+          "run": 44926983827,
+          "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+          "status": "SUCCESS",
+          "event": "push",
+          "branch": "main",
+          "attempt": 1,
+          "seconds": 1755,
+          "node_frontend": 1646,
+          "node_backend": 178,
+          "node_board": 7,
+          "node_total": 1831,
+          "python": 173,
+          "browser_programs": 76,
+          "completed_at": null,
+          "successful_steps": null,
+          "expected_node_frontend": 1646,
+          "expected_node_backend": 178,
+          "expected_node_board": 7,
+          "expected_node_total": 1831,
+          "expected_Python": 173,
+          "full_CI_PASS_claimed": true,
+          "unchanged96h_watchdog_pass_ms": 4410.967714,
+          "watchdog_limit_ms": 10000,
+          "watchdog_limit_changed": false
+        },
+        "Pages": {
+          "run": 44926983937,
+          "attempt": 1,
+          "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+          "status": "SUCCESS",
+          "seconds": 33,
+          "content_files": 461,
+          "content_bytes": 96565813,
+          "normal_TLS_all_content_exact": true,
+          "both_XLSX_separately_exact": true,
+          "event": "push"
+        },
+        "GCP_dispatched": true,
+        "tags_created": {
+          "DEV": true,
+          "PREPROD": false
+        }
+      },
+      "accepted_final_source": true
+    }
+  ],
+  "local_test_only_integration_history": [
+    {
+      "id": "LOCAL_TEST_ONLY_REMAINDER_SWEEPS_AFTER_D5F_FAILURE",
+      "status": "LOCAL_REMAINDER_COHORTS_AND_FINAL_16_FILE_AST_PASS_NEW_PUB_OWN_CI_PENDING",
+      "runtime_code_source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "runtime_package_source": "d5f67cf5eaa4f7058a022358f1a408c12f917cde",
+      "new_publication_source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "scope": "isolated local fixtures and test-only integration; not real PRE-PROD acceptance",
+      "runtime_or_exporter_changes": false,
+      "exact_file_count_and_AST_audit": "PASS_FINAL_ROOT_REVIEW",
+      "parent_provisional_changed_test_file_count": 16,
+      "cloud_cohort": {
+        "status": "PASS_ALL18_CURRENT_WITH_EXPLICIT3_CORRECTED_RETRIES",
+        "current_programs": 18,
+        "first_attempt_PASS": 15,
+        "first_attempt_FAIL_preserved": 3,
+        "corrections": [
+          "settings expected old application version",
+          "economy ordinary Lighthouse story introduction",
+          "housing ordinary Lighthouse story introduction"
+        ],
+        "full_corrected_retries_PASS": 3,
+        "report": "/workspace/work/advisor-20261121/ui/full-sweep-cloud/current-18-program-summary.json",
+        "raw_records_retained_in_report": true,
+        "actual_cloud_or_clock_mutations": false
+      },
+      "middle_accepted_front": {
+        "raw_diagnostic_status": "FAIL_PRESERVED",
+        "failing_viewport_width": 390,
+        "atomic_observation": {
+          "computed_background_image": "",
+          "isConnected": false,
+          "inline_background_image": "none",
+          "source_correct": true,
+          "frame_correct": true
+        },
+        "diagnosis": "A captured locator element was detached during dock replacement; the sampled style did not describe the live element.",
+        "test_helper_correction": {
+          "maximum_atomic_reads": 3,
+          "retry_only_if_disconnected": true,
+          "connected_bad_background_fails_immediately": true,
+          "three_disconnected_reads_fail": true,
+          "runtime_changed": false
+        },
+        "negative_controls_status": "PASS",
+        "negative_controls": [
+          {
+            "case": "live_wrong_background_fails_immediately",
+            "pass": true,
+            "calls": 1,
+            "expected_art_acceptance": false
+          },
+          {
+            "case": "detached_then_live_wrong_fails_immediately",
+            "pass": true,
+            "calls": 2,
+            "expected_art_acceptance": false
+          },
+          {
+            "case": "three_detached_fail_at_bound",
+            "pass": true,
+            "calls": 3,
+            "expected_art_acceptance": false
+          },
+          {
+            "case": "detached_then_live_none_preserves_all_art_checks",
+            "pass": true,
+            "calls": 2,
+            "expected_art_acceptance": true
+          }
+        ],
+        "negative_control_report": "/workspace/work/advisor-20261121/ui/full-sweep-middle/accepted-art-read-negative-controls.json",
+        "probe_report": "/workspace/work/advisor-20261121/ui/full-sweep-middle/accepted-front-art-probe.json",
+        "full_accepted_front_retry": "PASS_FULL_PROGRAM_EXIT0",
+        "retry_status_at_previous_parent_report": "RUNNING_AT_PARENT_REPORT_NOT_YET_CLAIMED_PASS",
+        "full_retry_proof": {
+          "status": "PASS",
+          "exit_code": 0,
+          "all_four_widths": [
+            1672,
+            1440,
+            390,
+            320
+          ],
+          "live_dom_read_bound": 3,
+          "retries_only_if_detached": true,
+          "alive_wrong_background_fails_immediately": true,
+          "full_artwork_and_geometry_assertions_preserved": true,
+          "raw_original_and_diagnostic_failures_preserved": true,
+          "diagnosed_failure": {
+            "computed_background": "",
+            "isConnected": false,
+            "inline_style": "background-image: none;",
+            "source": "building-stages"
+          },
+          "log": "/workspace/work/advisor-20261121/ui/full-sweep-middle/accepted-front-live-read-retry.log",
+          "log_sha256": "9ee2862498ad2645c23d01721541802f0567863da11ebf4d2053374293828759"
+        },
+        "full_retry_proof_path": "/workspace/work/advisor-20261121/ui/full-sweep-middle/accepted-front-current-proof.json",
+        "full_retry_log_bytes": 1768,
+        "all_20_function_entries_verified": true,
+        "physical_map_clicks_by_layout": [
+          8,
+          9
+        ],
+        "all_five_tabs_verified": true,
+        "all_ten_economy_artwork_verified": true,
+        "no_browser_errors": true,
+        "levels_and_workers_unchanged": true
+      },
+      "middle_onboarding_target_replacement": {
+        "raw_old_expectation": "Old three-step introduction expected the whole lower bar.",
+        "current_user_route": "28 steps target the individual category tab at that stop.",
+        "fix_scope": "selector_only",
+        "geometry_replacement_resize_frozen_world_assertions_preserved": true,
+        "final_full_retry": "PASS_IN_COMPLETED_MIDDLE19_COHORT"
+      },
+      "raw_failures_preserved": true,
+      "new_CI_Pages_tags_or_GCP_acceptance_claimed": false,
+      "apply_repository_metadata_authorized": false,
+      "AST_review": {
+        "reviewed_test_files": 16,
+        "status": "PASS",
+        "report": "/workspace/work/advisor-20261121/ui/test-only-audit/final-test-diff-audit.json",
+        "sha256": "3d46c88540528a4eb0f11e4fa7604c7f4dddd30550998fcf8a85c823b7cb9e62",
+        "frozen_runtime_source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "frozen_runtime_files": 119,
+        "canonical_generators_outputs_verified": [
+          {
+            "path": "scripts/build_workbook_v15.py",
+            "sha256": "d62765c70e07b417eab8a488a36d64256242d0de41fed13215fb91b8b6d7576b"
+          },
+          {
+            "path": "scripts/export_workbook_v15_facts.mjs",
+            "sha256": "d65c778a2040b29112a9349501948bf04197e1c122476ca83fb5792d63f8cb87"
+          },
+          {
+            "path": "scripts/export_workbook_v15_texts.mjs",
+            "sha256": "a23a536f96423d503f3d5429d40eff24b406748a8511399fafaf3e1bf14ec142"
+          },
+          {
+            "path": "scripts/export_workbook_v15_scenarios.mjs",
+            "sha256": "872c6a9716f4a700b933ba4a01263acfcb07f3ffe6dc33b37d2ff50ba565efb3"
+          },
+          {
+            "path": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+            "sha256": "ab4570ad897eeb2d26d3ca69fa36488afe31f435141a4636be1d5f9802c4b87b"
+          },
+          {
+            "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+            "sha256": "75afe37fc988e9e367dd9c7f4f9da08e49cb9a169d725c3b3006542b2ca430e7"
+          }
+        ],
+        "allowed_preparation": "Only shared real UI dismiss_player_offers import/call and strict gameStartup ready wait without timeout override",
+        "version_exception": "settings-signout only: expected display version0.15.2.4→0.15.3.0 and matching PASS log, same assertion node/type",
+        "diagnostic_exception": {
+          "path": "tests/helpers/building_stage_acceptance.py",
+          "condition_preserved": "getComputedStyle(n).backgroundImage must equal exactly 'none'",
+          "new_binding": "synchronous single snapshot.computed",
+          "snapshot_JS_sha256": "75f8f161c810378a0cf83a5632452fd373618fa12040ce6518f5e4d03c7bd405",
+          "expanded_failure_payload": true,
+          "detached_only_reacquisition_max": 3,
+          "live_wrong_background_retried": false,
+          "three_detached_reads_must_fail": true,
+          "wait_skip_or_timeout_added": false,
+          "independent_negative_controls": "/tmp/harborlight-guidance-art-detached-independent-controls.json",
+          "independent_negative_controls_status": "4_PASS"
+        },
+        "target_selector_exception": {
+          "path": "tests/harborlight-onboarding-target-replacement-v32-smoke.py",
+          "old_mobile": ".mobile-bottom-dock",
+          "new_mobile": "[data-mobile-category=administration]",
+          "old_desktop": ".dock-tabs",
+          "new_desktop": "#hit-category-administration",
+          "geometry_replacement_resize_frozen_state_assertions_unchanged": true
+        },
+        "helper_negative_controls_independently_PASS": true,
+        "final_review_DONE": "PASS"
+      },
+      "cohort_progress_at_parent_report": {
+        "middle_other_programs": {
+          "count": 18,
+          "remaining": 2,
+          "status": "FINISHING_NOT_ALL_CLAIMED_PASS"
+        },
+        "late_learning_v27": {
+          "total_cases": 24,
+          "remaining": 4,
+          "status": "FINISHING_NOT_ALL_CLAIMED_PASS"
+        },
+        "status": "HISTORICAL_PROGRESS_SNAPSHOT_SUPERSEDED_BY_COMPLETED_COHORT_REPORTS"
+      },
+      "reviewed_changed_test_file_count": 16,
+      "completed_remainder_cohorts": {
+        "middle": {
+          "status": "PASS",
+          "unique_programs": 19,
+          "report": "/workspace/work/advisor-20261121/ui/full-sweep-middle/summary.json",
+          "sha256": "62e89dfaf4a149741830072fe905841ee460e4d6e9b6b7468ce44e29e595d4cc",
+          "raw_failures_preserved": true
+        },
+        "late": {
+          "status": "PASS_LATE26_COVERED_20_FRESH_FULL_4_PRIOR_FULL_2_EXPLICIT_PARTITIONED",
+          "covered_programs": 26,
+          "fresh_full_programs": 20,
+          "prior_full_programs": 4,
+          "complete_explicit_partitioned_programs": 2,
+          "report": "/workspace/work/advisor-20261121/ui/full-sweep-late/late-combined-summary.json",
+          "sha256": "f1b8f94c17d75ea9153f330cae273b44aaed48be7326cace4c689746cb2cae11",
+          "raw_failures_preserved": true
+        },
+        "cloud": {
+          "status": "PASS_ALL18_CURRENT_WITH_EXPLICIT3_CORRECTED_RETRIES",
+          "current_programs": 18,
+          "first_attempt_PASS": 15,
+          "first_attempt_FAIL_preserved": 3,
+          "corrections": [
+            "settings expected old application version",
+            "economy ordinary Lighthouse story introduction",
+            "housing ordinary Lighthouse story introduction"
+          ],
+          "full_corrected_retries_PASS": 3,
+          "report": "/workspace/work/advisor-20261121/ui/full-sweep-cloud/current-18-program-summary.json",
+          "raw_records_retained_in_report": true,
+          "actual_cloud_or_clock_mutations": false
+        }
+      }
+    }
+  ]
 }

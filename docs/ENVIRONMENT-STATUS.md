@@ -1,18 +1,13 @@
 # HARBORLIGHT — stan środowisk
 
-## DEV 0.15.3.0 / cache22 — lokalnie gotowy CODE, publikacja oczekuje
 
-| Obszar | Aktualny stan |
-|---|---|
-| Roboczy DEV | Lokalny kandydat gotowy: tutorial 28, zachowany ukryty Samouczek 25, Doradca 1 cel / 2–5 akcji i czytelne etykiety. |
-| CODE i eksporty | Zamrożone `f6572ee7500b42f56d1575de2e173d1bd635216c`; 119 plików runtime zgodnych bajtowo. Master 161 i redakcyjny 6/413 oraz minigry 55/110 mają PASS. |
-| Publikacja / własny CI / Pages / tagi | PENDING nowej publikacji; brak nowego przyjętego wydania na podstawie wcześniejszego C6. |
-| Dotychczas publiczny DEV | Odebrane C6 / 0.15.2.4 / cache21 / d5ad do osobnej publikacji. |
-| PRE-PROD faktyczne | Bez zmiany: C6/d5ad, standardowy44577083312/próba1. Nowego wdrożenia jeszcze nie potwierdzono. |
-| PRE-PROD planowane | Jawnie autoryzowane poleceniem „jak skończysz wrzuć na pre prod”, po ukończeniu DEV, własnym CI/Pages i standardowym odbiorze tego samego źródła. |
-| Konta / PROD / DNS | Bez resetu lub nowych operacji. |
+## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 
-[Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Bieżące dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Ręczny odbiór187 przypadków: **NOT RUN**. Poniższy odbiór C6 zachowuje własny historyczny zakres i nadal opisuje faktyczne PRE-PROD.
+Kod aplikacji i kanonicznych eksportów: `f6572ee7500b42f56d1575de2e173d1bd635216c`; odebrana publikacja: `fc95a1aadf36a115538ed0b846f9ce48fbba651b`. Własny [CI44926983827](https://github.com/ksobczak321-oss/gra/actions/runs/44926983827) ma **SUCCESS 29 min 15 s**: 1831 Node, 173 Python i 76 programów Chromium. Bieżące [Pages44926983937](https://github.com/ksobczak321-oss/gra/actions/runs/44926983937) ma osobny SUCCESS; wcześniejsze nieudane Pages oraz nieudane i automatycznie anulowane CI pozostają historią. Standardowy [PRE-PROD44929856572/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1) ma **SUCCESS 8 min 08 s**.
+
+Rzeczywisty admin3 wystartował w **24,843 s**, a przez kolejne 10 s zwykłej gry zachował gotowy ekran i maksymalną przerwę 422.9000000000233 ms. Zapisy testowej przeglądarki były blokowane. UID kont i generacje 2 zachowano. Profile admin2 i admin3 pozostały identyczne bajtowo, z tymi samymi początkami i rewizjami 475/597 oraz niezmienionym zegarem admin3. Użytkownik jawnie potwierdził rozpoczęcie od nowa na admin1 podczas audytu: rewizja 332→379, populacja 12→18 i nowy początek wyspy. Tego postępu i początku nie opisujemy jako zachowanych; QA oraz wdrożenie nie zapisywały świata ani nie resetowały kont. Oba oryginalne ZIP-y, cztery warunki receipt, obraz API, dokładny TAR i wszystkie 462 publiczne pliki mają niezależny PASS. Oba XLSX sprawdzono osobno na Pages. Niezmienne tagi `dev-0.15.3.0-20261121` i `preprod-0.15.3.0-20261121` są zdalnie potwierdzone na tej samej publikacji.
+
+[Zakres i zachowana historia](v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Ręczny odbiór wszystkich 187 przypadków: **NOT RUN**. Końcowe metadane nie zmieniają aplikacji, arkuszy ani tagów; bez resetu przez QA lub wdrożenie, zmiany haseł, PROD lub DNS. Potwierdzony restart właściciela admin1 opisano osobno. QA nie zapisywał przeliczonej wyspy. Poniżej zachowano poprzednie wydania w ich historycznym zakresie.
 
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 

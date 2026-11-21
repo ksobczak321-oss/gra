@@ -1,10 +1,13 @@
 # Wersja gry HARBORLIGHT
 
-## W przygotowaniu: 0.15.3.0 / frontend-v32-22
 
-Pakiet nowego GO z 21 listopada 2026 podnosi segment C: **0.15.2.4 → 0.15.3.0**, a D wraca do0. Obejmuje spójne zmiany tutoriala, zachowanego ukrytego Samouczka, Doradcy i etykiet mapy. Schemat świata 9, ruleset 32 i archipelag 2 pozostają niezależne i bez zmiany.
+## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 
-CODE **`f6572ee7500b42f56d1575de2e173d1bd635216c`** jest zamrożony; eksporty i oba arkusze mają świeżą walidację PASS. Publikacja, własny CI, Pages, tag DEV i nowy tag PRE-PROD są PENDING. Dotychczasowe publiczne DEV i PRE-PROD pozostają odebrane C6/0.15.2.4/d5ad. Po pierwotnym GO tylko na DEV użytkownik jawnie zlecił „jak skończysz wrzuć na pre prod”, więc standardowy PRE-PROD jest autoryzowany po ukończeniu i zweryfikowaniu nowego DEV; nie jest jeszcze wdrożony. [Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Starsze zapisy wersji poniżej są historią swoich wydań.
+Kod aplikacji i kanonicznych eksportów: `f6572ee7500b42f56d1575de2e173d1bd635216c`; odebrana publikacja: `fc95a1aadf36a115538ed0b846f9ce48fbba651b`. Własny [CI44926983827](https://github.com/ksobczak321-oss/gra/actions/runs/44926983827) ma **SUCCESS 29 min 15 s**: 1831 Node, 173 Python i 76 programów Chromium. Bieżące [Pages44926983937](https://github.com/ksobczak321-oss/gra/actions/runs/44926983937) ma osobny SUCCESS; wcześniejsze nieudane Pages oraz nieudane i automatycznie anulowane CI pozostają historią. Standardowy [PRE-PROD44929856572/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1) ma **SUCCESS 8 min 08 s**.
+
+Rzeczywisty admin3 wystartował w **24,843 s**, a przez kolejne 10 s zwykłej gry zachował gotowy ekran i maksymalną przerwę 422.9000000000233 ms. Zapisy testowej przeglądarki były blokowane. UID kont i generacje 2 zachowano. Profile admin2 i admin3 pozostały identyczne bajtowo, z tymi samymi początkami i rewizjami 475/597 oraz niezmienionym zegarem admin3. Użytkownik jawnie potwierdził rozpoczęcie od nowa na admin1 podczas audytu: rewizja 332→379, populacja 12→18 i nowy początek wyspy. Tego postępu i początku nie opisujemy jako zachowanych; QA oraz wdrożenie nie zapisywały świata ani nie resetowały kont. Oba oryginalne ZIP-y, cztery warunki receipt, obraz API, dokładny TAR i wszystkie 462 publiczne pliki mają niezależny PASS. Oba XLSX sprawdzono osobno na Pages. Niezmienne tagi `dev-0.15.3.0-20261121` i `preprod-0.15.3.0-20261121` są zdalnie potwierdzone na tej samej publikacji.
+
+[Zakres i zachowana historia](v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Ręczny odbiór wszystkich 187 przypadków: **NOT RUN**. Końcowe metadane nie zmieniają aplikacji, arkuszy ani tagów; bez resetu przez QA lub wdrożenie, zmiany haseł, PROD lub DNS. Potwierdzony restart właściciela admin1 opisano osobno. QA nie zapisywał przeliczonej wyspy. Poniżej zachowano poprzednie wydania w ich historycznym zakresie.
 
 ## DEV 0.15.1.0 — doradca i redakcja, odebrany
 

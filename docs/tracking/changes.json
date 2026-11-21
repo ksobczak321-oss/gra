@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-21",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów. Zadanie z 16 listopada: pełny MASTER 15 ze źródeł e23b jest gotowy; archiwum 14 zachowane, bieżące zasady, teksty, scenariusze i symulacje 24/24/72 h zwalidowane PASS. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. Gra, redakcyjny Excel z sześcioma zakładkami, konta i wdrożenia bez zmian. GO z18listopada2026 obejmuje wyłącznie DEV0.15.2.0/cache16: dziesięć wyglądów każdego z20budynków dla par poziomów1–20 oraz średniowieczny żuraw podczas rzeczywistej budowy. Ostatnia grafika pozostaje powyżej20bez zmiany limitu modelu; dawna dekoracyjna chatkaZakładu skórzanego wizualnie podąża zaRatuszem bez nowej funkcji. Istniejący żaglowiecPortu pozostaje. Karty1164–1165 mają własny odbiórPENDING; bezPRE-PROD,PROD,DNS,resetu i zmian ekonomii. Sprawdzenie istniejącego modelu wykazałoTeatrmaxLevel1: jako jawny wybór integracji tylkojego wygląd śledzi poziomRatusza, bez zmiany rzeczywistegopoziomu1,reguł,czasów lub kosztów. ZakresDEV obejmuje także publiczny katalog harborlight-building-gallery.html z200wariantami. Nowe GO z 21 listopada 2026 obejmuje wyłącznie DEV 0.15.3.0 / cache22:28 kroków tutoriala, osiem opisów menu pod i, czasowe ukrycie samouczka25 lekcji z zachowaniem postępu, bieżące rady1 cel/2–5 akcji, prawdziwe minigry przy braku monet i czytelne etykiety poziomów. Karty1175–1182 oraz przypadki 0180–0187 mają odrębny odbiór; PRE-PROD pozostaje odebrany C6/d5ad bez nowej promocji. Późniejsze jawne polecenie „jak skończysz wrzuć na pre prod” autoryzuje także standardowy PRE-PROD tej paczki po ukończeniu DEV i własnym CI/Pages. Pierwotny zakres tylkoDEV pozostaje faktem historycznym; nowa promocja nadal PENDING, bez resetu, zmiany haseł, PROD lub DNS.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów. Zadanie z 16 listopada: pełny MASTER 15 ze źródeł e23b jest gotowy; archiwum 14 zachowane, bieżące zasady, teksty, scenariusze i symulacje 24/24/72 h zwalidowane PASS. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. Gra, redakcyjny Excel z sześcioma zakładkami, konta i wdrożenia bez zmian. GO z18listopada2026 obejmuje wyłącznie DEV0.15.2.0/cache16: dziesięć wyglądów każdego z20budynków dla par poziomów1–20 oraz średniowieczny żuraw podczas rzeczywistej budowy. Ostatnia grafika pozostaje powyżej20bez zmiany limitu modelu; dawna dekoracyjna chatkaZakładu skórzanego wizualnie podąża zaRatuszem bez nowej funkcji. Istniejący żaglowiecPortu pozostaje. Karty1164–1165 mają własny odbiórPENDING; bezPRE-PROD,PROD,DNS,resetu i zmian ekonomii. Sprawdzenie istniejącego modelu wykazałoTeatrmaxLevel1: jako jawny wybór integracji tylkojego wygląd śledzi poziomRatusza, bez zmiany rzeczywistegopoziomu1,reguł,czasów lub kosztów. ZakresDEV obejmuje także publiczny katalog harborlight-building-gallery.html z200wariantami. Nowe GO z 21 listopada 2026 obejmuje wyłącznie DEV 0.15.3.0 / cache22:28 kroków tutoriala, osiem opisów menu pod i, czasowe ukrycie samouczka25 lekcji z zachowaniem postępu, bieżące rady1 cel/2–5 akcji, prawdziwe minigry przy braku monet i czytelne etykiety poziomów. Karty1175–1182 oraz przypadki 0180–0187 mają odrębny odbiór; PRE-PROD pozostaje odebrany C6/d5ad bez nowej promocji. Późniejsze jawne polecenie „jak skończysz wrzuć na pre prod” autoryzuje także standardowy PRE-PROD tej paczki po ukończeniu DEV i własnym CI/Pages. Pierwotny zakres tylkoDEV pozostaje faktem historycznym; nowa promocja nadal PENDING, bez resetu, zmiany haseł, PROD lub DNS. Końcowy odbiór0.15.3.0/cache22 potwierdzono dla publikacjifc95a1aadf36a115538ed0b846f9ce48fbba651b, własnegoCI44926983827, Pages44926983937 i standardowegoPREPROD44929856572; wcześniejsze zdania o oczekiwaniu są historią. Wszystkie187 ręcznych prób nadal NOT RUN, bez resetu przezQA/wdrożenie, PROD i DNS; restart admin1 był działaniem właściciela.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -31558,9 +31558,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31591,12 +31591,13 @@
           "tests/harborlight-tour-guidance-v32.test.mjs",
           "tests/harborlight-tour-route-v5-smoke.py"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -31635,9 +31636,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31666,12 +31667,13 @@
           "tests/harborlight-menu-tour-info-v32-smoke.py",
           "tests/harborlight-tour-guidance-v32.test.mjs"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -31710,9 +31712,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31744,12 +31746,13 @@
           "tests/harborlight-practical-paused-v32-smoke.py",
           "tests/helpers/browser_tutorial.py"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -31788,9 +31791,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31824,12 +31827,13 @@
           "tests/harborlight-advisor-live-guidance.test.mjs",
           "tests/harborlight-advisor-ui-smoke.py"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -31868,9 +31872,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31899,12 +31903,13 @@
         "automated_tests": [
           "tests/harborlight-advisor-live-guidance.test.mjs"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -31943,9 +31948,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -31976,12 +31981,13 @@
           "tests/harborlight-map-labels-v32-smoke.py",
           "tests/harborlight-native-map-v32-smoke.py"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -32020,9 +32026,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32054,12 +32060,13 @@
           "tests/harborlight-learning-ads-v26.test.mjs",
           "tests/harborlight-missions-v27.test.mjs"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -32098,9 +32105,9 @@
       },
       "status": {
         "implementation": "implemented",
-        "dev": "LOCAL_READY_F657_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_PUBLICATION_CI_PENDING",
-        "ci": "pending_own_exact_source",
-        "preprod": "authorized_pending_verified_DEV_and_exactCI",
+        "dev": "ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS",
+        "ci": "SUCCESS_44926983827_EXACT_fc95a1a",
+        "preprod": "ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32133,12 +32140,13 @@
           "tests/harborlight-advisor-live-guidance.test.mjs",
           "tests/harborlight-advisor.test.mjs"
         ],
-        "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
         "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-        "ci_run_url": null,
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44926983827",
         "manual_execution": "NOT_RUN",
-        "release_note": "CODE f6572ee7500b42f56d1575de2e173d1bd635216c /0.15.3.0/cache22 zamrożony;119runtime plików byte-exact. Master161/64876/130źródeł, editorial6/413ABC Cempty112fingerprints i minigry55/110 mają świeży PASS. Dwa pełne eksporty24/24/72h są byte-identyczne; wszystkie stare wartości C6 zachowane, jawnie dodane dwa pola fikstury/profil. Pierwsze1644/1646FAIL,22copyPASS i rawffb freshFAIL/sześć różnic zboża pozostają oddzielne; nie deklarujemy1646localPASS. Własny PUB/CI/Pages/tagi i nowy standardowy PRE-PROD PENDING. Autoryzacja użytkownika DEV→ownCI/Pages→PRE-PROD obowiązuje; faktyczne PRE-PROD nadal C6/d5ad/44577083312. Bez resetu, zmiany kont/haseł, PROD i DNS.",
-        "publication_source_sha": null
+        "release_note": "DEV i PRE-PROD0.15.3.0/cache22 przyjęte z CODEf657 i PUBfc95a1a. CI44926983827 SUCCESS1831Node/173Python/76Chromium, Pages44926983937 SUCCESS, standardowyPREPROD44929856572/1 SUCCESS; oryginalneZIP/receipt4/TAR462/TLS462 i integralność kont z jawnym restartem właścicielaadmin1PASS; admin2/admin3 byte-intact, UID/gen2 preserved, QA0writes. Pierwotne1644/1646, artefaktyffb, wcześniejszePages i CI44922491921 pozostają historycznymiFAIL; 1831Node/173PythonPASS z niepełnego d5fCI nie jest pełnymPASS tego przebiegu. 187manualNOT_RUN, bez resetu przezQA/wdrożenie/PROD/DNS.",
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1"
       },
       "notes": [
         "Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.",
@@ -32159,12 +32167,12 @@
   ],
   "current_environment": {
     "as_of": "2026-11-21",
-    "preprod_application_version": "0.15.2.4",
-    "preprod_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-    "preprod_ci_run_id": 44569674535,
-    "preprod_deployment_run_id": 44577083312,
+    "preprod_application_version": "0.15.3.0",
+    "preprod_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "preprod_ci_run_id": 44926983827,
+    "preprod_deployment_run_id": 44929856572,
     "preprod_deployment_attempt": 1,
-    "preprod_status": "ACCEPTED_C6_NATIVE_ADMIN1_ADMIN3_ORIGINAL_RECEIPT_ARCHIVE_ALL_TLS_FILES_AND_ACCOUNT_PRESERVATION_PASS",
+    "preprod_status": "ACCEPTED_NATIVE_EXISTING_UI_ORIGINAL_ARTIFACTS_ALL_BYTES_ACCOUNTS",
     "prod_status": "postponed_by_user",
     "full_test_account_reset": "earlier_RESET_SUCCESS_INDEPENDENTLY_VERIFIED_not_repeated_by_this_deployment",
     "note": "DEV i PRE-PROD 0.15.2.4/cache21 przyjęte automatycznie na publikacji d5ad35c, kod e394ea8. Własne CI 44569674535 SUCCESS: 1784 Node, 173 Python, 73 programy Chromium; Pages 44569674475 SUCCESS. Standardowy PRE-PROD 44577083312/1 SUCCESS, oryginalne dwa ZIP/receipt/TAR i wszystkie 460 plików HTTPS zgodne. Rzeczywisty admin3: start 280,121 s, responsywny Worker i 10 s gotowej gry; trzy konta, postęp i zegary zachowane. Ręczny odbiór użytkownika i 179 przypadków NOT RUN. Historyczne DDA, B94 QUALITY FAIL, C4 CI FAIL i C5 QUALITY HOLD pozostają odrębne. Bez resetu, PROD i DNS.",
@@ -32194,8 +32202,8 @@
         "dev_tag": "dev-0.13.0.0-20261103"
       }
     },
-    "preprod_promotion_status": "completed_success_source_C6_d5ad35c",
-    "preprod_promotion_target": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "preprod_promotion_status": "COMPLETED_ACCEPTED",
+    "preprod_promotion_target": "0.15.3.0",
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
       "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
@@ -32204,53 +32212,42 @@
       "preprod_deployment_attempt": 1,
       "preprod_status": "previous_release_verified"
     },
-    "preprod_pages_run_id": 44569674475,
+    "preprod_pages_run_id": 44926983937,
     "preprod_bridge_run_id": null,
-    "preprod_tag": "preprod-0.15.2.4-20261119",
-    "preprod_tag_remote_object": "6a3e833440117e6f80e530f4281241761847cb88",
+    "preprod_tag": "preprod-0.15.3.0-20261121",
+    "preprod_tag_remote_object": "eb15ac2f39a563d806c90e2c6fdb214740d1da60",
     "preprod_artifacts": {
-      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-      "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-      "run": 44577083312,
+      "status": "PASS_ORIGINAL_TWO_ZIP_FOUR_RECEIPT_CHECKS_IMAGE_TAR_ALL_PUBLIC_BYTES",
+      "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "run": 44929856572,
       "attempt": 1,
-      "original_ZIPs": [
-        {
-          "kind": "release",
-          "artifact_id": 14556888714,
-          "name": "harborlight-dev-release-44577083312-1",
-          "bytes": 616,
-          "sha256": "9c5306b7f21d09b099719c1a88b5d983ebdb801391b49e709df12c61b27ce119"
-        },
-        {
-          "kind": "frontend",
-          "artifact_id": 14557818037,
-          "name": "harborlight-dev-frontend-44577083312-1",
-          "bytes": 92553081,
-          "sha256": "2f7f5a0d45f33c0c7c631db9fa9b45e53723fa523fa69622e8785ab6b844d537"
-        }
-      ],
-      "receipt_checks": {
-        "ci": true,
-        "dev_smoke": true,
-        "frontend_smoke": true,
-        "account_api": true
+      "package": {
+        "archive": "/workspace/work/advisor-20261121/release/committed-frontend-fc95a1a.tar.gz",
+        "archive_sha256": "3bba1c9265a6ab6e8cd3b2009988794fc33f946263efe8d2f886f5dd3c3d156b",
+        "commit": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "file_count": 462,
+        "manifest_sha256": "aeb67cf2465b9de38b8829a64430b3400018e03ae108a9758a692b901602b38c",
+        "total_bytes": 96621830,
+        "frontend_dir": "/workspace/work/advisor-20261121/release/verified-local-frontend-fc95a1a"
       },
-      "receipt_member": {
-        "member": "release.json",
-        "bytes": 989,
-        "sha256": "6604f9ecec6e2677377427f2ca83b469338bf025cd69ef2654c6500b730542ba"
+      "image_digest": "sha256:db95f55d33bc90fc0d670400c30116326aa1abc1013571f82914114c59790be1",
+      "report_paths": {
+        "CI": "/workspace/work/advisor-20261121/release/CI-44926983827-1/CI-summary.json",
+        "Pages": "/workspace/work/advisor-20261121/release/Pages-44926983937-1/Pages-summary.json",
+        "PREPROD": "/workspace/work/advisor-20261121/release/GCP-44929856572-1/GCP-summary.json",
+        "original_artifact_audit": "/workspace/work/advisor-20261121/release/original-artifact-audit-44929856572-1.json",
+        "public_PREPROD_bytes": "/workspace/work/advisor-20261121/release/preprod-public-byte-audit-44929856572-1.json",
+        "public_Pages_bytes": "/workspace/work/advisor-20261121/release/pages-public-byte-audit-fc95a1a.json",
+        "separate_workbook_bytes": "/workspace/work/advisor-20261121/release/pages-two-xlsx-byte-audit-fc95a1a.json",
+        "account_preservation": "/workspace/work/advisor-20261121/release/release22-account-preservation.json",
+        "before_account_metadata": "/workspace/work/advisor-20261121/release/before-release22-account-metadata.json",
+        "DEV_tag_remote": "/workspace/work/advisor-20261121/release/dev-tag-remote-proof.json",
+        "after_account_metadata": "/workspace/work/advisor-20261121/release/after-release22-account-metadata.json",
+        "owner_confirmed_restart": "/workspace/work/advisor-20261121/release/owner-confirmed-restart-admin1-release22.json",
+        "PREPROD_tag_remote": "/workspace/work/advisor-20261121/release/preprod-tag-remote-proof.json",
+        "building_manifest_header": "/workspace/work/advisor-20261121/release/preprod-runtime-manifest-header-44929856572.json"
       },
-      "frontend_member": {
-        "member": "harborlight-frontend.tar.gz",
-        "bytes": 92526359,
-        "sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b"
-      },
-      "archive_sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b",
-      "manifest_sha256": "679f47bfa1a7d0fb412fd6bf919f43834fcd8c599f16ac59d4996a5805c6733c",
-      "files": 460,
-      "bytes": 96565038,
-      "five_content_pins": "PASS",
-      "image_digest": "sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda"
+      "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json"
     },
     "previous_accepted_dev_v30": {
       "dev_application_version": "0.13.1.0",
@@ -32307,16 +32304,16 @@
       ]
     },
     "preprod_bridge_duration": null,
-    "preprod_deployment_duration": "754s_total;721s_deploy_job",
+    "preprod_deployment_duration": "7 min 45 s",
     "dev_application_version": "0.15.3.0",
-    "dev_status": "LOCAL_READY_CODE_FROZEN_CANONICAL_ARTIFACTS_PASS_OWN_CI_AND_PUBLICATION_PENDING",
-    "dev_ci": "PENDING_OWN_EXACT_SOURCE",
-    "dev_source_sha": null,
+    "dev_status": "ACCEPTED_EXACT_PUB_CI_PAGES_ALL_BYTES",
+    "dev_ci": "SUCCESS",
+    "dev_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
     "dev_implementation_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-    "dev_ci_run_id": null,
-    "dev_pages_run_id": null,
-    "dev_pages_conclusion": "PENDING_NEW_PUBLICATION",
-    "dev_tag": null,
+    "dev_ci_run_id": 44926983827,
+    "dev_pages_run_id": 44926983937,
+    "dev_pages_conclusion": "SUCCESS",
+    "dev_tag": "dev-0.15.3.0-20261121",
     "dev_cache": "frontend-v32-22",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
@@ -32326,10 +32323,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": null,
-    "frontend_manifest_sha256": null,
-    "frontend_file_count": null,
-    "frontend_total_bytes": null,
+    "frontend_archive_sha256": "3bba1c9265a6ab6e8cd3b2009988794fc33f946263efe8d2f886f5dd3c3d156b",
+    "frontend_manifest_sha256": "aeb67cf2465b9de38b8829a64430b3400018e03ae108a9758a692b901602b38c",
+    "frontend_file_count": 462,
+    "frontend_total_bytes": 96621830,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -32390,13 +32387,13 @@
       "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
       "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
     },
-    "public_asset_file_count": 459,
-    "public_asset_total_bytes": 96509270,
-    "current_directory_scope": "Local-ready DEV0.15.3.0/cache22 CODEf657 frozen,119runtimefiles byte-exact, canonicalartifactsPASS. New PUB, ownCI/Pages/tags and authorized standardPREPROD pending; actual PREPROD remains C6/d5ad/44577083312.",
-    "dev_tag_remote_object": null,
-    "dev_tag_remote_verified": false,
-    "dev_ci_completed_at": "2026-11-19T17:24:27Z",
-    "dev_ci_duration": "39m02s_workflow;38m59s_validate_job",
+    "public_asset_file_count": 461,
+    "public_asset_total_bytes": 96565813,
+    "current_directory_scope": "Accepted0.15.3.0/cache22 CODEf657 PUBfc95a1a, CI44926983827, Pages44926983937, standardPREPROD44929856572; metadata followup only, manual187NOT_RUN.",
+    "dev_tag_remote_object": "4fbbb4177a0ab375a0f47bdecee648e67cf1d596",
+    "dev_tag_remote_verified": true,
+    "dev_ci_completed_at": "2026-11-21T17:22:16Z",
+    "dev_ci_duration": "29 min 15 s",
     "dev_ci_successful_steps": 36,
     "dev_ci_failed_steps": 0,
     "previous_accepted_dev_cache8": {
@@ -32518,23 +32515,14 @@
       "preprod_account_API_enabled": false,
       "preprod_tag_scope": "historical source and artifact verification; functional acceptance reopened"
     },
-    "preprod_application_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-    "preprod_gate_duration": "24s",
+    "preprod_application_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+    "preprod_gate_duration": "0 min 15 s",
     "preprod_tag_remote_verified": true,
-    "preprod_public_content_files": 459,
-    "preprod_public_content_bytes": 96509270,
-    "preprod_public_including_manifest_files": 460,
-    "preprod_public_HTTPS_hash_audit": {
-      "status": "PASS",
-      "checked_at_utc": "2026-11-19T17:40:59.910810+00:00",
-      "normal_TLS": true,
-      "all_files": 460,
-      "total_bytes": 96565038,
-      "matches_original_frontend_archive": true,
-      "runtime_manifest": "max-age=0, must-revalidate; exact current body",
-      "warm_browser_cache_acceptance_claimed_by_TLS_audit": false
-    },
-    "preprod_next_promotion_status": "authorized_pending_verified_DEV_and_exactCI",
+    "preprod_public_content_files": 461,
+    "preprod_public_content_bytes": 96559765,
+    "preprod_public_including_manifest_files": 462,
+    "preprod_public_HTTPS_hash_audit": "PASS_ALL462_NORMAL_TLS_EXACT_ORIGINAL_PACKAGE",
+    "preprod_next_promotion_status": "COMPLETED_ACCEPTED",
     "owner_reset_report": {
       "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
       "deployment_run_id": 43768861718,
@@ -34131,11 +34119,11 @@
       "subsequent_promotion_as_of": "2026-11-18"
     },
     "preprod_observed_candidate": {
-      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-      "version": "0.15.2.4",
-      "status": "ACCEPTED_C6_NATIVE_ADMIN1_ADMIN3_ALL_INDEPENDENT_AUDITS_PASS",
-      "run": 44577083312,
+      "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "version": "0.15.3.0",
+      "status": "ACCEPTED",
+      "run": 44929856572,
       "attempt": 1,
       "manual_user_acceptance": "NOT_RUN"
     },
@@ -35480,7 +35468,7 @@
     },
     "pending_next_source": null,
     "active_promotion_request": {
-      "status": "authorized_pending_verified_DEV_and_exactCI",
+      "status": "COMPLETED_DEV_THEN_STANDARD_PREPROD_0_15_3_0",
       "version": "0.15.3.0",
       "scope": "DEV_then_Git_own_CI_Pages_and_standard_PREPROD_exact_verified_source",
       "PROD_game_deployed": false,
@@ -35489,12 +35477,36 @@
       "historical_initial_status": "NO_NEW_PREPROD_PROMOTION_AUTHORIZED_DEV_ONLY",
       "explicit_user_quote": "jak skończysz wrzuć na pre prod",
       "preserve_accounts_passwords_progress": true,
-      "new_deployment_run": null,
-      "new_deployment_completed": false
+      "new_deployment_run": 44929856572,
+      "new_deployment_completed": true
     },
     "CI_test_totals": {
-      "status": "PENDING_NEW_EXACT_SOURCE",
-      "historical_cache21": "historical_cache21_CI_test_totals"
+      "run": 44926983827,
+      "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "status": "SUCCESS",
+      "event": "push",
+      "branch": "main",
+      "attempt": 1,
+      "seconds": 1755.0,
+      "node_frontend": 1646,
+      "node_backend": 178,
+      "node_board": 7,
+      "node_total": 1831,
+      "python": 173,
+      "browser_programs": 76,
+      "completed_at": "2026-11-21T17:22:16Z",
+      "successful_steps": 36,
+      "expected_node_frontend": 1646,
+      "expected_node_backend": 178,
+      "expected_node_board": 7,
+      "expected_node_total": 1831,
+      "expected_Python": 173,
+      "full_CI_PASS_claimed": true,
+      "unchanged96h_watchdog_pass_ms": 4410.967714,
+      "watchdog_limit_ms": 10000,
+      "watchdog_limit_changed": false,
+      "skipped_steps": 2,
+      "raw_report": "/workspace/work/advisor-20261121/release/CI-44926983827-1/CI-summary.json"
     },
     "latest_DEV_ci_observation": {
       "status": "PENDING_OWN_EXACT_SOURCE",
@@ -35502,12 +35514,12 @@
     },
     "dev_ci_failure_reason": null,
     "current_preprod_fix": {
-      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-      "status": "ACCEPTED_C6_ALL_INDEPENDENT_AUDITS_PASS",
-      "run": 44577083312,
+      "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "status": "ACCEPTED_GUIDANCE_ALL_INDEPENDENT_AUDITS_PASS",
+      "run": 44929856572,
       "attempt": 1,
-      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+      "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json"
     },
     "current_workbook": {
       "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
@@ -35526,10 +35538,11 @@
       "sha256": "75afe37fc988e9e367dd9c7f4f9da08e49cb9a169d725c3b3006542b2ca430e7",
       "all_ABC_headers_and_data_419_rows_exact_C6": true,
       "selected_six_sheet_read_and_merge_scope_preserved": true,
-      "new_publication_pending": true
+      "new_publication_pending": false,
+      "public_workbook_TLS": "PASS_SEPARATE_NORMAL_TLS_EXACT_PUBLICATION"
     },
     "master_workbook15_task": {
-      "status": "BUILD_AND_FRESH_VALIDATE_PASS_F657_FROZEN_OWN_PUBLICATION_CI_PENDING",
+      "status": "BUILD_FRESH_VALIDATE_OWN_CI_AND_PUBLICATION_PASS",
       "source_freeze_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
       "output_workbook": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
       "output_sha256": "ab4570ad897eeb2d26d3ca69fa36488afe31f435141a4636be1d5f9802c4b87b",
@@ -35545,22 +35558,23 @@
       "historical_cached_formulas_unchanged": 4982,
       "validation": "PASS",
       "new_reset_executed": false,
-      "publication_sha": null,
-      "ci_run": null,
+      "publication_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "ci_run": 44926983827,
       "active_tour_rows": 28,
       "archive_tour_rows": 56,
       "preserved_practical_lessons": 25
     },
     "metadata_only_followup": {
       "as_of": "2026-11-21",
-      "scope": "New advisor-guidance DEV implementation metadata; canonical artifacts waiting for CODE freeze",
-      "previous_accepted_publication": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "scope": "Final acceptance metadata only; app, exports, workbooks, immutable tags unchanged",
+      "accepted_publication_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
       "new_GCP_deployment": false,
       "new_reset": false
     },
     "next_dev_scope": null,
     "latest_local_validation": {
-      "status": "LOCAL_READY_TARGETED_AND_CANONICAL_PASS_INITIAL_FULL_FRONTEND_FAIL_PRESERVED_OWN_CI_PENDING",
+      "status": "LOCAL_TARGETED_AND_CANONICAL_PASS_OWN_EXACT_PUBLICATION_CI_SUCCESS_INITIAL_LOCAL_FULL_FAIL_PRESERVED",
       "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
       "frontend_initial_pass": 1644,
       "frontend_initial_total": 1646,
@@ -35580,7 +35594,9 @@
       "artifacts": "BUILD_FRESH_VALIDATE_AND_STRICT_REPEAT_PASS",
       "manual_user_acceptance": "NOT_RUN",
       "Python_total_pass": 173,
-      "initial_bundle_27_of_28_FAIL_preserved": true
+      "initial_bundle_27_of_28_FAIL_preserved": true,
+      "own_publication_CI_run": 44926983827,
+      "local_full_1646_PASS_claimed": false
     },
     "performance_fix_task": {
       "as_of": "2026-11-19",
@@ -35717,44 +35733,28 @@
       }
     },
     "actually_deployed_preprod": {
-      "version": "0.15.2.4",
-      "cache": "frontend-v32-21",
-      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-      "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-      "run": 44577083312,
+      "version": "0.15.3.0",
+      "cache": "frontend-v32-22",
+      "source": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "code_source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "run": 44929856572,
       "attempt": 1,
       "workflow": "SUCCESS",
-      "original_two_ZIPs_standard_receipt_four_checks_archive_five_pins": "PASS",
-      "all460_normal_TLS_files": "PASS",
-      "native_admin1_startup_ms": 4695.791,
-      "native_admin3": {
-        "start_ms": 280120.832,
-        "worker_observed": true,
-        "replay_heartbeats": 2762,
-        "replay_max_gap_ms": 498.2,
-        "post_ready_observed_ms": 10000,
-        "post_ready_heartbeats": 91,
-        "post_ready_max_gap_ms": 541.2,
-        "ready_retained": true,
-        "all_browser_writes_blocked": true
-      },
-      "quality": "AUTOMATED_ACCEPTANCE_PASS_MANUAL_USER_NOT_RUN",
-      "accepted_tag": "preprod-0.15.2.4-20261119",
-      "accounts_and_progress": "THREE_EXISTING_PROFILES_BYTE_IDENTICAL",
-      "PROD_DNS_reset": "NO_ACTION"
+      "quality": "ACCEPTED_ALL_INDEPENDENT_GATES",
+      "accepted_tag": "preprod-0.15.3.0-20261121"
     },
     "CI_test_totals_pending_next": null,
     "candidate_next_release": {
       "version": "0.15.3.0",
       "cache": "frontend-v32-22",
-      "status": "LOCAL_READY_CODE_FROZEN_ARTIFACTS_PASS_OWN_CI_PUBLICATION_PENDING",
+      "status": "PROMOTED_AND_AUTOMATED_DEV_PREPROD_ACCEPTED",
       "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-      "publication_sha": null,
-      "ci": null,
-      "preprod": null,
+      "publication_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "ci": 44926983827,
+      "preprod": 44929856572,
       "manual_user_acceptance": "NOT_RUN",
       "preprod_authorized": true,
-      "preprod_status": "authorized_pending_verified_DEV_and_exactCI"
+      "preprod_status": "ACCEPTED"
     },
     "historical_cache19_candidate_fields": {
       "dev_application_version": "0.15.2.2",
@@ -36011,7 +36011,7 @@
       "CI_run": 44520278661,
       "Pages_run": 44520278629
     },
-    "dev_pages_duration": "31s",
+    "dev_pages_duration": "0 min 33 s",
     "historical_preprod_observed_candidate_before_C6": {
       "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
       "run_id": 44093734171,
@@ -36094,13 +36094,13 @@
       "conclusion": "success"
     },
     "currently_public_DEV": {
-      "version": "0.15.2.4",
-      "cache": "frontend-v32-21",
-      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+      "version": "0.15.3.0",
+      "cache": "frontend-v32-22",
+      "source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json"
     },
     "advisor_guidance_task": {
-      "status": "LOCAL_READY_F657_CODE_FROZEN_ARTIFACTS_PASS_OWN_PUB_CI_PENDING",
+      "status": "ACCEPTED_DEV_PREPROD_ALL_AUTOMATED_GATES_PASS",
       "version": "0.15.3.0",
       "cache": "frontend-v32-22",
       "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json",
@@ -36114,7 +36114,12 @@
       "new_CODE_required_after_export_fixture_fix": true,
       "canonical_artifacts": "PASS",
       "canonical_artifact_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-      "runtime_files_verified": 119
+      "runtime_files_verified": 119,
+      "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "CI_run": 44926983827,
+      "Pages_run": 44926983937,
+      "PREPROD_run": 44929856572,
+      "manual_user_acceptance": "NOT_RUN"
     },
     "historical_cache21_canonical_artifacts": {
       "current_workbook": {
@@ -36157,7 +36162,7 @@
       }
     },
     "canonical_guidance_minigames": {
-      "status": "PASS_FROM_F657_PUBLICATION_PENDING",
+      "status": "PASS_F657_OWN_PUBLICATION_CI_AND_PREPROD",
       "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
       "games": 55,
       "instructions": 110,
@@ -36167,6 +36172,374 @@
       "ZIP_sha256": "9046c7e1b9438d5eb0ea3a587a812c0f2d279cd27225333d70a237bb9f176bb0",
       "text_or_gameplay_differences": 0,
       "source_line_anchor_shifts": 0
-    }
+    },
+    "historical_before_final_guidance_currently_public_DEV": {
+      "version": "0.15.2.4",
+      "cache": "frontend-v32-21",
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+    },
+    "historical_before_final_guidance_actually_deployed_preprod": {
+      "version": "0.15.2.4",
+      "cache": "frontend-v32-21",
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "run": 44577083312,
+      "attempt": 1,
+      "workflow": "SUCCESS",
+      "original_two_ZIPs_standard_receipt_four_checks_archive_five_pins": "PASS",
+      "all460_normal_TLS_files": "PASS",
+      "native_admin1_startup_ms": 4695.791,
+      "native_admin3": {
+        "start_ms": 280120.832,
+        "worker_observed": true,
+        "replay_heartbeats": 2762,
+        "replay_max_gap_ms": 498.2,
+        "post_ready_observed_ms": 10000,
+        "post_ready_heartbeats": 91,
+        "post_ready_max_gap_ms": 541.2,
+        "ready_retained": true,
+        "all_browser_writes_blocked": true
+      },
+      "quality": "AUTOMATED_ACCEPTANCE_PASS_MANUAL_USER_NOT_RUN",
+      "accepted_tag": "preprod-0.15.2.4-20261119",
+      "accounts_and_progress": "THREE_EXISTING_PROFILES_BYTE_IDENTICAL",
+      "PROD_DNS_reset": "NO_ACTION"
+    },
+    "historical_before_final_guidance_current_preprod_fix": {
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "status": "ACCEPTED_C6_ALL_INDEPENDENT_AUDITS_PASS",
+      "run": 44577083312,
+      "attempt": 1,
+      "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json"
+    },
+    "historical_before_final_guidance_preprod_observed_candidate": {
+      "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "version": "0.15.2.4",
+      "status": "ACCEPTED_C6_NATIVE_ADMIN1_ADMIN3_ALL_INDEPENDENT_AUDITS_PASS",
+      "run": 44577083312,
+      "attempt": 1,
+      "manual_user_acceptance": "NOT_RUN"
+    },
+    "historical_before_final_guidance_preprod_artifacts": {
+      "source": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "code_source": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+      "run": 44577083312,
+      "attempt": 1,
+      "original_ZIPs": [
+        {
+          "kind": "release",
+          "artifact_id": 14556888714,
+          "name": "harborlight-dev-release-44577083312-1",
+          "bytes": 616,
+          "sha256": "9c5306b7f21d09b099719c1a88b5d983ebdb801391b49e709df12c61b27ce119"
+        },
+        {
+          "kind": "frontend",
+          "artifact_id": 14557818037,
+          "name": "harborlight-dev-frontend-44577083312-1",
+          "bytes": 92553081,
+          "sha256": "2f7f5a0d45f33c0c7c631db9fa9b45e53723fa523fa69622e8785ab6b844d537"
+        }
+      ],
+      "receipt_checks": {
+        "ci": true,
+        "dev_smoke": true,
+        "frontend_smoke": true,
+        "account_api": true
+      },
+      "receipt_member": {
+        "member": "release.json",
+        "bytes": 989,
+        "sha256": "6604f9ecec6e2677377427f2ca83b469338bf025cd69ef2654c6500b730542ba"
+      },
+      "frontend_member": {
+        "member": "harborlight-frontend.tar.gz",
+        "bytes": 92526359,
+        "sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b"
+      },
+      "archive_sha256": "eb628bf6e524a205eb10af6ea32f261d5b3ebad8033a3274abf5de9633d5d11b",
+      "manifest_sha256": "679f47bfa1a7d0fb412fd6bf919f43834fcd8c599f16ac59d4996a5805c6733c",
+      "files": 460,
+      "bytes": 96565038,
+      "five_content_pins": "PASS",
+      "image_digest": "sha256:bbc02a1136b0f4c6335fe4629cfdbe981853a590eb42c1ff808d1ea170587cda"
+    },
+    "historical_before_final_guidance_latest_local_validation": {
+      "status": "LOCAL_READY_TARGETED_AND_CANONICAL_PASS_INITIAL_FULL_FRONTEND_FAIL_PRESERVED_OWN_CI_PENDING",
+      "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "frontend_initial_pass": 1644,
+      "frontend_initial_total": 1646,
+      "frontend_initial_fail": 2,
+      "frontend_local_full_PASS_claimed": false,
+      "copy_fix_targeted_pass": 22,
+      "backend_pass": 178,
+      "board_pass": 7,
+      "independent_Python_pass": 145,
+      "bundle_Python_28": "PASS_28_OF_28_15_268S_AFTER_TEST_ONLY_COUNT_CORRECTION",
+      "original96h_watchdog_pass_ms": 9602.511,
+      "watchdog_limit_ms": 10000,
+      "new_targeted_UI_programs_pass": 7,
+      "legacy_course_retry_PASS": true,
+      "additional_historical_UI_programs_pass": 7,
+      "cache_stages_editorial_default_programs_pass": 3,
+      "artifacts": "BUILD_FRESH_VALIDATE_AND_STRICT_REPEAT_PASS",
+      "manual_user_acceptance": "NOT_RUN",
+      "Python_total_pass": 173,
+      "initial_bundle_27_of_28_FAIL_preserved": true
+    },
+    "historical_C6_preprod_before_guidance": {
+      "preprod_application_version": "0.15.2.4",
+      "preprod_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+      "preprod_ci_run_id": 44569674535,
+      "preprod_deployment_run_id": 44577083312,
+      "preprod_tag": "preprod-0.15.2.4-20261119",
+      "preprod_tag_remote_object": "6a3e833440117e6f80e530f4281241761847cb88"
+    },
+    "account_integrity_after_guidance": {
+      "status": "PASS_WITH_OWNER_CONFIRMED_RESTART",
+      "existing": 3,
+      "QA_island_or_clock_writes": false,
+      "UID_generation_origin_preserved": false,
+      "all_profiles_byte_exact": false,
+      "before": {
+        "status": "PASS",
+        "at": "2026-11-21T17:23:56.394Z",
+        "report": "/workspace/work/advisor-20261121/release/before-release22-account-metadata.json",
+        "existing": 3,
+        "empty": 0,
+        "generations": [
+          2,
+          2,
+          2
+        ],
+        "revisions": [
+          332,
+          475,
+          597
+        ],
+        "records": [
+          {
+            "uid": "dev-admin1",
+            "generation": 2,
+            "island_generation": 2,
+            "revision": 332,
+            "island_started_at": 1794824400429,
+            "onboarding_world_started_at": 1794824400429,
+            "update_time": "2026-11-21T17:23:29.922Z",
+            "clock": {
+              "http_status": 403,
+              "denied": true
+            }
+          },
+          {
+            "uid": "dev-admin2",
+            "generation": 2,
+            "island_generation": 2,
+            "revision": 475,
+            "island_started_at": 1795093230210,
+            "onboarding_world_started_at": 1795093230210,
+            "update_time": "2026-11-21T15:34:05.561Z",
+            "clock": {
+              "http_status": 403,
+              "denied": true
+            }
+          },
+          {
+            "uid": "dev-admin3",
+            "generation": 2,
+            "island_generation": 2,
+            "revision": 597,
+            "island_started_at": 1794837111444,
+            "onboarding_world_started_at": 1794837111444,
+            "update_time": "2026-11-21T13:27:25.013Z",
+            "clock": {
+              "http_status": 200,
+              "rate": 1,
+              "clock_revision": 12,
+              "generation": 2,
+              "now": 1795301448315,
+              "real_now": 1795281836294
+            }
+          }
+        ],
+        "normal_TLS": true,
+        "actual_QA_island_or_clock_writes": false,
+        "credentials_or_raw_save_saved": false
+      },
+      "after": {
+        "at": "2026-11-21T17:34:55.775Z",
+        "report": "/workspace/work/advisor-20261121/release/after-release22-account-metadata.json",
+        "revisions": [
+          379,
+          475,
+          597
+        ],
+        "generations": [
+          2,
+          2,
+          2
+        ],
+        "existing": 3,
+        "empty": 0,
+        "actual_QA_island_or_clock_writes": false,
+        "records": [
+          {
+            "uid": "dev-admin1",
+            "same_generation": true,
+            "same_island_origin": false,
+            "revision_non_decreasing": true,
+            "island_origin_status": "ORIGIN_NOT_PRESERVED_OWNER_CONFIRMED_RESTART",
+            "origin_not_preserved_owner_confirmed": true,
+            "before_island_started_at": 1794824400429,
+            "after_island_started_at": 1795282462850,
+            "before_onboarding_world_started_at": 1794824400429,
+            "after_onboarding_world_started_at": 1795282462850,
+            "before_population": 12,
+            "after_population": 18,
+            "before_townhall_level": 1,
+            "after_townhall_level": 1,
+            "before_revision": 332,
+            "after_revision": 379,
+            "same_payload_hash": false,
+            "legitimate_newer_save_allowed": true,
+            "clock_rate_revision_generation_preserved": true,
+            "owner_confirmed_restart": {
+              "confirmation_file": "owner-confirmed-restart-admin1-release22.json",
+              "question_item_id": "[\"request_user_input_async\",\"call_07a34b5d40824a5d940b3757ae75fd88\",0]",
+              "question_verbatim": "Czy około 18:34 uruchomiłeś grę od nowa na admin1? Kontrola po wdrożeniu wykazała nowy początek tej wyspy; admin2 i admin3 zachowały identyczne zapisy.",
+              "answer_verbatim": "Tak — rozpocząłem od nowa na admin1",
+              "before_origin": 1794824400429,
+              "after_origin": 1795282462850,
+              "before_onboarding_origin": 1794824400429,
+              "after_onboarding_origin": 1795282462850
+            }
+          },
+          {
+            "uid": "dev-admin2",
+            "same_generation": true,
+            "same_island_origin": true,
+            "revision_non_decreasing": true,
+            "island_origin_status": "PRESERVED",
+            "origin_not_preserved_owner_confirmed": false,
+            "before_island_started_at": 1795093230210,
+            "after_island_started_at": 1795093230210,
+            "before_onboarding_world_started_at": 1795093230210,
+            "after_onboarding_world_started_at": 1795093230210,
+            "before_population": 72,
+            "after_population": 72,
+            "before_townhall_level": 2,
+            "after_townhall_level": 2,
+            "before_revision": 475,
+            "after_revision": 475,
+            "same_payload_hash": true,
+            "legitimate_newer_save_allowed": false,
+            "clock_rate_revision_generation_preserved": true
+          },
+          {
+            "uid": "dev-admin3",
+            "same_generation": true,
+            "same_island_origin": true,
+            "revision_non_decreasing": true,
+            "island_origin_status": "PRESERVED",
+            "origin_not_preserved_owner_confirmed": false,
+            "before_island_started_at": 1794837111444,
+            "after_island_started_at": 1794837111444,
+            "before_onboarding_world_started_at": 1794837111444,
+            "after_onboarding_world_started_at": 1794837111444,
+            "before_population": 144,
+            "after_population": 144,
+            "before_townhall_level": 4,
+            "after_townhall_level": 4,
+            "before_revision": 597,
+            "after_revision": 597,
+            "same_payload_hash": true,
+            "legitimate_newer_save_allowed": false,
+            "clock_rate_revision_generation_preserved": true,
+            "preserved_selected_rate": 1,
+            "preserved_clock_revision": 12
+          }
+        ]
+      },
+      "compare_policy": {
+        "same_UIDs_generations_and_island_origins": "STRICT_DEFAULT_REQUIRES_ALL; exact owner-confirmed admin1 restart separately accepted, no general exception",
+        "revisions_non_decreasing": true,
+        "legitimate_owner_gameplay_changes_allowed": true,
+        "no_unconditional_payload_byte_identity_requirement": true,
+        "admin3_clock_rate_revision_generation_preserved_expected": [
+          1,
+          12,
+          2
+        ]
+      },
+      "owner_activity": {
+        "uid": "dev-admin1",
+        "observed_before_deploy": "2026-11-21T17:23:29.922Z",
+        "note": "Owner actively played; legitimate state changes during deployment are allowed and must not be attributed to QA.",
+        "restart_directly_confirmed_by_owner": true,
+        "restart_answer_verbatim": "Tak — rozpocząłem od nowa na admin1",
+        "restart_provenance": {
+          "kind": "current_user_async_reply",
+          "source_tool": "request_user_input_async",
+          "tool_call_id": "call_07a34b5d40824a5d940b3757ae75fd88",
+          "question_item_id": "[\"request_user_input_async\",\"call_07a34b5d40824a5d940b3757ae75fd88\",0]",
+          "user_reply_source": "current_thread_not_uploaded_file",
+          "captured_at": "2026-11-21T17:41:30.386151+00:00",
+          "captured_at_is_not_exact_reply_received_time": true,
+          "timezone_for_question": "Europe/Warsaw",
+          "relay": "Root relayed the literal current user question and direct answer; no uploaded document instructions treated as authorization"
+        }
+      },
+      "UID_generation_preserved": true,
+      "owner_restart_record_path": "/workspace/work/advisor-20261121/release/owner-confirmed-restart-admin1-release22.json",
+      "owner_restart_record_sha256": "305334c882200c571d8cf988aa6294a6e738fb2ae9536d0a577c2264c25b5acf",
+      "preservation_report_path": "/workspace/work/advisor-20261121/release/release22-account-preservation.json",
+      "preservation_report_sha256": "1b9c7fefe5350a27e7ab0e324aaea7b7c6b01793d7a2c619cd84038c36f5c24a",
+      "unaffected_profiles_byte_identical": [
+        "dev-admin2",
+        "dev-admin3"
+      ],
+      "unaffected_revisions": {
+        "dev-admin2": 475,
+        "dev-admin3": 597
+      },
+      "admin3_clock_unchanged": true,
+      "strict_default_comparison_status": "FAIL_EXPECTED_OWNER_RESTART_RAW_PRESERVED",
+      "owner_confirmed_restart_UIDs": [
+        "dev-admin1"
+      ],
+      "owner_restart_before_after": {
+        "before": {
+          "at": "2026-11-21T17:23:56.394Z",
+          "uid": "dev-admin1",
+          "generation": 2,
+          "island_generation": 2,
+          "revision": 332,
+          "island_started_at": 1794824400429,
+          "onboarding_world_started_at": 1794824400429,
+          "population": 12,
+          "townhall_level": 1,
+          "payload_sha256": "f574bf0effcc9cc1f68fd4aa61a7edb18075c73eca0b53df495857ae6113dedf"
+        },
+        "after": {
+          "at": "2026-11-21T17:34:55.775Z",
+          "uid": "dev-admin1",
+          "generation": 2,
+          "island_generation": 2,
+          "revision": 379,
+          "island_started_at": 1795282462850,
+          "onboarding_world_started_at": 1795282462850,
+          "population": 18,
+          "townhall_level": 1,
+          "payload_sha256": "29d22a5ca81f0a815a6ccf5dd79b828c890489f9223fcb8437204310e2651daf"
+        }
+      },
+      "comparison_network_requests": 0,
+      "auditor_negative_control_Node_tests": 26,
+      "snapshots_rebaselined": false
+    },
+    "all_three_origins_preserved": false
   }
 }
