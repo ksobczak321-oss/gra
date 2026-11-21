@@ -14,7 +14,7 @@ UID = 'dev-admin1'
 
 
 def scenario(browser, language, mobile):
-    saved = fixture.starter(777, 'Stara wyspa')
+    saved = fixture.starter(777, 'Stara wyspa', legacy_practical=True)
     saved['statistics']['upgrades'] = 12
     fixture.DOCUMENTS[UID] = {'payload': json.dumps(saved), 'revision': 5, 'updateTime': fixture.timestamp()}
     context, page = fixture.context(browser, UID, language=language, mobile=mobile)

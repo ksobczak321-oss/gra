@@ -67,7 +67,8 @@ def frozen_source(source_ref):
     names = subprocess.run(['git', 'ls-tree', '-r', '--name-only', source_ref],
                            cwd=ROOT, capture_output=True, text=True, check=True,
                            timeout=30).stdout.splitlines()
-    modules = [name for name in names if name.endswith(('.js', '.mjs')) or Path(name).name == 'package.json']
+    modules = [name for name in names if name.endswith(('.js', '.mjs')) or Path(name).name == 'package.json'
+               or name == 'docs/testing/manual-test-cases.json']
     archive = subprocess.run(['git', 'archive', '--format=tar', source_ref, '--', *modules],
                              cwd=ROOT, capture_output=True, check=True, timeout=30).stdout
     with TemporaryDirectory(prefix='harborlight-v14-source-') as directory:
@@ -202,8 +203,8 @@ def game_facts(cwd=ROOT):
     return facts
 
 
-def manual_cases():
-    cases = json.loads(CASES.read_text())['cases']
+def manual_cases(path=None):
+    cases = json.loads((path or CASES).read_text())['cases']
     assert len({case['id'] for case in cases}) == len(cases)
     assert all(case['manual_result'] == 'NOT RUN' for case in cases), 'Do not rewrite real manual outcomes'
     return cases
@@ -490,9 +491,10 @@ def main(argv=None):
     if args.source_ref is not None:
         with frozen_source(args.source_ref) as snapshot:
             facts=game_facts(cwd=snapshot)
+            cases=manual_cases(snapshot/'docs/testing/manual-test-cases.json')
     else:
         facts=game_facts()
-    cases=manual_cases()
+        cases=manual_cases()
     if not args.validate_only:build(facts,cases)
     validate(facts,cases,write_report=not args.validate_only)
 

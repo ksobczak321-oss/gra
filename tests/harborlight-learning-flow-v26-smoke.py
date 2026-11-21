@@ -13,7 +13,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +21,10 @@ spec = importlib.util.spec_from_file_location('learning_v26_cloud', ROOT / 'test
 cloud = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cloud)
 UID = 'dev-admin2'
+INITIAL_TOUR_IDS = json.loads(subprocess.check_output([
+    'node', '--input-type=module', '-e',
+    "import {ADVISOR_INTRO_IDS} from './harborlight-v1-advisor-intro.js';console.log(JSON.stringify(ADVISOR_INTRO_IDS));"
+], cwd=ROOT, text=True))
 
 
 def world(*, introduction=False, earned=False, due=False):
@@ -43,7 +47,7 @@ def world(*, introduction=False, earned=False, due=False):
         state.engagementSchedule.pending={id:'engagement-1',kind:'initial-ad',sequence:1,started:false,choice:null,runId:null};
       }
       console.log(JSON.stringify(state));''' % (int(cloud.NOW.timestamp() * 1000), json.dumps(introduction), json.dumps(earned), json.dumps(not introduction), json.dumps(introduction), json.dumps(due))
-    state = json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=ROOT, text=True, capture_output=True, check=True).stdout)
+    state = json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=ROOT, text=True, capture_output=True, check=True, env=legacy_practical_node_env()).stdout)
     if earned:
         reward = state['tutorial']['chests']['island-map']['reward']
         assert reward['food'] == 25 and 'flour' not in reward, 'The preserved-history fixture must contain its actually earned legacy food reward'
@@ -219,7 +223,9 @@ def initial_pause_and_ads(browser):
         tour.locator('[data-onboarding-next]').click()
         tour.locator('[data-onboarding-name]').fill('Moja przystań')
         tour.locator('[data-onboarding-next]').click()
-        for step in ['category-administration', 'building-farm']:
+        # Keep the same persisted Farm pause point while traversing the newly
+        # approved shortened tour rather than the obsolete three-step wrapper.
+        for step in INITIAL_TOUR_IDS[1:INITIAL_TOUR_IDS.index('building-farm')+1]:
             tour.locator('[data-onboarding-next]').click()
             expect(tour).to_have_attribute('data-onboarding-step', step)
         tour.locator('[data-onboarding-exit]').click()

@@ -15,6 +15,7 @@ import threading
 from urllib.parse import parse_qs, unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 from helpers.building_stage_acceptance import staged_manifest, assert_scene
 
 SOURCE=Path(__file__).resolve().parents[1]
@@ -80,6 +81,7 @@ def actual_game(page,base,state,label):
     before=len(state['manifest_gets'])
     page.goto(base+'/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5',wait_until='domcontentloaded')
     page.wait_for_function('document.documentElement.dataset.gameStartup==="ready"',timeout=30000)
+    dismiss_player_offers(page)
     expect(page.locator('#loading')).to_be_hidden()
     assert_scene(page,CURRENT)
     result=page.evaluate('''async()=>{

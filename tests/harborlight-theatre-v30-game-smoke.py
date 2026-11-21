@@ -12,6 +12,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import legacy_practical_node_env
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('theatre_v30_game_base', SOURCE / 'tests/harborlight-release-v28-smoke.py')
@@ -33,7 +34,7 @@ def fixture():
       command({type:'theatreSaveLayout',slot:0});
       console.log(JSON.stringify(world));"""
     result = subprocess.run(['node', '--input-type=module', '-e', script], input=json.dumps(original),
-                            cwd=SOURCE, capture_output=True, text=True, check=True)
+                            cwd=SOURCE, capture_output=True, text=True, check=True, env=legacy_practical_node_env())
     return json.loads(result.stdout)
 
 

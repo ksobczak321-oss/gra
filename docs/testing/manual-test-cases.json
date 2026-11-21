@@ -2467,7 +2467,7 @@
   ],
   "current_scope": {
     "date": "2026-11-21",
-    "environment": "DEV",
+    "environment": "DEV_then_authorized_PREPROD_after_verified_source",
     "physical_online_integration": "excluded_by_user",
     "application_version": "0.15.3.0",
     "cache": "frontend-v32-22",
@@ -2481,14 +2481,14 @@
     "preprod_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
     "preprod_deployment_run_id": 44577083312,
     "preprod_deployment_attempt": 1,
-    "preprod_status": "UNCHANGED_C6_ACCEPTED_NEW_GUIDANCE_PROMOTION_NOT_AUTHORIZED",
+    "preprod_status": "authorized_pending_verified_DEV_and_exactCI",
     "preprod_tag": "preprod-0.15.2.4-20261119",
     "manual_user_acceptance": "NOT_RUN",
     "case_range": "TC0180–0187",
     "previous_case_range": "TC0148–0179",
     "requirements": "docs/v32/GO-ADVISOR-GUIDANCE.md",
     "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json",
-    "note": "Nowe GO obejmuje wyłącznie DEV 0.15.3.0 / cache22. Osiem nowych przypadków uzupełnia179 historycznych; wszystkie187 wyników pozostają NOT RUN. Własny końcowy SHA, CI, Pages i tag oczekują. PRE-PROD zachowuje C6/d5ad/44577083312; bez resetu, PROD, DNS i nowej promocji.",
+    "note": "Pierwotne GO dotyczyło DEV0.15.3.0/cache22; późniejsze jawne „jak skończysz wrzuć na pre prod” autoryzuje standardową promocję po ukończeniu DEV i własnym CI/Pages. Nowe źródło i przebieg PRE-PROD są PENDING, faktyczne PRE-PROD nadal C6/d5ad/44577083312. Wszystkie187 ręcznych wyników pozostają NOT RUN; bez resetu, zmiany kont/haseł, PROD i DNS.",
     "historical_C6_scope_before_guidance": {
       "date": "2026-11-19",
       "environment": "DEV_and_PREPROD",
@@ -2559,6 +2559,10 @@
           "pages_run_id": 41667711124
         }
       }
-    }
+    },
+    "initial_GO_scope": "DEV_ONLY",
+    "followup_PREPROD_quote": "jak skończysz wrzuć na pre prod",
+    "new_PREPROD_authorized": true,
+    "new_PREPROD_run_id": null
   }
 }

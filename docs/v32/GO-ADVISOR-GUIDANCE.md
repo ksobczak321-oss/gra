@@ -1,6 +1,6 @@
 # GO DEV 0.15.3.0 — tutorial i Doradca Królestwa
 
-Użytkownik 21 listopada 2026 zatwierdził pakiet poleceniem **GO**. Zakres obejmuje wyłącznie DEV, Git, własne CI i podgląd Pages. Kod jest w integracji; końcowy SHA, publikacja, CI, Pages, pakiet i tag nowego źródła pozostają **PENDING**. PRE-PROD nadal ma odebrane C6 / 0.15.2.4 / cache21, publikację `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d` i standardowy workflow 44577083312/próba1. Nowe GO nie obejmuje promocji tej paczki do PRE-PROD, PROD, DNS ani resetu.
+Użytkownik 21 listopada 2026 zatwierdził pakiet poleceniem **GO**, początkowo wyłącznie dla DEV/Git/CI/Pages. Następnie jawnie rozszerzył autoryzację: **„jak skończysz wrzuć na pre prod”**. Obowiązuje ukończenie DEV → Git i własny CI oraz Pages → standardowy PRE-PROD dokładnie tego samego zweryfikowanego źródła. Nie wymaga to kolejnej zgody. Końcowy CODE, publikacja, CI, Pages, pakiet i tag nowego źródła pozostają **PENDING**. Faktyczne PRE-PROD nadal ma odebrane C6 / 0.15.2.4 / cache21, publikację `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d` i workflow 44577083312/próba1; autoryzacja nie jest dowodem wdrożenia. Konta, hasła i postęp mają być zachowane. Bez resetu, PROD i DNS.
 
 ## Zakres zatwierdzony
 
@@ -32,7 +32,13 @@ Wyłączenie praktycznego kursu nie może blokować zwykłych ofert ani misji. M
 
 Automatyczne rady czytają zwięzły widok potrzebnych danych. Nie klonują całego świata lub historii i nie wykonują pełnej prognozy budowy przy każdym odświeżeniu. Szczegółowe obliczenia pozostają na świadome pytanie gracza lub wybór innej drogi. Etykiety mapy również nie dodają stałej pętli odświeżania. Nowa paczka zachowuje naprawę nadrabiania nieobecności C6.
 
+## Autoryzowana kolejność publikacji
+
+Po zakończeniu integracji i eksportów nowe źródło musi przejść własny pełny CI oraz Pages, a następnie otrzymać nieprzesuwany tag DEV. Root uruchamia standardowy `google-cloud-dev.yml` z niezmienionego źródła `main`; nie zastępuje go ręcznym deployem lub starym przebiegiem. PRE-PROD wymaga natywnego odbioru istniejących admin1 i admin3 z zablokowanymi zapisami testowej przeglądarki, także responsywności po starcie, odczytowej kontroli kont i zegara oraz weryfikacji obu oryginalnych ZIP-ów, czterech warunków receipt, obrazu API i całego pakietu. Root przewiduje 462 pliki; liczbę i hashe ma potwierdzić końcowy manifest. Odbiór obejmuje publiczne bajty i zachowanie kont. Dopiero po komplecie wyników powstaje tag PRE-PROD. Bez resetu, zmiany haseł lub działań PROD/DNS.
+
 ## Dowody i stan odbioru
+
+Pierwszy pełny lokalny frontend miał **1644/1646 PASS, 2 FAIL** w 225,866 s. Dwie usterki kopii tekstów poprawiono, a kierunkowe ponowienie ma **22/22 PASS**; nie deklarujemy pełnego lokalnego 1646 PASS. Niezmieniony watchdog 96 h przeszedł w 9602,511 ms przy limicie 10 000 ms. Pierwszy master źródła `ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea` nie przeszedł świeżej walidacji: 12 wejściowych JSON różniło się losowym `activitySeed` tworzonym z `Date.now()` w fiksturze eksportera. Poprawka obejmuje konstruktor fikstury; surowy FAIL jest zachowany. Dwie nowe rzeczywiste symulacje mają jeszcze wykazać ścisłe zero różnic. Nowy CODE obejmie poprawkę eksportera i izolowanego testu zachowanego kursu; runtime od ffb pozostaje bez zmiany.
 
 Bieżące wyniki kierunkowe opisuje [ADVISOR-GUIDANCE-EVIDENCE.json](ADVISOR-GUIDANCE-EVIDENCE.json). Nie zastępują pełnego odbioru końcowego źródła ani własnego CI i publikacji. Arkusze i instrukcje będą odświeżone po zamrożeniu CODE; planowany master ma 161 kart, aktywny tutorial 28, archiwum katalogu 56 i zachowany praktyczny kurs 25. Do wykonania eksportu nie opisujemy tych liczb jako gotowego pliku.
 

@@ -4,7 +4,7 @@
 
 Nowe GO z 21 listopada obejmuje 28 kroków tutoriala, zachowane informacje pod „i”, tymczasowe ukrycie Samouczka i Doradcę z jednym celem oraz2–5 aktualnymi działaniami. Etykiety poziomu budynków unikają paneli. **Integracja trwa; własne CI i publikacja są PENDING.** [Zakres](docs/v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json).
 
-PRE-PROD pozostaje odebrany C6/0.15.2.4/d5ad, workflow44577083312. Ta paczka ma GO wyłącznie na DEV; konta i postęp pozostają zachowane.
+PRE-PROD pozostaje odebrany C6/0.15.2.4/d5ad, workflow44577083312. Po początkowym GO na DEV użytkownik polecił **„jak skończysz wrzuć na pre prod”**: autoryzowana jest standardowa promocja po ukończeniu DEV i własnym zielonym CI/Pages. Nowe wdrożenie jeszcze nie nastąpiło. Konta, hasła i postęp pozostają zachowane; bez resetu, PROD i DNS.
 
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 

@@ -11,7 +11,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,7 +28,7 @@ def model(through=0, extra=False):
     if(%s)grantBonusMaterials(state,{stone:100});
     console.log(JSON.stringify(state));""" % (through, 'true' if extra else 'false')
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=ROOT,
-                                    text=True, capture_output=True, check=True).stdout)
+                                    text=True, capture_output=True, check=True, env=legacy_practical_node_env()).stdout)
 
 
 def enter(browser, value, *, language='pl', mobile=False, motion='reduce'):

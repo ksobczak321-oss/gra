@@ -11,11 +11,11 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Implementacja | `in_progress` |
 | DEV | `LOCAL_INTEGRATION_0_15_3_0_CACHE22_OWN_CI_PENDING` |
 | CI | `pending_own_exact_source` |
-| PRE-PROD | `not_authorized_for_this_package_new_GO_required` |
+| PRE-PROD | `authorized_pending_verified_DEV_and_exactCI` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
-**Tagi:** `v32`, `advisor-guidance`, `dev-only`, `no-reset`.
+**Tagi:** `v32`, `advisor-guidance`, `dev-preprod`, `no-reset`.
 
 Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurowej ani ręcznego testu.
 
@@ -28,7 +28,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Źródło
 
-Użytkownik zebrał zmiany tutoriala, samouczka, Doradcy i widoczności poziomów, a następnie zatwierdził cały pakiet poleceniem GO. Zakres nowej paczki: DEV.
+Użytkownik zebrał zmiany tutoriala, samouczka, Doradcy i poziomów, zatwierdził GO początkowo tylko na DEV, a następnie jawnie polecił: „jak skończysz wrzuć na pre prod”.
 
 Odniesienie: `chat:2026-11-21:1177; docs/v32/GO-ADVISOR-GUIDANCE.md`.
 
@@ -45,7 +45,7 @@ Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0182 — Samouczek praktyczny jest ukryty a zapisane dane pozostają](../../testing/manual/HL-TC-0182.md) — `NOT RUN`.
 
-Nowe GO DEV 0.15.3.0 / cache22. Wyniki kierunkowe nie zastępują końcowego źródła, własnego CI, Pages, pakietu ani tagu. PRE-PROD pozostaje C6/d5ad/44577083312; bez nowej promocji, resetu, PROD i DNS.
+Nowe GO 0.15.3.0/cache22: początkowo tylko DEV, później jawnie autoryzowana standardowa promocja PRE-PROD po ukończeniu DEV i własnym CI/Pages. Nowe źródło, publikacja i przebieg PRE-PROD pozostają PENDING; faktycznie nadal C6/d5ad/44577083312. Pierwszy lokalny frontend1644/1646 oraz master fresh-validation FAIL są zachowane;22copy PASS nie oznacza pełnego1646PASS. Bez resetu, zmiany kont/haseł, PROD i DNS.
 
 ## Relacje
 
@@ -56,6 +56,7 @@ Nowe GO DEV 0.15.3.0 / cache22. Wyniki kierunkowe nie zastępują końcowego źr
 ## Uwagi
 
 - Dotychczasowe zaakceptowane C6 i wcześniejsze błędy zachowują własne dowody. Nowa karta nie dziedziczy starego CI ani ręcznego odbioru.
+- Dalsze jawne polecenie użytkownika zastępuje ograniczenie tylko DEV dla przyszłej promocji tej paczki; nie jest dowodem wykonania wdrożenia.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

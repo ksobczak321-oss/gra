@@ -28,11 +28,12 @@ FARM_BUTTONS={'farmGrain':'Przydziel do zbioru zboża','farmVegetables':'Przydzi
 LEAK=re.compile(r'\{[^{}\n]+\}|\[object Object\]|\bundefined\b|\bNaN\b|\bniejasne\b|poł[ąa]cz\s+(?:linie|\d+\s+i\s+\d+)|\bpo\s+Tour\s*\d+|do potwierdzeni[ae].*lekcji|niebieskie.*czerwone|dostosuj\s+(?:sytosc|sytość|ze ser)|sytość do sprawdzenia|zjedzona sytosc brzmi dziwnie|Dopisek na kontach testowych:',re.I)
 fixture=json.loads(subprocess.check_output(['node','--input-type=module','-e',"""
 import {createState} from './harborlight-v1-state.js';
-import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
+import {APPROVED_TOUR_IDS,getTourCopy} from './harborlight-v1-approved-copy.js';
+import {ADVISOR_INTRO_IDS} from './harborlight-v1-advisor-intro.js';
 const now=Date.now(),make=onboarding=>{const s=createState(now,{ruleset:32,onboarding});s.settings.language='pl';s.islandName='Przystań redakcji';s.tutorial.autoOpenDisabled=true;for(const b of Object.values(s.buildings))b.level=6;s.capacity=216;s.highestTownhall=6;for(const id of Object.keys(s.resources))s.resources[id]=100000;s.education.discoveries.cheese=true;s.education.discoveries.cake=true;s.objective.repaired=true;return s};
 const normal=make(false),tour=make(true);tour.onboarding.stage='tour';tour.onboarding.index=0;
 const locked=createState(now,{ruleset:32});locked.settings.language='pl';locked.tutorial.autoOpenDisabled=true;
-console.log(JSON.stringify({normal,tour,locked,ids:APPROVED_TOUR_IDS}));
+console.log(JSON.stringify({normal,tour,locked,ids:APPROVED_TOUR_IDS,activeIds:ADVISOR_INTRO_IDS,retainedCopy:Object.fromEntries(APPROVED_TOUR_IDS.map(id=>[id,getTourCopy(id,'pl')]))}));
 """],cwd=SOURCE))
 
 
@@ -64,11 +65,13 @@ def open_page(browser,width,height,state,*,fixed_time=False):
             writes.append((route.request.method,route.request.url));route.abort();return
         route.fallback()
     page.route('**/*',read_only)
-    if fixed_time:page.clock.set_fixed_time(state['worldTimeMs'])
+    if fixed_time:page.clock.set_fixed_time(state['worldTimeMs']/1000)
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('response',lambda r:failed.append((r.status,r.url)) if r.status>=400 else None)
     page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(state))
     page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
+    page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+    dismiss_player_offers(page)
     return page,errors,failed,writes
 
 
@@ -80,6 +83,7 @@ with sync_playwright() as p:
         page,errors,failed,writes=open_page(browser,width,height,fixture['normal'])
         tooltips={}
         for category,identity,expected in [('economy','fisher',FISHER_MENU),('administration','dock',PORT_MENU)]:
+            dismiss_player_offers(page)
             page.locator('[data-mobile-category="'+category+'"]' if mobile else '#hit-category-'+category).click()
             card=page.locator('[data-mobile-building="'+identity+'"]' if mobile else '[data-building-dock] [data-dock-building="'+identity+'"]')
             title=card.get_attribute('title') or ''
@@ -101,6 +105,7 @@ with sync_playwright() as p:
                 assert 'Każdy poziom daje 36 łóżek.' in body and 'siedmiu niewydanych porcji dobowych' in body,body
             if identity=='academy':
                 assert '3 + poziom Akademii' in body and 'po przeprowadzce na inną wyspę zachowuje poziom nauki' in body,body
+                assert '100 punktów szczęścia przez tydzień' in body,body
             if identity=='bakery':
                 expect(page.locator('.v32-building-description')).to_contain_text('Zatrudnij piekarzy, by wypiekali chleb i ciasto.')
             if identity=='farm':
@@ -126,39 +131,53 @@ with sync_playwright() as p:
         assert not writes,writes
         page.close()
 
-        # Finish the short introduction, then choose the preserved full guide
-        # through actual Help controls. Its longer reviewed copy stays optional.
-        # A fixed test Date prevents ordinary play time from changing the
-        # read-only snapshot; the product's manual guide still runs normally.
+        # Follow the current 28-stop introduction to the same Farm pause point.
+        # Saved progress still uses the original 56-entry catalogue (Farm=26).
+        # A fixed test Date prevents ordinary play from changing the read-only
+        # snapshot, while real layout/camera timers continue to run normally.
         page,errors,failed,writes=open_page(browser,width,height,fixture['tour'],fixed_time=True)
         guide=page.locator('[data-island-onboarding]')
-        for identity in ['home','category-administration','building-farm']:
+        active_ids=fixture['activeIds']
+        assert len(active_ids)==28 and len(fixture['ids'])==56
+        farm_position=active_ids.index('building-farm')
+        for identity in active_ids[:farm_position+1]:
             expect(guide).to_have_attribute('data-onboarding-step',identity)
-            guide.locator('[data-onboarding-next]').click()
+            clean(page.locator('#island-onboarding-description').inner_text(),'initial tour '+identity)
+            if identity!='building-farm':guide.locator('[data-onboarding-next]').click()
+        guide.locator('[data-onboarding-exit]').click()
         expect(guide).to_have_count(0)
+        page.locator('[data-close-tutorial-exit-reminder]').click()
+        paused=page.evaluate('window.__HARBORLIGHT_DEV_STATE__.learning.tour')
+        assert paused['paused'] and paused['index']==fixture['ids'].index('building-farm')==26,paused
         dismiss_player_offers(page)
         page.locator('[data-mobile-control="tutorial"]:visible,#hit-tutorial:visible').first.click()
         page.locator('[data-help-tour-from-start]').click()
         guide=page.locator('[data-onboarding-replay="true"]')
-        start=fixture['ids'].index('construction');end=fixture['ids'].index('education')
-        for identity in fixture['ids'][:start]:
-            expect(guide).to_have_attribute('data-onboarding-step',identity)
-            guide.locator('[data-onboarding-next]').click()
         tour_seen=[]
         frozen=page.evaluate('''()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {world:s.worldTimeMs,resources:s.resources,residents:s.residents,buildings:s.buildings,tutorial:s.tutorial}}''')
-        for identity in fixture['ids'][start:end+1]:
+        for identity in active_ids:
             expect(guide).to_have_attribute('data-onboarding-step',identity)
-            description=page.locator('#island-onboarding-description').inner_text();clean(description,'tour '+identity)
+            description=page.locator('#island-onboarding-description').inner_text();clean(description,'active tour '+identity)
             for selector in ['[data-onboarding-card]','[data-onboarding-next]','[data-onboarding-exit]','[data-onboarding-highlight]']:
-                bounded(page,page.locator(selector),'tour '+identity+' '+selector)
+                bounded(page,page.locator(selector),'active tour '+identity+' '+selector)
+            if identity=='construction':assert '6 punktów sytości' in description,description
+            if identity=='building-house':assert 'Każdy poziom daje 36 łóżek.' in description,description
+            if identity in ['construction','building-house','building-farm']:
+                page.screenshot(path=str(OUTPUT/f'tour28-{identity}-{width}.png'))
+            tour_seen.append(identity)
+            if identity!=active_ids[-1]:guide.locator('[data-onboarding-next]').click()
+        assert page.evaluate('''()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {world:s.worldTimeMs,resources:s.resources,residents:s.residents,buildings:s.buildings,tutorial:s.tutorial}}''')==frozen
+        # Removed stops remain in the reviewed catalogue. Their real Academy
+        # and food-setting UI was checked above through ordinary building menus;
+        # these source-copy checks do not claim they are active tour stops.
+        start=fixture['ids'].index('construction');end=fixture['ids'].index('education')
+        retained_seen=[]
+        for identity in fixture['ids'][start:end+1]:
+            description=fixture['retainedCopy'][identity]['text'];clean(description,'retained catalogue '+identity)
             if identity=='construction':assert '6 punktów sytości' in description,description
             if identity=='building-house':assert 'Każdy poziom daje 36 łóżek.' in description,description
             if identity=='education':assert 'Absolwent otrzymuje 100 punktów szczęścia na 7 dni' in description,description
-            if identity in ['construction','building-house','food','education']:
-                page.screenshot(path=str(OUTPUT/f'tour-{identity}-{width}.png'))
-            tour_seen.append(identity)
-            if identity!=fixture['ids'][end]:page.locator('[data-onboarding-next]').click()
-        assert page.evaluate('''()=>{const s=window.__HARBORLIGHT_DEV_STATE__;return {world:s.worldTimeMs,resources:s.resources,residents:s.residents,buildings:s.buildings,tutorial:s.tutorial}}''')==frozen
+            retained_seen.append(identity)
         assert not errors,errors
         assert not failed,failed
         assert not writes,writes
@@ -174,8 +193,8 @@ with sync_playwright() as p:
         assert not failed,failed
         assert not writes,writes
         page.close()
-        report.append({'width':width,'info_buildings':info_checked,'approved_tooltips':tooltips,'production_labels':labels_checked,'long_tour_steps':tour_seen,'notes_and_placeholders_absent':True,'locked_message_resolved':True,'horizontal_overflow':False,'tour_world_frozen':True,'network_writes':0,'full_guide_opened_through_help':True})
+        report.append({'width':width,'info_buildings':info_checked,'approved_tooltips':tooltips,'production_labels':labels_checked,'active_tour_steps':tour_seen,'retained_reviewed_catalogue_steps':retained_seen,'canonical_farm_pause_index':26,'notes_and_placeholders_absent':True,'locked_message_resolved':True,'horizontal_overflow':False,'tour_world_frozen':True,'network_writes':0,'current_28_stop_guide_opened_through_help':True})
     browser.close()
 (OUTPUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))
-print('PASS six-sheet editorial UI: 20 reachable building INFOs, approved tooltips/actions/messages, no editorial notes/placeholders and bounded longer tutorial copy; 1672/1366/390.')
+print('PASS six-sheet editorial UI: 20 reachable building INFOs, approved tooltips/actions/messages, no editorial notes/placeholders and bounded active28 tutorial copy and retained reviewed catalogue; canonical Farm26; 1672/1366/390.')

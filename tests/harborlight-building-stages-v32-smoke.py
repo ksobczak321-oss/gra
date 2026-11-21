@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_offers import acknowledge_daily_offer
+from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',SOURCE)).resolve()
@@ -88,6 +88,7 @@ def context_for(browser,width=1440,height=1000,**routes):
 def loaded(page):
     page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player',wait_until='networkidle')
     page.wait_for_function('document.documentElement.dataset.gameStartup==="ready"')
+    dismiss_player_offers(page)
 
 
 def canvas_hashes(page):

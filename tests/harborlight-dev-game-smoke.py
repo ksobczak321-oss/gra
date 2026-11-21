@@ -16,6 +16,7 @@ import subprocess
 
 from playwright.sync_api import expect, sync_playwright
 from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
+from helpers.browser_tutorial import legacy_practical_node_env
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -31,14 +32,14 @@ SEQUENCE = 0
 OFFLINE = False
 
 
-def starter(coins, name):
+def starter(coins, name, *, legacy_practical=False):
     code = """import {createState} from './harborlight-v1-state.js';
       const state=createState(%d);
       state.tutorial.autoOpenDisabled=true;
       state.resources.coins=%d;state.islandName=%s;
       console.log(JSON.stringify(state));""" % (int(NOW.timestamp()*1000), coins, json.dumps(name))
     return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
-                                    text=True, capture_output=True, check=True).stdout))
+                                    text=True, capture_output=True, check=True, env=legacy_practical_node_env() if legacy_practical else None).stdout))
 
 
 def timestamp():

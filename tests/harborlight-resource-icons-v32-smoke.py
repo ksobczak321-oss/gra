@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 from playwright.sync_api import sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -31,6 +32,8 @@ with sync_playwright() as playwright:
         page.on('response', lambda response: failed.append(response.url) if response.status>=400 else None)
         page.add_init_script('localStorage.setItem("harborlight-language","pl")')
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5', wait_until='networkidle')
+        page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+        dismiss_player_offers(page)
         page.evaluate('mobile=>document.querySelector(mobile?"[data-mobile-category=resources]":"#hit-category-resources").click()', width<900)
         scope = '.mobile-bottom-dock .mobile-dock-scroll' if width<900 else '[data-resource-dock]'
         cards = page.locator(scope+' [data-dock-resource]')

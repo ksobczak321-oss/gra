@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from urllib.parse import unquote,urlsplit
 from playwright.sync_api import expect,sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE=Path(__file__).resolve().parents[1]
 ROOT=Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT',SOURCE)).resolve()
@@ -29,6 +30,7 @@ with sync_playwright() as p:
         page.add_init_script('localStorage.setItem("harborlight-language","pl")')
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5',wait_until='networkidle')
         page.wait_for_function('document.documentElement.dataset.gameStartup==="ready"',timeout=20000)
+        dismiss_player_offers(page)
         def open_building(identity):
             popup=page.locator('#island-dialog[open]')
             if popup.count():popup.locator('.dialog-close').click()

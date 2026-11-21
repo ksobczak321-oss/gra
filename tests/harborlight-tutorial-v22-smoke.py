@@ -13,7 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -34,7 +34,7 @@ def fresh_world():
       state.islandName='Samodzielny Dom';
       console.log(JSON.stringify(state));""" % int(cloud.NOW.timestamp() * 1000)
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=SOURCE,
-                                    capture_output=True, text=True, check=True).stdout)
+                                    capture_output=True, text=True, check=True, env=legacy_practical_node_env()).stdout)
 
 
 def confirmed(page):

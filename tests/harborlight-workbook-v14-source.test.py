@@ -43,6 +43,8 @@ class HistoricalSourceTests(unittest.TestCase):
             self.assertIn('0.14.0.0', (snapshot / 'harborlight-version.js').read_text())
             self.assertTrue((snapshot / 'backend/island-name.mjs').is_file())
             self.assertTrue((snapshot / 'backend/package.json').is_file())
+            cases = workbook.manual_cases(snapshot / 'docs/testing/manual-test-cases.json')
+            self.assertEqual(len(cases), 179, 'Historical validation must use its own checklist, even as current cases grow')
             self.assertFalse((snapshot / 'docs/arkusze/HARBORLIGHT14-zasady.xlsx').exists())
         self.assertFalse(snapshot.exists())
         self.assertEqual((ROOT / 'harborlight-version.js').read_bytes(), current_version)

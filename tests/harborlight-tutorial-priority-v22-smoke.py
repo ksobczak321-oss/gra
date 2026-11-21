@@ -12,6 +12,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import legacy_practical_node_env
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,7 +41,7 @@ def model(curriculum):
       if(tutorialStatus(state).nextLessonId!=='transport-priority')throw Error('Wrong real legacy fixture');
       console.log(JSON.stringify(state));"""
     result = subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT,
-                            capture_output=True, text=True, check=True)
+                            capture_output=True, text=True, check=True, env=legacy_practical_node_env())
     return json.loads(result.stdout)
 
 

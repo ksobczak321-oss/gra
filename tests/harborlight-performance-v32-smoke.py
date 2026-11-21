@@ -14,6 +14,7 @@ import threading
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 from helpers.building_stage_acceptance import staged_manifest, assert_scene
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -107,6 +108,7 @@ def run_case(browser, base, width, height, *, unavailable_future=False, fail_cur
         expect(retry).to_be_enabled()
         retry.click()
     page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"', timeout=30000)
+    dismiss_player_offers(page)
     expect(page.locator('#loading')).to_be_hidden()
     assert_scene(page, MANIFEST)
     state = page.evaluate('window.__HARBORLIGHT_DEV_STATE__')

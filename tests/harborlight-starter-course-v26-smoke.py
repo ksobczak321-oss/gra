@@ -13,7 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +38,7 @@ def model(through=0, decision=False):
         if(run.status!=='decision')throw Error('Actual card solver did not win');
       }
       console.log(JSON.stringify(state));''' % (START, through, json.dumps(decision))
-    return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
+    return json.loads(subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT, capture_output=True, text=True, check=True, env=legacy_practical_node_env()).stdout)
 
 
 def enter(browser, state, *, language='pl', mobile=False):

@@ -10,7 +10,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import dismiss_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -25,7 +25,7 @@ def starter(*, ruleset=None):
         options['ruleset'] = ruleset
     source = "import {createState} from './harborlight-v1-state.js'; console.log(JSON.stringify(createState(%d,%s)));" % (START, json.dumps(options))
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', source], cwd=SOURCE,
-                                    capture_output=True, text=True, check=True).stdout)
+                                    capture_output=True, text=True, check=True, env=legacy_practical_node_env()).stdout)
 
 
 def current_tour():
@@ -416,7 +416,7 @@ def complete_mobile_tour(browser):
 
 
 def existing_history(browser):
-    old = cloud.starter(777, 'Historia bez zmian')
+    old = cloud.starter(777, 'Historia bez zmian', legacy_practical=True)
     old.pop('onboarding', None)  # A real pre-v20 cloud save has no new marker.
     old['tutorial']['curriculum'] = 4
     old['buildings']['townhall']['level'] = 4
@@ -520,7 +520,7 @@ def lost_finish_acknowledgement(browser):
 
 
 def passive_autosave(browser):
-    seed(cloud.starter(333, 'Automatyczny zapis'))
+    seed(cloud.starter(333, 'Automatyczny zapis', legacy_practical=True))
     context, page = enter(browser)
     # The artwork loads independently of the authenticated world. Advancing
     # the fake clock before cloud bootstrap finishes would expire its network
@@ -569,7 +569,7 @@ def pending_introduction_idle_logout(browser):
 def expired_session(browser):
     # A browser closed overnight has no running idle timer. Authentication
     # activity metadata must still reject yesterday's stored session on return.
-    value = cloud.starter(641, 'Port nocny')
+    value = cloud.starter(641, 'Port nocny', legacy_practical=True)
     seed(value)
     writes_before = len(cloud.WRITES)
     context = browser.new_context(viewport={'width': 1366, 'height': 768})

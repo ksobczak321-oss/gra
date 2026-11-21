@@ -256,7 +256,18 @@ export async function exportTexts({ includeSource = true } = {}) {
   }
   for (const row of htmlTexts) row.source_scope = sourceScope(row.file);
 
-  const canonical = State.createState(FIXED_EPOCH, { ruleset: 32, onboarding: true });
+  // The activity constructor also reads the ambient clock when seeding tasks.
+  // Pin that clock only while building this isolated export fixture, retaining
+  // its complete seed and task fields instead of removing them from evidence.
+  const fixtureRealNow = Date.now;
+  let canonical;
+  try {
+    Date.now = () => FIXED_EPOCH;
+    canonical = State.createState(FIXED_EPOCH, { ruleset: 32, onboarding: true });
+  } finally {
+    Date.now = fixtureRealNow;
+  }
+  assert.equal(Date.now, fixtureRealNow, 'Export fixture clock was not restored');
   const baseOptions = { cloudAccount: true, firstIntroduction: true, simulatedCharity: false, state: canonical,
     resourceExample: { resource: 'stone', local: Math.floor(canonical.buildings.quarry.ready || 0), central: Math.floor(canonical.resources.stone || 0), inTransit: 0, hourlyBalance: State.resourceRates(canonical).stone.net } };
   const activeTourFor = options => createAdvisorTourSteps(Approved.APPROVED_TOUR_IDS.map(id => ({

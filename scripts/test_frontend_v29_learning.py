@@ -16,6 +16,7 @@ from playwright.sync_api import expect, sync_playwright
 
 SOURCE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SOURCE / 'tests'))
+from helpers.browser_tutorial import legacy_practical_node_env
 BASE = SOURCE / 'tests' / 'harborlight-release-v28-smoke.py'
 spec = importlib.util.spec_from_file_location('v29_learning_browser_base', BASE)
 base = importlib.util.module_from_spec(spec)
@@ -32,7 +33,7 @@ def fixture(step=0):
       if(state.loyalty.pendingReward&&!state.loyalty.closed&&state.loyalty.lastClaimedDay!==state.loyalty.pendingDay)run({type:'claimLoyalty'});
       run({type:'learningUpdate',patch:{tour:{index:%d,active:false,paused:true},adsNotBeforeActiveSeconds:100000}});
       console.log(JSON.stringify(state));""" % (NOW, step)
-    result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE, text=True, capture_output=True, check=True)
+    result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE, text=True, capture_output=True, check=True, env=legacy_practical_node_env())
     return json.loads(result.stdout)
 
 
@@ -61,17 +62,22 @@ def close_tour(page):
 
 def approved_tour_route():
     code = """import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';
-      console.log(JSON.stringify(APPROVED_TOUR_IDS));"""
+      import {ADVISOR_INTRO_IDS} from './harborlight-v1-advisor-intro.js';
+      console.log(JSON.stringify({visible:ADVISOR_INTRO_IDS,canonical:APPROVED_TOUR_IDS}));"""
     result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
                             text=True, capture_output=True, check=True)
-    route = json.loads(result.stdout)
-    assert len(route) == len(set(route)), route
+    catalog = json.loads(result.stdout)
+    route, canonical = catalog['visible'], catalog['canonical']
+    assert len(route) == len(set(route)) == 28, route
+    assert len(canonical) == len(set(canonical)) == 56, canonical
+    assert route == canonical[:11] + ['chat'] + canonical[21:28] + canonical[47:56], route
     assert route[0] == 'home' and 'building-theatre' in route, route
     assert route[route.index('building-farm') + 1] == 'producer-storage', route
-    return route
+    return catalog
 
 
-def scenario(browser, language, mobile, route):
+def scenario(browser, language, mobile, catalog):
+    route, canonical = catalog['visible'], catalog['canonical']
     context, page, errors, external = base.new_page(browser, fixture(), language, mobile)
     label = '%s-%s' % (language, 'mobile' if mobile else 'desktop')
     try:
@@ -114,6 +120,7 @@ def scenario(browser, language, mobile, route):
         expect(tour).to_have_attribute('data-onboarding-step', resume_step)
         expect(sad).to_have_count(0)
         close_tour(page)
+        assert base.state_of(page)['learning']['tour']['index'] == canonical.index(resume_step), 'A presentation index replaced the original saved cursor'
         expect(page.locator('[data-mobile-control="tutorial"]' if mobile else '#hit-tutorial')).to_have_class(re.compile('learning-help-highlight'))
         # Saved pause is restored exactly and completing the resumed tour
         # returns to practical work, not an idle island with the course hidden.
@@ -134,6 +141,8 @@ def scenario(browser, language, mobile, route):
         expect(tour).to_have_count(0)
         assert visited == route and len(visited) == len(set(visited)), visited
         assert 'building-theatre' in visited, visited
+        finished_tour = base.state_of(page)['learning']['tour']
+        assert finished_tour['completed'] and finished_tour['index'] == canonical.index(route[-1]) == 55
         # Practical guidance is optional: explicitly resume it through Help.
         open_help(page, mobile).locator('[data-help-return-lessons]').click()
         expect(page.locator('[data-tutorial-current="island-map"]')).to_be_visible()
@@ -157,22 +166,22 @@ def real_course():
       if(result.state.buildings.quarry.level!==2)throw Error('Quarry did not finish naturally');
       if(!result.state.tutorial.guided.townhall.accelerated)throw Error('Town Hall speed-up was not taught');
       console.log(JSON.stringify({quarrySeconds:finished.elapsedSeconds-quarry.elapsedSeconds,lessons:result.trace.length,curriculum:result.state.tutorial.curriculum}));"""
-    result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE, text=True, capture_output=True, check=True)
+    result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE, text=True, capture_output=True, check=True, env=legacy_practical_node_env())
     print('PASS real curriculum7 natural wait and coin acceleration: ' + result.stdout.strip())
 
 
 def run():
     real_course()
-    route = approved_tour_route()
+    catalog = approved_tour_route()
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM', '/usr/bin/chromium'), headless=True, args=['--no-sandbox'])
         try:
             for language in ['pl', 'en']:
                 for mobile in [False, True]:
-                    scenario(browser, language, mobile, route)
+                    scenario(browser, language, mobile, catalog)
         finally:
             browser.close()
-    print('PASS v29 learning: Help button edges, 3x question mark, %d-step approved route without duplicates, single Farm storage demonstration, Theatre, saved resume and explicitly resumed practical course; PL/EN desktop/mobile' % len(route))
+    print('PASS v29 learning: Help button edges, 3x question mark, %d-stop current route with 56 stable saved positions, single Farm storage demonstration, Theatre, saved resume and explicitly resumed preserved practical course; PL/EN desktop/mobile' % len(catalog['visible']))
 
 
 if __name__ == '__main__':

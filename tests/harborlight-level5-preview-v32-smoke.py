@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -41,6 +42,8 @@ with sync_playwright() as playwright:
         page.on('request', lambda request: requests.append(request.url))
         page.add_init_script('localStorage.setItem("harborlight-language","pl")')
         page.goto(f'https://{PAGES}/gra/harborlight-v1-layered.html{QUERY}', wait_until='networkidle')
+        page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+        dismiss_player_offers(page)
         badge = page.locator('[data-dev-preview]:visible').first
         expect(badge).to_be_visible()
         assert 'admin1' in badge.inner_text()
@@ -69,6 +72,8 @@ with sync_playwright() as playwright:
         context.route('**/*', asset)
         page = context.new_page()
         page.goto('http://127.0.0.1:47448/harborlight-v1-layered.html' + query, wait_until='networkidle')
+        page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
+        dismiss_player_offers(page)
         state = page.evaluate('window.__HARBORLIGHT_DEV_STATE__')
         assert state['buildings']['townhall']['level'] == 5
         assert state['buildings']['fisher']['level'] == 5

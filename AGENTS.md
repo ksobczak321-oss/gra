@@ -4,7 +4,7 @@
 
 Bieżący pakiet jest w integracji: **0.15.3.0 / `frontend-v32-22`**, 28 kroków tutoriala, osiem tematów pod „i”, ukryty zachowany Samouczek 25 lekcji, Doradca 1 cel / 2–5 akcji oraz widoczne etykiety poziomów. Własny CODE, publikacja, CI, Pages i tag pozostają PENDING. [Dokładny zakres](docs/v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json).
 
-GO obejmuje **tylko DEV/Git/CI/Pages**. Publiczny DEV i PRE-PROD do odrębnej publikacji zachowują odebrane C6/d5ad; PRE-PROD44577083312 nie przyjmuje nowego kodu. Nie uruchamiaj promocji tej paczki, resetu, PROD lub DNS bez nowego polecenia. Zachowaj postęp i flagi kursu. Historyczne testy włączonego kursu używają izolowanej fikstury; domyślne wyłączenie ma osobny odbiór. 511 kart / 187 ręcznych przypadków, wszystkie NOT RUN.
+Pierwotne GO obejmowało tylko DEV/Git/CI/Pages. Późniejsza jawna dyspozycja użytkownika **„jak skończysz wrzuć na pre prod”** autoryzuje ukończenie DEV → własny CI/Pages tego samego źródła → standardowy PRE-PROD, bez kolejnego pytania o zgodę. Wymagane są tag DEV, natywny odbiór istniejących admin1/admin3, oryginalne ZIP/receipt, cały pakiet i zachowanie kont, a następnie tag PRE-PROD. Faktyczne PRE-PROD nadal C6/d5ad/44577083312 do udanej nowej promocji. Zachowaj konta, hasła, postęp i flagi kursu; bez resetu, PROD i DNS. Historyczne testy włączonego kursu używają izolowanej fikstury; domyślne wyłączenie ma osobny odbiór. 511 kart / 187 ręcznych przypadków, wszystkie NOT RUN.
 
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 

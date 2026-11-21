@@ -10,7 +10,7 @@ import re
 import subprocess
 from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance
 
 SOURCE = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('release_v31_base', SOURCE / 'tests/harborlight-release-v28-smoke.py')
@@ -19,11 +19,13 @@ spec.loader.exec_module(base)
 SCREENSHOTS = Path(os.environ.get('HARBORLIGHT_SCREENSHOT_DIR', '/tmp/harborlight-v31-map'))
 APPROVED_TOUR = json.loads(subprocess.check_output(
     ['node', '--input-type=module', '-e',
-     'import {APPROVED_TOUR_IDS,getTourCopy} from %s; import {buildingPurpose} from %s; console.log(JSON.stringify({ids:APPROVED_TOUR_IDS,market:Object.fromEntries(["pl","en"].map(language=>[language,getTourCopy("building-market",language)])),lighthouse:Object.fromEntries(["pl","en"].map(language=>[language,buildingPurpose("lighthouse",language)]))}));' %
+     'import {APPROVED_TOUR_IDS,getTourCopy} from %s; import {buildingPurpose} from %s; import {ADVISOR_INTRO_IDS} from %s; console.log(JSON.stringify({ids:ADVISOR_INTRO_IDS,canonicalIds:APPROVED_TOUR_IDS,market:Object.fromEntries(["pl","en"].map(language=>[language,getTourCopy("building-market",language)])),lighthouse:Object.fromEntries(["pl","en"].map(language=>[language,buildingPurpose("lighthouse",language)]))}));' %
      (json.dumps((base.ROOT / 'harborlight-v1-approved-copy.js').as_uri()),
-      json.dumps((base.ROOT / 'harborlight-v1-copy.js').as_uri()))],
+      json.dumps((base.ROOT / 'harborlight-v1-copy.js').as_uri()),
+      json.dumps((base.ROOT / 'harborlight-v1-advisor-intro.js').as_uri()))],
     cwd=SOURCE, text=True))
 TOUR_IDS = APPROVED_TOUR['ids']
+assert len(TOUR_IDS) == 28 and len(APPROVED_TOUR['canonicalIds']) == 56
 
 
 def screen(page, name):
@@ -72,7 +74,7 @@ def house_guide_fixture():
       if(next?.id!=='personal-happiness'||next.index!==14)throw Error('Fixture is not on real lesson14');
       console.log(JSON.stringify(s));""" % base.NOW
     result = subprocess.run(['node', '--input-type=module', '-e', code],
-                            cwd=SOURCE, text=True, capture_output=True, check=True)
+                            cwd=SOURCE, text=True, capture_output=True, check=True, env=legacy_practical_node_env())
     return json.loads(result.stdout)
 
 

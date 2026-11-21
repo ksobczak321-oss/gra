@@ -11,6 +11,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_offers import dismiss_player_offers
 from helpers.building_stage_acceptance import staged_manifest, assert_scene, assert_art
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -98,6 +99,7 @@ with sync_playwright() as p:
         page.add_init_script('localStorage.setItem("harborlight-language","pl")')
         page.goto(BASE+'/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5',wait_until='networkidle')
         page.wait_for_function('document.getElementById("loading").hidden',timeout=30000)
+        dismiss_player_offers(page)
         before = page.evaluate('Object.fromEntries(Object.entries(window.__HARBORLIGHT_DEV_STATE__.buildings).map(([id,b])=>[id,{level:b.level,workers:b.workers||0}]))')
         assert before['townhall']['level']==5
         actual = page.locator('.world-hotspot[id^="hit-world-"]').evaluate_all('nodes=>nodes.map(n=>n.id.slice(10))')

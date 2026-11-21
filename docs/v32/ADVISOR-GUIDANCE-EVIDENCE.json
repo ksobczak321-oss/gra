@@ -3,14 +3,22 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.3.0",
   "cache": "frontend-v32-22",
-  "status": "DEV_INTEGRATION_TARGETED_PROOFS_ONLY_CODE_PUBLICATION_AND_OWN_CI_PENDING",
+  "status": "DEV_INTEGRATION_TARGETED_PROOFS_AND_FIXTURES_PREPROD_AUTHORIZED_AFTER_VERIFIED_SOURCE",
   "authorization": {
     "kind": "user_chat_GO",
     "date": "2026-11-21",
     "quote": "GO",
-    "scope": "DEV_GIT_OWN_CI_PAGES",
-    "PREPROD_for_this_package": false,
-    "PROD_DNS_reset": "NO_ACTION"
+    "scope": "DEV_GIT_OWN_CI_PAGES_THEN_STANDARD_PREPROD",
+    "PREPROD_for_this_package": true,
+    "PROD_DNS_reset": "NO_ACTION",
+    "initial_scope": "DEV_GIT_OWN_CI_PAGES",
+    "initial_PREPROD_for_this_package": false,
+    "followup_quote": "jak skończysz wrzuć na pre prod",
+    "followup_kind": "explicit_user_instruction",
+    "followup_date": "2026-11-21",
+    "PREPROD_condition": "authorized_pending_verified_DEV_and_exactCI",
+    "preserve_accounts_passwords_progress": true,
+    "repeat_user_confirmation_required": false
   },
   "baseline": {
     "repository_base": "0705dd88638183f6e35ec23fe55e82e793430173",
@@ -38,11 +46,29 @@
     "name": null
   },
   "PREPROD": {
-    "status": "UNCHANGED_C6_ACCEPTED_NO_NEW_PROMOTION_AUTHORIZED",
+    "status": "AUTHORIZED_PENDING_VERIFIED_DEV_EXACT_CI_STANDARD_WORKFLOW_AND_NATIVE_ACCEPTANCE",
     "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
     "run_id": 44577083312,
     "attempt": 1,
-    "new_dispatch": false
+    "new_dispatch": false,
+    "previously_observed_status": "UNCHANGED_C6_ACCEPTED_NO_NEW_PROMOTION_AUTHORIZED",
+    "actually_deployed_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "actually_deployed_run_id": 44577083312,
+    "target_version": "0.15.3.0",
+    "target_source_sha": null,
+    "new_run_id": null,
+    "new_deployment_accepted": false,
+    "required_gate_sequence": [
+      "finish_new_CODE_and_canonical_exports",
+      "own_exact_source_CI_and_Pages_SUCCESS",
+      "immutable_DEV_tag",
+      "standard_google_cloud_dev_workflow_exact_source",
+      "native_existing_admin1_and_admin3_startup_and_postready",
+      "original_two_ZIP_and_four_receipt_checks_image_package",
+      "all_public_package_bytes_and_account_preservation",
+      "immutable_PREPROD_tag"
+    ],
+    "expected_frontend_files_to_be_verified": 462
   },
   "scope": {
     "active_tour_steps": 28,
@@ -117,11 +143,53 @@
       "status": "PENDING_FINAL_PARENT_REPORT"
     },
     "menu_information": {
-      "status": "PENDING_FINAL_PARENT_REPORT"
+      "status": "PASS_REPORTED_BY_ROOT",
+      "topics": 8,
+      "viewport_count": 4,
+      "languages": [
+        "pl",
+        "en"
+      ],
+      "final_frozen_source_rerun": "PENDING"
+    },
+    "root_relevant_UI": {
+      "status": "PASS_REPORTED_BY_ROOT",
+      "passed_programs": 7,
+      "final_own_CI_is_separate": true
+    },
+    "legacy_course_fixture": {
+      "status": "PASS_REPORTED_BY_ROOT_AFTER_TEST_ONLY_PRELOAD_FIX",
+      "production_policy_remains_disabled": true,
+      "first_raw_failure_preserved": true
     }
   },
   "full_local_QA": {
-    "status": "PENDING_FINAL_INTEGRATED_SOURCE"
+    "status": "INITIAL_FULL_FRONTEND_FAIL_THEN_TARGETED_FIX_PASS_OWN_FULL_CI_PENDING",
+    "initial_frontend": {
+      "passed": 1644,
+      "total": 1646,
+      "failed": 2,
+      "elapsed_seconds": 225.866,
+      "source_scope": "local_run_before_copy_fixes_in_ffb",
+      "raw_failure_preserved": true,
+      "full_pass_claimed": false
+    },
+    "copy_fixes": {
+      "fixed_in_source": "ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea",
+      "targeted_pass": 22,
+      "targeted_total": 22,
+      "fixes": [
+        "restore_full_default_carrier_information_without_paused_course_reference",
+        "update_Ubrani_expectation_to_Ubrania"
+      ]
+    },
+    "unchanged_96h_watchdog": {
+      "pass_ms": 9602.511,
+      "limit_ms": 10000,
+      "limit_changed": false
+    },
+    "new_full_frontend_local_PASS_claimed": false,
+    "final_own_CI": "PENDING"
   },
   "frontend_package": {
     "status": "PENDING_FINAL_PUBLICATION_SOURCE",
@@ -130,12 +198,21 @@
     "manifest_sha256": null
   },
   "canonical_artifacts": {
-    "status": "WAITING_FOR_CODE_FREEZE",
+    "status": "FIRST_FFB_FRESH_VALIDATION_FAIL_PRESERVED_DETERMINISTIC_FIXTURE_FIX_WAITING_NEW_CODE",
     "planned_master_sheets": 161,
     "active_tour_rows": 28,
     "archived_full_tour_rows": 56,
     "preserved_practical_rows": 25,
-    "build_or_fresh_validation_claimed": false
+    "build_or_fresh_validation_claimed": false,
+    "first_attempt": {
+      "source_sha": "ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea",
+      "fresh_validation": "FAIL_PRESERVED",
+      "differing_input_JSONs": 12,
+      "cause": "activitySeed initialized from Date.now in export fixture constructors",
+      "fix_scope": "export_fixture_constructor_only",
+      "game_runtime_changed_by_fix": false,
+      "new_two_scenario_exports_strict_zero_diff": "PENDING"
+    }
   },
   "tracking": {
     "changes": 511,
@@ -181,5 +258,12 @@
     "docs/v32/GO-ADVISOR-GUIDANCE.md",
     "docs/ENVIRONMENT-STATUS.md",
     "docs/IMPLEMENTATION-LOG.md"
-  ]
+  ],
+  "historical_first_CODE_attempt": {
+    "source_sha": "ffb54aa54bbb2c39bfd823a75a24d89cdf2506ea",
+    "status": "FROZEN_THEN_CANONICAL_FRESH_VALIDATION_FAIL_PRESERVED_NEW_CODE_REQUIRED",
+    "runtime_since_reference_unchanged": true,
+    "next_changes_scope": "export_fixture_deterministic_activitySeed_and_test_only_legacy_preload_plus_metadata",
+    "acceptance_claimed": false
+  }
 }

@@ -16,7 +16,7 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, install_legacy_practical_course
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -40,7 +40,7 @@ def fixture(*, level=3, loyalty=False, course=False):
       if(%s)advanceEngagementSchedule(state,600,{visible:true,focused:true});
       console.log(JSON.stringify(state));""" % (json.dumps(course), NOW, NOW, json.dumps(course), level, level, json.dumps(loyalty), 0 if course else 100000, json.dumps(course))
     result = subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
-                            text=True, capture_output=True, check=True)
+                            text=True, capture_output=True, check=True, env=legacy_practical_node_env())
     return json.loads(result.stdout)
 
 
@@ -145,7 +145,7 @@ def ui_scenario(browser, language, mobile):
         screenshot(page, label + '-help')
         help_panel.locator('[data-help-tour-from-start]').click()
         tour = page.locator('[data-island-onboarding]')
-        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 56' if language == 'pl' else '1 of 56')
+        expect(tour.locator('[data-onboarding-counter]')).to_contain_text('1 z 28' if language == 'pl' else '1 of 28')
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         tour.locator('[data-onboarding-next]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'level')

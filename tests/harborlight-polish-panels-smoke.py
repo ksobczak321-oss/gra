@@ -14,7 +14,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -81,7 +81,7 @@ def seed():
       console.log(JSON.stringify(A.serializeArchipelago(worlds)));""" % int(NOW.timestamp()*1000)
     return acknowledge_daily_offer(json.loads(subprocess.run(['node', '--input-type=module', '-e', script],
                                     cwd=SOURCE, capture_output=True, text=True,
-                                    check=True).stdout))
+                                    check=True, env=legacy_practical_node_env()).stdout))
 
 
 def close_panel(page):

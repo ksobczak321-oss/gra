@@ -7,7 +7,8 @@
 | Roboczy DEV | Tutorial28, zachowany ukryty Samouczek 25, Doradca1 cel/2–5 akcji i widoczne etykiety; integracja. |
 | CODE / publikacja / własne CI / Pages / tag | PENDING nowego końcowego źródła. Wyniki C6 nie przyjmują nowego kodu. |
 | Dotychczas publiczny DEV | Odebrane C6 / 0.15.2.4 / cache21 / d5ad do osobnej publikacji. |
-| PRE-PROD | Bez zmiany: C6/d5ad, standardowy44577083312/próba1. Nowa promocja tej paczki nie jest autoryzowana. |
+| PRE-PROD faktyczne | Bez zmiany: C6/d5ad, standardowy44577083312/próba1. Nowego wdrożenia jeszcze nie potwierdzono. |
+| PRE-PROD planowane | Jawnie autoryzowane poleceniem „jak skończysz wrzuć na pre prod”, po ukończeniu DEV, własnym CI/Pages i standardowym odbiorze tego samego źródła. |
 | Konta / PROD / DNS | Bez resetu lub nowych operacji. |
 
 [Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Bieżące dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Ręczny odbiór187 przypadków: **NOT RUN**. Poniższy odbiór C6 zachowuje własny historyczny zakres i nadal opisuje faktyczne PRE-PROD.

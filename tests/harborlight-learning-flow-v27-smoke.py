@@ -5,7 +5,7 @@ Construction fixtures are earned through the actual course helper, including
 resource deliveries, the Lighthouse task and the solved/cashed-out minigame.
 No account, world, reward or construction-completion flags are fabricated.
 Historical course fixtures are retained; screen-guide navigation follows the
-current accepted v4 route and its 48 stable steps.
+current 28-stop presentation while stored cursors retain the 56-entry catalogue.
 """
 from datetime import datetime, timezone
 import importlib.util
@@ -16,7 +16,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
+from helpers.browser_tutorial import legacy_practical_node_env, request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -24,11 +24,13 @@ spec = importlib.util.spec_from_file_location('learning_v27_cloud', SOURCE / 'te
 cloud = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cloud)
 UID = 'dev-admin2'
-TOUR_IDS = json.loads(subprocess.check_output([
+TOUR_CATALOG = json.loads(subprocess.check_output([
     'node', '--input-type=module', '-e',
-    "import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';console.log(JSON.stringify(APPROVED_TOUR_IDS))",
+    "import {APPROVED_TOUR_IDS} from './harborlight-v1-approved-copy.js';import {ADVISOR_INTRO_IDS} from './harborlight-v1-advisor-intro.js';console.log(JSON.stringify({visible:ADVISOR_INTRO_IDS,canonical:APPROVED_TOUR_IDS}))",
 ], cwd=SOURCE, text=True))
-assert len(TOUR_IDS) == 56, 'The accepted v5 guide has 56 steps'
+TOUR_IDS, CANONICAL_TOUR_IDS = TOUR_CATALOG['visible'], TOUR_CATALOG['canonical']
+assert len(TOUR_IDS) == 28 and len(set(TOUR_IDS)) == 28, 'The current presentation has 28 distinct stops'
+assert len(CANONICAL_TOUR_IDS) == 56, 'The stored guide positions retain all 56 stable IDs'
 
 
 def world(*, through=0, resource_tour=False):
@@ -50,7 +52,7 @@ def world(*, through=0, resource_tour=False):
       }
       console.log(JSON.stringify(state));''' % (json.dumps(through > 0), through, json.dumps(resource_tour))
     return json.loads(subprocess.run(['node', '--input-type=module', '-e', code], cwd=SOURCE,
-                                    text=True, capture_output=True, check=True).stdout)
+                                    text=True, capture_output=True, check=True, env=legacy_practical_node_env()).stdout)
 
 
 def seed(state):
@@ -139,17 +141,16 @@ def tour_and_help(browser, language, mobile):
         expect(stone.locator('[data-dock-local="stone"]')).to_have_text(str(local))
         expect(stone.locator('[data-dock-central="stone"]')).to_have_text(str(central))
         expect(stone.locator('[data-dock-transit="stone"]')).to_have_text('0')
-        # Every later stable ID, including new buildings and chat, is reachable.
+        # Every remaining visible stop is reachable; removed building lessons
+        # stay available through their ordinary map/menu controls, not this tour.
         sequence = TOUR_IDS[TOUR_IDS.index('producer-storage') + 1:]
         for step in sequence:
             tour.locator('[data-onboarding-next]').click()
             expect(tour).to_have_attribute('data-onboarding-step', step)
-            if step == 'chat':
-                expect(page.locator('#island-onboarding-description')).to_contain_text(
-                    'innymi graczami' if language == 'pl' else 'chat online with other players')
         close_tour(page, language)
         paused = saved(page)
-        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == len(TOUR_IDS) - 1
+        assert paused['learning']['tour']['paused'] and paused['learning']['tour']['index'] == CANONICAL_TOUR_IDS.index(TOUR_IDS[-1])
+        assert paused['learning']['tour']['index'] == 55, 'The final presentation stop must retain its original saved position'
         assert lesson_history(paused) == before, 'Screen explanations changed practical lesson rewards'
         page.reload()
         page.wait_for_function('document.getElementById("loading").hidden')
@@ -158,7 +159,16 @@ def tour_and_help(browser, language, mobile):
         tour.locator('[data-onboarding-restart]').click()
         expect(tour).to_have_attribute('data-onboarding-step', 'home')
         assert saved(page)['learning']['tour']['index'] == 0
+        # Chat now appears before the Farm and includes the former League stop.
+        # Inspect it through the real current tour, preserving the chat-copy
+        # assertion that used to be reached later in the old full catalogue.
+        for step in TOUR_IDS[1:TOUR_IDS.index('chat') + 1]:
+            tour.locator('[data-onboarding-next]').click()
+            expect(tour).to_have_attribute('data-onboarding-step', step)
+        expect(page.locator('#island-onboarding-description')).to_contain_text(
+            'innymi graczami' if language == 'pl' else 'chat online with other players')
         close_tour(page, language)
+        assert saved(page)['learning']['tour']['index'] == CANONICAL_TOUR_IDS.index('chat')
         assert lesson_history(saved(page)) == before
         cloud.no_island_cache(page)
     finally:
@@ -453,7 +463,7 @@ def run():
     if recovery_only:
         print('PASS8 replay navigation/restart lost-ACK scenarios: confirmed cloud cursor adopted without duplicate writes or changed practical history; PL/EN desktop/mobile')
     else:
-        print('PASS integrated v27 learning: Help has two entries, overview excludes them,56 current tour steps with live resource-dock counts and chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
+        print('PASS integrated v27 learning: preserved practical course, current 28-stop tour with stable 56-entry saved cursors, live resource-dock counts and merged chat, saved resume/restart and lost-ACK readback, read-only practical review, actual construction countdown, receipt-before-effect arrows; PL/EN desktop/mobile')
 
 
 if __name__ == '__main__':
