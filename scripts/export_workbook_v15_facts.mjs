@@ -37,7 +37,7 @@ const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const clone = value => structuredClone(value);
 const sourceFiles = [...readdirSync(ROOT).filter(name => /^harborlight.*\.js$/.test(name)),
   ...readdirSync(resolve(ROOT, 'backend')).filter(name => /\.(?:m?js)$/.test(name)).map(name => 'backend/' + name),
-  BuildingStages.BUILDING_STAGE_MANIFEST].sort();
+  BuildingStages.BUILDING_STAGE_MANIFEST, 'harborlight-v1-advisor.css', 'harborlight-v1-advisor-guidance.css'].sort();
 const sourceHashes = Object.fromEntries(sourceFiles.map(name => [name, sha256(readFileSync(resolve(ROOT, name)))]));
 const tables = [];
 const columns = pairs => pairs.map(([key, label]) => ({ key, label }));
@@ -399,7 +399,7 @@ const result = { meta: { appVersion: GAME_VERSION, ruleset: Development.DEVELOPM
     sourceConditionRows: conditions.length, buildingArtStageRows: buildingStageRows.length,
     buildingArtFamilies: BuildingStages.BUILDING_STAGE_IDS.length },
   limitations: ['Tabele są eksportem reguł i cytatów, nie zapisem użytkownika ani dowodem wdrożenia.','Scenariusze kosztów zakładają duże zapasy bieżących towarów; efekty mnożników i ograniczenia logistyczne opisano oddzielnie.'] };
-assert.equal(GAME_VERSION, '0.15.3.0'); assert.equal(fresh.ruleset, 32); assert.equal(fresh.population, 18);
+assert.equal(GAME_VERSION, '0.15.3.1'); assert.equal(fresh.ruleset, 32); assert.equal(fresh.population, 18);
 const json = JSON.stringify(result, (key, value) => typeof value === 'number' && !Number.isFinite(value) ? null : value, 2) + '\n';
 const outputIndex = process.argv.indexOf('--output');
 if (outputIndex >= 0) {

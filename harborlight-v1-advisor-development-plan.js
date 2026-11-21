@@ -1,0 +1,288 @@
+// Advisory only. The planner owns a small disposable view, never a live world.
+// No model advances, forecasts, history reads, random choices or commands.
+import {ALL_BUILDINGS, buildingCost, canAfford, upgradeEligibility, workerLimit, freeWorkers} from './harborlight-v1-state.js?v=frontend-v32-23';
+import {GOODS, FOOD_IDS, RECIPE_CATALOG, NEW_BUILDINGS, availableRecipes, productionAssignments, crewCapacity, foodReservePlan, withProvisionsReadScope} from './harborlight-v1-provisions.js?v=frontend-v32-23';
+import {centralUnreserved, ordinaryWarehouseUsed,ordinaryStock} from './harborlight-v1-inventory.js?v=frontend-v32-23';
+import {activeWorkerIndices, haulCapacity, transportEfficiency, plannedLevel, warehouseLimits, warehouseDispatchStatus, constructionCounts} from './harborlight-v1-logistics.js?v=frontend-v32-23';
+import {directRouteWorkers} from './harborlight-v1-development-logistics.js?v=frontend-v32-23';
+import {residentWorkMultiplier, housingStatus} from './harborlight-v1-housing.js?v=frontend-v32-23';
+import {residentAvailableForAssignment} from './harborlight-v1-residents.js?v=frontend-v32-23';
+import {activePlayMultiplier} from './harborlight-v1-progression.js?v=frontend-v32-23';
+import {eventProductionMultiplier} from './harborlight-v1-events.js?v=frontend-v32-23';
+import {constructionTiming} from './harborlight-v1-economy.js?v=frontend-v32-23';
+import {ADVISOR_BUILDING_NAMES} from './harborlight-v1-advisor.js?v=frontend-v32-23';
+
+export const ADVISOR_PLAN_LIMITS=Object.freeze({candidates:20,variants:64,depth:2,recipes:32});
+const EPS=1e-7, ids=Object.keys(ALL_BUILDINGS), goods=Object.keys(GOODS);
+const amount=n=>Number.isFinite(n)?Math.max(0,n):0;
+const scalar=(source,fields)=>Object.fromEntries(fields.filter(k=>source?.[k]!==undefined).map(k=>[k,source[k]]));
+const scalars=source=>Object.fromEntries(Object.entries(source||{}).filter(([,v])=>v===null||['string','number','boolean'].includes(typeof v)));
+const stocks=source=>Object.fromEntries(goods.filter(k=>source?.[k]!==undefined).map(k=>[k,amount(source[k])]));
+const keyed=(source,fields)=>Object.fromEntries(Object.entries(source||{}).map(([k,v])=>[k,scalar(v,fields)]));
+const uid=p=>p.personUid||`resident-${p.id}`;
+const projectFields=['order','building','targetLevel','stage','buildRemaining','transportSeconds','goodsRemaining','goodsTotal','reservedCoins','instantTransport','forecast','premiumService','transportStarted'];
+// Whitelist first, then transfer. In particular, never enumerate provisions
+// people records or read their history, packed profile or other-island data.
+export function advisorDevelopmentSnapshot(source) {
+ const s=scalar(source,['ruleset','worldTimeMs','lastSimulatedAt','population','happiness','islandId','islandRole','highestAcademyLevel','lighthouseRemaining','chapelRemaining','constructionSequence','housingRevision']);
+ s.resources={...stocks(source?.resources),coins:amount(source?.resources?.coins)};s.bonusMaterials=stocks(source?.bonusMaterials);s.pendingDeliveries=stocks(source?.pendingDeliveries);
+ s.buildings=Object.fromEntries(ids.map(id=>[id,{level:0,workers:0,...scalar(source?.buildings?.[id],['level','workers','ready']),stock:stocks(source?.buildings?.[id]?.stock)}]));
+ s.residents=(source?.residents||[]).map(p=>scalar(p,['id','personUid','workplace','arrivalRemaining','returnRemaining','visitGroup','visiting','prayerRemaining','pendingRelease','hasHousing']));
+ const original=source?.provisions||{};
+ s.provisions={version:1,clockMs:source?.worldTimeMs||0,requiredTypes:original.requiredTypes,people:{},foodSettings:{priorities:[...(original.foodSettings?.priorities||[])],enabled:{...original.foodSettings?.enabled},limits:{...original.foodSettings?.limits}},assignments:{},localStock:{},legacyCrewAllowances:{},routeAssignments:keyed(original.routeAssignments,['workers'])};
+ for(const p of s.residents)s.provisions.people[uid(p)]={coverage:1,...scalar(original.people?.[uid(p)],['coverage','clothingRemaining','clothesSpare'])};
+ for(const id of ids){s.provisions.assignments[id]=scalars(original.assignments?.[id]);s.provisions.localStock[id]=stocks(original.localStock?.[id]);const row=original.legacyCrewAllowances?.[id];if(row)s.provisions.legacyCrewAllowances[id]={workers:row.workers,recipes:scalars(row.recipes)};}
+ s.education={version:1,people:{},courses:(source?.education?.courses||[]).map(r=>scalar(r,['studentUid','teacherUid'])),researches:(source?.education?.researches||[]).map(r=>({professorUids:[...(r.professorUids||[])]})),researchLevels:scalars(source?.education?.researchLevels),discoveries:scalars(source?.education?.discoveries),research:{completed:scalars(source?.education?.research?.completed)},routes:keyed(source?.education?.routes,['source','target','product'])};
+ s.military={version:1,people:{},courses:(source?.military?.courses||[]).map(r=>scalar(r,['studentUid','instructorUid'])),squads:(source?.military?.squads||[]).filter(r=>['away','waiting'].includes(r.stage)).map(r=>({stage:r.stage,people:(r.people||[]).map(p=>scalar(p,['id','personUid']))}))};
+ for(const p of s.residents){const key=p.personUid||`resident:${p.id}`;if(source?.education?.people?.[key])s.education.people[key]=scalar(source.education.people[key],['profession','rounds','protectedUntil']);if(source?.military?.people?.[key])s.military.people[key]=scalar(source.military.people[key],['rank','restUntil','housed']);}
+ s.constructionProjects=(source?.constructionProjects||[]).map(r=>({...scalar(r,projectFields),cost:stocks(r.cost),remainingMaterials:stocks(r.remainingMaterials),reservedMaterials:stocks(r.reservedMaterials),delivered:stocks(r.delivered),economyTiming:scalars(r.economyTiming),starterTurbo:r.starterTurbo?scalars(r.starterTurbo):undefined}));
+ s.premium=scalar(source?.premium,['expiresAt']);s.premiumServices=(source?.premiumServices||[]).map(r=>scalar(r,['building','targetLevel','stage','buildRemaining','buildSeconds','remaining']));s.starterTurbo=scalars(source?.starterTurbo);
+ s.haulTrips=Object.fromEntries(['warehouse','dock','market'].map(id=>[id,(source?.haulTrips?.[id]||[]).map(r=>scalar(r,['kind','worker','residentId','projectOrder','resource','amount','remaining','producer','target','routeId','starterTurboClock','workMultiplier','economyClock']))]));
+ s.market={stock:stocks(source?.market?.stock),orders:(source?.market?.orders||[]).map(r=>scalar(r,['resource','amount'])),locked:[]};
+ s.dock={stock:stocks(source?.dock?.stock),orders:(source?.dock?.orders||[]).map(r=>scalar(r,['id','resource','direction','reservationVersion','stage','remainingToPort','remainingToUnload','voyageRemaining']))};
+ for(const key of ['transportPriority','warehousePriorities','logisticsPriority'])s[key]=[...(source?.[key]||[])];
+ s.roads={segments:[...(source?.roads?.segments||[])]};s.engagement=scalar(source?.engagement,['activeUntil','lastRealActivityAt','firstAnchorAt']);
+ s.worldEvents={clockMs:source?.worldEvents?.clockMs||0,effects:(source?.worldEvents?.effects||[]).map(r=>scalar(r,['untilMs','farmBonusPercent','transportSlowPercent']))};
+ s.missionProductionBonuses=(source?.missionProductionBonuses||[]).map(r=>scalar(r,['building','multiplier','until']));
+ s.theatre={version:1,shows:(source?.theatre?.shows||[]).filter(r=>['planned','running'].includes(r.status)).map(r=>({...scalar(r,['id','status','startAt','endAt']),personUids:[...(r.personUids||[])]}))};
+ s.houseHappinessPool={...scalar(source?.houseHappinessPool,['version','points','nextRefreshAt','refreshRemaining']),portions:(source?.houseHappinessPool?.portions||[]).map(r=>scalar(r,['points','population','day','legacy']))};
+ return s;
+}
+
+const englishNames={townhall:'Town Hall',house:'House',farm:'Farm',lumber:'Lumber Camp',quarry:'Quarry',windmill:'Mill',sawmill:'Sawmill',warehouse:'Warehouse',dock:'Port',market:'Market',lighthouse:'Lighthouse',chapel:'Chapel',theatre:'Theatre',bakery:'Bakery',dairy:'Dairy',slaughterhouse:'Slaughterhouse',fisher:'Fisher',leatherworks:'Leatherworks',academy:'Academy',barracks:'Barracks'};
+const aliases={townhall:/ratusz|town hall/,house:/\bdom|house|beds|lozk/,farm:/gospodar|\bfarm/,lumber:/drwal|lesnik|lumber/,quarry:/kamieniolom|quarry/,windmill:/mlyn|\bmill\b/,sawmill:/tartak|sawmill/,warehouse:/magazyn|warehouse/,dock:/\bport|porcie|przystan|harbou?r/,market:/targ|market/,lighthouse:/latarn|lighthouse/,chapel:/kaplic|chapel/,theatre:/teatr|theat/,bakery:/piekar|bakery/,dairy:/mleczarn|dairy/,slaughterhouse:/rzezn|slaughter/,fisher:/rybak|fisher/,leatherworks:/skorz|leatherworks/,academy:/akadem|academy/,barracks:/koszar|barracks/};
+export function advisorDevelopmentIntent(input='',options={}) {
+ const text=String(input).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').slice(0,300);
+ const detectedTopic=/jedzen|wyzyw|glod|food|feed/.test(text)?'food':/transport|priorytet|priorit|dostaw/.test(text)?'transport':/mieszk|pracown|wolni|workers|residents/.test(text)?'workers':null;
+ const topic=detectedTopic||(!text||/dlaczego|czemu|inaczej|inna|another|why|refresh|przelicz/.test(text)?options.topic||null:null);
+ const target=!topic&&Object.entries(aliases).find(([,re])=>re.test(text))?.[0];
+ const reset=/biezace zadanie|current task|rozwoj wyspy|island development/.test(text);
+ return {goal:reset?null:target||options.goal||null,targetLevel:reset||target?null:options.targetLevel??null,topic:reset?null:topic,language:options.language==='en'?'en':'pl',explicit:!reset&&!!(target||options.goal||topic),alternative:options.alternative===true};
+}
+const num=n=>Math.ceil(Math.max(0,n)-EPS).toLocaleString('pl-PL');
+const dtoCost=cost=>({materials:{...cost},foodQuote:cost.foodQuote?{...cost.foodQuote,materials:{...cost.foodQuote.materials}}:null,foodUnits:cost.foodUnits??0});
+const sum=(rows,fn)=>rows.reduce((n,r)=>n+fn(r),0);
+const finite=n=>Number.isFinite(n)?n:null;
+const productionFactor=(s,building)=>(s.lighthouseRemaining>0?2:1)*activePlayMultiplier(s)*eventProductionMultiplier(s,building)*((s.missionProductionBonuses||[]).some(b=>b.building===building&&b.until>s.worldTimeMs&&b.multiplier===2)?2:1);
+// Do not finance expansion by silently using the workers needed to replenish
+// meals. Raw-food duties require no input chain and have auditable model rates.
+// Existing processing can help, but is not assumed to run indefinitely from a
+// finite local input buffer. This is deliberately a conservative food floor.
+function foodProductionDuty(s,reserve) {
+ const recipes=Object.entries(RECIPE_CATALOG).filter(([id,r])=>!Object.keys(r.inputs).length&&Object.keys(r.outputs).some(id=>GOODS[id].edible)&&availableRecipes(s,r.building).some(row=>row.id===id));
+ const free=s.residents.filter(p=>residentAvailableForAssignment(s,p)&&s.education.people[p.personUid]?.profession!=='professor'&&!s.military.people[p.personUid]),allocations=[],held=new Set(),hires={};
+ const rows=recipes.map(([id,recipe])=>{
+  const assignment=productionAssignments(s,recipe.building).find(row=>row.recipeId===id),people=s.residents.filter(p=>p.workplace===recipe.building),ready=new Set(activeWorkerIndices(s,recipe.building)),all=productionAssignments(s,recipe.building);let cursor=0,workers=[];
+  for(const row of all){if(row.recipeId===id)workers=people.slice(cursor,cursor+row.workers).filter((p,i)=>ready.has(cursor+i));cursor+=row.workers;}
+  const resource=Object.keys(recipe.outputs)[0],perWorker=assignment.ratePerWorkerHour*Math.min(1,activePlayMultiplier(s))*Math.min(1,eventProductionMultiplier(s,recipe.building))*GOODS[resource].satiety;
+  return {recipeId:id,building:recipe.building,resource,assigned:assignment.workers,rate:sum(workers,p=>residentWorkMultiplier(s,p,{recipeId:id}))*perWorker,perWorker};
+ });
+ const required=reserve.requiredSatiety,currentComplete=sum(rows,row=>row.rate)+EPS>=required&&rows.filter(row=>row.rate+EPS>=required*.2).length>=reserve.requiredTypes;
+ const minimum=reserve.requiredTypes>1?required*.2:required,targets=new Map(currentComplete?[]:rows.slice(0,reserve.requiredTypes).map(row=>[row.recipeId,minimum]));
+ if(rows.length&&!currentComplete)targets.set(rows[0].recipeId,Math.max(targets.get(rows[0].recipeId)||0,required-sum(rows.slice(1),row=>Math.max(row.rate,targets.get(row.recipeId)||0))));
+ for(const row of rows){
+  const target=targets.get(row.recipeId)||0;let need=Math.max(0,target-row.rate),selected=[];
+  const room=Math.min(crewCapacity(s,row.building).perProduct-row.assigned,workerLimit(s,row.building)-amount(s.buildings[row.building].workers)-amount(hires[row.building]));
+  while(need>EPS&&selected.length<room&&free.length){const person=free.shift();selected.push(person);held.add(person.personUid||person.id);need-=row.perWorker*residentWorkMultiplier(s,person,{recipeId:row.recipeId});}
+  row.projected=row.rate+sum(selected,p=>row.perWorker*residentWorkMultiplier(s,p,{recipeId:row.recipeId}));
+  if(selected.length){hires[row.building]=amount(hires[row.building])+selected.length;allocations.push({...row,hire:selected.length,addedBatchesPerHour:(row.projected-row.rate)/GOODS[row.resource].satiety,targetWorkers:row.assigned+selected.length,buildingTarget:amount(s.buildings[row.building].workers)+hires[row.building]});}
+ }
+ const rate=sum(rows,row=>row.projected??row.rate),types=rows.filter(row=>(row.projected??row.rate)+EPS>=required*.2).length;
+ const floors={},selected=rows.filter(row=>(row.projected??row.rate)+EPS>=required*.2).slice(0,reserve.requiredTypes);let left=required;
+ if(reserve.requiredTypes>1)for(const row of selected){const points=Math.min(left,required*.2);floors[row.recipeId]=points/GOODS[row.resource].satiety;left-=points;}
+ for(const row of rows){const points=Math.min(left,Math.max(0,(row.projected??row.rate)-amount(floors[row.recipeId])*GOODS[row.resource].satiety));floors[row.recipeId]=amount(floors[row.recipeId])+points/GOODS[row.resource].satiety;left-=points;}
+ return {hires,held,allocations,floors,rate,currentRate:sum(rows,row=>row.rate),complete:required<=EPS||rate+EPS>=required&&types>=reserve.requiredTypes,required};
+}
+function quoteProduction(s,cost,reserve,hireLimit=2,owner=null) {
+ const central=Object.fromEntries(goods.map(id=>[id,Math.max(0,centralUnreserved(s,id)-amount(reserve.materials[id])+amount(owner?.reservedMaterials?.[id]))]));
+ const incoming={...s.pendingDeliveries},local=Object.fromEntries(ids.map(id=>[id,{...s.provisions.localStock[id]}])),cargo=[];
+ for(const trip of Object.values(s.haulTrips).flat()){
+  if(['producer','pending','marketOutbound','dockOutbound'].includes(trip.kind)){incoming[trip.resource]=amount(incoming[trip.resource])+amount(trip.amount);cargo.push(trip);}
+  if(['producerInput','directRoute'].includes(trip.kind)&&local[trip.target])local[trip.target][trip.resource]=amount(local[trip.target][trip.resource])+amount(trip.amount);
+ }
+ const duty=foodProductionDuty(s,reserve),ledger=[],rows=new Map(),unavailable=new Set(),free=s.residents.filter(p=>residentAvailableForAssignment(s,p)&&!duty.held.has(p.personUid||p.id)),hires={...duty.hires},unallocated={};let visits=0;
+ for(const id of ids){const assigned=productionAssignments(s,id),people=s.residents.filter(p=>p.workplace===id),ready=new Set(activeWorkerIndices(s,id)),start=sum(assigned,r=>r.workers);unallocated[id]=people.filter((p,index)=>index>=start&&ready.has(index));}
+ // Reserve every direct material before using the pool for recipe ingredients.
+ const deficits=Object.fromEntries(goods.map(id=>{const used=Math.min(central[id],amount(cost[id]));central[id]-=used;return [id,amount(cost[id])-used];}));
+ const take=(pool,id,n,where)=>{const q=Math.min(n,amount(pool[id]));pool[id]=amount(pool[id])-q;if(q)ledger.push({resource:id,quantity:q,source:where});return q;};
+ const ensure=(resource,quantity,path=[],localOnlyBuilding=null)=>{
+  if(quantity<=EPS)return 0;if(++visits>ADVISOR_PLAN_LIMITS.recipes*4||path.includes(resource)){unavailable.add(resource);return Infinity;}
+  if(!localOnlyBuilding)quantity-=take(incoming,resource,quantity,'incoming');if(quantity<=EPS)return 0;
+  const recipe=Object.entries(RECIPE_CATALOG).map(([id,r])=>({id,...r})).find(r=>r.outputs[resource]&&(!localOnlyBuilding||r.building===localOnlyBuilding)&&availableRecipes(s,r.building).some(a=>a.id===r.id));
+  if(!recipe){unavailable.add(resource);return Infinity;}
+  quantity-=take(local[recipe.building],resource,quantity,'local:'+recipe.building);if(quantity<=EPS)return 0;
+  const batches=Math.ceil(quantity/recipe.outputs[resource]-EPS),existing=rows.get(recipe.id),inputs={};let upstream=0;
+  for(const [input,q]of Object.entries(recipe.inputs)){
+   const need=q*batches,here=take(local[recipe.building],input,need,'local-input:'+recipe.building),stored=recipe.localInputs?0:take(central,input,need-here,'central-input');
+   const missing=Math.max(0,need-here-stored);inputs[input]={quantity:need,local:here,central:stored,make:missing};upstream=Math.max(upstream,ensure(input,missing,[...path,resource],recipe.localInputs?recipe.building:null));
+  }
+  const row=existing||{recipeId:recipe.id,building:recipe.building,resource,batches:0,quantity:0,inputs:{},localInputs:recipe.localInputs===true,usedLocally:0};
+  if(localOnlyBuilding)row.usedLocally+=batches*recipe.outputs[resource];
+  row.batches+=batches;row.quantity+=batches*recipe.outputs[resource];
+  for(const [id,usage]of Object.entries(inputs)){row.inputs[id]||={quantity:0,local:0,central:0,make:0};for(const key of Object.keys(usage))row.inputs[id][key]+=usage[key];}
+  rows.set(recipe.id,row);central[resource]+=Math.max(0,batches*recipe.outputs[resource]-quantity);
+  return upstream;
+ };
+ for(const id of goods)ensure(id,deficits[id]);
+ const carrierNeeds=activeWorkerIndices(s,'warehouse').length?0:Math.min(1,free.length,Math.max(0,workerLimit(s,'warehouse')-amount(s.buildings.warehouse.workers)));
+ const carrierPeople=free.splice(0,carrierNeeds);if(carrierNeeds)hires.warehouse=carrierNeeds;
+ let productionSeconds=0,walkSeconds=0;
+ for(const row of rows.values()){
+  const recipe=RECIPE_CATALOG[row.recipeId],assignments=productionAssignments(s,row.building),assigned=assignments.find(r=>r.recipeId===row.recipeId),people=s.residents.filter(p=>p.workplace===row.building),ready=new Set(activeWorkerIndices(s,row.building));
+  let cursor=0,workers=[];for(const r of assignments){if(r.recipeId===row.recipeId)workers=people.slice(cursor,cursor+r.workers).filter((p,i)=>ready.has(cursor+i));cursor+=r.workers;}
+  const capacity=crewCapacity(s,row.building),extra=Math.min(hireLimit,Math.max(0,(capacity.perRecipe?.[row.recipeId]??capacity.perProduct)-amount(assigned?.workers))),existingPeople=unallocated[row.building].splice(0,extra),useExisting=existingPeople.length;
+  const hire=Math.min(Math.max(0,extra-useExisting),free.length,Math.max(0,workerLimit(s,row.building)-amount(s.buildings[row.building].workers)-amount(hires[row.building]))),added=free.splice(0,hire);hires[row.building]=amount(hires[row.building])+hire;
+  row.assigned=amount(assigned?.workers);row.hire=hire;row.targetWorkers=row.assigned+hire+useExisting+(duty.allocations.find(r=>r.recipeId===row.recipeId)?.hire||0);row.buildingTarget=amount(s.buildings[row.building].workers)+amount(hires[row.building]);
+  const multiplier=productionFactor(s,row.building);
+  const weighted=sum([...workers,...added,...existingPeople],p=>residentWorkMultiplier(s,p,{recipeId:row.recipeId}));
+  row.batchesPerHour=Math.max(0,amount(assigned?.ratePerWorkerHour)*weighted*multiplier+(duty.allocations.find(r=>r.recipeId===row.recipeId)?.addedBatchesPerHour||0)-amount(duty.floors[row.recipeId]));
+  row.seconds=row.batchesPerHour>0?row.batches/row.batchesPerHour*3600:Infinity;
+  // Sequential sum is a conservative shared-workforce envelope; parallel cards
+  // are prerequisites, not a claim that every production chain is independent.
+  productionSeconds+=row.seconds;if(hire)walkSeconds=120;
+ }
+ return {rows:[...rows.values()],ledger,hires,foodDuty:{...duty,held:undefined},carrierPeople:carrierPeople.length,carrierUids:carrierPeople.map(p=>p.personUid||p.id),carrierSpeeds:carrierPeople.map(p=>residentWorkMultiplier(s,p)*transportEfficiency(s)),carrierTarget:amount(s.buildings.warehouse.workers)+carrierNeeds,freeRemaining:free.length,productionSeconds:unavailable.size?Infinity:productionSeconds,walkSeconds:walkSeconds||carrierNeeds||duty.allocations.length?120:0,unavailable:[...unavailable],incoming,cargo,deficits};
+}
+function constructionQuote(s,id,cost,production,owner=null) {
+ const existing=owner,levels=amount(s.education.researchLevels.construction),factor=1+.05*levels;
+ if(existing?.stage==='building')return {seconds:amount(existing.buildRemaining)/factor,transport:0,building:amount(existing.buildRemaining)/factor,conditional:false};
+ const counts=constructionCounts(s);
+ if(existing&&['planned','queued'].includes(existing.stage)||!existing&&counts.active>=counts.limit)return {seconds:null,transport:null,building:null,reason:'queue'};
+ const clock=existing?.starterTurbo||(existing?.economyTiming?.version===1?existing.economyTiming:null)||constructionTiming(s,{building:id,targetLevel:plannedLevel(s,id)+1,cost},{capacity:haulCapacity(s)});
+ if(!clock)return {seconds:null,transport:null,building:null,reason:'timing'};
+ const view=advisorDevelopmentSnapshot(s),project=existing?view.constructionProjects.find(p=>p.order===existing.order):{order:-1,building:id,targetLevel:plannedLevel(s,id)+1,cost,remainingMaterials:{...cost},reservedMaterials:{...cost},stage:'transport',economyTiming:clock};
+ if(!existing)view.constructionProjects.push(project);
+ const assigned=view.residents.filter(p=>production.carrierUids.includes(p.personUid||p.id));
+ for(const p of assigned){p.workplace='warehouse';p.arrivalRemaining=0;}view.buildings.warehouse.workers+=assigned.length;
+ const indices=activeWorkerIndices(view,'warehouse'),routed=directRouteWorkers(view,indices),dispatch=warehouseDispatchStatus(view),builders=indices.filter(i=>!routed.has(i)).slice(0,dispatch.constructionCrew),people=view.residents.filter(p=>p.workplace==='warehouse');
+ const speeds=builders.map(i=>residentWorkMultiplier(view,people[i])*transportEfficiency(view));
+ if(dispatch.sharedCarrier||view.theatre.shows.some(show=>show.startAt<view.worldTimeMs+(clock.totalSeconds||clock.buildingDuration||0)*1000&&show.endAt>view.worldTimeMs&&people.some(p=>show.personUids.includes(p.personUid))))return {seconds:null,transport:null,building:(clock.buildingDuration||0)/factor,reason:'shared-carrier-or-show'};
+ if(!speeds.length||s.constructionProjects.some(p=>p!==existing&&['transport','queued','planned'].includes(p.stage)))return {seconds:null,transport:null,building:(clock.buildingDuration||0)/factor,reason:'carriers-or-queue'};
+ const trips=existing?sum(goods,id=>Math.ceil(amount(existing.remainingMaterials?.[id])/clock.capacity)):clock.trips;
+ const inFlight=(s.haulTrips.warehouse||[]).filter(t=>t.kind==='construction'&&t.projectOrder===existing?.order);
+ const busy=Math.max(0,...inFlight.map(t=>amount(t.remaining)/(t.starterTurboClock?1:transportEfficiency(s)*(amount(t.workMultiplier)||1))));
+ const waves=Math.ceil(trips/Math.min(3,speeds.length)),transport=busy+(clock.courseSeconds||0)*waves/Math.min(...speeds),building=(clock.buildingDuration||0)/factor;
+ return {seconds:transport+building,transport,building,conditional:true};
+}
+function candidate(s,id,reserve,hireLimit=2,owner=null) {
+ const original=owner?{...(owner.remainingMaterials||owner.cost),coins:0}:buildingCost(s,id),quote=dtoCost(original),cost={...original};
+ // A failed food quote is a real additional requirement, never a free meal.
+ // Its eventual product choice is left to the player and keeps ETA unknown.
+ const production=quoteProduction(s,cost,reserve,hireLimit,owner),construction=constructionQuote(s,id,cost,production,owner),coinMissing=Math.max(0,amount(cost.coins)-amount(s.resources.coins));
+ const indices=activeWorkerIndices(s,'warehouse'),people=s.residents.filter(p=>p.workplace==='warehouse'),speed=[...indices.map(i=>residentWorkMultiplier(s,people[i])*transportEfficiency(s)),...production.carrierSpeeds];
+ const collectionTrips=sum(production.rows,r=>Math.ceil(Math.max(0,r.quantity-r.usedLocally)/haulCapacity(s)))+sum(production.rows,r=>r.localInputs?0:sum(Object.values(r.inputs),input=>Math.ceil(Math.max(0,input.quantity-input.local)/haulCapacity(s))))+sum(production.ledger.filter(r=>r.source==='incoming'||r.source.startsWith('local:')),r=>Math.ceil(r.quantity/haulCapacity(s)));
+ const productionTransport=collectionTrips?(speed.length?collectionTrips*300/(sum(speed,n=>n)):Infinity):0;
+ const cargoWait=Math.max(0,...production.cargo.map(trip=>{const p=s.residents.find(p=>p.id===trip.residentId),factor=trip.starterTurboClock?1:transportEfficiency(s)*(p?residentWorkMultiplier(s,p):amount(trip.workMultiplier)||1);return trip.remaining/factor;}));
+ const limits=warehouseLimits(s),storageBlocked=collectionTrips>0&&(ordinaryWarehouseUsed(s)>=limits.total||goods.some(id=>ordinaryStock(s,id)>=limits.perResource));
+ const eligible=owner||upgradeEligibility(s,id).ok;
+ const seconds=!eligible||quote.foodQuote?.ok===false||coinMissing||!reserve.complete||!production.foodDuty.complete||production.unavailable.length||construction.seconds===null||storageBlocked?null:finite(production.productionSeconds+productionTransport+production.walkSeconds+cargoWait+construction.seconds);
+ return {id,targetLevel:owner?.targetLevel||plannedLevel(s,id)+1,quote,production,construction,coinMissing,seconds,hireLimit,storageBlocked};
+}
+function foodServing(s,reserve) {
+ const settings=s.provisions.foodSettings,required=reserve.requiredSatiety,permitted=FOOD_IDS.filter(id=>settings.enabled[id]!==false).map(id=>({id,satiety:Math.min(centralUnreserved(s,id),settings.limits[id]===null||settings.limits[id]===undefined?Infinity:amount(settings.limits[id]))*GOODS[id].satiety}));
+ return sum(permitted,r=>r.satiety)+EPS>=required&&permitted.filter(r=>r.satiety+EPS>=required*.2).length>=reserve.requiredTypes;
+}
+export function advisorDevelopmentPlan(inputSnapshot,request={}) {
+ const s=advisorDevelopmentSnapshot(inputSnapshot),intent=advisorDevelopmentIntent(request.input,request.options),en=intent.language==='en',say=(pl,eng)=>en?eng:pl,bname=id=>en?englishNames[id]:ADVISOR_BUILDING_NAMES[id],gname=id=>en?id:GOODS[id]?.namePl||id;
+ return withProvisionsReadScope(s,()=>{
+  const reserve=foodReservePlan(s,{available:id=>centralUnreserved(s,id)}),free=freeWorkers(s),housing=housingStatus(s),th=amount(s.buildings.townhall.level);
+  let goal=intent.goal,requestedGoal=goal,desired=intent.targetLevel;
+  if(goal&&desired!==null&&amount(s.buildings[goal]?.level)>=desired){goal=null;requestedGoal=null;desired=null;}
+  const automatic=!goal,autoProject=automatic?[...s.constructionProjects].filter(p=>['building','transport','queued','planned'].includes(p.stage)).sort((a,b)=>a.order-b.order)[0]||s.premiumServices[0]:null;
+  if(!goal)goal=autoProject?.building||(th<ALL_BUILDINGS.townhall.maxLevel?'townhall':ids.find(id=>id!=='theatre'&&s.buildings[id].level<Math.min(th,ALL_BUILDINGS[id].maxLevel)));
+  if(!goal)return {kind:'maintenance',live:true,goal:null,targetLevel:null,tracking:null,taskId:'maintain-economy',title:say('Cel: utrzymuj sprawną wyspę','Goal: maintain a sustainable island'),text:say('Budynki osiągnęły maksymalne poziomy. Dbaj o wyżywienie, produkcję i odkrycia.','Buildings have reached their maximum levels. Maintain food, production and discoveries.'),why:say('Nie istnieje następny poziom budynku.','There is no next building level.'),tasks:[{id:'food',title:say('Wyżywienie','Food'),status:'ready',dependsOn:[],howTo:[{id:'food-review',text:say('Sprawdź wydawanie i różnorodność jedzenia.','Review serving and food variety.'),why:say('Maksymalny poziom nie usuwa potrzeby wyżywienia.','Maximum levels do not remove meal requirements.'),target:'warehouse',section:'food',guidance:{action:'inspect'}}]},{id:'research',title:say('Odkrycia','Discoveries'),status:'ready',dependsOn:[],howTo:[{id:'research-review',text:say('Sprawdź dostępne badania w Akademii.','Review available Academy research.'),why:say('Badania nadal mogą wspierać gospodarkę.','Research can still support the economy.'),target:'academy',guidance:{action:'inspect'}}]}],steps:[],estimate:{seconds:null,text:say('Brak następnej rozbudowy.','No further upgrade.')},candidates:[],diagnostics:{candidateCount:0,variantCount:0}};
+  desired??=goal==='theatre'?1:s.constructionProjects.find(p=>p.building===goal)?.targetLevel||s.premiumServices.find(p=>p.building===goal)?.targetLevel||plannedLevel(s,goal)+1;
+  if(goal!=='theatre'&&desired>ALL_BUILDINGS[goal].maxLevel){goal=th<ALL_BUILDINGS.townhall.maxLevel?'townhall':null;desired=goal?plannedLevel(s,goal)+1:null;requestedGoal=null;if(!goal)return advisorDevelopmentPlan(s,{options:{...request.options,goal:null,targetLevel:null}});}
+  let selectedId=goal,requirement=null;
+  const unlock=NEW_BUILDINGS[goal]?.unlockLevel||(goal==='dock'?4:goal==='market'?2:1);
+  if(goal!=='townhall'&&(th<unlock||plannedLevel(s,goal)+1>th)){selectedId='townhall';requirement={kind:'townhall',level:Math.max(unlock,plannedLevel(s,goal)+1)};}
+  let eligibility=upgradeEligibility(s,selectedId),populationGate=eligibility.code==='townhall-population'?eligibility:null;
+  if(!autoProject&&(housing.unhoused>0||populationGate&&housing.beds<populationGate.populationRequired)&&s.buildings.house.level<th){selectedId='house';eligibility=upgradeEligibility(s,'house');requirement={kind:'housing',level:s.buildings.house.level+1};if(automatic){goal='house';desired=plannedLevel(s,'house')+1;}}
+  const centralLimit=warehouseLimits(s),fullCentral=ordinaryWarehouseUsed(s)>=centralLimit.total||goods.some(id=>ordinaryStock(s,id)>=centralLimit.perResource);
+  if(automatic&&!autoProject&&selectedId==='townhall'&&fullCentral&&s.buildings.warehouse.level<th&&upgradeEligibility(s,'warehouse').ok&&canAfford(s,buildingCost(s,'warehouse'))){selectedId=goal='warehouse';desired=plannedLevel(s,'warehouse')+1;eligibility=upgradeEligibility(s,'warehouse');populationGate=null;requirement={kind:'storage',level:desired};}
+  const owner=s.constructionProjects.find(p=>p.building===selectedId),premium=s.premiumServices.find(p=>p.building===selectedId);
+  const valid=ids.filter(id=>id!=='theatre'&&th>=(NEW_BUILDINGS[id]?.unlockLevel||1)&&upgradeEligibility(s,id).ok&&s.buildings[id].level<ALL_BUILDINGS[id].maxLevel).slice(0,ADVISOR_PLAN_LIMITS.candidates),candidates=[];
+  const chosen=candidate(s,selectedId,reserve,0,owner);candidates.push(chosen);
+  for(const hire of [1,2,4])if(candidates.length<ADVISOR_PLAN_LIMITS.variants)candidates.push(candidate(s,selectedId,reserve,hire,owner));
+  // Compare a real two-upgrade route only for a material producer that is a
+  // bottleneck of the goal. Its full cost and elapsed construction are charged.
+  for(const id of valid){
+   if(id===selectedId||!(chosen.production.rows.some(row=>row.building===id)||id==='warehouse'&&chosen.production.rows.length)||candidates.length>=ADVISOR_PLAN_LIMITS.variants)continue;
+   const first=candidate(s,id,reserve,2);if(first.seconds===null||first.production.rows.length)continue;
+   const next=advisorDevelopmentSnapshot(s);next.buildings[id].level++;
+   for(const [resource,q]of Object.entries(first.quote.materials))next.resources[resource]=Math.max(0,amount(next.resources[resource])-q);
+   const after=candidate(next,selectedId,foodReservePlan(next,{available:r=>centralUnreserved(next,r)}),2,owner);
+   const totalCost=Object.fromEntries([...goods,'coins'].filter(resource=>amount(first.quote.materials[resource])+amount(after.quote.materials[resource])>0).map(resource=>[resource,amount(first.quote.materials[resource])+amount(after.quote.materials[resource])]));
+   candidates.push({...after,via:id,depth:2,seconds:after.seconds===null?null:first.seconds+after.seconds,prerequisite:first,totalCost});
+  }
+  candidates.sort((a,b)=>(a.seconds===null?Infinity:a.seconds)-(b.seconds===null?Infinity:b.seconds)||a.hireLimit-b.hireLimit);
+  const preferred=candidates.find(c=>c.seconds!==null)||candidates.find(c=>c.hireLimit===2)||chosen;
+  const distinct=candidates.find(c=>c!==preferred&&(c.via!==preferred.via||JSON.stringify(c.production.hires)!==JSON.stringify(preferred.production.hires)));
+  const selected=intent.alternative&&distinct?distinct:preferred;
+  const tasks=[],step=(id,text,why,target,guidance={action:'inspect'},section)=>({id,text,why,target,guidance,...(section?{section}:{})}),task=(id,title,howTo,dependsOn=[],status='ready')=>{const value={id,title,status,parallelGroup:dependsOn.length?'after-prerequisites':'prepare',dependsOn,howTo};tasks.push(value);return value;};
+  const duty=(selected.prerequisite||selected).production.foodDuty,safe=reserve.complete&&foodServing(s,reserve)&&duty.complete,automaticFocus=automatic&&(!safe||duty.allocations.length)?'food':null,safetyIds=[];
+  if(!safe||duty.allocations.length){
+   const how=[step('food-settings',say('Sprawdź w Magazynie włączone produkty, kolejność i limity wydawania.','Review enabled foods, order and serving limits in the Warehouse.'),say('Mieszkańcy potrzebują godzinnej rezerwy i wymaganej różnorodności.','Residents need a protected hour of meals and the required variety.'),'warehouse',{action:'inspect'},'food'),step('food-produce',say(`Chroniona rezerwa: brakuje ${num(Math.max(0,reserve.requiredSatiety-reserve.satiety))} punktów sytości; wymagane rodzaje: ${reserve.requiredTypes}. Utrzymuj co najmniej ${num(duty.required)} punktów sytości produkcji na godzinę.`,`Protected reserve: ${num(Math.max(0,reserve.requiredSatiety-reserve.satiety))} satiety points missing; required types: ${reserve.requiredTypes}. Maintain at least ${num(duty.required)} satiety points of production per hour.`),say('Rezerwa i pracownicy stale uzupełniający posiłki nie finansują rozbudowy.','The reserve and workers continuously replenishing meals do not finance expansion.'),'farm')];
+   for(const allocation of duty.allocations){how.push(step('food-hire-'+allocation.recipeId,say(`${bname(allocation.building)}: ustaw łącznie ${allocation.buildingTarget} pracowników; dodaj ${allocation.hire} wolnych do obsługi jedzenia.`,`${bname(allocation.building)}: set ${allocation.buildingTarget} workers in total; add ${allocation.hire} available residents to food production.`),say('Tych osób nie przydzielam ponownie do materiałów budowy.','These people are not reassigned to construction materials.'),allocation.building,{action:'assign-workers',targetCount:allocation.buildingTarget}));how.push(step('food-recipe-'+allocation.recipeId,say(`Przy produkcie „${gname(allocation.resource)}” ustaw łącznie ${allocation.targetWorkers} osób.`,`Set ${allocation.targetWorkers} workers in total on ${gname(allocation.resource)}.`),say('To stała obsada jedzenia; nadwyżka może dopiero wspierać rozwój.','This is ongoing food staffing; only surplus can support development.'),allocation.building,{action:'recipe-workers',recipeId:allocation.recipeId,targetCount:allocation.targetWorkers}));}
+   const row=task('food',say('Zabezpiecz jedzenie','Secure food'),how,[],duty.complete?'ready':'waiting');safetyIds.push(row.id);
+  }
+  if(automaticFocus){
+   const topic=automaticFocus;
+   task('review-'+topic,say('Sprawdź bieżące warunki wyspy','Review the island’s current conditions'),[step('review-topic',topic==='workers'?say(`Dostępni mieszkańcy: ${free}. Sprawdź ich zajęcia i limity pracy.`,`Available residents: ${free}. Review occupations and staffing limits.`):topic==='transport'?say('Sprawdź tragarzy i priorytety; zachowaj odbiór jedzenia.','Review carriers and priorities while preserving food collection.'):say('Sprawdź rezerwę, produkcję i wymaganą różnorodność.','Review the reserve, production and required variety.'),say('Doradca nie zmienia przydziałów ani ustawień.','The advisor does not change assignments or settings.'),topic==='workers'?'house':'warehouse',{action:'inspect'},topic==='food'?'food':topic==='transport'?'priorities':'workers')]);
+  }else if(goal==='theatre'){
+   task('theatre',say('Rozwijaj plac Teatru','Develop the Theatre square'),[step('theatre-review',say('Otwórz plac i sprawdź dostępne dekoracje.','Open the square and review available decorations.'),say('Teatr ma stały poziom budynku.','The Theatre has a permanent building level.'),'theatre')]);
+   task('theatre-visits',say('Zaproś mieszkańców','Invite residents'),[step('theatre-visitors',say('Sprawdź mieszkańców dostępnych do wizyty i wybierz, kogo chcesz zaprosić.','Review residents available for a visit and choose whom to invite.'),say('Udział jest dobrowolny; możesz zachować obsadę pracy potrzebnej teraz wyspie.','Visits are optional; you can preserve the workers your island currently needs.'),'theatre')]);
+  }
+  else {
+   const active=selected.prerequisite||selected,production=active.production;
+   const groups=new Map();for(const row of production.rows){if(!groups.has(row.building))groups.set(row.building,[]);groups.get(row.building).push(row);}
+   const groupRows=[...groups],maxProduction=Math.max(1,3-tasks.length);
+   for(let index=0;index<groupRows.length;index++){
+    const batch=index<maxProduction-1?[groupRows[index]]:groupRows.slice(index);if(!batch.length)break;
+    const how=[];
+    for(const [building,rows]of batch)for(const row of rows){
+     if(row.hire)how.push(step('hire-'+row.recipeId,say(`W budynku ${bname(building)} ustaw łącznie ${row.buildingTarget} pracowników (dodaj ${row.hire} wolnych).`,`Set ${bname(building)} staffing to ${row.buildingTarget} in total (add ${row.hire} available residents).`),say('Przydziały wszystkich kart mieszczą się we wspólnej puli wolnych osób.','All cards share one available-person budget.'),building,{action:'assign-workers',targetCount:row.buildingTarget}));
+     if(!row.targetWorkers)how.push(step('recipe-'+row.recipeId,say(`Brakuje dostępnej obsady do produktu „${gname(row.resource)}”. Sprawdź w Domu wolne osoby i kończące się zajęcia; zachowaj pracowników jedzenia.`,`No staff are currently available for ${gname(row.resource)}. Review available residents and activities about to finish in the House; preserve food workers.`),say('Produkcja wymaga wolnej osoby i miejsca w limicie budynku.','Production cannot start without a worker.'),'house',{action:'inspect',recipeId:row.recipeId}));
+     else how.push(step('recipe-'+row.recipeId,say(`${bname(building)}: ustaw przy produkcie „${gname(row.resource)}” łącznie ${row.targetWorkers} osób. Potrzeba ${num(row.quantity)} szt.`,`${bname(building)}: set ${row.targetWorkers} workers in total on ${gname(row.resource)}. Produce ${num(row.quantity)} units.`),row.usedLocally?say('Te świeże ryby zostają lokalnie u Rybaka do przetworzenia; nie odwoź ich do centrali.','These fresh fish stay locally with the Fisher for processing; do not send them to central storage.'):say('Przydział do produktu jest osobny od zatrudnienia w budynku.','Product allocation is separate from building staffing.'),building,{action:'recipe-workers',recipeId:row.recipeId,targetCount:row.targetWorkers}));
+     for(const [resource,need]of Object.entries(row.inputs))how.push(step('input-'+row.recipeId+'-'+resource,say(`Do produkcji potrzeba ${num(need.quantity)} szt. „${gname(resource)}”: ${num(need.local)} lokalnie, ${num(need.central)} z wolnej centrali, ${num(need.make)} z produkcji lub dostaw.`,`Production needs ${num(need.quantity)} ${gname(resource)}: ${num(need.local)} locally, ${num(need.central)} from free central stock, ${num(need.make)} from production or incoming cargo.`),row.localInputs?say('Rybak przetwarza własne świeże ryby na miejscu, bez transportu przez centralę.','The Fisher processes its own fresh fish locally, without central transport.'):say('Te same surowce nie są jednocześnie liczone na budowę i recepturę.','The same materials are not counted for both construction and recipe inputs.'),row.localInputs?building:'warehouse',{action:row.localInputs?'inspect':'transport-priority',resourceId:resource},row.localInputs?undefined:'priorities'));
+    }
+    task('produce-'+index,batch.length===1?say(`Przygotuj produkty — ${bname(batch[0][0])}`,`Prepare products — ${bname(batch[0][0])}`):say('Przygotuj pozostałe produkty','Prepare remaining products'),how,[],batch.some(([,rows])=>rows.some(row=>!row.targetWorkers))?'waiting':'ready');
+    if(batch.length>1)break;
+   }
+   const productionTasks=tasks.filter(t=>t.id.startsWith('produce-'));
+   for(const current of productionTasks){
+    const recipes=new Set(current.howTo.map(row=>row.guidance.recipeId).filter(Boolean));
+    for(const row of production.rows.filter(row=>recipes.has(row.recipeId)))for(const [resource,need]of Object.entries(row.inputs))if(need.make>EPS){
+     const upstream=productionTasks.find(t=>t!==current&&t.howTo.some(step=>step.guidance.recipeId&&RECIPE_CATALOG[step.guidance.recipeId]?.outputs[resource]));
+     if(upstream&&!current.dependsOn.includes(upstream.id))current.dependsOn.push(upstream.id);
+    }
+    if(current.dependsOn.length){current.parallelGroup='after-prerequisites';current.status='waiting';}
+   }
+   const producerIds=productionTasks.map(t=>t.id);
+   const cargoHow=[];
+   if(active.storageBlocked)cargoHow.push(step('central-room',say('Przed odbiorem zrób miejsce w Magazynie. Sprawdź największe zapasy; zachowaj chronione jedzenie.','Free central Warehouse space before collection. Review the largest stocks while preserving protected food.'),say('Pełna centrala blokuje przyjęcie wyprodukowanych i nadchodzących towarów.','Full central storage blocks finished and incoming goods.'),'warehouse',{action:'inspect'}));
+   if(production.carrierPeople)cargoHow.push(step('staff-carrier',say(`W Magazynie ustaw łącznie ${production.carrierTarget} tragarzy; nowa osoba dochodzi do 2 minut.`,`Set Warehouse staffing to ${production.carrierTarget} carriers in total; a new resident walks for up to 2 minutes.`),say('Tragarz został uwzględniony w tej samej puli mieszkańców co producenci.','This carrier uses the same resident budget as producers.'),'warehouse',{action:'assign-workers',targetCount:production.carrierTarget},'workers'));
+   const waiting=production.ledger.filter(r=>r.source==='incoming'||r.source.startsWith('local:'));
+   cargoHow.push(step('collect-products',waiting.length?say(`Odbierz gotowe lub nadchodzące produkty: ${waiting.map(r=>`${gname(r.resource)} ${num(r.quantity)}`).join(', ')}. Nie wytwarzaj ich drugi raz.`,`Collect ready or incoming goods: ${waiting.map(r=>`${gname(r.resource)} ${num(r.quantity)}`).join(', ')}. Do not produce them twice.`):say('Po przygotowaniu produktów sprawdź ich odbiór do centrali i dostawy surowców do przetwórców.','After preparing products, review collection to central storage and input deliveries to processors.'),say('Produkcja lokalna nie dodaje automatycznie zapasu do centrali.','Local production does not automatically reach central storage.'),'warehouse',{action:'inspect'},'priorities'));
+   if(owner?.stage!=='building'&&!s.warehousePriorities.includes('construction')&&s.warehousePriorities.length>=3){const previous=[...s.warehousePriorities].reverse().find(id=>!FOOD_IDS.includes(id))||s.warehousePriorities.at(-1);cargoHow.push(step('make-priority-room',say(`Masz zaznaczone 3 priorytety. Odznacz najniższy „${gname(previous)}”, żeby zwolnić miejsce dla budowy.`,`Three priorities are selected. Deselect the lowest-priority ${gname(previous)} to make room for construction.`),say('Magazyn pozwala zaznaczyć najwyżej 3 priorytety. Zmiana priorytetu nie usuwa zapasów ani pracowników.','The Warehouse allows at most 3 priorities. Changing priority removes no stock or workers.'),'warehouse',{action:'transport-priority',priority:previous,targetEnabled:false},'priorities'));}
+   cargoHow.push(step('supply-build',owner?.stage==='building'?say('Materiały budowy są już na miejscu. Utrzymuj teraz odbiór jedzenia i produktów na kolejny cel.','Construction materials have already arrived. Maintain food and product collection for the next goal.'):say('Następnie zaznacz priorytet budowy, zachowując obsługę jedzenia.','Then select construction priority while preserving food service.'),say('Transport surowców, odbiór wyrobów i materiały budowy korzystają ze wspólnej obsady.','Input deliveries, product collection and construction share the same carriers.'),'warehouse',owner?.stage==='building'?{action:'inspect'}:{action:'transport-priority',priority:'construction',targetEnabled:true},'priorities'));
+   task('transport',say('Odbierz i dostarcz materiały','Collect and deliver materials'),cargoHow,producerIds);
+   const blockers=[];if(populationGate){
+    if(amount(s.houseHappinessPool.points)>0)blockers.push(step('house-happiness',say(`W Domu jest ${num(s.houseHappinessPool.points)} punktów szczęścia. Sprawdź opcję przekazania mieszkańcom i użyj jej, jeśli jest dostępna.`,`The House holds ${num(s.houseHappinessPool.points)} happiness points. Review distribution and use it if available.`),say('Najpierw wykorzystaj zgromadzoną pulę; nie wymaga nowego zakupu.','Use the stored pool first; it requires no new purchase.'),'house',{action:'house-happiness'}));
+    blockers.push(step('population',say(`Ratusz wymaga ${populationGate.populationRequired} mieszkańców; masz ${s.population}. Zapewnij łóżka, jedzenie i szczęście; sprawdź licznik napływu.`,`The Town Hall requires ${populationGate.populationRequired} residents; you have ${s.population}. Provide beds, meals and happiness; review the arrival timer.`),say('Nie da się zastąpić warunku populacji samymi materiałami.','Materials alone cannot replace the population prerequisite.'),'house'));
+   }
+   if(active.coinMissing)blockers.push(step('coins',say(`Brakuje ${num(active.coinMissing)} monet. Zagraj w „Dopasuj trójki” w Ekspedycjach i wypłać wygraną przed rozbudową.`,`You are short of ${num(active.coinMissing)} coins. Play Picture triples in Expeditions and cash out a win before upgrading.`),say('Nagroda zależy od wyniku; planer nie zakłada przyszłej wygranej.','Rewards depend on results; the planner does not assume a future win.'),'expeditions',{action:'minigame',gameId:'triples'}));
+   if(active.quote.foodQuote?.ok===false)blockers.push(step('construction-food',say(`Przygotuj dodatkowe ${num(active.quote.foodQuote.missingSatiety)} punktów sytości na budowę ponad rezerwę; po wyborze jedzenia koszt zostanie przeliczony.`,`Provide ${num(active.quote.foodQuote.missingSatiety)} additional construction satiety points above the protected reserve; the cost is recalculated after choosing foods.`),say('Koszt jedzenia na budowę jest osobny od posiłków mieszkańców.','Construction food is separate from residents’ meals.'),'warehouse',{action:'inspect'},'food'));
+   for(const resource of production.unavailable)blockers.push(step('unlock-'+resource,say(`Sprawdź poziom producenta lub odkrycie dla produktu „${gname(resource)}”.`,`Review the producer level or discovery required for ${gname(resource)}.`),say('Obecnie nie ma dostępnej receptury tego produktu.','There is no available recipe for this product yet.'),'academy'));
+   const buildText=premium?say('Kupiona rozbudowa już istnieje. Sprawdź jej etap i pozostały czas; nie zamawiaj duplikatu.','A purchased upgrade already exists. Review its stage and remaining time; do not order a duplicate.'):owner?say(`Rozbudowa ${bname(selectedId)} ${owner.targetLevel} jest już przyjęta. Sprawdź etap i oczekujące dostawy.`,`${bname(selectedId)} level ${owner.targetLevel} is already accepted. Review its stage and pending deliveries.`):say(`Po przygotowaniu warunków otwórz ${bname(active.id)}, sprawdź rzeczywisty koszt i zleć poziom ${active.targetLevel}.`,`Once prerequisites are prepared, open the ${bname(active.id)}, review the actual quote and order level ${active.targetLevel}.`);
+   blockers.push(step('build-'+active.id,buildText,selected.via?say(`Ten wariant najpierw rozwija ${bname(selected.via)}, a dopiero potem cel. Uwzględnia dodatkowy koszt i czas.`,`This route upgrades the ${bname(selected.via)} before the goal and includes its additional cost and time.`):say('Przed zatwierdzeniem gra ponownie sprawdza zasoby i wszystkie blokady.','The game rechecks resources and all prerequisites before confirmation.'),active.id,{action:owner||premium?'inspect':'upgrade'}));
+   task('build',say(`Rozbuduj ${bname(active.id)} do ${active.targetLevel}`,`Upgrade ${bname(active.id)} to${active.targetLevel}`),blockers,['transport',...safetyIds],!safe||!eligibility.ok||premium?'waiting':'ready');
+  }
+  const observed=selected.production,seconds=owner?.stage==='building'?selected.construction.seconds:!safe||premium||!eligibility.ok?null:selected.seconds;
+  const why=automaticFocus?say(`Mieszkańcy potrzebują ${num(reserve.requiredSatiety)} punktów sytości na godzinę i ${reserve.requiredTypes} rodzajów jedzenia. Stała obsada i dostawy pozwolą rozwijać wyspę bez przerw w posiłkach.`,`Residents need ${num(reserve.requiredSatiety)} satiety points per hour and ${reserve.requiredTypes} food types. Steady staffing and deliveries let the island grow without interrupting meals.`):owner||premium?say('Ta rozbudowa jest już przyjęta. Warto dokończyć przygotowaną inwestycję, zamiast ponownie zbierać materiały lub zamawiać ten sam poziom.','This upgrade is already accepted. Finishing the prepared investment avoids gathering its materials or ordering the same level again.'):selectedId==='house'?say(`Dom zapewnia łóżka. ${housing.unhoused?`${housing.unhoused} mieszkańców nie ma teraz zakwaterowania.`:'Więcej miejsc będzie potrzebnych do przyjęcia mieszkańców wymaganych przez kolejny Ratusz.'}` ,`The House provides beds. ${housing.unhoused?`${housing.unhoused} residents currently have no housing.`:'More places are needed for the residents required by the next Town Hall.'}`):selectedId==='warehouse'?say(`W centrali zajęte jest ${num(ordinaryWarehouseUsed(s))} z ${num(warehouseLimits(s).total)} miejsc. Większy Magazyn pomoże przyjmować produkty i dostarczać materiały.`,`Central storage uses ${num(ordinaryWarehouseUsed(s))} of ${num(warehouseLimits(s).total)} spaces. A larger Warehouse helps receive products and supply materials.`):requirement?.kind==='townhall'?say(`${bname(goal)} wymaga Ratusza na poziomie ${requirement.level}; masz poziom ${th}. Dlatego proponuję najpierw spełnić ten warunek.`,`${bname(goal)} requires Town Hall level ${requirement.level}; yours is level ${th}. I suggest meeting this prerequisite first.`):selectedId==='townhall'?say(`Kolejny Ratusz zwiększy limit mieszkańców do ${36*(plannedLevel(s,'townhall')+1)} i pozwoli dalej rozwijać budynki wyspy.`,`The next Town Hall raises the population limit to ${36*(plannedLevel(s,'townhall')+1)} and allows island buildings to develop further.`):goal==='dock'?say('Wyższy poziom Portu pozwala zatrudnić więcej osób do obsługi ładunków i rozwijać handel. To krok w stronę celu, który wybrałeś.','A higher Port level allows more cargo workers and supports trade. It works towards the goal you chose.'):say(`Rozbudowa budynku ${bname(selected.via||selectedId)} zwiększy jego możliwości i pomoże przygotować dalszy rozwój wyspy.`,`Upgrading the ${bname(selected.via||selectedId)} expands its capabilities and helps prepare further island development.`);
+  const title=automaticFocus?say('Cel: stałe wyżywienie mieszkańców','Goal: steady meals for residents'):say(`Cel: ${bname(goal)} — poziom ${desired}`,`Goal: ${bname(goal)} — level ${desired}`);
+  const recommendation=automaticFocus?say('Sugeruję najpierw zabezpieczyć jedzenie, bo mieszkańcy potrzebują stałych dostaw do dalszego rozwoju.','I suggest securing food first, because residents need steady meals for further growth.'):requirement?say(requirement.kind==='housing'?'Sugeruję najpierw rozbudować Dom, bo potrzebujesz więcej łóżek do dalszego rozwoju.':requirement.kind==='storage'?'Sugeruję rozbudować Magazyn, bo obecna pojemność blokuje przyjmowanie towarów.':`Sugeruję najpierw rozbudować Ratusz, bo jego poziom jest warunkiem rozwoju budynku ${bname(goal)}.`,requirement.kind==='housing'?'I suggest upgrading the House first, because further growth needs more beds.':requirement.kind==='storage'?'I suggest upgrading the Warehouse, because current capacity blocks incoming goods.':`I suggest upgrading the Town Hall first, because its level is required to develop the ${bname(goal)}.`):!safe?say('Sugeruję najpierw zabezpieczyć jedzenie, bo mieszkańcy potrzebują stałych dostaw do dalszego rozwoju.','I suggest securing food first, because residents need steady meals for further growth.'):say(`Sugeruję teraz zająć się budynkiem ${bname(selected.via||selectedId)}, ${requestedGoal?'żeby zrealizować wybrany przez Ciebie cel.':selectedId==='townhall'?'bo Ratusz otwiera dalszy rozwój wyspy.':'aby zwiększyć możliwości wyspy.'}`,`I suggest focusing on the ${bname(selected.via||selectedId)} now, ${requestedGoal?'to work towards your chosen goal.':selectedId==='townhall'?'because the Town Hall enables further island development.':'to expand the island’s capabilities.'}`);
+  const topicSummary=intent.topic==='workers'?say(`Dostępni mieszkańcy: ${free}. Przydziały wszystkich kart korzystają ze wspólnej puli.`,`Available residents: ${free}. All cards share one staffing budget.`):intent.topic==='transport'?say(`Tragarze: ${s.buildings.warehouse.workers}; gotowi do pracy: ${activeWorkerIndices(s,'warehouse').length}.`,`Carriers: ${s.buildings.warehouse.workers}; ready: ${activeWorkerIndices(s,'warehouse').length}.`):intent.topic==='food'?say(`Rezerwa: ${num(reserve.satiety)} / ${num(reserve.requiredSatiety)} punktów sytości, rodzaje: ${reserve.requiredTypes}.`,`Reserve: ${num(reserve.satiety)} / ${num(reserve.requiredSatiety)} satiety points, required types: ${reserve.requiredTypes}.`):null;
+  return {kind:automaticFocus||'development',live:true,taskId:automaticFocus?'develop-food':`develop-${goal}-${desired}`,goal:automaticFocus?null:goal,targetLevel:automaticFocus?null:desired,requestedGoal:requestedGoal||null,requestedTargetLevel:requestedGoal?desired:null,tracking:requestedGoal?{goal:requestedGoal,targetLevel:desired,topic:null,language:intent.language}:null,title,topicSummary,alternative:intent.alternative?{available:!!distinct,via:selected.via||null,hireLimit:selected.hireLimit}:null,text:(intent.alternative?say(distinct?'Inny wariant obsady lub kolejności rozbudowy. ':'Obecnie nie znalazłem innego wykonalnego wariantu. ',distinct?'Another staffing or upgrade route. ':'No other feasible route is currently available. '):'')+recommendation,why,explanation:why,tasks,steps:tasks.flatMap(t=>t.howTo),freeWorkers:free,reserve,safetyComplete:safe,cost:selected.quote.materials,foodQuote:selected.quote.foodQuote,foodUnits:selected.quote.foodUnits,missing:goods.map(id=>({id,required:amount(selected.quote.materials[id]),available:Math.max(0,centralUnreserved(s,id)-amount(reserve.materials[id])),missing:amount(observed.deficits[id])})).filter(r=>r.missing>EPS),estimate:{seconds:finite(seconds),text:seconds===null?say('Pełny czas jest nieznany: uzupełnij wskazane warunki, a doradca ponownie porówna plan.','The full time is unknown: resolve the listed conditions and the advisor will compare the plan again.'):say(`Warunkowo około ${num(seconds/60)} min po wykonaniu wskazanych przydziałów, przy utrzymaniu obecnych warunków i bonusów. Zmiany kolejki wpływają na czas.`,`Conditionally about ${num(seconds/60)} minutes after the listed staffing changes, while current conditions and bonuses continue. Queue changes affect this time.`)},candidates:candidates.map(c=>({building:c.id,via:c.via||null,depth:c.depth||1,hireLimit:c.hireLimit,seconds:c.seconds,cost:c.quote.materials,prerequisiteCost:c.prerequisite?.quote.materials||null,totalCost:c.totalCost||c.quote.materials,foodQuote:c.quote.foodQuote})),diagnostics:{candidateCount:valid.length,variantCount:candidates.length,maxDepth:2,recipeVisitsBound:ADVISOR_PLAN_LIMITS.recipes*4,hires:observed.hires,ledger:observed.ledger,production:observed.rows},limitations:[say('Plan opiera się na obecnych zapasach, obsadzie i kolejkach. Zmiany bonusów, przydziałów, dostaw lub liczby mieszkańców mogą zmienić kolejność zadań i ich czas.','The plan uses current stocks, staffing and queues. Changes to bonuses, assignments, deliveries or population can change task order and timings.')]};
+ });
+}

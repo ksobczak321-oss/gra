@@ -1,6 +1,15 @@
 # Zasady pracy nad HARBORLIGHT
 
 
+
+
+
+## Kandydat DEV 0.15.3.1 / cache23 — lokalne testy PASS, publikacja PENDING
+
+Po końcowym doprecyzowaniu przyjaznego tonu i adaptacji celu pełny frontend ma 1711/1711 PASS; backend 178, planszówka 7, 145 Python i 8 lokalnych programów UI również PASS. Niezmieniony watchdog 96 h: 8866.634829 ms <10 000 ms. Kierunkowe 60, wcześniejsze 510 i nowe 9+25 mają osobne raporty. Poprzednie 1704 PASS oraz pierwszy FAIL stagingu pozostają historią. Nie zastępują końcowego źródła, jego artefaktów lub własnegoCI.
+
+Nowy Doradca przedstawia jeden cel, 2–5 kart i wszystkie uporządkowane instrukcje z krótkim powodem; wspiera swobodę gracza. Automatyczny plan w Workerze dostosowuje się co 120 s rzeczywistych, a jawny cel rozmowy zachowuje osobny kontekst. Prowadzenie wskazuje mapę, a po otwarciu menu dokładną kontrolkę. CODE/PUB, eksporty, pakiet 28 po eksportach, CI 79 / Pages, tagi i nowy standardowy PRE-PROD są **PENDING**. Oczekiwany pakiet 467 plików wymaga rzeczywistej weryfikacji. Odebrane fc95/cache22 z historią restartu właściciela admin1 pozostaje poniżej bez zmian. 519 kart / 195 przypadków NOT RUN; bez resetu, PROD, DNS i zmian haseł. [Zakres](docs/v32/GO-ADVISOR-TASKS.md) · [Dowody](docs/v32/ADVISOR-TASKS-EVIDENCE.json).
+
 ## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 
 Kod aplikacji i kanonicznych eksportów: `f6572ee7500b42f56d1575de2e173d1bd635216c`; odebrana publikacja: `fc95a1aadf36a115538ed0b846f9ce48fbba651b`. Własny [CI44926983827](https://github.com/ksobczak321-oss/gra/actions/runs/44926983827) ma **SUCCESS 29 min 15 s**: 1831 Node, 173 Python i 76 programów Chromium. Bieżące [Pages44926983937](https://github.com/ksobczak321-oss/gra/actions/runs/44926983937) ma osobny SUCCESS; wcześniejsze nieudane Pages oraz nieudane i automatycznie anulowane CI pozostają historią. Standardowy [PRE-PROD44929856572/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/44929856572/attempts/1) ma **SUCCESS 8 min 08 s**.

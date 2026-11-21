@@ -1,12 +1,12 @@
 // Read-only advice. Detailed questions use an isolated snapshot on demand.
 // Continuous guidance copies current planning inputs only, never historical
 // meals, packed worlds, adventure boards or another island's state.
-import { ALL_BUILDINGS, EXPEDITIONS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-22';
-import { centralAvailable, centralUnreserved, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-22';
-import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-22';
-import { GOODS, FOOD_IDS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-22';
-import { quotePremiumBuilding, expeditionRoundReward } from './harborlight-v1-activities.js?v=frontend-v32-22';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-22';
+import { ALL_BUILDINGS, EXPEDITIONS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-23';
+import { centralAvailable, centralUnreserved, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-23';
+import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-23';
+import { GOODS, FOOD_IDS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-23';
+import { quotePremiumBuilding, expeditionRoundReward } from './harborlight-v1-activities.js?v=frontend-v32-23';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-23';
 
 export const ADVISOR_BUILDING_NAMES = Object.freeze({ townhall:'Ratusz', house:'Dom', farm:'Gospodarstwo', lumber:'Drwale', quarry:'Kamieniołom', windmill:'Młyn', sawmill:'Tartak', warehouse:'Magazyn', dock:'Port', market:'Targ', lighthouse:'Latarnia', chapel:'Kaplica', theatre:'Teatr', bakery:'Piekarnia', dairy:'Mleczarnia', slaughterhouse:'Rzeźnia', fisher:'Rybak', leatherworks:'Zakład skórzany', academy:'Akademia', barracks:'Koszary' });
 const aliases = {townhall:'ratusz\\w*', house:'dom(?:u|em|y|ow)?|lozk\\w*', farm:'gospodarstw\\w*|rolnik\\w*', lumber:'drwal\\w*|lesnik\\w*', quarry:'kamieniolom\\w*|kamieniarz\\w*', windmill:'mlyn\\w*|mlynarz\\w*', sawmill:'tartak\\w*', warehouse:'magazyn\\w*|tragarz\\w*', dock:'port(?:u|em|y|ow)?|porcie|przystan\\w*', market:'targ\\w*', lighthouse:'latarn\\w*', chapel:'kaplic\\w*', theatre:'teatr\\w*', bakery:'piekarn\\w*|piekarz\\w*', dairy:'mleczarn\\w*', slaughterhouse:'rzezn\\w*|rzeznik\\w*', fisher:'rybak\\w*', leatherworks:'zaklad\\w*\\s+skorz\\w*', academy:'akadem\\w*', barracks:'koszar\\w*'};

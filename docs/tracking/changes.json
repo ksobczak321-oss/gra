@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-11-21",
-  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów. Zadanie z 16 listopada: pełny MASTER 15 ze źródeł e23b jest gotowy; archiwum 14 zachowane, bieżące zasady, teksty, scenariusze i symulacje 24/24/72 h zwalidowane PASS. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. Gra, redakcyjny Excel z sześcioma zakładkami, konta i wdrożenia bez zmian. GO z18listopada2026 obejmuje wyłącznie DEV0.15.2.0/cache16: dziesięć wyglądów każdego z20budynków dla par poziomów1–20 oraz średniowieczny żuraw podczas rzeczywistej budowy. Ostatnia grafika pozostaje powyżej20bez zmiany limitu modelu; dawna dekoracyjna chatkaZakładu skórzanego wizualnie podąża zaRatuszem bez nowej funkcji. Istniejący żaglowiecPortu pozostaje. Karty1164–1165 mają własny odbiórPENDING; bezPRE-PROD,PROD,DNS,resetu i zmian ekonomii. Sprawdzenie istniejącego modelu wykazałoTeatrmaxLevel1: jako jawny wybór integracji tylkojego wygląd śledzi poziomRatusza, bez zmiany rzeczywistegopoziomu1,reguł,czasów lub kosztów. ZakresDEV obejmuje także publiczny katalog harborlight-building-gallery.html z200wariantami. Nowe GO z 21 listopada 2026 obejmuje wyłącznie DEV 0.15.3.0 / cache22:28 kroków tutoriala, osiem opisów menu pod i, czasowe ukrycie samouczka25 lekcji z zachowaniem postępu, bieżące rady1 cel/2–5 akcji, prawdziwe minigry przy braku monet i czytelne etykiety poziomów. Karty1175–1182 oraz przypadki 0180–0187 mają odrębny odbiór; PRE-PROD pozostaje odebrany C6/d5ad bez nowej promocji. Późniejsze jawne polecenie „jak skończysz wrzuć na pre prod” autoryzuje także standardowy PRE-PROD tej paczki po ukończeniu DEV i własnym CI/Pages. Pierwotny zakres tylkoDEV pozostaje faktem historycznym; nowa promocja nadal PENDING, bez resetu, zmiany haseł, PROD lub DNS. Końcowy odbiór0.15.3.0/cache22 potwierdzono dla publikacjifc95a1aadf36a115538ed0b846f9ce48fbba651b, własnegoCI44926983827, Pages44926983937 i standardowegoPREPROD44929856572; wcześniejsze zdania o oczekiwaniu są historią. Wszystkie187 ręcznych prób nadal NOT RUN, bez resetu przezQA/wdrożenie, PROD i DNS; restart admin1 był działaniem właściciela.",
+  "scope": "Widoczna historia rozmowy, trzy pełne wklejki użytkownika i zatwierdzone zakresy v17–v22.1. Historyczne materiały v1–v16 są kontekstem, nie nowymi domyślnie otwieranymi zadaniami. Nowe GO z 31 października po pilnej poprawce obejmuje wcześniej uzgodnione nowe mechaniki wyłącznie DEV, oddzielne powroty w Pomocy i materiały planszówki do wydruku; integracja planszówki online jest jawnie wyłączona. GO z 1 listopada 2026 rozszerza DEV o pakiet0.10.2.0 / v26: czytelny Magazyn i Dom, osobne sekcje społeczności i oznaczone symulacje, ręczną redakcję opisów, nazwę3–40 znaków, wznawianie obu narzędzi nauki, ochronę od reklam, nowy kurs25 lekcji, turbo poziomów 1–2 i blokadę niedostępnych budynków. Ten zakres nie promuje PRE-PROD; ostatni potwierdzony PRE-PROD to0.10.1.0 / 353faad. Baselinev22.1 poniżej jest historycznym punktem ewidencji, nie najnowszym stanem chmury. GO z 1 listopada po akceptacji opisów rozszerza DEV do0.11.0.0/v27:34 kroki tutoriala, Pomoc pod?, informacja o skutkach, stabilne ETA, globalne dojście/powrót2 min, mieszkania niezależne od limitu Ratusza, dzienna pula tylko zakwaterowanych, praca bez mieszkania×0,5 i jedzenie×2 zamiast dawnej globalnej kary szczęścia oraz misje Latarni 8/5/3 z wykonalnymi wymaganiami. Parametry integracji misji są jawnie opisane. Nowe GO nie promuje chmury i nie resetuje kont. Aktualne GO z 2 listopada obejmuje DEV0.12.0.0/v28 według docs/FRONTEND-V28-REQUIREMENTS.md, z atomowymi kartami0969–1019 i ręcznymi przypadkami0071–0094. PRE-PROD0.11/c7c3974 pozostaje odebrany historycznie i bez nowej promocji. Poprzednie akapity opisują wcześniejsze zakresy; bieżący stan rozstrzyga docs/ENVIRONMENT-STATUS.md. Nowe wyniki pełnego odbioru/CI/Pages wymagają osobnych dowodów. Odbiór lokalny v28 zakończony dla0d17b7aa91fef72f0fb36d28451d711daeaee909; mainpushpotwierdzony, Pages41471972395SUCCESS29s, własneCI41471972606IN_PROGRESS, bez tagu. Aktualne dowody i ograniczenie proxy403 w dokumencie walidacji0.12; PRE-PROD0.11 bez zmiany. PierwszyCI41471972606 zakończył sięFAILURE9min48s (mobilnyXy=-21), nieCANCELLED; prognoza iwyjście mają gotowe poprawki/cachefrontend-v28-2. Karty1020/1021iTC0095/0096 dają350kart/96ręcznych NOT RUN. NowySHA/odbiór/CI oczekuje. Poprawiony kandydat2:0ca7715b6e9282b31ca7941c89c3c742ac0df9e6wmain, Pages41475213874SUCCESS31s, własneCI41475214118IN_PROGRESS. Lokalny frontend991PASS; bieżący pakiet62pliki/11 332 589bajtów iQA96browserPASS, ręczne96NOT RUN. PierwszyCI41471972606 zachowujeFAILURE9m48s.350kart,53v28(52implemented+1rejected). KońcowyCI41475214118 poprawionego źródła0ca7715b6e9282b31ca7941c89c3c742ac0df9e6 maSUCCESS12m33s, obie grupyChromium przeszły; Pages41475213874SUCCESS31s. Tagdev-0.12.0.0-20261102PLANNED do osobnego potwierdzenia. PierwszyCI41471972606FAILURE pozostaje historią. PRE-PROD bez zmiany, ręczne96NOT RUN. Tagdev-0.12.0.0-20261102 został opublikowany i potwierdzonyzdalnie:obiekt22677b82849a3d9b20e2256f344f241e30c47020, rozwiązanySHA0ca7715b6e9282b31ca7941c89c3c742ac0df9e6; nie przesuwamy go na późniejsze metadane. Aktualizacja operacyjna promocji0.12: d9e2940b9a00755d979c159ec0fb62e290dd7ff1 ma własneCI41480146644SUCCESS13min46s iPages41480146737SUCCESS41s. Rzeczywistybridge41482423516SUCCESS21s uruchomiłdeploy41482455135 dla tego źródła; jego końcowy odbiór iartefakty pozostają do potwierdzenia. Starsze baselinev22.1 i wcześniejsze zdania o braku promocji są chronologią; bieżący stan podaje docs/ENVIRONMENT-STATUS.md. 351kart/96ręcznychNOT RUN, bezresetu/PROD. Zrealizowana promocja PRE-PROD0.12: źródłod9e2940b9a00755d979c159ec0fb62e290dd7ff1, własneCI41480146644SUCCESS13min46s, Pages41480146737SUCCESS41s, rzeczywistybridge41482423516SUCCESS21s i deploy41482455135/próba1SUCCESS2min20s. Wszystkie wymagane kontrole odczytowe i publikacje obu artefaktów przeszły.52karty aplikacji i operacja1022 mają deployed_source_d9e2940,1013pozostajeodrzucona.351kart/96ręcznychNOT RUN, bez resetu/PROD. Powyższe wpisy o planowanej lub trwającej promocji zachowują chronologię, nie zastępują bieżącego odbioru. TagPREPROD`preprod-0.12.0.0-20261102` opublikowano i potwierdzonozdalnie po sukcesie wdrożenia: obiektd66b25ba216e5b686e6a92b9b8558d35eda9fd2d→d9e2940b9a00755d979c159ec0fb62e290dd7ff1. Nie przesuwamy go na następne commity dowodów. Odbiór i tag nie odznaczają żadnego z96ręcznych przypadków. GO z3listopada2026 obejmuje DEV0.13.0.0/v29: nową krzywą budowy i pojemności, naukę dwóch dróg budowy, krótszy tutorial34kroki, powitalnego mieszkańca przez7dni, sekwencyjne misje, Teatr i dziewięć przygód oraz rzeczywisty katalog trzech kont. Karty1023–1067 mają własne statusy; poprzednie dowody nie zaliczają tego kodu. PRE-PROD pozostaje0.12.0.0/d9e2940, bez resetu lub PROD. Nowe ręczne przypadki0097–0130 startująNOTRUN. Uzupełnienie odbioru v29: 397 kart łącznie, w tym dodatkowa HL-CHG-1068 dla aktualizacji Excela; 134 scenariusze ręczne, wszystkie nadal NOT RUN. TC0131–0134 sprawdzają także wcześniejsze przyjęte zlecenia, powitalnego mieszkańca i pulę Domu oraz pełny przebieg reklam w grze. Aktualne środowiska oddziela sekcja current_environment; environment_baseline jest historycznym początkiem rejestru. Nowe GO v30 z3listopada2026 obejmuje wizualne dopasowanie Teatru i studio własnej aranżacji w DEV0.13.1.0. Karty1069–1079 mają własne statusy; historyczna prezentacja mapowa1044 jest częściowo zastąpiona przez1069. 408kart/145ręcznychNOTRUN; bez nowej promocji GCP, resetu i PROD. Dodatkowy steeringv30 wymaga automatycznie zapisanego placu kontynuowanego po dniach i rozwoju bez twardego końca20; ostatecznie pozostaje20miejsc bez nowych sektorów. Dodano1080–1081 orazTC0146–0147:410kart/147ręcznychNOTRUN. Ostateczna odpowiedźv30:20miejsc,bez nowych sektorów,dalsze poziomy bez końca20,koszty tą samą formułą i reklamy co5także25/30. Trwała aranżacja nie zależy od zapisania Pomysłu. Jawne zlecenie promocji0.13.1.0napreprod ma odrębną kartę1082:PENDINGdo własnegoCI nowegoSHA i rzeczywistegoSUCCESSGCP.411kart/147ręcznychNOTRUN,bez resetu iPROD. GO DEV0.14.0.0/v31 z4listopada2026 zatwierdza paczkę po audycie ścieżek i plan50dni, karty1083–1120 i ręczneTC0148–0179. Implementacja i własna walidacja końcowego źródła pozostają w toku; PRE-PROD0.13.1.0/68e9bcd bez nowej promocji.449kart/179ręcznychNOTRUN; bez resetu,PROD i realnychoperatorów. Cel20w50dni/150godzin nie jest wynikiem testu. Nowe GO z14–15listopada2026 obejmuje pełny uzgodniony pakietv32/0.15.0.0 naDEV,47odpowiedzi z formularzy i poprawki UI. Karty1122–1138 mapują regułyR01–R59 z audytu. Nowe implementacje są lokalnie zweryfikowane, ale nowe CI i publiczny podgląd muszą mieć własny dowód; bez promocji PRE-PROD/PROD i bez resetu kont. Odłożone niepełne przepisy/sieć skórzana i niezatwierdzone parametry balansu zachowują odrębne ograniczenia. GO z15listopada po akceptacji statycznego frontu obejmuje wyłącznie DEV0.15.0.0/cachefrontend-v32-7: zachowane zaakceptowane grafiki, przypisania funkcji budynków bez zamiany identyfikatorów zapisów, zgodne miniatury i wyrównanie dolnego menu do prawej krawędzi1664. KartyHL-CHG-1144–1146 mają własny odbiór; osobny pakiet sera, otrębów/paszy i nazw mieszkańców pozostaje poza tą publikacją. PóźniejszeGOcache8 po zgłoszeniu Akademii iKoszar autoryzuje wyłącznie nazwy mieszkańców według zajęcia, numeracjęról i grupy we wszystkich listach/wyborachUI, z zachowaniemfrontucache7,UID,zapisów,uprawnień i postępu; modele sera,otrębów/paszy nadal wyłączone. KartyHL-CHG-1147–1148 wymagają własnego odbioru. Responsive120: cache8 zawiera także minimalną poprawkęUI poFAILURECI43738724605; próg20px i reguły modelu pozostają niezmienione. KartaHL-CHG-1149 zachowuje dawną awarię i odrębny odbiór nowego kodu. NajnowszeGOcache9 omezuje importPL na šest vybraných arkuszy Excela (413wierszy,87niepustychC,85zmianwC), z zasadąC→B i rozstrzyganiem notatek redakcyjnych. Pozostałe treści arkuszy nie są czytane; ser doMleczarni i reklamy na każdympoziomie oczekują decyzji. Nowy wynikowyExcel ma6arkuszy413ABC/Bscalone/Cpuste przy zachowaniu historycznego pełnegoarkusza. KartaHL-CHG-1150 ma własne oczekujące wynikiDEV; oddzielna zablokowana promocjaPROD pozostaje poza tym importem. Najnowsze jawneGO użytkownika ustala kolejność obecnyPRE-PROD0.14/7e→PROD, dopiero po potwierdzeniuPROD aktualnyDEV→PRE-PROD. OpsHL-CHG-1151 zapisujeBLOCKED wyłączonymAPI i brakiem ustalonego dostępu; wąski profil85plików nie znosi bramkiAPI ani domyślnego108. Cache9 wymaga trzeciego pełnego własnego zielonegoCI przed zaakceptowanym tagiem. NajnowszeGO:PROD/domenaodłożone; naprawa starych chmurowychreguł0.15.0.1/cache10 i osobny reset3PRE-PROD z zachowaniemloginów/haseł/UID poAPI,datastore.user,blokadziezapisów i10min. E0wdrożoneplikiSUCCESS, funkcjeREOPENED_USER_REPORT; noweCI/deploy/resetPENDING. Bug1152/Ops1153. Bieżące0.15.0.1/cache11: DEV/PRE-PROD86 oraz własnyCI i rzeczywisty zalogowanyUI32 SUCCESS; osobnyreset3NOT_EXECUTED/właścicielskiCloudShell. E0REOPENED/b268FAILURE historyczne;PROD/DNSodłożone. GO16listopada2026: Bug1154 usuwa przebłysk staregoPNG/HUD przy starcie, najpierwDEV0.15.0.2/cache12. NoweCI/publikacjaPENDING; reset właściciel zgłosił jako uruchomiony, wynikNOT_CONFIRMED, nowa promocjaPRE-PROD czeka na zakończenie. GO16listopada: admin3-only▶1×/⏩2×/6× naDEV iPRE-PROD, karta1155. WłaścicielskiRESET PASS43768861718/generacje2/2/2; niezależny odczytPENDING. Reset43768861718 jest niezależnie potwierdzony16listopadaTLS:3UID/generacje2/expiredfalse/islandnull,3ownFirestore403/APItrue,0zapisów; bez ponowienia. Nowyappcache12 nadalPENDING,QA nie tworzy nowychświatów. Zadanie z 16 listopada: pełny MASTER 15 ze źródeł e23b jest gotowy; archiwum 14 zachowane, bieżące zasady, teksty, scenariusze i symulacje 24/24/72 h zwalidowane PASS. Artefakt gotowy do publikacji w Git; wynik nowego CI należy sprawdzić w Actions. Gra, redakcyjny Excel z sześcioma zakładkami, konta i wdrożenia bez zmian. GO z18listopada2026 obejmuje wyłącznie DEV0.15.2.0/cache16: dziesięć wyglądów każdego z20budynków dla par poziomów1–20 oraz średniowieczny żuraw podczas rzeczywistej budowy. Ostatnia grafika pozostaje powyżej20bez zmiany limitu modelu; dawna dekoracyjna chatkaZakładu skórzanego wizualnie podąża zaRatuszem bez nowej funkcji. Istniejący żaglowiecPortu pozostaje. Karty1164–1165 mają własny odbiórPENDING; bezPRE-PROD,PROD,DNS,resetu i zmian ekonomii. Sprawdzenie istniejącego modelu wykazałoTeatrmaxLevel1: jako jawny wybór integracji tylkojego wygląd śledzi poziomRatusza, bez zmiany rzeczywistegopoziomu1,reguł,czasów lub kosztów. ZakresDEV obejmuje także publiczny katalog harborlight-building-gallery.html z200wariantami. Nowe GO z 21 listopada 2026 obejmuje wyłącznie DEV 0.15.3.0 / cache22:28 kroków tutoriala, osiem opisów menu pod i, czasowe ukrycie samouczka25 lekcji z zachowaniem postępu, bieżące rady1 cel/2–5 akcji, prawdziwe minigry przy braku monet i czytelne etykiety poziomów. Karty1175–1182 oraz przypadki 0180–0187 mają odrębny odbiór; PRE-PROD pozostaje odebrany C6/d5ad bez nowej promocji. Późniejsze jawne polecenie „jak skończysz wrzuć na pre prod” autoryzuje także standardowy PRE-PROD tej paczki po ukończeniu DEV i własnym CI/Pages. Pierwotny zakres tylkoDEV pozostaje faktem historycznym; nowa promocja nadal PENDING, bez resetu, zmiany haseł, PROD lub DNS. Końcowy odbiór0.15.3.0/cache22 potwierdzono dla publikacjifc95a1aadf36a115538ed0b846f9ce48fbba651b, własnegoCI44926983827, Pages44926983937 i standardowegoPREPROD44929856572; wcześniejsze zdania o oczekiwaniu są historią. Wszystkie187 ręcznych prób nadal NOT RUN, bez resetu przezQA/wdrożenie, PROD i DNS; restart admin1 był działaniem właściciela. Nowe zlecenie0.15.3.1/cache23 obejmuje karty zadań Doradcy, pełną instrukcję, wskazania mapa→kontrolka oraz plan wWorkerze co120s rzeczywistych. Jest PENDING; własny CODE/CI/Pages/standardowyPRE-PROD wymagają nowych dowodów. Odebrane fc95 zachowuje osobny historyczny odbiór.",
   "environment_baseline": {
     "application_source_sha": "092e75226fbb14cab09826f313e11d10891966d8",
     "ci_run_id": 41221965032,
@@ -32163,6 +32163,521 @@
         "OPS:no-reset",
         "MODEL:preserve-progress"
       ]
+    },
+    {
+      "id": "HL-CHG-1183",
+      "epic": "HL-EPIC-UI",
+      "area": "Układ Doradcy",
+      "type": "Story",
+      "title": "Układ Doradcy: cel i równoległe karty zadań",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1183; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Jeden bieżący cel poprzedza 2–5 równoległych kart zadań z krótkim opisem i powodem.",
+        "Widok zachowuje logiczne i wizualne grupowanie na desktopie i ekranie 320/390 px bez nakładania lub ukrytych kontrolek.",
+        "Wykonane działanie nie pozostaje wymaganiem do ponownego wykonania.",
+        "Doradca używa życzliwego „Cześć, sugeruję… bo…” i jasno pozostawia graczowi swobodę zignorowania propozycji."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1184",
+      "epic": "HL-EPIC-UI",
+      "area": "Kolejność i zależności",
+      "type": "Story",
+      "title": "Wszystkie instrukcje i krótkie uzasadnienia pod kartami",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1184; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Cała uporządkowana instrukcja pozostaje pod kartami, bez wyboru ukrywającego inne działania.",
+        "Zależności uwzględniają rzeczywiste potrzeby produkcji, transportu i budowy oraz powód danej czynności.",
+        "Działania dostępne teraz są odróżnione od czekających na dostawę lub ukończenie wcześniejszego etapu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1185",
+      "epic": "HL-EPIC-UI",
+      "area": "Nawigacja do budynku",
+      "type": "Story",
+      "title": "Pokaż gdzie najpierw wskazuje budynek na mapie",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1185; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Pierwsza wskazówka zadania wskazuje właściwy budynek na mapie, także gdy jego menu jest zamknięte.",
+        "Wskazanie nie otwiera budynku, nie zmienia obsady i nie wykonuje żadnej czynności gry.",
+        "Wskazanie obsługuje desktop, dotyk, przesunięcie planszy i zmianę rozmiaru."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1186",
+      "epic": "HL-EPIC-UI",
+      "area": "Nawigacja wewnątrz menu",
+      "type": "Story",
+      "title": "Po otwarciu budynku wskazuj dokładną kontrolkę",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1186; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Po samodzielnym otwarciu właściwego budynku przez gracza wskazówka przechodzi do dokładnego pola, przycisku lub sekcji.",
+        "Strzałka nie zasłania celu i nie naciska go; zamknięty, zastąpiony lub obcy modal nie utrzymuje nieaktualnego celu.",
+        "Zmiana zadania, przewijanie, zmiana rozmiaru i ponowne otwarcie odnajdują rzeczywistą kontrolkę."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1187",
+      "epic": "HL-EPIC-UI",
+      "area": "Planista rozwoju",
+      "type": "Story",
+      "title": "Planuj wykonalny rozwój co 120 sekund rzeczywistych",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1187; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Worker porównuje rzeczywiście wykonalne warianty i wskazuje najlepszy spośród ocenionych, z jawnym uzasadnieniem.",
+        "Automatyczny przegląd następuje co 120 sekund czasu rzeczywistego; tempo gry 1×/2×/6× nie skraca okresu.",
+        "Jawna zmiana celu może zlecić plan wcześniej; spóźniony wynik starego celu nie zastępuje bieżącego.",
+        "Co120s rzeczywistych automatyczny cel dostosowuje się do faktycznej drogi gracza; poprzedni automatyczny wybór nie jest trwale przypięty."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1188",
+      "epic": "HL-EPIC-UI",
+      "area": "Wydajność planisty",
+      "type": "Bug",
+      "title": "Worker otrzymuje ograniczone dane bez blokowania gry",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1188; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Do Workera trafia zwięzły obraz potrzebnych zasobów, obsady, produkcji, transportu i projektów, bez pełnego świata lub historii.",
+        "Planowanie nie wykonuje kosztownej synchronicznej prognozy na głównym wątku i nie zatrzymuje zwykłej gry.",
+        "Błąd Workera lub nieaktualny wynik nie prowadzi do automatycznych działań ani ciężkiego synchronicznego fallbacku."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1189",
+      "epic": "HL-EPIC-UI",
+      "area": "Swoboda gracza",
+      "type": "Story",
+      "title": "Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1189; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Rozmowa w PL i EN, niewysłany szkic oraz wyciszenie pozostają poprawne po odświeżeniu kart i planu.",
+        "Porada, strzałka i planowanie nie zmieniają obsady, priorytetów, budowy, nagród lub zegara gry.",
+        "Gracz może zignorować zalecenie i realizować własny cel.",
+        "Jawny cel rozmowy pozostaje osobny od automatycznych propozycji i nie zamraża ich bezterminowo; odświeżenie nie usuwa treści ani szkicu."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
+    },
+    {
+      "id": "HL-CHG-1190",
+      "epic": "HL-EPIC-OPS",
+      "area": "Zgodność i odbiór wydania",
+      "type": "Ops",
+      "title": "Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania",
+      "source": {
+        "kind": "current_user_chat_instruction",
+        "date": "2026-11-21",
+        "date_note": "Europe/Warsaw",
+        "summary": "Nowa organizacja Doradcy, prowadzenie mapa→kontrolka i plan wykonalnego rozwoju co120s czasu rzeczywistego w tle; wcześniejsza autoryzacja PRE-PROD po ukończeniu pozostaje aktualna.",
+        "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1190; docs/v32/GO-ADVISOR-TASKS.md"
+      },
+      "status": {
+        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
+        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
+        "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+        "prod": "postponed_by_user",
+        "decision": "accepted"
+      },
+      "acceptance": [
+        "Aktywne 28 kroków i ukryty kurs 25 zachowują treści, postęp i historię nagród bez automatycznego ukończenia.",
+        "Nowy CODE/PUB ma własne testy, CI, Pages, artefakty i standardowy PRE-PROD oraz odczytowy audyt istniejących kont.",
+        "Odebrane fc95 i konkretny potwierdzony restart właściciela admin1 zachowują historyczne dowody; nie są przyjęciem nowego źródła ani ogólną zgodą na reset."
+      ],
+      "supersedes": [],
+      "superseded_by": [],
+      "related_changes": [
+        "HL-CHG-1178",
+        "HL-CHG-1182"
+      ],
+      "issue_url": null,
+      "published_to_github_issues": false,
+      "evidence": {
+        "documents": [
+          "docs/v32/GO-ADVISOR-TASKS.md",
+          "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+        ],
+        "code": [],
+        "automated_tests": [],
+        "source_sha": null,
+        "code_source_sha": null,
+        "publication_source_sha": null,
+        "ci_run_url": null,
+        "manual_execution": "NOT_RUN",
+        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+      },
+      "notes": [
+        "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
+        "Nowy zakres nie upoważnia do resetu kont, zmiany haseł, PROD lub DNS."
+      ],
+      "tags": [
+        "v32",
+        "advisor-tasks",
+        "dev-preprod",
+        "no-reset"
+      ],
+      "rules": [
+        "OPS:DEV-then-PREPROD",
+        "OPS:no-reset",
+        "MODEL:preserve-progress"
+      ]
     }
   ],
   "current_environment": {
@@ -32389,7 +32904,7 @@
     },
     "public_asset_file_count": 461,
     "public_asset_total_bytes": 96565813,
-    "current_directory_scope": "Accepted0.15.3.0/cache22 CODEf657 PUBfc95a1a, CI44926983827, Pages44926983937, standardPREPROD44929856572; metadata followup only, manual187NOT_RUN.",
+    "current_directory_scope": "Pending0.15.3.1/cache23 advisor tasks and real120s background plan; actualaccepted DEV/PREPROD remain0.15.3.0/fc95. 519cards/195manualNOT_RUN.",
     "dev_tag_remote_object": "4fbbb4177a0ab375a0f47bdecee648e67cf1d596",
     "dev_tag_remote_verified": true,
     "dev_ci_completed_at": "2026-11-21T17:22:16Z",
@@ -33006,8 +33521,8 @@
       "native_UI_prerequisite": "owner_first_new_game"
     },
     "next_application_source_sha": null,
-    "next_application_version": null,
-    "next_cache": null,
+    "next_application_version": "0.15.3.1",
+    "next_cache": "frontend-v32-23",
     "next_local_validation": null,
     "next_workbook": null,
     "owner_latest_empty_island_observation": {
@@ -35468,17 +35983,14 @@
     },
     "pending_next_source": null,
     "active_promotion_request": {
-      "status": "COMPLETED_DEV_THEN_STANDARD_PREPROD_0_15_3_0",
-      "version": "0.15.3.0",
-      "scope": "DEV_then_Git_own_CI_Pages_and_standard_PREPROD_exact_verified_source",
-      "PROD_game_deployed": false,
-      "DNS_edited": false,
-      "reset_repeated": false,
-      "historical_initial_status": "NO_NEW_PREPROD_PROMOTION_AUTHORIZED_DEV_ONLY",
-      "explicit_user_quote": "jak skończysz wrzuć na pre prod",
-      "preserve_accounts_passwords_progress": true,
-      "new_deployment_run": 44929856572,
-      "new_deployment_completed": true
+      "status": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_OWN_EXACT_CI_PAGES",
+      "target_version": "0.15.3.1",
+      "target_cache": "frontend-v32-23",
+      "authorization_quote": "jak skończysz wrzuć na pre prod",
+      "authorization_carried_forward": true,
+      "new_deployment_run": null,
+      "new_deployment_completed": false,
+      "no_reset_PROD_DNS_password_changes": true
     },
     "CI_test_totals": {
       "run": 44926983827,
@@ -35572,7 +36084,7 @@
       "new_GCP_deployment": false,
       "new_reset": false
     },
-    "next_dev_scope": null,
+    "next_dev_scope": "docs/v32/GO-ADVISOR-TASKS.md",
     "latest_local_validation": {
       "status": "LOCAL_TARGETED_AND_CANONICAL_PASS_OWN_EXACT_PUBLICATION_CI_SUCCESS_INITIAL_LOCAL_FULL_FAIL_PRESERVED",
       "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
@@ -35745,16 +36257,18 @@
     },
     "CI_test_totals_pending_next": null,
     "candidate_next_release": {
-      "version": "0.15.3.0",
-      "cache": "frontend-v32-22",
-      "status": "PROMOTED_AND_AUTOMATED_DEV_PREPROD_ACCEPTED",
-      "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-      "publication_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
-      "ci": 44926983827,
-      "preprod": 44929856572,
-      "manual_user_acceptance": "NOT_RUN",
-      "preprod_authorized": true,
-      "preprod_status": "ACCEPTED"
+      "version": "0.15.3.1",
+      "cache": "frontend-v32-23",
+      "status": "LOCAL_ROOT_TESTS_PASS_CODE_EXPORTS_OWN_PUBLICATION_PENDING",
+      "source_sha": null,
+      "publication_sha": null,
+      "ci": null,
+      "pages": null,
+      "preprod": null,
+      "preprod_status": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
+      "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
+      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+      "expected_public_package_files": 467
     },
     "historical_cache19_candidate_fields": {
       "dev_application_version": "0.15.2.2",
@@ -36540,6 +37054,41 @@
       "auditor_negative_control_Node_tests": 26,
       "snapshots_rebaselined": false
     },
-    "all_three_origins_preserved": false
+    "all_three_origins_preserved": false,
+    "historical_cache22_candidate_next_release_before_advisor_tasks": {
+      "version": "0.15.3.0",
+      "cache": "frontend-v32-22",
+      "status": "PROMOTED_AND_AUTOMATED_DEV_PREPROD_ACCEPTED",
+      "source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+      "publication_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+      "ci": 44926983827,
+      "preprod": 44929856572,
+      "manual_user_acceptance": "NOT_RUN",
+      "preprod_authorized": true,
+      "preprod_status": "ACCEPTED"
+    },
+    "historical_cache22_active_promotion_request_before_advisor_tasks": {
+      "status": "COMPLETED_DEV_THEN_STANDARD_PREPROD_0_15_3_0",
+      "version": "0.15.3.0",
+      "scope": "DEV_then_Git_own_CI_Pages_and_standard_PREPROD_exact_verified_source",
+      "PROD_game_deployed": false,
+      "DNS_edited": false,
+      "reset_repeated": false,
+      "historical_initial_status": "NO_NEW_PREPROD_PROMOTION_AUTHORIZED_DEV_ONLY",
+      "explicit_user_quote": "jak skończysz wrzuć na pre prod",
+      "preserve_accounts_passwords_progress": true,
+      "new_deployment_run": 44929856572,
+      "new_deployment_completed": true
+    },
+    "advisor_tasks_task": {
+      "status": "LOCAL_ROOT_TESTS_PASS_CODE_EXPORTS_OWN_PUBLICATION_PENDING",
+      "version": "0.15.3.1",
+      "cache": "frontend-v32-23",
+      "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
+      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+      "manual_user_acceptance": "NOT_RUN",
+      "private_workspace": "/workspace/work/advisor-layout-20261121",
+      "local_checkpoint_evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+    }
   }
 }

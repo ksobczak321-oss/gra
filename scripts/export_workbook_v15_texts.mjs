@@ -10,7 +10,8 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { ADVISOR_INTRO_IDS, createAdvisorTourSteps, TOUR_MENU_INFORMATION_IDS, tourMenuInformation } from '../harborlight-v1-advisor-intro.js';
-import { advisorSuggestion } from '../harborlight-v1-advisor.js';
+import { ADVISOR_PLAN_LIMITS, advisorDevelopmentSnapshot, advisorDevelopmentPlan } from '../harborlight-v1-advisor-development-plan.js';
+import { ADVISOR_GUIDANCE_ACTIONS, normalizeAdvisorGuidance, advisorGuidanceSelectors } from '../harborlight-v1-advisor-guidance.js';
 import { PRACTICAL_TUTORIAL_ENABLED } from '../harborlight-v1-learning-policy.js';
 import * as Approved from '../harborlight-v1-approved-copy.js';
 import * as Progression from '../harborlight-v1-progression.js';
@@ -26,6 +27,8 @@ const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const SCRIPT = fileURLToPath(import.meta.url);
 const FIXED_EPOCH = Date.UTC(2026, 10, 16, 12);
 const MAX_CELL = 24000;
+const ADVISOR_SOURCES = ['harborlight-v1-advisor-development-plan.js', 'harborlight-v1-advisor-development-client.js', 'harborlight-v1-advisor-development-worker.js', 'harborlight-v1-advisor-guidance.js', 'harborlight-v1-advisor-guidance.css'];
+const ADVISOR_STYLES = ['harborlight-v1-advisor.css', 'harborlight-v1-advisor-guidance.css'];
 const lineIndexes = new Map();
 let publicApplicationFiles = new Set();
 const require = createRequire(import.meta.url);
@@ -119,8 +122,9 @@ async function applicationSources() {
   const build = await readFile(path.join(ROOT, 'scripts/build_frontend.py'), 'utf8');
   const list = build.match(/PUBLIC_FILES\s*=\s*\(([\s\S]*?)\n\)/)?.[1];
   assert(list, 'Cannot read the explicit public application allowlist.');
-  const names = [...list.matchAll(/"([^"]+)"/g)].map(match => match[1]).filter(name => /\.(?:js|mjs|html)$/.test(name));
+  const names = [...list.matchAll(/"([^"]+)"/g)].map(match => match[1]).filter(name => /\.(?:js|mjs|html)$/.test(name) || ADVISOR_STYLES.includes(name));
   publicApplicationFiles = new Set(names);
+  for (const file of ADVISOR_SOURCES) assert(publicApplicationFiles.has(file), `Missing current public advisor source: ${file}`);
   const top = (await readdir(ROOT)).filter(name => /^(?:harborlight.*\.(?:js|mjs|html)|index\.html|game\.js|panic-pets\.js)$/.test(name));
   const backend = [];
   async function walk(directory) {
@@ -228,7 +232,7 @@ export async function exportTexts({ includeSource = true } = {}) {
         if (text && /\p{L}/u.test(text)) htmlTexts.push({ file, line: lineAt(source, match.index + 1), type: 'Treść elementu HTML', text, condition: 'Statyczny tekst dokumentu; widoczność zależy od CSS i kodu strony.' });
       }
       for (const match of masked.matchAll(/\b(aria-label|placeholder|title|alt)\s*=\s*(['"])([\s\S]*?)\2/g)) htmlTexts.push({ file, line: lineAt(source, match.index), type: `Atrybut ${match[1]}`, text: htmlDecode(match[3]), condition: 'Etykieta lub podpowiedź HTML; widoczność zależy od elementu.' });
-    } else stats = parseSource(file, source, source);
+    } else if (!file.endsWith('.css')) stats = parseSource(file, source, source);
     let chunk = 0;
     if (includeSource) for (let start = 0; start < source.length;) {
       const [code, end] = sliceUtf16(source, start, MAX_CELL);
@@ -276,23 +280,97 @@ export async function exportTexts({ includeSource = true } = {}) {
   const activeTour = activeTourFor(baseOptions);
   const tour = Approved.APPROVED_TOUR_IDS.map((id, index) => ({ order: index + 1, id, ...Approved.getTourCopy(id, 'pl', baseOptions), condition: 'Zachowany katalog56 i stabilny indeks dawnych zapisów; bieżący tutorial pokazuje osobno28 kroków. Konto chmurowe; start v32, Pomagam bez dopisku symulacji.', file: 'harborlight-v1-approved-copy.js;harborlight-v1-development-copy.js' }));
   const menuInformation = Object.keys(TOUR_MENU_INFORMATION_IDS).flatMap(menu => tourMenuInformation(menu, 'pl', baseOptions).map(topic => ({ menu, archive_order: Approved.APPROVED_TOUR_IDS.indexOf(topic.id) + 1, ...topic, condition: 'Wyświetlane pod przyciskiem i po otwarciu odpowiedniego menu; poza aktywnym tutorialem.', file: 'harborlight-v1-advisor-intro.js;harborlight-v1-play.js' })));
-  const advisorProfiles = [
-    { profile: 'Kanoniczny start', state: structuredClone(canonical), options: { language: 'pl' } },
-    { profile: 'Start bez monet — jawna fikstura', state: { ...structuredClone(canonical), resources: { ...canonical.resources, coins: 0 } }, options: { language: 'pl' } },
-    { profile: 'Wybrany cel Port — stan startowy', state: structuredClone(canonical), options: { language: 'pl', goal: 'dock' } }
+  const advisorPlans = [], advisorTasks = [], advisorActions = [];
+  const profileDefinitions = [
+    { id: 'start', profile: 'Kanoniczny start' },
+    { id: 'no-coins', profile: 'Start bez monet — jawna fikstura', noCoins: true },
+    { id: 'port', profile: 'Wybrany cel Port — stan startowy', goal: 'dock', input: { pl: 'Rozbudowa Portu', en: 'Upgrade the Port' } },
+    { id: 'workers', profile: 'Pytanie o wolnych mieszkańców', input: { pl: 'Wolni mieszkańcy', en: 'Available residents' } },
+    { id: 'food', profile: 'Pytanie o wyżywienie', input: { pl: 'Wyżywienie', en: 'Food' } },
+    { id: 'transport', profile: 'Pytanie o priorytety transportu', input: { pl: 'Priorytety transportu', en: 'Transport priorities' } }
   ];
-  const advisorPlans = advisorProfiles.flatMap(({ profile, state, options }) => {
-    const before = json(state), plan = advisorSuggestion(state, options);
-    assert.equal(json(state), before, 'Read-only advisor example changed its fixture');
-    assert(plan.title && plan.steps.length >= 2 && plan.steps.length <= 5, 'Current advisor must expose one goal and2–5 actions');
-    return plan.steps.map((action, index) => ({ profile, goal: plan.title, explanation: plan.text, order: index + 1, action: action.text, target: action.target || '', section: action.section || '', options: json(options), input: before, output: json(plan), condition: 'Rzeczywista funkcja doradcy na jawnej fiksturze; nie rozgrywka użytkownika ani dowód optymalności globalnej.', file: 'harborlight-v1-advisor.js' }));
-  });
+  for (const definition of profileDefinitions) for (const language of ['pl', 'en']) {
+    const state = structuredClone(canonical);
+    if (definition.noCoins) state.resources.coins = 0;
+    const fixture = definition.id + '-' + language, before = json(state);
+    const request = { input: definition.input?.[language] || '', options: { language, ...(definition.goal ? { goal: definition.goal } : {}) } };
+    const snapshot = advisorDevelopmentSnapshot(state), snapshotBefore = json(snapshot);
+    const plan = advisorDevelopmentPlan(snapshot, request);
+    assert.equal(json(state), before, 'Read-only advisor example changed the source fixture');
+    assert.equal(json(snapshot), snapshotBefore, 'Read-only advisor example changed its compact snapshot');
+    assert(plan.title && plan.why && plan.tasks.length >= 2 && plan.tasks.length <= 5, 'Current advisor must expose one goal and2–5 task cards');
+    assert.deepEqual(plan.steps, plan.tasks.flatMap(task => task.howTo), 'Legacy steps must retain the complete grouped instructions');
+    const taskIds = new Set(plan.tasks.map(task => task.id));
+    assert.equal(taskIds.size, plan.tasks.length, 'Task IDs must be unique');
+    if (!request.input && !definition.goal) assert.equal(plan.tracking, null, 'Automatic advice must not pin its previous goal');
+    if (definition.goal) assert.equal(plan.tracking?.goal, definition.goal, 'An explicit player goal must remain distinct from automatic advice');
+    advisorPlans.push({ fixture, profile: definition.profile, language, goal: plan.title, explanation: plan.text, why: plan.why,
+      goal_mode: plan.requestedGoal ? 'Cel wskazany przez gracza' : 'Automatycznie proponowany cel', tracking: json(plan.tracking),
+      topic: plan.topicSummary || '', estimate: json(plan.estimate), request: json(request), input: before, snapshot: snapshotBefore, output: json(plan),
+      condition: 'Rzeczywista czysta funkcja na jawnej fiksturze; nie zapis użytkownika ani dowód globalnie najkrótszej strategii.', file: 'harborlight-v1-advisor-development-plan.js' });
+    plan.tasks.forEach((task, index) => {
+      assert(task.title && task.status && Array.isArray(task.dependsOn) && task.howTo.length, 'Incomplete current task card');
+      assert(task.dependsOn.every(id => taskIds.has(id)), 'A task dependency refers to a missing card');
+      advisorTasks.push({ fixture, language, order: index + 1, id: task.id, title: task.title, status: task.status,
+        dependencies: json(task.dependsOn), parallel_group: task.parallelGroup || '', why: task.why || '', goal_why: plan.why,
+        instructions: task.howTo.length, definition: json(task), file: 'harborlight-v1-advisor-development-plan.js' });
+      task.howTo.forEach((action, actionIndex) => {
+        assert(action.id && action.text && action.why && action.target && action.guidance?.action, 'Each instruction must expose its explanation and explicit semantic guidance');
+        const guidance = normalizeAdvisorGuidance(action);
+        assert(guidance, 'Planner instruction is not valid semantic guidance');
+        advisorActions.push({ fixture, language, task: task.id, order: actionIndex + 1, id: action.id, text: action.text, why: action.why,
+          target: action.target, section: action.section || '', action: action.guidance.action,
+          guidance: json(action.guidance), normalized: json(guidance), selectors: json(advisorGuidanceSelectors(guidance)),
+          definition: json(action), file: 'harborlight-v1-advisor-development-plan.js;harborlight-v1-advisor-guidance.js' });
+      });
+    });
+  }
+  // UI, scheduler and Worker modules are parsed as text, never started here.
+  // Every policy row retains an exact source excerpt rather than an inferred
+  // promise about timing, automatic actions or a globally optimal strategy.
+  const clientFile = 'harborlight-v1-advisor-development-client.js';
+  const clientAst = acorn.parse(sources.get(clientFile), { ecmaVersion: 'latest', sourceType: 'module' });
+  const intervalNode = clientAst.body.flatMap(node => node.type === 'ExportNamedDeclaration' && node.declaration?.type === 'VariableDeclaration' ? node.declaration.declarations : []).find(node => node.id?.name === 'ADVISOR_DEVELOPMENT_INTERVAL_MS');
+  const advisorIntervalMs = intervalNode?.init?.value;
+  assert.equal(advisorIntervalMs, 120000, 'The live planner cadence must come from its actual exported constant');
+  const clientFunction = clientAst.body.find(node => node.type === 'ExportNamedDeclaration' && node.declaration?.id?.name === 'createAdvisorDevelopmentClient')?.declaration;
+  const timeoutProperty = clientFunction?.params[0]?.left?.properties?.find(node => node.key?.name === 'timeoutMs');
+  const advisorTimeoutMs = timeoutProperty?.value?.right?.value;
+  assert(Number.isSafeInteger(advisorTimeoutMs) && advisorTimeoutMs > 0, 'Missing actual default Worker timeout');
+  function policy(id, value, detail, file, marker) {
+    const source = sources.get(file), index = source?.indexOf(marker);
+    assert(index >= 0, `Missing current policy evidence: ${id}`);
+    const line = lineAt(source, index), excerpt = source.split('\n')[line - 1];
+    return { id, value: typeof value === 'object' ? json(value) : value, detail, file, line, excerpt };
+  }
+  const advisorPolicy = [
+    policy('cadence-real-ms', advisorIntervalMs, 'Domyślny odstęp w milisekundach czasu rzeczywistego; nie mnożnik1×/2×/6× świata.', clientFile, 'ADVISOR_DEVELOPMENT_INTERVAL_MS='),
+    policy('monotonic-real-clock', 'performance.now', 'Planowanie używa monotonicznego zegara przeglądarki.', clientFile, 'now=()=>performance.now()'),
+    policy('worker-compact-whitelist', 'snapshot → Worker', 'Najpierw jawny DTO aktualnego stanu, potem postMessage; bez kopii historii lub innych wysp.', clientFile, 'snapshot=advisorDevelopmentSnapshot(state)'),
+    policy('queue-latest-only', '1 aktywne +1 najnowsze oczekujące', 'Starsze oczekujące żądanie jest odrzucane. Nie uruchamia się równoległa symulacja na wątku UI.', clientFile, 'if(active){if(pending)settle'),
+    policy('background-start', 'start niezależny od panelu', 'Kontroler jest uruchamiany przy inicjalizacji Doradcy, także gdy panel rozmowy jest zamknięty.', 'harborlight-v1-play.js', 'advisorDevelopmentClient.start()'),
+    policy('cache-with-closed-panel', 'getPlan → cache', 'Kontroler startuje niezależnie od otwarcia panelu, a odczyt wyniku zwraca cache.', clientFile, 'getPlan:()=>plan'),
+    policy('automatic-goal-adaptation', 'tracking=null → świeży wybór', 'Automatyczna porada nie przypina poprzedniego celu. Kolejny przebieg co120s bierze aktualny stan, więc uwzględnia inną drogę wybraną przez gracza.', clientFile, "else options={language:options.language};currentInput=''"),
+    policy('explicit-player-goal', 'Osobny wybór, np. Port', 'Jawnie wskazany cel jest zapisany oddzielnie w tracking; automatyczny rozwój nie jest tym samym trybem.', 'harborlight-v1-advisor-development-plan.js', 'tracking:intent.explicit?'),
+    policy('friendly-optional-advice', 'Cześć → propozycja → dlaczego', 'Doradca przyjaźnie proponuje i wyjaśnia. Gracz może zignorować propozycję lub wybrać inną drogę; wskazówka nie jest obowiązkowym zadaniem.', 'harborlight-v1-advisor-ui.js', 'Cześć! Oto moja propozycja:'),
+    policy('player-choice-copy', 'To tylko propozycja', 'UI wprost potwierdza swobodę wybrania innej drogi, również w wersji angielskiej.', 'harborlight-v1-advisor-ui.js', 'To tylko propozycja — możesz wybrać inną drogę.'),
+    policy('followup-without-auto-pin', 'Tylko świadomie śledzony cel', 'W bieżącym trybie cache pytania poboczne nie zamieniają automatycznej propozycji w przypięty cel. Dalsze pytanie o jawnie wybrany Port zachowuje ten wybór.', 'harborlight-v1-advisor-ui.js', 'const followupGoal=cachedMode?plan?.tracking?.goal??null'),
+    policy('visibility-resume', 'visibilitychange', 'Po odzyskaniu widoczności kontroler przelicza przeterminowany plan; przeglądarka może ograniczać zegary nieaktywnej karty.', clientFile, 'const visibility='),
+    policy('context-response-guard', 'contextKey +requestRevision', 'Wynik z nieaktualnego konta, wyspy, kontekstu lub celu nie jest publikowany.', clientFile, 'data.contextKey!==job.contextKey'),
+    policy('explicit-goal-refresh', 'request', 'Jawne pytanie zmienia rewizję i uruchamia aktualizację celu; zwykłe odczyty nie wykonują modelu.', clientFile, 'request(value={})'),
+    policy('worker-timeout', advisorTimeoutMs, 'Domyślny limit zadania w milisekundach. Zbyt długie zadanie kończy Worker i raportuje błąd; nie ma ciężkiej awaryjnej symulacji na głównym wątku.', clientFile, "finish(job,error('advisor-timeout'))"),
+    policy('bounded-model-search', ADVISOR_PLAN_LIMITS, 'Bieżące ograniczenia porównania kandydatów, wariantów, głębokości i receptur; nie gwarancja globalnego optimum.', 'harborlight-v1-advisor-development-plan.js', 'export const ADVISOR_PLAN_LIMITS='),
+    policy('map-then-menu', 'map /route → rzeczywista kontrolka', 'Gracz sam otwiera wskazany budynek lub listę minigier; potem strzałka wskazuje kontrolkę odpowiedniej instrukcji.', 'harborlight-v1-advisor-guidance.js', "setTarget(map,current.spec.building === 'expeditions' ? 'route' : 'map')"),
+    policy('semantic-actions', ADVISOR_GUIDANCE_ACTIONS, 'Cele wynikają z danych guidance, nigdy z parsowania opisu lub numeru mieszkańca.', 'harborlight-v1-advisor-guidance.js', 'export const ADVISOR_GUIDANCE_ACTIONS'),
+    policy('guidance-context-cancel', 'context-changed', 'Zmiana kontekstu kończy bieżące prowadzenie, bez polecenia gry.', 'harborlight-v1-advisor-guidance.js', "stop('context-changed')"),
+    policy('guidance-user-cancel', 'Escape /Zakończ', 'Podpowiedź jest dobrowolna; zakończenie usuwa jedynie oznaczenia i obserwację UI.', 'harborlight-v1-advisor-guidance.js', "stop('escape')")
+  ];
   const guidancePolicy = [
     { feature: 'Tutorial wprowadzenia i powtórki w Pomocy', availability: 'Dostępny', value: ADVISOR_INTRO_IDS.length, detail: 'Aktywne28 kroków; numeracja dawnych56 pozycji pozostaje stabilna,20+21 mają wspólny przystanek.', file: 'harborlight-v1-advisor-intro.js' },
     { feature: 'Archiwalny katalog oprowadzania', availability: 'Zachowany dla tekstów i zapisów', value: Approved.APPROVED_TOUR_IDS.length, detail: 'Nie jest pełną aktywną trasą tutoriala. Usunięte12–19 mają objaśnienia w menu i.', file: 'harborlight-v1-approved-copy.js;harborlight-v1-advisor-intro.js' },
     { feature: 'Samouczek praktyczny', availability: PRACTICAL_TUTORIAL_ENABLED ? 'Dostępny' : 'Tymczasowo ukryty', value: Progression.TUTORIAL_LESSONS.length, detail: 'Kod, treści, pozycja, historia wykonanych lekcji i odebrane nagrody zachowane. Wyłączenie nie oznacza ukończenia kursu i nie przyznaje skrzyń.', file: 'harborlight-v1-learning-policy.js;harborlight-v1-play.js' },
     { feature: 'Misje Latarni po ukryciu samouczka', availability: 'Niezależne od ukrytego kursu', value: 'Ratusz≥2 i rozpoczęty świat', detail: 'Pozostałe warunki misji są zachowane; wyłączenie samouczka nie zeruje ani nie kończy postępu.', file: 'harborlight-v1-learning-policy.js;harborlight-v1-missions.js' },
-    { feature: 'Doradca Królestwa', availability: 'Dobrowolny plan bieżącej wyspy', value: '1cel /2–5akcji', detail: 'Aktualizuje rady z bieżącego stanu, podpowiada dostępne minigry przy niedoborze monet; nie wykonuje operacji za gracza ani nie gwarantuje globalnego optimum.', file: 'harborlight-v1-advisor.js;harborlight-v1-advisor-ui.js' }
+    { feature: 'Doradca Królestwa', availability: 'Przyjacielska, dobrowolna propozycja', value: '1cel /2–5kart zadań', detail: 'Cześć — proponuję ten kierunek, bo... Gracz może wybrać inaczej. Automatyczny cel nie jest przypięty: Worker ocenia aktualną wyspę domyślnie co120000ms czasu rzeczywistego oraz po jawnym pytaniu. Osobno zachowuje świadomie wskazany cel, np. Port. Karty mają pełne instrukcje i uzasadnienia; wskazówki prowadzą od mapy do menu, nie wykonują operacji za gracza ani nie gwarantują globalnego optimum.', file: 'harborlight-v1-advisor-development-plan.js;harborlight-v1-advisor-development-client.js;harborlight-v1-advisor-ui.js;harborlight-v1-advisor-guidance.js' }
   ];
   const variantProfiles = [
     ['Ponowne oprowadzanie', { firstIntroduction: false }],
@@ -351,8 +429,11 @@ export async function exportTexts({ includeSource = true } = {}) {
   const result = [
     table('advisor_introduction', 'Tutorial — aktywne28 kroków', 'Wprowadzenie i powtórka w Pomocy mają tę samą trasę28 kroków. Tekst tej tabeli pochodzi z rzeczywistych funkcji dla pierwszego wprowadzenia; warianty są w osobnej tabeli. Objaśnienia12–19 są w menu i;20+21 połączone;29–47 poza trasą. Stabilne dawne indeksy56 zachowane.', [['order','Krok'],['id','ID'],['title','Tytuł PL'],['text','Tekst PL'],['condition','Kontekst'],['file','Źródło']], activeTour, ['harborlight-v1-advisor-intro.js','harborlight-v1-approved-copy.js','harborlight-v1-development-copy.js']),
     table('tour_menu_information', 'Menu — objaśnienia pod i', 'Osiem dawnych kroków12–19 poza aktywnym tutorialem, zachowanych pod i odpowiednich menu.', [['menu','Menu'],['archive_order','Dawny krok'],['id','ID'],['title','Tytuł PL'],['text','Opis PL'],['condition','Warunek wyświetlenia'],['file','Źródło']], menuInformation, ['harborlight-v1-advisor-intro.js','harborlight-v1-play.js']),
-    table('advisor_live_plans', 'Doradca — bieżące zadanie', 'Rzeczywiste przykłady działania czystej funkcji:1cel i2–5akcji na opisanych fiksturach, bez zmiany modelu i bez operacji chmurowych. To przykłady, nie dowód globalnie optymalnej strategii.', [['profile','Fikstura'],['goal','Jeden cel'],['explanation','Powód'],['order','Akcja'],['action','Wskazówka PL'],['target','Cel nawigacji'],['section','Sekcja'],['options','Opcje JSON'],['input','Pełne wejście fikstury'],['output','Pełny wynik funkcji'],['condition','Granica dowodu'],['file','Źródło']], advisorPlans, ['harborlight-v1-advisor.js']),
-    table('guidance_policy', 'Prowadzenie — dostępność', 'Bieżąca prezentacja jest oddzielona od zachowanego kodu i historii kursu. Wyłączenie samouczka nie przyznaje nagród i nie blokuje zwykłych misji.', [['feature','Element'],['availability','Dostępność'],['value','Liczba / wartość'],['detail','Zasada'],['file','Źródło']], guidancePolicy, ['harborlight-v1-learning-policy.js','harborlight-v1-advisor-intro.js','harborlight-v1-missions.js','harborlight-v1-engagement.js']),
+    table('advisor_live_plans', 'Doradca — plany PL i EN', 'Rzeczywisty nowy planer: dobrowolna, przyjacielska propozycja1celu,2–5kart zadań i pełnych instrukcji. Cel automatyczny nie jest przypięty, jawny Port ma osobny tracking. Sześć kontekstów po polsku i angielsku; zachowane pełne wejście, DTO i wynik, także koszty, uzasadnienia, warunkowy czas, kandydaci i ograniczenia. Bez zmiany modelu lub konta; nie jest to dowód globalnego optimum.', [['fixture','ID fikstury'],['profile','Fikstura'],['language','Język'],['goal','Jeden cel'],['goal_mode','Tryb wyboru celu'],['tracking','Śledzony wybór JSON'],['explanation','Opis planu'],['why','Dlaczego ten cel'],['topic','Odpowiedź na temat'],['estimate','Warunkowy czas JSON'],['request','Pytanie i opcje JSON'],['input','Pełne wejście fikstury'],['snapshot','Pełny DTO planera'],['output','Pełny wynik funkcji'],['condition','Granica dowodu'],['file','Źródło']], advisorPlans, ['harborlight-v1-advisor-development-plan.js']),
+    table('advisor_task_cards', 'Doradca — karty zadań', 'Każda karta ma status, zależności i grupę równoległości. Wszystkie instrukcje są w osobnej tabeli, bez ucinania do pięciu pojedynczych kliknięć.', [['fixture','ID fikstury'],['language','Język'],['order','Kolejność karty'],['id','ID zadania'],['title','Tytuł'],['status','Status'],['dependencies','Zależności JSON'],['parallel_group','Grupa równoległości'],['why','Uzasadnienie karty, jeśli podane'],['goal_why','Uzasadnienie celu'],['instructions','Liczba instrukcji'],['definition','Pełna karta JSON'],['file','Źródło']], advisorTasks, ['harborlight-v1-advisor-development-plan.js']),
+    table('advisor_how_to', 'Doradca — instrukcje i cele', 'Pełne uporządkowane instrukcje PL/EN z krótkim dlaczego i jawnymi celami semantycznymi. Selektory są wynikiem rzeczywistej czystej funkcji, nie wykonano nawigacji ani akcji gry.', [['fixture','ID fikstury'],['language','Język'],['task','ID karty'],['order','Kolejność instrukcji'],['id','ID instrukcji'],['text','Co zrobić'],['why','Dlaczego'],['target','Budynek / cel'],['section','Sekcja'],['action','Akcja semantyczna'],['guidance','Dane celu JSON'],['normalized','Znormalizowany cel JSON'],['selectors','Selektory kontroli JSON'],['definition','Pełna instrukcja JSON'],['file','Źródło']], advisorActions, ['harborlight-v1-advisor-development-plan.js','harborlight-v1-advisor-guidance.js']),
+    table('advisor_planning_policy', 'Doradca — rytm i prowadzenie', 'Przyjacielska propozycja i swoboda gracza, adaptacja automatycznego celu co120000ms, osobny jawny cel, model Worker/cache i prowadzenie mapa→menu. Każda pozycja ma dokładny fragment bieżącego źródła i linię. To katalog reguł, nie pomiar wydajności ani gwarancja czasu budowy.', [['id','ID zasady'],['value','Wartość / mechanizm'],['detail','Zastosowanie i granica'],['file','Źródło'],['line','Linia'],['excerpt','Dokładny fragment kodu']], advisorPolicy, [...ADVISOR_SOURCES,'harborlight-v1-advisor-ui.js','harborlight-v1-play.js']),
+    table('guidance_policy', 'Prowadzenie — dostępność', 'Bieżąca prezentacja jest oddzielona od zachowanego kodu i historii kursu. Wyłączenie samouczka nie przyznaje nagród i nie blokuje zwykłych misji.', [['feature','Element'],['availability','Dostępność'],['value','Liczba / wartość'],['detail','Zasada'],['file','Źródło']], guidancePolicy, [...ADVISOR_SOURCES,'harborlight-v1-learning-policy.js','harborlight-v1-advisor-intro.js','harborlight-v1-missions.js','harborlight-v1-engagement.js']),
     table('intro_texts', 'Wprowadzenie', 'Rzeczywisty polski tekst pierwszego wprowadzenia.', [['id','ID'],['type','Rodzaj'],['text','Tekst PL'],['file','Źródło']], introRows, textFiles),
     table('tutorial_tour', 'Tutorial — katalog archiwalny56', 'Pełny zachowany katalog i stabilne pozycje zapisów; nie jest aktywną trasą. Aktywne28 kroków są w osobnej tabeli, a12–19 w informacjach menu.', [['order','Dawna kolejność'],['id','ID'],['title','Tytuł PL'],['text','Opis PL'],['condition','Kontekst'],['file','Źródło']], tour, textFiles),
     table('tutorial_tour_variants', 'Tutorial — warianty i archiwum', 'Rzeczywiście rozwiązywane warianty startu, powtórki i trybu. Kolumna zakresu oddziela aktywną trasę28 od zachowanego katalogu56.', [['scope','Zakres'],['order','Krok w danym zakresie'],['id','ID'],['condition','Warunek wariantu'],['title','Tytuł PL'],['text','Tekst PL'],['file','Źródło']], tourVariants, sourceFiles(textFiles, 'harborlight-v1-advisor-intro.js')),
@@ -363,7 +444,7 @@ export async function exportTexts({ includeSource = true } = {}) {
     table('translations', 'Tłumaczenia PL', 'Mapy tłumaczeń z eksportów oraz statyczne pary odczytane z kodu; pochodzenie każdego wpisu jest jawne.', [['catalog','Katalog'],['original','Klucz / tekst źródłowy'],['polish','Polska wartość'],...common,['origin','Sposób odczytu']], [...translations, ...astTranslations], sourceFiles(textFiles, names.filter(name => /(?:i18n|copy|theatre|adventures)/.test(name)))),
     table('conditional_ui_texts', 'Teksty warunkowe — kod', 'Literały i dynamiczne szablony, również z błędów i warunkowych ekranów. To kandydaci tekstowi kodu; nie każdy literal jest aktualnie wyświetlany. Kolumna zakresu odróżnia aktualny pakiet/backend od odrębnych prototypów.', [['id','ID'],...common,['source_scope','Zakres źródła'],['kind','Rodzaj'],['polish','PL z translatora'],['original','Wartość / szablon źródłowy'],['translation_status','Status tłumaczenia'],['scope','Funkcja / zakres'],['condition','Nadrzędne warunki'],['template','Dokładny zapis'],['source_start','Początek w pliku'],['source_end','Koniec w pliku']], candidates, names, { limitations: ['Wyrażenia i wartości wpisywane przez gracza nie są skończonym katalogiem; zachowano ich szablony i warunki.', 'Indeks AST zachowuje również gałęzie zgodności historycznej. Ich obecność w kodzie nie dowodzi aktywacji w v32.'] }),
     table('static_html_texts', 'Ekrany HTML', 'Teksty i etykiety HTML gry, logowania oraz dokumentów; skrypty analizowane oddzielnie. Prototypy są jawnie odróżnione od bieżącego pakietu.', [...common,['source_scope','Zakres źródła'],['type','Rodzaj'],['text','Tekst'],['condition','Kontekst']], htmlTexts, names.filter(name => name.endsWith('.html'))),
-    table('source_files', 'Spis źródeł tekstów', 'Pełna lista analizowanych modułów aplikacji z SHA256 i liczbą elementów AST; bez plików testowych i danych kont.', [['file','Plik'],['source_kind','Warstwa'],['sha256','SHA256'],['bytes','Bajty'],['lines','Linie'],['ast_nodes','Węzły AST'],['functions','Funkcje'],['constants','Stałe'],['conditions','Gałęzie i warunki'],['inline_scripts','Skrypty inline HTML'],['source_chunks','Fragmenty pełnego kodu'],['complete_source','Pełny zapis zachowany']], manifests, names),
+    table('source_files', 'Spis źródeł tekstów', 'Pełna lista modułów i obu arkuszy stylu Doradcy z SHA256. JavaScript/HTML ma indeks AST, CSS wyłącznie pełne źródło i odcisk; bez testów i danych kont.', [['file','Plik'],['source_kind','Warstwa'],['sha256','SHA256'],['bytes','Bajty'],['lines','Linie'],['ast_nodes','Węzły AST'],['functions','Funkcje'],['constants','Stałe'],['conditions','Gałęzie i warunki'],['inline_scripts','Skrypty inline HTML'],['source_chunks','Fragmenty pełnego kodu'],['complete_source','Pełny zapis zachowany']], manifests, names),
     table('source_functions', 'Funkcje — indeks', 'Indeks funkcji i sygnatur. Pełne ciała znajdują się w dokładnym zapisie kodu, bez ucinania długich funkcji.', [['id','ID'],...common,['end_line','Do linii'],['name','Nazwa'],['scope','Zakres'],['signature','Sygnatura'],['async','Async'],['generator','Generator'],['condition','Warunki nadrzędne'],['start','Początek'],['end','Koniec']], functions, names, { hidden: true }),
     table('source_constants', 'Stałe — indeks', 'Deklaracje const i ich dokładne wyrażenia; nie wykonujemy UI lub serwera ani nie odczytujemy process.env.', [['id','ID'],...common,['name','Nazwa'],['scope','Zakres'],['expression_type','Typ wyrażenia'],['expression','Wyrażenie źródłowe'],['condition','Warunki nadrzędne'],['start','Początek'],['end','Koniec']], constants, names, { hidden: true }),
     table('source_conditions', 'Warunki — indeks', 'Gałęzie if/else, ternary, logiczne, switch, pętle i catch. Wyrażenia zachowane dosłownie; kod określa również kolejność wywołań i return.', [['id','ID'],...common,['end_line','Do linii'],['kind','Rodzaj'],['operator','Operator'],['scope','Zakres'],['condition','Wyrażenie'],['ancestors','Warunki nadrzędne'],['start','Początek'],['end','Koniec']], branches, names, { hidden: true }),
@@ -372,8 +453,8 @@ export async function exportTexts({ includeSource = true } = {}) {
   const sourceCommit = process.env.HARBORLIGHT_WORKBOOK_SOURCE_SHA || spawnSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).stdout.trim();
   assert.match(sourceCommit, /^[a-f0-9]{40}$/);
   return {
-    meta: { applicationVersion: GAME_VERSION, ruleset: 32, tutorialVersion: Progression.TUTORIAL_VERSION, sourceCommit, fixedEpoch: new Date(FIXED_EPOCH).toISOString(), parser: `Node bundled Acorn${acorn.version}`, applicationFiles: names.length, applicationSourceHashes: Object.fromEntries(manifests.map(row => [row.file, row.sha256])), inclusionScope: ['All public .js/.mjs/.html from scripts/build_frontend.py PUBLIC_FILES', 'All root harborlight*.js/.mjs/.html, with unpublished prototypes explicitly labelled', 'Root index.html, game.js and panic-pets.js, explicitly classified as prototype/standalone game', 'Recursive backend .js/.mjs runtime modules'], exclusions: ['tests and fixtures', 'node_modules, build and dist folders', 'scripts and infra operational tooling', 'environment files, credentials, private account data', 'CSS/assets are not JavaScript logic and are outside this static AST/code trace'], sourceInventoryIncludesBackendRuntime: true, sourceInventoryExcludesTestsAndAccountData: true, sourceCodeExecuted: 'Only explicit safe model/copy exports; UI/server parsed statically, never executed.', originalUploadedWorkbookRead: false, runtimeSecretsRead: false, completeSourceTrace: includeSource },
-    counts: { firstIntroductionSteps: ADVISOR_INTRO_IDS.length, tourSteps: activeTour.length, archiveTourSteps: tour.length, menuInformationTopics: menuInformation.length, advisorExampleActions: advisorPlans.length, practicalTutorialEnabled: PRACTICAL_TUTORIAL_ENABLED, tourVariants: tourVariants.length, activeTourVariants: activeTourVariants.length, archiveTourVariants: archiveTourVariants.length, lessons: lessons.length, developmentCopy: catalog.length, buildingIds: Object.keys(State.ALL_BUILDINGS).length, buildingVariants: buildings.length, labels: labels.length, translationRows: translations.length + astTranslations.length, conditionalTextCandidates: candidates.length, staticHtmlTexts: htmlTexts.length, applicationFiles: names.length, astNodes: nodeCount, functions: functions.length, constants: constants.length, conditionBranches: branches.length, sourceChunks: codeRows.length },
+    meta: { applicationVersion: GAME_VERSION, ruleset: 32, tutorialVersion: Progression.TUTORIAL_VERSION, sourceCommit, fixedEpoch: new Date(FIXED_EPOCH).toISOString(), parser: `Node bundled Acorn${acorn.version}`, applicationFiles: names.length, applicationSourceHashes: Object.fromEntries(manifests.map(row => [row.file, row.sha256])), inclusionScope: ['All public .js/.mjs/.html and both advisor CSS files from scripts/build_frontend.py PUBLIC_FILES', 'All root harborlight*.js/.mjs/.html, with unpublished prototypes explicitly labelled', 'Root index.html, game.js and panic-pets.js, explicitly classified as prototype/standalone game', 'Recursive backend .js/.mjs runtime modules'], exclusions: ['tests and fixtures', 'node_modules, build and dist folders', 'scripts and infra operational tooling', 'environment files, credentials, private account data', 'CSS has no JavaScript AST; both advisor styles are retained with exact source/hash. Other CSS/assets are outside this code trace'], sourceInventoryIncludesBackendRuntime: true, sourceInventoryExcludesTestsAndAccountData: true, sourceCodeExecuted: 'Only explicit safe model/copy and pure guidance normalization/selector exports; UI/client/Worker/server logic parsed statically, never started.', originalUploadedWorkbookRead: false, runtimeSecretsRead: false, completeSourceTrace: includeSource },
+    counts: { firstIntroductionSteps: ADVISOR_INTRO_IDS.length, tourSteps: activeTour.length, archiveTourSteps: tour.length, menuInformationTopics: menuInformation.length, advisorExamplePlans: advisorPlans.length, advisorExampleTasks: advisorTasks.length, advisorExampleActions: advisorActions.length, advisorLanguages: [...new Set(advisorPlans.map(row => row.language))], advisorIntervalMs, advisorSemanticActions: ADVISOR_GUIDANCE_ACTIONS.length, advisorPolicyRows: advisorPolicy.length, practicalTutorialEnabled: PRACTICAL_TUTORIAL_ENABLED, tourVariants: tourVariants.length, activeTourVariants: activeTourVariants.length, archiveTourVariants: archiveTourVariants.length, lessons: lessons.length, developmentCopy: catalog.length, buildingIds: Object.keys(State.ALL_BUILDINGS).length, buildingVariants: buildings.length, labels: labels.length, translationRows: translations.length + astTranslations.length, conditionalTextCandidates: candidates.length, staticHtmlTexts: htmlTexts.length, applicationFiles: names.length, astNodes: nodeCount, functions: functions.length, constants: constants.length, conditionBranches: branches.length, sourceChunks: codeRows.length },
     tables: result,
     limitations: ['Pełny katalog i kod opisują możliwe reguły i szablony. Nie oznaczają rozegrania wszystkich możliwych stanów ani wariantów proceduralnych.', 'Warunki w indeksie są składniowe. Zależności pomiędzy funkcjami, wcześniejsze return i danymi runtime pozostają w pełnym zapisie źródeł.', 'Symulacje rozwoju i tabele liczb są odrębnym eksportem; ten plik nie wykonuje rozwoju gracza ani operacji chmurowych.']
   };

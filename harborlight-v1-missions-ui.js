@@ -1,5 +1,5 @@
-import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v32-22';
-import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v32-22';
+import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v32-23';
+import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v32-23';
 
 const NAMES = {
   coins: ['Monety', 'Coins'], wood: ['Drewno', 'Wood'], stone: ['Kamień', 'Stone'],

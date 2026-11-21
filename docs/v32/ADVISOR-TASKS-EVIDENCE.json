@@ -1,0 +1,522 @@
+{
+  "as_of": "2026-11-21",
+  "timezone": "Europe/Warsaw",
+  "version": "0.15.3.1",
+  "cache": "frontend-v32-23",
+  "status": "LOCAL_NODE_INFRA_EIGHT_UI_PASS_CODE_ARTIFACTS_AND_PUBLICATION_PENDING",
+  "authorization": {
+    "kind": "current_user_advisor_reorganization_and_real_time_planner",
+    "scope": "DEV_GIT_OWN_CI_PAGES_THEN_STANDARD_PREPROD",
+    "PREPROD_quote_carried_forward": "jak skończysz wrzuć na pre prod",
+    "repeat_confirmation_required": false,
+    "PROD_DNS_reset_password_changes": "NO_ACTION"
+  },
+  "baseline": {
+    "accepted_version": "0.15.3.0",
+    "accepted_cache": "frontend-v32-22",
+    "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+    "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+    "CI": 44926983827,
+    "Pages": 44926983937,
+    "PREPROD": 44929856572,
+    "PREPROD_attempt": 1,
+    "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json",
+    "account_integrity_status": "PASS_WITH_OWNER_CONFIRMED_RESTART",
+    "owner_admin1_restart_is_historical_and_narrow": true,
+    "new_release_must_have_own_account_audit": true
+  },
+  "code_source_sha": null,
+  "publication_source_sha": null,
+  "implementation": {
+    "status": "LOCAL_READY_FINAL_ROOT_TESTS_PASS_CODE_FREEZE_PENDING",
+    "presence_of_working_files_is_not_acceptance": true,
+    "final_source_not_verified": true
+  },
+  "requirements": {
+    "layout": "ONE_GOAL_THEN_2_TO_5_PARALLEL_TASK_CARDS_THEN_ALL_ORDERED_HOW_TO_AND_SHORT_WHY",
+    "dependencies": "PRODUCE_THEN_TRANSPORT_THEN_BUILD_WHEN_REQUIRED_BY_STATE",
+    "guidance": "MAP_BUILDING_FIRST_THEN_EXACT_CONTROL_AFTER_PLAYER_OPENS_MENU",
+    "planner_real_interval_ms": 120000,
+    "explicit_goal_change_may_request_earlier_plan": true,
+    "background_worker_required": true,
+    "compact_inputs_only": true,
+    "full_history_clone": false,
+    "automatic_game_commands_or_clock_writes": false,
+    "stale_results_must_be_rejected": true,
+    "PL_EN_chat_mute_draft_preserved": true,
+    "practical_course_25": "HIDDEN_PRESERVED",
+    "active_tour_28": "UNCHANGED",
+    "friendly_tone": "Cześć, sugeruję… bo…; optional supportive guidance",
+    "full_player_freedom": true,
+    "automatic_goal_not_permanently_pinned": true,
+    "automatic_plan_adapts_to_actual_player_route_every_real_120s": true,
+    "explicit_chat_goal_separate_from_automatic_development_goal": true,
+    "card_range_applies_to_main_development_tasks": true,
+    "simple_manual_topic_answers_not_artificially_padded": true,
+    "explicit_building_followups_preserve_player_chosen_goal": true,
+    "automatic_recommendations_not_pinned_by_previous_automatic_selection_or_one_off_topic": true
+  },
+  "local_tests": {
+    "status": "PASS_LOCAL_FULL_FRONTEND_INFRA_EIGHT_UI_POST_EXPORT_BUNDLE_PENDING",
+    "independent_model_parity": {
+      "status": "PASS",
+      "checks": 510,
+      "levels": [
+        1,
+        4,
+        5,
+        8,
+        20
+      ],
+      "all_buildings": true,
+      "scope": "Normalized baseline fixtures; not full official suite or hosted accounts"
+    },
+    "owner_planner_focused_units": {
+      "status": "PASS_REPORTED",
+      "planner": 26,
+      "controller": 27,
+      "total": 53,
+      "scope": "Pre-cache-bump owner report only"
+    },
+    "reports": [
+      {
+        "path": "/workspace/work/advisor-layout-20261121/independent-review.json",
+        "sha256": "c1a5ef74e6c13c71265c1766658ec7931ef13b3d18377fb1de9e208425057b38",
+        "scope": "Independent read-only510 checks before global cache bump",
+        "final_source_or_hosted_acceptance": false
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/planner-qa-summary.json",
+        "sha256": "f444d7d68b2f536fc95e2f8f8262e85b54f857c06c9affa6933203ea72086bf6",
+        "scope": "Planner owner focused53 units and nativeWorker, pre-cache22; not final full tests",
+        "final_source_or_hosted_acceptance": false
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/ui/report.json",
+        "sha256": "b367c480ae7ec5931bfa1f3ad5d113df75299cf831d1e2ad6c6ed125cae1e0fd",
+        "scope": "Local layout fixtures1440/390/320/short390",
+        "final_source_or_hosted_acceptance": false
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/real-ui/report.json",
+        "sha256": "caf153994c55ceb5ceac54cb3f190d74092b2fd60fd13981ce4b5cf462e19ebd",
+        "scope": "Local real UI integration fixtures; no hosted account acceptance",
+        "final_source_or_hosted_acceptance": false
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/guidance-dom/report.json",
+        "sha256": "02291c3e2a31d6a38c1d5f965ca577cb09b244b5a2b76ab3f99f83f3cdc33e3c",
+        "scope": "Local guidance DOM fixtures PL/EN and320px",
+        "final_source_or_hosted_acceptance": false
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/worker-freeze/report.json",
+        "sha256": "fc7bc33e1d78c68cc46b8e323fa8a7ad5ff481aca6c243de626ae7b2cbb42a31",
+        "scope": "Pre-global-bump native worker fixture, cache22 URL",
+        "final_source_or_hosted_acceptance": false
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/metadata/public-allowlist-checkpoint.json",
+        "sha256": "0579b441d68d97c5730642ec1424dba3f250231d5f8a48edccfb08d553a8c30e",
+        "scope": "Static final file-set review only; actual bundle gate pending",
+        "final_source_or_hosted_acceptance": false
+      }
+    ],
+    "full_frontend_Node": {
+      "status": "PASS_AFTER_FRIENDLY_STEERING",
+      "tests": 1711,
+      "pass": 1711,
+      "fail": 0,
+      "duration_ms": 217702.151901,
+      "path": "/workspace/work/advisor-layout-20261121/frontend-node-final-after-friendly.log",
+      "sha256": "8d3969491dbd2a6ff2dd9286fdbd2b411d35b4d960e8e427a54266848c0823f4"
+    },
+    "full_backend_and_board": "PENDING_ROOT",
+    "full_Python": "145_PASS_BEFORE_POST_EXPORT_BUNDLE28_PENDING",
+    "final_source_browser_suites": "PASS_EIGHT_LOCAL_PROGRAMS_NOT_OWN_CI_OR_HOSTED_ACCEPTANCE",
+    "raw_previous_failures_preserved": true,
+    "pre_steering_full_frontend": {
+      "status": "PASS_PRE_STEERING_NOT_FINAL_AFTER_NEW_USER_REQUEST",
+      "tests": 1704,
+      "pass": 1704,
+      "exit_code": 0,
+      "duration_ms": 210702.057066,
+      "path": "/workspace/work/advisor-layout-20261121/frontend-node-full.log",
+      "sha256": "fbd0660918062d8e6150713625342410d42edb18ef4c19d8f6c33173c9bcd70b",
+      "later_user_steering_requires_full_rerun": true
+    },
+    "initial_root_validation_failure": {
+      "status": "FAIL_PRESERVED",
+      "path": "/workspace/work/advisor-layout-20261121/metadata/root-validation-initial-FAIL-summary.json",
+      "sha256": "3b257ae790b46ba2244e5bd306eaa33aecc8b11b12f59d0d70fb52ef03a1a8dd",
+      "failure": "backend-stage: staged import copies not refreshed after global query bump",
+      "owner_reported_scope": "normal staging/check refresh, no model change",
+      "corrected_check": "PASS_ROOT_INFRA_ATTEMPT2_ORIGINAL_FAIL_RETAINED"
+    },
+    "final_friendly_adaptive_reports": [
+      {
+        "path": "/workspace/work/advisor-layout-20261121/planner-auto-adaptation-summary.json",
+        "sha256": "caa78f0a88ad78a5b9510cd6050e464620d709a2285adc47f57408570ee47529",
+        "scope": "Final friendly/adaptive local implementation before CODE/PUB; not publication or hosted acceptance"
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/final-steering-independent-review.json",
+        "sha256": "43ac6ade3b89902028c577431da22f7035243b5c856eed89a8f32da671cf69e0",
+        "scope": "Final friendly/adaptive local implementation before CODE/PUB; not publication or hosted acceptance"
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/final-recommendation-ui/report.json",
+        "sha256": "ff351d0ad602b1c0987c3db3b940875e017818a53bffb1ced2fd984fc0d77169",
+        "scope": "Final friendly/adaptive local implementation before CODE/PUB; not publication or hosted acceptance"
+      },
+      {
+        "path": "/workspace/work/advisor-layout-20261121/root-infra-summary.json",
+        "sha256": "dab049dcd68fba973f867ee1f459d8333e715f73e8d2062594b7971a762edaf8",
+        "scope": "Final friendly/adaptive local implementation before CODE/PUB; not publication or hosted acceptance"
+      }
+    ],
+    "final_planner_focused_units": {
+      "status": "PASS",
+      "model": 31,
+      "controller": 29,
+      "total": 60,
+      "native_worker_cache": 23,
+      "real_accounts": false,
+      "economic_coefficients_changed": false
+    },
+    "independent_final_delta": {
+      "status": "PASS",
+      "original_presteering_parity_checks": 510,
+      "new_repeated_named_goal_checks": 9,
+      "new_one_off_topic_checks": 25,
+      "sum_is_not_claimed_as_one_fresh_full_run": true,
+      "release_blockers": []
+    },
+    "final_recommendation_UI": {
+      "status": "PASS_LOCAL_FOUR_LAYOUTS",
+      "layouts": [
+        [
+          1440,
+          1000
+        ],
+        [
+          390,
+          844
+        ],
+        [
+          320,
+          568
+        ],
+        [
+          390,
+          350
+        ]
+      ],
+      "own_CI_and_hosted_acceptance": false
+    },
+    "root_infrastructure": {
+      "status": "PASS",
+      "backend_Node": 178,
+      "board_Node": 7,
+      "canonical_backend_stage": "PASS_AFTER_NORMAL_QUERY_COPY_REFRESH",
+      "Python_programs": [
+        {
+          "name": "harborlight-backend-package.test.py",
+          "tests": 2
+        },
+        {
+          "name": "harborlight-gcp-bootstrap.test.py",
+          "tests": 12
+        },
+        {
+          "name": "harborlight-gcp-verify.test.py",
+          "tests": 10
+        },
+        {
+          "name": "harborlight-firebase-hosting.test.py",
+          "tests": 17
+        },
+        {
+          "name": "harborlight-dev-users.test.py",
+          "tests": 23
+        },
+        {
+          "name": "harborlight-preprod-reset.test.py",
+          "tests": 20
+        },
+        {
+          "name": "harborlight-domain.test.py",
+          "tests": 12
+        },
+        {
+          "name": "harborlight-runtime-config.test.py",
+          "tests": 13
+        },
+        {
+          "name": "harborlight-budget.test.py",
+          "tests": 14
+        },
+        {
+          "name": "harborlight-tracking-issues.test.py",
+          "tests": 18
+        },
+        {
+          "name": "harborlight-workbook-v14-source.test.py",
+          "tests": 4
+        }
+      ],
+      "Python_tests": 145,
+      "post_export_bundle_28": "PENDING_SEPARATE_ACTUAL_RESULT",
+      "report": "/workspace/work/advisor-layout-20261121/root-infra-summary.json",
+      "report_sha256": "dab049dcd68fba973f867ee1f459d8333e715f73e8d2062594b7971a762edaf8"
+    },
+    "final_frontend_log": "/workspace/work/advisor-layout-20261121/frontend-node-final-after-friendly.log",
+    "previous_checkpoint_before_root_final": {
+      "status": "FINAL_TARGETED_AND_INFRA_PASS_FULL_FRONTEND_AND_COMBINED_UI_PENDING",
+      "full_frontend_Node": "RUNNING_FINAL_AFTER_FRIENDLY_LOG_RESULT_NOT_YET_CLAIMED",
+      "final_source_browser_suites": "PENDING_ROOT_COMBINED_EIGHT_UI_RUN"
+    },
+    "root_final_before_post_export_bundle": {
+      "status": "LOCAL_ROOT_FINAL_SOURCE_TEST_RESULTS_PASS_NOT_PUBLICATION_ACCEPTANCE",
+      "version": "0.15.3.1",
+      "cache": "frontend-v32-23",
+      "code_source_sha": null,
+      "publication_source_sha": null,
+      "root_summary": {
+        "path": "/workspace/work/advisor-layout-20261121/root-validation-summary.json",
+        "sha256": "fccdcfdef6a28b09f34ceadc23eff1beb563385ef6ebf43dfaf4d89baebeb6e7",
+        "completed_results": 22
+      },
+      "frontend_Node": {
+        "tests": 1711,
+        "pass": 1711,
+        "fail": 0,
+        "duration_ms": 217702.151901,
+        "path": "/workspace/work/advisor-layout-20261121/frontend-node-final-after-friendly.log",
+        "sha256": "8d3969491dbd2a6ff2dd9286fdbd2b411d35b4d960e8e427a54266848c0823f4"
+      },
+      "backend_Node": {
+        "tests": 178,
+        "pass": 178,
+        "fail": 0,
+        "duration_ms": 8062.010466,
+        "path": "/workspace/work/advisor-layout-20261121/backend-node.attempt2.log",
+        "sha256": "3c389538f0c3b65c7ea07e22d3e99e0b6b4e3bbbc833b97fc9c6290b8bb8adde"
+      },
+      "board_Node": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "duration_ms": 88.396676,
+        "path": "/workspace/work/advisor-layout-20261121/board-node.attempt2.log",
+        "sha256": "0fb079224e74f68f8d3bdef3e0ebbc43fa7542b8df9f030e6dda34cebb36e054"
+      },
+      "unchanged96h_watchdog": {
+        "status": "PASS",
+        "duration_ms": 8866.634829,
+        "limit_ms": 10000,
+        "limit_changed": false
+      },
+      "local_Node_total": 1896,
+      "Python_before_post_export_bundle": {
+        "counted_programs": 11,
+        "tests": 145,
+        "programs": [
+          {
+            "name": "harborlight-backend-package.test.py",
+            "tests": 2,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-backend-package.test.py.attempt2.log",
+            "sha256": "0c50325b3fcb1362f071e50cc6ad0a4f388bcce59568c07936c841ec062aeb8d"
+          },
+          {
+            "name": "harborlight-gcp-bootstrap.test.py",
+            "tests": 12,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-gcp-bootstrap.test.py.attempt2.log",
+            "sha256": "3fe0246263e8b8166fb936f0d4347cbe5b8e41a9371764980be427098ac7b621"
+          },
+          {
+            "name": "harborlight-gcp-verify.test.py",
+            "tests": 10,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-gcp-verify.test.py.attempt2.log",
+            "sha256": "61c726378951aeba35262642e6a1cde73c877a5aaf1065a79314e33ed0168bcf"
+          },
+          {
+            "name": "harborlight-firebase-hosting.test.py",
+            "tests": 17,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-firebase-hosting.test.py.attempt2.log",
+            "sha256": "b7ff009aea22ab02e7c86ae315be5bc0394bf3cf7537c701cb101fdd8bbd7832"
+          },
+          {
+            "name": "harborlight-dev-users.test.py",
+            "tests": 23,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-dev-users.test.py.attempt2.log",
+            "sha256": "2d97b02de73c5b726d0db4901faad2f649b99d8dccb2cdd6b4121f8753d175c7"
+          },
+          {
+            "name": "harborlight-preprod-reset.test.py",
+            "tests": 20,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-preprod-reset.test.py.attempt2.log",
+            "sha256": "17c0b55b35db5eae8fe129b46a49169d79584f9124249f0329e5f85f46fb38e8"
+          },
+          {
+            "name": "harborlight-domain.test.py",
+            "tests": 12,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-domain.test.py.attempt2.log",
+            "sha256": "fe38c521ef895aebfead9074327c5ea6e4f91ca234fd1723d11591c554598a52"
+          },
+          {
+            "name": "harborlight-runtime-config.test.py",
+            "tests": 13,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-runtime-config.test.py.attempt2.log",
+            "sha256": "97018320af590574c045b32c9700e7886af228c669d95da39ff5eb92d7e20f01"
+          },
+          {
+            "name": "harborlight-budget.test.py",
+            "tests": 14,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-budget.test.py.attempt2.log",
+            "sha256": "57b3280642c1340c4c60474a39462caeb04f4736612060b59e39b2b4a0849b8f"
+          },
+          {
+            "name": "harborlight-tracking-issues.test.py",
+            "tests": 18,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-tracking-issues.test.py.attempt2.log",
+            "sha256": "3ead1c8890757a77e192ba42615850407c99abb48a0322d7692304b6c852df21"
+          },
+          {
+            "name": "harborlight-workbook-v14-source.test.py",
+            "tests": 4,
+            "log": "/workspace/work/advisor-layout-20261121/harborlight-workbook-v14-source.test.py.attempt2.log",
+            "sha256": "2f9fc7c52afb65795f17051689523aca1de5bfbebef315552dc78ba4bfd1d9bc"
+          }
+        ]
+      },
+      "post_export_bundle_28": "PENDING_SEPARATE_ACTUAL_RESULT_NO_ASSUMED_PASS",
+      "local_browser_programs": [
+        {
+          "name": "harborlight-advisor-layout-v32-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-advisor-layout-v32-smoke.py.final.log",
+          "sha256": "8fbffd03bdc18a8ce867a1e6a8203d00de1c94c4305e1b4f8b32db7dfaf30907"
+        },
+        {
+          "name": "harborlight-advisor-development-worker-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-advisor-development-worker-smoke.py.final.log",
+          "sha256": "21dd540042986120574fd3233a04039e78817b509453c9d304c5c3c452a93c95"
+        },
+        {
+          "name": "harborlight-advisor-guidance-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-advisor-guidance-smoke.py.final.log",
+          "sha256": "e0024c1d8b8e34f9cd369fc95797c8e7fb0e16367f35ce0ee5fa15cc605b31b5"
+        },
+        {
+          "name": "harborlight-advisor-ui-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-advisor-ui-smoke.py.final.log",
+          "sha256": "0f6b04d8620f116301d88360b177b3db28d27130590fdfae7805f4fa10363a9a"
+        },
+        {
+          "name": "harborlight-practical-paused-v32-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-practical-paused-v32-smoke.py.final.log",
+          "sha256": "ef3936c6597836fbcc50aa5a3d71fb00561b99b62551a021d7f29e3887e4e43f"
+        },
+        {
+          "name": "harborlight-menu-tour-info-v32-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-menu-tour-info-v32-smoke.py.final.log",
+          "sha256": "c8a5031d43d4be487dd28bd72a3cae07a9b26e219882ea521e387bc1dccdddb4"
+        },
+        {
+          "name": "harborlight-map-labels-v32-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-map-labels-v32-smoke.py.final.log",
+          "sha256": "302cc102437f63e7099569f8c482f24263530dad283a57399bd637121e76742e"
+        },
+        {
+          "name": "harborlight-settings-signout-smoke.py",
+          "status": "EXIT0",
+          "log": "/workspace/work/advisor-layout-20261121/harborlight-settings-signout-smoke.py.final.log",
+          "sha256": "4f61376b741ee2415a5a89ebe66cb6293679e096af03fe1c6f2033ea816da93a"
+        }
+      ],
+      "own_CI": {
+        "status": "PENDING",
+        "expected_browser_programs": 79,
+        "run": null
+      },
+      "Pages": "PENDING",
+      "canonical_artifacts": "PENDING_FOR_NEW_CODE",
+      "PREPROD": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_GATES",
+      "manual_cases": {
+        "count": 195,
+        "status": "NOT_RUN"
+      },
+      "checkpoint_only_no_CODE_or_PUB_assigned": true,
+      "repository_mutations": false,
+      "initial_backend_stage_failure_remains_history": true,
+      "friendly_adaptive_steering_final_rerun_confirmed": true,
+      "pre_steering1704_log_is_historical_not_final": true
+    },
+    "unchanged96h_watchdog": {
+      "status": "PASS",
+      "duration_ms": 8866.634829,
+      "limit_ms": 10000,
+      "limit_changed": false
+    }
+  },
+  "canonical_artifacts": {
+    "status": "PENDING_FOR_FROZEN_NEW_CODE",
+    "old_f657_artifacts_not_claimed_for_new_source": true
+  },
+  "CI": {
+    "status": "PENDING",
+    "run": null,
+    "source_sha": null,
+    "expected_browser_programs": 79
+  },
+  "Pages": {
+    "status": "PENDING",
+    "run": null,
+    "source_sha": null
+  },
+  "DEV_tag": {
+    "status": "PENDING",
+    "name": null
+  },
+  "PREPROD": {
+    "authorization": "AUTHORIZED_AFTER_VERIFIED_DEV_AND_OWN_EXACT_SOURCE_CI_PAGES",
+    "status": "PENDING_NOT_DEPLOYED",
+    "run": null,
+    "attempt": null,
+    "source_sha": null,
+    "native_existing_admin1_admin3": "PENDING",
+    "original_artifacts_and_public_bytes": "PENDING",
+    "account_before_after_audit": "PENDING",
+    "tag": null
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "manual_case_range": "HL-TC-0188–0195",
+  "manual_cases_total": 195,
+  "change_range": "HL-CHG-1183–1190",
+  "changes_total": 519,
+  "private_evidence_workspace": "/workspace/work/advisor-layout-20261121",
+  "requirements_document": "docs/v32/GO-ADVISOR-TASKS.md",
+  "public_package_checkpoint": {
+    "status": "PASS_STATIC_PUBLIC_ALLOWLIST_REVIEW",
+    "expected_content_files": 466,
+    "expected_archive_files": 467,
+    "new_public_files": [
+      "harborlight-v1-advisor-development-plan.js",
+      "harborlight-v1-advisor-development-client.js",
+      "harborlight-v1-advisor-development-worker.js",
+      "harborlight-v1-advisor-guidance.js",
+      "harborlight-v1-advisor-guidance.css"
+    ],
+    "removed_files": [],
+    "actual_build_hashes_verification": "PENDING_ROOT",
+    "global_bump_changes_pre_cache_review_hashes": true,
+    "no_final_package_hash_claimed": true
+  }
+}

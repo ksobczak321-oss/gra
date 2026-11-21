@@ -4,7 +4,7 @@ Każdy wiersz prowadzi do osobnego scenariusza. Wszystkie wyniki startowe to **N
 
 Najwygodniej otworzyć [interaktywną listę](qa-checklist.html): wynik PASS / FAIL / BLOCKED, notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.
 
-**Bieżąca paczka DEV 0.15.3.0:** zacznij od TC0180–0187. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **187**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
+**Bieżąca paczka DEV 0.15.3.1:** zacznij od TC0188–0195. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **195**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
 
 1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.
 2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, dostępu albo zatwierdzonej reguły to **BLOCKED** z przyczyną.
@@ -204,6 +204,14 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0185 — Poziomy Kaplicy i Latarni są czytelne obok paneli](manual/HL-TC-0185.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0186 — Ukryty kurs nie blokuje misji i zachowuje reklamowy cooldown](manual/HL-TC-0186.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0187 — Bieżące rady pozostają płynne a pełna prognoza jest na żądanie](manual/HL-TC-0187.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0188 — Układ Doradcy: cel i równoległe karty zadań](manual/HL-TC-0188.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0189 — Wszystkie instrukcje i krótkie uzasadnienia pod kartami](manual/HL-TC-0189.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0190 — Pokaż gdzie najpierw wskazuje budynek na mapie](manual/HL-TC-0190.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0191 — Po otwarciu budynku wskazuj dokładną kontrolkę](manual/HL-TC-0191.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0192 — Planuj wykonalny rozwój co 120 sekund rzeczywistych](manual/HL-TC-0192.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0193 — Worker otrzymuje ograniczone dane bez blokowania gry](manual/HL-TC-0193.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0194 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](manual/HL-TC-0194.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0195 — Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania](manual/HL-TC-0195.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

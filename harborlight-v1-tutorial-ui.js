@@ -1,9 +1,9 @@
-import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v32-22';
-import { GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-22';
+import { tutorialLessonText, registerTutorialCopy } from './harborlight-v1-v16-copy.js?v=frontend-v32-23';
+import { GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
 
 // Presentation and optional-course model gates share one reversible policy.
 // The UI and saved course data remain available for a later restoration.
-export { PRACTICAL_TUTORIAL_ENABLED } from './harborlight-v1-learning-policy.js?v=frontend-v32-22';
+export { PRACTICAL_TUTORIAL_ENABLED } from './harborlight-v1-learning-policy.js?v=frontend-v32-23';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const MATERIAL_NAMES = { en: ['Wood', 'Stone', 'Grain', 'Food', 'Planks'], pl: ['Drewno', 'Kamień', 'Zboże', 'Żywność', 'Deski'] };

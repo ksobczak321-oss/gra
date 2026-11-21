@@ -12,8 +12,8 @@
 .kingdom-advisor-portrait{display:block;flex:0 0 50px;width:50px;height:66px;overflow:hidden;background:#305367;border-radius:30px 30px 8px 8px;border:1px solid #bb9b56}
 .kingdom-advisor-portrait svg{width:100%;height:100%}
 .kingdom-advisor .kingdom-advisor-mute{position:absolute;right:3px;bottom:-13px;font-size:10px;min-height:24px;padding:1px 7px;background:#102c3d}
-.kingdom-advisor-conversation{width:420px;max-width:calc(100vw - 32px);height:min(680px,calc(100dvh - 155px));max-height:calc(100dvh - 155px);display:flex;flex-direction:column;gap:10px;background:#102e3f;border:1px solid #c7a45e;border-radius:14px;box-shadow:0 12px 45px #00121bd9;padding:16px;margin-bottom:10px;overflow:hidden;overscroll-behavior:contain;scrollbar-color:#617c86 #102e3f}
-.kingdom-advisor-conversation>header,.kingdom-advisor-context,.kingdom-advisor-chips,.kingdom-advisor-form{flex:none}
+.kingdom-advisor-conversation{width:660px;max-width:calc(100vw - 32px);height:min(780px,calc(100dvh - 155px));max-height:calc(100dvh - 155px);display:flex;flex-direction:column;gap:10px;background:#102e3f;border:1px solid #c7a45e;border-radius:14px;box-shadow:0 12px 45px #00121bd9;padding:16px;margin-bottom:10px;overflow:hidden;overscroll-behavior:contain;scrollbar-color:#617c86 #102e3f}
+.kingdom-advisor-conversation>header,.kingdom-advisor-context,.kingdom-advisor-planning-status,.kingdom-advisor-chips,.kingdom-advisor-form{flex:none}
 .kingdom-advisor.is-open{z-index:85}
 .kingdom-advisor-conversation header{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #426172;padding-bottom:10px}
 .kingdom-advisor-conversation small{font-size:9px;letter-spacing:.13em;color:#d4b675}
@@ -25,6 +25,31 @@
 .kingdom-advisor-answer ol{padding-left:21px;margin:12px 0}
 .kingdom-advisor-answer li{margin:0 0 12px}
 .kingdom-advisor-answer li button{font-size:12px;min-height:32px}
+.kingdom-advisor-answer h4{font-size:14px;line-height:1.35;color:#f3cc7e;margin:0 0 10px}
+.kingdom-advisor-goal{border-bottom:1px solid #426475;padding-bottom:4px;margin-bottom:10px}
+.kingdom-advisor-goal>small{font-size:11px;color:#e6c788;letter-spacing:.02em}
+.kingdom-advisor-goal>h3{font-size:19px;line-height:1.3;margin-top:5px}
+.kingdom-advisor-choice{font-size:11px;line-height:1.35;color:#c4d9e0}
+.kingdom-advisor-plan-context{font-size:12px;color:#d4e3e7}
+.kingdom-advisor-topic-answer{font-size:12px;padding:9px 10px;background:#244858;border-left:3px solid #d7b365;border-radius:4px;color:#e1edf0}
+.kingdom-advisor-topic-answer>strong{color:#f4d087}
+.kingdom-advisor-planning-status{font-size:11px;line-height:1.3;color:#c2d6dd;margin:0!important}
+.kingdom-advisor-goal-why{font-size:12px;color:#d5e4e8}
+.kingdom-advisor-task-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));gap:8px;margin:12px 0 18px}
+.kingdom-advisor .kingdom-advisor-task-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:9px;min-width:0;min-height:96px;padding:10px;text-align:left;background:#123346;border-color:#6c8994;overflow-wrap:anywhere}
+.kingdom-advisor-task-card>strong{color:#f4d087;font-size:13px;line-height:1.35}
+.kingdom-advisor-task-card[aria-pressed="true"]{border-color:#f3ce7c;background:#254c5e;box-shadow:inset 0 0 0 1px #cfa95b}
+.kingdom-advisor-task-card[data-advisor-task-status="waiting"] .kingdom-advisor-task-state{color:#efc68c}
+.kingdom-advisor-task-card[data-advisor-task-status="done"] .kingdom-advisor-task-state{color:#b0d9ba}
+.kingdom-advisor-task-state{font-size:10px;line-height:1.25;color:#c6dce1}
+.kingdom-advisor-task-group{border:1px solid #426475;border-radius:9px;background:#102f40;margin:0 0 12px;padding:12px;scroll-margin:12px}
+.kingdom-advisor-task-group.is-selected{border-color:#a98e54}
+.kingdom-advisor-task-group ol{margin:8px 0 0}
+.kingdom-advisor-task-group ol>li:last-child{margin-bottom:0}
+.kingdom-advisor-step-why,.kingdom-advisor-dependency{font-size:11px;line-height:1.4;color:#bcd2d9}
+.kingdom-advisor-step-why>strong{color:#e6c88b}
+.kingdom-advisor-task-group li>p{margin-bottom:7px}
+.kingdom-advisor [data-advisor-howto-step]{scroll-margin:12px}
 .kingdom-advisor-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .kingdom-advisor [data-advisor-task]{text-wrap:balance}
 .kingdom-advisor [data-advisor-current]{border-color:#d5b169;color:#ffe2a1}
@@ -32,10 +57,10 @@
 .kingdom-advisor-followups,.kingdom-advisor-chips{display:flex;flex-wrap:wrap;gap:6px}
 .kingdom-advisor-followups button,.kingdom-advisor-chips button{font-size:11px;min-height:32px}
 .kingdom-advisor-details{font-size:12px;color:#bfd0d7;margin-top:12px;border-top:1px solid #426475;padding-top:10px}
-.kingdom-advisor-form{display:grid;gap:5px;margin:0}
+.kingdom-advisor-form{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:5px;margin:0}
 .kingdom-advisor-form label{font-size:12px;font-weight:600}
-.kingdom-advisor-form>div{display:flex;gap:7px}
-.kingdom-advisor-form input{min-width:0;flex:1;color:#edf2f4;background:#0a2535;border:1px solid #77909b;border-radius:8px;padding:9px 10px}
+.kingdom-advisor-form>div{display:flex;gap:7px;min-width:0;width:100%}
+.kingdom-advisor-form input{min-width:0;width:0;max-width:100%;flex:1 1 0;color:#edf2f4;background:#0a2535;border:1px solid #77909b;border-radius:8px;padding:9px 10px}
 .kingdom-advisor-form input::placeholder{color:#9fb5bf;font-size:11px}
 .kingdom-advisor-form button{background:#d7b365;color:#09283b;font-weight:700}
 .kingdom-advisor.is-muted{width:210px}
@@ -50,6 +75,9 @@
 @media(prefers-reduced-motion:no-preference){.advisor-navigation-target{animation:advisor-beacon 1.2s ease-in-out 3}@keyframes advisor-beacon{50%{outline-color:#fff4ce}}}
 
 @media(max-height:450px){.kingdom-advisor-chips{display:none}}
+
+@media(max-width:700px){.kingdom-advisor-context{display:none}.kingdom-advisor-chips{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;max-width:100%;padding-bottom:3px}.kingdom-advisor-chips>button{flex:0 0 auto;white-space:nowrap}.kingdom-advisor-task-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.kingdom-advisor .kingdom-advisor-task-card{min-height:76px;padding:8px}.kingdom-advisor-task-card>strong{font-size:12px}.kingdom-advisor-goal>h3{font-size:17px}.kingdom-advisor-task-group{padding:10px}}
+@media(min-width:701px) and (max-width:1100px){.kingdom-advisor.is-open{bottom:12px}.kingdom-advisor.is-open .kingdom-advisor-summary{display:none}.kingdom-advisor.is-open .kingdom-advisor-conversation{height:min(780px,calc(100dvh - 90px));max-height:calc(100dvh - 90px);margin:0}}
 
 /* Legacy desktop keeps its dock at the left edge. Leave space above its tabs,
    including the mute button that extends below the collapsed advisor. */

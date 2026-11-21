@@ -1,59 +1,61 @@
-import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-22';
-import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-22';
-import { createAdvisorIntroduction, tourMenuInformation } from './harborlight-v1-advisor-intro.js?v=frontend-v32-22';
-import { createMapBuildingLabels } from './harborlight-v1-map-labels.js?v=frontend-v32-22';
-import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-22';
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-22';
-import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-22';
-import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-22';
-import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-22';
-import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-22';
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-22';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-22';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-22';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-22';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-22';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-22';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-22';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-22';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-22';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-22';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-22';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-22';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-22';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-22';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-22';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-22';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-22';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-22';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-22';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-22';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-22';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-22';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-22';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-22';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-22';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-22';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-22';
-import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-22';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-22';
-import { PRACTICAL_TUTORIAL_ENABLED, createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-22';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-22';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-22';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-22';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-22';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-22';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-22';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-22';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-22';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-22';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-22';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-22';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-22';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-22';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-22';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-22';
-import { createStartupReplayClient, startupReplayGap, startupReplayIdentityKey, STARTUP_REPLAY_MIN_GAP_MS, STARTUP_REPLAY_RESIDUAL_MS } from './harborlight-v1-startup-replay.js?v=frontend-v32-22';
+import { advisorSuggestion } from './harborlight-v1-advisor.js?v=frontend-v32-23';
+import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-23';
+import { createAdvisorDevelopmentClient } from './harborlight-v1-advisor-development-client.js?v=frontend-v32-23';
+import { createAdvisorGuidance, normalizeAdvisorGuidance } from './harborlight-v1-advisor-guidance.js?v=frontend-v32-23';
+import { createAdvisorIntroduction, tourMenuInformation } from './harborlight-v1-advisor-intro.js?v=frontend-v32-23';
+import { createMapBuildingLabels } from './harborlight-v1-map-labels.js?v=frontend-v32-23';
+import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-23';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-23';
+import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-23';
+import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-23';
+import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-23';
+import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-23';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-23';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-23';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-23';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-23';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-23';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-23';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-23';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-23';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-23';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-23';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-23';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-23';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-23';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-23';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-23';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-23';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-23';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-23';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-23';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-23';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-23';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-23';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-23';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-23';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-23';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-23';
+import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-23';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-23';
+import { PRACTICAL_TUTORIAL_ENABLED, createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-23';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-23';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-23';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-23';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-23';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-23';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-23';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-23';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-23';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-23';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-23';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-23';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-23';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-23';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-23';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-23';
+import { createStartupReplayClient, startupReplayGap, startupReplayIdentityKey, STARTUP_REPLAY_MIN_GAP_MS, STARTUP_REPLAY_RESIDUAL_MS } from './harborlight-v1-startup-replay.js?v=frontend-v32-23';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -436,7 +438,7 @@ let learningFeedback = null;
 let tutorialReady = false;
 let practicalGuidanceRequested = false;
 let kingdomAdvisor = null;
-let advisorHighlightTimer = null;
+let advisorDevelopmentClient = null, advisorGuidance = null;
 let onboardingFlow = null;
 let worldExperienceReady = false;
 let tutorialGuideSignature = '';
@@ -1297,7 +1299,9 @@ function renderHUD() {
   refreshStarterConstructionGuide();
   refreshLearningFeedback();
   refreshIdleSession();
+  if (advisorDevelopmentClient) void advisorDevelopmentClient.updateContext().catch(() => {});
   kingdomAdvisor?.update();
+  advisorGuidance?.update();
   if (!State.onboardingStatus(state).pending && worldExperienceReady && !refreshPlayerOffers()) refreshEngagementExperience();
   localize();
   document.querySelectorAll('[data-dock-building="dock"], [data-mobile-building="dock"]').forEach(node => node.classList.toggle('charity-port-lit', charityPortIlluminated(state)));
@@ -3182,7 +3186,7 @@ function renderActivityStack() {
       el('div', { class: 'activity-section-heading' }, el('h3', { 'data-i18n-ignore': '' }, uiCopy('What can you do now?', 'Co możesz zrobić teraz?'))),
       ...adventureChoiceButtons(),
       el('div', { class: 'activity-section-heading' }, el('h3', {}, 'Expeditions'), button('Choose a minigame', () => openPanel('expeditions'), { class: 'activity-link' })),
-      button('Choose a minigame', () => openPanel('expeditions'), { class: 'activity-expedition' }));
+      button('Choose a minigame', () => openPanel('expeditions'), { class: 'activity-expedition', 'data-advisor-expeditions-entry':'' }));
   }
   activityStack.querySelectorAll('[data-task-countdown]').forEach(node => { const task = tasks.find(t => taskId(t) === node.dataset.taskCountdown); if (task) node.textContent = durationText(statusOfTask(task).remaining); });
 }
@@ -3761,7 +3765,7 @@ function renderPanel() {
       button('Notifications', () => openPanel('notifications'), { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [...(Development.isDevelopment(state)?[['kingdom','Królestwo']]:[]),['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), { 'data-menu-route': kind, ...(kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}) }))),
+      el('div', { class: 'panel-grid' }, [...(Development.isDevelopment(state)?[['kingdom','Królestwo']]:[]),['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), { 'data-menu-route': kind, ...(kind === 'expeditions' ? { 'data-advisor-expeditions-entry':'' } : {}), ...(kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}) }))),
       el('div', { class: 'social-menu-entries', 'data-social-menu': '' },
         card(button('Ranking', () => openPanel('ranking'), { 'data-open-ranking': '' }), note(uiCopy('Compare hourly results and your place among players.', 'Sprawdź swoją pozycję i porównaj wyniki graczy, aktualizowane co pełną godzinę.'))),
         card(button(uiCopy('Alliance and league', 'Sojusz i liga'), () => openPanel('community'), { 'data-open-community': '' }), note(uiCopy('Join forces, talk to your alliance and compete in the monthly league.', 'Dołącz do sojuszu, rozmawiaj z jego członkami i rywalizuj we wspólnej lidze.'))),
@@ -4288,32 +4292,72 @@ async function beginOnboarding() {
   });
   await onboardingFlow.start();
 }
+function advisorContextKey() {
+  const identity = startupIdentity();
+  // A save acknowledgement changes revision, not the island being advised.
+  return JSON.stringify([identity.uid, identity.generation, identity.activeIslandId,
+    state.islandStartedAt ?? state.onboarding?.worldStartedAt ?? null]);
+}
+function advisorExperienceReady() {
+  return worldExperienceReady && !State.onboardingStatus(state).pending &&
+    document.documentElement.dataset.gameStartup === 'ready' && !devSigningOut &&
+    (!devAccount || !devCloud.sessionIdleExpired) && !expeditionSession() &&
+    !replayTour?.active && !document.querySelector('[data-active-tutorial-guide]');
+}
+function advisorVisibleTarget(...selectors) {
+  for (const selector of selectors) for (const node of document.querySelectorAll(selector)) {
+    if (node.getClientRects().length && getComputedStyle(node).visibility !== 'hidden') return node;
+  }
+  return null;
+}
+function advisorGuidanceValue(step) {
+  const spec = normalizeAdvisorGuidance(step);
+  if (!spec) return undefined;
+  if (spec.action === 'assign-workers') return Number(state.buildings?.[spec.building]?.workers || 0);
+  if (spec.action === 'recipe-workers') return Number(state.provisions?.assignments?.[spec.building]?.[spec.recipeId] || 0);
+  if (spec.action === 'food-settings') {
+    const settings = state.provisions?.foodSettings;
+    if (!spec.resourceId) return undefined;
+    if (spec.control === 'limit') return settings?.limits?.[spec.resourceId] ?? null;
+    if (spec.control === 'priority-up' || spec.control === 'priority-down') return settings?.priorities?.indexOf(spec.resourceId);
+    return settings?.enabled?.[spec.resourceId] !== false;
+  }
+  if (spec.action === 'transport-priority') return (state.warehousePriorities || []).includes(spec.priority);
+  if (spec.action === 'house-happiness') return state.houseHappinessPool?.points;
+  if (spec.action === 'upgrade') {
+    const project = state.constructionProjects?.find(item => item.building === spec.building || item.target === spec.building);
+    return `${state.buildings?.[spec.building]?.level || 0}:${project?.order ?? ''}:${project?.stage ?? ''}`;
+  }
+  if (spec.action === 'minigame') return `${state.activeExpeditionId || ''}:${state.originalPuzzles?.attempts?.[spec.gameId]?.status || ''}:${state.expeditionRuns?.[spec.gameId]?.status || ''}`;
+  return undefined;
+}
 function mountKingdomAdvisor() {
-  if (kingdomAdvisor) { kingdomAdvisor.update(); return; }
-  kingdomAdvisor = createKingdomAdvisor({getState:() => state, getLanguage:language, getSuggestion:advisorSuggestion,
-    getPlan:(input, options) => advisorPlan(state, input, options),
-    isVisible:() => worldExperienceReady && !State.onboardingStatus(state).pending &&
-      document.documentElement.dataset.gameStartup === 'ready' && !document.querySelector('dialog[open]') &&
-      !expeditionSession() && !replayTour?.active && !document.querySelector('[data-active-tutorial-guide]'),
-    onNavigate:step => {
-      if (step.target === 'expeditions') { openPanel('expeditions'); kingdomAdvisor.update(); return; }
-      if (!BUILDINGS[step.target] && step.target !== 'theatre') return;
-      if (step.target === 'theatre') openPanel('theatre');
-      else openPanel('building', step.target);
-      const section = step.section === 'food' ? 'feeding' : step.section;
-      const toggle = section && dialog.querySelector(`[data-warehouse-section-toggle="${section}"]`);
-      if (toggle?.getAttribute('aria-expanded') === 'false') toggle.click();
-      const target = toggle || (section === 'workers' ? dialog.querySelector('[data-manage-workers], [data-worker-delta="1"]') : null) || dialog.querySelector('[data-v32-workers], .dialog-body');
-      document.querySelectorAll('.advisor-navigation-target').forEach(node => node.classList.remove('advisor-navigation-target'));
-      if (target) {
-        target.classList.add('advisor-navigation-target');
-        target.scrollIntoView({block:'nearest',behavior:'instant'});
-        clearTimeout(advisorHighlightTimer);
-        advisorHighlightTimer = setTimeout(() => target.classList.remove('advisor-navigation-target'), 6000);
-      }
-      kingdomAdvisor.update();
-    }
+  if (kingdomAdvisor) { void advisorDevelopmentClient?.updateContext().catch(() => {}); kingdomAdvisor.update(); return; }
+  advisorDevelopmentClient = createAdvisorDevelopmentClient({ getState:() => state,
+    getContextKey:advisorContextKey, getLanguage:language, isReady:advisorExperienceReady });
+  advisorGuidance = createAdvisorGuidance({ getPanel:() => panel, getLanguage:language,
+    getContextKey:advisorContextKey, isReady:advisorExperienceReady,
+    getMapTarget:building => building === 'expeditions'
+      ? advisorVisibleTarget('#island-dialog [data-advisor-expeditions-entry]', '.activity-expedition', '.mobile-island-menu', '[data-mobile-control="menu"]', '#hit-menu')
+      : document.getElementById('hit-world-' + building),
+    revealBuilding:building => window.dispatchEvent(new CustomEvent('island-tour-focus', { detail:{region:buildingRegionFor(building)} })),
+    readValue:advisorGuidanceValue,
+    isConfirmed:() => !devAccount || devSyncStatus === 'saved',
+    onComplete:() => { void advisorDevelopmentClient.request({input:'', options:{language:language()}}).catch(() => {}); }
   });
+  kingdomAdvisor = createKingdomAdvisor({ getState:() => state, getLanguage:language,
+    getSuggestion:advisorSuggestion, getCachedPlan:() => advisorDevelopmentClient.getCurrentPlan(),
+    getPlanningStatus:() => advisorDevelopmentClient.getStatus(),
+    subscribePlan:listener => advisorDevelopmentClient.subscribe(listener),
+    getPlan:(input, options) => advisorDevelopmentClient.request({input, options}),
+    isVisible:() => advisorExperienceReady() && !document.querySelector('dialog[open]'),
+    onNavigate:step => advisorGuidance.start(step)
+  });
+  advisorDevelopmentClient.start();
+  window.addEventListener('pagehide', event => {
+    if (event.persisted) return;
+    advisorDevelopmentClient?.dispose(); advisorGuidance?.destroy(); kingdomAdvisor?.destroy();
+  }, {once:true});
 }
 function beginWorldExperience() {
   if (worldExperienceReady || State.onboardingStatus(state).pending) return;
@@ -4388,7 +4432,7 @@ function refreshPlayerOffers() {
   if (tradeMutationBusy || shipMutationPreparing || uncertainShipPurchase) return true;
   // Optional offers must not cover a confirmation, an exit reminder or a
   // conversation the player is already reading.
-  if (document.querySelector('dialog[open], [data-advisor-conversation]:not([hidden])')) return true;
+  if (advisorGuidance?.active || document.querySelector('dialog[open], [data-advisor-conversation]:not([hidden])')) return true;
   if (State.onboardingStatus(state).pending || onboardingFlow?.active || replayTour?.active || expeditionSession() || tutorialCelebration || taskCelebration?.open || taskAcceptanceDialog?.open || confirmationDialog?.open || dialog.open || document.querySelector('.island-flow-dialog[open]')) return false;
   if (PRACTICAL_TUTORIAL_ENABLED && Progression.tutorialPendingRewards(state).length) return false;
   const intro = Missions.missionStoryIntro?.(state);

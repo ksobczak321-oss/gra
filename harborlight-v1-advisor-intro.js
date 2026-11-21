@@ -1,5 +1,5 @@
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-22';
-import { APPROVED_TOUR_IDS, APPROVED_TOUR_VERSION, getTourCopy, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-22';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-23';
+import { APPROVED_TOUR_IDS, APPROVED_TOUR_VERSION, getTourCopy, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-23';
 
 // Presentation positions are separate from the stable 56-entry saved catalogue.
 // This keeps every old pause/resume position valid without rewriting a world.

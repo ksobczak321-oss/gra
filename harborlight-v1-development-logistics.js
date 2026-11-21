@@ -1,6 +1,6 @@
 // Ruleset32 physical production. No imports from state, residents or logistics.
 // Timers remain in the host event loop; every job consumes local ingredients.
-import { GOODS, MATERIAL_IDS, RECIPE_CATALOG, availableRecipes, productionAssignments, localStorageStatus, normalizeProvisions, withdrawMilk, depositMilk, withProvisionsReadScope } from './harborlight-v1-provisions.js?v=frontend-v32-22';
+import { GOODS, MATERIAL_IDS, RECIPE_CATALOG, availableRecipes, productionAssignments, localStorageStatus, normalizeProvisions, withdrawMilk, depositMilk, withProvisionsReadScope } from './harborlight-v1-provisions.js?v=frontend-v32-23';
 const EPS=1e-7;
 const amount=n=>Number.isFinite(n)?Math.max(0,n):0;
 const whole=n=>Math.floor(amount(n));

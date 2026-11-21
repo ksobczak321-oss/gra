@@ -1,4 +1,4 @@
-import { replayStartupPacket } from './harborlight-v1-startup-replay-model.js?v=frontend-v32-22';
+import { replayStartupPacket } from './harborlight-v1-startup-replay-model.js?v=frontend-v32-23';
 const PROTOCOL = 1;
 self.onmessage = event => {
   const data = event.data;

@@ -36,6 +36,13 @@ def bounded(page, selector):
     assert box['y'] + box['height'] <= viewport['height'] + 1, (selector, box)
     return box
 
+def plan_shape(page,minimum_cards=2):
+    cards=page.locator('[data-advisor-task-card]')
+    assert minimum_cards <= cards.count() <= 5
+    assert page.locator('[data-advisor-task-group]').count()==cards.count()
+    assert page.locator('[data-advisor-howto-step]').count()>=2
+    assert page.locator('[data-advisor-task-group][hidden], [data-advisor-howto-step][hidden]').count()==0
+
 report = []
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'), headless=True, args=['--no-sandbox'])
@@ -53,6 +60,7 @@ with sync_playwright() as playwright:
         page.add_init_script('localStorage.setItem("harborlight-language","pl")')
         page.goto(BASE + '/harborlight-v1-layered.html?profile=new-player&preview=admin1-level5', wait_until='networkidle')
         page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"', timeout=20000)
+        expect(page.locator('[data-kingdom-advisor]')).to_have_attribute('data-advisor-planning','ready',timeout=10000)
         bounded(page,'[data-advisor-open]')
         mobile_dock = page.locator('.mobile-bottom-dock')
         if mobile_dock.is_visible():
@@ -62,13 +70,15 @@ with sync_playwright() as playwright:
         assert page.locator('#island-dialog[open]').count() == 0
         page.locator('[data-advisor-open]').click()
         bounded(page,'[data-advisor-conversation]')
-        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
+        plan_shape(page)
         user_input = page.locator('[data-advisor-input]')
         user_input.fill('Chcę najszybciej jak to możliwe rozbudować Port')
         user_input.press('Enter')
         answer = page.locator('[data-advisor-answer]')
-        expect(answer.locator('h3')).to_have_text('Cel: rozbudowa — Port')
-        expect(answer).to_contain_text('Następny poziom')
+        expect(answer.locator('[data-advisor-task]')).to_contain_text('Port')
+        plan_shape(page)
+        expect(page.locator('[data-advisor-plan-context]')).to_contain_text('Sugeruję')
+        expect(page.locator('[data-advisor-goal-why]')).not_to_be_visible()
         bounded(page,'[data-advisor-input]')
         bounded(page,'[data-advisor-send]')
         bounded(page,'[data-advisor-close]')
@@ -84,7 +94,7 @@ with sync_playwright() as playwright:
             page.set_viewport_size({'width':width,'height':height})
         page.locator('[data-advisor-why]').click()
         expect(page.locator('[data-advisor-why]')).to_have_attribute('aria-expanded','true')
-        expect(answer).to_contain_text('chronioną rezerwę')
+        assert len(page.locator('.kingdom-advisor-details').inner_text())>20
         user_input.fill('niedokończony wpis gracza')
         # Update has to recompute advice while preserving the actual input node.
         user_input.evaluate('(e)=>{window.advisorInputBefore=e}')
@@ -92,22 +102,32 @@ with sync_playwright() as playwright:
         expect(user_input).to_have_value('niedokończony wpis gracza')
         assert user_input.evaluate('(e)=>e===window.advisorInputBefore')
         page.locator('[data-advisor-alternative]').click()
-        expect(answer).to_contain_text('Inna droga')
+        expect(page.locator('[data-kingdom-advisor]')).to_have_attribute('data-advisor-planning','ready',timeout=10000)
+        plan_shape(page)
         page.screenshot(path=str(OUTPUT/f'advisor-port-{width}-{height}.png'))
-        # Navigation opens existing UI and highlights it; it never applies a plan.
+        # Show where first marks the map. Only the user's subsequent keyboard
+        # activation opens the building; the advisor does not click a control.
         user_input.fill('Wolni mieszkańcy')
         user_input.press('Enter')
-        target = answer.locator('[data-advisor-target="house"]')
+        expect(page.locator('[data-kingdom-advisor]')).to_have_attribute('data-advisor-planning','ready',timeout=10000)
+        target=answer.locator('[data-advisor-target]:not([data-advisor-target="expeditions"])').first
         target.click()
+        expect(page.locator('#island-dialog')).not_to_be_visible()
+        expect(page.locator('[data-advisor-conversation]')).not_to_be_visible()
+        expect(page.locator('[data-advisor-guidance-phase="map"]')).to_be_visible()
+        expect(page.locator('.advisor-guidance-map-target')).to_be_visible()
+        page.locator('[data-advisor-guidance-focus]').click()
+        page.keyboard.press('Enter')
         expect(page.locator('#island-dialog')).to_be_visible()
-        expect(page.locator('[data-kingdom-advisor]')).not_to_be_visible()
-        expect(page.locator('.advisor-navigation-target')).to_be_visible()
+        expect(page.locator('#island-dialog .advisor-guidance-target')).to_be_visible()
+        assert page.locator('[data-advisor-guidance-phase="map"]').count()==0
         page.locator('#island-dialog .dialog-close').click()
         page.locator('[data-advisor-open]').click()
         expect(user_input).to_have_value('Wolni mieszkańcy')
         user_input.fill('<img src=x onerror=alert(1)>')
         user_input.press('Enter')
-        expect(answer).to_contain_text('Doprecyzuj cel')
+        expect(page.locator('[data-kingdom-advisor]')).to_have_attribute('data-advisor-planning','ready',timeout=10000)
+        expect(answer.locator('[data-advisor-task]')).to_be_visible()
         assert answer.locator('img,script').count() == 0
         user_input.press('Escape')
         expect(page.locator('[data-advisor-conversation]')).not_to_be_visible()
@@ -125,7 +145,7 @@ with sync_playwright() as playwright:
         assert not errors, errors
         assert not failed, failed
         assert not writes, writes
-        report.append({'width':width,'height':height,'port_plan':True,'live_input_preserved':True,'why_and_alternative':True,'navigation_highlight':True,'optional_mute':True,'no_api_or_storage_writes':True,'errors':errors})
+        report.append({'width':width,'height':height,'port_plan':True,'live_input_preserved':True,'why_and_alternative':True,'map_then_actual_control_guidance':True,'optional_mute':True,'no_api_or_storage_writes':True,'errors':errors})
         context.close()
     # Exercise the actual UI controller with the actual island model. This
     # detached fixture is independent of the application account and proves
@@ -150,13 +170,13 @@ with sync_playwright() as playwright:
           f.ui=UI.createKingdomAdvisor({getState:()=>state,getLanguage:()=>f.language,
             getSuggestion:(world,options)=>{f.lightCalls++;return Model.advisorSuggestion(world,options);},
             getPlan:(input,options)=>{f.detailedCalls++;return Model.advisorPlan(state,input,options);},
-            onNavigate:row=>{f.lastNavigation=row.target;}});
+            onNavigate:row=>{f.lastNavigation=row.target;return true;}});
           f.ui.open();
         }''')
         bounded(page,'[data-advisor-conversation]')
         expect(page.locator('[data-advisor-task]')).to_contain_text('Ratusz')
         expect(page.locator('[data-advisor-answer]')).to_contain_text('jako tragarza')
-        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
+        plan_shape(page,minimum_cards=1)
         assert page.evaluate('advisorFixture.detailedCalls')==0
         result=page.evaluate('''() => {
           const f=advisorFixture,r=f.State.act(f.state,{type:'assign',building:'warehouse',delta:1},f.now);
@@ -184,7 +204,7 @@ with sync_playwright() as playwright:
         expect(user_input).to_have_value('Mój niedokończony wpis')
         assert page.evaluate('advisorFixture.detailedCalls')==1
         page.evaluate('''() => {const f=advisorFixture;f.state.resources.coins=0;f.ui.update(true);}''')
-        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
+        plan_shape(page,minimum_cards=1)
         game=page.locator('[data-advisor-target="expeditions"]')
         expect(game).to_be_visible()
         expect(page.locator('[data-advisor-answer]')).to_contain_text('Nagroda zależy')
@@ -205,22 +225,22 @@ with sync_playwright() as playwright:
         page.evaluate('''() => {const f=advisorFixture;f.language='pl';f.ui.update(true);}''')
         user_input.fill('Wolni mieszkańcy')
         user_input.press('Enter')
-        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
-        before=page.locator('[data-advisor-answer] > p').first.inner_text()
+        plan_shape(page,minimum_cards=1)
+        before=page.locator('[data-advisor-plan-context]').first.inner_text()
         result=page.evaluate('''() => {
           const f=advisorFixture,r=f.State.act(f.state,{type:'assign',building:'warehouse',delta:1},f.state.worldTimeMs);
           f.ui.update(true);return r.ok;
         }''')
         assert result is True
-        assert page.locator('[data-advisor-answer] > p').first.inner_text()!=before
+        assert page.locator('[data-advisor-plan-context]').first.inner_text()!=before
         assert page.evaluate('advisorFixture.detailedCalls')==3, 'A workers topic refresh reran the detailed planner'
         expect(user_input).to_have_value('Wolni mieszkańcy')
         bounded(page,'[data-advisor-input]')
         page.screenshot(path=str(OUTPUT/f'advisor-live-guidance-{width}-{height}.png'))
         assert not errors, errors
-        report.append({'width':width,'height':height,'controller_live_model':True,'staffing_update':True,'completed_goal_replaced':True,'visible_actions_2_to_5':True,'passive_detailed_quotes':0,'minigame_reward_navigation':True,'EN':True,'input_preserved':True})
+        report.append({'width':width,'height':height,'controller_live_model':True,'staffing_update':True,'completed_goal_replaced':True,'ordered_howto_preserved':True,'passive_detailed_quotes':0,'minigame_reward_navigation':True,'EN':True,'input_preserved':True})
         context.close()
     browser.close()
 (OUTPUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))
-print('PASS advisor UI: real Port goal, live guidance with2–5actions, actual model staffing/upgrade transitions, no passive detailed forecasts, reward-bearing minigame navigation, EN, preserved input, keyboard, mute/reopen, desktop/mobile and short viewport; no account/storage writes.')
+print('PASS advisor UI: real Port goal, one goal with2–5task cards and all ordered how-to, actual model staffing/upgrade transitions, no passive detailed forecasts, reward-bearing minigame navigation, EN, preserved input, keyboard, mute/reopen, desktop/mobile and short viewport; no account/storage writes.')

@@ -241,6 +241,14 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0185 — Poziomy Kaplicy i Latarni są czytelne obok paneli](manual/HL-TC-0185.md) | Etykiety mapy | P1 | READY | NOT RUN |
 | [HL-TC-0186 — Ukryty kurs nie blokuje misji i zachowuje reklamowy cooldown](manual/HL-TC-0186.md) | Dostępność rozwoju | P0 | READY | NOT RUN |
 | [HL-TC-0187 — Bieżące rady pozostają płynne a pełna prognoza jest na żądanie](manual/HL-TC-0187.md) | Wydajność Doradcy | P0 | READY | NOT RUN |
+| [HL-TC-0188 — Układ Doradcy: cel i równoległe karty zadań](manual/HL-TC-0188.md) | Układ Doradcy | P0 | READY | NOT RUN |
+| [HL-TC-0189 — Wszystkie instrukcje i krótkie uzasadnienia pod kartami](manual/HL-TC-0189.md) | Kolejność i zależności | P0 | READY | NOT RUN |
+| [HL-TC-0190 — Pokaż gdzie najpierw wskazuje budynek na mapie](manual/HL-TC-0190.md) | Nawigacja do budynku | P0 | READY | NOT RUN |
+| [HL-TC-0191 — Po otwarciu budynku wskazuj dokładną kontrolkę](manual/HL-TC-0191.md) | Nawigacja wewnątrz menu | P0 | READY | NOT RUN |
+| [HL-TC-0192 — Planuj wykonalny rozwój co 120 sekund rzeczywistych](manual/HL-TC-0192.md) | Planista rozwoju | P0 | READY | NOT RUN |
+| [HL-TC-0193 — Worker otrzymuje ograniczone dane bez blokowania gry](manual/HL-TC-0193.md) | Wydajność planisty | P0 | READY | NOT RUN |
+| [HL-TC-0194 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](manual/HL-TC-0194.md) | Swoboda gracza | P0 | READY | NOT RUN |
+| [HL-TC-0195 — Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania](manual/HL-TC-0195.md) | Zgodność i odbiór wydania | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

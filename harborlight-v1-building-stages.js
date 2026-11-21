@@ -2,7 +2,7 @@
 // owned by the game. Importing this module does not fetch or touch the DOM.
 export const BUILDING_STAGE_IDS = Object.freeze(['townhall','house','farm','lumber','quarry','windmill','sawmill','warehouse','bakery','dairy','slaughterhouse','fisher','leatherworks','academy','barracks','chapel','lighthouse','theatre','market','dock']);
 export const BUILDING_STAGE_MANIFEST = 'assets/building-upgrades-v1/manifest.json';
-export const BUILDING_STAGE_MANIFEST_URL = `${BUILDING_STAGE_MANIFEST}?v=frontend-v32-22`;
+export const BUILDING_STAGE_MANIFEST_URL = `${BUILDING_STAGE_MANIFEST}?v=frontend-v32-23`;
 export const WORLD_SIZE = Object.freeze([1672,941]);
 const NS = 'http://www.w3.org/2000/svg';
 const EPS = 1e-9;

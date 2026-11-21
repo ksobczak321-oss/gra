@@ -1,7 +1,7 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-22';
-import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-22';
-import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-22';
-import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-22';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
+import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-23';
+import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-23';
+import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-23';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.

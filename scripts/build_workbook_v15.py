@@ -256,14 +256,16 @@ def prepare(exports, source_sha):
     guide = Sheet(sheet_name('Przeczytaj', used), 'HARBORLIGHT15 — pełny master aktualnych zasad',
                   'Bieżące tabele v15 mają pierwszeństwo. 100 wcześniejszych kart zachowano jako ukryte archiwum. Pełna treść warunków i źródeł jest dostępna w dodatkach. Każdy wynik symulacji ma własny horyzont i założenia.',
                   ['Temat', 'Aktualna informacja', 'Źródło / granica'], [45, 140, 100], table_id='readme')
-    guide.add(['Kod gry', '0.15.3.0 / ruleset32', source_sha])
+    guide.add(['Kod gry', '0.15.3.1 / ruleset32', source_sha])
     guide.add(['Historyczny wspólny odbiór DEV/PRE-PROD 0.15.0.2', RELEASE_SOURCE, 'CI43850690541 i PRE-PROD43854387444 SUCCESS. To historyczny punkt odniesienia, nie źródło bieżących tabel.'])
     guide.add(['Źródło historycznej aplikacji 0.15.0.2', APP_SOURCE, 'Bieżący kod i jego odciski wskazuje pierwszy wiersz Kod gry. Aktualizacja Excela nie wdraża gry.'])
-    guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.2.4', 'd5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d', '0.15.2.4/cache21 — CI44569674535, Pages44569674475 i PRE-PROD44577083312/próba1 SUCCESS. Bieżący pakiet0.15.3.0 ma własny odrębny odbiór; eksport arkusza nie publikuje gry.'])
+    guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.2.4', 'd5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d', '0.15.2.4/cache21 — CI44569674535, Pages44569674475 i PRE-PROD44577083312/próba1 SUCCESS. Odbiór0.15.3.0 opisano osobno; bieżące tabele0.15.3.1 wskazują własny commit źródłowy i nie potwierdzają wdrożenia.'])
+    guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.3.0', 'fc95a1aadf36a115538ed0b846f9ce48fbba651b', '0.15.3.0/cache22 — CI44926983827, Pages44926983937 i PRE-PROD44929856572/próba1 SUCCESS. Kod i źródło tamtych artefaktów f6572ee7500b42f56d1575de2e173d1bd635216c. To zachowany odbiór historyczny, nie wynik bieżącego eksportu.'])
     guide.add(['Historyczny pełny odbiór DEV i PRE-PROD0.15.2.0', 'dda2fa1793e49ec23811ccffb147a7e56a366692', '0.15.2.0/cache17 — CI44287093749 i Pages44287093698 oraz PRE-PROD44292700743/próba1 SUCCESS. Zachowany wcześniejszy punkt odniesienia.'])
     guide.add(['Poprzednia próba 0.15.2.1/cache18: sukces techniczny, regresja warm-cache', 'b94af8befa671d936eeaf6e4be9b933cbf61ff08', 'CI44520278661 i workflow PRE-PROD44526548282/próba1 SUCCESS dla zimnej pamięci podręcznej. Późniejszy odbiór rozgrzanej pamięci FAIL: stary manifest przywracał pełne atlasy i błędną kolejność Zakładu skórzanego. Brak pełnego odbioru jakościowego i tagu akceptacji PRE-PROD tej próby.'])
     guide.add(['Nawigacja', 'Spis treści zawiera odnośnik do każdej bieżącej tabeli i jej źródła.', 'Filtrowanie od wiersza5; nagłówki zamrożone.'])
-    guide.add(['Teksty i prowadzenie', 'Aktywny tutorial28, objaśnienia menu i, rady1cel/2–5akcji; zachowany katalog56 i ukryty samouczek25.', 'Dostępność jest jawna w tabelach; zachowanie kodu lub historii nie oznacza aktywnego ekranu ani przyznania nagrody. Zmienne i warunki zachowane.'])
+    guide.add(['Teksty i prowadzenie', 'Aktywny tutorial28, objaśnienia menu i, Doradca1cel/2–5kart z pełnymi instrukcjami i dlaczego PL/EN; zachowany katalog56 i ukryty samouczek25.', 'Dostępność jest jawna w tabelach; zachowanie kodu lub historii nie oznacza aktywnego ekranu ani przyznania nagrody. Zmienne i warunki zachowane.'])
+    guide.add(['Planowanie Doradcy', 'Przyjacielska propozycja z uzasadnieniem i swobodą wyboru. Worker co120000ms ponownie ocenia aktualną wyspę; automatyczny cel nie jest przypięty, jawny cel np.Port pozostaje osobnym wyborem. Podpowiedź wskazuje mapę, potem kontrolkę menu.', 'Osobne tabele zawierają rzeczywiste pełne plany, karty, instrukcje i semantyczne cele, a zasady mają dokładny fragment źródła. Ograniczone porównanie wariantów nie jest gwarancją globalnego optimum ani automatyczną akcją gry.'])
     guide.add(['Scenariusze', 'Katalogi mechanik, scenariusze i deterministyczne przykłady generatorów.', 'Przykłady plansz nie oznaczają wyliczenia wszystkich kombinacji losowych.'])
     guide.add(['Symulacje', 'Faktycznie wykonane przebiegi silnika v32 i ich strategia, wyniki oraz blokady.', '50dni planu i historyczne35dni v31 nie są wynikiem aktualnego gracza.'])
     guide.add(['Kalkulator', 'Niebieskie pola i formuły z zapisanym wynikiem; dane receptur z kodu.', 'Model warunkowy nie zastępuje symulacji silnika.'])
@@ -372,7 +374,7 @@ def write_book(sheets):
         entries[name] = sheet_xml(spec, active=index == 0)
     changed = {'xl/workbook.xml': workbook, 'xl/_rels/workbook.xml.rels': rels, '[Content_Types].xml': types}
     core = E.fromstring(entries['docProps/core.xml']); dc = 'http://purl.org/dc/elements/1.1/'
-    for name, value in [('title', 'HARBORLIGHT15 — pełny master0.15.3.0/v32'), ('subject', 'Aktualne reguły, teksty, scenariusze i symulacje;100kart archiwum'), ('description', 'Eksport bieżącego kodu; każda symulacja ma założenia i zmierzony horyzont, a generator nie zmienia gry lub kont.')]:
+    for name, value in [('title', 'HARBORLIGHT15 — pełny master0.15.3.1/v32'), ('subject', 'Aktualne reguły, teksty, scenariusze i symulacje;100kart archiwum'), ('description', 'Eksport bieżącego kodu; każda symulacja ma założenia i zmierzony horyzont, a generator nie zmienia gry lub kont.')]:
         node = core.find(f'{{{dc}}}{name}')
         if node is None: node = E.SubElement(core, f'{{{dc}}}{name}')
         node.text = value
@@ -387,7 +389,7 @@ def write_book(sheets):
 def source_checks(exports, source_sha):
     hashes = {}
     assert exports['scenarios']['meta']['exporterSha256'] == digest(EXPORTERS['scenarios']), 'Simulation exporter changed; refresh simulations'
-    assert exports['facts']['meta']['appVersion'] == exports['texts']['meta']['applicationVersion'] == exports['scenarios']['meta']['version'] == '0.15.3.0'
+    assert exports['facts']['meta']['appVersion'] == exports['texts']['meta']['applicationVersion'] == exports['scenarios']['meta']['version'] == '0.15.3.1'
     assert all(payload['meta']['ruleset'] == 32 for payload in exports.values())
     assert exports['facts']['checks']['passed'] is True
     assert exports['texts']['meta']['completeSourceTrace'] is True
@@ -395,7 +397,14 @@ def source_checks(exports, source_sha):
     assert exports['texts']['counts']['archiveTourSteps'] == 56 and exports['texts']['counts']['lessons'] == 25
     assert exports['texts']['counts']['menuInformationTopics'] == 8
     assert exports['texts']['counts']['practicalTutorialEnabled'] is False
-    assert exports['texts']['counts']['advisorExampleActions'] >= 6
+    assert exports['texts']['counts']['advisorExamplePlans'] == 12
+    assert exports['texts']['counts']['advisorExampleTasks'] >= 24
+    assert exports['texts']['counts']['advisorExampleActions'] >= exports['texts']['counts']['advisorExampleTasks']
+    assert exports['texts']['counts']['advisorLanguages'] == ['pl', 'en']
+    assert exports['texts']['counts']['advisorIntervalMs'] == 120000
+    assert exports['texts']['counts']['advisorSemanticActions'] == 8
+    assert exports['texts']['counts']['advisorPolicyRows'] >= 20
+    assert {'advisor_live_plans', 'advisor_task_cards', 'advisor_how_to', 'advisor_planning_policy'} <= {table['id'] for table in exports['texts']['tables']}
     assert exports['scenarios']['meta']['simulationIncluded'] is True, 'Actual development simulations are required'
     assert exports['scenarios']['checks']['currentSimulationProfiles'] >= 3
     assert exports['scenarios']['checks']['allSimulationsCanonicalStart'] is True
@@ -407,6 +416,7 @@ def source_checks(exports, source_sha):
             assert digest(ROOT/name) == expected, ('Stale export', kind, name)
             assert hashlib.sha256(subprocess.check_output(['git', 'show', f'{source_sha}:{name}'], cwd=ROOT)).hexdigest() == expected
             hashes[name] = expected
+    assert {'harborlight-v1-advisor-development-plan.js', 'harborlight-v1-advisor-development-client.js', 'harborlight-v1-advisor-development-worker.js', 'harborlight-v1-advisor-guidance.js', 'harborlight-v1-advisor-guidance.css'} <= hashes.keys(), 'Missing current advisor source provenance'
     assert hashes, 'No source provenance'
     return hashes
 
@@ -457,7 +467,7 @@ def validate(exports, sheets, source_sha, write_report=True):
         calc.rows[6][2], calc.rows[11][2] = entry['level'], entry['recipeId']
         assert math.isclose(evaluate(calc.rows[26][2].text, sheets, calc.name), entry['batchesPerWorkerHour'], rel_tol=1e-12)
         calc.rows[6][2], calc.rows[11][2] = old_level, old_recipe; samples += 1
-    report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': '0.15.3.0', 'ruleset': 32,
+    report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': '0.15.3.1', 'ruleset': 32,
               'file': str(OUTPUT.relative_to(ROOT)), 'sha256': digest(OUTPUT), 'bytes': OUTPUT.stat().st_size,
               'source_git_commit': source_sha, 'accepted_application_source': APP_SOURCE, 'accepted_publication_source': RELEASE_SOURCE,
               'accepted_reference_scope': 'Historical shared DEV/PRE-PROD0.15.0.2; current tables and fingerprints use source_git_commit, not these historical reference fields.',
