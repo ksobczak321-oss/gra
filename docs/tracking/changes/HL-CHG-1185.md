@@ -9,9 +9,9 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented_frozen_CODE_local_verified` |
-| DEV | `LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING` |
-| CI | `PENDING_OWN_EXACT_SOURCE_CI_PAGES` |
-| PRE-PROD | `AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION` |
+| DEV | `PUB1_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` |
+| CI | `FAILURE_44939109067_TEST_FIXTURE_CACHE_ASSERT` |
+| PRE-PROD | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -39,13 +39,14 @@ Data pierwotnej wiadomości: 2026-11-21. Europe/Warsaw
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
 - **Kod dowodowy:** `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44939109067.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0190 — Pokaż gdzie najpierw wskazuje budynek na mapie](../../testing/manual/HL-TC-0190.md) — `NOT RUN`.
 
-CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN.
+PUB4f CI44939109067FAIL8m38:1896Node/173Python/standalonePASS; firstmain cacheassertprelaunchSTOP,60main18cloudNOT_RUN. Pages44939109035PASS38s/all466TLS+bothXLSX. Fivecurrentreferencesin2tests corrected;3fullbrowserlocalPASS. CODEace6/runtime/artifacts unchanged;newPUB/CI/Pages/tag/GCPpending;195manualNOT_RUN.
 
 ## Relacje
 

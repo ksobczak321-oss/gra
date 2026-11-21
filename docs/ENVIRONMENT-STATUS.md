@@ -5,11 +5,12 @@
 
 
 
-## Kandydat DEV 0.15.3.1 / cache23 — CODE i lokalny odbiór gotowe, publikacja PENDING
 
-Zamrożony CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4` ma pełny lokalny frontend 1711, backend 178, planszówkę 7 i 8 programów UI PASS. Po rzeczywistym pakiecie 28 po eksportach suma Python wynosi 173 PASS. Świeże kanoniczne artefakty i niezależna walidacja nowego źródła mają PASS. Pierwszy CODE 6e7 zatrzymał się na starym markerze pochodzenia tekstu; jego surowy FAIL pozostaje historią. Jedyna poprawka dotyczy markera eksportera, runtime/testy bez zmian.
+## Kandydat DEV 0.15.3.1 / cache23 — pierwszy CI FAILURE, nowa publikacja PENDING
 
-Master ma 164 kart i 66801 wierszy, redakcyjny Excel 6/413; dokładne hashe i porównania opisano w dowodach. PUB/push, własny CI 79, Pages, pakiet publiczny, tag DEV i nowy standardowy PRE-PROD nadal **PENDING**. Odebrane fc95/cache22 oraz jego historia restartu właściciela admin1 pozostają poniżej bez zmian. 519 kart / 195 przypadków NOT RUN; bez resetu, PROD, DNS i zmian haseł. [Zakres](v32/GO-ADVISOR-TASKS.md) · [Dowody](v32/ADVISOR-TASKS-EVIDENCE.json).
+CODE ace6 / runtime/kanoniczne artefakty pozostają zamrożone i bez zmian. PUB 4f873f4 ma CI44939109067 **FAILURE 8 min 38 s** po 1896 Node/173 Python i osobnej przeglądarce minigier PASS. Pierwszy główny program zatrzymał się przed launch na starym oczekiwaniu cache22;60 głównych i18 chmurowych nie wykonano. Pięć bieżących referencji w dwóch testach poprawiono bez zmiany asercji, limitów i historycznych negatywnych kontroli; trzy pełne programy lokalne PASS.
+
+Pages44939109035 ma osobny SUCCESS 38 s,466 plików /96 673 009 bajtów przez normalny TLS i oba XLSX PASS dla własnego 4f. Nowy PUB2/CI/Pages są PENDING; brak nowego tagu DEV, GCP i bazowej kontroli kont. Faktyczne odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22. 519 kart /195 przypadków NOT RUN. [Zakres i dokładna historia](v32/GO-ADVISOR-TASKS.md) · [Dowody](v32/ADVISOR-TASKS-EVIDENCE.json).
 
 ## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 

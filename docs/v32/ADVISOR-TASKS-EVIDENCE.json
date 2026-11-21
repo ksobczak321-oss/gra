@@ -3,7 +3,7 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.3.1",
   "cache": "frontend-v32-23",
-  "status": "SOURCE_FROZEN_LOCAL_COMPLETE_CANONICAL_READY_NOT_PUBLISHED",
+  "status": "PUB1_OWN_CI_FAILED_CURRENT_FIXTURES_CORRECTED_NEW_PUBLICATION_PENDING",
   "authorization": {
     "kind": "current_user_advisor_reorganization_and_real_time_planner",
     "scope": "DEV_GIT_OWN_CI_PAGES_THEN_STANDARD_PREPROD",
@@ -26,7 +26,7 @@
     "new_release_must_have_own_account_audit": true
   },
   "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-  "publication_source_sha": null,
+  "publication_source_sha": "4f873f489ca7332dfa32647c78cd3debe19d952a",
   "implementation": {
     "status": "FROZEN_CODE_LOCAL_VERIFIED_CANONICAL_AND_POST_EXPORT_BUNDLE_PASS",
     "presence_of_working_files_is_not_acceptance": true,
@@ -939,15 +939,558 @@
     }
   },
   "CI": {
-    "status": "PENDING",
-    "run": null,
-    "source_sha": null,
-    "expected_browser_programs": 79
+    "run": 44939109067,
+    "attempt": 1,
+    "source": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+    "kind": "ci",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44939109067",
+    "created_at": "2026-11-21T19:06:10Z",
+    "completed_at": "2026-11-21T19:14:48Z",
+    "workflow_seconds": 518.0,
+    "jobs": [
+      {
+        "id": 136952173660,
+        "name": "validate",
+        "status": "completed",
+        "conclusion": "failure",
+        "started_at": "2026-11-21T19:06:13Z",
+        "completed_at": "2026-11-21T19:14:48Z",
+        "seconds": 515.0,
+        "steps": [
+          {
+            "name": "Set up job",
+            "number": 1,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Checkout exact source commit",
+            "number": 2,
+            "conclusion": "success",
+            "seconds": 4.0
+          },
+          {
+            "name": "Setup Node",
+            "number": 3,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Setup Python",
+            "number": 4,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test game rules and release promotion gates",
+            "number": 5,
+            "conclusion": "success",
+            "seconds": 187.0
+          },
+          {
+            "name": "Verify canonical API trade rules",
+            "number": 6,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test API infrastructure endpoints",
+            "number": 7,
+            "conclusion": "success",
+            "seconds": 3.0
+          },
+          {
+            "name": "Test isolated backend image payload",
+            "number": 8,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Test cloud bootstrap safety",
+            "number": 9,
+            "conclusion": "success",
+            "seconds": 2.0
+          },
+          {
+            "name": "Test read-only cloud verification",
+            "number": 10,
+            "conclusion": "success",
+            "seconds": 5.0
+          },
+          {
+            "name": "Test deterministic frontend release bundle",
+            "number": 11,
+            "conclusion": "success",
+            "seconds": 12.0
+          },
+          {
+            "name": "Test Firebase Hosting preparation safety",
+            "number": 12,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Test permanent DEV account preparation safety",
+            "number": 13,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test guarded post-promotion PRE-PROD account reset",
+            "number": 14,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test production domain preparation safety",
+            "number": 15,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test isolated runtime and Hosting configuration",
+            "number": 16,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test monthly billing alert configuration safety",
+            "number": 17,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test dry-run tracking issue import and idempotency",
+            "number": 18,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Verify generated change cards and their index",
+            "number": 19,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Verify generated manual QA checklist and case index",
+            "number": 20,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test standalone physical game scenario",
+            "number": 21,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Verify generated legal documents match their reviewed drafts",
+            "number": 22,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Verify historical Excel 14 against accepted 0.14.0.0 source",
+            "number": 23,
+            "conclusion": "success",
+            "seconds": 18.0
+          },
+          {
+            "name": "Verify all lossless building sprites against approved atlases",
+            "number": 24,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Verify current DEV editorial Excel and empty correction column",
+            "number": 25,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Verify every standalone minigame and its Word and TXT instructions",
+            "number": 26,
+            "conclusion": "success",
+            "seconds": 8.0
+          },
+          {
+            "name": "Verify full current master Excel and preserved historical rules",
+            "number": 27,
+            "conclusion": "success",
+            "seconds": 52.0
+          },
+          {
+            "name": "Install browser acceptance dependencies",
+            "number": 28,
+            "conclusion": "success",
+            "seconds": 20.0
+          },
+          {
+            "name": "Build the frontend release being validated",
+            "number": 29,
+            "conclusion": "success",
+            "seconds": 3.0
+          },
+          {
+            "name": "Test every standalone minigame and download in Chromium",
+            "number": 30,
+            "conclusion": "success",
+            "seconds": 192.0
+          },
+          {
+            "name": "Test packaged game and both tutorial programs in Chromium",
+            "number": 31,
+            "conclusion": "failure",
+            "seconds": 0.0
+          },
+          {
+            "name": "Test packaged DEV login and cloud saves in Chromium",
+            "number": 32,
+            "conclusion": "skipped",
+            "seconds": 0.0
+          },
+          {
+            "name": "Publish browser failure diagnostics",
+            "number": 33,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Publish DEV account browser failure diagnostics",
+            "number": 34,
+            "conclusion": "skipped",
+            "seconds": 0.0
+          },
+          {
+            "name": "Post Setup Python",
+            "number": 66,
+            "conclusion": "skipped",
+            "seconds": 0.0
+          },
+          {
+            "name": "Post Setup Node",
+            "number": 67,
+            "conclusion": "skipped",
+            "seconds": 0.0
+          },
+          {
+            "name": "Post Checkout exact source commit",
+            "number": 68,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Complete job",
+            "number": 69,
+            "conclusion": "success",
+            "seconds": 0.0
+          }
+        ]
+      }
+    ],
+    "step_status_counts": {
+      "success": 33,
+      "failure": 1,
+      "skipped": 4
+    },
+    "full_log_bytes": 530342,
+    "full_log_sha256": "f4a0a0f03fcfca56b6b466d07eece6e23d6e15795625ff0ad7f06b7c6738354c",
+    "observer_workflow_dispatches": 0,
+    "observer_repository_mutations": 0,
+    "observer_account_or_clock_writes": 0,
+    "node_full_stats_by_step": {
+      "Test game rules and release promotion gates": {
+        "tests": 1711,
+        "pass": 1711,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 186429.913545
+      },
+      "Test API infrastructure endpoints": {
+        "tests": 178,
+        "pass": 178,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 3549.692697
+      },
+      "Test standalone physical game scenario": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 72.750378
+      }
+    },
+    "node_total": 1896,
+    "python_reports": [
+      {
+        "step": "Test isolated backend image payload",
+        "tests": 2
+      },
+      {
+        "step": "Test cloud bootstrap safety",
+        "tests": 12
+      },
+      {
+        "step": "Test read-only cloud verification",
+        "tests": 10
+      },
+      {
+        "step": "Test deterministic frontend release bundle",
+        "tests": 28
+      },
+      {
+        "step": "Test Firebase Hosting preparation safety",
+        "tests": 17
+      },
+      {
+        "step": "Test permanent DEV account preparation safety",
+        "tests": 23
+      },
+      {
+        "step": "Test guarded post-promotion PRE-PROD account reset",
+        "tests": 20
+      },
+      {
+        "step": "Test production domain preparation safety",
+        "tests": 12
+      },
+      {
+        "step": "Test isolated runtime and Hosting configuration",
+        "tests": 13
+      },
+      {
+        "step": "Test monthly billing alert configuration safety",
+        "tests": 14
+      },
+      {
+        "step": "Test dry-run tracking issue import and idempotency",
+        "tests": 18
+      },
+      {
+        "step": "Verify historical Excel 14 against accepted 0.14.0.0 source",
+        "tests": 4
+      }
+    ],
+    "python_total": 173,
+    "legacy_96h_watchdog": [
+      {
+        "step": "Test game rules and release promotion gates",
+        "elapsed_ms": 8716.843639
+      }
+    ],
+    "browser_source_program_groups": [
+      {
+        "step": "Test every standalone minigame and download in Chromium",
+        "programs": [
+          "tests/harborlight-minigames-standalone-smoke.py"
+        ],
+        "count": 1,
+        "step_conclusion": "success",
+        "completed_programs_confirmed_by_sequential_step_success": 1
+      },
+      {
+        "step": "Test packaged game and both tutorial programs in Chromium",
+        "programs": [
+          "tests/harborlight-building-cache-v32-smoke.py",
+          "tests/harborlight-performance-v32-smoke.py",
+          "tests/harborlight-building-stages-v32-smoke.py",
+          "tests/harborlight-purple-editorial-ui-smoke.py",
+          "tests/harborlight-advisor-ui-smoke.py",
+          "tests/harborlight-advisor-layout-v32-smoke.py",
+          "tests/harborlight-advisor-development-worker-smoke.py",
+          "tests/harborlight-advisor-guidance-smoke.py",
+          "tests/harborlight-practical-paused-v32-smoke.py",
+          "tests/harborlight-menu-tour-info-v32-smoke.py",
+          "tests/harborlight-map-labels-v32-smoke.py",
+          "tests/harborlight-startup-replay-v32-smoke.py",
+          "tests/harborlight-startup-no-flash-v32-smoke.py",
+          "tests/harborlight-admin3-speed-v32-smoke.py",
+          "tests/harborlight-cloud-rules-v32-smoke.py",
+          "tests/harborlight-editorial-six-tabs-v32-smoke.py",
+          "tests/harborlight-pages-dev-v32-smoke.py",
+          "tests/harborlight-level5-preview-v32-smoke.py",
+          "tests/harborlight-new-building-layout-v32-smoke.py",
+          "tests/harborlight-menu-consistency-v32-smoke.py",
+          "tests/harborlight-worker-feedback-v32-smoke.py",
+          "tests/harborlight-native-map-v32-smoke.py",
+          "tests/harborlight-accepted-front-v32-smoke.py",
+          "tests/harborlight-resource-icons-v32-smoke.py",
+          "tests/harborlight-building-access-v32-smoke.py",
+          "tests/harborlight-tour-route-v5-smoke.py",
+          "tests/harborlight-onboarding-target-replacement-v32-smoke.py",
+          "tests/harborlight-warehouse-sections-v32-smoke.py",
+          "tests/harborlight-theatre-selection-v32-smoke.py",
+          "tests/harborlight-save-packing-v32-smoke.py",
+          "tests/harborlight-original-puzzles-v32-smoke.py",
+          "tests/harborlight-resident-labels-ui-v32-smoke.py",
+          "tests/harborlight-kingdom-resident-labels-v32-smoke.py",
+          "tests/harborlight-legacy-resident-labels-v32-smoke.py",
+          "tests/harborlight-theatre-free-placement-v31-smoke.py",
+          "tests/harborlight-frontend-v17-smoke.py",
+          "tests/harborlight-frontend-v18-smoke.py",
+          "tests/harborlight-tutorial-v18-smoke.py",
+          "tests/harborlight-tutorial-v21-smoke.py",
+          "tests/harborlight-tutorial-v22-smoke.py",
+          "tests/harborlight-tutorial-priority-v22-smoke.py",
+          "tests/harborlight-tutorial-map-v25-smoke.py",
+          "tests/harborlight-learning-review-v26-smoke.py",
+          "tests/harborlight-learning-flow-v26-smoke.py",
+          "tests/harborlight-starter-course-v26-smoke.py",
+          "tests/harborlight-learning-feedback-v27-smoke.py",
+          "tests/harborlight-learning-flow-v27-smoke.py",
+          "tests/harborlight-missions-ui-v27-smoke.py",
+          "tests/harborlight-missions-game-v27-smoke.py",
+          "tests/harborlight-release-v28-smoke.py",
+          "tests/harborlight-starter-course-v28-smoke.py",
+          "scripts/test_frontend_v29_learning.py",
+          "tests/harborlight-theatre-v29-smoke.py",
+          "tests/harborlight-adventures-v29-smoke.py",
+          "tests/harborlight-release-v29-smoke.py",
+          "tests/harborlight-theatre-v30-smoke.py",
+          "tests/harborlight-theatre-v30-game-smoke.py",
+          "tests/harborlight-adventures-v31-smoke.py",
+          "tests/harborlight-missions-v31-smoke.py",
+          "tests/harborlight-release-v31-smoke.py"
+        ],
+        "count": 60,
+        "step_conclusion": "failure",
+        "completed_programs_confirmed_by_sequential_step_success": null,
+        "actual_logged_starts": 1,
+        "actual_log_program_sequence_equals_source": false
+      },
+      {
+        "step": "Test packaged DEV login and cloud saves in Chromium",
+        "programs": [
+          "tests/harborlight-v32-live-cas-smoke.py",
+          "tests/harborlight-dev-auth-smoke.py",
+          "tests/harborlight-dev-game-smoke.py",
+          "tests/harborlight-settings-signout-smoke.py",
+          "tests/harborlight-v18-auth-smoke.py",
+          "tests/harborlight-onboarding-v20-smoke.py",
+          "tests/harborlight-v21-features-smoke.py",
+          "tests/harborlight-help-v24-smoke.py",
+          "tests/harborlight-community-v24-smoke.py",
+          "tests/harborlight-charity-v24-smoke.py",
+          "tests/harborlight-manual-checklist-smoke.py",
+          "tests/harborlight-polish-panels-smoke.py",
+          "tests/harborlight-economy-review-v26-smoke.py",
+          "tests/harborlight-housing-v27-smoke.py",
+          "tests/harborlight-onboarding-v28-smoke.py",
+          "tests/harborlight-social-v28-smoke.py",
+          "tests/harborlight-ship-capacity-v28-smoke.py",
+          "tests/harborlight-cloud-interruption-v31-smoke.py"
+        ],
+        "count": 18,
+        "step_conclusion": "skipped",
+        "completed_programs_confirmed_by_sequential_step_success": null
+      }
+    ],
+    "browser_programs_expected_from_exact_source": 79,
+    "browser_programs_confirmed_all_required_steps": null,
+    "crosschecks": {
+      "all_required_browser_steps_success": false,
+      "logged_program_sequences_match_source": false,
+      "all_reported_Node_failures_zero": true,
+      "watchdog_one_report_under_original10s": true,
+      "declared_Node_total": true,
+      "declared_Python_total": true
+    },
+    "actual_hosted_or_account_acceptance": "SEPARATE_REQUIRED_GCP_AND_PARENT_AUDITS",
+    "full_CI_PASS_claimed": false
   },
   "Pages": {
-    "status": "PENDING",
-    "run": null,
-    "source_sha": null
+    "run": 44939109035,
+    "attempt": 1,
+    "source": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+    "kind": "pages",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44939109035",
+    "created_at": "2026-11-21T19:06:10Z",
+    "completed_at": "2026-11-21T19:06:48Z",
+    "workflow_seconds": 38.0,
+    "jobs": [
+      {
+        "id": 136952173304,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-21T19:06:16Z",
+        "completed_at": "2026-11-21T19:06:47Z",
+        "seconds": 31.0,
+        "steps": [
+          {
+            "name": "Set up job",
+            "number": 1,
+            "conclusion": "success",
+            "seconds": 2.0
+          },
+          {
+            "name": "Checkout",
+            "number": 2,
+            "conclusion": "success",
+            "seconds": 9.0
+          },
+          {
+            "name": "Setup Pages",
+            "number": 3,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Upload artifact",
+            "number": 4,
+            "conclusion": "success",
+            "seconds": 7.0
+          },
+          {
+            "name": "Wait for uploaded Pages artifact metadata",
+            "number": 5,
+            "conclusion": "success",
+            "seconds": 0.0
+          },
+          {
+            "name": "Deploy to GitHub Pages",
+            "number": 6,
+            "conclusion": "success",
+            "seconds": 8.0
+          },
+          {
+            "name": "Post Checkout",
+            "number": 12,
+            "conclusion": "success",
+            "seconds": 1.0
+          },
+          {
+            "name": "Complete job",
+            "number": 13,
+            "conclusion": "success",
+            "seconds": 0.0
+          }
+        ]
+      }
+    ],
+    "step_status_counts": {
+      "success": 8
+    },
+    "full_log_bytes": 190996,
+    "full_log_sha256": "06c7c39f62fe7e2f6aa7574056bca1a8372b56f03a80e03afb71a98c92418902",
+    "observer_workflow_dispatches": 0,
+    "observer_repository_mutations": 0,
+    "observer_account_or_clock_writes": 0,
+    "public_content_audit": "/workspace/work/advisor-layout-20261121/release/pages-public-byte-audit.json",
+    "both_XLSX_audit": "/workspace/work/advisor-layout-20261121/release/pages-XLSX-independent-audit.json"
   },
   "DEV_tag": {
     "status": "PENDING",
@@ -955,7 +1498,7 @@
   },
   "PREPROD": {
     "authorization": "AUTHORIZED_AFTER_VERIFIED_DEV_AND_OWN_EXACT_SOURCE_CI_PAGES",
-    "status": "PENDING_NOT_DEPLOYED",
+    "status": "PENDING_NOT_DEPLOYED_NO_DEV_TAG_OR_BASELINE",
     "run": null,
     "attempt": null,
     "source_sha": null,
@@ -995,5 +1538,72 @@
       "status": "FAIL_PROVENANCE_MARKER_GUARD_BEFORE_SIMULATIONS_PRESERVED",
       "assigned_fresh_artifacts_PASS": false
     }
-  ]
+  ],
+  "publication_accepted": false,
+  "publication_workflow_history": [
+    {
+      "status": "PUB1_CI_FAILURE_PRESERVED_NOT_ACCEPTED",
+      "publication": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+      "CODE": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "CI": {
+        "run": 44939109067,
+        "status": "FAILURE",
+        "seconds": 518.0,
+        "Node_PASS": 1896,
+        "Python_PASS": 173,
+        "standalone_browser_PASS": 1,
+        "main_programs": 60,
+        "main_and_cloud_complete": false,
+        "main_programs_not_completed": 60,
+        "cloud_programs_not_run": 18,
+        "cause": "First mainbrowser building-cache fixture expects cache22 before browser launch; runtime correctly uses cache23. Four other current singleton imports in building-stages also require cache23. Fix scope is five current fixture references across two Python tests, with assertions and historical negatives retained.",
+        "full_CI_PASS_claimed": false,
+        "raw_report": "/workspace/work/advisor-layout-20261121/release/CI-44939109067-1/CI-summary.json",
+        "raw_log_sha256": "f4a0a0f03fcfca56b6b466d07eece6e23d6e15795625ff0ad7f06b7c6738354c"
+      },
+      "Pages": {
+        "run": 44939109035,
+        "status": "SUCCESS",
+        "seconds": 38.0,
+        "source_bound_only_to_this_PUB": true,
+        "normal_TLS_content_files": 466,
+        "normal_TLS_content_bytes": 96673009,
+        "both_XLSX_separately_exact": true
+      },
+      "package_snapshot": {
+        "archive": "/workspace/work/advisor-layout-20261121/release/committed-frontend-4f873f4.tar.gz",
+        "archive_sha256": "7dcf76b9e9719f77a3a37d4c124918b0f16d0974daa88d650e84872a5b09f47c",
+        "commit": "4f873f489ca7332dfa32647c78cd3debe19d952a",
+        "file_count": 467,
+        "frontend_dir": "/workspace/work/advisor-layout-20261121/release/verified-local-frontend-4f873f4",
+        "manifest_sha256": "6d00006be836b09e07cad6c2cfdbe4874ada57e2f90caf11ee5c9205c96ae9b6",
+        "total_bytes": 96729691
+      },
+      "DEV_tag_created": false,
+      "GCP_dispatched": false,
+      "account_baseline_captured": false,
+      "PREPROD_tag_created": false,
+      "raw_reports_preserved": true,
+      "root_owns_test_fix_newPUB_and_acceptance": true,
+      "corrected_local_test_fixtures": {
+        "status": "THREE_FULL_BROWSER_PROGRAMS_PASS_ROOT_CONFIRMED",
+        "audit": "/workspace/work/advisor-layout-20261121/cache23-fixture-readonly-audit.json",
+        "diff": "/workspace/work/advisor-layout-20261121/test-only-cache23/exact-test-only.diff",
+        "changed_current_references": 5,
+        "changed_Python_files": 2,
+        "assertions_timeouts_historical_negatives_preserved": true,
+        "runtime_and_canonical_artifacts_unchanged": true,
+        "new_publication_acceptance": false
+      }
+    }
+  ],
+  "next_publication": {
+    "source_sha": null,
+    "CI": "PENDING_NEW_OWN_EXACT_SOURCE",
+    "Pages": "PENDING_NEW_EXACT_SOURCE",
+    "DEV_tag": "PENDING_NOT_CREATED",
+    "PREPROD": "PENDING_NOT_DISPATCHED",
+    "account_baseline": "NOT_CAPTURED",
+    "runtime_and_artifact_CODE": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4"
+  }
 }

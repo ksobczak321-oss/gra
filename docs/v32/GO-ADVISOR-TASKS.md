@@ -2,6 +2,15 @@
 
 **Zamrożony CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`; lokalne testy, świeże artefakty i pakiet 28 mają PASS. Publikacja pozostaje PENDING.** PUB, push, własny CI 79, Pages, tagi i standardowy PRE-PROD wymagają własnych dowodów. Poprzednie odebrane DEV/PRE-PROD nadal mają 0.15.3.0/cache22/fc95, z zachowaną historią jawnie potwierdzonego restartu właściciela admin1. Obowiązuje wcześniejsza autoryzacja standardowego PRE-PROD po zweryfikowanym DEV; bez resetu, haseł, PROD lub DNS. [Dokładne dowody](ADVISOR-TASKS-EVIDENCE.json).
 
+
+## Pierwsza publikacja cache23 — CI FAILURE, nowe źródło oczekuje
+
+PUB `4f873f489ca7332dfa32647c78cd3debe19d952a` ma własny **CI44939109067 FAILURE 8 min 38 s**. 1896 Node, 173 Python, master, redakcyjny Excel, minigry i osobny program minigier przeszły. Pierwszy główny program `building-cache` zatrzymał się przed uruchomieniem przeglądarki: aktualna fikstura oczekiwała cache22 wobec poprawnego runtime23. **60 głównych i 18 chmurowych programów nie wykonano**; nie deklarujemy pełnego CI PASS. Rzeczywiste raporty i logi pozostają zachowane.
+
+Poprawiono wyłącznie pięć bieżących odwołań w dwóch plikach testów Python: jedno oczekiwanie cache i cztery importy współdzielonego modułu etapów. Asercje, limity i historyczne kontrole negatywne zachowano. Trzy pełne programy przeglądarkowe przeszły na niezmienionych bajtach 4f: rzeczywiste starty cache i kontrole negatywne, wydajność oraz 200 grafik /160 pozycji żurawia. Runtime, ekonomia, CODE ace6 i kanoniczne artefakty pozostały identyczne bajtowo.
+
+Pages44939109035 tego źródła ma osobny **SUCCESS 38 s**: 466 plików treści /96 673 009 bajtów przez normalny TLS oraz oba XLSX zweryfikowane oddzielnie. Jest to dowód publikacji własnych bajtów 4f; nie zalicza następnego źródła. Nowy PUB2, własny CI i Pages są PENDING. Nie utworzono nowego tagu DEV/PRE-PROD, nie uruchomiono GCP ani nie pobrano nowej bazowej kontroli kont. Odebrane PRE-PROD nadal fc95/cache22;195 ręcznych przypadków NOT RUN.
+
 ## CODE i kanoniczne artefakty gotowe lokalnie — publikacja PENDING
 
 Źródło kodu i eksportów **`ace6fb06bb20a65b20a363722cdf35a0799fb1c4`** jest zamrożone. Względem pierwszego CODE 6e7 zmieniono wyłącznie jeden marker pochodzenia tekstu w eksporterze; runtime i testy są identyczne bajtowo. Zachowany pierwszy FAIL zatrzymał eksport tekstów przed symulacjami i nie otrzymuje świeżego PASS. Nowy pełny pipeline i świeża walidacja mają własny PASS przypięty do nowego CODE.
