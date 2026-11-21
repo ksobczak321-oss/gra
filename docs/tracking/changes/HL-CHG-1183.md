@@ -8,8 +8,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `local_ready_final_Node_infra_eight_UI_PASS` |
-| DEV | `LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING` |
+| Implementacja | `implemented_frozen_CODE_local_verified` |
+| DEV | `LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING` |
 | CI | `PENDING_OWN_EXACT_SOURCE_CI_PAGES` |
 | PRE-PROD | `AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION` |
 | PROD | `postponed_by_user` |
@@ -39,13 +39,14 @@ Data pierwotnej wiadomości: 2026-11-21. Europe/Warsaw
 - **Dokumenty:** [docs/v32/GO-ADVISOR-TASKS.md](../../v32/GO-ADVISOR-TASKS.md), [docs/v32/ADVISOR-TASKS-EVIDENCE.json](../../v32/ADVISOR-TASKS-EVIDENCE.json)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0188 — Układ Doradcy: cel i równoległe karty zadań](../../testing/manual/HL-TC-0188.md) — `NOT RUN`.
 
-Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN.
+CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN.
 
 ## Relacje
 

@@ -4,11 +4,12 @@
 
 
 
-## Kandydat DEV 0.15.3.1 / cache23 — lokalne testy PASS, publikacja PENDING
 
-Po końcowym doprecyzowaniu przyjaznego tonu i adaptacji celu pełny frontend ma 1711/1711 PASS; backend 178, planszówka 7, 145 Python i 8 lokalnych programów UI również PASS. Niezmieniony watchdog 96 h: 8866.634829 ms <10 000 ms. Kierunkowe 60, wcześniejsze 510 i nowe 9+25 mają osobne raporty. Poprzednie 1704 PASS oraz pierwszy FAIL stagingu pozostają historią. Nie zastępują końcowego źródła, jego artefaktów lub własnegoCI.
+## Kandydat DEV 0.15.3.1 / cache23 — CODE i lokalny odbiór gotowe, publikacja PENDING
 
-Nowy Doradca przedstawia jeden cel, 2–5 kart i wszystkie uporządkowane instrukcje z krótkim powodem; wspiera swobodę gracza. Automatyczny plan w Workerze dostosowuje się co 120 s rzeczywistych, a jawny cel rozmowy zachowuje osobny kontekst. Prowadzenie wskazuje mapę, a po otwarciu menu dokładną kontrolkę. CODE/PUB, eksporty, pakiet 28 po eksportach, CI 79 / Pages, tagi i nowy standardowy PRE-PROD są **PENDING**. Oczekiwany pakiet 467 plików wymaga rzeczywistej weryfikacji. Odebrane fc95/cache22 z historią restartu właściciela admin1 pozostaje poniżej bez zmian. 519 kart / 195 przypadków NOT RUN; bez resetu, PROD, DNS i zmian haseł. [Zakres](v32/GO-ADVISOR-TASKS.md) · [Dowody](v32/ADVISOR-TASKS-EVIDENCE.json).
+Zamrożony CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4` ma pełny lokalny frontend 1711, backend 178, planszówkę 7 i 8 programów UI PASS. Po rzeczywistym pakiecie 28 po eksportach suma Python wynosi 173 PASS. Świeże kanoniczne artefakty i niezależna walidacja nowego źródła mają PASS. Pierwszy CODE 6e7 zatrzymał się na starym markerze pochodzenia tekstu; jego surowy FAIL pozostaje historią. Jedyna poprawka dotyczy markera eksportera, runtime/testy bez zmian.
+
+Master ma 164 kart i 66801 wierszy, redakcyjny Excel 6/413; dokładne hashe i porównania opisano w dowodach. PUB/push, własny CI 79, Pages, pakiet publiczny, tag DEV i nowy standardowy PRE-PROD nadal **PENDING**. Odebrane fc95/cache22 oraz jego historia restartu właściciela admin1 pozostają poniżej bez zmian. 519 kart / 195 przypadków NOT RUN; bez resetu, PROD, DNS i zmian haseł. [Zakres](v32/GO-ADVISOR-TASKS.md) · [Dowody](v32/ADVISOR-TASKS-EVIDENCE.json).
 
 ## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 

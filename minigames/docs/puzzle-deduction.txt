@@ -110,7 +110,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-deduction.
 
-Źródło katalogu: f6572ee7500b42f56d1575de2e173d1bd635216c.
+Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
 
 Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

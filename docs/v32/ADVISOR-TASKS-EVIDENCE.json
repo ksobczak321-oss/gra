@@ -3,7 +3,7 @@
   "timezone": "Europe/Warsaw",
   "version": "0.15.3.1",
   "cache": "frontend-v32-23",
-  "status": "LOCAL_NODE_INFRA_EIGHT_UI_PASS_CODE_ARTIFACTS_AND_PUBLICATION_PENDING",
+  "status": "SOURCE_FROZEN_LOCAL_COMPLETE_CANONICAL_READY_NOT_PUBLISHED",
   "authorization": {
     "kind": "current_user_advisor_reorganization_and_real_time_planner",
     "scope": "DEV_GIT_OWN_CI_PAGES_THEN_STANDARD_PREPROD",
@@ -25,10 +25,10 @@
     "owner_admin1_restart_is_historical_and_narrow": true,
     "new_release_must_have_own_account_audit": true
   },
-  "code_source_sha": null,
+  "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
   "publication_source_sha": null,
   "implementation": {
-    "status": "LOCAL_READY_FINAL_ROOT_TESTS_PASS_CODE_FREEZE_PENDING",
+    "status": "FROZEN_CODE_LOCAL_VERIFIED_CANONICAL_AND_POST_EXPORT_BUNDLE_PASS",
     "presence_of_working_files_is_not_acceptance": true,
     "final_source_not_verified": true
   },
@@ -57,7 +57,7 @@
     "automatic_recommendations_not_pinned_by_previous_automatic_selection_or_one_off_topic": true
   },
   "local_tests": {
-    "status": "PASS_LOCAL_FULL_FRONTEND_INFRA_EIGHT_UI_POST_EXPORT_BUNDLE_PENDING",
+    "status": "PASS_LOCAL_FULL_FRONTEND_INFRA_EIGHT_UI_AND_POST_EXPORT_BUNDLE",
     "independent_model_parity": {
       "status": "PASS",
       "checks": 510,
@@ -132,7 +132,7 @@
       "sha256": "8d3969491dbd2a6ff2dd9286fdbd2b411d35b4d960e8e427a54266848c0823f4"
     },
     "full_backend_and_board": "PENDING_ROOT",
-    "full_Python": "145_PASS_BEFORE_POST_EXPORT_BUNDLE28_PENDING",
+    "full_Python": "173_PASS_ACTUAL145_PLUS_POST_EXPORT28",
     "final_source_browser_suites": "PASS_EIGHT_LOCAL_PROGRAMS_NOT_OWN_CI_OR_HOSTED_ACCEPTANCE",
     "raw_previous_failures_preserved": true,
     "pre_steering_full_frontend": {
@@ -464,11 +464,479 @@
       "duration_ms": 8866.634829,
       "limit_ms": 10000,
       "limit_changed": false
+    },
+    "post_export_bundle": {
+      "status": "PASS",
+      "tests": 28,
+      "seconds": 14.315,
+      "path": "/workspace/work/advisor-layout-20261121/bundle28-final.log",
+      "sha256": "a13e6a82a08ba70b3db585541200bb94ada292ea8e931b18a9b6b2d4757e1e75"
+    },
+    "CODE_transition": {
+      "from": "6e7f593c7d6f7f23ac9ef095efefadb30e952cbe",
+      "to": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "only_changed_path": "scripts/export_workbook_v15_texts.mjs",
+      "root_identity_report": "/workspace/work/advisor-layout-20261121/CODE2-runtime-test-identity.json",
+      "exact_single_provenance_marker_replacement": true,
+      "runtime_and_test_sources_byte_exact": true,
+      "prior_1711_full_frontend_proof_remains_scoped_to_identical_runtime_test_sources": true
     }
   },
   "canonical_artifacts": {
-    "status": "PENDING_FOR_FROZEN_NEW_CODE",
-    "old_f657_artifacts_not_claimed_for_new_source": true
+    "status": "PASS_FRESH_EXACT_CODE",
+    "summary_path": "/workspace/work/advisor-layout-20261121/artifacts-attempt2/canonical-artifacts-summary.json",
+    "summary_sha256": "880efb65983eac7322189637ea28b917bf4da7899b962d15b94c03b1a06003ef",
+    "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+    "report": {
+      "status": "PASS",
+      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "version": "0.15.3.1",
+      "steps": [
+        {
+          "step": "facts-export",
+          "command": [
+            "node",
+            "scripts/export_workbook_v15_facts.mjs",
+            "--output",
+            "/workspace/work/advisor-layout-20261121/artifacts-attempt2/exports/facts.json"
+          ],
+          "exit_code": 0,
+          "seconds": 14.44059103499967
+        },
+        {
+          "step": "texts-export",
+          "command": [
+            "node",
+            "scripts/export_workbook_v15_texts.mjs",
+            "--output",
+            "/workspace/work/advisor-layout-20261121/artifacts-attempt2/exports/texts.json"
+          ],
+          "exit_code": 0,
+          "seconds": 3.439250709998305
+        },
+        {
+          "step": "scenarios-export",
+          "command": [
+            "node",
+            "scripts/export_workbook_v15_scenarios.mjs",
+            "--output",
+            "/workspace/work/advisor-layout-20261121/artifacts-attempt2/exports/scenarios.json"
+          ],
+          "exit_code": 0,
+          "seconds": 85.0942629980018
+        },
+        {
+          "step": "scenarios-real-repeat",
+          "command": [
+            "node",
+            "scripts/export_workbook_v15_scenarios.mjs",
+            "--output",
+            "/workspace/work/advisor-layout-20261121/artifacts-attempt2/deterministic-repeat/scenarios.json"
+          ],
+          "exit_code": 0,
+          "seconds": 84.0139112049983
+        },
+        {
+          "step": "master-build",
+          "command": [
+            "python3",
+            "scripts/build_workbook_v15.py",
+            "--source-ref",
+            "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+            "--exports-dir",
+            "/workspace/work/advisor-layout-20261121/artifacts-attempt2/exports"
+          ],
+          "exit_code": 0,
+          "seconds": 39.07655166100085
+        },
+        {
+          "step": "master-fresh-validate",
+          "command": [
+            "python3",
+            "scripts/build_workbook_v15.py",
+            "--validate-only",
+            "--source-ref",
+            "ace6fb06bb20a65b20a363722cdf35a0799fb1c4"
+          ],
+          "exit_code": 0,
+          "seconds": 45.92858938099744
+        },
+        {
+          "step": "editorial-build",
+          "command": [
+            "python3",
+            "scripts/build_editorial_six_tabs.py"
+          ],
+          "exit_code": 0,
+          "seconds": 0.7939655819973268
+        },
+        {
+          "step": "editorial-validate",
+          "command": [
+            "python3",
+            "scripts/validate_dev_copy_workbook.py"
+          ],
+          "exit_code": 0,
+          "seconds": 0.3463604540011147
+        },
+        {
+          "step": "minigames-export",
+          "command": [
+            "node",
+            "scripts/export_minigame_catalog.mjs",
+            "--source-ref",
+            "ace6fb06bb20a65b20a363722cdf35a0799fb1c4"
+          ],
+          "exit_code": 0,
+          "seconds": 0.21451816799890366
+        },
+        {
+          "step": "minigames-documents-build",
+          "command": [
+            "python3",
+            "scripts/build_minigame_documents.py"
+          ],
+          "exit_code": 0,
+          "seconds": 5.785086404001049
+        },
+        {
+          "step": "minigames-catalog-check",
+          "command": [
+            "node",
+            "scripts/export_minigame_catalog.mjs",
+            "--source-ref",
+            "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+            "--check"
+          ],
+          "exit_code": 0,
+          "seconds": 0.2678597369995259
+        },
+        {
+          "step": "minigames-documents-check",
+          "command": [
+            "python3",
+            "scripts/build_minigame_documents.py",
+            "--check"
+          ],
+          "exit_code": 0,
+          "seconds": 5.8807577379993745
+        }
+      ],
+      "master": {
+        "sheets": 164,
+        "current_sheets": 64,
+        "rows": 66801,
+        "source_files": 136,
+        "bytes": 8365051,
+        "sha256": "0e91fe4182890d9f59dc6db8450980d2221496be3d38942864a1f8790fa8eaee",
+        "history": {
+          "historical_sheets_unchanged": 100,
+          "historical_zip_parts_unchanged": 220,
+          "historical_comments_unchanged": 48,
+          "historical_cached_formulas_unchanged": 4982
+        },
+        "formula_samples": 160
+      },
+      "editorial": {
+        "sheets": 6,
+        "rows": 413,
+        "C_all_blank": true,
+        "source_files": 117,
+        "bytes": 60328,
+        "sha256": "ddbbad979126ed87818e75405670e21c9b7214627f24e6014e9ec52eaa9e5fee"
+      },
+      "editorial_identity": {
+        "status": "PASS",
+        "baseline_publication": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "sheets": [
+          {
+            "name": "Tutorial",
+            "header_and_data_rows": 56,
+            "ABC_exact": true,
+            "C_data_blank": true
+          },
+          {
+            "name": "Budynki — opisy",
+            "header_and_data_rows": 25,
+            "ABC_exact": true,
+            "C_data_blank": true
+          },
+          {
+            "name": "Budynki — informacje",
+            "header_and_data_rows": 31,
+            "ABC_exact": true,
+            "C_data_blank": true
+          },
+          {
+            "name": "Dolny pasek",
+            "header_and_data_rows": 25,
+            "ABC_exact": true,
+            "C_data_blank": true
+          },
+          {
+            "name": "Komunikaty",
+            "header_and_data_rows": 216,
+            "ABC_exact": true,
+            "C_data_blank": true
+          },
+          {
+            "name": "Przyciski",
+            "header_and_data_rows": 66,
+            "ABC_exact": true,
+            "C_data_blank": true
+          }
+        ],
+        "total_rows_including_headers": 419,
+        "data_rows": 413,
+        "all_ABC_values_exact": true,
+        "C_all_blank": true,
+        "fields_excluded": false
+      },
+      "guidance_counts": {
+        "firstIntroductionSteps": 28,
+        "tourSteps": 28,
+        "archiveTourSteps": 56,
+        "menuInformationTopics": 8,
+        "advisorExamplePlans": 12,
+        "advisorExampleTasks": 30,
+        "advisorExampleActions": 88,
+        "advisorLanguages": [
+          "pl",
+          "en"
+        ],
+        "advisorIntervalMs": 120000,
+        "advisorSemanticActions": 8,
+        "advisorPolicyRows": 20,
+        "practicalTutorialEnabled": false,
+        "tourVariants": 10,
+        "activeTourVariants": 4,
+        "archiveTourVariants": 6,
+        "lessons": 25,
+        "developmentCopy": 490,
+        "buildingIds": 20,
+        "buildingVariants": 22,
+        "labels": 200,
+        "translationRows": 2558,
+        "conditionalTextCandidates": 11294,
+        "staticHtmlTexts": 388,
+        "applicationFiles": 135,
+        "astNodes": 496586,
+        "functions": 7537,
+        "constants": 10401,
+        "conditionBranches": 20947,
+        "sourceChunks": 230
+      },
+      "economic_outputs": {
+        "status": "PASS",
+        "before_source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "after_source": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "numeric_table_count": 13,
+        "tables": [
+          {
+            "id": "levels",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "building-levels",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "products",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "recipe-levels",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "research",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "research-levels",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "direct-routes",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "study-and-military",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "military-outcomes",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "roads",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "population",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "parameters",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          },
+          {
+            "id": "validated-examples",
+            "identical": true,
+            "difference_count": 0,
+            "first_differences": []
+          }
+        ],
+        "other_facts_exact": {
+          "catalogs": true,
+          "rules": true,
+          "initialState": true,
+          "currentVsPending": true
+        },
+        "all_200_building_art_rows_exact": true,
+        "no_economic_tolerance_used": true
+      },
+      "actual_simulations": {
+        "status": "PASS",
+        "before_source": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "after_source": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "profiles": [
+          {
+            "id": "bez-pracy",
+            "hours": 24,
+            "before_sha256": "f4c061ae46fed2d846e8a3d569729d7468831562c238cb8f5417269239c5b11f",
+            "after_sha256": "f4c061ae46fed2d846e8a3d569729d7468831562c238cb8f5417269239c5b11f",
+            "complete_profile_values_types_and_property_order_exact": true,
+            "difference_count": 0,
+            "differences": [],
+            "new_fixture_provenance_field_differences": 0,
+            "resource_value_differences": 0,
+            "checkpoints": 25,
+            "commands": 14
+          },
+          {
+            "id": "produkcja-24h",
+            "hours": 24,
+            "before_sha256": "4ef6df93e5eb4633898fefda5f0e974fc4152eae71a281832afb78ac155c54a6",
+            "after_sha256": "4ef6df93e5eb4633898fefda5f0e974fc4152eae71a281832afb78ac155c54a6",
+            "complete_profile_values_types_and_property_order_exact": true,
+            "difference_count": 0,
+            "differences": [],
+            "new_fixture_provenance_field_differences": 0,
+            "resource_value_differences": 0,
+            "checkpoints": 25,
+            "commands": 30
+          },
+          {
+            "id": "rozwoj-3d",
+            "hours": 72,
+            "before_sha256": "47ed290e957caa367c97d1d21db5c5a68551acd0b03ad525fa0515cd81c72f76",
+            "after_sha256": "47ed290e957caa367c97d1d21db5c5a68551acd0b03ad525fa0515cd81c72f76",
+            "complete_profile_values_types_and_property_order_exact": true,
+            "difference_count": 0,
+            "differences": [],
+            "new_fixture_provenance_field_differences": 0,
+            "resource_value_differences": 0,
+            "checkpoints": 73,
+            "commands": 143
+          }
+        ],
+        "numeric_tolerance_used": false,
+        "simulation_checks": {
+          "puzzleExamples": 120,
+          "solverSolved": 115,
+          "layoutsValidated": 120,
+          "storyVariants": 100,
+          "storyRooms": 560,
+          "campaignSteps": 152,
+          "theatrePricePoints": 1030,
+          "theatreShowCases": 10,
+          "currentSimulationProfiles": 3,
+          "allSimulationsCanonicalStart": true,
+          "noInjectedResourcesOrLevels": true
+        },
+        "scope": "Actual24/24/72h complete engine profiles, not a forecast or user save. The accepted baseline is already deterministic and includes explicit seed metadata. No UI-only numeric differences are accepted silently."
+      },
+      "new_actual_simulations_deterministic_repeat": {
+        "status": "PASS",
+        "source": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "two_actual_exports_with_full24_24_72h_profiles": true,
+        "entire_export_bytes_exact": true,
+        "before_sha256": "8fa1106c1e9a0ccfd7a194987fd8e6ff7c1335f712fe50b14bf70eac936f1467",
+        "after_sha256": "8fa1106c1e9a0ccfd7a194987fd8e6ff7c1335f712fe50b14bf70eac936f1467",
+        "bytes": 4039094,
+        "difference_count": 0,
+        "first_differences": [],
+        "profiles": [
+          {
+            "id": "bez-pracy",
+            "hours": 24,
+            "seedBasis": 1794812400000,
+            "activitySeed": 3454386051,
+            "ambientClockDuringConstruction": 1794812400000
+          },
+          {
+            "id": "produkcja-24h",
+            "hours": 24,
+            "seedBasis": 1794812400000,
+            "activitySeed": 3454386051,
+            "ambientClockDuringConstruction": 1794812400000
+          },
+          {
+            "id": "rozwoj-3d",
+            "hours": 72,
+            "seedBasis": 1794812400000,
+            "activitySeed": 3454386051,
+            "ambientClockDuringConstruction": 1794812400000
+          }
+        ],
+        "numeric_tolerance_or_fields_excluded": false
+      },
+      "accepted_0_15_3_0_identity_requirement": "Strict complete profiles, seeds, commands, checkpoints and resources versus accepted deterministic CODE f6572ee; no tolerance or excluded fields. The older uncontrolled C6 attempt remains historical evidence.",
+      "minigames": {
+        "games": 55,
+        "entries_strict_equal_accepted_0_15_3_0": true,
+        "entry_difference_count": 0,
+        "first_entry_differences": [],
+        "comparison": {
+          "catalog_gameplay_and_all_text_exact_except_verified_provenance": true,
+          "verified_source_line_updates": [],
+          "normalization_only": "Source SHA and independently verified identical-anchor line references; no text or gameplay exclusions.",
+          "TXT_and_link_index_checked": 56,
+          "DOCX_inner_parts_checked": 1045,
+          "semantic_catalog_sha256": "924f65663b1b0931966322cfe17e3560c14b472da6cf370d50e11394118db7eb"
+        },
+        "zip_bytes": 2390499,
+        "zip_sha256": "5872a18084e4a0c4521b17bb5a831993bc3b21837d17bf4ba0b8f7c040168cb2"
+      },
+      "gameplay_or_account_writes": false,
+      "all_processes_finished": true,
+      "CI_and_deploy": "ROOT_PENDING_EXACT_PUBLICATION_ACCEPTANCE"
+    }
   },
   "CI": {
     "status": "PENDING",
@@ -518,5 +986,14 @@
     "actual_build_hashes_verification": "PENDING_ROOT",
     "global_bump_changes_pre_cache_review_hashes": true,
     "no_final_package_hash_claimed": true
-  }
+  },
+  "canonical_attempt_history": [
+    {
+      "source": "6e7f593c7d6f7f23ac9ef095efefadb30e952cbe",
+      "path": "/workspace/work/advisor-layout-20261121/artifacts/pipeline-failure-20261121T185247Z.json",
+      "sha256": "ff0d3a0e9712664b7fa0bb12ca27921d797881596069e6726a0c874a1264513b",
+      "status": "FAIL_PROVENANCE_MARKER_GUARD_BEFORE_SIMULATIONS_PRESERVED",
+      "assigned_fresh_artifacts_PASS": false
+    }
+  ]
 }

@@ -32178,8 +32178,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1183; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32206,12 +32206,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32243,8 +32243,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1184; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32270,12 +32270,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32307,8 +32307,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1185; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32334,12 +32334,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32371,8 +32371,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1186; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32398,12 +32398,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32435,8 +32435,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1187; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32463,12 +32463,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32500,8 +32500,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1188; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32527,12 +32527,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32564,8 +32564,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1189; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32592,12 +32592,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32629,8 +32629,8 @@
         "reference": "chat:2026-11-21:advisor-tasks:HL-CHG-1190; docs/v32/GO-ADVISOR-TASKS.md"
       },
       "status": {
-        "implementation": "local_ready_final_Node_infra_eight_UI_PASS",
-        "dev": "LOCAL_READY_CODE_EXPORTS_PUBLICATION_PENDING",
+        "implementation": "implemented_frozen_CODE_local_verified",
+        "dev": "LOCAL_READY_CODE_CANONICAL_BUNDLE_PASS_PUBLICATION_PENDING",
         "ci": "PENDING_OWN_EXACT_SOURCE_CI_PAGES",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_AND_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
@@ -32656,12 +32656,12 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+        "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Końcowy lokalnyfrontend1711PASS po friendly/adaptive steering; backend 178/board7/Python145 i8UI PASS. Bundle28poeksportach/CODE/PUB/ownCI 79 / Pages/standardPREPROD PENDING. Dawne1704PASS i pierwszyFAIL stagingu zachowane. Manual195NOT_RUN."
+        "release_note": "CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4, local1711/178/7Node+173Python+8UI PASS; fresh canonical pipeline PASS. PUB/ownCI 79/Pages/standardPREPROD PENDING. First6e7 exporter guardFAIL preserved; runtime/tests exact after single provenance marker correction. Manual195NOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -36259,8 +36259,8 @@
     "candidate_next_release": {
       "version": "0.15.3.1",
       "cache": "frontend-v32-23",
-      "status": "LOCAL_ROOT_TESTS_PASS_CODE_EXPORTS_OWN_PUBLICATION_PENDING",
-      "source_sha": null,
+      "status": "SOURCE_FROZEN_LOCAL_COMPLETE_CANONICAL_READY_NOT_PUBLISHED",
+      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
       "publication_sha": null,
       "ci": null,
       "pages": null,
@@ -37081,14 +37081,15 @@
       "new_deployment_completed": true
     },
     "advisor_tasks_task": {
-      "status": "LOCAL_ROOT_TESTS_PASS_CODE_EXPORTS_OWN_PUBLICATION_PENDING",
+      "status": "SOURCE_FROZEN_LOCAL_COMPLETE_CANONICAL_READY_NOT_PUBLISHED",
       "version": "0.15.3.1",
       "cache": "frontend-v32-23",
       "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
       "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
       "manual_user_acceptance": "NOT_RUN",
       "private_workspace": "/workspace/work/advisor-layout-20261121",
-      "local_checkpoint_evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+      "local_checkpoint_evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4"
     }
   }
 }

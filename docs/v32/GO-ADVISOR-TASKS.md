@@ -1,14 +1,24 @@
 # GO 0.15.3.1 — zadania i plan rozwoju Doradcy Królestwa
 
-**Kandydat DEV 0.15.3.1 / `frontend-v32-23`: PENDING.** Końcowy CODE, publikacja, testy, CI, Pages, artefakty i tagi nie są jeszcze potwierdzone. Ten dokument zapisuje nową dyspozycję użytkownika; nie potwierdza jej wdrożenia. Obecny odebrany DEV i PRE-PROD pozostaje **0.15.3.0 / cache22**, publikacja `fc95a1aadf36a115538ed0b846f9ce48fbba651b`, własny CI44926983827, Pages44926983937 i standardowy PRE-PROD44929856572/próba1. [Poprzedni odbiór](GO-ADVISOR-GUIDANCE.md) i jego [dowody](ADVISOR-GUIDANCE-EVIDENCE.json) pozostają historią tego źródła.
+**Zamrożony CODE `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`; lokalne testy, świeże artefakty i pakiet 28 mają PASS. Publikacja pozostaje PENDING.** PUB, push, własny CI 79, Pages, tagi i standardowy PRE-PROD wymagają własnych dowodów. Poprzednie odebrane DEV/PRE-PROD nadal mają 0.15.3.0/cache22/fc95, z zachowaną historią jawnie potwierdzonego restartu właściciela admin1. Obowiązuje wcześniejsza autoryzacja standardowego PRE-PROD po zweryfikowanym DEV; bez resetu, haseł, PROD lub DNS. [Dokładne dowody](ADVISOR-TASKS-EVIDENCE.json).
 
-## Lokalny checkpoint przed końcowym CODE
+## CODE i kanoniczne artefakty gotowe lokalnie — publikacja PENDING
+
+Źródło kodu i eksportów **`ace6fb06bb20a65b20a363722cdf35a0799fb1c4`** jest zamrożone. Względem pierwszego CODE 6e7 zmieniono wyłącznie jeden marker pochodzenia tekstu w eksporterze; runtime i testy są identyczne bajtowo. Zachowany pierwszy FAIL zatrzymał eksport tekstów przed symulacjami i nie otrzymuje świeżego PASS. Nowy pełny pipeline i świeża walidacja mają własny PASS przypięty do nowego CODE.
+
+Master: **164 kart / 64 bieżących / 66801 wierszy / 136 źródeł**, 8365051 bajtów, SHA256 `0e91fe4182890d9f59dc6db8450980d2221496be3d38942864a1f8790fa8eaee`. Redakcyjny Excel: 6 kart / 413 wierszy / 117 odcisków, 60328 bajtów, SHA256 `ddbbad979126ed87818e75405670e21c9b7214627f24e6014e9ec52eaa9e5fee`. Wszystkie 419 wierszy A/B/C z nagłówkami pozostają dokładnie zgodne z fc95, przy pustej C. Trzynaście tabel gospodarki i 200 wierszy grafik zachowuje pełną zgodność. Dwa rzeczywiste pełne eksporty 24/24/72 h mają ścisłe zero różnic całego JSON: 4039094 bajtów, SHA256 `8fa1106c1e9a0ccfd7a194987fd8e6ff7c1335f712fe50b14bf70eac936f1467`, bez tolerancji lub wyłączania pól. Wszystkie trzy profile są także zgodne z poprzednim f657.
+
+Minigry: **55 gier /110 instrukcji**, zachowana treść poza źródłowym SHA, 1045 części DOCX i 56 TXT z indeksem; zero przesunięć kotwic. ZIP 2390499 bajtów, SHA256 `5872a18084e4a0c4521b17bb5a831993bc3b21837d17bf4ba0b8f7c040168cb2`. Przykłady Doradcy PL/EN obejmują 12 planów, 30 kart i 88 instrukcji; tutorial 28, archiwum 56, osiem tematów i zachowany kurs 25 pozostają ujęte w aktualnym eksporcie. [Pełny raport](ADVISOR-TASKS-EVIDENCE.json) ma własne dowody nowego źródła.
+
+Rzeczywiste **28 testów pakietu po eksportach PASS** w 14.315 s uzupełnia 145 wcześniejszych: **173 Python PASS**. Pełny frontend 1711, backend 178, planszówka 7 i 8 lokalnych UI zachowują własne dowody; zgodność źródeł runtime/testów potwierdzono między CODE. PUB/push, własny CI 79/Pages, publiczne bajty, tag DEV i standardowy PRE-PROD nadal **PENDING**. 519 kart / 195 ręcznych przypadków NOT RUN.
+
+## Historia — checkpoint przed końcowym CODE
 
 Planista, UI i prowadzenie zostały zgłoszone jako zamrożone do integracji wersji/cache. Niezależny odczytowy przegląd ma **510 PASS** dla poziomów 1/4/5/8/20 i wszystkich budynków; właściciel planisty raportuje osobne 26+27 testów kierunkowych i lokalnego Workera. Raporty układu oraz prowadzenia PL/EN są zachowane z własnymi hashami i ograniczeniami w dowodach. To próby sprzed globalnej zmiany cache, częściowo z adresem Workera cache22, a nie odbiór końcowego źródła cache23. Pełny frontend cache23 przed późniejszym doprecyzowaniem przyjaznego tonu i adaptacyjnego celu miał **1704/1704 PASS** w210702,057066ms; ten surowy wynik pozostaje PRE_STEERING. Późniejsza zmiana wymaga ponowienia pełnego finału. CODE, własny CI/Pages, świeże artefakty i nowy PRE-PROD pozostają **PENDING**.
 
 Statyczna kontrola finalnej allowlisty potwierdza dokładnie pięć nowych nazw: `harborlight-v1-advisor-development-plan.js`, `harborlight-v1-advisor-development-client.js`, `harborlight-v1-advisor-development-worker.js`, `harborlight-v1-advisor-guidance.js` i `harborlight-v1-advisor-guidance.css`. Nie usunięto dawnych plików. Po dołączeniu minigier i indeksu oczekiwane są **466 plików treści / 467 wraz z generowanym manifestem wydania**; faktyczny build, rozmiary i hashe wymagają osobnej kontroli końcowego źródła.
 
-## Końcowy odbiór lokalny przed CODE — PASS, publikacja nadal PENDING
+## Historia — odbiór lokalny przed zamrożeniem CODE
 
 Rzeczywisty pełny frontend po ostatniej uwadze ma **1711/1711 PASS**, exit 0 w 217.702 s. Niezmieniony watchdog 96 h ma 8866.634829 ms przy limicie 10 000 ms. Backend 178, planszówka 7, **145 Python** i wszystkie **8 lokalnych programów UI** mają oddzielne pełne PASS w rzeczywistych logach. To razem 1896 Node w lokalnych zestawach. Zachowano wcześniejsze 1704 PASS sprzed uwagi, pierwszą usterkę stagingu i wszystkie kierunkowe raporty jako odrębne fakty.
 
