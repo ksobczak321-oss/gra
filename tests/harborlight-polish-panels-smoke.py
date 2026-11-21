@@ -14,6 +14,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer, dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -180,6 +181,7 @@ def scenario(browser, mobile, records, failures):
     page.clock.install(time=NOW)
     page.clock.pause_at(NOW)
     try:
+        install_legacy_practical_course(page)
         page.goto(ORIGIN+'/harborlight-v1-layered.html?profile=new-player', wait_until='domcontentloaded')
         page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__&&document.getElementById("loading").hidden')
         dismiss_player_offers(page)

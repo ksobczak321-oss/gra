@@ -1,5 +1,11 @@
 # HARBORLIGHT
 
+## W przygotowaniu: DEV 0.15.3.0 — Doradca i krótszy tutorial
+
+Nowe GO z 21 listopada obejmuje 28 kroków tutoriala, zachowane informacje pod „i”, tymczasowe ukrycie Samouczka i Doradcę z jednym celem oraz2–5 aktualnymi działaniami. Etykiety poziomu budynków unikają paneli. **Integracja trwa; własne CI i publikacja są PENDING.** [Zakres](docs/v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json).
+
+PRE-PROD pozostaje odebrany C6/0.15.2.4/d5ad, workflow44577083312. Ta paczka ma GO wyłącznie na DEV; konta i postęp pozostają zachowane.
+
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 
 Naprawa admin3 jest wdrożona i automatycznie odebrana na **DEV i PRE-PROD**. Kod aplikacji i źródła artefaktów: `e394ea8fe369f9dfc6615b7a96da1c3e499672e6`; odebrana publikacja: `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`, **0.15.2.4 / `frontend-v32-21`**. [Gra PRE-PROD](https://harborlight-dev.web.app/harborlight-v1-layered.html?v=frontend-v32-21).

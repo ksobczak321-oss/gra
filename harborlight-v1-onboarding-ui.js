@@ -1,5 +1,5 @@
-import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-21';
-import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-21';
+import { validateIslandName } from './harborlight-v1-profile.js?v=frontend-v32-22';
+import { introCopy, APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-22';
 
 const pick = (language, pl, en) => language === 'pl' ? pl : en;
 const valueFor = (value, language) => {
@@ -126,7 +126,7 @@ export function createIslandOnboarding(options = {}) {
     node('select', { id: 'island-onboarding-language', 'data-onboarding-language': '', name: 'language', onchange: event => { void changeLanguage(event.target.value); } },
       node('option', { value: 'pl', selected: language === 'pl' }, 'Polski'),
       node('option', { value: 'en', selected: language === 'en' }, 'English')),
-    node('small', { 'data-onboarding-language-hint': '' }, pick(language, 'Wybrany język obowiązuje także w dalszym tutorialu i samouczku. Możesz go później zmienić w Ustawieniach.', 'The selected language also applies to the tutorial and practical lessons. You can change it later in Settings.')));
+    node('small', { 'data-onboarding-language-hint': '' }, pick(language, 'Wybrany język obowiązuje w całej grze i oprowadzaniu. Możesz go później zmienić w Ustawieniach.', 'The selected language applies throughout the game and island tour. You can change it later in Settings.')));
 
   async function render(focusSelector) {
     const thisGeneration = ++generation;

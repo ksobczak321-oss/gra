@@ -1,4 +1,4 @@
-import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-21';
+import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-22';
 // Approved presentation copy only. No world state, timers or rewards are mutated.
 // User revision: 2026-11-15. Native PL/EN share stable game IDs.
 // Numeric legacy tour positions migrate once through the retained stable IDs.
@@ -986,7 +986,7 @@ export function normalizeTourProgressIndex(index = 0, routeVersion = 1) {
 }
 
 
-const V32_TOUR_TITLES = ["Twoja wyspa", "Ratusz i poziom wyspy", "Szczęście mieszkańców", "Monety", "Praca mieszkańców", "Dom i łóżka", "Posiłki i różnorodność", "Ubrani", "Nowi mieszkańcy", "Gospodarstwo", "Magazyny lokalne", "Drwale", "Kamieniołom", "Młyn", "Tartak", "Piekarnia", "Mleczarnia", "Rzeźnia", "Rybak", "Zakład skórzany", "Magazyn", "Transport towarów", "Rozbudowa", "Akademia", "Nauka mieszkańców", "Badania i odkrycia", "Koszary", "Oficerowie i wyprawy", "Kaplica", "Latarnia", "Zadania Latarni", "Zadania Królestwa", "Pożyczki dla Królestwa", "Pożyczki od Królestwa", "Depozyty Królestwa", "Teatr", "Dekoracje i atrakcje", "Ekspedycje", "Zasady minigier", "Port", "Targ", "Archipelag", "Czat i sojusze", "Liga", "Pomagam", "Ścieżki", "Tutorial i samouczek", "Ustawienia"];
+const V32_TOUR_TITLES = ["Twoja wyspa", "Ratusz i poziom wyspy", "Szczęście mieszkańców", "Monety", "Praca mieszkańców", "Dom i łóżka", "Posiłki i różnorodność", "Ubrania", "Nowi mieszkańcy", "Gospodarstwo", "Magazyny lokalne", "Drwale", "Kamieniołom", "Młyn", "Tartak", "Piekarnia", "Mleczarnia", "Rzeźnia", "Rybak", "Zakład skórzany", "Magazyn", "Transport towarów", "Rozbudowa", "Akademia", "Nauka mieszkańców", "Badania i odkrycia", "Koszary", "Oficerowie i wyprawy", "Kaplica", "Latarnia", "Zadania Latarni", "Zadania Królestwa", "Pożyczki dla Królestwa", "Pożyczki od Królestwa", "Depozyty Królestwa", "Teatr", "Dekoracje i atrakcje", "Ekspedycje", "Zasady minigier", "Port", "Targ", "Archipelag", "Czat i sojusze", "Liga", "Pomagam", "Ścieżki", "Tutorial i samouczek", "Ustawienia"];
 export const TOUR_COPY = Object.freeze({
   ...PREVIOUS_TOUR_COPY,
   ...Object.fromEntries(V4_TOUR_IDS.map((id,index) => [id, {

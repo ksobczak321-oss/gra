@@ -10,7 +10,7 @@ from pathlib import Path
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance
+from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import dismiss_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -43,6 +43,7 @@ def seed(value):
 
 def enter(browser, *, language='pl', mobile=False):
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)
+    install_legacy_practical_course(page)
     page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
     page.wait_for_function('document.getElementById("loading").hidden')
     return context, page
@@ -166,7 +167,7 @@ def onboarding_language_switch(browser, *, language, mobile):
     name.fill(draft)
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
-    expect(page.locator('[data-onboarding-title]')).to_have_text('Górny pasek — sytuacja na wyspie' if other == 'pl' else 'Top bar — your island at a glance')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Twoja wyspa' if other == 'pl' else 'Your island')
     expect(page.locator('[data-onboarding-counter]')).to_contain_text('Poznaj wyspę' if other == 'pl' else 'Explore your island')
     frozen(saved(page), original)
     assert cloud.cloud_state(UID)['islandName'] == draft
@@ -191,6 +192,7 @@ def onboarding_language_waits_for_save(browser):
         cloud.firebase(route)
 
     context.route('https://firestore.googleapis.com/**', firebase)
+    install_legacy_practical_course(page)
     page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
     page.wait_for_function('document.getElementById("loading").hidden')
     guide = page.locator('[data-island-onboarding]')
@@ -242,6 +244,7 @@ def onboarding_language_failed_save_recovers(browser):
         return cloud.firebase(route)
 
     context.route('https://firestore.googleapis.com/**', firebase)
+    install_legacy_practical_course(page)
     page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
     page.wait_for_function('document.getElementById("loading").hidden')
     guide = page.locator('[data-island-onboarding]')
@@ -286,7 +289,7 @@ def onboarding_language_failed_save_recovers(browser):
     # Recovery resumes a writable introduction, not a replacement island.
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-stage', 'tour')
-    expect(page.locator('[data-onboarding-title]')).to_have_text('Top bar — your island at a glance')
+    expect(page.locator('[data-onboarding-title]')).to_have_text('Your island')
     assert saved(page)['islandName'] == draft
     frozen(cloud.cloud_state(UID), original)
     context.close()
@@ -315,18 +318,18 @@ def persisted_tour_and_skip(browser):
     expect(guide).to_have_attribute('data-onboarding-step', first_step)
     page.locator('[data-onboarding-next]').click()
     expect(guide).to_have_attribute('data-onboarding-step', second_step)
-    # The short first introduction keeps canonical catalogue positions:
-    # top bar -> bottom menu -> one production building. Help retains all56.
-    assert first_step == 'home' and second_step == 'category-administration'
+    # The reviewed 28-step presentation retains the canonical saved indices.
+    # Its first11 topics stay in their original order.
+    assert first_step == 'home' and second_step == 'level'
     page.locator('[data-onboarding-next]').click()
-    expect(guide).to_have_attribute('data-onboarding-step', 'building-farm')
+    expect(guide).to_have_attribute('data-onboarding-step', 'happiness')
     page.locator('[data-onboarding-previous]').click()
     expect(guide).to_have_attribute('data-onboarding-step', second_step)
     page.clock.run_for(61000)
     frozen(saved(page), original)
     assert cloud.cloud_state(UID)['islandName'] == 'Port Żółtej Latarni'
     expected_index = cloud.cloud_state(UID)['onboarding']['index']
-    assert expected_index == current_tour()['positions'][1] == 51
+    assert expected_index == current_tour()['positions'][1] == 1
 
     page.reload()
     page.wait_for_function('document.getElementById("loading").hidden')
@@ -362,8 +365,8 @@ def persisted_tour_and_skip(browser):
 
 
 def complete_mobile_tour(browser):
-    # The current route explains the seven development buildings as well as
-    # the legacy island. Keep the other recovery fixtures on their old rules.
+    # The current 28-step route preserves selected building and interface
+    # explanations. Keep the other recovery fixtures on their old rules.
     original = starter(ruleset=32)
     expected = current_tour()
     seed(original)
@@ -396,10 +399,10 @@ def complete_mobile_tour(browser):
     else:
         raise AssertionError('The complete walkthrough did not finish in100 steps')
     assert ids == expected['ids'], ids
-    assert ids == ['home', 'category-administration', 'building-farm']
-    assert expected['positions'] == [0, 51, 26]
-    # The separate full-replay suite still renders every catalogue target.
-    # Shortening the initial presentation must not remove those explanations.
+    assert len(ids) == 28
+    assert expected['positions'] == list(range(11)) + [19] + list(range(21, 28)) + list(range(47, 56))
+    # Saved positions still refer to the unchanged56-entry catalogue. Menu i
+    # retains12–19 while the same reviewed presentation is used for replay.
     assert len(expected['fullIds']) == 56
     for building in expected['buildings']:
         target = 'level' if building == 'townhall' else 'building-' + building
@@ -472,6 +475,7 @@ def lost_finish_acknowledgement(browser):
         return cloud.firebase(route)
 
     context.route('https://firestore.googleapis.com/**', firestore)
+    install_legacy_practical_course(page)
     page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
     page.wait_for_function('document.getElementById("loading").hidden')
     guide = name_island(page, 'Port po utracie odpowiedzi')
@@ -544,6 +548,7 @@ def pending_introduction_idle_logout(browser):
     seed(original)
     context, page = cloud.context(browser, UID)
     context.route(cloud.ORIGIN + '/harborlight-auth.html*', lambda route: route.fulfill(content_type='text/html', body='<!doctype html><title>Login</title>'))
+    install_legacy_practical_course(page)
     page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
     page.wait_for_function('document.getElementById("loading").hidden')
     expect(page.locator('[data-island-onboarding]')).to_have_attribute('data-onboarding-stage', 'intro')
@@ -577,6 +582,7 @@ def expired_session(browser):
     context.add_init_script('if(!localStorage.getItem("qa-overnight-seeded")){localStorage.setItem(%s, %s);localStorage.setItem("qa-overnight-seeded","1");}' % (json.dumps(cloud.SESSION), json.dumps(json.dumps(previous))))
     page = context.new_page()
     page.clock.install(time=cloud.NOW)
+    install_legacy_practical_course(page)
     page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player')
     page.wait_for_url('**/harborlight-auth.html?mode=login')
     assert page.evaluate('(key)=>localStorage.getItem(key)', cloud.SESSION) is None

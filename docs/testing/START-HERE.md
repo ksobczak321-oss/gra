@@ -4,7 +4,7 @@ Każdy wiersz prowadzi do osobnego scenariusza. Wszystkie wyniki startowe to **N
 
 Najwygodniej otworzyć [interaktywną listę](qa-checklist.html): wynik PASS / FAIL / BLOCKED, notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.
 
-**Bieżąca paczka DEV 0.15.2.4:** zacznij od TC0148–0179. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **179**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
+**Bieżąca paczka DEV 0.15.3.0:** zacznij od TC0180–0187. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **187**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
 
 1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.
 2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, dostępu albo zatwierdzonej reguły to **BLOCKED** z przyczyną.
@@ -196,6 +196,14 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0177 — Cel 50 dni ma odrębny raport kosztów, ludności i zawartości](manual/HL-TC-0177.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0178 — Drogi poboczne i migracja zachowują główny postęp](manual/HL-TC-0178.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0179 — Wydanie v31 ma własne dowody i nie odznacza ręcznych prób](manual/HL-TC-0179.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0180 — Tutorial pokazuje 28 tematów i poprawnie wznawia dawną pozycję](manual/HL-TC-0180.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0181 — Osiem opisów z tutoriala pozostaje pod i we właściwych menu](manual/HL-TC-0181.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0182 — Samouczek praktyczny jest ukryty a zapisane dane pozostają](manual/HL-TC-0182.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0183 — Doradca aktualizuje jeden cel i od dwóch do pięciu działań](manual/HL-TC-0183.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0184 — Brak monet prowadzi do prawdziwej minigry i właściwej wypłaty](manual/HL-TC-0184.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0185 — Poziomy Kaplicy i Latarni są czytelne obok paneli](manual/HL-TC-0185.md) · P1 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0186 — Ukryty kurs nie blokuje misji i zachowuje reklamowy cooldown](manual/HL-TC-0186.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0187 — Bieżące rady pozostają płynne a pełna prognoza jest na żądanie](manual/HL-TC-0187.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

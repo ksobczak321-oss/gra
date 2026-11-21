@@ -259,27 +259,35 @@ test('compact, expanded and building Chapel descriptions describe a fixed blessi
 });
 
 
-test('the carrier help explains normal timing, paid tutorial acceleration and the capped food reserve', () => {
+test('carrier help preserves timing and food reserve in both current advisor and archived course variants', () => {
   const sourceCode = readFileSync(new URL('../harborlight-v1-play.js', import.meta.url), 'utf8');
   const start = sourceCode.indexOf("informationHeading('central-warehouse'");
   const end = sourceCode.indexOf("el('div', { class: 'stat-grid logistics-stats'", start);
   assert.ok(start >= 0 && end > start, 'carrier rules must remain available under the Warehouse information control');
-  const help = sourceCode.slice(start, end).match(/uiCopy\('(A carrier takes one material per trip[^'\n]+)', '([^'\n]+)'\)/);
-  assert.ok(help, 'the Warehouse information control must contain its carrier rules in both languages');
+  const helps = [...sourceCode.slice(start, end).matchAll(/uiCopy\('(A carrier takes one material per trip[^'\n]+)', '([^'\n]+)'\)/g)];
+  assert.equal(helps.length, 2, 'both the current and archived help must retain bilingual carrier rules');
+  for (const help of helps) {
   const source = help[1], livePolish = help[2];
-  const polish = assertPolish(source, 'expanded carrier help');
-  assert.match(polish, /jeden rodzaj materiału/);
-  assert.match(polish, /niepełnym ładunkiem/);
-  assert.match(polish, /w obie strony trwa 5 minut/);
-  assert.match(polish, /120 sztuk/);
-  assert.match(polish, /rezerwa żywności wynosi 50 × poziom magazynu.*najwyżej 24\. poziom/);
+  assert.doesNotMatch(livePolish, englishResidue, 'actual Polish uiCopy branch');
   assert.match(livePolish, /jeden rodzaj materiału/);
   assert.match(livePolish, /(?:niepełnym|częściowym) ładunku/);
   assert.match(livePolish, /w obie strony trwa 5 minut/);
   assert.match(livePolish, /120 sztuk/);
   assert.match(livePolish, /[Rr]ezerwa żywności wynosi 50 × poziom [Mm]agazynu.*1200 na poziomie 24/);
-  assert.match(livePolish, /[Ss]amoucz(?:ku|ek).*przyspiesz(?:anie|enia).*monety/);
+  if (source.includes('Kingdom Advisor')) {
+    assert.match(livePolish, /Doradca Królestwa.*dostawy.*rozbudowę/);
+    assert.doesNotMatch(livePolish, /samoucz/i);
+  } else {
+    const polish = assertPolish(source, 'archived carrier translation');
+    assert.match(polish, /jeden rodzaj materiału/);
+    assert.match(polish, /niepełnym ładunkiem/);
+    assert.match(polish, /w obie strony trwa 5 minut/);
+    assert.match(polish, /120 sztuk/);
+    assert.match(polish, /rezerwa żywności wynosi 50 × poziom magazynu.*najwyżej 24\. poziom/);
+    assert.match(livePolish, /[Ss]amoucz(?:ku|ek).*przyspiesz(?:anie|enia).*monety/);
+  }
   assert.doesNotMatch(livePolish, /sześciu tragarzy|30 sekund|Ratuszu 2/);
+  }
   const state = createState(NOW);
   assert.equal(foodReserve(state), 50);
   state.buildings.warehouse.level = 24;

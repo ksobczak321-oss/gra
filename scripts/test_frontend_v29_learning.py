@@ -11,9 +11,11 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import sys
 from playwright.sync_api import expect, sync_playwright
 
 SOURCE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(SOURCE / 'tests'))
 BASE = SOURCE / 'tests' / 'harborlight-release-v28-smoke.py'
 spec = importlib.util.spec_from_file_location('v29_learning_browser_base', BASE)
 base = importlib.util.module_from_spec(spec)

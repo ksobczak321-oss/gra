@@ -9,6 +9,7 @@ from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
 from helpers.building_stage_acceptance import staged_manifest, assert_scene, assert_art
+from helpers.browser_offers import dismiss_player_offers
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -58,6 +59,7 @@ with sync_playwright() as p:
         page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
         page.goto(BASE+'/harborlight-v1-layered.html', wait_until='networkidle')
         page.wait_for_function('document.getElementById("loading").hidden',timeout=30000)
+        dismiss_player_offers(page)
         page.locator('[data-v32-building]').first.wait_for()
         assert page.locator('[data-v32-building]').count()==7
         assert page.locator('[data-v32-building] .v32-building-art,[data-v32-building] img,.v32-map-label').count()==0
@@ -79,7 +81,10 @@ with sync_playwright() as p:
             if not touch:
                 hit.hover()
                 page.wait_for_timeout(160)
-                assert marker.evaluate('(e)=>getComputedStyle(e,"::after").visibility')=='visible',key
+                tooltip=page.locator('#map-building-tooltip')
+                expect(tooltip).to_be_visible()
+                expect(tooltip).to_have_attribute('data-map-label-for','hit-world-'+key)
+                expect(tooltip).to_have_text(marker.get_attribute('data-label'))
             hit.click()
             panel=page.locator(f'[data-v32-panel="{key}"]')
             panel.wait_for(state='visible')

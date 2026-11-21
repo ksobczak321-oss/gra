@@ -1,5 +1,11 @@
 # Zasady pracy nad HARBORLIGHT
 
+## GO DEV 0.15.3.0 — tutorial i Doradca, 21 listopada 2026
+
+Bieżący pakiet jest w integracji: **0.15.3.0 / `frontend-v32-22`**, 28 kroków tutoriala, osiem tematów pod „i”, ukryty zachowany Samouczek 25 lekcji, Doradca 1 cel / 2–5 akcji oraz widoczne etykiety poziomów. Własny CODE, publikacja, CI, Pages i tag pozostają PENDING. [Dokładny zakres](docs/v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json).
+
+GO obejmuje **tylko DEV/Git/CI/Pages**. Publiczny DEV i PRE-PROD do odrębnej publikacji zachowują odebrane C6/d5ad; PRE-PROD44577083312 nie przyjmuje nowego kodu. Nie uruchamiaj promocji tej paczki, resetu, PROD lub DNS bez nowego polecenia. Zachowaj postęp i flagi kursu. Historyczne testy włączonego kursu używają izolowanej fikstury; domyślne wyłączenie ma osobny odbiór. 511 kart / 187 ręcznych przypadków, wszystkie NOT RUN.
+
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 
 Naprawa admin3 jest wdrożona i automatycznie odebrana na **DEV i PRE-PROD**. Kod aplikacji i źródła artefaktów: `e394ea8fe369f9dfc6615b7a96da1c3e499672e6`; odebrana publikacja: `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`, **0.15.2.4 / `frontend-v32-21`**. [Gra PRE-PROD](https://harborlight-dev.web.app/harborlight-v1-layered.html?v=frontend-v32-21).

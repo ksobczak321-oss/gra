@@ -1,4 +1,5 @@
 .kingdom-advisor{position:fixed;left:16px;bottom:18px;width:270px;z-index:37;font:14px/1.45 system-ui,sans-serif;color:#e6f0f2;isolation:isolate}
+.kingdom-advisor,.kingdom-advisor *{box-sizing:border-box}
 .kingdom-advisor[hidden],.kingdom-advisor [hidden]{display:none!important}
 .kingdom-advisor button,.kingdom-advisor input{font:inherit}
 .kingdom-advisor button{cursor:pointer;color:#f2ddb0;background:#21465b;border:1px solid #6a8994;border-radius:8px;min-height:36px;padding:6px 10px}
@@ -24,6 +25,9 @@
 .kingdom-advisor-answer ol{padding-left:21px;margin:12px 0}
 .kingdom-advisor-answer li{margin:0 0 12px}
 .kingdom-advisor-answer li button{font-size:12px;min-height:32px}
+.kingdom-advisor-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.kingdom-advisor [data-advisor-task]{text-wrap:balance}
+.kingdom-advisor [data-advisor-current]{border-color:#d5b169;color:#ffe2a1}
 .kingdom-advisor-estimate{font-size:12px;color:#e8cb93}
 .kingdom-advisor-followups,.kingdom-advisor-chips{display:flex;flex-wrap:wrap;gap:6px}
 .kingdom-advisor-followups button,.kingdom-advisor-chips button{font-size:11px;min-height:32px}

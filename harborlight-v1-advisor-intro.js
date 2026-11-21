@@ -1,36 +1,116 @@
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-21';
-import { APPROVED_TOUR_IDS } from './harborlight-v1-approved-copy.js?v=frontend-v32-21';
+import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-22';
+import { APPROVED_TOUR_IDS, APPROVED_TOUR_VERSION, getTourCopy, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-22';
 
-// Keep the full, reviewed catalogue and its stable persisted positions intact.
-// Only the initial presentation is shortened; Help can still replay the catalogue.
-export const ADVISOR_INTRO_IDS = Object.freeze(['home','category-administration','building-farm']);
-const positions = ADVISOR_INTRO_IDS.map(id => APPROVED_TOUR_IDS.indexOf(id));
-export function introductionIndex(savedIndex) {
-  if (savedIndex === positions[1]) return 1;
-  if (savedIndex === positions[2]) return 2;
-  // A legacy paused tour resumes at a relevant short explanation, never resets play.
-  return savedIndex >= APPROVED_TOUR_IDS.indexOf('building-townhall') ? 2 : 0;
+// Presentation positions are separate from the stable 56-entry saved catalogue.
+// This keeps every old pause/resume position valid without rewriting a world.
+export const ADVISOR_INTRO_IDS = Object.freeze([
+  ...APPROVED_TOUR_IDS.slice(0, 11),
+  'chat', // The former Chat and League explanations now share one stop.
+  ...APPROVED_TOUR_IDS.slice(21, 28),
+  ...APPROVED_TOUR_IDS.slice(47, 56)
+]);
+const positions = Object.freeze(ADVISOR_INTRO_IDS.map(id => APPROVED_TOUR_IDS.indexOf(id)));
+
+export const TOUR_MENU_INFORMATION_IDS = Object.freeze({
+  kingdom: Object.freeze(APPROVED_TOUR_IDS.slice(11, 15)),
+  expeditions: Object.freeze(APPROVED_TOUR_IDS.slice(15, 17)),
+  archipelago: Object.freeze([APPROVED_TOUR_IDS[17]]),
+  charity: Object.freeze([APPROVED_TOUR_IDS[18]])
+});
+
+/** The removed 12–19 explanations stay available from their menu's i button. */
+export function tourMenuInformation(menu, language = 'pl', options = {}) {
+  return (TOUR_MENU_INFORMATION_IDS[menu] || []).map(id => ({ id, ...getTourCopy(id, language, options) }));
 }
-export const ADVISOR_INTRO_COPY = Object.freeze([
-    ['Górny pasek — sytuacja na wyspie','Spójrz na górny pasek. Tutaj sprawdzisz poziom wyspy, szczęście, monety, pracujących i mieszkańców. Przyciski obok otwierają Pomoc, ustawienia i menu gry.', 'Top bar — your island at a glance','The top bar shows your island level, happiness, coins, workers and residents. Nearby buttons open Help, settings and the game menu.'],
-    ['Dolne menu — wybierz, czym się zajmiesz','Administracja i Gospodarka prowadzą do budynków. Zasoby pokazują towary i produkcję, Dekoracje — atrakcje, a Ścieżki — drogi. Wybierz kategorię, a potem interesujący Cię element.', 'Bottom menu — choose your next action','Administration and Economy lead to buildings. Resources shows goods and production, Decorations shows attractions, and Paths shows roads. Choose a category, then an item.'],
-    ['Gospodarstwo — jeden przykład produkcji','Kliknij Gospodarstwo, przydziel wolnych mieszkańców i wybierz produkt. Towary trafiają najpierw do magazynu lokalnego, skąd odbierają je tragarze z Magazynu. Po rozpoczęciu gry doradca w lewym dolnym rogu pomoże zaplanować kolejne kroki. Jego rady są dobrowolne.', 'Farm — one production example','Open the Farm, assign free residents and choose a product. Goods first enter local storage, then Warehouse carriers collect them. Once play starts, the advisor in the lower-left corner can help you plan. Advice is optional.']
-  ]);
-export function createAdvisorIntroduction(options) {
-  const language = () => options.getLanguage?.() || options.language || 'pl';
-  const pl = () => language() !== 'en';
-  const visible = selectors => selectors.map(selector => document.querySelector(selector)).find(node => node?.getClientRects().length);
-  const original = options.steps;
-  const texts = ADVISOR_INTRO_COPY;
-  const steps = ADVISOR_INTRO_IDS.map((id, index) => ({...original.find(step => step.id === id), id,
-    title:() => texts[index][pl() ? 0 : 2], text:() => texts[index][pl() ? 1 : 3],
-    ...(index === 0 ? {target:() => visible(['.mobile-island-hud','.island-topbar','#hit-home'])} : {}),
-    ...(index === 1 ? {target:() => visible(['.mobile-bottom-dock','.dock-tabs','#hit-category-administration'])} : {})
-  }));
-  const translate = next => ({...next, index:positions[Math.min(2,Math.max(0,next.index ?? 0))]});
-  const inner = createIslandOnboarding({...options, steps, index:introductionIndex(options.index || 0),
-    onUpdate:next => options.onUpdate?.(translate(next)), onFinish:next => options.onFinish?.(translate(next)),
-    onPause:next => options.onPause?.(translate(next))});
-  return {start:() => inner.start(), destroy:() => inner.destroy(), get active(){return inner.active;},
-    update:next => inner.update({...next,index:introductionIndex(next.index || 0)})};
+
+/** Resume a kept topic, the merged Chat topic, or the next remaining stop. */
+export function introductionIndex(savedIndex, routeVersion = APPROVED_TOUR_VERSION) {
+  const canonical = normalizeTourProgressIndex(savedIndex, routeVersion);
+  if (APPROVED_TOUR_IDS[canonical] === 'league') return ADVISOR_INTRO_IDS.indexOf('chat');
+  const exact = positions.indexOf(canonical);
+  if (exact >= 0) return exact;
+  const next = positions.findIndex(position => position > canonical);
+  return next >= 0 ? next : ADVISOR_INTRO_IDS.length - 1;
+}
+
+export function introductionSavedIndex(presentationIndex = 0) {
+  const safe = Number.isSafeInteger(presentationIndex) ? presentationIndex : 0;
+  return positions[Math.min(positions.length - 1, Math.max(0, safe))];
+}
+
+function reviewedCopy(id, language = 'pl', options = {}) {
+  const copy = getTourCopy(id, language, options);
+  if (id === 'tutorial') {
+    copy.title = language === 'en' ? 'Help and island tour' : 'Pomoc i tutorial';
+    copy.text = language === 'en'
+      ? 'The ? button opens Help, where you can resume or replay the island tour. Once play starts, the Kingdom Advisor suggests one development goal and concrete actions matched to your island. Follow the advice or choose your own plan.'
+      : 'Pod przyciskiem „?” znajdziesz Pomoc oraz możliwość wznowienia lub ponownego obejrzenia tutoriala. Po rozpoczęciu gry Doradca Królestwa podpowiada jeden cel rozwoju i konkretne działania dopasowane do Twojej wyspy. Możesz skorzystać z jego rady lub wybrać własny plan.';
+  }
+  if (id === 'clothing' && language === 'pl') copy.title = 'Ubrania';
+  if (id === 'chat') {
+    const league = getTourCopy('league', language, options);
+    copy.title = language === 'en' ? 'Chat, alliances and League' : 'Czat, sojusze i liga';
+    copy.text = [copy.text, league.text].filter(Boolean).join('\n\n');
+  }
+  return copy;
+}
+
+// Retained public bilingual catalogue for tools and non-DOM checks.
+export const ADVISOR_INTRO_COPY = Object.freeze(ADVISOR_INTRO_IDS.map(id => {
+  const pl = reviewedCopy(id, 'pl'), en = reviewedCopy(id, 'en');
+  return Object.freeze([pl.title, pl.text, en.title, en.text]);
+}));
+
+const valueFor = (value, language) => {
+  const source = typeof value === 'function' ? value(language) : value;
+  const selected = typeof source === 'string' ? source : source?.[language] ?? source?.pl ?? source?.en ?? '';
+  return String(typeof selected === 'function' ? selected(language) : selected);
+};
+
+/** Filter real target/prepare callbacks while retaining their live state copy. */
+export function createAdvisorTourSteps(original = []) {
+  const byId = new Map(original.map(step => [step.id, step]));
+  return ADVISOR_INTRO_IDS.map(id => {
+    const source = byId.get(id) || {};
+    const output = { ...source, id };
+    if (id === 'chat') {
+      const league = byId.get('league');
+      output.title = language => reviewedCopy(id, language).title;
+      output.text = language => [
+        source.text == null ? getTourCopy(id, language).text : valueFor(source.text, language),
+        league?.text == null ? getTourCopy('league', language).text : valueFor(league.text, language)
+      ].filter(Boolean).join('\n\n');
+    } else if (id === 'tutorial') {
+      output.title = language => reviewedCopy(id, language).title;
+      output.text = language => reviewedCopy(id, language).text;
+    } else if (id === 'clothing') {
+      output.title = language => language === 'pl' ? 'Ubrania' : source.title == null ? getTourCopy(id, language).title : valueFor(source.title, language);
+    }
+    if (output.title == null) output.title = language => reviewedCopy(id, language).title;
+    if (output.text == null) output.text = language => reviewedCopy(id, language).text;
+    return output;
+  });
+}
+
+export function createAdvisorIntroduction(options = {}) {
+  const steps = createAdvisorTourSteps(options.steps);
+  const translate = next => ({ ...next, index: introductionSavedIndex(next.index), routeVersion: APPROVED_TOUR_VERSION });
+  const inner = createIslandOnboarding({
+    ...options, steps,
+    index: introductionIndex(options.index, options.routeVersion),
+    routeVersion: APPROVED_TOUR_VERSION,
+    onUpdate: next => options.onUpdate?.(translate(next)),
+    onFinish: next => options.onFinish?.(translate(next)),
+    onPause: typeof options.onPause === 'function' ? next => options.onPause(translate(next)) : undefined,
+    onAfterPause: next => options.onAfterPause?.(translate(next))
+  });
+  return {
+    root: inner.root,
+    start: () => inner.start(), destroy: () => inner.destroy(),
+    get active() { return inner.active; },
+    update: next => inner.update({ ...next,
+      ...(next.index === undefined ? {} : { index: introductionIndex(next.index, next.routeVersion) }),
+      routeVersion: APPROVED_TOUR_VERSION
+    })
+  };
 }

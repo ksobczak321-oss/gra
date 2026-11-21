@@ -1,6 +1,6 @@
 // Presentation coordinates only. Building IDs, inventories, crews and saves keep
 // their existing identities when a painted building receives a different role.
-import { applyBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-21';
+import { applyBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-22';
 const freezeRows=rows=>Object.freeze(Object.fromEntries(Object.entries(rows).map(([id,value])=>[id,Object.freeze(value)])));
 
 export const MAP_BUILDING_REGIONS=freezeRows({

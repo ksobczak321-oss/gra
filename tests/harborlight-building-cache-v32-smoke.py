@@ -32,7 +32,7 @@ assert CURRENT and all(family.get('sprites') for family in CURRENT['buildings'].
 CURRENT_SHA=hashlib.sha256(CURRENT_BYTES).hexdigest()
 constant=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {BUILDING_STAGE_MANIFEST_URL} from './harborlight-v1-building-stages.js';console.log(JSON.stringify(BUILDING_STAGE_MANIFEST_URL));"],cwd=ROOT,text=True))
 CURRENT_URL='/'+constant.lstrip('/')
-assert urlsplit(CURRENT_URL).path==MANIFEST_PATH and parse_qs(urlsplit(CURRENT_URL).query).get('v')==['frontend-v32-21'], 'The current app must request its cache19 manifest URL'
+assert urlsplit(CURRENT_URL).path==MANIFEST_PATH and parse_qs(urlsplit(CURRENT_URL).query).get('v')==['frontend-v32-22'], 'The current app must request its cache19 manifest URL'
 # Reproduce the deployed rule order rather than relying on test-only headers.
 header_rules=json.loads((SOURCE/'firebase.json').read_text())['hosting']['headers']
 specific=[(i,row) for i,row in enumerate(header_rules) if row['source']==MANIFEST_PATH]

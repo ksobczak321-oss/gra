@@ -13,7 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance
+from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +46,7 @@ def enter(browser, state, *, language='pl', mobile=False):
     cloud.NOW = datetime.fromtimestamp(state['worldTimeMs'] / 1000, tz=timezone.utc)
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(state), 'revision': 7, 'updateTime': cloud.timestamp()}
     context, page = cloud.context(browser, UID, language=language, mobile=mobile)
+    install_legacy_practical_course(page)
     assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('document.getElementById("loading").hidden')
     if not state.get('tutorial', {}).get('autoOpenDisabled', False):

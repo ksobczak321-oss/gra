@@ -1,5 +1,11 @@
 # Wersja gry HARBORLIGHT
 
+## W przygotowaniu: 0.15.3.0 / frontend-v32-22
+
+Pakiet nowego GO z 21 listopada 2026 podnosi segment C: **0.15.2.4 → 0.15.3.0**, a D wraca do0. Obejmuje spójne zmiany tutoriala, zachowanego ukrytego Samouczka, Doradcy i etykiet mapy. Schemat świata 9, ruleset 32 i archipelag 2 pozostają niezależne i bez zmiany.
+
+Nowy CODE, publikacja, własny CI, Pages i tag są PENDING. Dotychczasowe publiczne DEV i PRE-PROD pozostają odebrane C6/0.15.2.4/d5ad; nowy pakiet ma GO tylko na DEV. [Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Starsze zapisy wersji poniżej są historią swoich wydań.
+
 ## DEV 0.15.1.0 — doradca i redakcja, odebrany
 
 DEV 0.15.1.0 obejmuje doradcę, trzy kroki pierwszego wprowadzenia i pięć fioletowych zakładek ABC. Bieżące źródło aplikacji to `abacd3fffc7fe033fca6c3a1e9003bb688aa4afa`; HTML i źródło pełnego mastera pozostają76a663d; arkusz redakcyjny ma aktualny odciskCSS. Moduły używają cache15, a CSS rewizji layout2. Własne CI44164876130 i Pages44164876499 SUCCESS; odebrane źródło `4dcc34ec3b462992330f88a22062070fcc0f7092`, tag `dev-0.15.1.0-20261117` potwierdzony zdalnie. Schemat9 i ruleset32 są zachowane; zakres wyłącznie DEV. [Dowody](v32/KINGDOM-ADVISOR-EVIDENCE.json).

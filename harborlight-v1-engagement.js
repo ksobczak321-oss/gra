@@ -1,5 +1,6 @@
 // Foreground-time invitations and the independent real-time session timeout.
 // The host supplies foreground seconds; background timers never create activity.
+import { practicalCourseBlocksInvitations } from './harborlight-v1-learning-policy.js?v=frontend-v32-22';
 export const SESSION_IDLE_SECONDS = 30 * 60;
 export const SESSION_WARNING_SECONDS = 30;
 const EPS = 1e-7;
@@ -59,9 +60,7 @@ function pendingOffer(schedule, kind) {
 // separate from these automatic invitations.
 export function learningBlocksInvitations(state) {
   const firstTour = state?.onboarding?.version === 1 && state.onboarding.worldStartedAt === null && ['intro', 'name', 'tour'].includes(state.onboarding.stage);
-  const tutorial = state?.tutorial;
-  const practical = !!tutorial?.version && tutorial.rewardDisabled !== true && tutorial.autoOpenDisabled !== true && Object.values(tutorial.completed || {}).filter(value => value === true).length < 25;
-  return firstTour || state?.learning?.tour?.active === true || state?.learning?.practical?.reviewActive === true || practical;
+  return firstTour || state?.learning?.tour?.active === true || practicalCourseBlocksInvitations(state);
 }
 export function invitationCooldownRemaining(state) {
   return Math.max(0, positive(state?.learning?.adsNotBeforeActiveSeconds) - ensure(state).activeSeconds);

@@ -13,7 +13,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance
+from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -79,6 +79,7 @@ def early_house_then_reload(browser):
     cloud.DOCUMENTS[UID] = {'payload': json.dumps(initial), 'revision': 5, 'updateTime': cloud.timestamp()}
     context, page = cloud.context(browser, UID)
     try:
+        install_legacy_practical_course(page)
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
         page.wait_for_function('document.getElementById("loading").hidden')
         request_practical_guidance(page)
@@ -194,6 +195,7 @@ def mobile_reward_grid(browser):
     context, page = cloud.context(browser, UID, mobile=True)
     try:
         page.set_viewport_size({'width': 360, 'height': 800})
+        install_legacy_practical_course(page)
         assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
         page.wait_for_function('document.getElementById("loading").hidden')
         request_practical_guidance(page)

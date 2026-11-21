@@ -1,59 +1,59 @@
-import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-21';
-import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-21';
-import { createAdvisorIntroduction } from './harborlight-v1-advisor-intro.js?v=frontend-v32-21';
-import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-21';
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-21';
-import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-21';
-import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-21';
-import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-21';
-import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-21';
-import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-21';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-21';
-import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-21';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-21';
-import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-21';
-import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-21';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-21';
-import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-21';
-import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-21';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-21';
-import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-21';
-import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-21';
-import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-21';
-import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-21';
-import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-21';
-import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-21';
-import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-21';
-import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-21';
-import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-21';
-import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-21';
-import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-21';
-import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-21';
-import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-21';
-import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-21';
-import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-21';
-import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-21';
-import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-21';
-import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-21';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-21';
-import { createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-21';
-import { createIslandOnboarding } from './harborlight-v1-onboarding-ui.js?v=frontend-v32-21';
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-21';
-import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-21';
-import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-21';
-import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-21';
-import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-21';
-import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-21';
-import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-21';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-21';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-21';
-import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-21';
-import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-21';
-import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-21';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-21';
-import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-21';
-import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-21';
-import { createStartupReplayClient, startupReplayGap, startupReplayIdentityKey, STARTUP_REPLAY_MIN_GAP_MS, STARTUP_REPLAY_RESIDUAL_MS } from './harborlight-v1-startup-replay.js?v=frontend-v32-21';
+import { advisorSuggestion, advisorPlan } from './harborlight-v1-advisor.js?v=frontend-v32-22';
+import { createKingdomAdvisor } from './harborlight-v1-advisor-ui.js?v=frontend-v32-22';
+import { createAdvisorIntroduction, tourMenuInformation } from './harborlight-v1-advisor-intro.js?v=frontend-v32-22';
+import { createMapBuildingLabels } from './harborlight-v1-map-labels.js?v=frontend-v32-22';
+import { resourceGraphic } from './harborlight-v1-goods-art.js?v=frontend-v32-22';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-22';
+import { mapRegionFor, mapFootprintFor, buildingArtwork, createAcceptedMapLayer } from './harborlight-v1-map-art.js?v=frontend-v32-22';
+import { loadBuildingStages, refreshBuildingStageArtwork, createBuildingStageScene, getBuildingStages, buildingStageLevel } from './harborlight-v1-building-stages.js?v=frontend-v32-22';
+import { createRequestedDevPreview, DEV_LEVEL_FIVE_PREVIEW } from './harborlight-v1-dev-preview.js?v=frontend-v32-22';
+import { normalizeRuntimeWorld } from './harborlight-v1-runtime-upgrade.js?v=frontend-v32-22';
+import * as DevelopmentLogistics from './harborlight-v1-development-logistics.js?v=frontend-v32-22';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-22';
+import { createDevelopmentUI, developmentBuildingArt, DEVELOPMENT_BUILDINGS, renderDevelopmentBuildingPanel, renderProductionControls, renderFoodControls, renderConstructionFoodMix, renderTransportControls, renderTheatreControls } from './harborlight-v1-development-ui.js?v=frontend-v32-22';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingInformation } from './harborlight-v1-development-copy.js?v=frontend-v32-22';
+import { createKingdomPanel } from './harborlight-v1-kingdom-ui.js?v=frontend-v32-22';
+import { kingdomServiceAction, giftServiceAction } from './harborlight-v1-kingdom-client.js?v=frontend-v32-22';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-22';
+import { BUILDINGS as LEGACY_BUILDINGS, RESOURCES as LEGACY_RESOURCES, EXPEDITIONS, TASKS, createState, normalizeState, act as modelAct, tick, buildingCost, canAfford, taskReady, totalWorkers, populationRateForState, housingCapacity, unhousedResidents, buildingLevelLimit, upgradeEligibility, WORKPLACE_IDS as LEGACY_WORKPLACE_IDS, workerLimit, freeWorkers, happinessGroups, workplaceUnlocked, storagePenalty, recordVisit, foodDemandPerHour, hasFoodForResidents, hungerPenaltyPerHour, residentHappiness, residentHappinessRate, productionMultiplier } from './harborlight-v1-state.js?v=frontend-v32-22';
+import { MATERIAL_IDS as LEGACY_MATERIAL_IDS, PRODUCTION_RECIPES, warehouseLimits, warehouseUsed, stockRoom, producerCapacity, marketCapacity, marketUsed, nextConstruction, constructionCounts, premiumActive, estimateMaterialsSeconds, plannedLevel } from './harborlight-v1-logistics.js?v=frontend-v32-22';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-22';
+import * as Logistics from './harborlight-v1-logistics.js?v=frontend-v32-22';
+import * as Residents from './harborlight-v1-residents.js?v=frontend-v32-22';
+import * as Missions from './harborlight-v1-missions.js?v=frontend-v32-22';
+import { createLighthouseMissionsPanel } from './harborlight-v1-missions-ui.js?v=frontend-v32-22';
+import * as Activities from './harborlight-v1-activities.js?v=frontend-v32-22';
+import * as Leisure from './harborlight-v1-leisure.js?v=frontend-v32-22';
+import * as Effects from './harborlight-v1-effects.js?v=frontend-v32-22';
+import * as Progression from './harborlight-v1-progression.js?v=frontend-v32-22';
+import * as Engagement from './harborlight-v1-engagement.js?v=frontend-v32-22';
+import * as Commerce from './harborlight-v1-commerce.js?v=frontend-v32-22';
+import * as WorldEvents from './harborlight-v1-events.js?v=frontend-v32-22';
+import { shareAchievement } from './harborlight-auth-providers.js?v=frontend-v32-22';
+import * as I18n from './harborlight-v1-i18n.js?v=frontend-v32-22';
+import { createAmbientScene } from './harborlight-v1-ambient.js?v=frontend-v32-22';
+import { profileContext, islandDisplayName, applyIslandNamePreference } from './harborlight-v1-profile.js?v=frontend-v32-22';
+import { createDevCloud, createDevTimeController, accountSaveKey } from './harborlight-dev-cloud.js?v=frontend-v32-22';
+import { createDevSync } from './harborlight-dev-sync.js?v=frontend-v32-22';
+import { buildingPurpose, buildingMenuCopy, gameGoal, residentsPurpose, warehousePurpose, lighthouseLevelName } from './harborlight-v1-copy.js?v=frontend-v32-22';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-22';
+import { PRACTICAL_TUTORIAL_ENABLED, createTutorialPanel, createTutorialGuide, showTutorialAchievement } from './harborlight-v1-tutorial-ui.js?v=frontend-v32-22';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-22';
+import { GAME_VERSION } from './harborlight-version.js?v=frontend-v32-22';
+import { createCharityPanel, createCharityPreviewAdapter, charityPortIlluminated } from './harborlight-v1-charity.js?v=frontend-v32-22';
+import { createCommunityClient, createLocalCommunityClient } from './harborlight-v1-community-client.js?v=frontend-v32-22';
+import { createCommunityPanel } from './harborlight-v1-community-ui.js?v=frontend-v32-22';
+import { APPROVED_TOUR_IDS, getTourCopy, uiCopy as approvedCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-22';
+import { createLearningFeedback, captureLearningFeedback, showTutorialExitReminder } from './harborlight-v1-learning-feedback.js?v=frontend-v32-22';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-22';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-22';
+import { createTheatrePanel } from './harborlight-v1-theatre-ui.js?v=frontend-v32-22';
+import { renderTheatreMapBuilding } from './harborlight-v1-theatre-art.js?v=frontend-v32-22';
+import { createAdventuresPanel, renderAdventureEffects } from './harborlight-v1-adventures-ui.js?v=frontend-v32-22';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-22';
+import { notificationPresentation } from './harborlight-v1-notification-copy.js?v=frontend-v32-22';
+import { captureInterruption, applyInterruption } from './harborlight-v1-interruption.js?v=frontend-v32-22';
+import { createStartupReplayClient, startupReplayGap, startupReplayIdentityKey, STARTUP_REPLAY_MIN_GAP_MS, STARTUP_REPLAY_RESIDUAL_MS } from './harborlight-v1-startup-replay.js?v=frontend-v32-22';
 
 I18n.registerTranslations(Theatre.THEATRE_TRANSLATIONS || {});
 I18n.registerTranslations(Adventures.ADVENTURE_TRANSLATIONS || {});
@@ -789,6 +789,7 @@ function toast(message) {
   toastTimer = setTimeout(() => { toastElement.hidden = true; }, 3500);
 }
 function refreshLearningFeedback() {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return;
   if (!learningFeedback) learningFeedback = createLearningFeedback({
     getState: () => state, getLanguage: language,
     isEnabled: () => practicalGuidanceRequested && tutorialReady && !state.tutorial?.autoOpenDisabled && !state.learning?.practical?.reviewActive && !replayTour?.active,
@@ -873,11 +874,11 @@ function perform(action, context = {}) {
   const previousAchievements = new Set((state.taskAchievements || []).map(item => item.id));
   const warehouseCrewBefore = action.type === 'assign' && action.building === 'warehouse' && action.delta < 0 ? state.residents.filter(person => person.workplace === 'warehouse' && !person.pendingRelease).map(person => person.id) : [];
   if (['expeditionStart', 'expeditionContinue'].includes(action.type)) { miniController?.dispose(); miniController = null; }
-  const beforeLearning = captureLearningFeedback(state);
+  const beforeLearning = PRACTICAL_TUTORIAL_ENABLED ? captureLearningFeedback(state) : null;
   const result = act(state, action, simulationNow(), context);
   lastPerformedResult = result;
   learningFeedback?.recordAction(action, beforeLearning, state, result);
-  if (result.ok && result.project && action.building === 'townhall' && result.project.targetLevel === 2 && state.tutorial?.curriculum >= 6) pendingStarterConstructionGuide = result.project;
+  if (PRACTICAL_TUTORIAL_ENABLED && result.ok && result.project && action.building === 'townhall' && result.project.targetLevel === 2 && state.tutorial?.curriculum >= 6) pendingStarterConstructionGuide = result.project;
   if (result.ok && action.type === 'dismissTutorial' && !Progression.tutorialStatus(state).finished) {
     act(state, { type: 'learningUpdate', patch: { adsNotBeforeActiveSeconds: (state.engagementSchedule?.activeSeconds || 0) + 3600 } });
   }
@@ -955,6 +956,7 @@ for (const [id, region] of Object.entries(buildingRegions)) {
 }
 // The tour points at the upper quay. The real Harbor hit area still includes
 // the lower pier; its explanation must not highlight the category navigation.
+createMapBuildingLabels();
 layer.append(el('span', { id: 'tour-port-region', 'aria-hidden': 'true',
   style: { position: 'absolute', left: '234px', top: '625px', width: Development.isDevelopment(state) ? '298px' : '482px', height: '70px', pointerEvents: 'none' } }));
 hotspot('boat', 'Ship — harbor trade', [215, 635, 219, 137], () => openPanel('trade'));
@@ -1023,7 +1025,7 @@ layer.append(leisureDock);
 function setDockCategory(id, { recordVisit = true } = {}) {
   if (!dockCategories.some(([category]) => category === id)) return;
   activeDockCategory = id;
-  if (tutorialReady && recordVisit) { act(state, { type: 'tutorialVisit', subject: id }); save(); }
+  if (PRACTICAL_TUTORIAL_ENABLED && tutorialReady && recordVisit) { act(state, { type: 'tutorialVisit', subject: id }); save(); }
   resourceDock.hidden = id !== 'resources';
   leisureDock.hidden = !['decorations', 'paths'].includes(id);
   const group = BUILDING_DOCK_GROUPS[id];
@@ -1526,6 +1528,7 @@ function lockedBuildingPanel(id) {
     el('p', { class: 'notice' }, uiCopy(`Current Town Hall level: ${state.buildings.townhall.level}.`, `Obecny poziom Ratusza: ${state.buildings.townhall.level}.`)));
 }
 function openPanel(kind, id) {
+  if (kind === 'tutorial' && !PRACTICAL_TUTORIAL_ENABLED) kind = 'help';
   if (kind === 'tutorial') practicalGuidanceRequested = true;
   if (['building', 'building-details'].includes(kind) && buildingLocked(id)) kind = 'building-locked';
   if (panel?.kind==='original-puzzle' && (kind!=='original-puzzle'||id!==panel.id)) exitOriginalPuzzle();
@@ -1539,7 +1542,7 @@ function openPanel(kind, id) {
   }
   else if (!restoringPanel && panel && panel.kind !== 'puzzle' && (panel.kind !== kind || panel.id !== id)) panelHistory.push({ ...panel, scroll: dialog.scrollTop || 0, bodyScroll: dialog.querySelector('.dialog-body')?.scrollTop || 0 });
   panel = { kind, id };
-  if (!['tutorial', 'puzzle', 'expeditions', 'building-locked'].includes(kind)) {
+  if (PRACTICAL_TUTORIAL_ENABLED && !['tutorial', 'puzzle', 'expeditions', 'building-locked'].includes(kind)) {
     act(state, { type: 'tutorialVisit', subject: ['building', 'building-details'].includes(kind) ? id : kind === 'menu' ? 'home' : kind });
     save();
   }
@@ -1571,7 +1574,7 @@ function closePanel(force = false) {
   theatreController?.destroy(); theatreController = null;
   adventuresController?.destroy(); adventuresController = null;
   if (force !== true && expeditionSession()) { requestExpeditionExit(() => closePanel(true)); return; }
-  if (force !== true && panel?.kind === 'tutorial') {
+  if (PRACTICAL_TUTORIAL_ENABLED && force !== true && panel?.kind === 'tutorial') {
     const unfinished = state.learning?.practical?.reviewActive ? state.learning.practical.reviewIndex < 24 : !Progression.tutorialStatus(state).finished;
     act(state, { type: 'dismissTutorial' });
     act(state, { type: 'learningUpdate', patch: { practical: { reviewActive: false, reviewPaused: (state.learning?.practical?.reviewActive === true || state.learning?.practical?.reviewPaused === true) && state.learning.practical.reviewIndex < 24 },
@@ -1740,6 +1743,22 @@ function informationHeading(key, title, ...paragraphs) {
   const trigger = button('i', () => activateInfoPopup(trigger, popup), { class: 'upgrade-info-toggle section-info-toggle', 'aria-label': `${title} information`, 'aria-expanded': 'false', 'aria-controls': popup.id, 'data-section-info': key });
   bindInfoTrigger(trigger, popup);
   return el('div', { class: 'upgrade-heading' }, el('h3', {}, title), trigger, popup);
+}
+function menuTourInformation(kind) {
+  const topics = tourMenuInformation(kind, language(), {
+    cloudAccount: !!devAccount, state,
+    simulatedCharity: LOCAL_PREVIEW || Commerce.runtimeCapabilities().environment === 'preprod' || devCloud.local === true
+  });
+  if (!topics.length) return null;
+  const title = uiCopy('About this menu', 'Informacje o tym menu');
+  const heading = informationHeading(`menu-${kind}`, title, ...topics.flatMap(topic => [
+    el('h4', { 'data-menu-tour-topic': topic.id, 'data-i18n-ignore': '' }, topic.title),
+    el('p', { 'data-menu-tour-description': topic.id, 'data-i18n-ignore': '' }, topic.text)
+  ]));
+  heading.dataset.menuTourInformation = kind;
+  heading.querySelector('button').setAttribute('aria-label', title);
+  heading.querySelector('[role="region"]').setAttribute('aria-label', title);
+  return heading;
 }
 document.addEventListener('pointerdown', event => {
   if (activeInfoPopup && !activeInfoPopup.trigger.contains(event.target) && !activeInfoPopup.popup.contains(event.target)) closeInfoPopup(false);
@@ -2171,7 +2190,7 @@ function warehouseOverview() {
   return card(informationHeading('central-warehouse', 'Central warehouse',
       uiCopy('All listed materials can be spent immediately. Ordinary deliveries use storage capacity; rewards do not. This is why the available amount can exceed the stated capacity. Coins are stored separately.', 'Wszystkie pokazane materiały możesz od razu wydać. Zwykłe dostawy zajmują miejsce w magazynie, a nagrody nie. Dlatego dostępny zapas może przekraczać podaną pojemność. Monety są przechowywane osobno.'),
       uiCopy(`Level 1 holds ${count(firstLevel.total)} ordinary items in total, up to ${count(firstLevel.perResource)} per material. Each level has fixed limits allowing for upgrades, a mission, meals and a buffer. Carriers collect goods and supply construction according to your priorities.`, `Na poziomie 1 magazyn mieści łącznie ${count(firstLevel.total)} sztuk ze zwykłych dostaw, do ${count(firstLevel.perResource)} każdego materiału. Każdy poziom ma stałą pojemność uwzględniającą rozbudowę, misję, jedzenie i bufor. Tragarze odbierają towary i zaopatrują budowy zgodnie z ustawionymi priorytetami.`),
-      Development.isDevelopment(state)?'Tragarz przewozi jeden rodzaj materiału na kurs. Ustawiaj priorytety dostaw i pilnuj miejsca w magazynach. Chroniona rezerwa obejmuje najtańsze pełne wyżywienie mieszkańców na godzinę, z wymaganą różnorodnością. Od Magazynu 5 i po odkryciu konkretnego kierunku możesz oddelegować tragarzy na stałą trasę.':uiCopy('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The practical guide teaches paid acceleration using game coins; it does not secretly shorten ordinary delivery times.', 'Tragarz przewozi jeden rodzaj materiału na kurs, także przy częściowym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone ścieżki go skracają. Na poziomie 1 tragarz zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu wyprzedza budowy, dopóki nie zmienisz priorytetu. Rezerwa żywności wynosi 50 × poziom Magazynu, najwyżej 1200 na poziomie 24. Samouczek pokazuje przyspieszenia za monety; nie skraca ukradkiem zwykłego czasu dostaw.'),
+      Development.isDevelopment(state)?'Tragarz przewozi jeden rodzaj materiału na kurs. Ustawiaj priorytety dostaw i pilnuj miejsca w magazynach. Chroniona rezerwa obejmuje najtańsze pełne wyżywienie mieszkańców na godzinę, z wymaganą różnorodnością. Od Magazynu 5 i po odkryciu konkretnego kierunku możesz oddelegować tragarzy na stałą trasę.':!PRACTICAL_TUTORIAL_ENABLED?uiCopy('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The Kingdom Advisor can help you plan supplies and construction.', 'Tragarz przewozi jeden rodzaj materiału na kurs, także przy częściowym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone ścieżki go skracają. Na poziomie 1 tragarz zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu wyprzedza budowy, dopóki nie zmienisz priorytetu. Rezerwa żywności wynosi 50 × poziom Magazynu, najwyżej 1200 na poziomie 24. Doradca Królestwa pomoże zaplanować dostawy i rozbudowę.'):uiCopy('A carrier takes one material per trip, including a partial load. The base round trip is 5 minutes; completed path levels reduce it. Level 1 carries 120 units per trip. Hunger halves effective transport. Central replenishment comes before construction unless you change priorities. Food reserve: 50 × Warehouse level, capped at level 24. The practical guide teaches paid acceleration using game coins; it does not secretly shorten ordinary delivery times.', 'Tragarz przewozi jeden rodzaj materiału na kurs, także przy częściowym ładunku. Podstawowy kurs w obie strony trwa 5 minut; ukończone ścieżki go skracają. Na poziomie 1 tragarz zabiera do 120 sztuk. Głód zmniejsza wydajność transportu o połowę. Uzupełnianie magazynu wyprzedza budowy, dopóki nie zmienisz priorytetu. Rezerwa żywności wynosi 50 × poziom Magazynu, najwyżej 1200 na poziomie 24. Samouczek pokazuje przyspieszenia za monety; nie skraca ukradkiem zwykłego czasu dostaw.'),
       ...MATERIAL_IDS.map(id => uiCopy(`${nameOf(id)}: ${count(Logistics.ordinaryStock(state, id))} ordinary, ${count(Logistics.bonusStock(state, id))} from rewards.`, `${text(nameOf(id))}: ${count(Logistics.ordinaryStock(state, id))} ze zwykłych dostaw, ${count(Logistics.bonusStock(state, id))} z nagród.`))),
     el('div', { class: 'stat-grid logistics-stats' },
       stat('Storage used', el('span', { 'data-logistics-stat': 'used' }, logisticsStatValue('used'))),
@@ -3417,31 +3436,34 @@ function helpPanel() {
         note(uiCopy('Learn the screen, the buildings and how the island works. Resume where you stopped, or start the tour again.', 'Poznaj ekran, budynki i zasady działania wyspy. Wznów od przerwanego miejsca albo obejrzyj przewodnik od początku.')),
         button(uiCopy('Resume tutorial', 'Wznów tutorial'), () => void replayIslandTour(false), { 'data-help-return-tour': '', 'data-help-continue-tour': '' }),
         button(uiCopy('Start tutorial from the beginning', 'Tutorial od początku'), () => void replayIslandTour(true), { class: 'action secondary', 'data-help-tour-from-start': '' })),
-      card(el('h3', {}, uiCopy('Practical tutorial — your first 25 lessons', 'Samouczek — pierwsze 25 praktycznych lekcji')),
+      PRACTICAL_TUTORIAL_ENABLED ? card(el('h3', {}, uiCopy('Practical tutorial — your first 25 lessons', 'Samouczek — pierwsze 25 praktycznych lekcji')),
         note(uiCopy('Learn by doing: assign residents, transport goods and develop buildings. Resume your lessons without losing progress or collecting rewards again.', 'Ucz się przez działanie: przydzielaj mieszkańców, przewoź towary i rozbudowuj budynki. Wznów lekcje bez utraty postępu i ponownego przyznawania nagród.')),
         button(uiCopy('Resume practical tutorial', 'Wznów samouczek'), () => {
           if (state.learning?.practical?.reviewPaused || state.learning?.practical?.reviewActive) void reviewPracticalTutorial(state.learning.practical.reviewIndex);
           else void resumePracticalTutorial();
         }, { 'data-help-return-lessons': '' }),
-        button(uiCopy('Review all practical lessons', 'Samouczek od początku'), () => void reviewPracticalTutorial(0), { class: 'action secondary', 'data-help-lessons-from-start': '' }))));
+        button(uiCopy('Review all practical lessons', 'Samouczek od początku'), () => void reviewPracticalTutorial(0), { class: 'action secondary', 'data-help-lessons-from-start': '' })) : null));
 }
 async function persistLearning(patch) {
   if (!act(state, { type: 'learningUpdate', patch }).ok) return false;
   return save(true);
 }
 async function resumePracticalTutorial() {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return false;
   if (!await persistLearning({ practical: { reviewActive: false, reviewPaused: false } })) return false;
   if (!perform({ type: 'resumeTutorial' })) return false;
   openPanel('tutorial');
   return true;
 }
 async function reviewPracticalTutorial(index = 0) {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return false;
   if (!act(state, { type: 'dismissTutorial' }).ok) return false;
   if (!await persistLearning({ practical: { reviewActive: true, reviewPaused: false, reviewIndex: index } })) return false;
   openPanel('tutorial');
   return true;
 }
 async function pausePracticalReview(index) {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return false;
   return persistLearning({ practical: { reviewActive: false, reviewPaused: index < 24, reviewIndex: index }, ...(index < 24 ? { adsNotBeforeActiveSeconds: (state.engagementSchedule?.activeSeconds || 0) + 3600 } : {}) });
 }
 async function replayIslandTour(fromBeginning = false) {
@@ -3449,7 +3471,7 @@ async function replayIslandTour(fromBeginning = false) {
   const index = fromBeginning ? 0 : state.learning?.tour?.paused || state.learning?.tour?.active ? state.learning.tour.index : 0;
   if (!await persistLearning({ tour: { active: true, paused: false, completed: false, index } })) return;
   closePanel(true); clearTutorialGuidance(true);
-  replayTour = createIslandOnboarding({ stage: 'tour', index, replay: true, language: language(), steps: onboardingSteps(),
+  replayTour = createAdvisorIntroduction({ stage: 'tour', index, replay: true, language: language(), getLanguage: language, steps: onboardingSteps(),
     allowRestart: true, onAfterPause: detail => showTutorialExitReminder({ language: language(), firstIntroduction: !detail.replay }),
     onUpdate: next => persistLearning({ tour: { index: next.index, active: true } }),
     onPause: async next => {
@@ -3739,13 +3761,17 @@ function renderPanel() {
       button('Notifications', () => openPanel('notifications'), { class: 'action secondary' }),
       button('Premium options', () => openPanel('premium'), { class: 'action secondary' }),
       el('div', { class: 'stat-grid' }, stat('Town Hall level', el('span', { 'data-population-stat': 'level' }, state.buildings.townhall.level)), stat('Residents', el('span', { 'data-population-stat': 'population' }, `${state.population} / ${state.capacity}`)), stat('Happiness', el('span', { 'data-population-stat': 'happiness' }, happinessText())), stat('Day', state.day)),
-      el('div', { class: 'panel-grid' }, [...(Development.isDevelopment(state)?[['kingdom','Królestwo']]:[]),['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}))),
+      el('div', { class: 'panel-grid' }, [...(Development.isDevelopment(state)?[['kingdom','Królestwo']]:[]),['rules', 'Island rules'], ['objective', 'Main objective'], ['buildings', 'Buildings'], ['expeditions', 'Expeditions'], ['tasks', 'Tasks'], ['residents', 'Residents'], ['resources', 'Warehouse'], ['trade', 'Trade'], ['archipelago', uiCopy('Your islands', 'Twoje wyspy')], ['map', 'Island map'], ['theatre', uiCopy('Theatre', 'Teatr')], ['adventures', uiCopy('Island adventures', 'Przygody na wyspie')], ['settings', 'Settings']].map(([kind, label]) => button(label, () => openPanel(kind), { 'data-menu-route': kind, ...(kind === 'archipelago' ? { 'data-archipelago-open': '' } : {}) }))),
       el('div', { class: 'social-menu-entries', 'data-social-menu': '' },
         card(button('Ranking', () => openPanel('ranking'), { 'data-open-ranking': '' }), note(uiCopy('Compare hourly results and your place among players.', 'Sprawdź swoją pozycję i porównaj wyniki graczy, aktualizowane co pełną godzinę.'))),
         card(button(uiCopy('Alliance and league', 'Sojusz i liga'), () => openPanel('community'), { 'data-open-community': '' }), note(uiCopy('Join forces, talk to your alliance and compete in the monthly league.', 'Dołącz do sojuszu, rozmawiaj z jego członkami i rywalizuj we wspólnej lidze.'))),
         card(button(uiCopy('I help', 'Pomagam'), () => openPanel('charity'), { 'data-open-charity': '' }), note(uiCopy('Give eligible earned coins to support a chosen cause. DEV is a simulation without a bank transfer.', 'Przekaż kwalifikujące się monety zdobyte w grze na wybrany cel pomocy. Na DEV to symulacja bez przelewu pieniędzy.')))),
       button('Return to island', closePanel, { class: 'action secondary' }));
   }
+  const menuInformation = menuTourInformation(panel.kind);
+  // Controllers such as Kingdom replace their own children when refreshed.
+  // Keep help outside that managed subtree so it survives ordinary updates.
+  if (menuInformation) body = el('div', { class: 'menu-with-tour-information' }, menuInformation, body);
   alignMenuSections(panel.kind, body);
   const scroll = dialog.querySelector('.dialog-body')?.scrollTop || 0;
   const dialogScroll = dialog.scrollTop || 0;
@@ -3876,8 +3902,9 @@ function tutorialOptions() {
   return { state, progression: Progression, language: language(), onReviewFromStart: () => reviewPracticalTutorial(0), onResumePractical: () => resumePracticalTutorial(), onPendingConstruction: showPendingConstruction, isBuildingRoute: route => !!BUILDINGS[route], onAction: tutorialAction, onVisit: visitTutorialRoute, onClose: () => closePanel(),
     ...(review ? { reviewIndex: state.learning.practical.reviewIndex, onReviewUpdate: index => persistLearning({ practical: { reviewIndex: index } }), onReviewExit: pausePracticalReview } : {}) };
 }
-function tutorialPanel() { return createTutorialPanel(tutorialOptions()); }
+function tutorialPanel() { return PRACTICAL_TUTORIAL_ENABLED ? createTutorialPanel(tutorialOptions()) : helpPanel(); }
 function tutorialAction(action) {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return false;
   if (action.type === 'seeTutorialReward') deferredTutorialRewards.delete(action.taskId);
   const result = perform(action);
   if (result && action.type === 'seeTutorialReward' && !tutorialCelebration) {
@@ -3903,14 +3930,15 @@ function visitTutorialRoute(route) {
 }
 function islandRulesPanel() {
   return el('div', { class: 'island-start-rules' }, note(gameGoal().description),
-    card(el('h3', {}, 'Residents and food'), note(uiCopy('Give residents jobs and keep Food in the central Warehouse. Workers need two minutes to reach work. Hunger slows production and transport. The practical guide teaches you how to accelerate upgrades with game coins.', 'Daj mieszkańcom pracę i zadbaj o żywność w magazynie centralnym. Droga do pracy zajmuje dwie minuty. Głód spowalnia produkcję i transport. Samouczek pokazuje, jak przyspieszać rozbudowę za monety z gry.'))),
+    card(el('h3', {}, 'Residents and food'), note(PRACTICAL_TUTORIAL_ENABLED ? uiCopy('Give residents jobs and keep Food in the central Warehouse. Workers need two minutes to reach work. Hunger slows production and transport. The practical guide teaches you how to accelerate upgrades with game coins.', 'Daj mieszkańcom pracę i zadbaj o żywność w magazynie centralnym. Droga do pracy zajmuje dwie minuty. Głód spowalnia produkcję i transport. Samouczek pokazuje, jak przyspieszać rozbudowę za monety z gry.') : uiCopy('Give residents jobs and keep food in the central Warehouse. Workers need two minutes to reach work. Hunger slows production and transport. The Kingdom Advisor can help you plan your next actions.', 'Daj mieszkańcom pracę i zadbaj o żywność w magazynie centralnym. Droga do pracy zajmuje dwie minuty. Głód spowalnia produkcję i transport. Doradca Królestwa pomoże zaplanować kolejne działania.'))),
     card(el('h3', {}, 'Production and transport'), note('Production waits in local storage until carriers deliver it. Upgrades spend central materials, then transport and construction take place in separate phases.')),
     card(el('h3', {}, 'Happiness and progress'), note('Food, work, housing and temporary attractions influence happiness. Develop all buildings, improve paths and complete tasks while keeping residents happy.')),
     resourceNotationPanel(),
     card(el('h3', {}, uiCopy('Town Hall population requirement', 'Ludność wymagana przez Ratusz')), el('p', { class: 'notice', 'data-i18n-ignore': '' }, uiCopy('From Town Hall 3 → 4, every further Town Hall upgrade requires at least 75% of the current level’s population limit, rounded up: level 3 has 72 places, so 54 residents are required for level 4. Other buildings do not have this population requirement.', 'Od awansu Ratusza 3 → 4 każda kolejna rozbudowa Ratusza wymaga co najmniej 75% limitu ludności bieżącego poziomu, zaokrąglonego w górę: poziom 3 ma 72 miejsca, więc do poziomu 4 potrzeba 54 mieszkańców. Inne budynki nie mają tego wymogu ludności.'))),
-    button('Continue tutorial', () => openPanel('tutorial'), { class: 'action secondary' }));
+    PRACTICAL_TUTORIAL_ENABLED ? button('Continue tutorial', () => openPanel('tutorial'), { class: 'action secondary' }) : null);
 }
 function finishTutorialReward(achievement, type) {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return false;
   const result = act(state, { type, taskId: achievement.lessonId });
   if (!result.ok) { toast(result.message); return false; }
   save();
@@ -4019,6 +4047,7 @@ function updateTutorialPointer(row) {
 }
 
 function refreshTutorialExperience() {
+  if (!PRACTICAL_TUTORIAL_ENABLED) { clearTutorialGuidance(true); return; }
   if (!practicalGuidanceRequested) { clearTutorialGuidance(true); return; }
   if (state.learning?.practical?.reviewActive || replayTour?.active || learningFeedback?.active) { clearTutorialGuidance(true); return; }
   const cashoutLesson = expeditionSession()?.status === 'decision' && Progression.tutorialRows(state).find(row => !row.completed)?.subject === 'expedition-complete';
@@ -4049,6 +4078,7 @@ function refreshTutorialExperience() {
   openTutorialReward(achievement, rows);
 }
 function openTutorialReward(achievement, rows) {
+  if (!PRACTICAL_TUTORIAL_ENABLED) return;
   if (expeditionSession()) return;
   act(state, { type: 'seeTutorialReward', taskId: achievement.lessonId }); save();
   tutorialCelebration = showTutorialAchievement({ achievement, row: rows.find(item => item.id === achievement.lessonId), language: language(), animations: effectiveAnimationsEnabled(), sound: state.settings.sound,
@@ -4057,9 +4087,9 @@ function openTutorialReward(achievement, rows) {
 }
 function progressionOverview() {
   const loyalty = Progression.loyaltyStatus?.(state), engagement = Progression.engagementStatus?.(state);
-  const tutorial = Progression.tutorialStatus(state), tutorialTotal = tutorial.visibleTotal ?? tutorial.total;
+  const tutorial = PRACTICAL_TUTORIAL_ENABLED ? Progression.tutorialStatus(state) : null, tutorialTotal = tutorial?.visibleTotal ?? tutorial?.total;
   return card(el('h3', {}, 'Your progress'),
-    el('div', { class: 'stat-grid' }, stat('Tutorial steps completed', `${tutorial.visibleCompleted ?? tutorial.completed} / ${tutorialTotal}`), stat('Tutorial rewards claimed', `${tutorial.claimed} / ${tutorialTotal}`)),
+    PRACTICAL_TUTORIAL_ENABLED ? el('div', { class: 'stat-grid' }, stat('Tutorial steps completed', `${tutorial.visibleCompleted ?? tutorial.completed} / ${tutorialTotal}`), stat('Tutorial rewards claimed', `${tutorial.claimed} / ${tutorialTotal}`)) : null,
     engagement?.active ? note(`Active play: production ×2 for ${durationText(engagement.remaining)}. Meaningful activity renews this five-minute bonus.`) : note('Meaningful activity activates a five-minute production ×2 bonus.'),
     loyalty ? el('details', { class: 'island-rules' }, el('summary', {}, 'Introductory loyalty calendar'),
       el('div', { class: 'loyalty-calendar' }, ...Array.from({length:10}, (_,index) => el('span', { class: `loyalty-day${loyalty.claimedDays.includes(index+1) ? ' is-claimed' : ''}${index+1 === loyalty.streak ? ' is-current' : ''}` }, index+1))), note(loyalty.message), loyalty.eligible ? note(costText(loyalty.reward)) : null, button('Claim daily reward', () => perform({ type: 'claimLoyalty' }), { disabled: !loyalty.eligible, 'data-claim-loyalty': '' })) : null,
@@ -4260,12 +4290,13 @@ async function beginOnboarding() {
 }
 function mountKingdomAdvisor() {
   if (kingdomAdvisor) { kingdomAdvisor.update(); return; }
-  kingdomAdvisor = createKingdomAdvisor({getState:() => state, getSuggestion:advisorSuggestion,
+  kingdomAdvisor = createKingdomAdvisor({getState:() => state, getLanguage:language, getSuggestion:advisorSuggestion,
     getPlan:(input, options) => advisorPlan(state, input, options),
     isVisible:() => worldExperienceReady && !State.onboardingStatus(state).pending &&
       document.documentElement.dataset.gameStartup === 'ready' && !document.querySelector('dialog[open]') &&
       !expeditionSession() && !replayTour?.active && !document.querySelector('[data-active-tutorial-guide]'),
     onNavigate:step => {
+      if (step.target === 'expeditions') { openPanel('expeditions'); kingdomAdvisor.update(); return; }
       if (!BUILDINGS[step.target] && step.target !== 'theatre') return;
       if (step.target === 'theatre') openPanel('theatre');
       else openPanel('building', step.target);
@@ -4303,7 +4334,7 @@ function beginWorldExperience() {
   tutorialReady = true;
   mountKingdomAdvisor();
   if (state.learning?.tour?.active && !expeditionSession()) { void replayIslandTour(false); return; }
-  if (state.learning?.practical?.reviewActive && !expeditionSession()) { openPanel('tutorial'); return; }
+  if (PRACTICAL_TUTORIAL_ENABLED && state.learning?.practical?.reviewActive && !expeditionSession()) { openPanel('tutorial'); return; }
 }
 const sessionStartedAt = devCloud.lastSessionActivityAt || Date.now();
 let foregroundAnchor = Date.now();
@@ -4359,15 +4390,15 @@ function refreshPlayerOffers() {
   // conversation the player is already reading.
   if (document.querySelector('dialog[open], [data-advisor-conversation]:not([hidden])')) return true;
   if (State.onboardingStatus(state).pending || onboardingFlow?.active || replayTour?.active || expeditionSession() || tutorialCelebration || taskCelebration?.open || taskAcceptanceDialog?.open || confirmationDialog?.open || dialog.open || document.querySelector('.island-flow-dialog[open]')) return false;
-  if (Progression.tutorialPendingRewards(state).length) return false;
+  if (PRACTICAL_TUTORIAL_ENABLED && Progression.tutorialPendingRewards(state).length) return false;
   const intro = Missions.missionStoryIntro?.(state);
-  if (Progression.tutorialStatus(state).finished && intro?.available) {
+  if ((!PRACTICAL_TUTORIAL_ENABLED || Progression.tutorialStatus(state).finished) && intro?.available) {
     const result = act(state, { type: 'missionIntroSeen', chapterId: intro.chapterId });
     if (!result.ok) return true;
     save();
     const popup = createFlowDialog('lighthouse-story-intro', language() === 'pl' ? intro.titlePl : intro.title,
       el('div', {}, el('p', { 'data-i18n-ignore': '' }, language() === 'pl' ? intro.descriptionPl : intro.description),
-        note(uiCopy('You have finished the practical guide. The island is yours to develop. Your next adventure has eight stages that will help you improve the island and restore the Lighthouse. Review a stage before accepting it: its timer starts only when you accept.', 'Samouczek ukończony! Teraz przejmujesz kontrolę nad wyspą i możesz ją dowolnie rozwijać. Przed Tobą przygoda złożona z ośmiu etapów, które pomogą rozwinąć osadę i Latarnię. Najpierw poznasz wymagania — czas zadania ruszy dopiero po jego przyjęciu.'))));
+        note(PRACTICAL_TUTORIAL_ENABLED ? uiCopy('You have finished the practical guide. The island is yours to develop. Your next adventure has eight stages that will help you improve the island and restore the Lighthouse. Review a stage before accepting it: its timer starts only when you accept.', 'Samouczek ukończony! Teraz przejmujesz kontrolę nad wyspą i możesz ją dowolnie rozwijać. Przed Tobą przygoda złożona z ośmiu etapów, które pomogą rozwinąć osadę i Latarnię. Najpierw poznasz wymagania — czas zadania ruszy dopiero po jego przyjęciu.') : uiCopy('Your next adventure has eight stages that will help you develop the island and restore the Lighthouse. Review the requirements before accepting a stage: its timer starts only when you accept.', 'Przed Tobą przygoda złożona z ośmiu etapów, które pomogą rozwinąć osadę i Latarnię. Poznaj wymagania przed przyjęciem etapu — czas zadania ruszy dopiero po jego przyjęciu.'))));
     const close = () => { popup.close(); popup.remove(); };
     popup.querySelector('.flow-body').append(el('div', { class: 'flow-actions' },
       button(uiCopy('Open your first mission', 'Otwórz pierwszą misję'), () => { close(); openPanel('tasks'); }, { 'data-story-task': '' }),

@@ -51,15 +51,16 @@ function production(state,resource,amount){
   assert.ok(state.economyLedger.produced[resource]>=target);
 }
 
-test('Lighthouse chapter waits for the course to finish or be dismissed; target is the actual next level',()=>{
+test('Lighthouse chapter opens independently of the hidden practical course; target is the actual next level',()=>{
   const state=island({ready:false});
-  assert.equal(Missions.missionStatus(state).available,false);
-  assert.equal(Missions.missionStatus(state).preview,true);
-  state.tutorial.autoOpenDisabled=true;Missions.advanceMissions(state,0,context);
+  const course=JSON.stringify(state.tutorial);
   const status=Missions.missionStatus(state,context);
+  assert.equal(status.available,true);
   assert.equal(status.chapter.level,2);assert.equal(status.chapter.targetLevel,2);
   assert.equal(status.index,1);assert.equal(status.total,8);
   assert.equal(state.buildings.lighthouse.level,1);
+  assert.equal(JSON.stringify(state.tutorial),course);
+  assert.equal(status.task.status,'offered');assert.equal(status.task.deadline,null);
 });
 
 test('new contribution offers fit the joint spendable inventory, including protected food',()=>{

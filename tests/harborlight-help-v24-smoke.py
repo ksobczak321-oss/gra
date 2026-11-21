@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import install_legacy_practical_course
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('help_fixture', ROOT / 'tests/harborlight-dev-game-smoke.py')
@@ -18,6 +19,7 @@ def scenario(browser, language, mobile):
     fixture.DOCUMENTS[UID] = {'payload': json.dumps(saved), 'revision': 5, 'updateTime': fixture.timestamp()}
     context, page = fixture.context(browser, UID, language=language, mobile=mobile)
     try:
+        install_legacy_practical_course(page)
         fixture.visit(page)
         fixture.settings(page)
         page.locator('[data-open-help]').click()

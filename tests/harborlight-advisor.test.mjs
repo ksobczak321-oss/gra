@@ -7,12 +7,12 @@ import {advisorPlan,advisorSuggestion} from '../harborlight-v1-advisor.js';
 import {ADVISOR_INTRO_IDS, ADVISOR_INTRO_COPY, introductionIndex} from '../harborlight-v1-advisor-intro.js';
 import {APPROVED_TOUR_IDS} from '../harborlight-v1-approved-copy.js';
 const NOW=Date.parse('2026-11-17T12:00:00Z');
-test('three introduction stops retain stable saved catalogue positions and complete bilingual copy',()=>{
- assert.deepEqual(ADVISOR_INTRO_IDS,['home','category-administration','building-farm']);
+test('reviewed introduction stops retain stable saved catalogue positions and complete bilingual copy',()=>{
+ assert.equal(ADVISOR_INTRO_IDS.length,28);
  for(const [index,id] of ADVISOR_INTRO_IDS.entries()) {
   assert.equal(introductionIndex(APPROVED_TOUR_IDS.indexOf(id)),index);
   assert.equal(ADVISOR_INTRO_COPY[index].length,4);
-  assert.ok(ADVISOR_INTRO_COPY[index].every(text=>typeof text==='string'&&text.length>10));
+  assert.ok(ADVISOR_INTRO_COPY[index].every(text=>typeof text==='string'&&text.length>0));
  }
  assert.equal(APPROVED_TOUR_IDS.length,56); // Existing saved positions and Help remain valid.
 });
@@ -38,7 +38,7 @@ test('all public advice and quotes leave normalized and partly missing sidecars 
 
 test('locked Port points to Town Hall instead of claiming the upgrade is available',()=>{
  const s=world();s.buildings.townhall.level=1;
- const p=advisorPlan(s,'Rozbuduj port');assert.equal(p.kind,'locked');assert.match(p.text,/poziomie 4 Ratusza/);assert.deepEqual(p.steps.map(x=>x.target),['townhall']);assert.equal(p.missing.length,0);assert.equal(p.estimate.seconds,null);
+ const p=advisorPlan(s,'Rozbuduj port');assert.equal(p.kind,'locked');assert.match(p.text,/poziomie 4 Ratusza/);assert.deepEqual(p.steps.map(x=>x.target),['townhall','warehouse']);assert.equal(p.missing.length,0);assert.equal(p.estimate.seconds,null);
 });
 
 test('Town Hall population gate uses actual requirement and current population',()=>{

@@ -16,6 +16,7 @@ import subprocess
 from urllib.parse import unquote, urlsplit
 
 from playwright.sync_api import expect, sync_playwright
+from helpers.browser_tutorial import install_legacy_practical_course
 
 SOURCE = Path(__file__).resolve().parents[1]
 ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', SOURCE)).resolve()
@@ -71,6 +72,7 @@ def new_page(browser, state, language, mobile):
     # Leave setup headroom so a busy browser cannot make pause_at go backwards.
     page.clock.install(time=now - timedelta(minutes=1))
     page.clock.pause_at(now)
+    install_legacy_practical_course(page)
     assert page.goto(ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('window.__HARBORLIGHT_DEV_STATE__ !== undefined && document.getElementById("loading").hidden')
     return context, page, errors, external

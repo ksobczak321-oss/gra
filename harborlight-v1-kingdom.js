@@ -1,5 +1,5 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-21';
-import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-21';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-22';
+import { warsawDayKey } from './harborlight-v1-calendar.js?v=frontend-v32-22';
 
 // Account-level DEV model. Persistence and authorization belong to the adapter.
 // Random outcomes are sampled once and saved; opening a panel never rerolls them.

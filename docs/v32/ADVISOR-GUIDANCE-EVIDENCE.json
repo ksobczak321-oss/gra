@@ -1,0 +1,185 @@
+{
+  "as_of": "2026-11-21",
+  "timezone": "Europe/Warsaw",
+  "version": "0.15.3.0",
+  "cache": "frontend-v32-22",
+  "status": "DEV_INTEGRATION_TARGETED_PROOFS_ONLY_CODE_PUBLICATION_AND_OWN_CI_PENDING",
+  "authorization": {
+    "kind": "user_chat_GO",
+    "date": "2026-11-21",
+    "quote": "GO",
+    "scope": "DEV_GIT_OWN_CI_PAGES",
+    "PREPROD_for_this_package": false,
+    "PROD_DNS_reset": "NO_ACTION"
+  },
+  "baseline": {
+    "repository_base": "0705dd88638183f6e35ec23fe55e82e793430173",
+    "accepted_application_code": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+    "accepted_publication": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "accepted_version": "0.15.2.4",
+    "cache": "frontend-v32-21",
+    "accepted_PREPROD_run": 44577083312,
+    "attempt": 1,
+    "evidence": "docs/v32/CHROME-PERFORMANCE-EVIDENCE.json",
+    "old_success_does_not_accept_new_code": true
+  },
+  "code_source_sha": null,
+  "publication_source_sha": null,
+  "CI": {
+    "status": "PENDING_OWN_EXACT_SOURCE",
+    "run_id": null
+  },
+  "Pages": {
+    "status": "PENDING_NEW_PUBLICATION",
+    "run_id": null
+  },
+  "DEV_tag": {
+    "status": "NOT_CREATED",
+    "name": null
+  },
+  "PREPROD": {
+    "status": "UNCHANGED_C6_ACCEPTED_NO_NEW_PROMOTION_AUTHORIZED",
+    "source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+    "run_id": 44577083312,
+    "attempt": 1,
+    "new_dispatch": false
+  },
+  "scope": {
+    "active_tour_steps": 28,
+    "retained_stable_catalogue": 56,
+    "route_version": 5,
+    "retained_practical_lessons": 25,
+    "practical_enabled": false,
+    "moved_menu_information_topics": 8,
+    "advisor_main_tasks": 1,
+    "advisor_actions_min": 2,
+    "advisor_actions_max": 5,
+    "map_labels": "HOVER_OR_FOCUS_WITH_PANEL_COLLISION_AVOIDANCE",
+    "global_optimality_claimed": false,
+    "no_automatic_gameplay": true
+  },
+  "targeted_proofs": {
+    "policy_and_related_missions": {
+      "status": "PASS",
+      "tests": 65,
+      "runs": [
+        {
+          "tests": 36,
+          "duration_ms": 1943.061745
+        },
+        {
+          "tests": 29,
+          "duration_ms": 839.228556
+        }
+      ],
+      "source_scope": "local_shared_worktree_before_final_query_bump_and_CODE_freeze",
+      "tests_files": [
+        "tests/harborlight-learning-policy.test.mjs",
+        "tests/harborlight-learning-ads-v26.test.mjs",
+        "tests/harborlight-engagement-v18.test.mjs",
+        "tests/harborlight-missions-v27.test.mjs",
+        "tests/harborlight-missions-v28.test.mjs",
+        "tests/harborlight-missions-v31.test.mjs",
+        "tests/harborlight-mission-headline.test.mjs"
+      ],
+      "legacy_enabled_tests_are_separate_from_default_disabled": true
+    },
+    "tour": {
+      "status": "PASS_REPORTED_BY_ROOT",
+      "unit_cases": 7,
+      "DOM_languages": [
+        "pl",
+        "en"
+      ],
+      "steps_each": 28,
+      "all_56_saved_positions_covered": true,
+      "final_frozen_source_rerun": "PENDING"
+    },
+    "map_labels": {
+      "status": "PASS_REPORTED_BY_ROOT",
+      "geometry_cases": 9,
+      "actual_label_checks": 120,
+      "viewport_count": 6,
+      "native_map_regression": "PASS",
+      "final_frozen_source_rerun": "PENDING"
+    },
+    "practical_default": {
+      "status": "PASS_REPORTED_BY_ROOT",
+      "saved_cursor_cases": 3,
+      "languages": [
+        "pl",
+        "en"
+      ],
+      "public_runtime_override": false,
+      "final_frozen_source_rerun": "PENDING"
+    },
+    "advisor_live_plan": {
+      "status": "PENDING_FINAL_PARENT_REPORT"
+    },
+    "menu_information": {
+      "status": "PENDING_FINAL_PARENT_REPORT"
+    }
+  },
+  "full_local_QA": {
+    "status": "PENDING_FINAL_INTEGRATED_SOURCE"
+  },
+  "frontend_package": {
+    "status": "PENDING_FINAL_PUBLICATION_SOURCE",
+    "file_count": null,
+    "archive_sha256": null,
+    "manifest_sha256": null
+  },
+  "canonical_artifacts": {
+    "status": "WAITING_FOR_CODE_FREEZE",
+    "planned_master_sheets": 161,
+    "active_tour_rows": 28,
+    "archived_full_tour_rows": 56,
+    "preserved_practical_rows": 25,
+    "build_or_fresh_validation_claimed": false
+  },
+  "tracking": {
+    "changes": 511,
+    "new_change_ids": [
+      "HL-CHG-1175",
+      "HL-CHG-1176",
+      "HL-CHG-1177",
+      "HL-CHG-1178",
+      "HL-CHG-1179",
+      "HL-CHG-1180",
+      "HL-CHG-1181",
+      "HL-CHG-1182"
+    ],
+    "historical_changes_preserved": 503,
+    "manual_cases": 187,
+    "historical_manual_cases_preserved": 179,
+    "all_manual_results": "NOT RUN",
+    "new_manual_ids": [
+      "HL-TC-0180",
+      "HL-TC-0181",
+      "HL-TC-0182",
+      "HL-TC-0183",
+      "HL-TC-0184",
+      "HL-TC-0185",
+      "HL-TC-0186",
+      "HL-TC-0187"
+    ]
+  },
+  "data_boundaries": {
+    "world_schema": 9,
+    "ruleset": 32,
+    "archipelago_schema": 2,
+    "tutorial_progress_reset": false,
+    "tutorial_rewards_claimed_or_settled_by_hide": false,
+    "saved_practical_review_flags_rewritten": false,
+    "advertising_cooldown_cleared": false,
+    "real_account_or_clock_writes": false,
+    "graphics_or_map_positions_changed": false,
+    "new_PROD_or_DNS_action": false
+  },
+  "manual_user_acceptance": "NOT_RUN",
+  "documents": [
+    "docs/v32/GO-ADVISOR-GUIDANCE.md",
+    "docs/ENVIRONMENT-STATUS.md",
+    "docs/IMPLEMENTATION-LOG.md"
+  ]
+}

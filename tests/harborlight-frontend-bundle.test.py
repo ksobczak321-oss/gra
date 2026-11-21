@@ -113,7 +113,7 @@ class FrontendBundleTests(unittest.TestCase):
                 actual_manifest_frames.add(sprite["src"])
         self.assertEqual(actual_manifest_frames, declared)
         self.assertEqual(len(BUNDLE.PUBLIC_FILES), len(set(BUNDLE.PUBLIC_FILES)))
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 460)
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 462)
         self.assertEqual(BUNDLE.MAX_MEMBERS, 512)
         self.assertEqual(BUNDLE.MAX_BYTES, 128 * 1024 * 1024)
         self.assertLess(len(BUNDLE.ARCHIVE_FILES), BUNDLE.MAX_MEMBERS)

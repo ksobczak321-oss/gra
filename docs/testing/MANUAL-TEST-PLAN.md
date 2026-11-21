@@ -233,6 +233,14 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0177 — Cel 50 dni ma odrębny raport kosztów, ludności i zawartości](manual/HL-TC-0177.md) | Plan i balans | P0 | READY | NOT RUN |
 | [HL-TC-0178 — Drogi poboczne i migracja zachowują główny postęp](manual/HL-TC-0178.md) | Ciągłość i gałęzie | P0 | READY | NOT RUN |
 | [HL-TC-0179 — Wydanie v31 ma własne dowody i nie odznacza ręcznych prób](manual/HL-TC-0179.md) | Odbiór wydania | P0 | READY | NOT RUN |
+| [HL-TC-0180 — Tutorial pokazuje 28 tematów i poprawnie wznawia dawną pozycję](manual/HL-TC-0180.md) | Tutorial ekranów | P0 | READY | NOT RUN |
+| [HL-TC-0181 — Osiem opisów z tutoriala pozostaje pod i we właściwych menu](manual/HL-TC-0181.md) | Pomoc w menu | P1 | READY | NOT RUN |
+| [HL-TC-0182 — Samouczek praktyczny jest ukryty a zapisane dane pozostają](manual/HL-TC-0182.md) | Samouczek praktyczny | P0 | READY | NOT RUN |
+| [HL-TC-0183 — Doradca aktualizuje jeden cel i od dwóch do pięciu działań](manual/HL-TC-0183.md) | Doradca Królestwa | P0 | READY | NOT RUN |
+| [HL-TC-0184 — Brak monet prowadzi do prawdziwej minigry i właściwej wypłaty](manual/HL-TC-0184.md) | Minigry i monety | P0 | READY | NOT RUN |
+| [HL-TC-0185 — Poziomy Kaplicy i Latarni są czytelne obok paneli](manual/HL-TC-0185.md) | Etykiety mapy | P1 | READY | NOT RUN |
+| [HL-TC-0186 — Ukryty kurs nie blokuje misji i zachowuje reklamowy cooldown](manual/HL-TC-0186.md) | Dostępność rozwoju | P0 | READY | NOT RUN |
+| [HL-TC-0187 — Bieżące rady pozostają płynne a pełna prognoza jest na żądanie](manual/HL-TC-0187.md) | Wydajność Doradcy | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

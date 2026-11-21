@@ -1,13 +1,14 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
+import { practicalCourseBlocksMissions } from './harborlight-v1-learning-policy.js?v=frontend-v32-22';
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-21';
-import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-21';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-21';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-21';
-import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-21';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-22';
+import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-22';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-22';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-22';
+import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-22';
 
-import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-21';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-22';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];
@@ -214,8 +215,7 @@ function event(state, kind, title, titlePl, message, messagePl) {
   state.notifications.length = Math.min(100, state.notifications.length);
 }
 function courseOpen(state) {
-  const t = state.tutorial;
-  return t?.autoOpenDisabled === true || t?.rewardDisabled === true || t?.settled === true || t?.version && Object.values(t.completed || {}).filter(x => x === true).length >= 25;
+  return !practicalCourseBlocksMissions(state);
 }
 function eligible(state) {
   return lev(state, 'townhall') >= 2 && !(state.onboarding?.worldStartedAt === null) && courseOpen(state);

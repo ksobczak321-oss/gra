@@ -1,5 +1,13 @@
 # Dziennik implementacji
 
+## 21 listopada 2026 — GO DEV 0.15.3.0, integracja
+
+Autoryzowano tutorial 28 ze stabilnym katalogiem56, osiem tematów menu pod „i”, ukrycie zachowanego kursu 25 lekcji, bieżącego Doradcę1 cel/2–5 akcji z prawdziwymi minigrami i poprawę etykiet Kaplicy/Latarni. Dostępność misji/ofert jest oddzielona od ukrytego kursu bez przestawienia jego flag; bieżące rady mają unikać klonowania całej historii i pełnych prognoz co sekundę.
+
+Kierunkowe dowody obejmują65 testów polityki/misji,7 testów trasy28 z DOM PL/EN,9 geometrii i120 etykiet oraz domyślne ukrycie dla trzech zapisanych pozycji PL/EN. Nie są pełnym odbiorem zamrożonego źródła. CODE, eksporty, własny CI i publikacja oczekują. Dodano karty 1175–1182 i przypadki 0180–0187; dawne503 karty i179 przypadków zachowane. [Zakres i aktualizowane dowody](v32/GO-ADVISOR-GUIDANCE.md).
+
+Zakres wyłącznie DEV. PRE-PROD zachowuje C6/d5ad/44577083312; bez nowej promocji, resetu, PROD i DNS. Wszystkie187 ręcznych wyników NOT RUN.
+
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 
 Naprawa admin3 jest wdrożona i automatycznie odebrana na **DEV i PRE-PROD**. Kod aplikacji i źródła artefaktów: `e394ea8fe369f9dfc6615b7a96da1c3e499672e6`; odebrana publikacja: `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`, **0.15.2.4 / `frontend-v32-21`**. [Gra PRE-PROD](https://harborlight-dev.web.app/harborlight-v1-layered.html?v=frontend-v32-21).

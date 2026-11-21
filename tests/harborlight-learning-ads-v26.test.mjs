@@ -2,7 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createState, normalizeState, act, advanceTo } from '../harborlight-v1-state.js';
 import { tutorialRows, tutorialStatus } from '../harborlight-v1-progression.js';
-import { advanceEngagementSchedule, engagementOfferStatus, startEngagementOffer, learningBlocksInvitations, invitationCooldownRemaining } from '../harborlight-v1-engagement.js';
+import { legacyEngagementModule } from './helpers/legacy-engagement.mjs';
+
+// Archived course regression: the hidden feature remains fully testable in an
+// isolated module with its original policy. Current-default behavior is covered
+// by harborlight-learning-policy.test.mjs without this fixture.
+const { advanceEngagementSchedule, engagementOfferStatus, startEngagementOffer,
+  learningBlocksInvitations, invitationCooldownRemaining } = await legacyEngagementModule();
 
 const NOW = Date.UTC(2026, 10, 1, 12);
 const foreground = { visible: true, focused: true };

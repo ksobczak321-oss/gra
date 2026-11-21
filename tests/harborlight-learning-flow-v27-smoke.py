@@ -16,7 +16,7 @@ import re
 import subprocess
 
 from playwright.sync_api import expect, sync_playwright
-from helpers.browser_tutorial import request_practical_guidance
+from helpers.browser_tutorial import request_practical_guidance, install_legacy_practical_course
 from helpers.browser_offers import acknowledge_daily_offer
 
 SOURCE = Path(__file__).resolve().parents[1]
@@ -60,6 +60,7 @@ def seed(state):
 
 
 def visit(page):
+    install_legacy_practical_course(page)
     assert page.goto(cloud.ORIGIN + '/harborlight-v1-layered.html?profile=new-player').ok
     page.wait_for_function('document.getElementById("loading").hidden')
     value = cloud.cloud_state(UID)

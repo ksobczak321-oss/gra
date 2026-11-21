@@ -1,40 +1,40 @@
-import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-21';
-import { withDevelopmentProductionReadScope } from './harborlight-v1-development-logistics.js?v=frontend-v32-21';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-21';
-import { residentTaxable } from './harborlight-v1-residents.js?v=frontend-v32-21';
-import { normalizeAdventureBudget, claimAdventureBudget } from './harborlight-v1-adventure-budget.js?v=frontend-v32-21';
-import { normalizeInterruptions } from './harborlight-v1-interruption.js?v=frontend-v32-21';
+import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-22';
+import { withDevelopmentProductionReadScope } from './harborlight-v1-development-logistics.js?v=frontend-v32-22';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-22';
+import { residentTaxable } from './harborlight-v1-residents.js?v=frontend-v32-22';
+import { normalizeAdventureBudget, claimAdventureBudget } from './harborlight-v1-adventure-budget.js?v=frontend-v32-22';
+import { normalizeInterruptions } from './harborlight-v1-interruption.js?v=frontend-v32-22';
 // Economy and progression for the interactive approved-screen prototype.
 // Pure data module: browser UI and Node tests share the same rules.
-import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming, missionProductionMultiplier } from './harborlight-v1-logistics.js?v=frontend-v32-21';
-export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v32-21';
+import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, receiveMaterials, stockRoom, warehouseLimits, warehouseUsed, syncCrewProgress, advanceLogistics, normalizeLogisticsState, nextLogisticsEvent, storagePenalty, updateStorageStatus, workplaceUnlocked, marketCapacity, marketUsed, notify, constructionCounts, premiumActive, plannedLevel, promoteConstructionQueue, logisticsAction, availableGoods, foodReserve, finishConstruction, centralReserved, centralAvailable, reserveConstructionMaterials, notifyConstructionEtaChange, townhallPopulationRequirement, playerTradeUnlocked, starterTurboAvailable, unlockStarterTurbo, starterConstructionTiming, missionProductionMultiplier } from './harborlight-v1-logistics.js?v=frontend-v32-22';
+export { workplaceUnlocked, marketCapacity, marketUsed, storagePenalty, townhallPopulationRequirement, playerTradeUnlocked } from './harborlight-v1-logistics.js?v=frontend-v32-22';
 
-import { normalizeResidents, applyDailyHappinessDecay, residentPrayerAction, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v32-21';
-export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v32-21';
-export { residentPrayerQuote, residentPrayerStatus, PRAYER_RULES } from './harborlight-v1-residents.js?v=frontend-v32-21';
+import { normalizeResidents, applyDailyHappinessDecay, residentPrayerAction, residentPopulationMinimum, synchronizeResidents, assignResidents, residentHappiness, residentHappinessRate, residentSegments, advanceResidents, adjustResidentHappiness, hasFoodForResidents, productionMultiplier, hungerPenaltyPerHour, unemploymentPenaltyPerHour, activeWorkerCount, availableResidentCount, settleResidentEvents, residentVisitAction, removeResidentForDeparture, residentIsWorking, residentHappinessBounds, residentHasHousing, housingStatus, foodDemandPerHour as residentFoodDemandPerHour } from './harborlight-v1-residents.js?v=frontend-v32-22';
+export { synchronizeResidents, residentHappiness, residentHappinessRate, productionMultiplier, hasFoodForResidents, hungerPenaltyPerHour, unemploymentPenaltyPerHour } from './harborlight-v1-residents.js?v=frontend-v32-22';
+export { residentPrayerQuote, residentPrayerStatus, PRAYER_RULES } from './harborlight-v1-residents.js?v=frontend-v32-22';
 
-import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction, quotePremiumBuilding, quoteTransport, quoteAcceleration } from './harborlight-v1-activities.js?v=frontend-v32-21';
-import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v32-21';
-import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v32-21';
-import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v32-21';
-import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v32-21';
-import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-21';
-import { consumeMaterial, spendMaterials, grantBonusMaterials, quoteMaterialSpend, centralUnreserved } from './harborlight-v1-inventory.js?v=frontend-v32-21';
-import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-21';
-import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v32-21';
-export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v32-21';
-import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v32-21';
-import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v32-21';
-import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v32-21';
-import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v32-21';
-import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction, enableCampaign, missionResidentPurchaseCost, prepareMissionAssistance, recruitmentRewardQuote, recordMissionAssistance } from './harborlight-v1-missions.js?v=frontend-v32-21';
-import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-21';
-import { APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-21';
-import { attachConstructionTiming } from './harborlight-v1-logistics.js?v=frontend-v32-21';
-import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-21';
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-21';
-import { normalizeWelcomeWorkers, claimWelcomeWorker, welcomeWorkerCopy } from './harborlight-v1-welcome.js?v=frontend-v32-21';
-import { commerceStatus } from './harborlight-v1-commerce.js?v=frontend-v32-21';
+import { normalizeActivities, advanceActivities, nextActivitiesEvent, activityAction, quotePremiumBuilding, quoteTransport, quoteAcceleration } from './harborlight-v1-activities.js?v=frontend-v32-22';
+import { normalizeLeisure, advanceLeisure, nextLeisureEvent, leisureAction } from './harborlight-v1-leisure.js?v=frontend-v32-22';
+import { normalizeEffectNotifications, syncEffectNotifications } from './harborlight-v1-effects.js?v=frontend-v32-22';
+import { normalizeProgression, advanceProgression, nextProgressionEvent, progressionAction, activePlayMultiplier, recordProgressionAction, recordProgressionLogin } from './harborlight-v1-progression.js?v=frontend-v32-22';
+import { nextWarsawMidnightMs } from './harborlight-v1-calendar.js?v=frontend-v32-22';
+import { normalizeIslandProfile, validateIslandName, validateStoredIslandName } from './harborlight-v1-profile.js?v=frontend-v32-22';
+import { consumeMaterial, spendMaterials, grantBonusMaterials, quoteMaterialSpend, centralUnreserved } from './harborlight-v1-inventory.js?v=frontend-v32-22';
+import { warsawParts, warsawDayKey, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-22';
+import { welcomeStatus, WELCOME_SECONDS } from './harborlight-v1-residents.js?v=frontend-v32-22';
+export { welcomeStatus } from './harborlight-v1-residents.js?v=frontend-v32-22';
+import { normalizeWorldEvents, advanceWorldEvents, nextWorldEvent, recordChapelBlessing, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v32-22';
+import { normalizeCommerce, commerceAction, nextCommerceEvent, advanceCommerce } from './harborlight-v1-commerce.js?v=frontend-v32-22';
+import { normalizeEngagementSchedule } from './harborlight-v1-engagement.js?v=frontend-v32-22';
+import { constructionScheduleEstimate } from './harborlight-v1-logistics.js?v=frontend-v32-22';
+import { normalizeMissions, advanceMissions, nextMissionEvent, missionAction, recordMissionAction, enableCampaign, missionResidentPurchaseCost, prepareMissionAssistance, recruitmentRewardQuote, recordMissionAssistance } from './harborlight-v1-missions.js?v=frontend-v32-22';
+import { residentWorkMultiplier } from './harborlight-v1-housing.js?v=frontend-v32-22';
+import { APPROVED_TOUR_VERSION, normalizeTourProgressIndex } from './harborlight-v1-approved-copy.js?v=frontend-v32-22';
+import { attachConstructionTiming } from './harborlight-v1-logistics.js?v=frontend-v32-22';
+import * as Theatre from './harborlight-v1-theatre.js?v=frontend-v32-22';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-22';
+import { normalizeWelcomeWorkers, claimWelcomeWorker, welcomeWorkerCopy } from './harborlight-v1-welcome.js?v=frontend-v32-22';
+import { commerceStatus } from './harborlight-v1-commerce.js?v=frontend-v32-22';
 
 export const RESOURCES = {
   coins: { name: 'Coins', short: 'coins', symbol: '◉', price: 1 },

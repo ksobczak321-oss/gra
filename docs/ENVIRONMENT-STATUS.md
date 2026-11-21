@@ -1,5 +1,17 @@
 # HARBORLIGHT — stan środowisk
 
+## Nowe GO: DEV 0.15.3.0 / cache22 w integracji
+
+| Obszar | Aktualny stan |
+|---|---|
+| Roboczy DEV | Tutorial28, zachowany ukryty Samouczek 25, Doradca1 cel/2–5 akcji i widoczne etykiety; integracja. |
+| CODE / publikacja / własne CI / Pages / tag | PENDING nowego końcowego źródła. Wyniki C6 nie przyjmują nowego kodu. |
+| Dotychczas publiczny DEV | Odebrane C6 / 0.15.2.4 / cache21 / d5ad do osobnej publikacji. |
+| PRE-PROD | Bez zmiany: C6/d5ad, standardowy44577083312/próba1. Nowa promocja tej paczki nie jest autoryzowana. |
+| Konta / PROD / DNS | Bez resetu lub nowych operacji. |
+
+[Zakres](v32/GO-ADVISOR-GUIDANCE.md) · [Bieżące dowody](v32/ADVISOR-GUIDANCE-EVIDENCE.json). Ręczny odbiór187 przypadków: **NOT RUN**. Poniższy odbiór C6 zachowuje własny historyczny zakres i nadal opisuje faktyczne PRE-PROD.
+
 ## DEV i PRE-PROD 0.15.2.4 / cache21 — odebrane
 
 Naprawa admin3 jest wdrożona i automatycznie odebrana na **DEV i PRE-PROD**. Kod aplikacji i źródła artefaktów: `e394ea8fe369f9dfc6615b7a96da1c3e499672e6`; odebrana publikacja: `d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d`, **0.15.2.4 / `frontend-v32-21`**. [Gra PRE-PROD](https://harborlight-dev.web.app/harborlight-v1-layered.html?v=frontend-v32-21).

@@ -33,7 +33,7 @@ test('reordering never assigns the reviewed TOUR-01 through TOUR-48 text to anot
   for (const [index,id] of ORIGINAL_V4.entries()) {
     assert.equal(TOUR_COPY[id].pl.text, developmentText(`TOUR-${String(index+1).padStart(2,'0')}`), id);
   }
-  assert.equal(getTourCopy('clothing','pl').title,'Ubrani');
+  assert.equal(getTourCopy('clothing','pl').title,'Ubrania');
   assert.equal(GOODS.civilianClothes.name,'Strój cywilny','The tour title must not rename an economic good');
   for (const id of APPROVED_TOUR_IDS) for (const language of ['pl','en']) {
     const copy=getTourCopy(id,language);

@@ -43,6 +43,9 @@ with sync_playwright() as playwright:
         context = browser.new_context(viewport={'width':width,'height':height}, reduced_motion='reduce')
         context.route(BASE + '/**', asset)
         page = context.new_page()
+        # With the practical course hidden, the existing Lighthouse story can
+        # legitimately appear immediately. Dismiss it through its real control.
+        page.add_locator_handler(page.locator('[data-story-close]'), lambda locator: locator.click())
         errors, failed, writes = [], [], []
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.on('response', lambda response: failed.append((response.status,response.url)) if response.status >= 400 else None)
@@ -59,6 +62,7 @@ with sync_playwright() as playwright:
         assert page.locator('#island-dialog[open]').count() == 0
         page.locator('[data-advisor-open]').click()
         bounded(page,'[data-advisor-conversation]')
+        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
         user_input = page.locator('[data-advisor-input]')
         user_input.fill('Chcę najszybciej jak to możliwe rozbudować Port')
         user_input.press('Enter')
@@ -123,7 +127,100 @@ with sync_playwright() as playwright:
         assert not writes, writes
         report.append({'width':width,'height':height,'port_plan':True,'live_input_preserved':True,'why_and_alternative':True,'navigation_highlight':True,'optional_mute':True,'no_api_or_storage_writes':True,'errors':errors})
         context.close()
+    # Exercise the actual UI controller with the actual island model. This
+    # detached fixture is independent of the application account and proves
+    # adaptation without replacing or writing an existing player's island.
+    for width, height in [(1440,1000),(390,844)]:
+        context = browser.new_context(viewport={'width':width,'height':height}, reduced_motion='reduce')
+        context.route(BASE + '/**', asset)
+        context.route(BASE + '/advisor-controller-test.html', lambda route: route.fulfill(status=200, content_type='text/html', body='<!doctype html><html lang="pl"><head><link rel="stylesheet" href="harborlight-v1-advisor.css"></head><body style="background:#123449"></body></html>'))
+        page=context.new_page()
+        errors=[]
+        page.on('pageerror',lambda error:errors.append(str(error)))
+        page.goto(BASE + '/advisor-controller-test.html')
+        page.evaluate('''async () => {
+          const State=await import('/harborlight-v1-state.js');
+          const Model=await import('/harborlight-v1-advisor.js');
+          const UI=await import('/harborlight-v1-advisor-ui.js');
+          const now=Date.parse('2026-11-21T10:00:00Z');
+          const state=State.createState(now,{ruleset:32});state.buildings.townhall.level=2;state.buildings.house.level=2;
+          for(const id of Object.keys(state.resources))state.resources[id]=1000;state.resources.coins=100000;
+          window.advisorFixture={State,state,now,language:'pl',detailedCalls:0,lightCalls:0,lastNavigation:null};
+          const f=window.advisorFixture;
+          f.ui=UI.createKingdomAdvisor({getState:()=>state,getLanguage:()=>f.language,
+            getSuggestion:(world,options)=>{f.lightCalls++;return Model.advisorSuggestion(world,options);},
+            getPlan:(input,options)=>{f.detailedCalls++;return Model.advisorPlan(state,input,options);},
+            onNavigate:row=>{f.lastNavigation=row.target;}});
+          f.ui.open();
+        }''')
+        bounded(page,'[data-advisor-conversation]')
+        expect(page.locator('[data-advisor-task]')).to_contain_text('Ratusz')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('jako tragarza')
+        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
+        assert page.evaluate('advisorFixture.detailedCalls')==0
+        result=page.evaluate('''() => {
+          const f=advisorFixture,r=f.State.act(f.state,{type:'assign',building:'warehouse',delta:1},f.now);
+          f.State.tick(f.state,121);f.ui.update(true);return r.ok;
+        }''')
+        assert result is True
+        expect(page.locator('[data-advisor-answer]')).not_to_contain_text('jako tragarza')
+        user_input=page.locator('[data-advisor-input]')
+        user_input.fill('Chcę rozbudować Gospodarstwo')
+        user_input.press('Enter')
+        expect(page.locator('[data-advisor-task]')).to_contain_text('Gospodarstwo')
+        assert page.evaluate('advisorFixture.detailedCalls')==1
+        user_input.fill('Mój niedokończony wpis')
+        page.evaluate('''() => {
+          const f=advisorFixture;for(let i=0;i<5;i++)f.ui.update(true);
+        }''')
+        assert page.evaluate('advisorFixture.detailedCalls')==1, 'Passive refresh reran a detailed forecast'
+        expect(user_input).to_have_value('Mój niedokończony wpis')
+        result=page.evaluate('''() => {
+          const f=advisorFixture,r=f.State.act(f.state,{type:'upgrade',building:'farm'},f.state.worldTimeMs);
+          f.State.tick(f.state,7200);f.ui.update(true);return {ok:r.ok,level:f.state.buildings.farm.level};
+        }''')
+        assert result=={'ok':True,'level':2}, result
+        expect(page.locator('[data-advisor-task]')).to_contain_text('Ratusz')
+        expect(user_input).to_have_value('Mój niedokończony wpis')
+        assert page.evaluate('advisorFixture.detailedCalls')==1
+        page.evaluate('''() => {const f=advisorFixture;f.state.resources.coins=0;f.ui.update(true);}''')
+        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
+        game=page.locator('[data-advisor-target="expeditions"]')
+        expect(game).to_be_visible()
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('Nagroda zależy')
+        game.click()
+        assert page.evaluate('advisorFixture.lastNavigation')=='expeditions'
+        page.evaluate('''() => {const f=advisorFixture;f.language='en';f.ui.open();f.ui.update(true);}''')
+        expect(page.locator('#kingdom-advisor-title')).to_have_text('Kingdom Advisor')
+        expect(page.locator('[data-advisor-task]')).to_contain_text('Goal:')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('reward depends')
+        expect(page.locator('[data-advisor-send]')).to_have_text('Ask')
+        user_input.fill('Upgrade the Port')
+        user_input.press('Enter')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('Town Hall must reach level 4')
+        page.evaluate('''() => {const f=advisorFixture;f.state.buildings.townhall.level=4;f.ui.update(true);}''')
+        expect(page.locator('[data-advisor-task]')).to_contain_text('Port')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('Next level: 2')
+        assert page.evaluate('advisorFixture.detailedCalls')==2
+        page.evaluate('''() => {const f=advisorFixture;f.language='pl';f.ui.update(true);}''')
+        user_input.fill('Wolni mieszkańcy')
+        user_input.press('Enter')
+        assert 2 <= page.locator('[data-advisor-actions] > li').count() <= 5
+        before=page.locator('[data-advisor-answer] > p').first.inner_text()
+        result=page.evaluate('''() => {
+          const f=advisorFixture,r=f.State.act(f.state,{type:'assign',building:'warehouse',delta:1},f.state.worldTimeMs);
+          f.ui.update(true);return r.ok;
+        }''')
+        assert result is True
+        assert page.locator('[data-advisor-answer] > p').first.inner_text()!=before
+        assert page.evaluate('advisorFixture.detailedCalls')==3, 'A workers topic refresh reran the detailed planner'
+        expect(user_input).to_have_value('Wolni mieszkańcy')
+        bounded(page,'[data-advisor-input]')
+        page.screenshot(path=str(OUTPUT/f'advisor-live-guidance-{width}-{height}.png'))
+        assert not errors, errors
+        report.append({'width':width,'height':height,'controller_live_model':True,'staffing_update':True,'completed_goal_replaced':True,'visible_actions_2_to_5':True,'passive_detailed_quotes':0,'minigame_reward_navigation':True,'EN':True,'input_preserved':True})
+        context.close()
     browser.close()
 (OUTPUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))
-print('PASS advisor UI: real Port goal, live update, explanation, alternative, navigation/highlight, keyboard, mute/reopen, desktop/mobile and short viewport; no account/storage writes.')
+print('PASS advisor UI: real Port goal, live guidance with2–5actions, actual model staffing/upgrade transitions, no passive detailed forecasts, reward-bearing minigame navigation, EN, preserved input, keyboard, mute/reopen, desktop/mobile and short viewport; no account/storage writes.')
