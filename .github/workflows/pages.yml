@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -30,9 +31,46 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
+        id: pages_artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
+      # Upload completion can precede visibility in the metadata endpoint used
+      # by deploy-pages. Wait for this run's exact artifact rather than starting
+      # a deployment which cannot find it yet. Never choose between duplicates.
+      - name: Wait for uploaded Pages artifact metadata
+        uses: actions/github-script@v7
+        timeout-minutes: 2
+        env:
+          PAGES_ARTIFACT_ID: ${{ steps.pages_artifact.outputs.artifact_id }}
+        with:
+          script: |
+            const wanted = process.env.PAGES_ARTIFACT_ID;
+            if (!/^[1-9][0-9]*$/.test(wanted || '')) {
+              throw new Error('Upload did not return a valid Pages artifact ID');
+            }
+            for (let attempt = 0; attempt < 12; attempt += 1) {
+              const { data } = await github.rest.actions.listWorkflowRunArtifacts({
+                ...context.repo, run_id: context.runId, per_page: 100
+              });
+              const matches = data.artifacts.filter(item => item.name === 'github-pages');
+              if (matches.length > 1) {
+                throw new Error('Multiple Pages artifacts found; deployment stopped');
+              }
+              if (matches.length === 1) {
+                if (String(matches[0].id) !== wanted || matches[0].expired) {
+                  throw new Error('Pages artifact does not match this upload');
+                }
+                core.info('Exact uploaded Pages artifact is visible');
+                return;
+              }
+              if (attempt < 11) {
+                core.info('Uploaded Pages artifact is not visible yet; checking again');
+                await new Promise(resolve => setTimeout(resolve, 5000));
+              }
+            }
+            throw new Error('Uploaded Pages artifact metadata did not become visible');
 
       - name: Deploy to GitHub Pages
         id: deployment
