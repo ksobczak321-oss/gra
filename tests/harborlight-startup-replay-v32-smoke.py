@@ -26,8 +26,14 @@ NOW = int(cloud.NOW.timestamp()*1000)
 PROBE = r'''(() => {
   window.__qaReplay={workers:0,terminations:0,messages:[],beats:[],started:false,done:false};
   const qa=window.__qaReplay,Native=window.Worker;
-  window.Worker=new Proxy(Native,{construct(Target,args){
-    const worker=Reflect.construct(Target,args);qa.workers++;
+  const replayURL=new URL('./harborlight-v1-startup-replay-worker.js',location.href);
+  window.Worker=new Proxy(Native,{construct(Target,args,NewTarget){
+    const worker=Reflect.construct(Target,args,NewTarget);
+    const url=new URL(args[0],location.href);
+    // Other native Workers (including the advisor) have their own protocol
+    // and lifecycle. Observe only the actual startup replay module.
+    if(url.origin!==replayURL.origin||url.pathname!==replayURL.pathname)return worker;
+    qa.workers++;
     const post=worker.postMessage.bind(worker),terminate=worker.terminate.bind(worker);
     worker.postMessage=(data,...rest)=>{
       qa.messages.push({targetNow:data.targetNow,recovery:data.recoverInterruptions,
@@ -94,6 +100,8 @@ class Replay(startup.Startup):
 
     def route(self,route):
         request=route.request;parsed=urlsplit(request.url)
+        if parsed.hostname=='harborlight-dev.web.app' and parsed.path=='/__qa_native_other_worker__.js':
+            return route.fulfill(body="self.onmessage=event=>self.postMessage({kind:'native-other',echo:event.data,name:self.name});",content_type='text/javascript')
         if self.clock_change and parsed.hostname=='harborlight-dev.web.app':
             if parsed.path=='/api/v1/config':
                 return route.fulfill(json={'accountApi':True,'projectId':'harborlight-dev','environment':'preprod'})
@@ -176,7 +184,21 @@ def run():
                 assert app.page.evaluate('Date.now()')==NOW
                 assert app.page.evaluate('!window.__qaReplayFrameRan&&!window.__qaReplayTimerRan'), 'The clock regression must keep both window scheduling APIs paused'
                 assert app.cloud_reads==2 and not app.errors,app.errors
+                # A different real Worker must retain its constructor options,
+                # message shape and termination without touching replay QA.
+                unrelated=app.page.evaluate('''async()=>{
+                  const worker=new Worker(new URL('./__qa_native_other_worker__.js',location.href),{type:'module',name:'native-passthrough'});
+                  try {
+                    const response=new Promise((resolve,reject)=>{worker.onmessage=event=>resolve(event.data);worker.onerror=reject;});
+                    worker.postMessage({kind:'unrelated-request',value:17});
+                    return await response;
+                  } finally {worker.terminate();}
+                }''')
+                assert unrelated=={'kind':'native-other','echo':{'kind':'unrelated-request','value':17},'name':'native-passthrough'},unrelated
+                assert app.page.evaluate('window.__qaReplay.workers===1&&window.__qaReplay.terminations===1&&window.__qaReplay.messages.length===1&&window.__qaReplay.done')
+                assert not app.errors,app.errors
                 report.append({'case':'paused-browser-clock-worker-start-and-completion','workers':1,'fixed_target':NOW,'clock_pumped':False,'cloud_reads':2,'js_errors':0})
+                report.append({'case':'unrelated-native-worker-passthrough','replay_workers':1,'replay_terminations':1,'native_constructor_options_and_non_replay_message_preserved':True})
                 print('PASS paused browser clock launches/completes Worker without frame/timer pumping',flush=True)
             finally:app.close()
 

@@ -7,11 +7,13 @@
 
 
 
-## Kandydat DEV 0.15.3.1 / cache23 — drugi CI FAILURE, nowa publikacja PENDING
 
-PUB 32d7d18 ma CI44940453474 **FAILURE 9 min 10 s**: 1896 Node/173 Python i osobne minigry PASS; pierwsze 7/60 głównych programów PASS. Ósmy guidance-smoke zatrzymał się przed przeglądarką na PermissionDenied prywatnego domyślnego katalogu;52 pozostałych main i 18cloud nie uruchomiono. Poprawka tylko portowalnej ścieżki testu ma lokalne5/5kontekstów PASS bez ustawiania zmiennej wyjścia; brak pełnegoCI PASS. CODE ace6/runtime/kanoniczne artefakty pozostają bez zmian, a historie 4f CI FAIL i 6e7 export FAIL zachowane.
 
-Pages44940453447 ma osobny SUCCESS 29 s dla 32d:466 plików /96 673 009 bajtów przez normalny TLS i oba XLSX PASS. Nowy PUB3/CI/Pages są PENDING; brak nowego tagu DEV, GCP i bazowej kontroli kont. Odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22. 519 kart /195 przypadków NOT RUN. [Zakres i historia](docs/v32/GO-ADVISOR-TASKS.md) · [Dowody](docs/v32/ADVISOR-TASKS-EVIDENCE.json).
+## Kandydat DEV 0.15.3.1 / cache23 — trzeci CI FAILURE, nowa publikacja PENDING
+
+PUB5cb9e97 ma CI44941704545 **FAILURE 8 min 34 s**: 1896 Node/173 Python, osobne minigry i pierwsze 11/60 głównych programów PASS. Startup-replay jako dwunasty program zatrzymał się na globalnym stubie przejmującym również Workera porad (2/2 zamiast 1/1);48 głównych i 18 chmurowych programów nie uruchomiono. Poprawka wyłącznie roli testowego Workera zachowuje 33 asercje i limity oraz dodaje trzy ścisłe kontrole passthrough;pełne 14 przypadków replay ma lokalny PASS na bajtach 5cb. No-flash desktop/mobile nadal PENDING. Brak pełnego CI PASS.
+
+Pages44941704526 ma osobny SUCCESS 49 s: 466 plików /96 673 009 bajtów przez normalny TLS i oba XLSX zgodne dla 5cb. CODE ace6/runtime/wszystkie 466 publiczne pliki/kanoniczne artefakty bez zmian. Nowy PUB4/CI/Pages PENDING; brak nowych tagów/GCP/baseline. Historie 4f/32d/6e7 FAIL zachowane. Odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22.519 kart /195 przypadków NOT RUN. [Zakres i historia](docs/v32/GO-ADVISOR-TASKS.md) · [Dowody](docs/v32/ADVISOR-TASKS-EVIDENCE.json).
 
 ## DEV i PRE-PROD 0.15.3.0 / cache22 — odebrane automatycznie
 

@@ -4,6 +4,16 @@
 
 
 
+
+
+## Trzecia publikacja cache23 — CI FAILURE na globalnym stubie Workera
+
+PUB `5cb9e97f12f13631cb83473cd2506d25370384f4` ma **CI44941704545 FAILURE 8 min 34 s**. Pełne 1896 Node, 173 Python, osobna przeglądarka minigier i **pierwsze 11/60 głównych programów** przeszły, w tym pięć kontekstów guidance. Dwunasty `startup-replay` zatrzymał się na ścisłej asercji jednego Workera i jednego zakończenia: otrzymał 2/2. Globalny stub testowy błędnie przejmował nowego Workera porad jako Workera nadrabiania i odczytywał niewłaściwy `packet.bundle`. Pozostałych **48 głównych i 18 chmurowych programów nie uruchomiono**. Pełnego main lub CI PASS nie deklarujemy.
+
+Poprawka obejmuje wyłącznie test: rozpoznanie rzeczywistej roli replay po origin i pathname `harborlight-v1-startup-replay-worker.js`; pozostałe natywne Workery przechodzą bez przechwytywania. Wszystkie 33 dotychczasowe asercje i limity pozostają zachowane; dodano trzy ścisłe asercje natywnego echo/passthrough. Pełny natywny pakiet replay na niezmienionych bajtach 5cb ma lokalne **14/14 PASS**. Kontrola no-flash desktop/mobile pozostaje PENDING do końcowego raportu właściciela; lokalna naprawa nie oznacza pełnego CI PASS. Niezależny przegląd 310 źródeł nie wykazał innych globalnych założeń o Workerze. CODE ace6, wszystkie 466 publicznych plików i kanoniczne artefakty pozostają bez zmian.
+
+Pages44941704526 ma osobny **SUCCESS 49 s**: 466 plików treści /96 673 009 bajtów przez normalny TLS oraz oba XLSX osobno zgodne z tym samym 5cb. Nowy PUB4, własny CI i Pages pozostają PENDING; brak nowego tagu DEV/PRE-PROD, GCP i bazowej kontroli kont. Wcześniejsze historie 4f FAIL, 32d FAIL i 6e7 export FAIL zachowano; lokalne ace6 canonical PASS pozostaje odrębne. Odebrane PRE-PROD nadal 0.15.3.0/fc95/cache22;195 ręcznych przypadków NOT RUN.
+
 ## Druga publikacja cache23 — CI FAILURE na katalogu testu
 
 PUB `32d7d189a482b2001761c7a1c4dfb4a2b69c31fe` ma **CI44940453474 FAILURE 9 min 10 s**. Pełne 1896 Node, 173 Python i osobna przeglądarka minigier przeszły. Z 60 głównych programów przeszło **pierwszych siedem**: cache, wydajność, etapy budynków, redakcja, Doradca UI, układ i Worker. Ósmy `guidance-smoke` zakończył się **przed uruchomieniem przeglądarki**: domyślny prywatny katalog `/workspace` nie był zapisywalny na runnerze GitHub. Pozostałych **52 głównych i 18 chmurowych programów nie uruchomiono**. To nie jest pełny PASS głównych programów lub CI.

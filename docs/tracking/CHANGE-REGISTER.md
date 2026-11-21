@@ -263,13 +263,13 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1180 — Umieszczaj etykiety Kaplicy i Latarni poza górnym i prawym menu](changes/HL-CHG-1180.md) | Bug | `accepted` | `ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS` | `ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS` |
 | [HL-CHG-1181 — Oddziel dostępność misji i ofert od ukrytego kursu bez zmiany jego flag](changes/HL-CHG-1181.md) | Bug | `accepted` | `ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS` | `ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS` |
 | [HL-CHG-1182 — Czytaj potrzebne dane doradcy tanio a pełne prognozy licz na żądanie](changes/HL-CHG-1182.md) | Bug | `accepted` | `ACCEPTED_EXACT_fc95a1a_PUB_CI_PAGES_CANONICAL_AND_TLS_PASS` | `ACCEPTED_44929856572_1_NATIVE_ARTIFACTS_BYTES_ACCOUNTS_PASS` |
-| [HL-CHG-1183 — Układ Doradcy: cel i równoległe karty zadań](changes/HL-CHG-1183.md) | Story | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
-| [HL-CHG-1184 — Wszystkie instrukcje i krótkie uzasadnienia pod kartami](changes/HL-CHG-1184.md) | Story | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
-| [HL-CHG-1185 — Pokaż gdzie najpierw wskazuje budynek na mapie](changes/HL-CHG-1185.md) | Story | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
-| [HL-CHG-1186 — Po otwarciu budynku wskazuj dokładną kontrolkę](changes/HL-CHG-1186.md) | Story | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
-| [HL-CHG-1187 — Planuj wykonalny rozwój co 120 sekund rzeczywistych](changes/HL-CHG-1187.md) | Story | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
-| [HL-CHG-1188 — Worker otrzymuje ograniczone dane bez blokowania gry](changes/HL-CHG-1188.md) | Bug | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
-| [HL-CHG-1189 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](changes/HL-CHG-1189.md) | Story | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1183 — Układ Doradcy: cel i równoległe karty zadań](changes/HL-CHG-1183.md) | Story | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1184 — Wszystkie instrukcje i krótkie uzasadnienia pod kartami](changes/HL-CHG-1184.md) | Story | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1185 — Pokaż gdzie najpierw wskazuje budynek na mapie](changes/HL-CHG-1185.md) | Story | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1186 — Po otwarciu budynku wskazuj dokładną kontrolkę](changes/HL-CHG-1186.md) | Story | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1187 — Planuj wykonalny rozwój co 120 sekund rzeczywistych](changes/HL-CHG-1187.md) | Story | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1188 — Worker otrzymuje ograniczone dane bez blokowania gry](changes/HL-CHG-1188.md) | Bug | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1189 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](changes/HL-CHG-1189.md) | Story | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
 
 <a id="hl-epic-tut"></a>
 
@@ -646,7 +646,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1158 — Adres minigier bez końcowego ukośnika nie może pobierać modułu z katalogu głównego](changes/HL-CHG-1158.md) | Bug | `accepted` | `accepted_DDA_with_own_CI_Pages_and_tag` | `SUCCESS44292700743_DDA_SUBSEQUENT_PROMOTION_PRESERVED_ORIGINAL_HISTORY` |
 | [HL-CHG-1161 — Zsynchronizuj trzy zamknięte kopie modeli API po zmianie cache i tekstów](changes/HL-CHG-1161.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
 | [HL-CHG-1162 — Dostosuj testy do dobrowolnego tutoriala, zwykłych ofert i wersji0.15.1.0](changes/HL-CHG-1162.md) | Bug | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `not_authorized_for_this_change` |
-| [HL-CHG-1190 — Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania](changes/HL-CHG-1190.md) | Ops | `accepted` | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
+| [HL-CHG-1190 — Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania](changes/HL-CHG-1190.md) | Ops | `accepted` | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
 
 <a id="hl-epic-arc"></a>
 

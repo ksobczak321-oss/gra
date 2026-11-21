@@ -9,8 +9,8 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 | Warstwa | Stan |
 |---|---|
 | Implementacja | `implemented_frozen_CODE_local_verified` |
-| DEV | `PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` |
-| CI | `FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY` |
+| DEV | `PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING` |
+| CI | `FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB` |
 | PRE-PROD | `AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
@@ -39,14 +39,14 @@ Data pierwotnej wiadomości: 2026-11-21. Europe/Warsaw
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
 - **Kod dowodowy:** `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`.
-- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44940453474.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/44941704545.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0191 — Po otwarciu budynku wskazuj dokładną kontrolkę](../../testing/manual/HL-TC-0191.md) — `NOT RUN`.
 
-PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN.
+PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN.
 
 ## Relacje
 

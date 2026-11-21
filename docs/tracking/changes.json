@@ -32179,8 +32179,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32208,10 +32208,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32244,8 +32244,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32272,10 +32272,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32308,8 +32308,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32336,10 +32336,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32372,8 +32372,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32400,10 +32400,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32436,8 +32436,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32465,10 +32465,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32501,8 +32501,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32529,10 +32529,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32565,8 +32565,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32594,10 +32594,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -32630,8 +32630,8 @@
       },
       "status": {
         "implementation": "implemented_frozen_CODE_local_verified",
-        "dev": "PUB2_PUBLISHED_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
-        "ci": "FAILURE_44940453474_TEST_OUTPUT_DIRECTORY_PORTABILITY",
+        "dev": "PUB3_CI_FAILED_NOT_ACCEPTED_NEW_PUB_PENDING",
+        "ci": "FAILURE_44941704545_GLOBAL_TEST_WORKER_STUB",
         "preprod": "AUTHORIZED_PENDING_VERIFIED_DEV_STANDARD_PROMOTION",
         "prod": "postponed_by_user",
         "decision": "accepted"
@@ -32658,10 +32658,10 @@
         "automated_tests": [],
         "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
         "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "publication_source_sha": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
-        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
+        "publication_source_sha": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
         "manual_execution": "NOT_RUN",
-        "release_note": "PUB32d CI44940453474FAIL9m10:1896Node/173Python/standalonePASS;7/60mainPASS,8thguidanceprelaunchPermissionDenied;52remainingmain18cloudNOT_RUN. Pages44940453447PASS29s/all466TLS+bothXLSX. Test-only output portability fix local5/5contextsPASS with outputenvunset;notfullCIacceptance. CODEace6/runtime/artifacts unchanged;PUB3/CI/Pages/tags/GCPpending;195manualNOT_RUN."
+        "release_note": "PUB5cb CI44941704545FAIL8m34:1896Node/173Python/standalone+11mainPASS;12thstartup-replayWorkerroleFAIL,48main18cloudNOT_RUN. Pages44941704526PASS49s/all466TLS+bothXLSX. Test-onlyrolefix preserves33assertions/timeouts+3nativepassthrough assertions;14/14packedNativeReplayPASS;no-flashdesktopmobilePENDING;notfullCI. CODEace6/all466/canonical unchanged;PUB4/CI/Pages/tags/GCPpending;195manualNOT_RUN."
       },
       "notes": [
         "Istnienie roboczej implementacji nie jest odbiorem ani publikacją.",
@@ -36021,26 +36021,26 @@
       "raw_report": "/workspace/work/advisor-20261121/release/CI-44926983827-1/CI-summary.json"
     },
     "latest_DEV_ci_observation": {
-      "run": 44940453474,
+      "run": 44941704545,
       "attempt": 1,
-      "source": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe",
+      "source": "5cb9e97f12f13631cb83473cd2506d25370384f4",
       "kind": "ci",
       "event": "push",
       "status": "completed",
       "conclusion": "failure",
-      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44940453474",
-      "created_at": "2026-11-21T19:20:56Z",
-      "completed_at": "2026-11-21T19:30:06Z",
-      "workflow_seconds": 550.0,
+      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44941704545",
+      "created_at": "2026-11-21T19:34:59Z",
+      "completed_at": "2026-11-21T19:43:33Z",
+      "workflow_seconds": 514.0,
       "jobs": [
         {
-          "id": 136956261143,
+          "id": 136960116573,
           "name": "validate",
           "status": "completed",
           "conclusion": "failure",
-          "started_at": "2026-11-21T19:20:59Z",
-          "completed_at": "2026-11-21T19:30:06Z",
-          "seconds": 547.0,
+          "started_at": "2026-11-21T19:35:02Z",
+          "completed_at": "2026-11-21T19:43:32Z",
+          "seconds": 510.0,
           "steps": [
             {
               "name": "Set up job",
@@ -36058,19 +36058,19 @@
               "name": "Setup Node",
               "number": 3,
               "conclusion": "success",
-              "seconds": 4.0
+              "seconds": 0.0
             },
             {
               "name": "Setup Python",
               "number": 4,
               "conclusion": "success",
-              "seconds": 1.0
+              "seconds": 0.0
             },
             {
               "name": "Test game rules and release promotion gates",
               "number": 5,
               "conclusion": "success",
-              "seconds": 146.0
+              "seconds": 107.0
             },
             {
               "name": "Verify canonical API trade rules",
@@ -36094,19 +36094,19 @@
               "name": "Test cloud bootstrap safety",
               "number": 9,
               "conclusion": "success",
-              "seconds": 2.0
+              "seconds": 1.0
             },
             {
               "name": "Test read-only cloud verification",
               "number": 10,
               "conclusion": "success",
-              "seconds": 5.0
+              "seconds": 4.0
             },
             {
               "name": "Test deterministic frontend release bundle",
               "number": 11,
               "conclusion": "success",
-              "seconds": 11.0
+              "seconds": 8.0
             },
             {
               "name": "Test Firebase Hosting preparation safety",
@@ -36136,13 +36136,13 @@
               "name": "Test isolated runtime and Hosting configuration",
               "number": 16,
               "conclusion": "success",
-              "seconds": 0.0
+              "seconds": 1.0
             },
             {
               "name": "Test monthly billing alert configuration safety",
               "number": 17,
               "conclusion": "success",
-              "seconds": 1.0
+              "seconds": 0.0
             },
             {
               "name": "Test dry-run tracking issue import and idempotency",
@@ -36178,7 +36178,7 @@
               "name": "Verify historical Excel 14 against accepted 0.14.0.0 source",
               "number": 23,
               "conclusion": "success",
-              "seconds": 16.0
+              "seconds": 11.0
             },
             {
               "name": "Verify all lossless building sprites against approved atlases",
@@ -36196,37 +36196,37 @@
               "name": "Verify every standalone minigame and its Word and TXT instructions",
               "number": 26,
               "conclusion": "success",
-              "seconds": 7.0
+              "seconds": 5.0
             },
             {
               "name": "Verify full current master Excel and preserved historical rules",
               "number": 27,
               "conclusion": "success",
-              "seconds": 39.0
+              "seconds": 31.0
             },
             {
               "name": "Install browser acceptance dependencies",
               "number": 28,
               "conclusion": "success",
-              "seconds": 29.0
+              "seconds": 18.0
             },
             {
               "name": "Build the frontend release being validated",
               "number": 29,
               "conclusion": "success",
-              "seconds": 3.0
+              "seconds": 2.0
             },
             {
               "name": "Test every standalone minigame and download in Chromium",
               "number": 30,
               "conclusion": "success",
-              "seconds": 176.0
+              "seconds": 179.0
             },
             {
               "name": "Test packaged game and both tutorial programs in Chromium",
               "number": 31,
               "conclusion": "failure",
-              "seconds": 91.0
+              "seconds": 129.0
             },
             {
               "name": "Test packaged DEV login and cloud saves in Chromium",
@@ -36278,8 +36278,8 @@
         "failure": 1,
         "skipped": 4
       },
-      "full_log_bytes": 550520,
-      "full_log_sha256": "bb3f14e961fc62ac179799fb270267abb1ba320a7e3e6d0d6d9e94c8ab5ca281",
+      "full_log_bytes": 552504,
+      "full_log_sha256": "485b318136784059b6b13cc62f6646f9afd097e165db179eaa0796d3f3b37612",
       "observer_workflow_dispatches": 0,
       "observer_repository_mutations": 0,
       "observer_account_or_clock_writes": 0,
@@ -36291,7 +36291,7 @@
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "duration_ms": 146035.344118
+          "duration_ms": 106741.510634
         },
         "Test API infrastructure endpoints": {
           "tests": 178,
@@ -36300,7 +36300,7 @@
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "duration_ms": 2661.100193
+          "duration_ms": 2283.874813
         },
         "Test standalone physical game scenario": {
           "tests": 7,
@@ -36309,7 +36309,7 @@
           "cancelled": 0,
           "skipped": 0,
           "todo": 0,
-          "duration_ms": 56.179431
+          "duration_ms": 48.897902
         }
       },
       "node_total": 1896,
@@ -36367,7 +36367,7 @@
       "legacy_96h_watchdog": [
         {
           "step": "Test game rules and release promotion gates",
-          "elapsed_ms": 6483.617912
+          "elapsed_ms": 5224.813822
         }
       ],
       "browser_source_program_groups": [
@@ -36447,7 +36447,7 @@
           "count": 60,
           "step_conclusion": "failure",
           "completed_programs_confirmed_by_sequential_step_success": null,
-          "actual_logged_starts": 10,
+          "actual_logged_starts": 14,
           "actual_log_program_sequence_equals_source": false
         },
         {
@@ -36725,7 +36725,7 @@
     "candidate_next_release": {
       "version": "0.15.3.1",
       "cache": "frontend-v32-23",
-      "status": "PUB2_CI_FAILED_REMEDY_LOCAL5_PASS_NEW_PUB_PENDING",
+      "status": "PUB3_CI_FAILED_REMEDY_LOCAL14_PASS_NOFLASH_PENDING_NEW_PUB",
       "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
       "publication_sha": null,
       "ci": null,
@@ -36735,7 +36735,7 @@
       "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
       "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
       "expected_public_package_files": 467,
-      "previous_unaccepted_publication": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe"
+      "previous_unaccepted_publication": "5cb9e97f12f13631cb83473cd2506d25370384f4"
     },
     "historical_cache19_candidate_fields": {
       "dev_application_version": "0.15.2.2",
@@ -37548,7 +37548,7 @@
       "new_deployment_completed": true
     },
     "advisor_tasks_task": {
-      "status": "PUB2_CI_FAILED_REMEDY_LOCAL5_PASS_NEW_PUB_PENDING",
+      "status": "PUB3_CI_FAILED_REMEDY_LOCAL14_PASS_NOFLASH_PENDING_NEW_PUB",
       "version": "0.15.3.1",
       "cache": "frontend-v32-23",
       "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
@@ -37558,7 +37558,7 @@
       "local_checkpoint_evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
       "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
       "publication_sha": null,
-      "previous_unaccepted_publication": "32d7d189a482b2001761c7a1c4dfb4a2b69c31fe"
+      "previous_unaccepted_publication": "5cb9e97f12f13631cb83473cd2506d25370384f4"
     },
     "cache23_first_publication_failure": {
       "status": "PUB1_CI_FAILURE_PRESERVED_NOT_ACCEPTED",
@@ -37667,6 +37667,75 @@
       },
       "new_publication_source": null,
       "runtime_CODE_and_canonical_artifacts_unchanged": true,
+      "DEV_tag_created": false,
+      "GCP_dispatched": false,
+      "account_baseline_captured": false,
+      "PREPROD_tag_created": false,
+      "raw_reports_preserved": true
+    },
+    "cache23_third_publication_failure": {
+      "status": "PUB3_CI_FAILURE_PRESERVED_NOT_ACCEPTED",
+      "publication": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+      "CODE": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "CI": {
+        "run": 44941704545,
+        "status": "FAILURE",
+        "seconds": 514,
+        "Node_PASS": 1896,
+        "Python_PASS": 173,
+        "standalone_browser_PASS": 1,
+        "main_browser_programs_PASS": 11,
+        "main_browser_total": 60,
+        "failing_program_number": 12,
+        "failing_program": "startup-replay",
+        "failure": "Strict qa.workers==qa.terminations==1 observed2/2 because global testWorker stub intercepted new advisory Worker as Replay and dereferenced packet.bundle.",
+        "remaining_main_programs_not_started": 48,
+        "cloud_programs_not_run": 18,
+        "full_main_or_CI_PASS_claimed": false,
+        "raw_report": "/workspace/work/advisor-layout-20261121/release/CI-44941704545-1/CI-summary.json",
+        "raw_log_sha256": "485b318136784059b6b13cc62f6646f9afd097e165db179eaa0796d3f3b37612"
+      },
+      "Pages": {
+        "run": 44941704526,
+        "status": "SUCCESS",
+        "seconds": 49,
+        "normal_TLS_content_files": 466,
+        "normal_TLS_content_bytes": 96673009,
+        "both_XLSX_separately_exact": true,
+        "proof_applies_only_to_own_source": true
+      },
+      "package_snapshot": {
+        "archive": "/workspace/work/advisor-layout-20261121/release/committed-frontend-5cb9e97.tar.gz",
+        "archive_sha256": "8b5fa4b180912aa8ab379f8b9fa3e5cac42978589b71895e1969dde2e0b572fd",
+        "commit": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+        "file_count": 467,
+        "frontend_dir": "/workspace/work/advisor-layout-20261121/release/verified-local-frontend-5cb9e97",
+        "manifest_sha256": "741326d11e4f7f35a81dd1d6a7d5954429a43c07afc0abeef927990e694f4797",
+        "total_bytes": 96729691
+      },
+      "test_only_remedy": {
+        "status": "PENDING_ACTUAL_OWNER14CASE_RESULT",
+        "scope": "Match replay stub by actual same-origin startup-replay-worker.js pathname; full native passthrough for all other workers",
+        "existing_assertions_preserved": 33,
+        "timeouts_preserved": true,
+        "added_strict_native_echo_passthrough_assertions": 3,
+        "independent_source_audit": {
+          "sources": 310,
+          "report": "worker-role-independent-audit.json",
+          "other_global_Worker_assumptions_found": false
+        },
+        "actual_result": {
+          "status": "PASS_LOCAL_PACKAGED_NATIVE_REPLAY_14_OF_14_NOFLASH_PENDING",
+          "packaged_source": "5cb9e97f12f13631cb83473cd2506d25370384f4",
+          "old_assertions_preserved": 33,
+          "original_timeouts_preserved": true,
+          "new_native_echo_passthrough_assertions": 3,
+          "owner_actual_result_confirmed_by_root": true,
+          "no_flash_desktop_mobile": "PENDING_OWNER_FINAL_DONE",
+          "full_CI_acceptance": false
+        }
+      },
+      "runtime_CODE_all466_public_and_canonical_unchanged": true,
       "DEV_tag_created": false,
       "GCP_dispatched": false,
       "account_baseline_captured": false,
