@@ -2,7 +2,7 @@ Kupiec w opałach
 
 HARBORLIGHT · Przygoda klasyczna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,7 +20,9 @@ Każda wygrana runda z kulką daje jedną kulę do armaty. Wyceluj w piratów i 
 
 Przygotowanie rozgrywki
 
-1. Trzy pirackie statki poruszają się po morzu. Kule do armaty otrzymuje się za wygrane rundy z kulką; zapas mieści najwyżej 12.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Trzy pirackie statki poruszają się po morzu. Kule do armaty otrzymuje się za wygrane rundy z kulką; zapas mieści najwyżej 12.
 
 Sterowanie i wykonywanie ruchów
 
@@ -47,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Nietrafiony pocisk zużywa amunicję; bez kul trzeba najpierw zdobyć następną.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny limit etapu przy trudności 1 wynosi 420 s. Dalsza trudność skraca go według wzoru: czas katalogowy / (1 + 0,05 × (trudność − 1)), nie mniej niż 60 s.
 
@@ -90,20 +94,24 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: adventure-pirate-cannon.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-adventures.js:45 — Cel i opis scenariusza
 
-• harborlight-v1-adventures.js:511 — Legalne działania i warunki ukończenia
+• harborlight-v1-adventures.js:546 — Legalne działania i warunki ukończenia
 
-• harborlight-v1-adventures.js:354 — Zegar etapów i łatwiejsze próby
+• harborlight-v1-adventures.js:357 — Zegar etapów i łatwiejsze próby
 
 • harborlight-v1-adventure-puzzles.js:110 — Sprawdzanie plansz, przepływu i równowagi
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

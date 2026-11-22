@@ -2,7 +2,7 @@ Wyspa, do której się wraca
 
 HARBORLIGHT · Przygoda fabularna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,35 +12,31 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Wybierz własny finał i połącz odkrycia z całego szlaku.
+Rozwiąż wszystkie 6 pomieszczeń, aby ukończyć opowieść.
 
 Scenariusz i zadanie gracza
 
-Wybierz własny finał i połącz odkrycia z całego szlaku. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+Wybierz własny finał i połącz odkrycia z całego szlaku.
 
 Przygotowanie rozgrywki
 
-1. W głównej grze opowieść jest odblokowana od 20. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
-2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+2. W głównej grze opowieść jest odblokowana od 20. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+3. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
 
 Sterowanie i wykonywanie ruchów
 
-1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+1. Przeczytaj cel i sterowanie bieżącego pomieszczenia.
 
-2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+2. Rozpocznij etap, gdy będziesz gotowy, i rozwiąż jego zagadkę.
+
+3. Po rozwiązaniu potwierdź przejście do następnego pomieszczenia. Kontynuuj do finału opowieści.
 
 Zasady krok po kroku
 
-1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
-
-2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
-
-3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
-
-4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
-
-5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+1. Ukończone pomieszczenia i zdobyte wskazówki pozostają zachowane. Każde nowe pomieszczenie ma własną instrukcję przed uruchomieniem zegara.
 
 Warunek zwycięstwa
 
@@ -53,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
 
@@ -210,31 +208,29 @@ Cel: Dobierz części, które wspólnie rozwiążą problem.
 
 Sterowanie
 
-1. Zaznacz lub odznacz części.
+1. Przeczytaj wymagania dotyczące zasięgu, chwytu i podnoszenia oraz ograniczenia części.
 
-2. Naciśnij „Sprawdź wynalazek”.
+2. Klikaj części, które wspólnie spełnią wymagania. Ponowne kliknięcie odznacza część.
+
+3. Kliknij „Sprawdź wynalazek”, gdy komplet będzie gotowy.
 
 Zasady
 
-1. Wynalazek wymaga dokładnie trzech ról: zasięgu, chwytu i podnoszenia.
+1. Każda potrzebna funkcja i każde podane ograniczenie muszą być spełnione jednocześnie.
 
-2. Ponowne kliknięcie zaznaczonej części usuwa ją z zestawu.
-
-3. Dzwonek, tafla szkła i wiadro nie zastępują wymaganych ról.
-
-4. Po wybraniu kompletu trzeba nacisnąć przycisk sprawdzenia.
+2. Samo zaznaczenie części nie kończy zadania; trzeba sprawdzić gotowy wynalazek.
 
 Zwycięstwo
 
-• Zestaw dokładnie trzech części realizuje wszystkie wymagane role i został sprawdzony.
+• Sprawdzony wynalazek spełnia wszystkie wymagane funkcje i ograniczenia.
 
 Błędy i ograniczenia
 
-• Niekompletny lub zły zestaw nie wygrywa; można go poprawić.
+• Niekompletny lub niezgodny zestaw nie kończy zadania. Zmień części i sprawdź ponownie.
 
 Przykład
 
-1. Długi kij daje zasięg, hak chwyt, a lina z bloczkiem podnoszenie. Samo wybranie trzech dowolnych przedmiotów nie wystarczy.
+1. Część pasująca do jednej funkcji nadal musi spełniać pozostałe ograniczenia. Oceniaj cały komplet, a nie tylko liczbę zaznaczonych części.
 
 Hotel dla rozbitków
 
@@ -242,27 +238,29 @@ Cel: Dopasuj pokoje do potrzeb wszystkich gości.
 
 Sterowanie
 
-1. Wybierz grupę gości, a następnie pokój.
+1. Przeczytaj wymagania grupy oraz cechy dostępnych pokoi.
+
+2. Kliknij grupę gości, a następnie wybrany dla niej pokój.
+
+3. Sprawdź wszystkie przydziały: każdy pokój musi spełniać wszystkie wymagania swojej grupy.
 
 Zasady
 
-1. Przydziel każdą grupę do jednego pokoju.
+1. Gdy wskażesz zajęty pokój, grupy zamienią się miejscami: dotychczasowi goście przejdą do poprzedniego pokoju wybranej grupy.
 
-2. Liczba miejsc, piętro i widok muszą pasować do karty gości.
-
-3. Przy wyborze zajętego pokoju grupy zamieniają się przydziałami.
+2. Jeżeli wybrana grupa nie miała jeszcze pokoju, goście z zajętego pokoju wrócą do oczekujących.
 
 Zwycięstwo
 
-• Wszystkie cztery grupy mają swoje właściwe pokoje.
+• Wszystkie grupy mają pokoje spełniające ich wymagania.
 
 Błędy i ograniczenia
 
-• Nawet jedna niezgodna cecha oznacza błędny przydział; popraw go przed końcem czasu.
+• Nawet jedna niezgodna cecha oznacza błędny przydział. Po zamianie zajętego pokoju sprawdź również grupę, która musiała go opuścić.
 
 Przykład
 
-1. Grupa trzyosobowa wymagająca piętra i morza nie może zamieszkać w pokoju z dobrym widokiem, ale z jednym łóżkiem.
+1. Jeżeli wybierasz zajęty pokój, dotychczasowi goście przejdą do poprzedniego pokoju wybranej grupy albo wrócą do oczekujących, gdy ta grupa nie miała przydziału.
 
 Mechanizm Latarni
 
@@ -270,17 +268,19 @@ Cel: Połącz napęd i ustaw właściwy kierunek oraz prędkość.
 
 Sterowanie
 
-1. Wybierz mnożnik dla każdego z trzech kół.
+1. Dla każdego z trzech kół kliknij jeden z przycisków mnożnika: ×1, ×2 albo ×3.
 
-2. Przyciskiem strzałki odwróć kierunek wskazanego koła.
+2. Przyciskiem ze strzałką odwróć kierunek odpowiedniego koła.
+
+3. Porównaj wyświetloną łączną prędkość i kierunek z celem.
 
 Zasady
 
-1. Łączna prędkość jest iloczynem trzech ustawionych mnożników.
+1. Sterujesz klikaniem przycisków; nie musisz przeciągać prostokątów.
 
-2. Parzysta liczba odwróconych kół daje kierunek podstawowy, nieparzysta — przeciwny.
+2. Łączną prędkość otrzymujemy przez pomnożenie trzech ustawień, np. ×2 · ×2 · ×3 = ×12.
 
-3. Prędkość i kierunek muszą być właściwe jednocześnie.
+3. Nieparzysta liczba odwróconych kół odwraca kierunek całego napędu. Prędkość i kierunek muszą zgadzać się jednocześnie.
 
 Zwycięstwo
 
@@ -328,7 +328,11 @@ Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
 
 Sterowanie
 
-1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+1. Znajdź źródło światła z lewej strony i złoty odbiornik.
+
+2. Kliknij zwierciadło, aby przełączyć je między „/” i „\”.
+
+3. Śledź promień i ustawiaj następne zwierciadła, aż światło trafi do odbiornika.
 
 Zasady
 
@@ -360,22 +364,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-homecoming.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:50 — Scenariusz, próg odblokowania i mechaniki
 
 • harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
 
-• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+• harborlight-v1-adventure-journey.js:65 — Kody odkryć i powiązanie pokoi
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

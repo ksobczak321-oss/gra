@@ -2,7 +2,7 @@ Mechanizm Latarni
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,21 +20,25 @@ Przywróć napęd mechanizmu Latarni, ustawiając trzy przekładnie na właściw
 
 Przygotowanie rozgrywki
 
-1. Trzy koła mają do wyboru mnożnik 1, 2 lub 3. Każde koło można też odwrócić. Wskazówka podaje docelowy łączny mnożnik i kierunek.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Trzy koła mają do wyboru mnożnik 1, 2 lub 3. Każde koło można też odwrócić. Wskazówka podaje docelowy łączny mnożnik i kierunek.
 
 Sterowanie i wykonywanie ruchów
 
-1. Wybierz mnożnik dla każdego z trzech kół.
+1. Dla każdego z trzech kół kliknij jeden z przycisków mnożnika: ×1, ×2 albo ×3.
 
-2. Przyciskiem strzałki odwróć kierunek wskazanego koła.
+2. Przyciskiem ze strzałką odwróć kierunek odpowiedniego koła.
+
+3. Porównaj wyświetloną łączną prędkość i kierunek z celem.
 
 Zasady krok po kroku
 
-1. Łączna prędkość jest iloczynem trzech ustawionych mnożników.
+1. Sterujesz klikaniem przycisków; nie musisz przeciągać prostokątów.
 
-2. Parzysta liczba odwróconych kół daje kierunek podstawowy, nieparzysta — przeciwny.
+2. Łączną prędkość otrzymujemy przez pomnożenie trzech ustawień, np. ×2 · ×2 · ×3 = ×12.
 
-3. Prędkość i kierunek muszą być właściwe jednocześnie.
+3. Nieparzysta liczba odwróconych kół odwraca kierunek całego napędu. Prędkość i kierunek muszą zgadzać się jednocześnie.
 
 Warunek zwycięstwa
 
@@ -45,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Sama poprawna prędkość przy złym kierunku nie uruchamia mechanizmu.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 600 s. Na pierwszej trudności rzeczywisty limit wynosi 600 s.
 
@@ -112,20 +118,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-gears.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:15 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:89 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:298 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:89 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

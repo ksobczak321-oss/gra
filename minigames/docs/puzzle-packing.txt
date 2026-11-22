@@ -2,7 +2,7 @@ Skrzynka ratunkowa
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,15 +20,19 @@ Przygotuj skrzynkę ratunkową, mieszcząc cały sprzęt na ograniczonej powierz
 
 Przygotowanie rozgrywki
 
-1. Pojemnik ma 4 × 4 pola. Do spakowania są dwa elementy 2 × 2 i dwa elementy 4 × 1; ich kolejność i początkowe obroty są generowane.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Przyjrzyj się kształtom sprzętu i miejscom, w które można je wpasować. Obracanie zmienia położenie zajmowanych pól elementu.
 
 Sterowanie i wykonywanie ruchów
 
-1. Wybierz element.
+1. Wybierz element wyposażenia i obejrzyj jego kształt.
 
-2. Użyj „Obróć wybrany element”, jeśli wymaga tego plan.
+2. Jeśli trzeba, kliknij „Obróć wybrany element”.
 
-3. Wskaż wolne pole początkowe albo użyj „Wyjmij wybrany element”.
+3. Kliknij pole będące lewym górnym rogiem jego położenia.
+
+4. Dopasuj wszystkie elementy; możesz je wyjmować i układać ponownie.
 
 Zasady krok po kroku
 
@@ -47,6 +51,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście poza siatkę lub nakładanie elementów jest niedozwolone; należy poprawić plan.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 420 s. Na pierwszej trudności rzeczywisty limit wynosi 420 s.
 
@@ -80,7 +86,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. Dwa kwadraty 2 × 2 mogą zająć dwie górne połowy, a dwa paski 4 × 1 — pozostałe dolne rzędy.
+1. Obróć wybrany element, jeżeli jego wcięcie pasuje do sąsiedniego sprzętu dopiero po zmianie ułożenia. Następnie wskaż jego lewy górny róg.
 
 Warianty i osobne linki
 
@@ -114,20 +120,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-packing.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:11 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:60 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:226 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:60 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

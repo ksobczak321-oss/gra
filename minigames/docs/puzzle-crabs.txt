@@ -2,7 +2,7 @@ Parada krabów
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,39 +12,45 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Poprowadź rodzinę krabów do bezpiecznych muszli.
+Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
 Scenariusz i zadanie gracza
 
-Trzy kraby muszą dotrzeć do swoich muszli po prawej stronie kamienistego brzegu.
+Jeden krab musi zapamiętać bezpieczną trasę do muszli. Najpierw obejrzyj drogę, a potem przeprowadź go po niej z pamięci.
 
 Przygotowanie rozgrywki
 
-1. Plansza ma 6 rzędów i 5 kolumn. Każdy krab ma własną parę rzędów oraz cel na prawym brzegu.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Jeden krab czeka na początku drogi do muszli. Obejrzyj bezpieczną trasę przed ukryciem podpowiedzi.
 
 Sterowanie i wykonywanie ruchów
 
-1. Wybierz kraba z listy.
+1. Obejrzyj podświetloną bezpieczną trasę.
 
-2. Wskaż sąsiednie wolne pole planszy.
+2. Kliknij „Zapamiętane — ruszam”, aby ukryć podpowiedź.
+
+3. Klikaj kolejne sąsiednie pola trasy aż do muszli.
+
+4. Jeśli chcesz obejrzeć drogę ponownie, wybierz „Pokaż trasę od nowa”.
 
 Zasady krok po kroku
 
-1. Wybierz kraba i przesuwaj go o jedno sąsiednie pole pionowo lub poziomo.
+1. Krab porusza się o jedno pole w pionie lub poziomie.
 
-2. Nie wolno wejść na kamień, inne zwierzę ani do pary rzędów należącej do innego kraba.
-
-3. Obejdź przeszkody dolnym lub górnym rzędem własnej strefy.
+2. Błędny krok cofa kraba na początek; spróbuj ponownie z zapamiętaną trasą.
 
 Warunek zwycięstwa
 
-• Wszystkie trzy kraby stoją na przypisanych muszlach.
+• Krab dociera do muszli po zapamiętanej trasie.
 
 Błędy, niedozwolone ruchy i zakończenie próby
 
-• Ruch po przekątnej, skok przez pole lub wejście na przeszkodę jest odrzucany.
+• Błędny krok cofa kraba na początek. Zacznij ponownie od pierwszego pola bezpiecznej trasy.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 90 s. Na pierwszej trudności rzeczywisty limit wynosi 90 s.
 
@@ -78,7 +84,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. Kamień na górnym rzędzie można ominąć schodząc do drugiego rzędu tej samej pary i wracając za przeszkodą.
+1. Zapamiętaj kolejność pierwszych zakrętów. Jeżeli krab wróci na początek, odtwórz te same pierwsze kroki i popraw miejsce pomyłki.
 
 Warianty i osobne linki
 
@@ -112,20 +118,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-crabs.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:8 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:53 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:206 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:53 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

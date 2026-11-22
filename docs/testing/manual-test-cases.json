@@ -2709,11 +2709,11 @@
   ],
   "current_scope": {
     "date": "2026-11-22",
-    "environment": "DEV_GIT_CI_PAGES_INITIAL_SCOPE",
+    "environment": "DEV_FIRST_THEN_EXPLICIT_AUTHORIZED_STANDARD_PREPROD",
     "application_version": "0.15.4.0",
     "cache": "frontend-v32-24",
-    "dev_status": "IMPLEMENTATION_IN_PROGRESS_NOT_PUBLISHED",
-    "code_source_sha": null,
+    "dev_status": "LOCAL_MODEL_INFRA_CANONICAL_PASS_PUBLICATION_PENDING",
+    "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
     "dev_source_sha": null,
     "publication_source_sha": null,
     "ci_run_id": null,
@@ -2727,8 +2727,8 @@
     "preprod_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
     "preprod_deployment_run_id": 44946821720,
     "preprod_status": "PREVIOUS_ACCEPTED_CACHE23_UNCHANGED_NEW_PACKET_NOT_DEPLOYED",
-    "new_PREPROD_authorized": false,
-    "new_PREPROD_authorization": "PENDING_EXPLICIT_PROMOTION_OR_ROOT_SCOPE_CLARIFICATION",
+    "new_PREPROD_authorized": true,
+    "new_PREPROD_authorization": "Explicit current user: jak skończysz wrzuć na pre prod",
     "new_PREPROD_run_id": null,
     "manual_user_acceptance": "NOT_RUN",
     "physical_online_integration": "excluded_by_user",
@@ -2867,6 +2867,6 @@
       "preprod_tag": "preprod-0.15.3.1-20261121",
       "account_integrity_status": "PASS"
     },
-    "note": "207 definicji; wszystkie NOT RUN. Nowe12 przypadków nie dziedziczy odbioru cache23 ani wyników automatyzacji. Poprzednie195 definicji i wyników pozostaje identyczne. Brak nowej promocji PRE-PROD/PROD/resetu/DNS/zmian haseł."
+    "note": "207 ręcznych definicji pozostaje NOT RUN. Lokalnie model/infrastruktura/kanoniczne artefakty PASS; własny CI/Pages i nowy PRE-PROD mają wymagać odrębnych wyników. Starsze195 definicji i wyników oraz historia cache23 zachowane. Bez resetu kont, zmian haseł, PROD i DNS."
   }
 }

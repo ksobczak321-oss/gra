@@ -113,7 +113,9 @@ class FrontendBundleTests(unittest.TestCase):
                 actual_manifest_frames.add(sprite["src"])
         self.assertEqual(actual_manifest_frames, declared)
         self.assertEqual(len(BUNDLE.PUBLIC_FILES), len(set(BUNDLE.PUBLIC_FILES)))
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 467)
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 469)
+        self.assertIn("harborlight-v1-minigame-instructions.js", BUNDLE.PUBLIC_FILES)
+        self.assertIn("harborlight-v1-minigame-instructions.css", BUNDLE.PUBLIC_FILES)
         self.assertEqual(BUNDLE.MAX_MEMBERS, 512)
         self.assertEqual(BUNDLE.MAX_BYTES, 128 * 1024 * 1024)
         self.assertLess(len(BUNDLE.ARCHIVE_FILES), BUNDLE.MAX_MEMBERS)
@@ -348,8 +350,8 @@ class HistoricalFrontendProfileTests(unittest.TestCase):
 
     def test_no_profile_keeps_default_current_allowlist_strict(self):
         self.reject(name=None)
-        # Original art/runtime frames, offline replay and two pure diet helpers.
-        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + 200 + 3 + 2 + 2 + 5 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
+        # Original art/runtime frames, offline replay, diet helpers and the two instruction assets.
+        self.assertEqual(len(BUNDLE.ARCHIVE_FILES), 113 + 25 + 200 + 3 + 2 + 2 + 5 + 2 + len(BUNDLE.MINIGAME_PUBLIC_FILES))
         self.assertIn('harborlight-v1-learning-policy.js', BUNDLE.ARCHIVE_FILES)
         self.assertIn('harborlight-v1-map-labels.js', BUNDLE.ARCHIVE_FILES)
         for name in ('harborlight-v1-advisor-development-plan.js', 'harborlight-v1-advisor-development-client.js', 'harborlight-v1-advisor-development-worker.js', 'harborlight-v1-advisor-guidance.js', 'harborlight-v1-advisor-guidance.css'):

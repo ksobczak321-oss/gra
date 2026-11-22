@@ -32697,17 +32697,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1191; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32731,15 +32731,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -32765,17 +32765,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1192; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32797,15 +32797,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -32831,17 +32831,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1193; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32868,15 +32868,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -32902,17 +32902,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1194; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32934,15 +32934,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -32968,17 +32968,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1195; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33002,15 +33002,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -33036,17 +33036,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1196; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33070,15 +33070,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -33104,17 +33104,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1197; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33137,15 +33137,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -33171,17 +33171,17 @@
         "kind": "current_user_chat_and_attachment_feedback",
         "date": "2026-11-22",
         "date_note": "Europe/Warsaw; nowe GO po wcześniejszych notatkach do paczki.",
-        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.",
+        "summary": "GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.",
         "reference": "chat:2026-11-22:packet:HL-CHG-1198; docs/v32/GO-PACKET-20261122.md",
         "attachment_references": [
           "minigry19112026.docx; SHA256 6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f"
         ]
       },
       "status": {
-        "implementation": "in_progress",
-        "dev": "PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION",
-        "ci": "NOT_RUN_FOR_NEW_PACKET",
-        "preprod": "NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED",
+        "implementation": "implemented_dev",
+        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
+        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
+        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33205,15 +33205,15 @@
         ],
         "code": [],
         "automated_tests": [],
-        "source_sha": null,
-        "code_source_sha": null,
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji."
+        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
       },
       "notes": [
-        "Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.",
+        "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
         "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
       ],
@@ -40727,14 +40727,14 @@
       "independent_verified_index_byte_delta": 6048
     },
     "pending_packet_20261122": {
-      "status": "IMPLEMENTATION_IN_PROGRESS_NOT_PUBLISHED",
+      "status": "LOCAL_MODEL_INFRA_CANONICAL_PASS_PUBLICATION_PENDING",
       "application_version": "0.15.4.0",
       "cache": "frontend-v32-24",
       "requirements": "docs/v32/GO-PACKET-20261122.md",
       "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
       "change_range": "HL-CHG-1191–1198",
       "manual_case_range": "HL-TC-0196–0207",
-      "code_source_sha": null,
+      "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
       "publication_source_sha": null,
       "ci_run_id": null,
       "pages_run_id": null,
@@ -40746,7 +40746,1039 @@
       ],
       "new_PREPROD_deployment": false,
       "preprod_still_accepted_source": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "manual_user_acceptance": "NOT_RUN"
+      "manual_user_acceptance": "NOT_RUN",
+      "new_PREPROD_authorized": true,
+      "canonical_artifacts": {
+        "status": "PASS",
+        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "report": "/workspace/work/minigry-packet-20261122/artifacts/attempt2/canonical-artifacts-summary.json",
+        "master": {
+          "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
+          "sha256": "667ce27b29fca7cb4ab9d0d88ae200dd433bc4b35456151909deff4d2d4e556e",
+          "bytes": 8608177,
+          "sheets": 164,
+          "current_sheets": 64,
+          "rows_current": 69151,
+          "historical_sheets_unchanged": 100,
+          "historical_zip_parts_unchanged": 220,
+          "historical_comments_unchanged": 48,
+          "historical_cached_formulas_unchanged": 4982
+        },
+        "editorial": {
+          "file": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
+          "sha256": "fd7aa16c993d2288e3be1a6347af1d039ceb675e8f532dd63f75c9e92195be11",
+          "rows": 413,
+          "sheets": {
+            "Tutorial": 55,
+            "Budynki — opisy": 24,
+            "Budynki — informacje": 30,
+            "Dolny pasek": 24,
+            "Komunikaty": 215,
+            "Przyciski": 65
+          },
+          "C_all_blank": true,
+          "source_files_fingerprinted": 119
+        },
+        "minigames": {
+          "games": 55,
+          "DOCX": 55,
+          "TXT": 55,
+          "language_of_documents": "pl",
+          "runtime_languages": [
+            "pl",
+            "en"
+          ],
+          "runtime_shared_instructions": true,
+          "catalog_entry_diff_count": 1242,
+          "old_catalog_identity_claimed": false,
+          "archive_bytes": 2416510,
+          "archive_sha256": "028cbc5c33668cb62cef564a2e941833b0b6d4b068d01e826e57dd364b0b1cbc"
+        },
+        "actual_simulations": {
+          "status": "PASS_CURRENT_REPRODUCIBLE_MODEL",
+          "source": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+          "two_actual_exports_with_full24_24_72h_profiles": true,
+          "entire_export_bytes_exact": true,
+          "sha256": "66343b87ac1c0a49568da17201b68125659e708fb52159b2f81aa19c7ac47f16",
+          "bytes": 4080750,
+          "profiles": [
+            {
+              "id": "bez-pracy",
+              "hours": 24,
+              "before_sha256": "f4c061ae46fed2d846e8a3d569729d7468831562c238cb8f5417269239c5b11f",
+              "after_sha256": "6cb923a408a67cc485902e034f0f43da2f528678a631143f00fe17e54e7eedf4",
+              "full_profile_diff_count": 52,
+              "difference_groups": {
+                "checkpoints[0]": 2,
+                "checkpoints[1]": 2,
+                "checkpoints[2]": 2,
+                "checkpoints[3]": 2,
+                "checkpoints[4]": 2,
+                "checkpoints[5]": 2,
+                "checkpoints[6]": 2,
+                "checkpoints[7]": 2,
+                "checkpoints[8]": 2,
+                "checkpoints[9]": 2,
+                "checkpoints[10]": 2,
+                "checkpoints[11]": 2,
+                "checkpoints[12]": 2,
+                "checkpoints[13]": 2,
+                "checkpoints[14]": 2,
+                "checkpoints[15]": 2,
+                "checkpoints[16]": 2,
+                "checkpoints[17]": 2,
+                "checkpoints[18]": 2,
+                "checkpoints[19]": 2,
+                "checkpoints[20]": 2,
+                "checkpoints[21]": 2,
+                "checkpoints[22]": 2,
+                "checkpoints[23]": 2,
+                "checkpoints[24]": 2,
+                "final": 2
+              },
+              "first_differences": [
+                {
+                  "path": "$.checkpoints[0].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[0].missingForNextTownhall.grain",
+                  "before": 400,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[2].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[2].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[3].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[3].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[4].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[4].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[5].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[5].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[6].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[6].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[7].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[7].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[8].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[8].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[9].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[9].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[10].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[10].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[11].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[11].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[12].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[12].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[13].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[13].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[14].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[14].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[15].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[15].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[16].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[16].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[17].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[17].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[18].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[18].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[19].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[19].missingForNextTownhall.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                }
+              ],
+              "checkpoints": 25,
+              "commands": 14,
+              "interpretation": "Accepted new food-free construction and farm staff allocation change development outcomes; recorded exact values, no numerical tolerance or blanket old-profile equality."
+            },
+            {
+              "id": "produkcja-24h",
+              "hours": 24,
+              "before_sha256": "4ef6df93e5eb4633898fefda5f0e974fc4152eae71a281832afb78ac155c54a6",
+              "after_sha256": "2108726beef0ae70a3550124a465e35bc7e13698008eb83d462c900a120ed697",
+              "full_profile_diff_count": 129,
+              "difference_groups": {
+                "checkpoints[0]": 2,
+                "checkpoints[1]": 2,
+                "checkpoints[2]": 3,
+                "checkpoints[3]": 3,
+                "checkpoints[4]": 3,
+                "checkpoints[5]": 3,
+                "checkpoints[6]": 3,
+                "checkpoints[7]": 3,
+                "checkpoints[8]": 3,
+                "checkpoints[9]": 3,
+                "checkpoints[10]": 3,
+                "checkpoints[11]": 3,
+                "checkpoints[12]": 3,
+                "checkpoints[13]": 2,
+                "checkpoints[14]": 3,
+                "checkpoints[15]": 3,
+                "checkpoints[16]": 3,
+                "checkpoints[17]": 3,
+                "checkpoints[18]": 3,
+                "checkpoints[19]": 3,
+                "checkpoints[20]": 3,
+                "checkpoints[21]": 2,
+                "checkpoints[22]": 3,
+                "checkpoints[23]": 2,
+                "checkpoints[24]": 3,
+                "commands": 1,
+                "commands[8]": 5,
+                "commands[9]": 6,
+                "commands[10]": 6,
+                "commands[11]": 3,
+                "commands[12]": 1,
+                "commands[13]": 5,
+                "commands[14]": 1,
+                "commands[15]": 1,
+                "commands[16]": 5,
+                "commands[17]": 1,
+                "commands[18]": 5,
+                "commands[19]": 5,
+                "commands[20]": 1,
+                "commands[21]": 5,
+                "commands[22]": 5,
+                "final": 3
+              },
+              "first_differences": [
+                {
+                  "path": "$.checkpoints[0].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[0].missingForNextTownhall.grain",
+                  "before": 400,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.vegetables",
+                  "before": 148,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[2].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[2].nextTownhallCost.vegetables",
+                  "before": 106,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[2].missingForNextTownhall.grain",
+                  "before": 72,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[3].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[3].nextTownhallCost.vegetables",
+                  "before": 20,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[3].missingForNextTownhall.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[4].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[4].nextTownhallCost.vegetables",
+                  "before": 97,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[4].missingForNextTownhall.grain",
+                  "before": 43,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[5].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[5].nextTownhallCost.vegetables",
+                  "before": 35,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[5].missingForNextTownhall.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[6].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[6].nextTownhallCost.vegetables",
+                  "before": 107,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[6].missingForNextTownhall.grain",
+                  "before": 44,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[7].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[7].nextTownhallCost.vegetables",
+                  "before": 43,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[7].missingForNextTownhall.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[8].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[8].nextTownhallCost.vegetables",
+                  "before": 98,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[8].missingForNextTownhall.grain",
+                  "before": 42,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[9].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[9].nextTownhallCost.vegetables",
+                  "before": 31,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[9].missingForNextTownhall.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[10].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[10].nextTownhallCost.vegetables",
+                  "before": 108,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[10].missingForNextTownhall.grain",
+                  "before": 55,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[11].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[11].nextTownhallCost.vegetables",
+                  "before": 17,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[11].missingForNextTownhall.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[12].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[12].nextTownhallCost.vegetables",
+                  "before": 106,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[12].missingForNextTownhall.grain",
+                  "before": 82,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[13].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[13].missingForNextTownhall.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[14].nextTownhallCost.grain",
+                  "before": 100,
+                  "after": null,
+                  "missing": "after"
+                }
+              ],
+              "checkpoints": 25,
+              "commands": 23,
+              "interpretation": "Accepted new food-free construction and farm staff allocation change development outcomes; recorded exact values, no numerical tolerance or blanket old-profile equality."
+            },
+            {
+              "id": "rozwoj-3d",
+              "hours": 72,
+              "before_sha256": "47ed290e957caa367c97d1d21db5c5a68551acd0b03ad525fa0515cd81c72f76",
+              "after_sha256": "fd4acc13284705a93932e9ffd3d3529f4efaa00917358d309f943e4b6f94825e",
+              "full_profile_diff_count": 2180,
+              "difference_groups": {
+                "checkpoints[0]": 2,
+                "checkpoints[1]": 26,
+                "checkpoints[2]": 24,
+                "checkpoints[3]": 26,
+                "checkpoints[4]": 28,
+                "checkpoints[5]": 26,
+                "checkpoints[6]": 28,
+                "checkpoints[7]": 27,
+                "checkpoints[8]": 29,
+                "checkpoints[9]": 27,
+                "checkpoints[10]": 29,
+                "checkpoints[11]": 27,
+                "checkpoints[12]": 28,
+                "checkpoints[13]": 37,
+                "checkpoints[14]": 31,
+                "checkpoints[15]": 29,
+                "checkpoints[16]": 31,
+                "checkpoints[17]": 29,
+                "checkpoints[18]": 30,
+                "checkpoints[19]": 28,
+                "checkpoints[20]": 35,
+                "checkpoints[21]": 28,
+                "checkpoints[22]": 33,
+                "checkpoints[23]": 30,
+                "checkpoints[24]": 28,
+                "checkpoints[25]": 26,
+                "checkpoints[26]": 26,
+                "checkpoints[27]": 26,
+                "checkpoints[28]": 26,
+                "checkpoints[29]": 26,
+                "checkpoints[30]": 26,
+                "checkpoints[31]": 16,
+                "checkpoints[32]": 23,
+                "checkpoints[33]": 16,
+                "checkpoints[34]": 23,
+                "checkpoints[35]": 23,
+                "checkpoints[36]": 16,
+                "checkpoints[37]": 23,
+                "checkpoints[38]": 24,
+                "checkpoints[39]": 23,
+                "checkpoints[40]": 18,
+                "checkpoints[41]": 18,
+                "checkpoints[42]": 18,
+                "checkpoints[43]": 18,
+                "checkpoints[44]": 18,
+                "checkpoints[45]": 18,
+                "checkpoints[46]": 18,
+                "checkpoints[47]": 24,
+                "checkpoints[48]": 18,
+                "checkpoints[49]": 16,
+                "checkpoints[50]": 23,
+                "checkpoints[51]": 23,
+                "checkpoints[52]": 16,
+                "checkpoints[53]": 16,
+                "checkpoints[54]": 23,
+                "checkpoints[55]": 24,
+                "checkpoints[56]": 23,
+                "checkpoints[57]": 18,
+                "checkpoints[58]": 21,
+                "checkpoints[59]": 26,
+                "checkpoints[60]": 26,
+                "checkpoints[61]": 26,
+                "checkpoints[62]": 21,
+                "checkpoints[63]": 21,
+                "checkpoints[64]": 24,
+                "checkpoints[65]": 24,
+                "checkpoints[66]": 24,
+                "checkpoints[67]": 20,
+                "checkpoints[68]": 20,
+                "checkpoints[69]": 20,
+                "checkpoints[70]": 22,
+                "checkpoints[71]": 22,
+                "checkpoints[72]": 20,
+                "commands": 1,
+                "commands[9]": 5,
+                "commands[10]": 5,
+                "commands[11]": 6,
+                "commands[12]": 3,
+                "commands[13]": 1,
+                "commands[14]": 1,
+                "commands[15]": 5,
+                "commands[16]": 3,
+                "commands[17]": 5,
+                "commands[18]": 3,
+                "commands[24]": 5,
+                "commands[25]": 6,
+                "commands[26]": 6,
+                "commands[27]": 6,
+                "commands[28]": 5,
+                "commands[29]": 1,
+                "commands[30]": 5,
+                "commands[31]": 4,
+                "commands[32]": 1,
+                "commands[33]": 3,
+                "commands[34]": 4,
+                "commands[35]": 5,
+                "commands[36]": 6,
+                "commands[37]": 7,
+                "commands[38]": 6,
+                "commands[39]": 7,
+                "commands[40]": 3,
+                "commands[41]": 4,
+                "commands[42]": 4,
+                "commands[43]": 5,
+                "commands[44]": 6,
+                "commands[45]": 4,
+                "commands[46]": 5,
+                "commands[47]": 6,
+                "commands[48]": 4,
+                "commands[49]": 5,
+                "commands[50]": 6,
+                "commands[51]": 6,
+                "commands[52]": 7,
+                "commands[53]": 6,
+                "commands[54]": 6,
+                "commands[55]": 6,
+                "commands[56]": 5,
+                "commands[57]": 1,
+                "commands[58]": 1,
+                "commands[59]": 1,
+                "commands[60]": 1,
+                "commands[61]": 3,
+                "commands[62]": 1,
+                "commands[63]": 4,
+                "commands[64]": 4,
+                "commands[65]": 5,
+                "commands[66]": 3,
+                "commands[67]": 4,
+                "commands[68]": 6,
+                "commands[69]": 6,
+                "commands[70]": 6,
+                "commands[71]": 6,
+                "commands[72]": 4,
+                "commands[73]": 5,
+                "commands[74]": 1,
+                "commands[75]": 1,
+                "commands[76]": 4,
+                "commands[77]": 5,
+                "commands[78]": 1,
+                "commands[79]": 4,
+                "commands[80]": 5,
+                "commands[81]": 6,
+                "commands[82]": 4,
+                "commands[83]": 4,
+                "commands[84]": 5,
+                "commands[85]": 4,
+                "commands[86]": 6,
+                "commands[87]": 5,
+                "commands[88]": 6,
+                "commands[89]": 6,
+                "commands[90]": 7,
+                "commands[91]": 6,
+                "commands[92]": 6,
+                "commands[93]": 5,
+                "commands[94]": 5,
+                "commands[95]": 3,
+                "commands[96]": 7,
+                "commands[97]": 6,
+                "commands[98]": 6,
+                "commands[99]": 7,
+                "commands[100]": 5,
+                "commands[101]": 1,
+                "commands[102]": 6,
+                "commands[103]": 4,
+                "commands[104]": 4,
+                "commands[105]": 4,
+                "attemptedUpgrades": 1,
+                "attemptedUpgrades[0]": 2,
+                "attemptedUpgrades[1]": 2,
+                "attemptedUpgrades[2]": 5,
+                "attemptedUpgrades[3]": 5,
+                "attemptedUpgrades[4]": 5,
+                "attemptedUpgrades[5]": 1,
+                "final": 20
+              },
+              "first_differences": [
+                {
+                  "path": "$.checkpoints[0].nextTownhallCost.grain",
+                  "before": 500,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[0].missingForNextTownhall.grain",
+                  "before": 400,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].townhall",
+                  "before": 1,
+                  "after": 2
+                },
+                {
+                  "path": "$.checkpoints[1].capacity",
+                  "before": 36,
+                  "after": 72
+                },
+                {
+                  "path": "$.checkpoints[1].happiness",
+                  "before": 25.824123,
+                  "after": 25.785965
+                },
+                {
+                  "path": "$.checkpoints[1].coins",
+                  "before": 124,
+                  "after": 24
+                },
+                {
+                  "path": "$.checkpoints[1].resources.coins",
+                  "before": 124,
+                  "after": 24
+                },
+                {
+                  "path": "$.checkpoints[1].resources.wood",
+                  "before": 16,
+                  "after": 6
+                },
+                {
+                  "path": "$.checkpoints[1].resources.stone",
+                  "before": 188,
+                  "after": 88
+                },
+                {
+                  "path": "$.checkpoints[1].resources.grain",
+                  "before": 256,
+                  "after": 252
+                },
+                {
+                  "path": "$.checkpoints[1].resources.planks",
+                  "before": 100,
+                  "after": 0
+                },
+                {
+                  "path": "$.checkpoints[1].localStock.farm.vegetables",
+                  "before": 72,
+                  "after": 68
+                },
+                {
+                  "path": "$.checkpoints[1].localStock.quarry.stone",
+                  "before": 12,
+                  "after": 6
+                },
+                {
+                  "path": "$.checkpoints[1].localStock.sawmill.wood",
+                  "before": 0,
+                  "after": 1
+                },
+                {
+                  "path": "$.checkpoints[1].localStock.sawmill.planks",
+                  "before": 102,
+                  "after": 55
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallEligibility.populationCapacity",
+                  "before": 36,
+                  "after": 72
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallEligibility.populationLevel",
+                  "before": 1,
+                  "after": 2
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallEligibility.targetLevel",
+                  "before": 2,
+                  "after": 3
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.coins",
+                  "before": 100,
+                  "after": 1000
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.wood",
+                  "before": 100,
+                  "after": 1000
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.stone",
+                  "before": 100,
+                  "after": 1000
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.grain",
+                  "before": 142,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.planks",
+                  "before": 100,
+                  "after": 1000
+                },
+                {
+                  "path": "$.checkpoints[1].nextTownhallCost.vegetables",
+                  "before": 106,
+                  "after": null,
+                  "missing": "after"
+                },
+                {
+                  "path": "$.checkpoints[1].missingForNextTownhall.wood",
+                  "before": 84,
+                  "after": 994
+                },
+                {
+                  "path": "$.checkpoints[1].missingForNextTownhall.coins",
+                  "before": null,
+                  "after": 976,
+                  "missing": "before"
+                },
+                {
+                  "path": "$.checkpoints[1].missingForNextTownhall.stone",
+                  "before": null,
+                  "after": 912,
+                  "missing": "before"
+                },
+                {
+                  "path": "$.checkpoints[1].missingForNextTownhall.planks",
+                  "before": null,
+                  "after": 1000,
+                  "missing": "before"
+                },
+                {
+                  "path": "$.checkpoints[2].townhall",
+                  "before": 1,
+                  "after": 2
+                },
+                {
+                  "path": "$.checkpoints[2].capacity",
+                  "before": 36,
+                  "after": 72
+                },
+                {
+                  "path": "$.checkpoints[2].happiness",
+                  "before": 23.288158,
+                  "after": 23.257895
+                },
+                {
+                  "path": "$.checkpoints[2].coins",
+                  "before": 143,
+                  "after": 43
+                },
+                {
+                  "path": "$.checkpoints[2].resources.coins",
+                  "before": 143,
+                  "after": 43
+                },
+                {
+                  "path": "$.checkpoints[2].resources.stone",
+                  "before": 188,
+                  "after": 168
+                },
+                {
+                  "path": "$.checkpoints[2].resources.grain",
+                  "before": 248,
+                  "after": 244
+                },
+                {
+                  "path": "$.checkpoints[2].resources.planks",
+                  "before": 100,
+                  "after": 0
+                },
+                {
+                  "path": "$.checkpoints[2].localStock.farm.grain",
+                  "before": 132,
+                  "after": 136
+                },
+                {
+                  "path": "$.checkpoints[2].localStock.farm.vegetables",
+                  "before": 168,
+                  "after": 164
+                },
+                {
+                  "path": "$.checkpoints[2].localStock.quarry.stone",
+                  "before": 92,
+                  "after": 6
+                },
+                {
+                  "path": "$.checkpoints[2].localStock.sawmill.planks",
+                  "before": 171,
+                  "after": 121
+                }
+              ],
+              "checkpoints": 73,
+              "commands": 106,
+              "interpretation": "Accepted new food-free construction and farm staff allocation change development outcomes; recorded exact values, no numerical tolerance or blanket old-profile equality."
+            }
+          ],
+          "old_profiles_claimed_identical": false,
+          "numeric_tolerance_or_fields_excluded": false,
+          "constructor_seed_and_ambient_clock_fixed": true
+        }
+      }
     }
   }
 }

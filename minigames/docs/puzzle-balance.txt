@@ -2,7 +2,7 @@ Wagi skarbca
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,7 +20,9 @@ Skarbiec otwierają dwie zapadnie. Rozłóż cztery ciężarki tak, aby obie mia
 
 Przygotowanie rozgrywki
 
-1. Ciężarki mają wartości 1, 2, 3 i 4 w przetasowanej kolejności. Każda z dwóch szal ma wyświetlony cel.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Ciężarki mają wartości 1, 2, 3 i 4 w przetasowanej kolejności. Każda z dwóch szal ma wyświetlony cel.
 
 Sterowanie i wykonywanie ruchów
 
@@ -45,6 +47,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Poprawna suma tylko na jednej szali nie otwiera skarbca.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 480 s. Na pierwszej trudności rzeczywisty limit wynosi 480 s.
 
@@ -112,20 +116,24 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-balance.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:26 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:167 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:167 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

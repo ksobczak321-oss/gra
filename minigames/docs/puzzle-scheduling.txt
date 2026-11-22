@@ -2,7 +2,7 @@ Port bez korków
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -16,25 +16,29 @@ Przydziel statkom nabrzeża i czasy rozładunku.
 
 Scenariusz i zadanie gracza
 
-Trzy statki potrzebują miejsc i godzin rozładunku. Ułóż harmonogram bez kolizji.
+Statki potrzebują miejsca i czasu na rozładunek. Ułóż im harmonogram, w którym każdy zdąży i żadne dwa statki nie zajmą jednocześnie tego samego nabrzeża.
 
 Przygotowanie rozgrywki
 
-1. Do dyspozycji są dwa nabrzeża i oznaczone godziny. Każdy statek ma wskazane nabrzeże, długość rozładunku i dopuszczalne okno rozpoczęcia.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Do dyspozycji są dwa nabrzeża i oznaczone godziny. Każdy statek ma wskazane nabrzeże, długość rozładunku i dopuszczalne okno rozpoczęcia.
 
 Sterowanie i wykonywanie ruchów
 
-1. Wybierz kartę statku.
+1. Przeczytaj na karcie statku jego nabrzeże, dozwolone godziny rozpoczęcia i długość rozładunku.
 
-2. Wskaż parę „nabrzeże · godzina”.
+2. Kliknij kartę wybranego statku.
+
+3. Kliknij pole z parą „nabrzeże · godzina rozpoczęcia”.
+
+4. Przydziel wszystkie statki i sprawdź, czy ich rozładunki się nie nakładają.
 
 Zasady krok po kroku
 
-1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+1. Przykład: start o 2 i rozładunek przez 2 godziny zajmuje nabrzeże od 2 do 4. Następny statek może zacząć o 4.
 
-2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
-
-3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+2. Dwa różne nabrzeża mogą pracować równocześnie.
 
 Warunek zwycięstwa
 
@@ -45,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Złe nabrzeże, czas poza oknem lub nakładające się przedziały są odrzucane.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 600 s. Na pierwszej trudności rzeczywisty limit wynosi 600 s.
 
@@ -112,20 +118,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-scheduling.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:14 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:82 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:297 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:82 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

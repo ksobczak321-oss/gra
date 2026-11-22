@@ -2,7 +2,7 @@ Noc sztormowa
 
 HARBORLIGHT · Przygoda fabularna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,35 +12,31 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Uruchom awaryjne światło i zabezpiecz drogę do schronienia.
+Rozwiąż wszystkie 5 pomieszczeń, aby ukończyć opowieść.
 
 Scenariusz i zadanie gracza
 
-Uruchom awaryjne światło i zabezpiecz drogę do schronienia. Opowieść łączy 5 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+Uruchom awaryjne światło i zabezpiecz drogę do schronienia.
 
 Przygotowanie rozgrywki
 
-1. W głównej grze opowieść jest odblokowana od 5. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
-2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+2. W głównej grze opowieść jest odblokowana od 5. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+3. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
 
 Sterowanie i wykonywanie ruchów
 
-1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+1. Przeczytaj cel i sterowanie bieżącego pomieszczenia.
 
-2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+2. Rozpocznij etap, gdy będziesz gotowy, i rozwiąż jego zagadkę.
+
+3. Po rozwiązaniu potwierdź przejście do następnego pomieszczenia. Kontynuuj do finału opowieści.
 
 Zasady krok po kroku
 
-1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
-
-2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
-
-3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
-
-4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
-
-5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+1. Ukończone pomieszczenia i zdobyte wskazówki pozostają zachowane. Każde nowe pomieszczenie ma własną instrukcję przed uruchomieniem zegara.
 
 Warunek zwycięstwa
 
@@ -53,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Katalogowy czas opowieści 1050 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
 
@@ -172,31 +170,29 @@ Cel: Dobierz części, które wspólnie rozwiążą problem.
 
 Sterowanie
 
-1. Zaznacz lub odznacz części.
+1. Przeczytaj wymagania dotyczące zasięgu, chwytu i podnoszenia oraz ograniczenia części.
 
-2. Naciśnij „Sprawdź wynalazek”.
+2. Klikaj części, które wspólnie spełnią wymagania. Ponowne kliknięcie odznacza część.
+
+3. Kliknij „Sprawdź wynalazek”, gdy komplet będzie gotowy.
 
 Zasady
 
-1. Wynalazek wymaga dokładnie trzech ról: zasięgu, chwytu i podnoszenia.
+1. Każda potrzebna funkcja i każde podane ograniczenie muszą być spełnione jednocześnie.
 
-2. Ponowne kliknięcie zaznaczonej części usuwa ją z zestawu.
-
-3. Dzwonek, tafla szkła i wiadro nie zastępują wymaganych ról.
-
-4. Po wybraniu kompletu trzeba nacisnąć przycisk sprawdzenia.
+2. Samo zaznaczenie części nie kończy zadania; trzeba sprawdzić gotowy wynalazek.
 
 Zwycięstwo
 
-• Zestaw dokładnie trzech części realizuje wszystkie wymagane role i został sprawdzony.
+• Sprawdzony wynalazek spełnia wszystkie wymagane funkcje i ograniczenia.
 
 Błędy i ograniczenia
 
-• Niekompletny lub zły zestaw nie wygrywa; można go poprawić.
+• Niekompletny lub niezgodny zestaw nie kończy zadania. Zmień części i sprawdź ponownie.
 
 Przykład
 
-1. Długi kij daje zasięg, hak chwyt, a lina z bloczkiem podnoszenie. Samo wybranie trzech dowolnych przedmiotów nie wystarczy.
+1. Część pasująca do jednej funkcji nadal musi spełniać pozostałe ograniczenia. Oceniaj cały komplet, a nie tylko liczbę zaznaczonych części.
 
 Brama przypływu
 
@@ -204,7 +200,11 @@ Cel: Przepuść wodę przez śluzy w bezpiecznej kolejności.
 
 Sterowanie
 
-1. Użyj przycisków kierunków 1→2, 2→1, 2→3 i 3→2.
+1. Na każdej komorze porównaj aktualny poziom z oznaczonym celem.
+
+2. Kliknij 1→2, 2→1, 2→3 lub 3→2, aby przelać jedną jednostkę wody w wybranym kierunku.
+
+3. Przelewaj dalej, aż wszystkie trzy poziomy jednocześnie osiągną cele.
 
 Zasady
 
@@ -234,17 +234,19 @@ Cel: Połącz napęd i ustaw właściwy kierunek oraz prędkość.
 
 Sterowanie
 
-1. Wybierz mnożnik dla każdego z trzech kół.
+1. Dla każdego z trzech kół kliknij jeden z przycisków mnożnika: ×1, ×2 albo ×3.
 
-2. Przyciskiem strzałki odwróć kierunek wskazanego koła.
+2. Przyciskiem ze strzałką odwróć kierunek odpowiedniego koła.
+
+3. Porównaj wyświetloną łączną prędkość i kierunek z celem.
 
 Zasady
 
-1. Łączna prędkość jest iloczynem trzech ustawionych mnożników.
+1. Sterujesz klikaniem przycisków; nie musisz przeciągać prostokątów.
 
-2. Parzysta liczba odwróconych kół daje kierunek podstawowy, nieparzysta — przeciwny.
+2. Łączną prędkość otrzymujemy przez pomnożenie trzech ustawień, np. ×2 · ×2 · ×3 = ×12.
 
-3. Prędkość i kierunek muszą być właściwe jednocześnie.
+3. Nieparzysta liczba odwróconych kół odwraca kierunek całego napędu. Prędkość i kierunek muszą zgadzać się jednocześnie.
 
 Zwycięstwo
 
@@ -264,7 +266,11 @@ Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
 
 Sterowanie
 
-1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+1. Znajdź źródło światła z lewej strony i złoty odbiornik.
+
+2. Kliknij zwierciadło, aby przełączyć je między „/” i „\”.
+
+3. Śledź promień i ustawiaj następne zwierciadła, aż światło trafi do odbiornika.
 
 Zasady
 
@@ -292,17 +298,19 @@ Cel: Przydziel statkom nabrzeża i czasy rozładunku.
 
 Sterowanie
 
-1. Wybierz kartę statku.
+1. Przeczytaj na karcie statku jego nabrzeże, dozwolone godziny rozpoczęcia i długość rozładunku.
 
-2. Wskaż parę „nabrzeże · godzina”.
+2. Kliknij kartę wybranego statku.
+
+3. Kliknij pole z parą „nabrzeże · godzina rozpoczęcia”.
+
+4. Przydziel wszystkie statki i sprawdź, czy ich rozładunki się nie nakładają.
 
 Zasady
 
-1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+1. Przykład: start o 2 i rozładunek przez 2 godziny zajmuje nabrzeże od 2 do 4. Następny statek może zacząć o 4.
 
-2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
-
-3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+2. Dwa różne nabrzeża mogą pracować równocześnie.
 
 Zwycięstwo
 
@@ -326,22 +334,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-storm-shelter.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:35 — Scenariusz, próg odblokowania i mechaniki
 
 • harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
 
-• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+• harborlight-v1-adventure-journey.js:65 — Kody odkryć i powiązanie pokoi
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

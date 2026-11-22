@@ -2,7 +2,7 @@ Wielki zlot żagli
 
 HARBORLIGHT · Przygoda fabularna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,35 +12,31 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Każdy statek ma własne potrzeby i miejsce w wielkim powitaniu.
+Rozwiąż wszystkie 6 pomieszczeń, aby ukończyć opowieść.
 
 Scenariusz i zadanie gracza
 
-Każdy statek ma własne potrzeby i miejsce w wielkim powitaniu. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+Każdy statek ma własne potrzeby i miejsce w wielkim powitaniu.
 
 Przygotowanie rozgrywki
 
-1. W głównej grze opowieść jest odblokowana od 19. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
-2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+2. W głównej grze opowieść jest odblokowana od 19. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+3. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
 
 Sterowanie i wykonywanie ruchów
 
-1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+1. Przeczytaj cel i sterowanie bieżącego pomieszczenia.
 
-2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+2. Rozpocznij etap, gdy będziesz gotowy, i rozwiąż jego zagadkę.
+
+3. Po rozwiązaniu potwierdź przejście do następnego pomieszczenia. Kontynuuj do finału opowieści.
 
 Zasady krok po kroku
 
-1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
-
-2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
-
-3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
-
-4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
-
-5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+1. Ukończone pomieszczenia i zdobyte wskazówki pozostają zachowane. Każde nowe pomieszczenie ma własną instrukcję przed uruchomieniem zegara.
 
 Warunek zwycięstwa
 
@@ -53,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
 
@@ -182,29 +180,29 @@ Cel: Zamień miejsca mocowań tak, by liny się nie przecinały.
 
 Sterowanie
 
-1. Wybierz lewy zaczep.
+1. Pod rysunkiem kliknij przycisk z symbolem wybranego punktu mocowania.
 
-2. Kliknij docelowe prawe mocowanie.
+2. Następnie kliknij „Zamień z…” przy symbolu drugiego punktu.
+
+3. Obserwuj przesuwające się razem z punktami liny i kontynuuj zamiany, aż znikną przecięcia.
 
 Zasady
 
-1. Wybierz lewą cumę i wskaż prawe mocowanie.
+1. Zamiana dotyczy punktów mocowania i wszystkich przyczepionych do nich lin.
 
-2. Jeżeli mocowanie jest zajęte, dwie liny zamieniają się prawymi końcami.
-
-3. Cel dotyczy wszystkich par lin: żadna para nie może się przecinać.
+2. Wszystkie pary lin muszą być wolne od przecięć.
 
 Zwycięstwo
 
-• Liczba przecięć pomiędzy linami wynosi zero.
+• Żadna para lin nie przecina się.
 
 Błędy i ograniczenia
 
-• Samo uporządkowanie części lin nie kończy zadania.
+• Usunięcie tylko części przecięć nie kończy zadania. Sprawdź całą sieć po każdej zamianie.
 
 Przykład
 
-1. Kolejność mocowań po prawej musi odpowiadać kolejności zaczepów po lewej; zamiana dwóch odwróconych końców zmniejsza liczbę skrzyżowań.
+1. Po zamianie punktu z kilkoma linami obejrzyj każdą z nich: poprawienie jednego przecięcia może zmienić również inne połączenia.
 
 Skrzynka ratunkowa
 
@@ -212,11 +210,13 @@ Cel: Spakuj cały sprzęt, obracając elementy i wykorzystując miejsce.
 
 Sterowanie
 
-1. Wybierz element.
+1. Wybierz element wyposażenia i obejrzyj jego kształt.
 
-2. Użyj „Obróć wybrany element”, jeśli wymaga tego plan.
+2. Jeśli trzeba, kliknij „Obróć wybrany element”.
 
-3. Wskaż wolne pole początkowe albo użyj „Wyjmij wybrany element”.
+3. Kliknij pole będące lewym górnym rogiem jego położenia.
+
+4. Dopasuj wszystkie elementy; możesz je wyjmować i układać ponownie.
 
 Zasady
 
@@ -236,7 +236,7 @@ Błędy i ograniczenia
 
 Przykład
 
-1. Dwa kwadraty 2 × 2 mogą zająć dwie górne połowy, a dwa paski 4 × 1 — pozostałe dolne rzędy.
+1. Obróć wybrany element, jeżeli jego wcięcie pasuje do sąsiedniego sprzętu dopiero po zmianie ułożenia. Następnie wskaż jego lewy górny róg.
 
 Hotel dla rozbitków
 
@@ -244,27 +244,29 @@ Cel: Dopasuj pokoje do potrzeb wszystkich gości.
 
 Sterowanie
 
-1. Wybierz grupę gości, a następnie pokój.
+1. Przeczytaj wymagania grupy oraz cechy dostępnych pokoi.
+
+2. Kliknij grupę gości, a następnie wybrany dla niej pokój.
+
+3. Sprawdź wszystkie przydziały: każdy pokój musi spełniać wszystkie wymagania swojej grupy.
 
 Zasady
 
-1. Przydziel każdą grupę do jednego pokoju.
+1. Gdy wskażesz zajęty pokój, grupy zamienią się miejscami: dotychczasowi goście przejdą do poprzedniego pokoju wybranej grupy.
 
-2. Liczba miejsc, piętro i widok muszą pasować do karty gości.
-
-3. Przy wyborze zajętego pokoju grupy zamieniają się przydziałami.
+2. Jeżeli wybrana grupa nie miała jeszcze pokoju, goście z zajętego pokoju wrócą do oczekujących.
 
 Zwycięstwo
 
-• Wszystkie cztery grupy mają swoje właściwe pokoje.
+• Wszystkie grupy mają pokoje spełniające ich wymagania.
 
 Błędy i ograniczenia
 
-• Nawet jedna niezgodna cecha oznacza błędny przydział; popraw go przed końcem czasu.
+• Nawet jedna niezgodna cecha oznacza błędny przydział. Po zamianie zajętego pokoju sprawdź również grupę, która musiała go opuścić.
 
 Przykład
 
-1. Grupa trzyosobowa wymagająca piętra i morza nie może zamieszkać w pokoju z dobrym widokiem, ale z jednym łóżkiem.
+1. Jeżeli wybierasz zajęty pokój, dotychczasowi goście przejdą do poprzedniego pokoju wybranej grupy albo wrócą do oczekujących, gdy ta grupa nie miała przydziału.
 
 Rejs we mgle
 
@@ -272,27 +274,31 @@ Cel: Wyznacz bezpieczny kurs przez boje i prądy.
 
 Sterowanie
 
-1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+1. Przeczytaj wskazówki dotyczące kursu.
+
+2. Klikaj sąsiednie pola: w górę, w dół, w lewo lub w prawo.
+
+3. Zapamiętuj odkryte rafy i doprowadź łódź do portu.
 
 Zasady
 
-1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+1. Mgła skrywa rafy. Wpłynięcie na rafę odkrywa ją i cofa łódź na początek.
 
-2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+2. Ruch po przekątnej jest niedozwolony.
 
-3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+3. Obserwuj pozostały zapas kroków.
 
 Zwycięstwo
 
-• Łódź dociera do portu na polu końcowym.
+• Łódź dociera do portu.
 
 Błędy i ograniczenia
 
-• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+• Wpłynięcie na rafę odkrywa ją i cofa łódź na początek. Zapamiętaj odkryte przeszkody podczas kolejnej próby.
 
 Przykład
 
-1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+1. Gdy odkryjesz rafę, zapamiętaj jej pole i po powrocie na początek wybierz inną drogę. Kieruj się również wskazówkami kursu.
 
 Port bez korków
 
@@ -300,17 +306,19 @@ Cel: Przydziel statkom nabrzeża i czasy rozładunku.
 
 Sterowanie
 
-1. Wybierz kartę statku.
+1. Przeczytaj na karcie statku jego nabrzeże, dozwolone godziny rozpoczęcia i długość rozładunku.
 
-2. Wskaż parę „nabrzeże · godzina”.
+2. Kliknij kartę wybranego statku.
+
+3. Kliknij pole z parą „nabrzeże · godzina rozpoczęcia”.
+
+4. Przydziel wszystkie statki i sprawdź, czy ich rozładunki się nie nakładają.
 
 Zasady
 
-1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+1. Przykład: start o 2 i rozładunek przez 2 godziny zajmuje nabrzeże od 2 do 4. Następny statek może zacząć o 4.
 
-2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
-
-3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+2. Dwa różne nabrzeża mogą pracować równocześnie.
 
 Zwycięstwo
 
@@ -362,22 +370,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-sail-gathering.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:49 — Scenariusz, próg odblokowania i mechaniki
 
 • harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
 
-• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+• harborlight-v1-adventure-journey.js:65 — Kody odkryć i powiązanie pokoi
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

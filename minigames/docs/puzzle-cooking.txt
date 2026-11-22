@@ -2,7 +2,7 @@ Kuchnia na święto
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -16,39 +16,41 @@ Przygotuj posiłki według przepisów i potrzeb gości.
 
 Scenariusz i zadanie gracza
 
-Przygotuj trzy świąteczne porcje według kolejnych przepisów, używając zapasów należących do scenariusza.
+Przygotuj świąteczne dania zgodnie z przepisami i potrzebami gości. Korzystasz z zapasów tej zagadki.
 
 Przygotowanie rozgrywki
 
-1. Kuchnia ma trzy składniki: zboże, zioła i jagody. Każdy przepis wymaga dokładnie trzech jednostek łącznie.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Bieżący przepis i karta gościa wskazują skład dania oraz wymaganą temperaturę. Liczniki pokazują dodawane ilości.
 
 Sterowanie i wykonywanie ruchów
 
-1. Dodawaj wskazane składniki.
+1. Przeczytaj bieżący przepis oraz wymagania gościa.
 
-2. Użyj „Przygotuj porcję” albo „Opróżnij garnek”.
+2. Klikaj składniki, aby dodać ich potrzebne ilości do garnka.
+
+3. Ustaw wymaganą temperaturę dostępnymi przyciskami.
+
+4. Kliknij „Przygotuj porcję”, aby sprawdzić danie, albo „Opróżnij garnek”, aby zacząć je od nowa.
 
 Zasady krok po kroku
 
-1. Kliknięcie składnika dodaje jedną jednostkę do garnka.
+1. Tylko poprawna porcja przechodzi do następnego przepisu.
 
-2. W garnku mieszczą się najwyżej trzy jednostki.
-
-3. Przycisk przygotowania porównuje skład z bieżącym przepisem i po każdej próbie opróżnia garnek.
-
-4. Tylko poprawna porcja zwiększa licznik podanych dań; błędna nie przechodzi do następnego przepisu.
-
-5. Składniki tej zagadki nie zużywają rzeczywistych zasobów wyspy.
+2. Składniki zagadki nie zużywają rzeczywistych zapasów wyspy.
 
 Warunek zwycięstwa
 
-• Poprawnie zrealizowano wszystkie trzy przepisy; błędna próba nie odbiera już podanych porcji.
+• Wszystkie wymagane porcje zostały poprawnie przygotowane.
 
 Błędy, niedozwolone ruchy i zakończenie próby
 
-• Błędny skład zostaje opróżniony bez zaliczenia porcji.
+• Błędny skład lub temperatura nie zaliczają porcji. Popraw bieżące danie zgodnie z przepisem.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 480 s. Na pierwszej trudności rzeczywisty limit wynosi 480 s.
 
@@ -82,7 +84,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. Przepis „zboże ×2, zioła ×1, jagody ×0” wymaga dwóch kliknięć zboża i jednego ziół przed gotowaniem.
+1. Właściwe składniki przy złej temperaturze nie zaliczą porcji. Przed przygotowaniem sprawdź oba warunki.
 
 Warianty i osobne linki
 
@@ -116,20 +118,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-cooking.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:24 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:153 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:281 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:153 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

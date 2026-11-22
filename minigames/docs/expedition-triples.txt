@@ -2,7 +2,7 @@ Znajdź trójki — ekspedycja
 
 HARBORLIGHT · Gra ekspedycyjna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,7 +12,7 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Dopasuj wszystkie karty w trójki, a potem zdecyduj o wypłacie puli lub kolejnej rundzie.
+Dopasuj wszystkie trójki symboli przed końcem czasu.
 
 Scenariusz i zadanie gracza
 
@@ -22,7 +22,9 @@ Kolejne rundy dopasowywania trójek z decyzją o wypłacie lub ryzyku całej zgr
 
 Przygotowanie rozgrywki
 
-1. Pierwsza trudność ma 24 karty. Każdy symbol występuje trzy razy; kolejne trudności zwiększają liczbę kart.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Pierwsza trudność ma 24 karty. Każdy symbol występuje trzy razy; kolejne trudności zwiększają liczbę kart.
 
 Sterowanie i wykonywanie ruchów
 
@@ -59,6 +61,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Brak potwierdzenia obecności w ciągu 60 s kończy serię i powoduje utratę całej niewypłaconej puli.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Limit trójek wynosi min(900 s, 240 s + 30 s × (trudność − 1)).
 
@@ -110,14 +114,22 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: expedition-triples.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
-• harborlight-v1-activities.js:484 — Zegar, zmniejszanie nagrody, pula ekspedycji
+• harborlight-v1-activities.js:487 — Zegar, zmniejszanie nagrody, pula ekspedycji
 
-• harborlight-v1-activities.js:539 — Potwierdzenie obecności po bezczynności i utrata puli
+• harborlight-v1-activities.js:542 — Potwierdzenie obecności po bezczynności i utrata puli
 
 • harborlight-v1-minigames.js:3 — Rozmiary plansz, limity czasu i progresja
 
 • harborlight-v1-expedition-hour.js:80 — Nagroda 50/100/200/400/800 i limit 800 monet
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

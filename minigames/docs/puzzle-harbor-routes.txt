@@ -2,7 +2,7 @@ Konwoje na redzie
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,7 +20,9 @@ Reda jest zatłoczona. Konwoje można wyprawiać wyłącznie w kierunku ich strz
 
 Przygotowanie rozgrywki
 
-1. Kwadratowa plansza ma 5–9 pól w boku, zależnie od trudności. Każdy konwój zajmuje kilka pól i ma własny kierunek wypłynięcia.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Plansza przedstawia konwoje i kierunki ich wypłynięcia. Układ oraz liczba konwojów zależą od trudności.
 
 Sterowanie i wykonywanie ruchów
 
@@ -49,6 +51,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Upływ limitu oznacza porażkę bieżącej próby.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Dokładny limit reguł v32: max(90 s, 150 s − min(60 s, floor(log2(d)) × 5 s)), gdzie d oznacza efektywną trudność. Pierwsza trudność ma 150 s.
 
@@ -82,7 +86,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. Jeżeli konwój A płynie w prawo, a przed jego czołem stoi B, wypraw najpierw B — o ile droga B jest już wolna.
+1. Jeżeli przed konwojem płynącym w prawo stoi drugi konwój, najpierw zwolnij jego drogę. Po każdym wypłynięciu ponownie sprawdź strzałki pozostałych jednostek.
 
 Warianty i osobne linki
 
@@ -116,22 +120,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-harbor-routes.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:6 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:188 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:188 — Połączenie bieżącej zagadki z oryginalnym silnikiem
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-original-puzzles.js:87 — Generator bieżącej planszy i zgodność starszych zapisów
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
 
-• harborlight-v1-original-puzzles.js:93 — Dokładny limit czasu Sieci i Konwojów
+• harborlight-v1-original-puzzles.js:110 — Dokładny limit czasu Sieci i Konwojów
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

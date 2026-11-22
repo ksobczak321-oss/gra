@@ -2,7 +2,7 @@ Rejs we mgle
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,29 +20,37 @@ Przeprowadź łódź przez mgłę i rafy do portu, mieszcząc się w ograniczony
 
 Przygotowanie rozgrywki
 
-1. Plansza 6 × 6 ma start w lewym górnym i port w prawym dolnym rogu. Oznaczone rafy blokują ruch. Dostępnych jest maksymalnie 15 kroków.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Mgła zasłania rafy na drodze łodzi do portu. Bieżący licznik pokazuje dostępny zapas kroków.
 
 Sterowanie i wykonywanie ruchów
 
-1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+1. Przeczytaj wskazówki dotyczące kursu.
+
+2. Klikaj sąsiednie pola: w górę, w dół, w lewo lub w prawo.
+
+3. Zapamiętuj odkryte rafy i doprowadź łódź do portu.
 
 Zasady krok po kroku
 
-1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+1. Mgła skrywa rafy. Wpłynięcie na rafę odkrywa ją i cofa łódź na początek.
 
-2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+2. Ruch po przekątnej jest niedozwolony.
 
-3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+3. Obserwuj pozostały zapas kroków.
 
 Warunek zwycięstwa
 
-• Łódź dociera do portu na polu końcowym.
+• Łódź dociera do portu.
 
 Błędy, niedozwolone ruchy i zakończenie próby
 
-• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+• Wpłynięcie na rafę odkrywa ją i cofa łódź na początek. Zapamiętaj odkryte przeszkody podczas kolejnej próby.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 480 s. Na pierwszej trudności rzeczywisty limit wynosi 480 s.
 
@@ -76,7 +84,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+1. Gdy odkryjesz rafę, zapamiętaj jej pole i po powrocie na początek wybierz inną drogę. Kieruj się również wskazówkami kursu.
 
 Warianty i osobne linki
 
@@ -110,20 +118,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-navigation.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:13 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:75 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:245 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:75 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

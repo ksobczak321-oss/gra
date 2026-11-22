@@ -2,7 +2,7 @@ Mewa-złodziejka
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,21 +20,23 @@ Mewa zabrała klucz potrzebny do dalszej wyprawy. Ustaw odpowiednią przynętę,
 
 Przygotowanie rozgrywki
 
-1. Dostępne są cztery miejsca na przynętę. Każde ma rodzaj pokarmu, wysokość oraz oznaczenie bezpieczeństwa.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Dostępne są cztery miejsca na przynętę. Każde ma rodzaj pokarmu, wysokość oraz oznaczenie bezpieczeństwa.
 
 Sterowanie i wykonywanie ruchów
 
-1. Wskaż jedno z czterech miejsc.
+1. Przeczytaj wskazówkę: jakiego jedzenia szuka mewa.
 
-2. Naciśnij „Zabierz klucz”.
+2. Wśród czterech miejsc wybierz to, które jednocześnie ma właściwy pokarm oraz opisy „wysoko” i „bez krabów”.
+
+3. Kliknij wybrane miejsce, a następnie przycisk „Zabierz klucz”.
 
 Zasady krok po kroku
 
-1. Przeczytaj, jaki pokarm wybiera mewa.
+1. Wszystkie trzy cechy przynęty muszą się zgadzać: pokarm, wysokość i bezpieczeństwo od krabów.
 
-2. Wybierz miejsce z właściwym jedzeniem, wysokością 2 i bezpieczne od krabów.
-
-3. Samo wskazanie przynęty nie kończy zadania: po poprawnym wyborze trzeba jeszcze zabrać klucz.
+2. Samo wybranie miejsca nie kończy zadania. Klucz odbierasz osobnym przyciskiem.
 
 Warunek zwycięstwa
 
@@ -45,6 +47,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Przynęta niespełniająca wskazówek nie pozwala zabrać klucza; można zmienić wybór.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 60 s. Na pierwszej trudności rzeczywisty limit wynosi 60 s.
 
@@ -112,20 +116,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-gull.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:7 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:32 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:296 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:32 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

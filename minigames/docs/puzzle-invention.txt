@@ -2,7 +2,7 @@ Pracownia wynalazków
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,33 +20,35 @@ W studni leży potrzebny przedmiot. Z dostępnych części zbuduj narzędzie zap
 
 Przygotowanie rozgrywki
 
-1. Dostępnych jest sześć części o różnych rolach. Jednocześnie można wybrać najwyżej trzy.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Przeczytaj wymagane funkcje oraz ograniczenia. Porównaj je z cechami dostępnych części.
 
 Sterowanie i wykonywanie ruchów
 
-1. Zaznacz lub odznacz części.
+1. Przeczytaj wymagania dotyczące zasięgu, chwytu i podnoszenia oraz ograniczenia części.
 
-2. Naciśnij „Sprawdź wynalazek”.
+2. Klikaj części, które wspólnie spełnią wymagania. Ponowne kliknięcie odznacza część.
+
+3. Kliknij „Sprawdź wynalazek”, gdy komplet będzie gotowy.
 
 Zasady krok po kroku
 
-1. Wynalazek wymaga dokładnie trzech ról: zasięgu, chwytu i podnoszenia.
+1. Każda potrzebna funkcja i każde podane ograniczenie muszą być spełnione jednocześnie.
 
-2. Ponowne kliknięcie zaznaczonej części usuwa ją z zestawu.
-
-3. Dzwonek, tafla szkła i wiadro nie zastępują wymaganych ról.
-
-4. Po wybraniu kompletu trzeba nacisnąć przycisk sprawdzenia.
+2. Samo zaznaczenie części nie kończy zadania; trzeba sprawdzić gotowy wynalazek.
 
 Warunek zwycięstwa
 
-• Zestaw dokładnie trzech części realizuje wszystkie wymagane role i został sprawdzony.
+• Sprawdzony wynalazek spełnia wszystkie wymagane funkcje i ograniczenia.
 
 Błędy, niedozwolone ruchy i zakończenie próby
 
-• Niekompletny lub zły zestaw nie wygrywa; można go poprawić.
+• Niekompletny lub niezgodny zestaw nie kończy zadania. Zmień części i sprawdź ponownie.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 480 s. Na pierwszej trudności rzeczywisty limit wynosi 480 s.
 
@@ -80,7 +82,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. Długi kij daje zasięg, hak chwyt, a lina z bloczkiem podnoszenie. Samo wybranie trzech dowolnych przedmiotów nie wystarczy.
+1. Część pasująca do jednej funkcji nadal musi spełniać pozostałe ograniczenia. Oceniaj cały komplet, a nie tylko liczbę zaznaczonych części.
 
 Warianty i osobne linki
 
@@ -114,20 +116,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-invention.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:21 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:132 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:273 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:132 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

@@ -11,13 +11,14 @@
 
 
 
-## Paczka 22 listopada — DEV 0.15.4.0 / cache24 w walidacji
 
-Użytkownik przekazał GO dla zebranej paczki: koszty budowy bez jedzenia (także zboża), wyrównane kontrolki produkcji, osiągalne etapy Doradcy, równy i ręczny podział załogi Gospodarstwa, instrukcje przed wszystkimi 55 minigrami oraz uwagi z `minigry19112026.docx`. Naprawa misji obejmuje konkretny przypadek admin2: 81 mieszkańców, Ratusz 3 i opłacona rozbudowa do 4 w transporcie. Pomocnicza misja nie może blokować opłaconego projektu ani przyznawać nagrody za pominięte zadania.
+## Paczka 22 listopada — DEV 0.15.4.0 / cache24 gotowy lokalnie, publikacja PENDING
 
-Kod 0.15.4.0 / `frontend-v32-24` jest zintegrowany lokalnie. Pełna regresja, świeże artefakty, własny CI, Pages i tag nowego DEV wymagają osobnych wyników. Ostatnie odebrane PRE-PROD pozostaje na `1e21ff1340c7327db9d63a42934547f14548294e` / 0.15.3.1 / cache23. Nie wykonano resetu, zmiany haseł ani działań PROD/DNS. Rzeczywisty admin2 odczytano przez zweryfikowany TLS, a poprawki sprawdzano na prywatnej kopii; QA nie zapisywał wyspy lub zegara.
+Zamrożony kod aplikacji i źródła eksportów: `27c81f7223c212a05dc850f27b0f9e92392b2c27`. Cała paczka GO obejmuje brak żywności i zboża w nowych budowach, wyrównane kontrolki, wykonalne etapy Doradcy, podział załogi Gospodarstwa, instrukcje wszystkich55 minigier,26uwag Worda oraz naprawę opłaconego Ratusza4/admin2. Jawnie zlecono ukończenie DEV i późniejszy standardowy PRE-PROD; konta i postęp mają pozostać zachowane.
 
-527 kart / 207 ręcznych przypadków NOT RUN. Zachowano wcześniejsze 519 kart i 195 definicji oraz wyników. [Zakres i 26 uwag Worda](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json).
+Lokalnie1829 testów frontend w pełnym przebiegu plus2 nowe testy źródeł eksportu,178backend i7planszówki PASS; przejścia CODE zmieniały tylko eksportery/metadane i zachowują aplikację oraz wcześniejsze testy identyczne bajtowo.145+28=173PythonPASS. Pierwszy pełny frontend, pierwszy eksport i pierwsze testy pakietu zachowują rzeczywiste FAIL oraz opisane poprawki. Własny CI2016Node/173Python/84programy Chromium i publikacja wymagają nowego odbioru.
+
+Świeże artefakty: master164karty/69151wierszy z zachowaną historią100/220/48/4982; redakcja6kart/413wierszy/ABC/pustaC z5zatwierdzonymi zmianami i408zachowanymi wierszami;55Word+55TXT zgodne z bieżącymi instrukcjami. Dwie rzeczywiste symulacje24/24/72h dały identyczny pełny JSON; zaakceptowane zmiany gospodarki opisano osobno. 527kart i207ręcznych przypadków NOT RUN; wcześniejsze519/195 obiektów zachowane. PRE-PROD nadal1e21/cache23 do nowego własnego wdrożenia. [Zakres](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json).
 
 ## DEV i PRE-PROD 0.15.3.1 / cache23 — odebrane automatycznie
 

@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `in_progress` |
-| DEV | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` |
-| CI | `NOT_RUN_FOR_NEW_PACKET` |
-| PRE-PROD | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
+| Implementacja | `implemented_dev` |
+| DEV | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` |
+| CI | `PENDING_OWN_EXACT_SOURCE_RUN` |
+| PRE-PROD | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -28,7 +28,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 
 ## Źródło
 
-GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. Początkowy zakres DEV/Git/własneCI/Pages.
+GO obejmuje zebraną paczkę 22 listopada: usunięcie żywności z budowy (także zboża), układ produkcji, wykonalny Doradca, obsadę Gospodarstwa, instrukcje i uwagi minigry19112026.docx, stabilne misje i wyjaśnienie progu Ratusza. DEV/Git/własneCI/Pages, następnie jawnie zlecony PRE-PROD.
 
 Odniesienie: `chat:2026-11-22:packet:HL-CHG-1196; docs/v32/GO-PACKET-20261122.md`.
 
@@ -41,6 +41,7 @@ Pełne historyczne wklejki użytkownika zostały przeczytane; identyfikatory źr
 - **Dokumenty:** [docs/v32/GO-PACKET-20261122.md](../../v32/GO-PACKET-20261122.md), [docs/v32/PACKET-20261122-EVIDENCE.json](../../v32/PACKET-20261122-EVIDENCE.json)
 - **Kod:** nie przypisano.
 - **Scenariusze automatyczne:** nie przypisano.
+- **Kod dowodowy:** `27c81f7223c212a05dc850f27b0f9e92392b2c27`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
@@ -49,7 +50,7 @@ Powiązane przypadki do ręcznego przeklikania:
 - [HL-TC-0204 — Pierwszy blask i każdy pokój czekają na przeczytanie opisu](../../testing/manual/HL-TC-0204.md) — `NOT RUN`.
 - [HL-TC-0205 — Zmiany mechanik Worda są czytelne i rozwiązywalne](../../testing/manual/HL-TC-0205.md) — `NOT RUN`.
 
-Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają pełnego odbioru ani publikacji. WłasneCI/Pages i nowySHA pozostająPENDING; poprzednie519 kart i wcześniejsze zakresy nie są odbiorem tej paczki. PRE-PROD pozostaje1e21 / cache23 do odrębnej promocji.
+Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN.
 
 ## Relacje
 
@@ -59,7 +60,7 @@ Paczka0.15.4.0/cache24 w implementacji. Lokalne testy kierunkowe nie oznaczają 
 
 ## Uwagi
 
-- Przyjęte GO dotyczy początkowo DEV/Git/CI/Pages; brak nowych działań PRE-PROD/PROD/DNS lub resetu kont.
+- Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.
 - Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.
 - Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.
 

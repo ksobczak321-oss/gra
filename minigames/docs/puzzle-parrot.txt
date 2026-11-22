@@ -2,7 +2,7 @@ Papuga kapitana
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,37 +12,45 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 Scenariusz i zadanie gracza
 
-Papuga kapitana powtarza zakodowane słowa. Odczytaj każde z nich wspak i zachowaj kolejność wypowiedzi.
+Papuga pomieszała litery wiadomości kapitana. Odtwórz z nich kolejne słowa.
 
 Przygotowanie rozgrywki
 
-1. Wskazówka zawiera 3–4 odwrócone słowa. Przyciski przedstawiają osiem nazw, w tym nazwy niepotrzebne w bieżącej odpowiedzi.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Odczytaj wskazówkę do bieżącego słowa. Dostępne przyciski przedstawiają pojedyncze litery rozsypanki.
 
 Sterowanie i wykonywanie ruchów
 
-1. Naciskaj kolejne przyciski nazw.
+1. Przeczytaj wskazówkę do bieżącego słowa.
+
+2. Klikaj pojedyncze litery w kolejności tworzącej słowo.
+
+3. Sprawdź ułożone słowo przyciskiem potwierdzenia.
+
+4. W razie pomyłki wyczyść odpowiedź i ułóż ją ponownie.
 
 Zasady krok po kroku
 
-1. Odwróć litery każdego słowa osobno.
+1. Korzystasz z liter dostępnych w bieżącej rozsypance.
 
-2. Naciskaj nazwy w tej samej kolejności, w jakiej występują zakodowane słowa.
-
-3. Błąd czyści dotychczasową sekwencję odpowiedzi; trzeba wprowadzić ją od początku.
+2. Ukończ wszystkie słowa wiadomości.
 
 Warunek zwycięstwa
 
-• Cała odtworzona lista słów odpowiada ukrytej sekwencji.
+• Wszystkie słowa wiadomości zostały poprawnie ułożone i potwierdzone.
 
 Błędy, niedozwolone ruchy i zakończenie próby
 
-• Błędne słowo resetuje odpowiedź, a upływ czasu kończy próbę.
+• Błędne ułożenie nie zalicza słowa. Wyczyść odpowiedź, ułóż ją ponownie i sprawdź.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Referencyjny czas katalogowy tej zagadki: 90 s. Na pierwszej trudności rzeczywisty limit wynosi 90 s.
 
@@ -76,7 +84,7 @@ Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.
 
 Przykładowy przebieg
 
-1. „aciwtoK” oznacza „Kotwica”. Kolejności samych słów nie odwracaj.
+1. Najpierw ustal słowo pasujące do wskazówki, a potem wybieraj jego kolejne litery. Potwierdź dopiero kompletną odpowiedź.
 
 Warianty i osobne linki
 
@@ -110,20 +118,28 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-parrot.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:10 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:46 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:216 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-island-puzzles.js:46 — Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-island-puzzles.js:199 — Wybór wersji generatora dla nowej i zapisanej planszy
+
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
+
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

@@ -2,7 +2,7 @@
 
 HARBORLIGHT · Przygoda fabularna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,35 +12,31 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Przygotuj przestrzeń, gości i finał święta mieszkańców.
+Rozwiąż wszystkie 6 pomieszczeń, aby ukończyć opowieść.
 
 Scenariusz i zadanie gracza
 
-Przygotuj przestrzeń, gości i finał święta mieszkańców. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+Przygotuj przestrzeń, gości i finał święta mieszkańców.
 
 Przygotowanie rozgrywki
 
-1. W głównej grze opowieść jest odblokowana od 15. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
-2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+2. W głównej grze opowieść jest odblokowana od 15. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+3. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
 
 Sterowanie i wykonywanie ruchów
 
-1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+1. Przeczytaj cel i sterowanie bieżącego pomieszczenia.
 
-2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+2. Rozpocznij etap, gdy będziesz gotowy, i rozwiąż jego zagadkę.
+
+3. Po rozwiązaniu potwierdź przejście do następnego pomieszczenia. Kontynuuj do finału opowieści.
 
 Zasady krok po kroku
 
-1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
-
-2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
-
-3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
-
-4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
-
-5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+1. Ukończone pomieszczenia i zdobyte wskazówki pozostają zachowane. Każde nowe pomieszczenie ma własną instrukcję przed uruchomieniem zegara.
 
 Warunek zwycięstwa
 
@@ -53,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
 
@@ -96,13 +94,13 @@ Wariant 1
 
 https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=1
 
-1. Parada krabów — Poprowadź rodzinę krabów do bezpiecznych muszli.
+1. Parada krabów — Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
 2. Hotel dla rozbitków — Dopasuj pokoje do potrzeb wszystkich gości.
 
 3. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
 
-4. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+4. Papuga kapitana — Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 5. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
 
@@ -114,11 +112,11 @@ https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=2
 
 1. Hotel dla rozbitków — Dopasuj pokoje do potrzeb wszystkich gości.
 
-2. Parada krabów — Poprowadź rodzinę krabów do bezpiecznych muszli.
+2. Parada krabów — Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
 3. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
 
-4. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+4. Papuga kapitana — Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 5. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
 
@@ -128,9 +126,9 @@ Wariant 3
 
 https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=3
 
-1. Parada krabów — Poprowadź rodzinę krabów do bezpiecznych muszli.
+1. Parada krabów — Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
-2. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+2. Papuga kapitana — Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 3. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
 
@@ -144,7 +142,7 @@ Wariant 4
 
 https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=4
 
-1. Parada krabów — Poprowadź rodzinę krabów do bezpiecznych muszli.
+1. Parada krabów — Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
 2. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
 
@@ -152,7 +150,7 @@ https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=4
 
 4. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
 
-5. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+5. Papuga kapitana — Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 6. Światło przez soczewki — Obracaj zwierciadła, aby światło dotarło do odbiornika.
 
@@ -160,13 +158,13 @@ Wariant 5
 
 https://harborlight-dev.web.app/minigames/?game=story-sea-festival&variant=5
 
-1. Parada krabów — Poprowadź rodzinę krabów do bezpiecznych muszli.
+1. Parada krabów — Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
 2. Kuchnia na święto — Przygotuj posiłki według przepisów i potrzeb gości.
 
 3. Hotel dla rozbitków — Dopasuj pokoje do potrzeb wszystkich gości.
 
-4. Papuga kapitana — Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+4. Papuga kapitana — Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 5. Fotograf wyspy — Znajdź perspektywę, z której znaki tworzą wspólny obraz.
 
@@ -178,33 +176,35 @@ Poniższe instrukcje dotyczą mechanik wymienionych w sekwencjach pomieszczeń. 
 
 Parada krabów
 
-Cel: Poprowadź rodzinę krabów do bezpiecznych muszli.
+Cel: Zapamiętaj bezpieczną trasę i doprowadź kraba do muszli.
 
 Sterowanie
 
-1. Wybierz kraba z listy.
+1. Obejrzyj podświetloną bezpieczną trasę.
 
-2. Wskaż sąsiednie wolne pole planszy.
+2. Kliknij „Zapamiętane — ruszam”, aby ukryć podpowiedź.
+
+3. Klikaj kolejne sąsiednie pola trasy aż do muszli.
+
+4. Jeśli chcesz obejrzeć drogę ponownie, wybierz „Pokaż trasę od nowa”.
 
 Zasady
 
-1. Wybierz kraba i przesuwaj go o jedno sąsiednie pole pionowo lub poziomo.
+1. Krab porusza się o jedno pole w pionie lub poziomie.
 
-2. Nie wolno wejść na kamień, inne zwierzę ani do pary rzędów należącej do innego kraba.
-
-3. Obejdź przeszkody dolnym lub górnym rzędem własnej strefy.
+2. Błędny krok cofa kraba na początek; spróbuj ponownie z zapamiętaną trasą.
 
 Zwycięstwo
 
-• Wszystkie trzy kraby stoją na przypisanych muszlach.
+• Krab dociera do muszli po zapamiętanej trasie.
 
 Błędy i ograniczenia
 
-• Ruch po przekątnej, skok przez pole lub wejście na przeszkodę jest odrzucany.
+• Błędny krok cofa kraba na początek. Zacznij ponownie od pierwszego pola bezpiecznej trasy.
 
 Przykład
 
-1. Kamień na górnym rzędzie można ominąć schodząc do drugiego rzędu tej samej pary i wracając za przeszkodą.
+1. Zapamiętaj kolejność pierwszych zakrętów. Jeżeli krab wróci na początek, odtwórz te same pierwsze kroki i popraw miejsce pomyłki.
 
 Hotel dla rozbitków
 
@@ -212,27 +212,29 @@ Cel: Dopasuj pokoje do potrzeb wszystkich gości.
 
 Sterowanie
 
-1. Wybierz grupę gości, a następnie pokój.
+1. Przeczytaj wymagania grupy oraz cechy dostępnych pokoi.
+
+2. Kliknij grupę gości, a następnie wybrany dla niej pokój.
+
+3. Sprawdź wszystkie przydziały: każdy pokój musi spełniać wszystkie wymagania swojej grupy.
 
 Zasady
 
-1. Przydziel każdą grupę do jednego pokoju.
+1. Gdy wskażesz zajęty pokój, grupy zamienią się miejscami: dotychczasowi goście przejdą do poprzedniego pokoju wybranej grupy.
 
-2. Liczba miejsc, piętro i widok muszą pasować do karty gości.
-
-3. Przy wyborze zajętego pokoju grupy zamieniają się przydziałami.
+2. Jeżeli wybrana grupa nie miała jeszcze pokoju, goście z zajętego pokoju wrócą do oczekujących.
 
 Zwycięstwo
 
-• Wszystkie cztery grupy mają swoje właściwe pokoje.
+• Wszystkie grupy mają pokoje spełniające ich wymagania.
 
 Błędy i ograniczenia
 
-• Nawet jedna niezgodna cecha oznacza błędny przydział; popraw go przed końcem czasu.
+• Nawet jedna niezgodna cecha oznacza błędny przydział. Po zamianie zajętego pokoju sprawdź również grupę, która musiała go opuścić.
 
 Przykład
 
-1. Grupa trzyosobowa wymagająca piętra i morza nie może zamieszkać w pokoju z dobrym widokiem, ale z jednym łóżkiem.
+1. Jeżeli wybierasz zajęty pokój, dotychczasowi goście przejdą do poprzedniego pokoju wybranej grupy albo wrócą do oczekujących, gdy ta grupa nie miała przydziału.
 
 Kuchnia na święto
 
@@ -240,61 +242,63 @@ Cel: Przygotuj posiłki według przepisów i potrzeb gości.
 
 Sterowanie
 
-1. Dodawaj wskazane składniki.
+1. Przeczytaj bieżący przepis oraz wymagania gościa.
 
-2. Użyj „Przygotuj porcję” albo „Opróżnij garnek”.
+2. Klikaj składniki, aby dodać ich potrzebne ilości do garnka.
+
+3. Ustaw wymaganą temperaturę dostępnymi przyciskami.
+
+4. Kliknij „Przygotuj porcję”, aby sprawdzić danie, albo „Opróżnij garnek”, aby zacząć je od nowa.
 
 Zasady
 
-1. Kliknięcie składnika dodaje jedną jednostkę do garnka.
+1. Tylko poprawna porcja przechodzi do następnego przepisu.
 
-2. W garnku mieszczą się najwyżej trzy jednostki.
-
-3. Przycisk przygotowania porównuje skład z bieżącym przepisem i po każdej próbie opróżnia garnek.
-
-4. Tylko poprawna porcja zwiększa licznik podanych dań; błędna nie przechodzi do następnego przepisu.
-
-5. Składniki tej zagadki nie zużywają rzeczywistych zasobów wyspy.
+2. Składniki zagadki nie zużywają rzeczywistych zapasów wyspy.
 
 Zwycięstwo
 
-• Poprawnie zrealizowano wszystkie trzy przepisy; błędna próba nie odbiera już podanych porcji.
+• Wszystkie wymagane porcje zostały poprawnie przygotowane.
 
 Błędy i ograniczenia
 
-• Błędny skład zostaje opróżniony bez zaliczenia porcji.
+• Błędny skład lub temperatura nie zaliczają porcji. Popraw bieżące danie zgodnie z przepisem.
 
 Przykład
 
-1. Przepis „zboże ×2, zioła ×1, jagody ×0” wymaga dwóch kliknięć zboża i jednego ziół przed gotowaniem.
+1. Właściwe składniki przy złej temperaturze nie zaliczą porcji. Przed przygotowaniem sprawdź oba warunki.
 
 Papuga kapitana
 
-Cel: Rozpoznaj słowa papugi i odtwórz ich prawdziwą kolejność.
+Cel: Ułóż słowa wiadomości kapitana z rozsypanych liter.
 
 Sterowanie
 
-1. Naciskaj kolejne przyciski nazw.
+1. Przeczytaj wskazówkę do bieżącego słowa.
+
+2. Klikaj pojedyncze litery w kolejności tworzącej słowo.
+
+3. Sprawdź ułożone słowo przyciskiem potwierdzenia.
+
+4. W razie pomyłki wyczyść odpowiedź i ułóż ją ponownie.
 
 Zasady
 
-1. Odwróć litery każdego słowa osobno.
+1. Korzystasz z liter dostępnych w bieżącej rozsypance.
 
-2. Naciskaj nazwy w tej samej kolejności, w jakiej występują zakodowane słowa.
-
-3. Błąd czyści dotychczasową sekwencję odpowiedzi; trzeba wprowadzić ją od początku.
+2. Ukończ wszystkie słowa wiadomości.
 
 Zwycięstwo
 
-• Cała odtworzona lista słów odpowiada ukrytej sekwencji.
+• Wszystkie słowa wiadomości zostały poprawnie ułożone i potwierdzone.
 
 Błędy i ograniczenia
 
-• Błędne słowo resetuje odpowiedź, a upływ czasu kończy próbę.
+• Błędne ułożenie nie zalicza słowa. Wyczyść odpowiedź, ułóż ją ponownie i sprawdź.
 
 Przykład
 
-1. „aciwtoK” oznacza „Kotwica”. Kolejności samych słów nie odwracaj.
+1. Najpierw ustal słowo pasujące do wskazówki, a potem wybieraj jego kolejne litery. Potwierdź dopiero kompletną odpowiedź.
 
 Fotograf wyspy
 
@@ -330,7 +334,11 @@ Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
 
 Sterowanie
 
-1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+1. Znajdź źródło światła z lewej strony i złoty odbiornik.
+
+2. Kliknij zwierciadło, aby przełączyć je między „/” i „\”.
+
+3. Śledź promień i ustawiaj następne zwierciadła, aż światło trafi do odbiornika.
 
 Zasady
 
@@ -362,22 +370,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-sea-festival.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:45 — Scenariusz, próg odblokowania i mechaniki
 
 • harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
 
-• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+• harborlight-v1-adventure-journey.js:65 — Kody odkryć i powiązanie pokoi
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

@@ -274,7 +274,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1187 — Planuj wykonalny rozwój co 120 sekund rzeczywistych](changes/HL-CHG-1187.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
 | [HL-CHG-1188 — Worker otrzymuje ograniczone dane bez blokowania gry](changes/HL-CHG-1188.md) | Bug | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
 | [HL-CHG-1189 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](changes/HL-CHG-1189.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
-| [HL-CHG-1192 — Wyrównaj opis produktu liczbę osób i przydział w jednym rzędzie](changes/HL-CHG-1192.md) | Bug | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
+| [HL-CHG-1192 — Wyrównaj opis produktu liczbę osób i przydział w jednym rzędzie](changes/HL-CHG-1192.md) | Bug | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
 
 <a id="hl-epic-tut"></a>
 
@@ -328,8 +328,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1113 — Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale](changes/HL-CHG-1113.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1136 — Tutorial 48 i samouczek 25 objaśniają nowe produkty i budynki](changes/HL-CHG-1136.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1159 — Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala](changes/HL-CHG-1159.md) | Story | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `SUCCESS44292700743_DDA_SUBSEQUENT_PROMOTION_PRESERVED_ORIGINAL_HISTORY` |
-| [HL-CHG-1193 — Prowadź gracza przez wykonalne inwestycje pośrednie do dalszego celu](changes/HL-CHG-1193.md) | Story | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
-| [HL-CHG-1197 — Zachowaj dokładny stały wybór minigier wymaganych przez misje](changes/HL-CHG-1197.md) | Bug | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
+| [HL-CHG-1193 — Prowadź gracza przez wykonalne inwestycje pośrednie do dalszego celu](changes/HL-CHG-1193.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1197 — Zachowaj dokładny stały wybór minigier wymaganych przez misje](changes/HL-CHG-1197.md) | Bug | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
 
 <a id="hl-epic-eco"></a>
 
@@ -380,8 +380,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1125 — Mleko zachowuje skumulowany wiek centralny podczas transportu](changes/HL-CHG-1125.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1126 — Wiele produktów ma fizyczne składniki, bufory i kursy tragarzy](changes/HL-CHG-1126.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1131 — Koszty budowy używają fizycznego miksu ponad rezerwę sytości](changes/HL-CHG-1131.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1191 — Usuń żywność i zboże ze wszystkich cen budowy i rozbudowy](changes/HL-CHG-1191.md) | Decision | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
-| [HL-CHG-1194 — Dziel załogę między uprawy i przenoś ją ręcznie bez zatrudniania](changes/HL-CHG-1194.md) | Story | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
+| [HL-CHG-1191 — Usuń żywność i zboże ze wszystkich cen budowy i rozbudowy](changes/HL-CHG-1191.md) | Decision | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1194 — Dziel załogę między uprawy i przenoś ją ręcznie bez zatrudniania](changes/HL-CHG-1194.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
 
 <a id="hl-epic-peo"></a>
 
@@ -452,7 +452,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1127 — Kursy, rundy i równoległe badania zachowują osoby i opłaty](changes/HL-CHG-1127.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1128 — Wojsko ma wyłączną karierę, szkolenia, wyprawy i kolejkę powrotów](changes/HL-CHG-1128.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1133 — Darmowy ratunek przyjmuje pełną grupę na wybranej wyspie](changes/HL-CHG-1133.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1198 — Wyjaśnij81 mieszkańców koszty Ratusza 4 i dobrowolną pomoc ratunkową](changes/HL-CHG-1198.md) | Bug | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
+| [HL-CHG-1198 — Wyjaśnij81 mieszkańców koszty Ratusza 4 i dobrowolną pomoc ratunkową](changes/HL-CHG-1198.md) | Bug | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
 
 <a id="hl-epic-min"></a>
 
@@ -501,8 +501,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1111 — Nowe mechaniki mają rzeczywistą interakcję i weryfikowane rozwiązanie](changes/HL-CHG-1111.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1112 — Warianty przygód zmieniają układ, wskazówki i rozwiązanie](changes/HL-CHG-1112.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1135 — Autorskie plansze, licznik odmian i przedłużenia czasu](changes/HL-CHG-1135.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1195 — Pokaż wszystkim 55 grom instrukcję przed startem bez limitu czytania](changes/HL-CHG-1195.md) | Story | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
-| [HL-CHG-1196 — Wprowadź czytelne sterowanie i wymagające rozwiązywalne zagadki z uwag Worda](changes/HL-CHG-1196.md) | Story | `accepted` | `PENDING_FINAL_LOCAL_VALIDATION_AND_PUBLICATION` | `NOT_DEPLOYED_NEW_PACKET_PREVIOUS_CACHE23_ACCEPTED` |
+| [HL-CHG-1195 — Pokaż wszystkim 55 grom instrukcję przed startem bez limitu czytania](changes/HL-CHG-1195.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1196 — Wprowadź czytelne sterowanie i wymagające rozwiązywalne zagadki z uwag Worda](changes/HL-CHG-1196.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
 
 <a id="hl-epic-acc"></a>
 

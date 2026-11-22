@@ -2,7 +2,7 @@ Konwój przez mgłę
 
 HARBORLIGHT · Przygoda fabularna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,35 +12,31 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Połącz światło, pomiary i rozkład rejsów.
+Rozwiąż wszystkie 7 pomieszczeń, aby ukończyć opowieść.
 
 Scenariusz i zadanie gracza
 
-Połącz światło, pomiary i rozkład rejsów. Opowieść łączy 7 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+Połącz światło, pomiary i rozkład rejsów.
 
 Przygotowanie rozgrywki
 
-1. W głównej grze opowieść jest odblokowana od 7. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
-2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+2. W głównej grze opowieść jest odblokowana od 7. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+3. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
 
 Sterowanie i wykonywanie ruchów
 
-1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+1. Przeczytaj cel i sterowanie bieżącego pomieszczenia.
 
-2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+2. Rozpocznij etap, gdy będziesz gotowy, i rozwiąż jego zagadkę.
+
+3. Po rozwiązaniu potwierdź przejście do następnego pomieszczenia. Kontynuuj do finału opowieści.
 
 Zasady krok po kroku
 
-1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
-
-2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
-
-3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
-
-4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
-
-5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+1. Ukończone pomieszczenia i zdobyte wskazówki pozostają zachowane. Każde nowe pomieszczenie ma własną instrukcję przed uruchomieniem zegara.
 
 Warunek zwycięstwa
 
@@ -53,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Katalogowy czas opowieści 1470 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
 
@@ -282,7 +280,11 @@ Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
 
 Sterowanie
 
-1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+1. Znajdź źródło światła z lewej strony i złoty odbiornik.
+
+2. Kliknij zwierciadło, aby przełączyć je między „/” i „\”.
+
+3. Śledź promień i ustawiaj następne zwierciadła, aż światło trafi do odbiornika.
 
 Zasady
 
@@ -310,27 +312,31 @@ Cel: Wyznacz bezpieczny kurs przez boje i prądy.
 
 Sterowanie
 
-1. Kliknij sąsiednie wolne pole, na które ma wpłynąć łódź.
+1. Przeczytaj wskazówki dotyczące kursu.
+
+2. Klikaj sąsiednie pola: w górę, w dół, w lewo lub w prawo.
+
+3. Zapamiętuj odkryte rafy i doprowadź łódź do portu.
 
 Zasady
 
-1. Poruszaj się po sąsiednich polach w czterech kierunkach.
+1. Mgła skrywa rafy. Wpłynięcie na rafę odkrywa ją i cofa łódź na początek.
 
-2. Rafy są niedostępne, a ruch po przekątnej nie jest dozwolony.
+2. Ruch po przekątnej jest niedozwolony.
 
-3. Każde przejście zużywa krok; powrót na wcześniejsze pole również kosztuje krok. Cofnięcie dostępnego ruchu może przywrócić zapas.
+3. Obserwuj pozostały zapas kroków.
 
 Zwycięstwo
 
-• Łódź dociera do portu na polu końcowym.
+• Łódź dociera do portu.
 
 Błędy i ograniczenia
 
-• Wyczerpanie zapasu kroków blokuje dalszą drogę; cofnij ruch lub zacznij próbę ponownie.
+• Wpłynięcie na rafę odkrywa ją i cofa łódź na początek. Zapamiętaj odkryte przeszkody podczas kolejnej próby.
 
 Przykład
 
-1. Zwykła trasa bez objazdów wymaga dziesięciu kroków: pięć w prawo i pięć w dół. Omijanie raf wymaga wcześniejszego planu.
+1. Gdy odkryjesz rafę, zapamiętaj jej pole i po powrocie na początek wybierz inną drogę. Kieruj się również wskazówkami kursu.
 
 Konwoje na redzie
 
@@ -364,7 +370,7 @@ Błędy i ograniczenia
 
 Przykład
 
-1. Jeżeli konwój A płynie w prawo, a przed jego czołem stoi B, wypraw najpierw B — o ile droga B jest już wolna.
+1. Jeżeli przed konwojem płynącym w prawo stoi drugi konwój, najpierw zwolnij jego drogę. Po każdym wypłynięciu ponownie sprawdź strzałki pozostałych jednostek.
 
 Port bez korków
 
@@ -372,17 +378,19 @@ Cel: Przydziel statkom nabrzeża i czasy rozładunku.
 
 Sterowanie
 
-1. Wybierz kartę statku.
+1. Przeczytaj na karcie statku jego nabrzeże, dozwolone godziny rozpoczęcia i długość rozładunku.
 
-2. Wskaż parę „nabrzeże · godzina”.
+2. Kliknij kartę wybranego statku.
+
+3. Kliknij pole z parą „nabrzeże · godzina rozpoczęcia”.
+
+4. Przydziel wszystkie statki i sprawdź, czy ich rozładunki się nie nakładają.
 
 Zasady
 
-1. Wybrany statek musi dostać swoje nabrzeże oraz godzinę z podanego zakresu.
+1. Przykład: start o 2 i rozładunek przez 2 godziny zajmuje nabrzeże od 2 do 4. Następny statek może zacząć o 4.
 
-2. Przedział od startu do końca rozładunku nie może nakładać się na rozładunek innego statku przy tym samym nabrzeżu.
-
-3. Dwa różne nabrzeża mogą obsługiwać statki w tym samym czasie.
+2. Dwa różne nabrzeża mogą pracować równocześnie.
 
 Zwycięstwo
 
@@ -406,22 +414,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-fog-convoy.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:37 — Scenariusz, próg odblokowania i mechaniki
 
 • harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
 
-• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+• harborlight-v1-adventure-journey.js:65 — Kody odkryć i powiązanie pokoi
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

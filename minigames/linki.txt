@@ -1,5 +1,5 @@
 HARBORLIGHT — wszystkie minigry i dokumentacja
-Stan opisu: 17 listopada 2026
+Stan opisu: 22 listopada 2026
 
 Biblioteka: https://harborlight-dev.web.app/minigames/
 

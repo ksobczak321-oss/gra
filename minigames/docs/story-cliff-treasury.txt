@@ -2,7 +2,7 @@ Skarbiec pod klifem
 
 HARBORLIGHT · Przygoda fabularna
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -12,35 +12,31 @@ Link otwiera samodzielną próbę gry. Rozgrywka odbywa się w pamięci tej kart
 
 Cel gry
 
-Przeprowadź wodę i ciężarki tak, aby zachować drogę powrotną.
+Rozwiąż wszystkie 6 pomieszczeń, aby ukończyć opowieść.
 
 Scenariusz i zadanie gracza
 
-Przeprowadź wodę i ciężarki tak, aby zachować drogę powrotną. Opowieść łączy 6 kolejnych pomieszczeń w jeden łańcuch odkryć. Każdy ukończony pokój pozostawia kod, który wpływa na układ następnego.
+Przeprowadź wodę i ciężarki tak, aby zachować drogę powrotną.
 
 Przygotowanie rozgrywki
 
-1. W głównej grze opowieść jest odblokowana od 17. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
-2. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
+2. W głównej grze opowieść jest odblokowana od 17. poziomu Ratusza. Samodzielny link pozwala przetestować ją niezależnie od prywatnego konta.
+
+3. Wybierz jeden z pięciu wariantów. Lista pomieszczeń dla każdego wariantu jest podana niżej; różni się zarówno kolejnością części pokoi, jak i układami plansz.
 
 Sterowanie i wykonywanie ruchów
 
-1. Sterowanie zmienia się zależnie od rodzaju pokoju: wybór obiektów, układanie, obracanie, sygnały, karty albo przechylenie planszy.
+1. Przeczytaj cel i sterowanie bieżącego pomieszczenia.
 
-2. Przycisk przejścia do następnego pomieszczenia działa dopiero po potwierdzonym rozwiązaniu bieżącego.
+2. Rozpocznij etap, gdy będziesz gotowy, i rozwiąż jego zagadkę.
+
+3. Po rozwiązaniu potwierdź przejście do następnego pomieszczenia. Kontynuuj do finału opowieści.
 
 Zasady krok po kroku
 
-1. Rozwiąż zagadkę bieżącego pomieszczenia zgodnie z jej własnymi zasadami.
-
-2. Po rozwiązaniu potwierdź przejście do kolejnego pomieszczenia. Sama wygrana plansza nie pomija dalszych pokoi.
-
-3. Znaleziony czterocyfrowy kod trafia do dziennika wiedzy i wpływa na generowanie kolejnej planszy.
-
-4. Finał pozostaje ostatnim mechanizmem we wszystkich pięciu wariantach.
-
-5. W głównej grze ukończone pokoje pozostają zapisane, gdy bieżąca próba się nie uda. Nie trzeba ponownie przechodzić całej historii.
+1. Ukończone pomieszczenia i zdobyte wskazówki pozostają zachowane. Każde nowe pomieszczenie ma własną instrukcję przed uruchomieniem zegara.
 
 Warunek zwycięstwa
 
@@ -53,6 +49,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Wyjście lub koniec czasu kończy bieżącą próbę pokoju. Wcześniejsze rozwiązane pokoje pozostają częścią postępu głównej gry.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Katalogowy czas opowieści 1260 s jest orientacyjną sumą 210 s na pokój, a nie jednym wspólnym limitem całej historii.
 
@@ -182,15 +180,19 @@ Cel: Złóż plan według znaków, aby odczytać wiadomość.
 
 Sterowanie
 
-1. Kliknij okienko/narożnik, którego stronę chcesz zmienić.
+1. Przeczytaj docelową „Wiadomość” w notatniku.
+
+2. Kliknij jedno z czterech okienek planu, aby złożyć albo rozłożyć odpowiadający mu narożnik.
+
+3. Porównuj słowo w każdym okienku z tą samą pozycją wiadomości.
+
+4. Powtarzaj kliknięcia wybranych okienek, aż cała wiadomość będzie zgodna.
 
 Zasady
 
-1. Każde kliknięcie przełącza jeden narożnik między złożeniem a rozłożeniem.
+1. Każde kliknięcie zmienia tylko jeden narożnik; przeciąganie nie jest potrzebne.
 
-2. Dopasuj zawartość każdego okienka do odpowiadającej mu pozycji wiadomości.
-
-3. Wszystkie narożniki można przestawiać wielokrotnie.
+2. Ponowne kliknięcie tego samego okienka przywraca drugą stronę.
 
 Zwycięstwo
 
@@ -210,7 +212,11 @@ Cel: Przepuść wodę przez śluzy w bezpiecznej kolejności.
 
 Sterowanie
 
-1. Użyj przycisków kierunków 1→2, 2→1, 2→3 i 3→2.
+1. Na każdej komorze porównaj aktualny poziom z oznaczonym celem.
+
+2. Kliknij 1→2, 2→1, 2→3 lub 3→2, aby przelać jedną jednostkę wody w wybranym kierunku.
+
+3. Przelewaj dalej, aż wszystkie trzy poziomy jednocześnie osiągną cele.
 
 Zasady
 
@@ -240,17 +246,17 @@ Cel: Ustaw bieguny i przeprowadź kapsułę do zamka.
 
 Sterowanie
 
-1. Klikaj magnesy, aby zmieniać ich bieguny.
+1. Kliknij magnes, aby zmienić jego strzałkę na przeciwną.
 
-2. Naciśnij „Wyślij impuls”, aby przesunąć kapsułę.
+2. Obserwuj komunikat o łącznym ruchu pod planszą. Potrzebujesz dokładnie jednego pola w prawo.
+
+3. Gdy pojawi się „Gotowe”, klikaj „Wyślij impuls”, aż kapsuła dotrze do zamka.
 
 Zasady
 
-1. Odwrócenie magnesu zmienia znak jego siły.
+1. Za silny impuls lub ruch poza tor zostaje odrzucony.
 
-2. Wypadkowa jest sumą sił ze znakami; legalny impuls ma wartość +1 lub −1.
-
-3. W kierunku celu potrzebna jest wypadkowa +1. Zbyt silny impuls albo ruch poza tor jest odrzucany.
+2. Strzałki magnesów pokazują, które siły dodają się, a które wzajemnie osłabiają.
 
 Zwycięstwo
 
@@ -300,7 +306,11 @@ Cel: Obracaj zwierciadła, aby światło dotarło do odbiornika.
 
 Sterowanie
 
-1. Klikaj wyłącznie pola zwierciadeł i obserwuj drogę promienia.
+1. Znajdź źródło światła z lewej strony i złoty odbiornik.
+
+2. Kliknij zwierciadło, aby przełączyć je między „/” i „\”.
+
+3. Śledź promień i ustawiaj następne zwierciadła, aż światło trafi do odbiornika.
 
 Zasady
 
@@ -328,9 +338,11 @@ Cel: Obejrzyj przedmioty i znajdź zgubę według wskazówki.
 
 Sterowanie
 
-1. Dotknij zakrytego pola, aby je obejrzeć.
+1. Przeczytaj obie wskazówki: kolor i symbol szukanego miejsca.
 
-2. Wybierz przycisk „Tu są okulary?” odpowiadający właściwemu obejrzanemu polu.
+2. Porównaj widoczne oznaczenia wszystkich miejsc i kliknij to, które pasuje do obu wskazówek.
+
+3. Po obejrzeniu miejsca kliknij jego przycisk potwierdzenia wyboru.
 
 Zasady
 
@@ -350,7 +362,7 @@ Błędy i ograniczenia
 
 Przykład
 
-1. Jeśli wskazówka mówi „niebieski, kotwica”, zielona kotwica i niebieska muszla są błędnymi odpowiedziami.
+1. Jeżeli wskazówka wymaga określonego koloru i symbolu, zgodność samego koloru nie wystarcza do wskazania okularów.
 
 Zakres samodzielnej próby
 
@@ -362,22 +374,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-cliff-treasury.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:47 — Scenariusz, próg odblokowania i mechaniki
 
 • harborlight-v1-story-catalog.js:56 — Dokładna kolejność pięciu wariantów
 
-• harborlight-v1-adventure-journey.js:50 — Kody odkryć i powiązanie pokoi
+• harborlight-v1-adventure-journey.js:65 — Kody odkryć i powiązanie pokoi
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara

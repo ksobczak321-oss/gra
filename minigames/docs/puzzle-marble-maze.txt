@@ -2,7 +2,7 @@ Kula mechanizmu
 
 HARBORLIGHT · Zagadka wyspy
 
-Szczegółowe zasady, cel i scenariusz · 17 listopada 2026
+Szczegółowe zasady, cel i scenariusz · 22 listopada 2026
 
 Otwórz grę na PRE-PROD
 
@@ -20,7 +20,9 @@ Kulka uruchamia mechanizm, jeżeli dotrze do zagłębienia. Prowadź ją przechy
 
 Przygotowanie rozgrywki
 
-1. Plansza o logicznym rozmiarze 600 × 600 zawiera ściany, kulki i otwory-cel. Na trudności 1 jest jedna kulka; wyższe trudności mogą mieć do sześciu.
+1. Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
+
+2. Plansza o logicznym rozmiarze 600 × 600 zawiera ściany, kulki i otwory-cel. Na trudności 1 jest jedna kulka; wyższe trudności mogą mieć do sześciu.
 
 Sterowanie i wykonywanie ruchów
 
@@ -51,6 +53,8 @@ Błędy, niedozwolone ruchy i zakończenie próby
 • Upływ limitu kończy aktywną próbę.
 
 Czas i tempo rozgrywki
+
+• Przed rozpoczęciem przeczytaj instrukcję i wybierz „Zaczynam”, gdy będziesz gotowy. Zegar próby pozostaje zatrzymany podczas tego pierwszego czytania.
 
 • Dokładny limit reguł v32: max(60 s, 180 s / (1 + 0,1 × (d − 1))), gdzie d to efektywna trudność. Pierwsza trudność ma 180 s; druga około 163,64 s. To rzeczywisty zegar planszy, niezależny od orientacyjnych 420 s w katalogu fabularnym.
 
@@ -118,22 +122,26 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-marble-maze.
 
-Źródło katalogu: ace6fb06bb20a65b20a363722cdf35a0799fb1c4.
+Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
 
-Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
+Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 
 • harborlight-v1-story-catalog.js:28 — Nazwa, cel i czas katalogowy
 
-• harborlight-v1-island-puzzles.js:181 — Legalne ruchy i warunek rozwiązania
+• harborlight-v1-island-puzzles.js:181 — Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania
 
-• harborlight-v1-adventure-journey.js:56 — Limit czasu i warunki próby v32
+• harborlight-v1-adventure-journey.js:71 — Limit czasu i warunki próby v32
 
-• harborlight-v1-adventure-journey.js:169 — Jednorazowe rozliczenie ukończonej przygody
+• harborlight-v1-adventure-journey.js:185 — Jednorazowe rozliczenie ukończonej przygody
 
 • harborlight-v1-inventory.js:24 — Przeliczenie technicznego food na mąkę w regułach v32
 
-• harborlight-v1-state.js:1140 — Rozliczenie nagród opowieści i konwersja mąki
+• harborlight-v1-state.js:1134 — Rozliczenie nagród opowieści i konwersja mąki
 
-• harborlight-v1-logistics.js:514 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
+• harborlight-v1-logistics.js:524 — Przyjęcie materiałów do Magazynu i oczekujące dostawy
 
 • harborlight-v1-minigames.js:32 — Dokładny limit czasu i progresja Trójek lub Kulek
+
+• harborlight-v1-minigame-instructions.js:606 — Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą
+
+• scripts/minigame_instruction_overlay.mjs:66 — Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara
