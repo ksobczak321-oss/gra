@@ -39,9 +39,9 @@ Pełne historyczne wklejki użytkownika zostały przeczytane; identyfikatory źr
 ## Dowody
 
 - **Dokumenty:** [docs/v32/GO-PACKET-20261122.md](../../v32/GO-PACKET-20261122.md), [docs/v32/PACKET-20261122-EVIDENCE.json](../../v32/PACKET-20261122-EVIDENCE.json)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
-- **Kod dowodowy:** `27c81f7223c212a05dc850f27b0f9e92392b2c27`.
+- **Kod:** [harborlight-v1-minigame-instructions.js](../../../harborlight-v1-minigame-instructions.js), [harborlight-v1-minigame-instructions.css](../../../harborlight-v1-minigame-instructions.css), [harborlight-v1-activities.js](../../../harborlight-v1-activities.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-minigame.css](../../../harborlight-v1-minigame.css)
+- **Scenariusze automatyczne:** [tests/harborlight-minigame-instructions-v32-smoke.py](../../../tests/harborlight-minigame-instructions-v32-smoke.py), [tests/harborlight-adventure-instructions-v32.test.mjs](../../../tests/harborlight-adventure-instructions-v32.test.mjs), [tests/harborlight-expedition-instructions-v32.test.mjs](../../../tests/harborlight-expedition-instructions-v32.test.mjs)
+- **Kod dowodowy:** `e3053c23d6fbb41736197d1bd7aea03c4ada20bd`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:

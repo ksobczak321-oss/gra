@@ -39,9 +39,9 @@ Pełne historyczne wklejki użytkownika zostały przeczytane; identyfikatory źr
 ## Dowody
 
 - **Dokumenty:** [docs/v32/GO-PACKET-20261122.md](../../v32/GO-PACKET-20261122.md), [docs/v32/PACKET-20261122-EVIDENCE.json](../../v32/PACKET-20261122-EVIDENCE.json)
-- **Kod:** nie przypisano.
-- **Scenariusze automatyczne:** nie przypisano.
-- **Kod dowodowy:** `27c81f7223c212a05dc850f27b0f9e92392b2c27`.
+- **Kod:** [harborlight-v1-development.js](../../../harborlight-v1-development.js), [harborlight-v1-residents.js](../../../harborlight-v1-residents.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
+- **Scenariusze automatyczne:** [tests/harborlight-farm-distribution-v32.test.mjs](../../../tests/harborlight-farm-distribution-v32.test.mjs), [tests/harborlight-production-controls-v32-smoke.py](../../../tests/harborlight-production-controls-v32-smoke.py)
+- **Kod dowodowy:** `e3053c23d6fbb41736197d1bd7aea03c4ada20bd`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:

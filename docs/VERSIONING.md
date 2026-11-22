@@ -12,13 +12,13 @@
 
 
 
-## Paczka 22 listopada — DEV 0.15.4.0 / cache24 gotowy lokalnie, publikacja PENDING
+## Paczka 22 listopada — DEV0.15.4.0 / cache24, ponowny odbiór oczekuje
 
-Zamrożony kod aplikacji i źródła eksportów: `27c81f7223c212a05dc850f27b0f9e92392b2c27`. Cała paczka GO obejmuje brak żywności i zboża w nowych budowach, wyrównane kontrolki, wykonalne etapy Doradcy, podział załogi Gospodarstwa, instrukcje wszystkich55 minigier,26uwag Worda oraz naprawę opłaconego Ratusza4/admin2. Jawnie zlecono ukończenie DEV i późniejszy standardowy PRE-PROD; konta i postęp mają pozostać zachowane.
+Finalny kod i źródła świeżych eksportów: `e3053c23d6fbb41736197d1bd7aea03c4ada20bd`. Paczka obejmuje brak żywności i zboża w nowych budowach, wyrównanie produkcji, wykonalne etapy Doradcy, podział załogi Gospodarstwa, instrukcje55 minigier i uwagi Worda oraz poprawną obsługę opłaconego Ratusza4/admin2. Użytkownik jawnie zlecił DEV→PRE-PROD z zachowaniem kont i postępu.
 
-Lokalnie1829 testów frontend w pełnym przebiegu plus2 nowe testy źródeł eksportu,178backend i7planszówki PASS; przejścia CODE zmieniały tylko eksportery/metadane i zachowują aplikację oraz wcześniejsze testy identyczne bajtowo.145+28=173PythonPASS. Pierwszy pełny frontend, pierwszy eksport i pierwsze testy pakietu zachowują rzeczywiste FAIL oraz opisane poprawki. Własny CI2016Node/173Python/84programy Chromium i publikacja wymagają nowego odbioru.
+Pierwszy podgląd f85d183 ma Pages45029811697 SUCCESS40s oraz CI45029811749 FAILURE656s:2016Node i173Python przeszły, przeglądarki zatrzymały się na starym oczekiwaniu rady Doradcy. Zachowano ten wynik. Poprawiono też rzeczywiste problemy interfejsu minigier: rozmiar kart na telefonie i natychmiastowe lokalizowane odświeżanie po Rozpocznij. Nowe źródło wymaga własnego pełnego CI84programów Chromium, Pages i standardowego PRE-PROD. Dotychczasowe odebrane PRE-PROD pozostaje1e21/cache23.
 
-Świeże artefakty: master164karty/69151wierszy z zachowaną historią100/220/48/4982; redakcja6kart/413wierszy/ABC/pustaC z5zatwierdzonymi zmianami i408zachowanymi wierszami;55Word+55TXT zgodne z bieżącymi instrukcjami. Dwie rzeczywiste symulacje24/24/72h dały identyczny pełny JSON; zaakceptowane zmiany gospodarki opisano osobno. 527kart i207ręcznych przypadków NOT RUN; wcześniejsze519/195 obiektów zachowane. PRE-PROD nadal1e21/cache23 do nowego własnego wdrożenia. [Zakres](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json).
+Świeży master164karty/69152wierszy zachowuje100 historycznych kart,220częściZIP,48komentarzy i4982buforowane formuły; redakcja6kart/413wierszy/ABC/pustaC oraz55Word+55TXT mają aktualne źródło. Rzeczywiste symulacje24/24/72h są powtarzalne; zaakceptowane zmiany gospodarki opisano oddzielnie.527kart/207ręcznych przypadków NOT RUN; poprzednie519/195 zachowane. [Zakres](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json). Bez resetu, zmian haseł, PROD lub DNS.
 
 ## DEV i PRE-PROD 0.15.3.1 / cache23 — odebrane automatycznie
 

@@ -32729,10 +32729,17 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-provisions.js",
+          "harborlight-v1-state.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-construction-food-removal.test.mjs",
+          "tests/harborlight-v32-world-integration.test.mjs"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -32795,10 +32802,16 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-play.js",
+          "harborlight-v1-development.css",
+          "harborlight-v1-play.css"
+        ],
+        "automated_tests": [
+          "tests/harborlight-production-controls-v32-smoke.py"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -32866,10 +32879,16 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-advisor-development-plan.js",
+          "harborlight-v1-advisor.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-advisor-development-plan.test.mjs",
+          "tests/harborlight-advisor-ui-smoke.py"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -32932,10 +32951,17 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-development.js",
+          "harborlight-v1-residents.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-farm-distribution-v32.test.mjs",
+          "tests/harborlight-production-controls-v32-smoke.py"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33000,10 +33026,20 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-minigame-instructions.js",
+          "harborlight-v1-minigame-instructions.css",
+          "harborlight-v1-activities.js",
+          "harborlight-v1-play.js",
+          "harborlight-v1-minigame.css"
+        ],
+        "automated_tests": [
+          "tests/harborlight-minigame-instructions-v32-smoke.py",
+          "tests/harborlight-adventure-instructions-v32.test.mjs",
+          "tests/harborlight-expedition-instructions-v32.test.mjs"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33068,10 +33104,16 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-island-puzzles.js",
+          "harborlight-v1-minigame-instructions.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-v32-original-puzzles.test.mjs",
+          "tests/harborlight-original-puzzles-v32-smoke.py"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33135,10 +33177,17 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js",
+          "harborlight-v1-play.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-mission-sidebar-integration-v32-smoke.py",
+          "tests/harborlight-mission-assistance-resolution.test.mjs"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33203,10 +33252,16 @@
           "docs/v32/GO-PACKET-20261122.md",
           "docs/v32/PACKET-20261122-EVIDENCE.json"
         ],
-        "code": [],
-        "automated_tests": [],
-        "source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
-        "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+        "code": [
+          "harborlight-v1-missions.js",
+          "harborlight-v1-missions-ui.js"
+        ],
+        "automated_tests": [
+          "tests/harborlight-mission-assistance-resolution.test.mjs",
+          "tests/harborlight-mission-assistance-resolution-smoke.py"
+        ],
+        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -40734,7 +40789,7 @@
       "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
       "change_range": "HL-CHG-1191–1198",
       "manual_case_range": "HL-TC-0196–0207",
-      "code_source_sha": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+      "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
       "publication_source_sha": null,
       "ci_run_id": null,
       "pages_run_id": null,
@@ -41778,7 +41833,9 @@
           "numeric_tolerance_or_fields_excluded": false,
           "constructor_seed_and_ambient_clock_fixed": true
         }
-      }
+      },
+      "canonical_artifact_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/canonical-artifacts-summary.json",
+      "first_preview_CI_history": "45029811749 FAILURE,2016Node/173PythonPASS, obsolete advisor expectation; no PREPROD or tag"
     }
   }
 }

@@ -168,8 +168,8 @@ with sync_playwright() as playwright:
           window.advisorFixture={State,state,now,language:'pl',detailedCalls:0,lightCalls:0,lastNavigation:null};
           const f=window.advisorFixture;
           f.ui=UI.createKingdomAdvisor({getState:()=>state,getLanguage:()=>f.language,
-            getSuggestion:(world,options)=>{f.lightCalls++;return Model.advisorSuggestion(world,options);},
-            getPlan:(input,options)=>{f.detailedCalls++;return Model.advisorPlan(state,input,options);},
+            getSuggestion:(world,options)=>{f.lightCalls++;const before=JSON.stringify(world),next=Model.advisorSuggestion(world,options);if(JSON.stringify(world)!==before)throw Error('Advice mutated its island fixture');f.lastSuggestion=next;return next;},
+            getPlan:(input,options)=>{f.detailedCalls++;const before=JSON.stringify(state),next=Model.advisorPlan(state,input,options);if(JSON.stringify(state)!==before)throw Error('Detailed advice mutated its island fixture');f.lastDetailedPlan=next;return next;},
             onNavigate:row=>{f.lastNavigation=row.target;return true;}});
           f.ui.open();
         }''')
@@ -217,10 +217,31 @@ with sync_playwright() as playwright:
         expect(page.locator('[data-advisor-send]')).to_have_text('Ask')
         user_input.fill('Upgrade the Port')
         user_input.press('Enter')
-        expect(page.locator('[data-advisor-answer]')).to_contain_text('Town Hall must reach level 4')
+        # The named Port remains the player's destination. Its later unlock
+        # must not turn into an immediate impossible Town Hall4 order at TH2.
+        expect(page.locator('[data-advisor-task]')).to_have_text('Goal: prepare the next step — Town Hall 3')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('Port eventually requires Town Hall level 4')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('Review the immediate level 3 first')
+        assert page.evaluate('''() => {
+          const p=advisorFixture.lastDetailedPlan;
+          return {goal:p.goal,targetLevel:p.targetLevel,requestedGoal:p.requestedGoal,
+            requestedTargetLevel:p.requestedTargetLevel,longTermRequirement:p.longTermRequirement,
+            targets:p.steps.map(row=>row.target)};
+        }''') == {'goal':'townhall','targetLevel':3,'requestedGoal':'dock',
+                  'requestedTargetLevel':2,'longTermRequirement':4,'targets':['townhall','warehouse']}
+        assert page.evaluate('advisorFixture.detailedCalls')==2
         page.evaluate('''() => {const f=advisorFixture;f.state.buildings.townhall.level=4;f.ui.update(true);}''')
-        expect(page.locator('[data-advisor-task]')).to_contain_text('Port')
-        expect(page.locator('[data-advisor-answer]')).to_contain_text('Next level: 2')
+        expect(page.locator('[data-advisor-task]')).to_have_text('Goal: prepare materials — Port')
+        expect(page.locator('[data-advisor-answer]')).to_contain_text('Immediate level: 2')
+        assert page.evaluate('''() => {
+          const f=advisorFixture,p=f.lastSuggestion;
+          return {kind:p.kind,goal:p.goal,targetLevel:p.targetLevel,
+            coinShortfall:p.missing.find(row=>row.id==='coins')?.missing,
+            expectedCoins:f.State.buildingCost(f.state,'dock').coins,
+            preparation:p.steps.some(row=>row.id==='prepare-dock'),
+            immediateUpgrade:p.steps.some(row=>row.id==='upgrade-dock')};
+        }''') == {'kind':'materials','goal':'dock','targetLevel':2,'coinShortfall':400,
+                  'expectedCoins':400,'preparation':True,'immediateUpgrade':False}
         assert page.evaluate('advisorFixture.detailedCalls')==2
         page.evaluate('''() => {const f=advisorFixture;f.language='pl';f.ui.update(true);}''')
         user_input.fill('Wolni mieszkańcy')

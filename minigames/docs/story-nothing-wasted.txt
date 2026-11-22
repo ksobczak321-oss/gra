@@ -332,7 +332,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: story-nothing-wasted.
 
-Źródło katalogu: 27c81f7223c212a05dc850f27b0f9e92392b2c27.
+Źródło katalogu: e3053c23d6fbb41736197d1bd7aea03c4ada20bd.
 
 Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

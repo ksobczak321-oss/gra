@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "title": "HARBORLIGHT — wszystkie aktywne minigry i przygody",
   "language": "pl",
-  "sourceCommit": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+  "sourceCommit": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
   "baseUrl": "https://harborlight-dev.web.app/minigames/",
   "counts": {
     "total": 55,

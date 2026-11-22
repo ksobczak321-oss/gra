@@ -4,9 +4,9 @@
   "game_version": "0.15.4.0",
   "ruleset": 32,
   "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
-  "sha256": "667ce27b29fca7cb4ab9d0d88ae200dd433bc4b35456151909deff4d2d4e556e",
-  "bytes": 8608177,
-  "source_git_commit": "27c81f7223c212a05dc850f27b0f9e92392b2c27",
+  "sha256": "ab0e8a4cc0caade680d0a28d434d976f82fb0aef923ed38fdf8f5321ea5df3a0",
+  "bytes": 8608294,
+  "source_git_commit": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
   "accepted_application_source": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
   "accepted_publication_source": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
   "accepted_reference_scope": "Historical shared DEV/PRE-PROD0.15.0.2; current tables and fingerprints use source_git_commit, not these historical reference fields.",
@@ -79,7 +79,7 @@
     "Kalkulator v15",
     "Kontrola źródeł v15"
   ],
-  "rows_current": 69151,
+  "rows_current": 69152,
   "new_cached_formulas": 12,
   "formula_samples_against_code": 160,
   "source_hashes": {
@@ -186,7 +186,7 @@
     "harborlight-v1-onboarding-ui.js": "282cc9a29a2e1e53c0d33740a6e7b4048bc3b17ed1b748d07b34d39bdd4bbb5c",
     "harborlight-v1-original-puzzles-ui.js": "40e0e08c80c807133a95187e23a401d1d00517055b1b3f803d7bcb5ace6aeb80",
     "harborlight-v1-original-puzzles.js": "2d62fafec872b8b908beecce82fb6394e985a476f9b2981282915ed2595f7c49",
-    "harborlight-v1-play.js": "79feab558980c1f6c2a3706158bb73c332947ef8a7b5f44e2f43bc62396137b1",
+    "harborlight-v1-play.js": "1a340ab4dcb987ebec434a154fcd50e18bb4d54c9bd1abb4d57b85f5c0acc6bd",
     "harborlight-v1-profile.js": "91cc0f4e1ff164337a09f30a32bddc73682f4b45a34c68bd0785fe36784dac2f",
     "harborlight-v1-progression.js": "1913cb226c9f1a2b5d7bb991f5e844e91e8d77be3c4286351546d69ecf4cd742",
     "harborlight-v1-provisions.js": "e637d4e2839e5a9dcca0463d66bcedcf143ff89f8e520435d6d8ca6f0e8414be",
@@ -228,9 +228,9 @@
   },
   "builder_sha256": "ff3ac95ccf7bade1961031454e73dc255a213fd448ed83e69154fbb83af017b2",
   "export_payload_hashes": {
-    "facts": "88440ccf1cf69bb7d325a09b09ec89abc15d3ae7990be27529422105430b714a",
-    "texts": "39224fe4297394f850725dac395c7832a9f1188529be214c2451c923d7280baf",
-    "scenarios": "17115fa2ea287727743f2105d3832dd90e459ebd83b3e0bead6159a4a299ac4c"
+    "facts": "df31e4148806b2fed148456fefe62425f4f31ef27e4314cdd27c5d05a538c628",
+    "texts": "0131acc48f9c01961e67c2b54e4ac97abe1206a29695ae76cb6eb90ad2bb1744",
+    "scenarios": "5e4d89d1f168dde9ff08f094ae14f3f52e7479f14246dbc110213afc9844f6f5"
   },
   "tables": [
     {
@@ -596,7 +596,7 @@
     {
       "id": "source_conditions",
       "sheet": "Warunki — indeks v15",
-      "rows": 21776,
+      "rows": 21777,
       "hidden": true
     },
     {
@@ -620,7 +620,7 @@
   ],
   "scope": "Aktualny kod, pełne katalogi, warunki i źródła; wyniki symulacji tylko według jawnych horyzontów i strategii.",
   "simulation_snapshot": "docs/design/WORKBOOK-V32-SIMULATION.json",
-  "simulation_sha256": "66343b87ac1c0a49568da17201b68125659e708fb52159b2f81aa19c7ac47f16",
+  "simulation_sha256": "e655a42ee894c19aafd2b67b6ce4bba9a04e12db740680ca95c37700d55e9b08",
   "facts_checks": {
     "passed": true,
     "physicalRecipeExamples": 20,
@@ -676,10 +676,10 @@
     "conditionalTextCandidates": 12170,
     "staticHtmlTexts": 388,
     "applicationFiles": 136,
-    "astNodes": 515244,
+    "astNodes": 515261,
     "functions": 7824,
     "constants": 10733,
-    "conditionBranches": 21776,
+    "conditionBranches": 21777,
     "sourceChunks": 236
   },
   "game_or_cloud_changes": false,
