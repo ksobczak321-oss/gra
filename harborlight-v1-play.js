@@ -3541,7 +3541,7 @@ function miniGameInput(action) {
   if (!inputFrame || action.meaningful === true || stoppedTilt || Date.now() - miniSavedAt >= 1000) { miniSavedAt = Date.now(); save(); }
   const run = expeditionRun(panel?.id);
   miniController?.update(run, Activities.expeditionRoundStatus(state, run));
-  if (action.type === 'expeditionBegin') { refreshLivePanel(); refreshMiniGame(); }
+  if (action.type === 'expeditionBegin') { refreshLivePanel(); refreshMiniGame(); localize(dialog); }
   if (before !== run?.status) { save(); renderHUD(); }
 }
 function refreshMiniGame() {
