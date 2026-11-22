@@ -25,6 +25,7 @@ Status kodu nie jest potwierdzeniem aktywacji usług, wykonania operacji chmurow
 - Czas, fizyka, tasowanie, ruchy, porażki za obecność, płatności za czas i postęp minigry zaczynają się po świadomym Rozpocznij grę.
 - Instrukcje są także przed następną rundą, łatwiejszą próbą i kolejnym pokojem; zamknięcie lub odświeżenie podczas czytania nie przegrywa rozpoczętej puli.
 - Zwykły świat wyspy nadal działa; polityka już faktycznie rozpoczętych prób i historia nagród pozostają zachowane.
+- Plansza120 kart zachowuje minimum20px przy360×740, także z innymi fontami, odliczaniem tasowania i komunikatem; zasady i przyciski mają co najmniej44px. To automatyczna kontrola, nie ręczny odbiór.
 
 ## Źródło
 
@@ -39,9 +40,9 @@ Pełne historyczne wklejki użytkownika zostały przeczytane; identyfikatory źr
 ## Dowody
 
 - **Dokumenty:** [docs/v32/GO-PACKET-20261122.md](../../v32/GO-PACKET-20261122.md), [docs/v32/PACKET-20261122-EVIDENCE.json](../../v32/PACKET-20261122-EVIDENCE.json)
-- **Kod:** [harborlight-v1-minigame-instructions.js](../../../harborlight-v1-minigame-instructions.js), [harborlight-v1-minigame-instructions.css](../../../harborlight-v1-minigame-instructions.css), [harborlight-v1-activities.js](../../../harborlight-v1-activities.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-minigame.css](../../../harborlight-v1-minigame.css)
-- **Scenariusze automatyczne:** [tests/harborlight-minigame-instructions-v32-smoke.py](../../../tests/harborlight-minigame-instructions-v32-smoke.py), [tests/harborlight-adventure-instructions-v32.test.mjs](../../../tests/harborlight-adventure-instructions-v32.test.mjs), [tests/harborlight-expedition-instructions-v32.test.mjs](../../../tests/harborlight-expedition-instructions-v32.test.mjs)
-- **Kod dowodowy:** `e3053c23d6fbb41736197d1bd7aea03c4ada20bd`.
+- **Kod:** [harborlight-v1-minigame-instructions.js](../../../harborlight-v1-minigame-instructions.js), [harborlight-v1-minigame-instructions.css](../../../harborlight-v1-minigame-instructions.css), [harborlight-v1-activities.js](../../../harborlight-v1-activities.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js), [harborlight-v1-minigame.css](../../../harborlight-v1-minigame.css), [harborlight-v1-minigame-ui.js](../../../harborlight-v1-minigame-ui.js)
+- **Scenariusze automatyczne:** [tests/harborlight-minigame-instructions-v32-smoke.py](../../../tests/harborlight-minigame-instructions-v32-smoke.py), [tests/harborlight-adventure-instructions-v32.test.mjs](../../../tests/harborlight-adventure-instructions-v32.test.mjs), [tests/harborlight-expedition-instructions-v32.test.mjs](../../../tests/harborlight-expedition-instructions-v32.test.mjs), [tests/harborlight-frontend-v17-smoke.py](../../../tests/harborlight-frontend-v17-smoke.py)
+- **Kod dowodowy:** `34dac392fe569c71cee9b913c38ef9c47667ac3e`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:

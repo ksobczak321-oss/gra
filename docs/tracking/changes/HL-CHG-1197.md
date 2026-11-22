@@ -40,7 +40,7 @@ Pełne historyczne wklejki użytkownika zostały przeczytane; identyfikatory źr
 - **Dokumenty:** [docs/v32/GO-PACKET-20261122.md](../../v32/GO-PACKET-20261122.md), [docs/v32/PACKET-20261122-EVIDENCE.json](../../v32/PACKET-20261122-EVIDENCE.json)
 - **Kod:** [harborlight-v1-missions.js](../../../harborlight-v1-missions.js), [harborlight-v1-missions-ui.js](../../../harborlight-v1-missions-ui.js), [harborlight-v1-play.js](../../../harborlight-v1-play.js)
 - **Scenariusze automatyczne:** [tests/harborlight-mission-sidebar-integration-v32-smoke.py](../../../tests/harborlight-mission-sidebar-integration-v32-smoke.py), [tests/harborlight-mission-assistance-resolution.test.mjs](../../../tests/harborlight-mission-assistance-resolution.test.mjs)
-- **Kod dowodowy:** `e3053c23d6fbb41736197d1bd7aea03c4ada20bd`.
+- **Kod dowodowy:** `34dac392fe569c71cee9b913c38ef9c47667ac3e`.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:

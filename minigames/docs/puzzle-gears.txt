@@ -118,7 +118,7 @@ Każda pozycja biblioteki ma własny adres. Wariant wybierzesz w adresie lub w p
 
 Identyfikator gry: puzzle-gears.
 
-Źródło katalogu: e3053c23d6fbb41736197d1bd7aea03c4ada20bd.
+Źródło katalogu: 34dac392fe569c71cee9b913c38ef9c47667ac3e.
 
 Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej.
 

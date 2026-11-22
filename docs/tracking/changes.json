@@ -32738,8 +32738,8 @@
           "tests/harborlight-construction-food-removal.test.mjs",
           "tests/harborlight-v32-world-integration.test.mjs"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -32810,8 +32810,8 @@
         "automated_tests": [
           "tests/harborlight-production-controls-v32-smoke.py"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -32887,8 +32887,8 @@
           "tests/harborlight-advisor-development-plan.test.mjs",
           "tests/harborlight-advisor-ui-smoke.py"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -32960,8 +32960,8 @@
           "tests/harborlight-farm-distribution-v32.test.mjs",
           "tests/harborlight-production-controls-v32-smoke.py"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33012,7 +33012,8 @@
         "Każda z55 gier katalogu ma przed rozpoczęciem cel, scenariusz, zasady i konkretne sterowanie w PL/EN.",
         "Czas, fizyka, tasowanie, ruchy, porażki za obecność, płatności za czas i postęp minigry zaczynają się po świadomym Rozpocznij grę.",
         "Instrukcje są także przed następną rundą, łatwiejszą próbą i kolejnym pokojem; zamknięcie lub odświeżenie podczas czytania nie przegrywa rozpoczętej puli.",
-        "Zwykły świat wyspy nadal działa; polityka już faktycznie rozpoczętych prób i historia nagród pozostają zachowane."
+        "Zwykły świat wyspy nadal działa; polityka już faktycznie rozpoczętych prób i historia nagród pozostają zachowane.",
+        "Plansza120 kart zachowuje minimum20px przy360×740, także z innymi fontami, odliczaniem tasowania i komunikatem; zasady i przyciski mają co najmniej44px. To automatyczna kontrola, nie ręczny odbiór."
       ],
       "supersedes": [],
       "superseded_by": [],
@@ -33031,15 +33032,17 @@
           "harborlight-v1-minigame-instructions.css",
           "harborlight-v1-activities.js",
           "harborlight-v1-play.js",
-          "harborlight-v1-minigame.css"
+          "harborlight-v1-minigame.css",
+          "harborlight-v1-minigame-ui.js"
         ],
         "automated_tests": [
           "tests/harborlight-minigame-instructions-v32-smoke.py",
           "tests/harborlight-adventure-instructions-v32.test.mjs",
-          "tests/harborlight-expedition-instructions-v32.test.mjs"
+          "tests/harborlight-expedition-instructions-v32.test.mjs",
+          "tests/harborlight-frontend-v17-smoke.py"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33112,8 +33115,8 @@
           "tests/harborlight-v32-original-puzzles.test.mjs",
           "tests/harborlight-original-puzzles-v32-smoke.py"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33186,8 +33189,8 @@
           "tests/harborlight-mission-sidebar-integration-v32-smoke.py",
           "tests/harborlight-mission-assistance-resolution.test.mjs"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -33260,8 +33263,8 @@
           "tests/harborlight-mission-assistance-resolution.test.mjs",
           "tests/harborlight-mission-assistance-resolution-smoke.py"
         ],
-        "source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
-        "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
         "publication_source_sha": null,
         "ci_run_url": null,
         "manual_execution": "NOT_RUN",
@@ -40789,7 +40792,7 @@
       "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
       "change_range": "HL-CHG-1191–1198",
       "manual_case_range": "HL-TC-0196–0207",
-      "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
       "publication_source_sha": null,
       "ci_run_id": null,
       "pages_run_id": null,
@@ -41834,12 +41837,13 @@
           "constructor_seed_and_ambient_clock_fixed": true
         }
       },
-      "canonical_artifact_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/canonical-artifacts-summary.json",
+      "canonical_artifact_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
       "first_preview_CI_history": "PUB1CI45029811749FAILstaleadvisorliteral; PUB2CI45032326833FAILstaleconstructioncopy. Both2016Node173PythonPASS, noDEVtag/PREPROD. Tests-onlyfixes retainCODE5 and exact468publiccontent.",
-      "previous_unaccepted_publication": "d1f8bc57952eb0fa448c08c2dfdef502597f957c",
-      "previous_unaccepted_CI_run": 45034760921,
+      "previous_unaccepted_publication": "32990aa1cf260ba3a3511e2c2add982a7287895d",
+      "previous_unaccepted_CI_run": 45037008018,
       "previous_unaccepted_CI_conclusion": "failure",
-      "latest_test_bootstrap_correction": "Own ephemeral server and actual-ready wait in v32UI; fixed identical install/pause clock anchor in Polish fixture. Original26v32assertions and frozenNOW preserved."
+      "latest_test_bootstrap_correction": "Own ephemeral server and actual-ready wait in v32UI; fixed identical install/pause clock anchor in Polish fixture. Original26v32assertions and frozenNOW preserved.",
+      "latest_rendering_correction": "Font-sensitive mobilememory19px→atleast20px; actual151/156 fulltests/stress/lifecyclePASS; no model changes"
     }
   }
 }

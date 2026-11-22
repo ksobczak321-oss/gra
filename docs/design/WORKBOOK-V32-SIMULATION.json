@@ -3,7 +3,7 @@
     "schema": 1,
     "version": "0.15.4.0",
     "ruleset": 32,
-    "sourceCommit": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+    "sourceCommit": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
     "sourceHashes": {
       "backend/island-name.mjs": "d84d85d93a922017a4d160ae98adcced18a7b455cc4e44e0606fc36695c2efb1",
       "harborlight-v1-activities.js": "4e94639bfad44c2c9dfacb3781897a9ef4b89c87a05a415996280e029c0e12ce",

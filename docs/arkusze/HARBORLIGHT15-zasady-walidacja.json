@@ -4,9 +4,9 @@
   "game_version": "0.15.4.0",
   "ruleset": 32,
   "file": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
-  "sha256": "ab0e8a4cc0caade680d0a28d434d976f82fb0aef923ed38fdf8f5321ea5df3a0",
-  "bytes": 8608294,
-  "source_git_commit": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+  "sha256": "97e56228071c977ab92be76306e5eff23372d7464cc09113182e95dc6826cf1e",
+  "bytes": 8608624,
+  "source_git_commit": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
   "accepted_application_source": "37061c43139f32dfba61e4d837b133ed9d2d7da8",
   "accepted_publication_source": "c4f752142c0421aad1dc0490a2f5139c277e6ee5",
   "accepted_reference_scope": "Historical shared DEV/PRE-PROD0.15.0.2; current tables and fingerprints use source_git_commit, not these historical reference fields.",
@@ -79,7 +79,7 @@
     "Kalkulator v15",
     "Kontrola źródeł v15"
   ],
-  "rows_current": 69152,
+  "rows_current": 69153,
   "new_cached_formulas": 12,
   "formula_samples_against_code": 160,
   "source_hashes": {
@@ -178,7 +178,7 @@
     "harborlight-v1-map-labels.js": "f46df838726b6dfe2705528d6ce74ab4262b1d161ac4451a5da5277346ba0e9f",
     "harborlight-v1-military.js": "a1fec5e50275ce066747760b62cd676b62416d12097b5aaeab75a8a8caff9e79",
     "harborlight-v1-minigame-instructions.js": "482768d605d27a5aa9a6604d17912c69e36123bfe76ce6ab5bd7297c8290d960",
-    "harborlight-v1-minigame-ui.js": "1d9e6861fa216acfc4d6d69df66c0320bd0402398a3bfe90381115902c6653a6",
+    "harborlight-v1-minigame-ui.js": "08778f06724dbb62d2b3b0f26fd8df78acf62ccbcb7a1d31abfd69fb316efd95",
     "harborlight-v1-minigames.js": "6811531afb1e2ba6a803792d6646741b4f890ebd7700561c7a97a453b3cbfb8b",
     "harborlight-v1-missions-ui.js": "0eead8e1982d293147a62b1f95ce63b51692b9a51c642867382a1338d247937c",
     "harborlight-v1-missions.js": "5ee59116477606ce6212fbb5b894442e9fba54e3061be745d53453bca554dc0c",
@@ -228,9 +228,9 @@
   },
   "builder_sha256": "ff3ac95ccf7bade1961031454e73dc255a213fd448ed83e69154fbb83af017b2",
   "export_payload_hashes": {
-    "facts": "df31e4148806b2fed148456fefe62425f4f31ef27e4314cdd27c5d05a538c628",
-    "texts": "0131acc48f9c01961e67c2b54e4ac97abe1206a29695ae76cb6eb90ad2bb1744",
-    "scenarios": "5e4d89d1f168dde9ff08f094ae14f3f52e7479f14246dbc110213afc9844f6f5"
+    "facts": "41b2b378f31a0841a0cb21c53a4c9db9a638d777aec89d2bf1522b8c7613fa1f",
+    "texts": "6c87c02c7ea34ed2dfa4781bba67b289a543cb5eed62694536811b5f60e90426",
+    "scenarios": "0fceb3ee4256dddf376d87fc699f2d735f4ff706f7e342006d97b96d84658c67"
   },
   "tables": [
     {
@@ -590,7 +590,7 @@
     {
       "id": "source_constants",
       "sheet": "Stałe — indeks v15",
-      "rows": 10751,
+      "rows": 10752,
       "hidden": true
     },
     {
@@ -620,7 +620,7 @@
   ],
   "scope": "Aktualny kod, pełne katalogi, warunki i źródła; wyniki symulacji tylko według jawnych horyzontów i strategii.",
   "simulation_snapshot": "docs/design/WORKBOOK-V32-SIMULATION.json",
-  "simulation_sha256": "e655a42ee894c19aafd2b67b6ce4bba9a04e12db740680ca95c37700d55e9b08",
+  "simulation_sha256": "6f042bf268ad49079bf4c0fb3b7b5ae180ca3fa3416ddb4aea9a2d341f6b5009",
   "facts_checks": {
     "passed": true,
     "physicalRecipeExamples": 20,
@@ -676,9 +676,9 @@
     "conditionalTextCandidates": 12170,
     "staticHtmlTexts": 388,
     "applicationFiles": 136,
-    "astNodes": 515261,
+    "astNodes": 515288,
     "functions": 7824,
-    "constants": 10733,
+    "constants": 10734,
     "conditionBranches": 21777,
     "sourceChunks": 236
   },
