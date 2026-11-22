@@ -1,5 +1,6 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
-import { originalPuzzleCatalog, originalPuzzleStatus, availableConvoyIds } from './harborlight-v1-original-puzzles.js?v=frontend-v32-23';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-24';
+import { originalPuzzleCatalog, originalPuzzleStatus, availableConvoyIds } from './harborlight-v1-original-puzzles.js?v=frontend-v32-24';
+import { createMiniGameInstructions } from './harborlight-v1-minigame-instructions.js?v=frontend-v32-24';
 
 const SVG='http://www.w3.org/2000/svg';
 const el=(tag,classes,text)=>{const n=document.createElement(tag);if(classes)n.className=classes;if(text!==undefined)n.textContent=text;return n;};
@@ -13,13 +14,14 @@ export function originalPuzzlePointerPoint(svg,event) {
   return {x:(event.clientX-left)/scale+v.x,y:(event.clientY-top)/scale+v.y};
 }
 /** Host owns persistence and the simulation clock. UI sends actions, never awards coins. */
-export function mountOriginalPuzzle({host,state,getState,variant='signal-line',getStatus,embedded=false,onAction,onResult,onClose,allowAdSimulation=false}={}) {
+export function mountOriginalPuzzle({host,state,getState,variant='signal-line',getStatus,embedded=false,onAction,onResult,onClose,allowAdSimulation=false,language='pl'}={}) {
   if(!host)throw new TypeError('A puzzle host is required.');
   const entry=originalPuzzleCatalog.find(x=>x.id===variant);if(!entry)throw new TypeError('Unknown original puzzle.');
   let current=state,disposed=false,frame=0,lastSnapshot='',announced='',lastResult='',dragging=false,dragPointer=null,selectedNode=null,pending=false;
   const root=el('section','original-puzzle');root.dataset.variant=variant;root.setAttribute('aria-label',entry.name);root.dataset.i18nIgnore='true';host.replaceChildren(root);
   const header=el('div','original-puzzle-header'),title=el('h3','',entry.name),intro=el('p','original-puzzle-intro',entry.description);header.append(title,intro);root.append(header);
   const stats=el('div','original-puzzle-stats');root.append(stats);if(embedded){header.hidden=true;stats.hidden=true;}
+  const instructionHost=el('div','original-puzzle-instructions');if(!embedded)root.append(instructionHost);let instructionKey='';
   const boardHost=el('div','original-puzzle-board');root.append(boardHost);
   const message=el('p','original-puzzle-message');message.setAttribute('role','status');message.setAttribute('aria-live','polite');root.append(message);
   const controls=el('div','original-puzzle-controls');root.append(controls);
@@ -62,15 +64,18 @@ export function mountOriginalPuzzle({host,state,getState,variant='signal-line',g
     const wrap=el('div','');wrap.append(svg,keys);return wrap;
   }
   let boardAttempt=null,boardProgress='',boardSvg=null,dialogKey='',controlsKey='';
-  function render(force=false){if(disposed)return;const info=status(),a=info.attempt;const snapshot=JSON.stringify([a?.id,a?.status,a?.remaining,a?.timeOffer,a?.usedEdges,a?.board.removed,a?.hint,a?.rewardClaimed,info.failures,info.hour.nextDifficulty]);if(!force&&snapshot===lastSnapshot)return;lastSnapshot=snapshot;
+  function render(force=false){if(disposed)return;const info=status(),a=info.attempt;const snapshot=JSON.stringify([a?.id,a?.status,a?.instructionsPending,a?.remaining,a?.timeOffer,a?.usedEdges,a?.board.removed,a?.hint,a?.rewardClaimed,info.failures,info.hour.nextDifficulty]);if(!force&&snapshot===lastSnapshot)return;lastSnapshot=snapshot;
+    const pending=a?.instructionsPending===true,reading=!a||pending||a.status!=='active';
+    const nextInstructionKey=`${a?.id||'new'}:${a?.status||''}:${pending}`;
+    if(!embedded&&instructionKey!==nextInstructionKey){instructionKey=nextInstructionKey;instructionHost.replaceChildren(createMiniGameInstructions({subject:{type:'puzzle',id:variant},compact:!reading,language,...(reading?{startLabel:language==='en'?(pending?'Start game':a?'New attempt':'Start attempt'):(pending?'Rozpocznij grę':a?'Nowa próba':'Rozpocznij próbę'),onStart:()=>send(pending?'originalPuzzleBegin':'originalPuzzleStart',{deferStart:false})}:{})}));}
+    boardHost.hidden=pending||!a;boardHost.inert=pending;
     stats.replaceChildren(el('span','',`Trudność: ${a?.difficulty||info.hour.nextDifficulty}`),el('span','',`Czas: ${a?clock(a.remaining):'—'}`),el('span','',`Postęp: ${Math.round(info.progress*100)}%`),el('span','',embedded?'Etap przygody':a?.civilianRescue?`Ocaleni: ${a.rescueOutcome?.rescued||a.civilianRescue.requested} osób`:`Nagroda: ${info.reward||'—'} monet${a?.easier?' (50%)':''}`));
     if(!a){boardHost.replaceChildren(el('p','original-puzzle-empty','Rozpocznij próbę. Każda plansza ma własny układ i pełny limit czasu.'));boardAttempt=null;}
     else if(variant==='signal-line'){if(boardAttempt!==a.id){boardSvg=signalBoard(a);boardHost.replaceChildren(boardSvg);boardAttempt=a.id;}else updateSignal(boardSvg,a);}
     else{const progress=`${a.id}:${a.status}:${a.board.removed.join(',')}:${!!a.timeOffer}:${a.hint?.convoyId}`;if(progress!==boardProgress){boardHost.replaceChildren(routeBoard(a));boardProgress=progress;}}
     if(a?.message&&a.message!==announced){message.textContent=a.message;announced=a.message;}
-    const nextControlsKey=`${a?.id}:${a?.status}:${a?.rewardClaimed}:${a?.hintUsed}:${info.canUseHelp}`;
-    if(nextControlsKey!==controlsKey){controlsKey=nextControlsKey;controls.replaceChildren();if(embedded){}else if(!a||a.status!=='active'){
-      controls.append(button(a?'Nowa próba':'Rozpocznij próbę','originalPuzzleStart',{},'is-primary'));
+    const nextControlsKey=`${a?.id}:${a?.status}:${pending}:${a?.rewardClaimed}:${a?.hintUsed}:${info.canUseHelp}`;
+    if(nextControlsKey!==controlsKey){controlsKey=nextControlsKey;controls.replaceChildren();if(embedded||pending){}else if(!a||a.status!=='active'){
       if(info.canUseHelp)controls.append(button(developmentText('UI-057')+' — 50% nagrody','originalPuzzleEasier'));
       if(a?.status==='won'&&!a.rewardClaimed)controls.append(button(a?.civilianRescue?'Ocaleni czekają na przyjęcie':'Odbierz nagrodę','originalPuzzleClaim',{},'is-primary'));
       if(onClose){const b=el('button','','Wróć');b.type='button';b.addEventListener('click',onClose);controls.append(b);}

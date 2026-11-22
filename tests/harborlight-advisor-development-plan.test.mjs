@@ -32,10 +32,10 @@ test('snapshot preserves resident order, scalar food coverage, current trips, ro
  const p=advisorDevelopmentSnapshot(s);assert.deepEqual(p.residents.map(p=>p.id),s.residents.map(p=>p.id));assert.equal(p.provisions.people[s.residents[0].personUid].coverage,.25);assert.deepEqual(p.haulTrips.warehouse,s.haulTrips.warehouse);assert.equal(p.constructionProjects[0].transportSeconds,33);assert.deepEqual(p.roads,s.roads);assert.deepEqual(p.education.routes,s.education.routes);
 });
 
-test('official physical construction quote and hidden food metadata survive the worker DTO',()=>{
+test('official food-free physical construction quote survives the worker DTO while meals stay protected',()=>{
  const s=world(),cost=buildingCost(structuredClone(s),'dock'),p=plan(s);
- assert.deepEqual(p.cost,Object.fromEntries(Object.entries(cost)));assert.deepEqual(p.foodQuote,cost.foodQuote);assert.equal(p.foodUnits,cost.foodUnits);
- const transferred=structuredClone(p);assert.deepEqual(transferred.foodQuote,cost.foodQuote);assert.ok(!Object.keys(cost).includes('foodQuote'));
+ assert.deepEqual(p.cost,Object.fromEntries(Object.entries(cost)));assert.ok(FOOD_IDS.every(id=>!(id in p.cost)));
+ const transferred=structuredClone(p);assert.deepEqual(transferred.cost,p.cost);assert.equal('foodQuote'in transferred,false);assert.equal('foodUnits'in transferred,false);
  for(const row of p.missing)assert.equal(row.available,centralAvailable(structuredClone(s),row.id));
 });
 
@@ -79,15 +79,15 @@ test('population gate sees stored House happiness and an actual minigame route f
  assert.ok(p.steps.some(row=>row.guidance.action==='house-happiness'&&/18/.test(row.text)));assert.ok(p.steps.some(row=>row.guidance.action==='minigame'&&row.guidance.gameId==='triples'));assert.equal(p.estimate.seconds,null);
 });
 
-test('food-incomplete construction quote is not treated as zero cost or an exact ETA',()=>{
+test('empty food stocks still require meals but never invent a construction-food charge',()=>{
  const s=world();for(const id of Object.keys(s.resources))if(id!=='coins')s.resources[id]=0;
- const p=plan(s);assert.equal(p.foodQuote.ok,false);assert.ok(p.foodQuote.missingSatiety>0);assert.ok(p.steps.some(row=>row.id==='construction-food'));assert.equal(p.estimate.seconds,null);
- const reserve=foodReservePlan(structuredClone(s));assert.deepEqual(p.reserve,reserve);
+ const p=plan(s);assert.equal('foodQuote'in p,false);assert.ok(p.steps.every(row=>row.id!=='construction-food'));assert.equal(p.estimate.seconds,null);
+ const reserve=foodReservePlan(structuredClone(s));assert.deepEqual(p.reserve,reserve);assert.ok(p.tasks.some(row=>row.id==='food'));
 });
 
 test('dependency cards precede transport and construction; every action has structured guidance',()=>{
  const s=world();s.resources.wood=s.resources.planks=0;const p=plan(s);
- assert.ok(p.tasks.length>=2&&p.tasks.length<=5);const transport=p.tasks.find(t=>t.id==='transport'),build=p.tasks.find(t=>t.id==='build');assert.ok(transport);assert.ok(build.dependsOn.includes('transport'));
+ assert.ok(p.tasks.length>=2&&p.tasks.length<=5);const transport=p.tasks.find(t=>t.id==='transport'),materials=p.tasks.find(t=>t.id==='materials');assert.ok(transport);assert.ok(materials.dependsOn.includes('transport'));assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));
  for(const task of p.tasks)for(const dep of task.dependsOn)assert.ok(p.tasks.findIndex(t=>t.id===dep)<p.tasks.indexOf(task));
  for(const step of p.steps){assert.ok(step.guidance?.action);assert.ok(step.target);assert.ok(step.why);}
  const sawmill=p.tasks.find(t=>t.howTo.some(row=>row.guidance.recipeId==='planks'));const lumber=p.tasks.find(t=>t.howTo.some(row=>row.guidance.recipeId==='wood'));if(sawmill!==lumber)assert.ok(sawmill.dependsOn.includes(lumber.id));
@@ -174,14 +174,14 @@ test('lack of free staff produces a waiting House review instead of a zero-perso
 
 test('ordinary-level auto plan responds to actual food staffing rather than remaining a Town Hall order',()=>{
  const s=world(3);s.bonusMaterials={...s.resources};staff(s,'farm',4);s.provisions.assignments.farm={farmGrain:2,farmVegetables:2};staff(s,'warehouse',3);
- const growth=plan(s,'');assert.equal(growth.goal,'townhall');assert.equal(growth.tracking,null);assert.ok(growth.steps.some(row=>row.id==='build-townhall'));
+ const growth=plan(s,'');assert.equal(growth.goal,'lighthouse');assert.equal(growth.longTermGoal.building,'townhall');assert.equal(growth.tracking,null);assert.ok(growth.steps.some(row=>row.id==='build-lighthouse'));
  for(const p of s.residents.filter(p=>p.workplace==='farm'))p.workplace=null;s.buildings.farm.workers=0;s.provisions.assignments.farm={farmGrain:0,farmVegetables:0};
  const food=plan(s,'');assert.equal(food.kind,'food');assert.equal(food.goal,null);assert.equal(food.tracking,null);assert.ok(food.tasks.every(task=>!task.id.startsWith('build')));assert.equal(food.tasks.length,2);
- staff(s,'farm',4);s.provisions.assignments.farm={farmGrain:2,farmVegetables:2};const recovered=plan(s,'');assert.equal(recovered.goal,'townhall');assert.ok(recovered.steps.some(row=>row.id==='build-townhall'));
+ staff(s,'farm',4);s.provisions.assignments.farm={farmGrain:2,farmVegetables:2};const recovered=plan(s,'');assert.equal(recovered.goal,'lighthouse');assert.ok(recovered.steps.some(row=>row.id==='build-lighthouse'));
 });
 
 test('a funded capacity bottleneck changes the actual automatic upgrade to the Warehouse',()=>{
- const s=world(5);for(const id of Object.keys(s.resources))s.resources[id]=0;Object.assign(s.resources,{coins:100000,wood:55000,stone:1000,grain:1000,vegetables:1000,food:1000,planks:1000});
+ const s=world(2);for(const id of Object.keys(s.resources))s.resources[id]=0;Object.assign(s.resources,{coins:100000,wood:55000,stone:1000,grain:1000,vegetables:1000,food:1000,planks:1000});
  staff(s,'farm',4);s.provisions.assignments.farm={farmGrain:2,farmVegetables:2};staff(s,'warehouse',3);
  const full=plan(s,'');assert.equal(full.goal,'warehouse');assert.equal(full.targetLevel,2);assert.equal(full.tracking,null);assert.ok(full.steps.some(row=>row.id==='build-warehouse'));
  s.buildings.warehouse.level=3;const roomy=plan(s,'');assert.equal(roomy.goal,'townhall');assert.ok(roomy.steps.some(row=>row.id==='build-townhall'));
@@ -204,4 +204,85 @@ test('new named goals discard old target levels, including repeating a completed
 test('already sustainable manual topics and Theatre retain2–5 distinct complete cards',()=>{
  const s=world();s.bonusMaterials={...s.resources};staff(s,'farm',4);s.provisions.assignments.farm={farmGrain:2,farmVegetables:2};staff(s,'warehouse',3);
  for(const input of ['Wolni mieszkańcy','Jedzenie','Transport','Teatr']){const result=plan(s,input);assert.ok(result.tasks.length>=2&&result.tasks.length<=5,input);for(const task of result.tasks)assert.ok(task.howTo.length&&task.howTo.every(row=>row.why));}
+});
+
+function sustainedIsland(level=3){
+ const s=world(level);for(const id of Object.keys(s.resources))s.resources[id]=0;Object.assign(s.resources,{coins:5000,wood:2500,stone:2500,planks:2500,grain:1000,vegetables:1000});
+ staff(s,'farm',4);s.provisions.assignments.farm={farmGrain:2,farmVegetables:2};staff(s,'warehouse',3);return s;
+}
+
+test('scarce level2 island gets an attainable materials task instead of a distant Town Hall order',()=>{
+ const s=sustainedIsland(2);s.resources.coins=s.resources.wood=s.resources.stone=s.resources.planks=100;
+ const p=plan(s,'');assert.equal(p.kind,'materials');assert.equal(p.goal,null);assert.equal(p.tracking,null);assert.deepEqual(p.longTermGoal,{building:'townhall',targetLevel:3});
+ assert.match(p.title,/przygotuj materiały/);assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));assert.ok(p.steps.some(row=>row.guidance.action==='recipe-workers'));
+ assert.ok(Object.values(p.diagnostics.hires).reduce((n,q)=>n+q,0)<=p.freeWorkers);
+});
+
+test('funded Lighthouse is selected from its actual growth benefit before an unaffordable population milestone',()=>{
+ const s=sustainedIsland(3),p=plan(s,'');
+ assert.equal(p.safetyComplete,true);assert.equal(p.goal,'lighthouse');assert.equal(p.targetLevel,1);assert.equal(p.currentStep.funded,true);assert.equal(p.currentStep.eligible,true);
+ assert.deepEqual(p.longTermGoal,{building:'townhall',targetLevel:4});assert.match(p.title,/Latarnia.*1/);assert.match(p.why,/100%.*24 godzin/);
+ const route=p.candidates.find(row=>row.via==='lighthouse');assert.ok(route);assert.equal(route.growthBenefit.beforeRate,.2);assert.equal(route.growthBenefit.afterRate,3);assert.equal(route.growthBenefit.requiredPopulation,81);
+ assert.equal(route.prerequisiteCost.coins,500);assert.equal(route.totalCost.coins,route.cost.coins+route.prerequisiteCost.coins);assert.ok(p.steps.some(row=>row.id==='build-lighthouse'));assert.ok(p.steps.every(row=>row.id!=='build-townhall'));
+ assert.deepEqual(p.cost,Object.fromEntries(Object.entries(buildingCost(s,'lighthouse'))));
+});
+
+test('an existing full-happiness Lighthouse is not rebuilt when it brings no earlier population readiness',()=>{
+ const s=sustainedIsland(3);s.happiness=100;s.baseHappiness=20;s.lighthouseRemaining=86400;s.buildings.lighthouse.level=1;
+ const p=plan(s,'');assert.equal(p.kind,'population');assert.equal(p.goal,null);assert.equal(p.diagnostics.supportInvestment,null);assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));
+ assert.equal(p.diagnostics.population.required,81);assert.equal(p.diagnostics.population.ratePerHour,3);
+});
+
+test('an unfunded Lighthouse is never suggested as an immediately achievable investment',()=>{
+ const s=sustainedIsland(3);s.resources.coins=300;const p=plan(s,'');
+ assert.equal(p.kind,'population');assert.equal(p.diagnostics.supportInvestment,null);assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));assert.ok(p.steps.some(row=>row.guidance.action==='minigame'));
+});
+
+test('no carrier and no free people produces a staffing growth task instead of an impossible construction order',()=>{
+ const s=sustainedIsland(2);for(const person of s.residents.filter(p=>p.workplace==='warehouse'))person.workplace=null;s.buildings.warehouse.workers=0;
+ staff(s,'quarry',s.residents.filter(p=>!p.workplace).length,{stone:14});s.resources.wood=s.resources.planks=0;
+ const p=plan(s,'');assert.equal(p.freeWorkers,0);assert.equal(p.kind,'population');assert.equal(p.estimate.seconds,null);assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));
+ assert.ok(p.steps.some(row=>row.id==='population-staff'));assert.ok(Object.values(p.diagnostics.hires).every(q=>q===0));
+});
+
+test('a producer investment is compared by net material time rather than always choosing the Lighthouse',()=>{
+ const s=sustainedIsland(24);s.buildings.warehouse.level=24;s.buildings.lighthouse.level=24;s.buildings.dock.level=23;s.resources.coins=50000;s.resources.wood=500;s.resources.stone=s.resources.planks=15000;
+ s.resources.fish=1000;staff(s,'fisher',1,'fish');staff(s,'lumber',10,'wood');
+ const p=plan(s,'Port');assert.equal(p.currentStep.building,'lumber');assert.equal(p.currentStep.targetLevel,2);assert.equal(p.diagnostics.supportInvestment,'lumber');
+ assert.equal(p.goal,'dock');assert.equal(p.tracking.goal,'dock');assert.deepEqual(p.longTermGoal,{building:'dock',targetLevel:24});assert.match(p.title,/Drwale/);
+ const route=p.candidates.find(row=>row.via==='lumber'),direct=p.candidates.filter(row=>!row.via&&row.seconds!==null);assert.ok(route&&direct.length);assert.ok(route.seconds<Math.min(...direct.map(row=>row.seconds)));assert.equal(route.totalCost.wood,route.cost.wood+route.prerequisiteCost.wood);
+ assert.ok(p.steps.some(row=>row.id==='build-lumber'));assert.ok(p.steps.every(row=>row.id!=='build-dock'));
+});
+
+test('Lighthouse population comparison respects its finite duration and the remaining immigration progress',()=>{
+ const s=sustainedIsland(4);s.populationProgress=.5;const p=plan(s,''),route=p.candidates.find(row=>row.via==='lighthouse');assert.ok(route);
+ assert.equal(route.population.required,108);assert.equal(route.population.bonusSeconds,86400);assert.equal(route.population.rateAfterBonus,.2);
+ const expected=86400+(108-18-.5-72)/.2*3600;
+ assert.equal(route.population.seconds,expected);assert.ok(route.population.seconds>86400);
+});
+
+test('explicit locked Port keeps a distant destination but presents only the next attainable step',()=>{
+ const s=sustainedIsland(2);s.resources.coins=s.resources.wood=s.resources.stone=s.resources.planks=100;
+ const p=plan(s,'Port');assert.equal(p.goal,'dock');assert.equal(p.tracking.goal,'dock');assert.equal(p.currentStep.building,'townhall');assert.equal(p.currentStep.targetLevel,3);
+ assert.equal(p.kind,'materials');assert.match(p.title,/przygotuj materiały/);assert.doesNotMatch(p.title,/poziom 4/);assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));
+});
+
+test('population guidance keeps negative happiness visible rather than displaying a false zero',()=>{
+ const s=sustainedIsland(3);s.happiness=-20;s.baseHappiness=-20;s.resources.coins=0;const p=plan(s,'');
+ assert.equal(p.kind,'population');assert.equal(p.diagnostics.population.seconds,null);assert.match(p.steps.find(row=>row.id==='growth-rate').text,/-20%/);
+});
+
+
+for(const stage of ['queued','transport','building'])test(`a paid Town Hall4 ${stage} project never demands the future level5 population or charges it again`,()=>{
+ const s=sustainedIsland(3);s.constructionProjects=[{order:9,building:'townhall',targetLevel:4,stage,buildRemaining:120,remainingMaterials:stage==='building'?{}:{wood:900,stone:900,planks:900},reservedMaterials:stage==='building'?{}:{wood:900,stone:900,planks:900},cost:{wood:1500,stone:1500,planks:1500},reservedCoins:1500}];
+ const p=plan(s,'');assert.equal(p.goal,'townhall');assert.equal(p.targetLevel,4);assert.equal(p.currentStep.kind,'construction');assert.equal(p.currentStep.funded,true);assert.equal(p.currentStep.eligible,true);
+ assert.match(p.title,/dokończ przyjętą/);assert.ok(p.steps.every(row=>!['population','population-staff','coins'].includes(row.id)));assert.ok(p.steps.every(row=>row.guidance.action!=='upgrade'));
+ assert.equal(p.steps.find(row=>row.id==='build-townhall').guidance.action,'inspect');assert.match(p.steps.find(row=>row.id==='build-townhall').text,/4.*już przyjęta/);assert.equal(p.cost.coins,0);
+});
+
+
+test('an accepted paid delivery reports remaining units and never asks to toggle an enabled construction priority',()=>{
+ const s=sustainedIsland(3);s.warehousePriorities=['construction','grain'];s.constructionProjects=[{order:3,building:'townhall',targetLevel:4,stage:'transport',goodsRemaining:6283,remainingMaterials:{wood:1000},reservedMaterials:{wood:1000},cost:{wood:1500},reservedCoins:1500}];
+ const p=plan(s,'');assert.match(p.steps.find(row=>row.id==='accepted-delivery').text,/6.?283/);assert.match(p.steps.find(row=>row.id==='supply-build').text,/już włączony/);assert.equal(p.steps.find(row=>row.id==='supply-build').guidance.action,'inspect');
+ assert.ok(p.steps.every(row=>row.guidance.priority!=='construction'));assert.equal(p.cost.coins,0);
 });

@@ -62,6 +62,7 @@ def scenario(browser, language, mobile):
         page.locator('[data-adventure-all]').click()
         expect(page.locator('[data-adventure-start]:not([data-adventure-start="escapeStory"]):not([data-adventure-start="islandPuzzle"])')).to_have_count(9)
         page.locator('[data-adventure-start="cargoRain"]').click()
+        page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         overlay = page.locator('[data-cargo-flight]')
         expect(overlay).to_be_visible()
         box = overlay.bounding_box()

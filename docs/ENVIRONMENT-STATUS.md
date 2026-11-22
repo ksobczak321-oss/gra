@@ -10,6 +10,15 @@
 
 
 
+
+## Paczka 22 listopada — DEV 0.15.4.0 / cache24 w walidacji
+
+Użytkownik przekazał GO dla zebranej paczki: koszty budowy bez jedzenia (także zboża), wyrównane kontrolki produkcji, osiągalne etapy Doradcy, równy i ręczny podział załogi Gospodarstwa, instrukcje przed wszystkimi 55 minigrami oraz uwagi z `minigry19112026.docx`. Naprawa misji obejmuje konkretny przypadek admin2: 81 mieszkańców, Ratusz 3 i opłacona rozbudowa do 4 w transporcie. Pomocnicza misja nie może blokować opłaconego projektu ani przyznawać nagrody za pominięte zadania.
+
+Kod 0.15.4.0 / `frontend-v32-24` jest zintegrowany lokalnie. Pełna regresja, świeże artefakty, własny CI, Pages i tag nowego DEV wymagają osobnych wyników. Ostatnie odebrane PRE-PROD pozostaje na `1e21ff1340c7327db9d63a42934547f14548294e` / 0.15.3.1 / cache23. Nie wykonano resetu, zmiany haseł ani działań PROD/DNS. Rzeczywisty admin2 odczytano przez zweryfikowany TLS, a poprawki sprawdzano na prywatnej kopii; QA nie zapisywał wyspy lub zegara.
+
+527 kart / 207 ręcznych przypadków NOT RUN. Zachowano wcześniejsze 519 kart i 195 definicji oraz wyników. [Zakres i 26 uwag Worda](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json).
+
 ## DEV i PRE-PROD 0.15.3.1 / cache23 — odebrane automatycznie
 
 Kod i kanoniczne artefakty: `ace6fb06bb20a65b20a363722cdf35a0799fb1c4`; odebrana publikacja: `1e21ff1340c7327db9d63a42934547f14548294e`. Własny [CI44943513346](https://github.com/ksobczak321-oss/gra/actions/runs/44943513346) **SUCCESS 34 min 44 s**: 1896 Node, 173 Python i 79 programów Chromium. [Pages44943513266](https://github.com/ksobczak321-oss/gra/actions/runs/44943513266) ma osobny SUCCESS 0 min 26 s; normalny TLS potwierdził 466 plików treści i osobno oba XLSX. Standardowy [PRE-PROD44946821720/próba1](https://github.com/ksobczak321-oss/gra/actions/runs/44946821720/attempts/1) ma **SUCCESS 8 min 04 s**.

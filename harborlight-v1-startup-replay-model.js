@@ -1,8 +1,8 @@
 // Pure worker-side counterpart of the first beginWorldExperience settlement.
 // No normalization, save compaction, network request or UI action is performed.
-import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-23';
-import * as State from './harborlight-v1-state.js?v=frontend-v32-23';
-import * as Development from './harborlight-v1-development.js?v=frontend-v32-23';
+import * as Archipelago from './harborlight-v1-archipelago.js?v=frontend-v32-24';
+import * as State from './harborlight-v1-state.js?v=frontend-v32-24';
+import * as Development from './harborlight-v1-development.js?v=frontend-v32-24';
 
 function actionContext(bundle, world, context, standardAdvertisement = false) {
   const caps = context.capabilities || {};

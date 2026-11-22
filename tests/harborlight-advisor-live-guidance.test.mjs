@@ -121,7 +121,7 @@ test('dedicated Academy beds avoid recommending an unnecessary House upgrade',()
  const state=rich(world(4));state.buildings.house.level=3;state.buildings.academy.level=4;state.population=110;
  state.residents=Array.from({length:110},(_,id)=>({...state.residents[0],id:id+1,personUid:'island-1:resident-'+(id+1)}));
  for(const person of state.residents.slice(0,6))state.education.people[person.personUid]={profession:'professor',rounds:1};
- const plan=bounded(advisorSuggestion(state));assert.equal(plan.kind,'upgrade');assert.equal(plan.goal,'townhall');
+ const plan=bounded(advisorSuggestion(state));assert.equal(plan.kind,'materials');assert.equal(plan.goal,'townhall');assert.ok(plan.steps.every(row=>row.id!=='upgrade-house'));
 });
 
 test('new levels and player staffing immediately replace completed steps instead of repeating them',()=>{
@@ -172,4 +172,14 @@ test('Polish quick topics show2–5 meaningful steps and refresh cheap current c
  const after=advisorSuggestion(state,{topic:'workers'});assert.equal(after.freeWorkers,before.freeWorkers-1);assert.notEqual(after.text,before.text);
  const port=advisorPlan(world(5),'Port');assert.ok(port.steps.length>5,'the full manual production dependencies remain available beyond the five main UI actions');
  const locked=advisorPlan(state,'Port');assert.equal(locked.steps.length,2);
+});
+
+
+test('legacy locked fallback distinguishes the immediate Town Hall level from the later Port unlock',()=>{
+ const state=rich(world(2)),p=bounded(advisorSuggestion(state,{goal:'dock'}));
+ assert.equal(p.kind,'locked');assert.equal(p.targetLevel,3);assert.equal(p.longTermRequirement,4);assert.match(p.title,/Ratusz 3/);assert.doesNotMatch(p.title,/Ratusz 4/);assert.equal(p.requestedGoal,'dock');
+});
+
+test('legacy unfunded fallback prepares resources without an actionable upgrade order',()=>{
+ const state=world(2),p=bounded(advisorSuggestion(state,{goal:'lumber'}));assert.equal(p.kind,'materials');assert.ok(p.steps.every(row=>!row.id.startsWith('upgrade-')));assert.ok(p.steps.some(row=>row.id==='prepare-lumber'));
 });

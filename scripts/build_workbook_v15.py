@@ -49,6 +49,13 @@ def json_text(value):
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'))
 
 
+def application_version(exports):
+    version = exports['facts']['meta']['appVersion']
+    assert isinstance(version, str) and re.fullmatch(r'[0-9]+(?:\.[0-9]+){3}', version), 'Invalid current application version'
+    assert version == exports['texts']['meta']['applicationVersion'] == exports['scenarios']['meta']['version'], 'Export application versions differ'
+    return version
+
+
 def cell_value(value):
     if value is None:
         return ''
@@ -256,11 +263,12 @@ def prepare(exports, source_sha):
     guide = Sheet(sheet_name('Przeczytaj', used), 'HARBORLIGHT15 — pełny master aktualnych zasad',
                   'Bieżące tabele v15 mają pierwszeństwo. 100 wcześniejszych kart zachowano jako ukryte archiwum. Pełna treść warunków i źródeł jest dostępna w dodatkach. Każdy wynik symulacji ma własny horyzont i założenia.',
                   ['Temat', 'Aktualna informacja', 'Źródło / granica'], [45, 140, 100], table_id='readme')
-    guide.add(['Kod gry', '0.15.3.1 / ruleset32', source_sha])
+    guide.add(['Kod gry', application_version(exports) + ' / ruleset32', source_sha])
     guide.add(['Historyczny wspólny odbiór DEV/PRE-PROD 0.15.0.2', RELEASE_SOURCE, 'CI43850690541 i PRE-PROD43854387444 SUCCESS. To historyczny punkt odniesienia, nie źródło bieżących tabel.'])
     guide.add(['Źródło historycznej aplikacji 0.15.0.2', APP_SOURCE, 'Bieżący kod i jego odciski wskazuje pierwszy wiersz Kod gry. Aktualizacja Excela nie wdraża gry.'])
-    guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.2.4', 'd5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d', '0.15.2.4/cache21 — CI44569674535, Pages44569674475 i PRE-PROD44577083312/próba1 SUCCESS. Odbiór0.15.3.0 opisano osobno; bieżące tabele0.15.3.1 wskazują własny commit źródłowy i nie potwierdzają wdrożenia.'])
+    guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.2.4', 'd5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d', '0.15.2.4/cache21 — CI44569674535, Pages44569674475 i PRE-PROD44577083312/próba1 SUCCESS. Odbiór0.15.3.0 opisano osobno; bieżące tabele wskazują własny commit źródłowy i nie potwierdzają wdrożenia.'])
     guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.3.0', 'fc95a1aadf36a115538ed0b846f9ce48fbba651b', '0.15.3.0/cache22 — CI44926983827, Pages44926983937 i PRE-PROD44929856572/próba1 SUCCESS. Kod i źródło tamtych artefaktów f6572ee7500b42f56d1575de2e173d1bd635216c. To zachowany odbiór historyczny, nie wynik bieżącego eksportu.'])
+    guide.add(['Poprzedni pełny odbiór DEV i PRE-PROD0.15.3.1', '1e21ff1340c7327db9d63a42934547f14548294e', '0.15.3.1/cache23 — CI44943513346, Pages44943513266 i PRE-PROD44946821720/próba1 SUCCESS. Kod i źródło tamtych artefaktów ace6fb06bb20a65b20a363722cdf35a0799fb1c4. Bieżąca aktualizacja opisuje oddzielny zamrożony kod i nie potwierdza jego wdrożenia.'])
     guide.add(['Historyczny pełny odbiór DEV i PRE-PROD0.15.2.0', 'dda2fa1793e49ec23811ccffb147a7e56a366692', '0.15.2.0/cache17 — CI44287093749 i Pages44287093698 oraz PRE-PROD44292700743/próba1 SUCCESS. Zachowany wcześniejszy punkt odniesienia.'])
     guide.add(['Poprzednia próba 0.15.2.1/cache18: sukces techniczny, regresja warm-cache', 'b94af8befa671d936eeaf6e4be9b933cbf61ff08', 'CI44520278661 i workflow PRE-PROD44526548282/próba1 SUCCESS dla zimnej pamięci podręcznej. Późniejszy odbiór rozgrzanej pamięci FAIL: stary manifest przywracał pełne atlasy i błędną kolejność Zakładu skórzanego. Brak pełnego odbioru jakościowego i tagu akceptacji PRE-PROD tej próby.'])
     guide.add(['Nawigacja', 'Spis treści zawiera odnośnik do każdej bieżącej tabeli i jej źródła.', 'Filtrowanie od wiersza5; nagłówki zamrożone.'])
@@ -352,6 +360,8 @@ def sheet_xml(spec, active=False):
 
 
 def write_book(sheets):
+    version = next(row[1].split(' / ruleset', 1)[0] for row in sheets[0].rows.values() if row and row[0] == 'Kod gry')
+    assert re.fullmatch(r'[0-9]+(?:\.[0-9]+){3}', version), 'Missing current application version in guide'
     assert digest(BASE) == BASE_SHA, 'Historical master14 changed'
     with ZipFile(BASE) as source: entries = {name: source.read(name) for name in source.namelist()}
     workbook = E.fromstring(entries['xl/workbook.xml']); nodes = workbook.find(f'{{{M}}}sheets')
@@ -374,7 +384,7 @@ def write_book(sheets):
         entries[name] = sheet_xml(spec, active=index == 0)
     changed = {'xl/workbook.xml': workbook, 'xl/_rels/workbook.xml.rels': rels, '[Content_Types].xml': types}
     core = E.fromstring(entries['docProps/core.xml']); dc = 'http://purl.org/dc/elements/1.1/'
-    for name, value in [('title', 'HARBORLIGHT15 — pełny master0.15.3.1/v32'), ('subject', 'Aktualne reguły, teksty, scenariusze i symulacje;100kart archiwum'), ('description', 'Eksport bieżącego kodu; każda symulacja ma założenia i zmierzony horyzont, a generator nie zmienia gry lub kont.')]:
+    for name, value in [('title', f'HARBORLIGHT15 — pełny master{version}/v32'), ('subject', 'Aktualne reguły, teksty, scenariusze i symulacje;100kart archiwum'), ('description', 'Eksport bieżącego kodu; każda symulacja ma założenia i zmierzony horyzont, a generator nie zmienia gry lub kont.')]:
         node = core.find(f'{{{dc}}}{name}')
         if node is None: node = E.SubElement(core, f'{{{dc}}}{name}')
         node.text = value
@@ -389,7 +399,7 @@ def write_book(sheets):
 def source_checks(exports, source_sha):
     hashes = {}
     assert exports['scenarios']['meta']['exporterSha256'] == digest(EXPORTERS['scenarios']), 'Simulation exporter changed; refresh simulations'
-    assert exports['facts']['meta']['appVersion'] == exports['texts']['meta']['applicationVersion'] == exports['scenarios']['meta']['version'] == '0.15.3.1'
+    application_version(exports)
     assert all(payload['meta']['ruleset'] == 32 for payload in exports.values())
     assert exports['facts']['checks']['passed'] is True
     assert exports['texts']['meta']['completeSourceTrace'] is True
@@ -467,7 +477,7 @@ def validate(exports, sheets, source_sha, write_report=True):
         calc.rows[6][2], calc.rows[11][2] = entry['level'], entry['recipeId']
         assert math.isclose(evaluate(calc.rows[26][2].text, sheets, calc.name), entry['batchesPerWorkerHour'], rel_tol=1e-12)
         calc.rows[6][2], calc.rows[11][2] = old_level, old_recipe; samples += 1
-    report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': '0.15.3.1', 'ruleset': 32,
+    report = {'validation': 'PASS', 'workbook_version': 15, 'game_version': application_version(exports), 'ruleset': 32,
               'file': str(OUTPUT.relative_to(ROOT)), 'sha256': digest(OUTPUT), 'bytes': OUTPUT.stat().st_size,
               'source_git_commit': source_sha, 'accepted_application_source': APP_SOURCE, 'accepted_publication_source': RELEASE_SOURCE,
               'accepted_reference_scope': 'Historical shared DEV/PRE-PROD0.15.0.2; current tables and fingerprints use source_git_commit, not these historical reference fields.',

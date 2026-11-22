@@ -327,6 +327,7 @@ def choice_and_ad_acceptance(browser):
             assert page.locator('[data-expedition-choice]').count() == 2
             # Contextual back remains available outside the active minigame.
             page.locator(f'[data-expedition-choice="{kind}"]').click()
+            page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
             expect(page.locator('[data-minigame-kind]')).to_have_attribute('data-minigame-kind', kind)
             assert page.locator('[data-panel-back]').count() == 0
             current = run_of(saved(page))
@@ -387,6 +388,7 @@ def choice_and_ad_acceptance(browser):
         page.locator('#hit-home').click()
         page.locator('#island-dialog').get_by_role('button', name='Ekspedycje' if language == 'pl' else 'Expeditions', exact=True).click()
         page.locator('[data-expedition-choice="triples"]').click()
+        page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         assert page.locator('[data-panel-back]').count() == 0
         page.locator('[data-minigame-result-actions] button').first.click()
         page.locator('[data-confirm-choice]').click()
@@ -403,6 +405,7 @@ def choice_and_ad_acceptance(browser):
             assert run_of(saved(page))['pot'] == 50
             page.locator('[data-expedition-next-kind]').select_option(next_kind)
             page.locator('[data-expedition-continue]').click()
+            page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
             continued = run_of(saved(page))
             assert continued['level'] == 2 and continued['pot'] == 50
             assert continued['selectedGameKind'] == continued['miniGame']['kind'] == next_kind

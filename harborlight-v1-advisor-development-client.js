@@ -1,6 +1,6 @@
-import {advisorDevelopmentSnapshot} from './harborlight-v1-advisor-development-plan.js?v=frontend-v32-23';
+import {advisorDevelopmentSnapshot} from './harborlight-v1-advisor-development-plan.js?v=frontend-v32-24';
 export const ADVISOR_DEVELOPMENT_INTERVAL_MS=120_000;
-export const ADVISOR_DEVELOPMENT_WORKER_URL=new URL('./harborlight-v1-advisor-development-worker.js?v=frontend-v32-23',import.meta.url);
+export const ADVISOR_DEVELOPMENT_WORKER_URL=new URL('./harborlight-v1-advisor-development-worker.js?v=frontend-v32-24',import.meta.url);
 const error=code=>Object.assign(new Error(code),{code,name:code==='advisor-superseded'?'AbortError':'Error'});
 // Schedules by monotonic *real* time, independently of the world's 1×/2×/6×.
 // There is at most one running worker and one latest waiting request. No

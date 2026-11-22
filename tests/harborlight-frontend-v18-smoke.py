@@ -169,6 +169,7 @@ def expedition_time_and_ad(browser):
     install(page, fixture(page, 'production'))
     page.locator('.activity-expedition').click()
     page.locator('[data-expedition-choice="triples"]').click()
+    page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
     before = next(r for r in state(page)['expeditionRuns'].values() if r['status'] == 'active')
     page.locator('[data-buy-extra-time]').click()
     purchased = next(r for r in state(page)['expeditionRuns'].values() if r['status'] == 'active')

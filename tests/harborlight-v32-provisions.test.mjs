@@ -16,7 +16,9 @@ test('farm directions, baseline cake and automatic robes follow actual unlocks',
 });
 test('whole-person staffing has shared and per-direction caps without cloning crew',()=>{
  const s=state();s.buildings.farm.workers=12;assert.deepEqual(P.crewCapacity(s,'farm'),{perProduct:12,total:18,products:2});
- assert.equal(P.provisionsAction(s,{type:'provisionsSetWorkers',building:'farm',recipeId:'farmVegetables',workers:6}).ok,false);
+ assert.deepEqual(P.productionAssignments(s,'farm').map(row=>row.workers),[6,6]);
+ assert.equal(P.provisionsAction(s,{type:'provisionsSetWorkers',building:'farm',recipeId:'farmVegetables',workers:7}).ok,true);assert.deepEqual(P.productionAssignments(s,'farm').map(row=>row.workers),[5,7]);
+ assert.equal(P.provisionsAction(s,{type:'provisionsSetWorkers',building:'farm',recipeId:'farmGrain',workers:13}).ok,false);
  assert.equal(P.provisionsAction(s,{type:'provisionsSetWorkers',building:'farm',recipeId:'farmGrain',workers:6}).ok,true);assert.equal(P.provisionsAction(s,{type:'provisionsSetWorkers',building:'farm',recipeId:'farmVegetables',workers:6}).ok,true);
  assert.equal(P.productionAssignments(s,'farm').reduce((n,x)=>n+x.workers,0),12);assert.equal(P.provisionsAction(s,{type:'provisionsSetWorkers',building:'farm',recipeId:'farmVegetables',workers:.5}).ok,false);
  s.buildings.farm.level=2;assert.equal(P.crewCapacity(s,'farm').total,60);
@@ -35,11 +37,11 @@ test('value exchange cannot turn ten cheap meat into nine expensive flour',()=>{
  assert.equal(P.provisionsAction(s,{type:'provisionsExchange',from:'meat',to:'flour',amount:10,confirm:true}).ok,true);assert.equal(s.resources.meat,0);assert.equal(s.resources.flour,2);
  assert.equal(P.quoteExchange(s,'flour','bread',1).ok,false);
 });
-test('cheapest reserve covers one hour and required diversity and is protected from construction',()=>{
+test('cheapest reserve covers one hour and variety, while ordinary meal quotes remain available',()=>{
  const s=state({th:3,stocks:{meat:100,flour:100,bread:100}});const r=P.foodReservePlan(s);near(r.requiredSatiety,6);assert.equal(r.requiredTypes,2);assert.equal(r.complete,true);assert.ok(Object.values(r.shares).filter(x=>x>=1.2-1e-8).length>=2);assert.ok(r.materials.meat>0);
  const all=Math.floor(s.resources.meat);assert.equal(P.quoteConstructionFood(s,1,{meat:all}).ok,false);
  const one=state({stocks:{bread:10}});const q=P.quoteConstructionFood(one,6);assert.equal(q.ok,true);assert.deepEqual(q.materials,{bread:1});assert.equal(P.quoteConstructionFood(one,-1).ok,false);
- assert.equal(P.provisionsAction(one,{type:'provisionsConstructionSpend',foodUnits:6,mix:{bread:1}}).ok,true);assert.equal(one.resources.bread,9);
+ one.ruleset=32;const before=structuredClone(one);assert.equal(P.provisionsAction(one,{type:'provisionsConstructionSpend',foodUnits:6,mix:{bread:1}}).ok,false);assert.deepEqual(one,before);
 });
 test('ration shortage is proportional for housed and unhoused residents',()=>{
  const s=state({population:2,stocks:{grain:9}}),ctx={hasHousing:p=>p.id===1,now:0};const m=P.feedResidents(s,H,ctx);near(m.coverage,.5);near(P.feedingMultiplier(s,s.residents[0]),.75);near(P.feedingMultiplier(s,s.residents[1]),.75);

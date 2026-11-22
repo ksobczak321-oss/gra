@@ -32,8 +32,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CATALOG = ROOT / "docs/minigames/catalog.json"
 OUTPUT = ROOT / "minigames"
 BASE_URL = "https://harborlight-dev.web.app"
-FIXED_DATE = datetime(2026, 11, 17, 12, 0, tzinfo=timezone.utc)
-ZIP_DATE = (2026, 11, 17, 12, 0, 0)
+FIXED_DATE = datetime(2026, 11, 22, 12, 0, tzinfo=timezone.utc)
+ZIP_DATE = (2026, 11, 22, 12, 0, 0)
 ARCHIVE_NAME = "HARBORLIGHT-minigry-dokumentacja.zip"
 MANIFEST_NAME = "documents.json"
 INDEX_NAME = "linki.txt"
@@ -134,7 +134,7 @@ def make_body(entry, catalog, puzzle_lookup):
     paragraphs = [
         Paragraph(title, "title"),
         Paragraph("HARBORLIGHT · " + family, "subtitle"),
-        Paragraph("Szczegółowe zasady, cel i scenariusz · 17 listopada 2026", "metadata"),
+        Paragraph("Szczegółowe zasady, cel i scenariusz · 22 listopada 2026", "metadata"),
         Paragraph("Otwórz grę na PRE-PROD", "heading"),
         Paragraph(game_url(entry), "url", game_url(entry)),
         Paragraph(PRACTICE_NOTE, "callout"),
@@ -238,7 +238,7 @@ def make_body(entry, catalog, puzzle_lookup):
         Paragraph("Źródła i wersja zasad", "heading"),
         Paragraph("Identyfikator gry: " + entry["slug"] + "."),
         Paragraph("Źródło katalogu: " + catalog["sourceCommit"] + "."),
-        Paragraph("Stan opisu: 17 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej."),
+        Paragraph("Stan opisu: 22 listopada 2026. Opis dotyczy modeli gry wskazanych poniżej."),
     ])
     for source in entry["sourceFiles"]:
         path = source["path"]
@@ -347,7 +347,7 @@ def make_docx(entry, paragraphs):
     props.modified = FIXED_DATE
     props.revision = 1
     props.keywords = "HARBORLIGHT, minigry, " + entry["slug"]
-    props.comments = "Wygenerowano z katalogu zasad; stan opisu 17 listopada 2026."
+    props.comments = "Wygenerowano z katalogu zasad; stan opisu 22 listopada 2026."
     for item in paragraphs:
         style = {"title": "Title", "subtitle": "Subtitle", "heading": "Heading 1", "subheading": "Heading 2", "minorheading": "Heading 3"}.get(item.kind)
         paragraph = document.add_paragraph(style=style)
@@ -445,7 +445,7 @@ def make_outputs(catalog, catalog_data):
     assert len(puzzle_lookup) == 24, "Expected all 24 actual island-puzzle mechanics"
     files = {}
     documents = []
-    index = ["HARBORLIGHT — wszystkie minigry i dokumentacja", "Stan opisu: 17 listopada 2026", "", "Biblioteka: " + BASE_URL + GAME_PATH, "", PRACTICE_NOTE, ""]
+    index = ["HARBORLIGHT — wszystkie minigry i dokumentacja", "Stan opisu: 22 listopada 2026", "", "Biblioteka: " + BASE_URL + GAME_PATH, "", PRACTICE_NOTE, ""]
     for number, entry in enumerate(entries, 1):
         paragraphs = make_body(entry, catalog, puzzle_lookup)
         txt = ("\n\n".join(p.text for p in paragraphs) + "\n").encode("utf-8")
@@ -462,7 +462,7 @@ def make_outputs(catalog, catalog_data):
             index.extend(f"Wariant {variant.get('number', i)}: {game_url(entry, variant.get('number', i))}" for i, variant in enumerate(entry["variants"], 1))
         index.append("")
     files[INDEX_NAME] = ("\n".join(index).rstrip() + "\n").encode("utf-8")
-    manifest = {"schemaVersion": 1, "date": "2026-11-17", "sourceCommit": catalog["sourceCommit"], "catalogSha256": sha256(catalog_data), "entryCount": len(entries), "docxCount": len(entries), "txtCount": len(entries), "storyVariantLinks": sum(len(e["variants"]) for e in entries if e["slug"].startswith("story-")), "validation": "PASS", "families": dict(Counter(e["family"] for e in entries)), "documents": documents}
+    manifest = {"schemaVersion": 1, "date": "2026-11-22", "sourceCommit": catalog["sourceCommit"], "catalogSha256": sha256(catalog_data), "entryCount": len(entries), "docxCount": len(entries), "txtCount": len(entries), "storyVariantLinks": sum(len(e["variants"]) for e in entries if e["slug"].startswith("story-")), "validation": "PASS", "families": dict(Counter(e["family"] for e in entries)), "documents": documents}
     files[MANIFEST_NAME] = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     archive_buffer = BytesIO()
     with ZipFile(archive_buffer, "w", compression=ZIP_DEFLATED, compresslevel=9) as archive:

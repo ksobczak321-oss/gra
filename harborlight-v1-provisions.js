@@ -1,7 +1,7 @@
-import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
-import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-23';
-import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-23';
-import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-23';
+import { developmentText, GOODS_NAMES } from './harborlight-v1-development-copy.js?v=frontend-v32-24';
+import { createHistoryIndex } from './harborlight-v1-diet-history-index.js?v=frontend-v32-24';
+import { createDietAccumulator } from './harborlight-v1-diet-accumulator.js?v=frontend-v32-24';
+import { unpackAdventureSave } from './harborlight-v1-save-packing.js?v=frontend-v32-24';
 // DEV v32 provisions. No browser, network, wall-clock or world-state imports.
 // The host owns production and transport; this module owns their recipes,
 // protected food, individual meal history, milk batches and civilian clothing.
@@ -26,6 +26,12 @@ export const GOODS = Object.freeze({
 export const MATERIAL_IDS = Object.freeze(Object.keys(GOODS));
 export const FOOD_IDS = Object.freeze(MATERIAL_IDS.filter(id => GOODS[id].edible));
 const foodIds = new Set(FOOD_IDS);
+// Building prices use material and coin costs only. Food keeps its ordinary
+// resident, production and travel roles, including grain's edible definition.
+// Filter only a fresh quote: paid/saved project ledgers retain their exact goods.
+export function buildingMaterialCost(cost) {
+  return Object.fromEntries(Object.entries(cost).filter(([id]) => !foodIds.has(id)));
+}
 export const NEW_BUILDINGS = Object.freeze({
   bakery: Object.freeze({ name: 'Piekarnia', unlockLevel: 2, production: 'bread' }), dairy: Object.freeze({ name: 'Mleczarnia', unlockLevel: 2, production: 'pasteurizedMilk' }),
   slaughterhouse: Object.freeze({ name: 'Rzeźnia', unlockLevel: 1, production: 'meat' }), fisher: Object.freeze({ name: 'Rybak', unlockLevel: 1, production: 'fish' }),
@@ -96,8 +102,56 @@ export function localStockRoom(state, building, resource, local = null) {
   const s = localStorageStatus(state, building, local);
   return Math.max(0, Math.min(s.perProduct - finite(s.stock[resource]), s.total - s.used));
 }
+// Move only the unallocated/excess portion of a farm crew. Work in groups at
+// equal staffing levels, so repeated read-only production quotes do not loop
+// once per resident. Catalog order gives an odd extra crop worker to grain.
+function distributeFarmWorkers(counts, ids, amount, limits, decrease = false) {
+  let remaining = whole(amount);
+  while (remaining > 0) {
+    const eligible = ids.filter(id => decrease ? counts[id] > 0 : counts[id] < limits[id]);
+    if (!eligible.length) break;
+    const level = (decrease ? Math.max : Math.min)(...eligible.map(id => counts[id]));
+    const group = eligible.filter(id => counts[id] === level);
+    if (decrease) group.reverse();
+    const otherLevels = eligible.filter(id => counts[id] !== level).map(id => counts[id]);
+    const boundary = decrease
+      ? Math.max(0, ...otherLevels)
+      : Math.min(...group.map(id => limits[id]), ...otherLevels);
+    const distance = decrease ? level - boundary : boundary - level;
+    const step = Math.min(distance, Math.floor(remaining / group.length));
+    if (step > 0) {
+      for (const id of group) counts[id] += decrease ? -step : step;
+      remaining -= step * group.length;
+    } else {
+      for (const id of group) {
+        if (!remaining) break;
+        counts[id] += decrease ? -1 : 1;
+        remaining--;
+      }
+    }
+  }
+  return remaining;
+}
+function farmProductionCounts(recipes, selected, crew, cap) {
+  const ids = recipes.map(r => r.id), limits = Object.fromEntries(ids.map(id => [id, cap.perRecipe?.[id] ?? cap.perProduct]));
+  const counts = Object.fromEntries(ids.map(id => [id, Math.min(whole(selected[id]), limits[id])]));
+  const requested = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  if (requested > crew) distributeFarmWorkers(counts, ids, requested - crew, limits, true);
+  else if (requested < crew) {
+    const crops = ids.filter(id => id === 'farmGrain' || id === 'farmVegetables');
+    const remaining = distributeFarmWorkers(counts, crops, crew - requested, limits);
+    // Higher-level products keep their explicit staffing. Only a full crop
+    // direction can spill new/default workers into another unlocked product.
+    if (remaining) distributeFarmWorkers(counts, ids.filter(id => !crops.includes(id)), remaining, limits);
+  }
+  return counts;
+}
 export function productionAssignments(state, building, context = {}) {
   const recipes = availableRecipes(state, building, context), cap = crewCapacity(state, building, context), crew = Math.min(whole(state.buildings?.[building]?.workers), cap.total), selected = state.provisions?.assignments?.[building] || {};
+  if (building === 'farm') {
+    const counts = farmProductionCounts(recipes, selected, crew, cap);
+    return recipes.map(r => ({ recipeId: r.id, building, workers: counts[r.id], inputs: { ...r.inputs }, outputs: { ...r.outputs }, ratePerWorkerHour: recipeRatePerWorkerHour(state, r.id) }));
+  }
   const hasSelection=Object.keys(selected).length>0;
   let left = crew;
   return recipes.map((r, index) => {
@@ -475,14 +529,15 @@ export function quoteExchange(state,from,to,amount,context={}) {
   return result(true,'Wymiana według wartości, z prowizją 10%.',{from,to,amount,receive,inputValue,outputValue:receive*GOODS[to].price});
 }
 export function quoteConstructionFood(state,foodUnits,mix=null,context={}) {
-  ensure(state,context);if(!Number.isFinite(foodUnits)||foodUnits<0||foodUnits*6>MAX)return result(false,'Nieprawidłowy koszt jedzenia na budowę.');const required=finite(foodUnits)*6,reserved=foodReservePlan(state,context).materials,available=Object.fromEntries(FOOD_IDS.map(id=>[id,Math.max(0,rawAvailable(state,id,context)-finite(reserved[id]))]));let materials={};
-  if(mix!==null){if(!object(mix))return result(false,'Wybierz jedzenie na budowę.');for(const[id,q]of Object.entries(mix)){if(!FOOD_IDS.includes(id)||!Number.isSafeInteger(q)||q<0)return result(false,'Wybierz jadalne produkty i pełne liczby sztuk.');if(q>available[id]+EPS)return result(false,developmentText('MSG-PROTECTED-RESERVE'));if(q>0)materials[id]=q;}}
+  ensure(state,context);if(!Number.isFinite(foodUnits)||foodUnits<0||foodUnits*6>MAX)return result(false,'Nieprawidłowe zapotrzebowanie na jedzenie.');const required=finite(foodUnits)*6,reserved=foodReservePlan(state,context).materials,available=Object.fromEntries(FOOD_IDS.map(id=>[id,Math.max(0,rawAvailable(state,id,context)-finite(reserved[id]))]));let materials={};
+  if(mix!==null){if(!object(mix))return result(false,'Wybierz zestaw jedzenia.');for(const[id,q]of Object.entries(mix)){if(!FOOD_IDS.includes(id)||!Number.isSafeInteger(q)||q<0)return result(false,'Wybierz jadalne produkty i pełne liczby sztuk.');if(q>available[id]+EPS)return result(false,developmentText('MSG-PROTECTED-RESERVE'));if(q>0)materials[id]=q;}}
   else{let remaining=required;for(const id of cheapFoods()){const q=Math.min(Math.floor(available[id]+EPS),Math.ceil(Math.max(0,remaining)/GOODS[id].satiety-EPS));if(q>0){materials[id]=q;remaining-=q*GOODS[id].satiety;}if(remaining<=EPS)break;}}
   const provided=Object.entries(materials).reduce((s,[id,q])=>s+q*GOODS[id].satiety,0);
-  return result(provided+EPS>=required,provided+EPS>=required?'Zestaw jedzenia na budowę jest gotowy.':developmentText('MSG-MEAL-COST-MISSING',{brak:Math.round(Math.max(0,required-provided)*100)/100}),{materials,satietyRequired:required,satietyProvided:provided,missingSatiety:Math.max(0,required-provided)});
+  return result(provided+EPS>=required,provided+EPS>=required?'Zestaw jedzenia jest gotowy.':developmentText('MSG-MEAL-COST-MISSING',{brak:Math.round(Math.max(0,required-provided)*100)/100}),{materials,satietyRequired:required,satietyProvided:provided,missingSatiety:Math.max(0,required-provided)});
 }
 export function provisionsAction(state,action,context={}) {
   if(!action||typeof action.type!=='string'||!action.type.startsWith('provisions'))return null;
+  if(state.ruleset===32&&action.type==='provisionsConstructionSpend')return result(false,'Budowa i rozbudowa nie zużywają żywności.');
   const p=ensure(state,context);
   if(action.type==='provisionsFoodSettings'){
     if(action.priorities!==undefined&&(!Array.isArray(action.priorities)||action.priorities.some(id=>!FOOD_IDS.includes(id))))return result(false,'Wybierz prawidłowe produkty żywnościowe.');
@@ -493,7 +548,21 @@ export function provisionsAction(state,action,context={}) {
   if(action.type==='provisionsSetWorkers'){
     const building=action.building,recipes=availableRecipes(state,building,context),cap=crewCapacity(state,building,context),id=action.recipeId;
     if(!recipes.some(r=>r.id===id)||!Number.isSafeInteger(action.workers)||action.workers<0||action.workers>(cap.perRecipe?.[id]??cap.perProduct))return result(false,'Wybierz odblokowany kierunek i prawidłową liczbę pracowników.');
-    const existing={...(p.assignments[building]||{})},current=productionAssignments(state,building,context);if(!Object.keys(existing).length)for(const row of current)existing[row.recipeId]=row.workers;existing[id]=action.workers;
+    const current=productionAssignments(state,building,context);
+    const existing=building==='farm'?Object.fromEntries(current.map(row=>[row.recipeId,row.workers])):{...(p.assignments[building]||{})};
+    if(!Object.keys(existing).length)for(const row of current)existing[row.recipeId]=row.workers;
+    existing[id]=action.workers;
+    if(building==='farm'){
+      const crew=Math.min(whole(state.buildings?.[building]?.workers),cap.total),total=Object.values(existing).reduce((sum,count)=>sum+count,0);
+      if(action.workers>crew)return result(false,'Nie masz tylu przydzielonych pracowników w Gospodarstwie.');
+      const others=recipes.map(r=>r.id).filter(recipeId=>recipeId!==id),limits=Object.fromEntries(recipes.map(r=>[r.id,cap.perRecipe?.[r.id]??cap.perProduct]));
+      if(total>crew)distributeFarmWorkers(existing,others,total-crew,limits,true);
+      else if(total<crew){
+        const crops=others.filter(recipeId=>recipeId==='farmGrain'||recipeId==='farmVegetables');
+        const remaining=distributeFarmWorkers(existing,crops,crew-total,limits);
+        if(remaining&&distributeFarmWorkers(existing,others.filter(recipeId=>!crops.includes(recipeId)),remaining,limits)>0)return result(false,'Pozostałe kierunki nie pomieszczą tej obsady. Zachowaj limit pracowników przy każdym produkcie.');
+      }
+    }
     if(Object.values(existing).reduce((a,b)=>a+finite(b),0)>Math.min(whole(state.buildings?.[building]?.workers),cap.total))return result(false,'Nie masz tylu przydzielonych pracowników. Najpierw zmniejsz inną obsadę lub przydziel mieszkańców do budynku.');
     p.assignments[building]=existing;crewCapacity(state,building,context);return result(true,'Zmieniono podział pracowników między produkty.');
   }

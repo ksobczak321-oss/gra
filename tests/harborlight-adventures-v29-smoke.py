@@ -38,6 +38,7 @@ def scenario(browser, language, mobile):
     def current():return page.evaluate('window.current()')
     def start(kind):
         page.evaluate('window.reset()');page.locator('[data-adventure-all]').click();page.locator('[data-adventure-start="%s"]'%kind).click()
+        page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         expect(page.locator('[data-adventure-kind]')).to_have_attribute('data-adventure-kind',kind)
         assert page.locator('.adv-active-header h4').inner_text()!=kind
     def complete():

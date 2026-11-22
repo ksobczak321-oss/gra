@@ -232,6 +232,7 @@ def task_and_cashout_targets(browser):
     try:
         page.locator('[data-tutorial-go="lighthouse-task"],[data-tutorial-visit="lighthouse-task"]').first.click()
         page.locator('[data-expedition-choice="triples"]').click()
+        page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         active = saved(page)
         run = next(run for run in active['expeditionRuns'].values() if run['status'] == 'active')
         for symbol in sorted(set(run['miniGame']['cards'])):

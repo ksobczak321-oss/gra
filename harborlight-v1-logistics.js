@@ -1,16 +1,16 @@
 // Physical goods and event-based logistics. Durations are real elapsed seconds,
 // including catch-up after the browser is closed.
-import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v32-23';
-import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v32-23';
-import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, materialReward } from './harborlight-v1-inventory.js?v=frontend-v32-23';
-import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v32-23';
-import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v32-23';
-import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-23';
-import { theatrePorterCanStart } from './harborlight-v1-theatre.js?v=frontend-v32-23';
-import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, foodReservePlan, normalizeProvisions, quoteGoods, availableRecipes, productionAssignments } from './harborlight-v1-provisions.js?v=frontend-v32-23';
-import { normalizeDevelopmentLogistics, developmentProducerIds, developmentProductionBlocked, developmentProductionJobs, progressDevelopmentJob, completeDevelopmentJob, developmentWarehouseSources, takeLocalGoods, putLocalGoods, directRouteWorkers, directRouteSource, developmentLogisticsAction, milkCargoFromCentral, milkCargoToCentral } from './harborlight-v1-development-logistics.js?v=frontend-v32-23';
-import { constructionTiming, normalizeConstructionTiming, warehouseCapacityForLevel, productionPerWorkerHour } from './harborlight-v1-economy.js?v=frontend-v32-23';
-export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, quoteMaterialSpend } from './harborlight-v1-inventory.js?v=frontend-v32-23';
+import { productionMultiplier, beginLighthouseBonus } from './harborlight-v1-residents.js?v=frontend-v32-24';
+import { roadSpeedMultiplier, roadCapacityMultiplier } from './harborlight-v1-leisure.js?v=frontend-v32-24';
+import { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, normalizeBonusMaterials, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, materialReward } from './harborlight-v1-inventory.js?v=frontend-v32-24';
+import { activePlayMultiplier } from './harborlight-v1-progression.js?v=frontend-v32-24';
+import { eventTransportMultiplier, eventProductionMultiplier } from './harborlight-v1-events.js?v=frontend-v32-24';
+import { residentWorkMultiplier, foodDemandPerHour } from './harborlight-v1-housing.js?v=frontend-v32-24';
+import { theatrePorterCanStart } from './harborlight-v1-theatre.js?v=frontend-v32-24';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, foodReservePlan, normalizeProvisions, quoteGoods, availableRecipes, productionAssignments } from './harborlight-v1-provisions.js?v=frontend-v32-24';
+import { normalizeDevelopmentLogistics, developmentProducerIds, developmentProductionBlocked, developmentProductionJobs, progressDevelopmentJob, completeDevelopmentJob, developmentWarehouseSources, takeLocalGoods, putLocalGoods, directRouteWorkers, directRouteSource, developmentLogisticsAction, milkCargoFromCentral, milkCargoToCentral } from './harborlight-v1-development-logistics.js?v=frontend-v32-24';
+import { constructionTiming, normalizeConstructionTiming, warehouseCapacityForLevel, productionPerWorkerHour } from './harborlight-v1-economy.js?v=frontend-v32-24';
+export { centralReserved, centralAvailable, ordinaryStock, bonusStock, ordinaryWarehouseUsed, grantBonusMaterials, consumeMaterial, spendMaterials, centralUnreserved, quoteMaterialSpend } from './harborlight-v1-inventory.js?v=frontend-v32-24';
 export const workerEfficiency = productionMultiplier;
 // Paths improve cargo courses, independently of production and resident walks.
 export const transportEfficiency = (state, efficiency = workerEfficiency(state)) => efficiency * roadSpeedMultiplier(state) * activePlayMultiplier(state) * eventTransportMultiplier(state);
@@ -258,6 +258,16 @@ export function constructionScheduleEstimate(state, projectOrCost, buildingId) {
   const unavailable = reason => ({ ...baseline, transport: Infinity, building: Infinity, total: Infinity, scheduled: true, reason });
   const existing = spec && (state.constructionProjects || []).find(project => project === spec || spec.order && project.order === spec.order);
   if (existing?.stage === 'building') {const remaining=existing.buildRemaining/constructionEfficiency(state);return { ...baseline, transport: 0, building: remaining, total: remaining, queueWait: 0, completionTotal: remaining, scheduled: true, reason: '' };}
+  // No future carrier can appear inside this read-only logistics projection.
+  // Production events alone cannot deliver construction cargo. Avoid simulating
+  // thousands of unrelated factory events just to rediscover this dead end.
+  const possibleLevel=Math.max(state.buildings.townhall.level,...(state.constructionProjects||[]).filter(project=>project.building==='townhall').map(project=>project.targetLevel));
+  if(!existing&&id!=='townhall'&&(spec?.targetLevel||plannedLevel(state,id)+1)>possibleLevel)return unavailable('Upgrade the Town Hall first.');
+  const remainingGoods=spec?.remainingMaterials||spec?.cost||projectOrCost||{};
+  const needsCargo=materialIds(state).some(resource=>whole(remainingGoods[resource])>0);
+  const warehouseAssigned=(state.buildings.warehouse?.workers||0)>0||(state.residents||[]).some(person=>person.workplace==='warehouse');
+  const tripsInFlight=(state.haulTrips?.warehouse||[]).length>0;
+  if(needsCargo&&!warehouseAssigned&&!tripsInFlight)return unavailable('Waiting for available warehouse carriers or an earlier upgrade.');
   const snapshot = structuredClone(state);
   const efficiency = workerEfficiency(state);
   let target = existing ? snapshot.constructionProjects.find(project => project.order === existing.order) : null;

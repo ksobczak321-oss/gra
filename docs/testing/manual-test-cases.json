@@ -2559,102 +2559,237 @@
         "HL-CHG-1190"
       ],
       "file": "manual/HL-TC-0195.md"
+    },
+    {
+      "id": "HL-TC-0196",
+      "title": "Brak żywności i zboża w cenach wszystkich rozbudów",
+      "area": "Koszty budowy",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1191"
+      ],
+      "file": "manual/HL-TC-0196.md"
+    },
+    {
+      "id": "HL-TC-0197",
+      "title": "Historyczna opłacona budowa i zwykłe wyżywienie pozostają zachowane",
+      "area": "Zgodność zapisu",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1191"
+      ],
+      "file": "manual/HL-TC-0197.md"
+    },
+    {
+      "id": "HL-TC-0198",
+      "title": "Równe kontrolki produkcji na szerokim i wąskim ekranie",
+      "area": "Układ produkcji",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1192"
+      ],
+      "file": "manual/HL-TC-0198.md"
+    },
+    {
+      "id": "HL-TC-0199",
+      "title": "Doradca wybiera realny etap zamiast niedostępnego Ratusza 4",
+      "area": "Plan rozwoju",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1193"
+      ],
+      "file": "manual/HL-TC-0199.md"
+    },
+    {
+      "id": "HL-TC-0200",
+      "title": "Doradca przelicza aktualny plan i prowadzi do właściwej kontrolki",
+      "area": "Swoboda gracza",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1193"
+      ],
+      "file": "manual/HL-TC-0200.md"
+    },
+    {
+      "id": "HL-TC-0201",
+      "title": "Gospodarstwo dzieli nowych ludzi i przenosi istniejących między produktami",
+      "area": "Obsada Gospodarstwa",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1194"
+      ],
+      "file": "manual/HL-TC-0201.md"
+    },
+    {
+      "id": "HL-TC-0202",
+      "title": "Pełne instrukcje wszystkich55 gier i czytelne sterowanie",
+      "area": "Instrukcje minigier",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1195",
+        "HL-CHG-1196"
+      ],
+      "file": "manual/HL-TC-0202.md"
+    },
+    {
+      "id": "HL-TC-0203",
+      "title": "Czytanie instrukcji nie zużywa czasu ani puli ekspedycji",
+      "area": "Czytanie przed grą",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1195"
+      ],
+      "file": "manual/HL-TC-0203.md"
+    },
+    {
+      "id": "HL-TC-0204",
+      "title": "Pierwszy blask i każdy pokój czekają na przeczytanie opisu",
+      "area": "Przygody fabularne",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1195",
+        "HL-CHG-1196"
+      ],
+      "file": "manual/HL-TC-0204.md"
+    },
+    {
+      "id": "HL-TC-0205",
+      "title": "Zmiany mechanik Worda są czytelne i rozwiązywalne",
+      "area": "Zagadki z Worda",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1196"
+      ],
+      "file": "manual/HL-TC-0205.md"
+    },
+    {
+      "id": "HL-TC-0206",
+      "title": "Misja otwiera dokładnie wskazaną grę i zachowuje wybór po odświeżeniu",
+      "area": "Misje i gry",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1197"
+      ],
+      "file": "manual/HL-TC-0206.md"
+    },
+    {
+      "id": "HL-TC-0207",
+      "title": "81 mieszkańców spełnia próg Ratusza 4 a pozostałe braki są wyjaśnione",
+      "area": "Ludność i pomoc",
+      "priority": "P0",
+      "definition_status": "READY",
+      "manual_result": "NOT RUN",
+      "changes": [
+        "HL-CHG-1198"
+      ],
+      "file": "manual/HL-TC-0207.md"
     }
   ],
   "current_scope": {
-    "date": "2026-11-21",
-    "environment": "DEV_and_PREPROD",
-    "application_version": "0.15.3.1",
-    "cache": "frontend-v32-23",
-    "dev_status": "ACCEPTED_AUTOMATED_MANUAL_NOT_RUN",
-    "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-    "dev_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-    "publication_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-    "ci_run_id": 44943513346,
-    "pages_run_id": 44943513266,
-    "dev_tag": "dev-0.15.3.1-20261121",
-    "case_range": "TC0188–0195",
-    "previous_case_range": "TC0180–0187",
-    "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
-    "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+    "date": "2026-11-22",
+    "environment": "DEV_GIT_CI_PAGES_INITIAL_SCOPE",
+    "application_version": "0.15.4.0",
+    "cache": "frontend-v32-24",
+    "dev_status": "IMPLEMENTATION_IN_PROGRESS_NOT_PUBLISHED",
+    "code_source_sha": null,
+    "dev_source_sha": null,
+    "publication_source_sha": null,
+    "ci_run_id": null,
+    "pages_run_id": null,
+    "dev_tag": null,
+    "case_range": "TC0196–0207",
+    "previous_case_range": "TC0188–0195",
+    "requirements": "docs/v32/GO-PACKET-20261122.md",
+    "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
     "preprod_application_version": "0.15.3.1",
     "preprod_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
     "preprod_deployment_run_id": 44946821720,
-    "preprod_status": "ACCEPTED_ALL_AUTOMATED_GATES_MANUAL_NOT_RUN",
-    "new_PREPROD_authorized": true,
-    "new_PREPROD_run_id": 44946821720,
+    "preprod_status": "PREVIOUS_ACCEPTED_CACHE23_UNCHANGED_NEW_PACKET_NOT_DEPLOYED",
+    "new_PREPROD_authorized": false,
+    "new_PREPROD_authorization": "PENDING_EXPLICIT_PROMOTION_OR_ROOT_SCOPE_CLARIFICATION",
+    "new_PREPROD_run_id": null,
     "manual_user_acceptance": "NOT_RUN",
-    "note": "DEV/PREPROD0.15.3.1 accepted from own exact-sourceCI/Pages/standardGCP and independent originals/publicbytes/native UI/strictaccount audits. All195manualNOT_RUN. Previous owneradmin1restart remains historical release22 only; noQA reset/writes, PROD/DNS/passwordchanges.",
-    "previous_accepted_cache22_scope": {
+    "physical_online_integration": "excluded_by_user",
+    "local_targeted_proofs_do_not_execute_manual_cases": true,
+    "previous_accepted_cache23_scope": {
       "date": "2026-11-21",
       "environment": "DEV_and_PREPROD",
-      "physical_online_integration": "excluded_by_user",
-      "application_version": "0.15.3.0",
-      "cache": "frontend-v32-22",
+      "application_version": "0.15.3.1",
+      "cache": "frontend-v32-23",
       "dev_status": "ACCEPTED_AUTOMATED_MANUAL_NOT_RUN",
-      "dev_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
-      "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
-      "ci_run_id": 44926983827,
-      "pages_run_id": 44926983937,
-      "dev_tag": "dev-0.15.3.0-20261121",
-      "preprod_application_version": "0.15.3.0",
-      "preprod_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
-      "preprod_deployment_run_id": 44929856572,
-      "preprod_deployment_attempt": 1,
-      "preprod_status": "ACCEPTED_NATIVE_ARTIFACTS_BYTES_ACCOUNT_PRESERVATION_MANUAL_NOT_RUN",
-      "preprod_tag": "preprod-0.15.3.0-20261121",
+      "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "dev_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "publication_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "ci_run_id": 44943513346,
+      "pages_run_id": 44943513266,
+      "dev_tag": "dev-0.15.3.1-20261121",
+      "case_range": "TC0188–0195",
+      "previous_case_range": "TC0180–0187",
+      "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
+      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+      "preprod_application_version": "0.15.3.1",
+      "preprod_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "preprod_deployment_run_id": 44946821720,
+      "preprod_status": "ACCEPTED_ALL_AUTOMATED_GATES_MANUAL_NOT_RUN",
+      "new_PREPROD_authorized": true,
+      "new_PREPROD_run_id": 44946821720,
       "manual_user_acceptance": "NOT_RUN",
-      "case_range": "TC0180–0187",
-      "previous_case_range": "TC0148–0179",
-      "requirements": "docs/v32/GO-ADVISOR-GUIDANCE.md",
-      "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json",
-      "note": "DEV/PREPROD0.15.3.0 have independent exact-source acceptance; all187 manual cases remain NOT RUN. Admin2/admin3 remain intact; admin1 was restarted by the explicitly confirming owner during audit. QA/deployment performed no game writes/reset, password changes, PROD or DNS.",
-      "historical_C6_scope_before_guidance": {
-        "date": "2026-11-19",
+      "note": "DEV/PREPROD0.15.3.1 accepted from own exact-sourceCI/Pages/standardGCP and independent originals/publicbytes/native UI/strictaccount audits. All195manualNOT_RUN. Previous owneradmin1restart remains historical release22 only; noQA reset/writes, PROD/DNS/passwordchanges.",
+      "previous_accepted_cache22_scope": {
+        "date": "2026-11-21",
         "environment": "DEV_and_PREPROD",
         "physical_online_integration": "excluded_by_user",
-        "application_version": "0.15.2.4",
-        "preprod_application_version": "0.15.2.4",
-        "preprod_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-        "note": "Bieżący DEV i PRE-PROD0.15.2.4/cache21 mają własne CI/Pages oraz standardowe przyjęcie44577083312/1. Wszystkie179 ręcznych przypadków pozostają NOT RUN; automatyzacja nie zalicza ręcznego testu. Zachowano historyczne definicje, powiązania i v31 scope. Bez resetu kont, zmian zegara, PROD, DNS lub realnych operatorów. ZakresTC0148–0179 nadal oznacza ostatni zestaw definicji v31, a nie komplet nowych przypadków C6.",
-        "dev_status": "accepted_automated_ci_pages_and_preprod_manual_cases_not_run",
-        "case_range": "TC0148–0179",
-        "previous_case_range": "TC0135–0147",
-        "previous_accepted_dev": {
-          "dev_application_version": "0.13.0.0",
-          "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
-          "dev_ci_run_id": 41657032913,
-          "dev_pages_run_id": 41657032922,
-          "dev_tag": "dev-0.13.0.0-20261103"
-        },
-        "dev_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
-        "ci_run_id": 44569674535,
-        "pages_run_id": 44569674475,
-        "preprod_ci_run_id": 44569674535,
-        "preprod_deployment_run_id": 44577083312,
+        "application_version": "0.15.3.0",
+        "cache": "frontend-v32-22",
+        "dev_status": "ACCEPTED_AUTOMATED_MANUAL_NOT_RUN",
+        "dev_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "code_source_sha": "f6572ee7500b42f56d1575de2e173d1bd635216c",
+        "ci_run_id": 44926983827,
+        "pages_run_id": 44926983937,
+        "dev_tag": "dev-0.15.3.0-20261121",
+        "preprod_application_version": "0.15.3.0",
+        "preprod_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_deployment_run_id": 44929856572,
         "preprod_deployment_attempt": 1,
-        "preprod_status": "accepted_native_existing_UI_original_receipt_all_bytes_accounts_preserved_manual_cases_not_run",
-        "previous_accepted_dev_v30": {
-          "application_version": "0.13.1.0",
-          "dev_status": "verified_ci_and_pages_manual_cases_not_run",
-          "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
-          "ci_run_id": 41667711260,
-          "pages_run_id": 41667711124
-        },
-        "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
-        "cache": "frontend-v32-21",
-        "dev_tag": "dev-0.15.2.4-20261119",
-        "preprod_tag": "preprod-0.15.2.4-20261119",
+        "preprod_status": "ACCEPTED_NATIVE_ARTIFACTS_BYTES_ACCOUNT_PRESERVATION_MANUAL_NOT_RUN",
+        "preprod_tag": "preprod-0.15.3.0-20261121",
         "manual_user_acceptance": "NOT_RUN",
-        "historical_v31_scope_before_C6_sync": {
-          "date": "2026-11-04",
-          "environment": "DEV",
+        "case_range": "TC0180–0187",
+        "previous_case_range": "TC0148–0179",
+        "requirements": "docs/v32/GO-ADVISOR-GUIDANCE.md",
+        "evidence": "docs/v32/ADVISOR-GUIDANCE-EVIDENCE.json",
+        "note": "DEV/PREPROD0.15.3.0 have independent exact-source acceptance; all187 manual cases remain NOT RUN. Admin2/admin3 remain intact; admin1 was restarted by the explicitly confirming owner during audit. QA/deployment performed no game writes/reset, password changes, PROD or DNS.",
+        "historical_C6_scope_before_guidance": {
+          "date": "2026-11-19",
+          "environment": "DEV_and_PREPROD",
           "physical_online_integration": "excluded_by_user",
-          "application_version": "0.14.0.0",
-          "preprod_application_version": "0.13.1.0",
-          "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
-          "note": "Nowy DEV 0.14.0.0 / v31 jest w integracji; końcowy SHA, własne CI, Pages i pakiet pozostają PENDING. 179 ręcznych prób ma NOT RUN; zachowano 147 historycznych definicji i wyników. PRE-PROD pozostaje 0.13.1.0/68e9bcd, bez nowej promocji, resetu, PROD i realnych operatorów. Cel 50 dni i 150 godzin wymaga osobnych dowodów.",
-          "dev_status": "implementation_in_progress_manual_cases_not_run",
+          "application_version": "0.15.2.4",
+          "preprod_application_version": "0.15.2.4",
+          "preprod_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "note": "Bieżący DEV i PRE-PROD0.15.2.4/cache21 mają własne CI/Pages oraz standardowe przyjęcie44577083312/1. Wszystkie179 ręcznych przypadków pozostają NOT RUN; automatyzacja nie zalicza ręcznego testu. Zachowano historyczne definicje, powiązania i v31 scope. Bez resetu kont, zmian zegara, PROD, DNS lub realnych operatorów. ZakresTC0148–0179 nadal oznacza ostatni zestaw definicji v31, a nie komplet nowych przypadków C6.",
+          "dev_status": "accepted_automated_ci_pages_and_preprod_manual_cases_not_run",
           "case_range": "TC0148–0179",
           "previous_case_range": "TC0135–0147",
           "previous_accepted_dev": {
@@ -2664,35 +2799,74 @@
             "dev_pages_run_id": 41657032922,
             "dev_tag": "dev-0.13.0.0-20261103"
           },
-          "dev_source_sha": null,
-          "ci_run_id": null,
-          "pages_run_id": null,
-          "preprod_ci_run_id": 41671140612,
-          "preprod_deployment_run_id": 41673824262,
+          "dev_source_sha": "d5ad35cf530b9df62bc4e50d9e1d6e2c308fb63d",
+          "ci_run_id": 44569674535,
+          "pages_run_id": 44569674475,
+          "preprod_ci_run_id": 44569674535,
+          "preprod_deployment_run_id": 44577083312,
           "preprod_deployment_attempt": 1,
-          "preprod_status": "verified_deployment_manual_cases_not_run",
+          "preprod_status": "accepted_native_existing_UI_original_receipt_all_bytes_accounts_preserved_manual_cases_not_run",
           "previous_accepted_dev_v30": {
             "application_version": "0.13.1.0",
             "dev_status": "verified_ci_and_pages_manual_cases_not_run",
             "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
             "ci_run_id": 41667711260,
             "pages_run_id": 41667711124
+          },
+          "code_source_sha": "e394ea8fe369f9dfc6615b7a96da1c3e499672e6",
+          "cache": "frontend-v32-21",
+          "dev_tag": "dev-0.15.2.4-20261119",
+          "preprod_tag": "preprod-0.15.2.4-20261119",
+          "manual_user_acceptance": "NOT_RUN",
+          "historical_v31_scope_before_C6_sync": {
+            "date": "2026-11-04",
+            "environment": "DEV",
+            "physical_online_integration": "excluded_by_user",
+            "application_version": "0.14.0.0",
+            "preprod_application_version": "0.13.1.0",
+            "preprod_source_sha": "68e9bcd6adf22ab98f963688726a71d4d8a66c6b",
+            "note": "Nowy DEV 0.14.0.0 / v31 jest w integracji; końcowy SHA, własne CI, Pages i pakiet pozostają PENDING. 179 ręcznych prób ma NOT RUN; zachowano 147 historycznych definicji i wyników. PRE-PROD pozostaje 0.13.1.0/68e9bcd, bez nowej promocji, resetu, PROD i realnych operatorów. Cel 50 dni i 150 godzin wymaga osobnych dowodów.",
+            "dev_status": "implementation_in_progress_manual_cases_not_run",
+            "case_range": "TC0148–0179",
+            "previous_case_range": "TC0135–0147",
+            "previous_accepted_dev": {
+              "dev_application_version": "0.13.0.0",
+              "dev_source_sha": "cf6739a081d89bb5b2c6773a04a34f3fe2a8a8da",
+              "dev_ci_run_id": 41657032913,
+              "dev_pages_run_id": 41657032922,
+              "dev_tag": "dev-0.13.0.0-20261103"
+            },
+            "dev_source_sha": null,
+            "ci_run_id": null,
+            "pages_run_id": null,
+            "preprod_ci_run_id": 41671140612,
+            "preprod_deployment_run_id": 41673824262,
+            "preprod_deployment_attempt": 1,
+            "preprod_status": "verified_deployment_manual_cases_not_run",
+            "previous_accepted_dev_v30": {
+              "application_version": "0.13.1.0",
+              "dev_status": "verified_ci_and_pages_manual_cases_not_run",
+              "dev_source_sha": "13c55a4e4853edf44c185747c1c626ac42c221fc",
+              "ci_run_id": 41667711260,
+              "pages_run_id": 41667711124
+            }
           }
-        }
+        },
+        "initial_GO_scope": "DEV_ONLY",
+        "followup_PREPROD_quote": "jak skończysz wrzuć na pre prod",
+        "new_PREPROD_authorized": true,
+        "new_PREPROD_run_id": 44929856572,
+        "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
+        "preprod_ci_run_id": 44926983827,
+        "account_integrity_status": "PASS_WITH_OWNER_CONFIRMED_RESTART",
+        "owner_admin1_restart_acknowledged": true
       },
-      "initial_GO_scope": "DEV_ONLY",
-      "followup_PREPROD_quote": "jak skończysz wrzuć na pre prod",
-      "new_PREPROD_authorized": true,
-      "new_PREPROD_run_id": 44929856572,
-      "publication_source_sha": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
-      "preprod_ci_run_id": 44926983827,
-      "account_integrity_status": "PASS_WITH_OWNER_CONFIRMED_RESTART",
-      "owner_admin1_restart_acknowledged": true
+      "physical_online_integration": "excluded_by_user",
+      "local_targeted_proofs_do_not_execute_manual_cases": true,
+      "preprod_deployment_attempt": 1,
+      "preprod_tag": "preprod-0.15.3.1-20261121",
+      "account_integrity_status": "PASS"
     },
-    "physical_online_integration": "excluded_by_user",
-    "local_targeted_proofs_do_not_execute_manual_cases": true,
-    "preprod_deployment_attempt": 1,
-    "preprod_tag": "preprod-0.15.3.1-20261121",
-    "account_integrity_status": "PASS"
+    "note": "207 definicji; wszystkie NOT RUN. Nowe12 przypadków nie dziedziczy odbioru cache23 ani wyników automatyzacji. Poprzednie195 definicji i wyników pozostaje identyczne. Brak nowej promocji PRE-PROD/PROD/resetu/DNS/zmian haseł."
   }
 }

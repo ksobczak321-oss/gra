@@ -163,6 +163,8 @@ def journey_close_scenario(browser, language, mobile):
                                ('story', '[data-story-start="merchant-rescue"]')]:
             open_adventure_catalog(page, language, mobile)
             page.locator(selector).first.click()
+            if base.state_of(page).get('ruleset') == 32:
+                page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
             before = base.state_of(page)['adventures']['active']
             assert before['data']['puzzle']['kind'] == 'marbleMaze'
             move_actual_marble(page, mobile)

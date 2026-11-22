@@ -1,5 +1,5 @@
-import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v32-23';
-import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-23';
+import { registerTranslations } from './harborlight-v1-i18n.js?v=frontend-v32-24';
+import { TUTORIAL_LESSONS } from './harborlight-v1-progression.js?v=frontend-v32-24';
 
 // Presentation copy for the current learning flow. Player-entered text never
 // passes through this catalogue.
@@ -226,6 +226,7 @@ export const V16_COPY = {
   'The final reward filled free ordinary Warehouse capacity. No material was removed, and no tutorial reward is waiting.': 'Nagroda końcowa uzupełniła wolne miejsce w magazynie. Żadne materiały nie przepadły i wszystkie nagrody samouczka zostały odebrane.',
   'Tutorial complete. Your ordinary Warehouse is full and no tutorial rewards are waiting.': 'Samouczek ukończony. Magazyn jest pełny i wszystkie nagrody samouczka zostały odebrane.',
   'One-time supplies fill the missing first Town Hall budget directly in ordinary storage, including food for construction and meals.': 'Jednorazowa pomoc uzupełnia brakujące materiały na pierwszą rozbudowę ratusza, z zapasem żywności na budowę i posiłki.',
+  'One-time supplies cover missing Town Hall coins and construction materials, plus food for residents.': 'Jednorazowa pomoc uzupełnia brakujące monety i materiały na rozbudowę Ratusza oraz zapewnia zapas jedzenia dla mieszkańców.',
   'Reward confirmed. Continue to the next tutorial action.': 'Nagroda potwierdzona. Przejdź do kolejnego zadania samouczka.',
   'Tutorial complete: Warehouse full': 'Samouczek ukończony: magazyn pełny',
   'Tutorial resumed. Your progress is preserved.': 'Wracamy do samouczka. Twój dotychczasowy postęp został zachowany.',

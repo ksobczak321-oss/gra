@@ -118,14 +118,9 @@ function recipeTownhallMinimum(row) {
 }
 function costFacts(state, id, queued) {
   const cost = State.buildingCost(state, id, { queued, starterDiscount: false });
-  const ordinary = { ...cost }, mix = cost?.foodQuote?.materials || {};
-  for (const [resource, value] of Object.entries(mix)) {
-    ordinary[resource] = (ordinary[resource] || 0) - value;
-    if (Math.abs(ordinary[resource]) < 1e-8) delete ordinary[resource];
-  }
-  return { cost: { ...cost }, ordinary, foodUnits: cost?.foodUnits || 0,
-    foodSatiety: cost?.foodQuote?.satietyRequired || 0,
-    exampleFoodMix: mix, foodQuoteOk: cost?.foodQuote?.ok ?? true };
+  assert.ok(Provisions.FOOD_IDS.every(resource => !Object.hasOwn(cost,resource)), `Building ${id} must not quote food or grain`);
+  assert.equal(cost.foodQuote, undefined); assert.equal(cost.foodUnits, undefined);
+  return { cost: { ...cost }, ordinary: { ...cost } };
 }
 const fresh = State.createState(AT, { ruleset: 32, onboarding: true });
 const levels = [];
@@ -153,7 +148,7 @@ for (const id of buildingIds) {
   for (let targetLevel = 1; targetLevel <= definition.maxLevel; targetLevel++) {
     const state = fixture(Math.max(targetLevel, unlocks[id]));
     state.buildings[id].level = targetLevel - 1;
-    const ordinary = id === 'theatre' ? { ordinary: {}, foodUnits: 0, foodSatiety: 0, cost: {}, exampleFoodMix: {} } : costFacts(state, id, false);
+    const ordinary = id === 'theatre' ? { ordinary: {}, cost: {} } : costFacts(state, id, false);
     const queued = id === 'theatre' ? ordinary : costFacts(state, id, true);
     const timing = id === 'theatre' ? null : Economy.constructionTiming(state, { building: id, targetLevel, cost: ordinary.cost });
     state.buildings[id].level = targetLevel;
@@ -164,8 +159,7 @@ for (const id of buildingIds) {
     buildingLevels.push({ buildingId: id, buildingPl: nameOf(id), currentLevel: targetLevel - 1, targetLevel,
       mode: targetLevel === 1 ? firstLevelMode : 'Rozbudowa',
       priceIsValuationOnly: targetLevel === 1 && firstLevelMode !== 'Wybudowanie',
-      unlockTownhall: unlocks[id], ordinaryCost: ordinary.ordinary, foodUnits: ordinary.foodUnits, foodSatiety: ordinary.foodSatiety,
-      exampleFoodMix: ordinary.exampleFoodMix, queuedOrdinaryCost: queued.ordinary, queuedFoodUnits: queued.foodUnits,
+      unlockTownhall: unlocks[id], ordinaryCost: ordinary.ordinary, queuedOrdinaryCost: queued.ordinary,
       totalSeconds: timing?.totalSeconds || 0, transportSeconds: timing?.transportDuration || 0, buildingSeconds: timing?.buildingDuration || 0,
       constructionPorters: timing?.requiredWorkers || 0, constructionTrips: timing?.trips || 0, constructionWaves: timing?.waves || 0,
       crewPerProduct: producerIds.has(id) ? crew.perProduct : null,
@@ -328,9 +322,12 @@ for (const [recipeId, recipe] of Object.entries(Provisions.RECIPE_CATALOG)) {
   for (const id of new Set([...Object.keys(recipe.inputs), ...Object.keys(recipe.outputs)])) assert.equal(local[id] || 0, (before[id] || 0) - (recipe.inputs[id] || 0) + (recipe.outputs[id] || 0), recipeId + ':' + id);
   examples.push({ id: 'physical-batch-' + recipeId, domain: 'Produkcja fizyczna', input: { recipeId, level: state.buildings[recipe.building].level, workers: 1, localBefore: before }, expected: { seconds: job.cycle, inputs: recipe.inputs, outputs: recipe.outputs }, actual: { localAfter: local }, passed: true, source_file: 'harborlight-v1-development-logistics.js' });
 }
-const foodState = fixture(1), foodQuote = Provisions.quoteConstructionFood(foodState, 1);
+const foodState = fixture(1), buildingQuote = State.buildingCost(foodState,'townhall',{starterDiscount:false});
+assert.deepEqual(buildingQuote,{coins:500,wood:500,stone:500,planks:500});
+examples.push({ id: 'construction-materials-no-food', domain: 'Koszty budowy', input: { building:'townhall', currentLevel:1 }, expected: { coins:500,wood:500,stone:500,planks:500 }, actual: buildingQuote, passed: true, source_file: 'harborlight-v1-state.js;harborlight-v1-provisions.js' });
+const foodQuote = Provisions.quoteConstructionFood(foodState, 1);
 assert.equal(foodQuote.satietyRequired, 6); assert.equal(foodQuote.ok, true);
-examples.push({ id: 'construction-six-satiety', domain: 'Wyżywienie budowy', input: { oldFoodUnits: 1 }, expected: { satietyRequired: 6 }, actual: foodQuote, passed: true, source_file: 'harborlight-v1-provisions.js' });
+examples.push({ id: 'protected-meal-six-satiety', domain: 'Posiłki i podróże', input: { mealUnits:1 }, expected: { satietyRequired:6 }, actual: foodQuote, passed:true, source_file:'harborlight-v1-provisions.js;harborlight-v1-archipelago.js' });
 assert.equal(Economy.warehouseCapacityPlan(1, { ruleset: 32 }).total, 40000);
 examples.push({ id: 'warehouse-level1-40k', domain: 'Magazyn', input: { level: 1, ruleset: 32 }, expected: { total: 40000 }, actual: Economy.warehouseCapacityPlan(1, { ruleset: 32 }), passed: true, source_file: 'harborlight-v1-economy.js' });
 let changed = Clock.changeDevAccountClock(null, { rate: 2, requestId: 'workbook-rate-two' }, AT);
@@ -358,7 +355,7 @@ flattenRules('Accounts', { sessionIdleTimeoutMs: SESSION_IDLE_TIMEOUT_MS, legalV
   retentionExample: { anchor: AT, expiry: threeMonthDeadline(AT) }, clockScope: 'tylko uwierzytelniony dev-admin3; lokalny DEV lub projekt harborlight-dev / preprod; PROD odmowa; osobny zegar generacji konta' }, 'backend/account-service.mjs; backend/server.mjs; harborlight-dev-cloud.js');
 
 add('levels', 'Poziomy 1–100', 'Wartości aktualnego ruleset32. Brak bonusów badań, dróg, szczęścia i światła Latarni.', [['level','Poziom'],['maxConstructionSeconds','Najdłuższa budowa [s]'],['populationCapacity','Limit mieszkańców'],['houseBeds','Łóżka Domu'],['warehouseTotal','Magazyn razem'],['warehousePerResource','Limit na zasób'],['carrierCapacity','Udźwig tragarza'],['marketCapacity','Pojemność Targu'],['dockCapacity','Pojemność Portu'],['nextTownhallPopulationRequired','Ludność do następnego Ratusza'],['requiredFoodTypes','Wymagane rodzaje jedzenia'],['professorLimit','Limit profesorów'],['barracksBeds','Łóżka Koszar'],['warehouseNeeds','Koszyk potrzeb Magazynu'],['warehouseBuffer','Mnożnik bufora'],['warehouseRoundingUnit','Zaokrąglenie w dół']], levels, ['harborlight-v1-economy.js','harborlight-v1-logistics.js','harborlight-v1-education.js','harborlight-v1-military.js']);
-add('building-levels', 'Budynki i poziomy', 'Cennik poziomu N przy stanie N−1. Bez kolejki i z kolejką; bez rabatu startowego. Poziom1 bywa dostępny od startu lub odblokowuje się automatycznie: jego cennik jest wtedy wyceną, nie faktyczną opłatą. Wyżywienie pokazano oddzielnie.', [['buildingId','ID budynku'],['buildingPl','Budynek'],['currentLevel','Poziom przed'],['targetLevel','Poziom docelowy'],['mode','Sposób uzyskania poziomu'],['priceIsValuationOnly','Tylko wycena poziomu1'],['unlockTownhall','Próg Ratusza'],['ordinaryCost','Koszt zwykły'],['foodUnits','Dawne jednostki żywności'],['foodSatiety','Koszt sytości'],['exampleFoodMix','Przykładowe jedzenie'],['queuedOrdinaryCost','Koszt w kolejce'],['queuedFoodUnits','Jednostki jedzenia w kolejce'],['totalSeconds','Budżet łączny [s]'],['transportSeconds','Transport budowy [s]'],['buildingSeconds','Sama budowa [s]'],['constructionPorters','Tragarze'],['constructionTrips','Kursy ładunku'],['constructionWaves','Fale kursów'],['crewPerProduct','Limit na produkt'],['crewTotal','Limit wszystkich pracowników'],['activeProducts','Dostępne produkty bez odkryć'],['localPerProduct','Magazyn lokalny na produkt'],['localTotal','Magazyn lokalny razem']], buildingLevels, ['harborlight-v1-state.js','harborlight-v1-economy.js','harborlight-v1-provisions.js'], ['Czasy są budżetem modelu przy standardowych warunkach; brak materiałów, pracowników lub bonusy zmieniają faktyczny termin.','Przykładowy dobór jedzenia zakłada duży zapas wszystkich bieżących towarów, bez historycznej żywności.','Puste limity magazynu lokalnego i produktu oznaczają, że budynek nie jest producentem; nie przypisujemy Domowi lub Ratuszowi fikcyjnego magazynu.']);
+add('building-levels', 'Budynki i poziomy', 'Cennik poziomu N przy stanie N−1. Bez kolejki i z kolejką; bez rabatu startowego. Poziom1 bywa dostępny od startu lub odblokowuje się automatycznie: jego cennik jest wtedy wyceną, nie faktyczną opłatą. Koszt obejmuje monety i materiały budowlane; zboże i pozostałe produkty spożywcze nie są kosztami nowych budów.', [['buildingId','ID budynku'],['buildingPl','Budynek'],['currentLevel','Poziom przed'],['targetLevel','Poziom docelowy'],['mode','Sposób uzyskania poziomu'],['priceIsValuationOnly','Tylko wycena poziomu1'],['unlockTownhall','Próg Ratusza'],['ordinaryCost','Koszt zwykły'],['queuedOrdinaryCost','Koszt w kolejce'],['totalSeconds','Budżet łączny [s]'],['transportSeconds','Transport budowy [s]'],['buildingSeconds','Sama budowa [s]'],['constructionPorters','Tragarze'],['constructionTrips','Kursy ładunku'],['constructionWaves','Fale kursów'],['crewPerProduct','Limit na produkt'],['crewTotal','Limit wszystkich pracowników'],['activeProducts','Dostępne produkty bez odkryć'],['localPerProduct','Magazyn lokalny na produkt'],['localTotal','Magazyn lokalny razem']], buildingLevels, ['harborlight-v1-state.js','harborlight-v1-economy.js','harborlight-v1-provisions.js'], ['Czasy są budżetem modelu przy standardowych warunkach; brak materiałów, pracowników lub bonusy zmieniają faktyczny termin.','Nowe wyceny nie zawierają jedzenia ani zboża. Zapisane wcześniej opłacone projekty zachowują swój oryginalny koszt i rezerwacje.','Puste limity magazynu lokalnego i produktu oznaczają, że budynek nie jest producentem; nie przypisujemy Domowi lub Ratuszowi fikcyjnego magazynu.']);
 add('products', 'Produkty', 'Wszystkie obecne towary i zapas historyczny; miejsce produkcji z katalogu receptur.', [['id','ID'],['name','Produkt'],['category','Kategoria'],['price','Cena bazowa [monety]'],['salePrice','Cena sprzedaży bazowa'],['satiety','Sytość na sztukę'],['edible','Jadalny'],['producers','Budynki produkcji'],['productionSpecial','Inne źródło'],['legacy','Historyczny'],['devBalanceProposal','Parametr oznaczony propozycją DEV']], goods, ['harborlight-v1-provisions.js']);
 add('recipe-levels', 'Receptury i wydajność', 'Jedna osoba, wydajność bazowa ×1; tempo liczy partie receptury. 2 mięsa w partii nie oznaczają podwojenia liczby partii.', [['recipeId','ID receptury'],['buildingId','ID budynku'],['buildingPl','Budynek'],['level','Poziom budynku'],['minimumBuildingLevel','Minimalny poziom budynku'],['minimumTownhall','Minimalny Ratusz'],['discovery','Odkrycie'],['academyRequired','Wymagana Akademia'],['availableWithoutDiscovery','Dostępne bez odkrycia'],['availableWithDiscovery','Dostępne po odkryciu'],['inputsPerBatch','Surowce na partię'],['outputsPerBatch','Produkty na partię'],['batchesPerWorkerHour','Partie / osoba / godz.'],['secondsPerBatch','Sekundy na partię'],['inputsPerWorkerHour','Zużycie / osoba / godz.'],['outputsPerWorkerHour','Produkcja / osoba / godz.'],['inputFlow','Obieg składników']], recipeLevels, ['harborlight-v1-provisions.js','harborlight-v1-development-logistics.js'], ['Dostępność to osobna kolumna; sama matematyczna wydajność nie odblokowuje receptury.','Posiłki, szczęście, łóżka, wykształcenie, badania, wydarzenia i brak miejsca wpływają na rzeczywistą produkcję.']);
 add('research', 'Badania i odkrycia', 'Katalog Akademii odczytany z kodu.', [['id','ID'],['name','Nazwa'],['kind','Rodzaj'],['minimumAcademy','Minimalna Akademia'],['minimumTownhall','Minimalny Ratusz'],['minimumBuilding','Wymagane budynki'],['firstCost','Koszt bazowy'],['effect','Efekt'],['devBalanceProposal','Propozycja balansu DEV']], research, ['harborlight-v1-education.js']);

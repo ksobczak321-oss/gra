@@ -1,6 +1,6 @@
-import { THEATRE_DECORATIONS, THEATRE_STYLES, theatreStatus, theatreQuote, theatreDecorationName, THEATRE_LIGHTING, THEATRE_PAVING, THEATRE_TRANSLATIONS, THEATRE_GARDEN_BOUNDS, THEATRE_WELCOME_GARDEN, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v32-23';
-import { renderTheatreScene, theatreIconSvg, THEATRE_SLOT_POSITIONS, theatrePerspectiveScale } from './harborlight-v1-theatre-art.js?v=frontend-v32-23';
-import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v32-23';
+import { THEATRE_DECORATIONS, THEATRE_STYLES, theatreStatus, theatreQuote, theatreDecorationName, THEATRE_LIGHTING, THEATRE_PAVING, THEATRE_TRANSLATIONS, THEATRE_GARDEN_BOUNDS, THEATRE_WELCOME_GARDEN, theatrePosition } from './harborlight-v1-theatre.js?v=frontend-v32-24';
+import { renderTheatreScene, theatreIconSvg, THEATRE_SLOT_POSITIONS, theatrePerspectiveScale } from './harborlight-v1-theatre-art.js?v=frontend-v32-24';
+import { ATTRACTIONS } from './harborlight-v1-leisure.js?v=frontend-v32-24';
 
 const CITY_NAMES = {
   'flower-beds': 'Rabaty kwiatowe', 'village-benches': 'Ławki w osadzie', 'lantern-strings': 'Girlandy świetlne',
@@ -26,7 +26,7 @@ const node = (tag, attrs = {}, ...children) => {
 const svgNode = markup => { const holder = node('span', { class: 'theatre-art' }); holder.innerHTML = markup; return holder; };
 function styles() {
   for (const [id, file] of [['harborlight-theatre-css', 'harborlight-v1-theatre.css'], ['harborlight-theatre-scene-css', 'harborlight-v1-theatre-scene.css']]) {
-    if (!document.getElementById(id)) document.head.append(node('link', { id, rel: 'stylesheet', href: new URL(`./${file}?v=frontend-v32-23`, import.meta.url).href }));
+    if (!document.getElementById(id)) document.head.append(node('link', { id, rel: 'stylesheet', href: new URL(`./${file}?v=frontend-v32-24`, import.meta.url).href }));
   }
 }
 

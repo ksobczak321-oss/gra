@@ -282,6 +282,7 @@ def expedition_defers_tutorial_reward(browser):
     expect(page.locator('[data-tutorial-current]')).to_have_attribute('data-tutorial-current', 'expedition-rules')
     page.locator('[data-tutorial-visit="expedition-rules"]').click()
     page.locator('[data-expedition-choice="triples"]').click()
+    page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
     current = snapshot(page)
     assert current['tutorial']['completed']['expedition-rules']
     assert not current['tutorial']['claimed'].get('expedition-rules')

@@ -1,14 +1,14 @@
 // Lighthouse chapters are optional world objectives, independent of the
 // practical course. Accepted clocks and receipts are persisted with the island.
-import { practicalCourseBlocksMissions } from './harborlight-v1-learning-policy.js?v=frontend-v32-23';
+import { practicalCourseBlocksMissions } from './harborlight-v1-learning-policy.js?v=frontend-v32-24';
 import { MATERIAL_IDS, PRODUCTION_RECIPES, productionRate, availableGoods,
-  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-23';
-import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-23';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-23';
-import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-23';
-import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-23';
+  haulCapacity, warehouseLimits, ordinaryStock, bonusStock, foodReserve, townhallPopulationRequirement, quoteTrade, receiveMaterials } from './harborlight-v1-logistics.js?v=frontend-v32-24';
+import { consumeMaterial, grantBonusMaterials, quoteMaterialSpend, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-24';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-24';
+import { residentAtHome, synchronizeResidents } from './harborlight-v1-residents.js?v=frontend-v32-24';
+import { CAMPAIGN_VERSION, campaignChapter, campaignChapterPreview, campaignBudget, campaignStepReward } from './harborlight-v1-campaign.js?v=frontend-v32-24';
 
-import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-23';
+import { MATERIAL_IDS as DEVELOPMENT_MATERIAL_IDS, FOOD_IDS, GOODS, RECIPE_CATALOG, recipeRatePerWorkerHour } from './harborlight-v1-provisions.js?v=frontend-v32-24';
 
 const HOUR = 3600, DAY = 24 * HOUR, EPS = 1e-7, SAFE = Number.MAX_SAFE_INTEGER;
 const RESOURCES = ['coins', ...MATERIAL_IDS];
@@ -417,13 +417,20 @@ function assistanceSource(state){
 export function missionAssistanceOffer(state,context={}){
   const source=assistanceSource(state);if(!source)return null;
   const {m,task,parent}=source,o=parent.objective;
-  const mode=o.targetPopulation||o.recruitmentTarget||o.building==='townhall'?'population':['recruitment','invitation'].includes(o.type)?'count':'supplies';
+  // Recruitment and the later Town Hall material budget are distinct goals.
+  // Once its real population prerequisite is met, a building may still need
+  // supplies; an earlier claimed crew must not block that new assistance.
+  if(accomplished(state,m,parent))return null;
+  const paidProject=o.type==='building'?state.buildings?.[o.building]?.construction:null;
+  if(paidProject&&whole(paidProject.targetLevel)>=whole(o.target))return null;
+  const buildingPopulation=o.type==='building'&&o.building==='townhall'?townhallPopulationRequirement(state,o.target).populationRequired:0;
+  const mode=o.targetPopulation||o.recruitmentTarget||buildingPopulation>whole(state.population)?'population':['recruitment','invitation'].includes(o.type)?'count':'supplies';
   let target=whole(o.targetPopulation||o.recruitmentTarget);
-  if(o.type==='building'&&o.building==='townhall')target=townhallPopulationRequirement(state,o.target).populationRequired;
+  if(buildingPopulation&&mode==='population')target=buildingPopulation;
   if(['recruitment','invitation'].includes(o.type)&&!target)target=whole(state.population)+Math.max(0,whole(o.count,1)-(m.invited-whole(o.baseline)));
   const capacity=lev(state,'townhall')*(state.ruleset===32?36:24);
   target=Math.min(capacity,Math.max(whole(state.population),target));
-  const goalMissionId=target===townhallPopulationRequirement(state,4).populationRequired&&m.chapter?.level===3?`${m.chapter.id}:recruitment-54`:parent.id;
+  const goalMissionId=mode==='population'&&target===townhallPopulationRequirement(state,4).populationRequired&&m.chapter?.level===3?`${m.chapter.id}:recruitment-54`:parent.id;
   const goalContracts=m.assistanceContracts.filter(contract=>(contract.goalMissionId||contract.missionId)===goalMissionId);
   const previous=goalContracts.find(contract=>!contract.claimed);
   if(previous)return {...clone(previous),source:'campaign'};
@@ -466,7 +473,8 @@ export function recruitmentRewardQuote(state,runContext){
   if(!object(raw)||raw.source!=='campaign')return bad('A verified campaign assistance context is required.');
   const contract=m.assistanceContracts.find(item=>item.receiptId===raw.receiptId&&item.missionId===raw.missionId&&item.chapterId===raw.chapterId);
   if(!contract||contract.claimed||m.recruitmentReceipts.includes(contract.receiptId))return bad('This assistance reward was already received or is unavailable.');
-  if(m.chapter?.id!==contract.chapterId||m.chapter?.status==='completed'||m.receipts.includes(contract.goalMissionId))return{ok:true,missionId:contract.missionId,recruitmentReceiptId:contract.receiptId,receiptId:contract.receiptId,residentsRequested:0,residentsAccepted:0,supplies:{},targetPopulation:contract.targetPopulation,helpNeighbors:true,goalAlreadyResolved:true};
+  if(m.chapter?.id!==contract.chapterId||m.chapter?.status==='completed'||m.receipts.includes(contract.goalMissionId)||
+    contract.mode==='population'&&contract.targetPopulation>0&&whole(state.population)>=contract.targetPopulation)return{ok:true,missionId:contract.missionId,recruitmentReceiptId:contract.receiptId,receiptId:contract.receiptId,residentsRequested:0,residentsAccepted:0,supplies:{},targetPopulation:contract.targetPopulation,helpNeighbors:true,goalAlreadyResolved:true};
   const spaces=Math.max(0,lev(state,'townhall')*(state.ruleset===32?36:24)-whole(state.population)-whole(state.incomingPassengers));
   const requested=Math.max(0,Math.min(contract.residentsRequested,contract.mode==='count'?contract.residentsRequested:contract.targetPopulation-whole(state.population)));
   const budget=campaignBudget(m.chapter?.level||lev(state,'townhall'));
@@ -624,6 +632,31 @@ function remainingCost(state, task, context) {
   }
   return Object.fromEntries(Object.entries(task.requirements||{}).map(([id,n])=>[id,Math.max(0,n-(task.deposited?.[id]||0))]).filter(([,n])=>n>0));
 }
+// Building mission previews are unspent preparation quotes. Once the actual
+// building price no longer includes food, cached preparation rows must not keep
+// directing an older save to collect obsolete meals or grain. Contributions,
+// accepted project payments, prizes and ordinary meal objectives are untouched.
+function refreshUnspentBuildingFoodQuotes(state,m,context){
+  if(state.ruleset!==32||typeof context.buildingCost!=='function')return;
+  const main=m.stack[0],goal=main?.task?.objective;
+  for(const frame of m.stack){
+    const task=frame.task,o=task?.objective;if(!o||!['building','stock'].includes(o.type))continue;
+    const foods=['food',...FOOD_IDS];
+    if(!foods.some(id=>whole(task.requirements?.[id])||whole(o.requirements?.[id])))continue;
+    let building=o.type==='building'?o.building:null;
+    if(o.type==='stock'){
+      if(frame!==main&&goal?.type==='building')building=goal.building;
+      else if(frame===main&&m.chapter?.campaignVersion===CAMPAIGN_VERSION)building=campaignChapter(m.chapter.level)?.steps[frame.index-1]?.costBuilding;
+      else if(frame===main&&frame.index===7)building='lighthouse';
+    }
+    if(!building)continue;
+    const fresh=frame!==main&&goal?.type==='building'?remainingCost(state,main.task,context):
+      o.type==='building'?remainingCost(state,task,context):lev(state,building)>=m.chapter.targetLevel?{}:costFor(state,building,context);
+    if(foods.some(id=>whole(fresh[id])))continue;
+    task.requirements=clone(fresh);
+    if(o.type==='stock')o.requirements=clone(fresh);
+  }
+}
 function accomplished(state,m,task) {
   if(!task)return false;const o=task.objective;
   if(o.type==='review')return m.reviewed.includes(task.id);
@@ -760,6 +793,38 @@ function repairContributionParent(m,task){
   const parent=m.stack[m.stack.length-2]?.task;
   if(parent?.objective.type==='contribute'&&task.objective.type==='contribute')for(const[id,n]of Object.entries(task.deposited))parent.deposited[id]=Math.max(parent.deposited[id]||0,n);
 }
+// Support is a route to a real objective, not an obligation to replay puzzles
+// after that objective has already been achieved outside the assistance path.
+// Only the fulfilled ancestor is credited; unfinished helper rewards stay unpaid.
+function resolveFulfilledAncestor(state,m){
+  for(let index=0;index<m.stack.length-1;index++){
+    const frame=m.stack[index];
+    if(!frame.task||!accomplished(state,m,frame.task))continue;
+    const children=m.stack.splice(index+1);
+    repairContributionParent(m,frame.task);
+    if(!completeFrameTask(state,m,frame)){m.stack.push(...children);return false;}
+    event(state,'lighthouse-mission-return','The main objective is ready','Cel misji jest już spełniony',
+      'Your completed objective counts. Continue with the next main step; the obsolete assistance is no longer required.',
+      'Wykonany cel zostaje zaliczony. Przejdź do kolejnego etapu misji głównej; poprzedni plan pomocy nie jest już potrzebny.');
+    return true;
+  }
+  return false;
+}
+function continueCommittedMainConstruction(state,m){
+  if(m.stack.length<2||m.chapter?.campaignVersion!==CAMPAIGN_VERSION)return false;
+  const main=m.stack[0],task=main?.task,o=task?.objective;
+  if(o?.type!=='building')return false;
+  const project=state.buildings?.[o.building]?.construction;
+  if(!project||whole(project.targetLevel)<whole(o.target))return false;
+  // Starting the real, paid upgrade outside the help panel already resolved
+  // its preparation problem. Resume waiting for that exact project, without
+  // granting a level, paying again or completing any unsolved helper puzzle.
+  m.stack=[main];task.status='active';task.acceptedAt??=clock(state);task.deadline=null;task.untimed=true;
+  event(state,'lighthouse-mission-return','The paid construction is underway','Opłacona budowa już trwa',
+    'Continue with the main mission. Carriers and builders will finish the paid project; the assistance adventure is optional.',
+    'Wróć do misji głównej. Tragarze i budowniczowie dokończą opłacony projekt; wyprawa pomocnicza jest teraz opcjonalna.');
+  return true;
+}
 function fail(state,m,frame){
   if(frame.task.objective.type==='invitation'&&frame.task.acceptedAt!==null&&!frame.task.purchaseUnitCost)frame.task.purchaseUnitCost=cleanCost(frame.task.requirements);
   frame.task.status=frame.kind==='rescue'?'retry':'assistance';frame.task.deadline=null;frame.task.acceptedAt=null;
@@ -797,7 +862,10 @@ export function advanceMissions(state,seconds=0,context={}){
   const m=ensure(state);if(state._missionForecast===true)return m;
   normalizeProductionBonuses(state);
   unlock(state,m);
+  refreshUnspentBuildingFoodQuotes(state,m,context);
   for(let guard=0;guard<24&&m.stack.length;guard++){
+    if(continueCommittedMainConstruction(state,m))continue;
+    if(resolveFulfilledAncestor(state,m))continue;
     const frame=m.stack.at(-1);frame.task ||= newTask(state,m,frame,context);const task=frame.task;
     const precredited=['building','stock','invitation','assign','review','check','adventure','recruitment','shipping'].includes(task.objective.type);
     if(accomplished(state,m,task)&&(task.status==='active'||precredited)){
@@ -862,6 +930,40 @@ export function missionHeadline(state){
     ...(frame&&task?{kind:frame.kind,index:frame.index,total:frame.total,
       task:{id:task.id,status:task.status,title:task.title,titlePl:task.titlePl}}:{})};
 }
+/** Stable suggestions follow the current mission, then resumable games, then
+ * the catalog. Playing an unrelated game never rotates the mission choices. */
+export function recommendedMissionAdventures(state,choices=[],limit=3,context={}){
+  const task=ensure(state).stack.at(-1)?.task,o=task?.objective;
+  const required=o?.type==='adventure'?o:['recruitment','invitation'].includes(o?.type)?{kind:'escapeStory',storyId:'captainless-ship'}:null;
+  const eligible=(Array.isArray(choices)?choices:[]).filter(choice=>choice&& (choice.resume||choice.available));
+  const matches=choice=>required&&choice.kind===required.kind&&
+    (required.kind==='escapeStory'?choice.storyId===required.storyId:required.kind==='islandPuzzle'?choice.puzzleKind===required.puzzleKind:true);
+  const current=eligible.filter(matches).sort((a,b)=>Number(!!b.resume)-Number(!!a.resume)||whole(a.completed)-whole(b.completed))[0];
+  const assistance=current?.kind==='escapeStory'&&current.storyId==='captainless-ship'?missionAssistanceOffer(state,context):null;
+  const ordered=[...(current?[{...current,missionTaskId:task.id,missionRequired:true,
+      ...(assistance?{rescueContext:{missionId:assistance.missionId}}:{})}]:[]),
+    ...eligible.filter(choice=>choice!==current&&choice.resume),
+    ...eligible.filter(choice=>choice!==current&&!choice.resume)];
+  return ordered.slice(0,Math.max(0,Math.min(10,whole(limit,3))));
+}
+/** Explain the actual main objective behind a support branch, including its
+ * already fulfilled population condition and the remaining physical stock. */
+export function missionAssistancePlan(state,context={}){
+  const m=ensure(state),main=m.stack[0],task=main?.task;
+  if(!task||m.stack.length<2)return null;
+  const o=task.objective,requirements=remainingCost(state,task,context);
+  const requiredPopulation=whole(o.targetPopulation||o.recruitmentTarget||
+    (o.type==='building'&&o.building==='townhall'?townhallPopulationRequirement(state,o.target).populationRequired:0));
+  const assistance=missionAssistanceOffer(state,context);
+  return {main:{id:task.id,index:main.index,total:main.total,title:task.title,titlePl:task.titlePl,
+      objective:clone(o),requirements:clone(requirements)},
+    population:requiredPopulation?{current:whole(state.population),required:requiredPopulation,met:whole(state.population)>=requiredPopulation}:null,
+    missing:Object.fromEntries(Object.entries(requirements).map(([id,n])=>[id,Math.max(0,n-available(state,id))]).filter(([,n])=>n>0)),
+    assistanceMode:assistance?.mode||null,supplies:clone(assistance?.supplies||{}),
+    residentsRequested:whole(assistance?.residentsRequested),storyId:assistance?.storyId||'captainless-ship',
+    canReturnToMain:m.chapter?.campaignVersion===CAMPAIGN_VERSION,
+    returnAction:'missionReturnToMain'};
+}
 export function missionStatus(state,context={}){
   const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
   if(!frame||!task)return{available:false,preview:lev(state,'townhall')>=2&&!courseOpen(state),finished:m.chapter?.status==='completed',chapter:m.chapter?clone(m.chapter):null,
@@ -869,17 +971,17 @@ export function missionStatus(state,context={}){
     story:campaignStoryFor(state,m),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null,worldChanges:clone(m.worldChanges)};
   const plan=proof(state,m,task,context);
   const view=clone(task);
-  if(task.objective.type==='invitation')view.requirements=remainingCost(state,task,context);
+  if(['invitation','building'].includes(task.objective.type))view.requirements=remainingCost(state,task,context);
   return{available:true,finished:false,chapter:clone(m.chapter),kind:frame.kind,index:frame.index,total:frame.total,task:view,plan,
     active:task.status==='active',canStart:task.status!=='active'&&plan.feasible,
     remaining:task.deadline===null?null:Math.max(0,(task.deadline-clock(state))/1000),
     progress:task.objective.type==='production'||task.objective.type==='delivered'?Math.min(task.objective.count,Math.max(0,metric(state,task.objective.type==='production'?'produced':'delivered',task.objective.resource)-task.objective.baseline)):null,
     incident:m.lastIncident?clone(m.lastIncident):null,parents:m.stack.slice(0,-1).map(f=>({kind:f.kind,index:f.index,total:f.total})),
     story:campaignStoryFor(state,m),introduction:missionStoryIntro(state),lastReward:m.lastReward?clone(m.lastReward):null,
-    assistance:missionAssistanceOffer(state,context),previewSteps:context.previewSteps===false?[]:campaignReadiness(state,context)?.steps||[],worldChanges:clone(m.worldChanges)};
+    assistance:missionAssistanceOffer(state,context),assistancePlan:missionAssistancePlan(state,context),previewSteps:context.previewSteps===false?[]:campaignReadiness(state,context)?.steps||[],worldChanges:clone(m.worldChanges)};
 }
 export function missionAction(state,action,context={}){
-  if(!['missionStart','missionRetry','missionDeposit','missionNext','missionIntroSeen','missionReview','missionRequestHelp'].includes(action?.type))return null;
+  if(!['missionStart','missionRetry','missionDeposit','missionNext','missionIntroSeen','missionReview','missionRequestHelp','missionReturnToMain'].includes(action?.type))return null;
   advanceMissions(state,0,context);const m=ensure(state),frame=m.stack.at(-1),task=frame?.task;
   if(action.type==='missionNext'){unlock(state,m);advanceMissions(state,0,context);return good('Lighthouse missions refreshed.');}
   if(action.type==='missionIntroSeen'){
@@ -894,6 +996,16 @@ export function missionAction(state,action,context={}){
     if(!task||action.id!==task.id)return bad('This mission step is no longer available.');
     if(m.stack.length>=3)return bad('The rescue plan is already active. Complete its real preparation steps.');
     fail(state,m,frame);advanceMissions(state,0,context);return good('An assistance plan for this objective is ready.');
+  }
+  if(action.type==='missionReturnToMain'){
+    if(m.chapter?.campaignVersion!==CAMPAIGN_VERSION)return bad('This accepted timed assistance must be completed through its existing route.');
+    if(m.stack.length===1)return good('The main mission is already open.');
+    if(!task||action.id!==task.id)return bad('This assistance plan is no longer current.');
+    const main=m.stack[0];
+    m.stack=[main];
+    if(main.task){main.task.status='offered';main.task.acceptedAt=null;main.task.deadline=null;}
+    advanceMissions(state,0,context);
+    return good('Returned to the main objective. Completed progress and contributions are preserved.');
   }
   if(action.id&&m.receipts.includes(action.id)&&action.id!==task?.id)return good('This mission step was already completed.',{completed:true,missionId:action.id});
   if(!task||action.id!==task.id)return bad('This Lighthouse mission step is no longer available.');

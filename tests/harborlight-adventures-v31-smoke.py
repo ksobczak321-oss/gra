@@ -23,7 +23,7 @@ const language=new URLSearchParams(location.search).get('language')||'pl';let st
 window.actionLog=[];window.openMainCount=0;
 window.reset=({practice=false}={})=>{panel?.destroy();document.querySelector('main').replaceChildren();state={resources:{coins:500,wood:0,stone:0,grain:0,food:0,planks:0},worldTimeMs:Date.parse('2026-11-04T12:00:00Z'),activityClock:0,activitySeed:123456,population:12,capacity:480,buildings:{townhall:{level:20},house:{level:20},lighthouse:{level:1}},notifications:[],expeditionRuns:{}};A.normalizeAdventures(state);if(practice){A.adventureRewardStatus(state);state.adventureBudget.dailySpent=state.adventureBudget.dailyLimit;}panel=createAdventuresPanel({state,language,onMainMission:()=>window.openMainCount++,mainMission:{title:language==='pl'?'Zabezpieczmy osadę':'Prepare the settlement',description:language==='pl'?'Sprawdź materiały i wolną ekipę.':'Check materials and the available crew.'},onAction:action=>{window.actionLog.push(action);const result=A.adventureAction(state,action,{claimAdventureReward:(world,payload)=>{const awarded=claimAdventureBudget(world,payload);world.resources.coins+=awarded.reward.coins||0;grantBonusMaterials(world,awarded.reward);return awarded;}});panel.update(state);return result;}});document.querySelector('main').append(panel.element);};
 window.current=()=>structuredClone(state);window.view=()=>getIslandPuzzleView(state.adventures.active.data.puzzle,language);
-window.solution=()=>islandPuzzleSolution(state.adventures.active.data.puzzle);
+window.solution=()=>{const p=state.adventures.active.data.puzzle;if(p.kind==='parrot'&&p.generatorVersion===2){const localized=structuredClone(p);localized.data.language=language==='en'?1:0;return islandPuzzleSolution(localized);}return islandPuzzleSolution(p);};
 window.advance=seconds=>{A.advanceAdventures(state,seconds);panel.update(state);};
 window.restore=()=>{const saved=structuredClone(state);A.normalizeAdventures(state,saved);panel.update(state);};
 window.controlFor=move=>{const view=window.view();for(const[family,records]of[['control',view.controls],['item',view.items],['target',view.targets],['cell',view.grid?.cells]])for(const record of records||[])if(record.move&&Object.entries(record.move).every(([key,value])=>move[key]===value))return'[data-puzzle-'+family+'='+JSON.stringify(String(record.id??record.index))+']';return null;};
@@ -55,6 +55,8 @@ def scenario(browser, language, mobile):
         page.evaluate('window.reset()')
         tap(page.locator('[data-adventure-all]'))
         tap(page.locator('[data-puzzle-start=' + json.dumps(kind) + ']').first)
+        if page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').count():
+            tap(page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]'))
         expect(page.locator('[data-expanded-adventure]')).to_have_attribute('data-expanded-adventure', 'islandPuzzle')
         expect(page.locator('[data-puzzle-title]')).not_to_be_empty()
 
@@ -101,6 +103,7 @@ def scenario(browser, language, mobile):
         page.evaluate('window.reset()')
         tap(page.locator('[data-adventure-all]'))
         tap(page.locator('[data-adventure-start="cargoRain"]'))
+        tap(page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]'))
         page.evaluate('window.advance(2)')
         tap(page.locator('[data-cargo-drop="1"]'))
         assert page.evaluate('window.current().resources.coins') == 505
@@ -132,6 +135,8 @@ def scenario(browser, language, mobile):
         practice_start = page.locator('[data-puzzle-start="gull"]')
         expect(practice_start).to_contain_text('for fun' if language == 'en' else 'dla przyjemności')
         tap(practice_start)
+        if page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').count():
+            tap(page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]'))
         play_moves(page.evaluate('window.solution()'))
         tap(page.locator('[data-puzzle-next-room]'))
         assert page.evaluate('window.current().adventures.active.data.practice') is True
@@ -188,10 +193,14 @@ def scenario(browser, language, mobile):
         page.evaluate('window.reset()')
         tap(page.locator('[data-adventure-all]'))
         tap(page.locator('[data-story-start="first-light"]').first)
+        if page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').count():
+            tap(page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]'))
         expect(page.locator('[data-expanded-adventure]')).to_have_attribute('data-expanded-adventure', 'escapeStory')
         room_count = page.evaluate('window.current().adventures.active.data.story.roomCount')
         completed = 0
         while page.locator('[data-expanded-adventure]').count():
+            if page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').count():
+                tap(page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]'))
             assert completed < 8, 'Story did not advance'
             play_moves(page.evaluate('window.solution()'))
             assert page.evaluate('window.view().solved')

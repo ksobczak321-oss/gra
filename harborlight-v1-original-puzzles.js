@@ -1,5 +1,5 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
-import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-23';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-24';
+import { normalizeExpeditionHour, allocateExpeditionAttemptId, reserveExpeditionDifficulty, recordExpeditionOutcome, expeditionHourStatus, cappedExpeditionReward } from './harborlight-v1-expedition-hour.js?v=frontend-v32-24';
 
 export const ORIGINAL_PUZZLE_VERSION = 1;
 export const originalPuzzleCatalog = Object.freeze([
@@ -51,10 +51,10 @@ export function createSignalGraph(difficulty = 1, seed = 1) {
   const degree=Object.fromEntries(values.map(n=>[n.id,0]));for(const e of edges.values()){degree[e.a]++;degree[e.b]++;}
   return { nodes:values.map(n=>({...n,x:n.x-minX+1,y:n.y-minY+1})), edges:[...edges.values()], starts:values.filter(n=>degree[n.id]%2).map(n=>n.id), width:Math.max(...values.map(n=>n.x))-minX+2,height:Math.max(...values.map(n=>n.y))-minY+2 };
 }
-export function createHarborRoutes(difficulty = 1, seed = 1) {
-  const random=randomSource(seed), size=clamp(5+Math.floor(Math.log2(Math.max(1,difficulty))),5,9), paths=[],occupied=new Set();
+function buildHarborRoutes(difficulty = 1, seed = 1, modern = false) {
+  const random=randomSource(seed), size=modern?clamp(8+Math.floor(Math.log2(Math.max(1,difficulty))),8,12):clamp(5+Math.floor(Math.log2(Math.max(1,difficulty))),5,9), paths=[],occupied=new Set();
   const inside=(x,y)=>x>=0&&x<size&&y>=0&&y<size;
-  const target=Math.min(18,5+Math.floor(Math.log2(Math.max(1,difficulty)))*2);
+  const target=modern?Math.min(20,10+Math.floor(Math.log2(Math.max(1,difficulty)))*2):Math.min(18,5+Math.floor(Math.log2(Math.max(1,difficulty)))*2);
   for(let order=0;order<target;order++) {
     let found=null;
     const heads=shuffled(Array.from({length:size*size},(_,i)=>[i%size,Math.floor(i/size)]),random);
@@ -66,7 +66,7 @@ export function createHarborRoutes(difficulty = 1, seed = 1) {
         let clear=true;for(let px=x+dx,py=y+dy;inside(px,py);px+=dx,py+=dy)if(occupied.has(nodeKey(px,py))){clear=false;break;}
         if(!clear)continue;
         const cells=[[x,y],[bx,by]],used=new Set(cells.map(c=>nodeKey(...c)));
-        const desired=2+Math.floor(random()*4);
+        const desired=2+Math.floor(random()*(modern?3:4));
         while(cells.length<desired) {
           const tail=cells.at(-1),options=shuffled(directions,random).map(([tx,ty])=>[tail[0]+tx,tail[1]+ty]).filter(([px,py])=>inside(px,py)&&!occupied.has(nodeKey(px,py))&&!used.has(nodeKey(px,py)));
           if(!options.length)break;
@@ -81,6 +81,23 @@ export function createHarborRoutes(difficulty = 1, seed = 1) {
   }
   return { size,paths,removed:[] };
 }
+// Build backwards from an empty harbor: every newly placed convoy has a
+// clear exit before the later convoys are added. Reversing that construction
+// order therefore proves that the board can always be emptied.
+export function createHarborRoutes(difficulty = 1, seed = 1, boardVersion = 2) {
+  if(boardVersion===1)return buildHarborRoutes(difficulty,seed,false);
+  const target=Math.min(20,10+Math.floor(Math.log2(Math.max(1,difficulty)))*2);
+  let best=null;
+  for(let retry=0;retry<32;retry++){
+    const candidate=buildHarborRoutes(difficulty,(seed+Math.imul(retry,0x9e3779b9))>>>0,true);
+    if(!best||candidate.paths.length>best.paths.length)best=candidate;
+    if(candidate.paths.length===target){candidate.paths=shuffled(candidate.paths,randomSource((seed^0x734a1f21)>>>0));return candidate;}
+  }
+  // A wider retry retains the same geometric proof and deterministic seed.
+  const candidate=buildHarborRoutes(1000000,(seed^0xa5f09c31)>>>0,true);
+  if(candidate.paths.length>best.paths.length)best=candidate;
+  best.paths=shuffled(best.paths,randomSource((seed^0x734a1f21)>>>0));return best;
+}
 export function availableConvoyIds(board) {
   const removed=new Set(board.removed||[]),active=board.paths.filter(p=>!removed.has(p.id)),occupied=new Map();
   for(const p of active)for(const cell of p.cells)occupied.set(nodeKey(...cell),p.id);
@@ -90,13 +107,13 @@ export function availableConvoyIds(board) {
     return true;
   }).map(p=>p.id);
 }
-export function createOriginalAttempt(variant,{seed=1,difficulty=1,now=0,id='original-1',highestTownhall=1,easier=false}={}) {
+export function createOriginalAttempt(variant,{seed=1,difficulty=1,now=0,id='original-1',highestTownhall=1,easier=false,boardVersion=2,instructionsPending=false}={}) {
   if(!variants.has(variant))throw new TypeError('Unknown original puzzle.');
   difficulty=clamp(integer(difficulty,1),1,1000000);
   const effective=easier?Math.max(1,Math.ceil(difficulty/2)):difficulty;
   const duration=Math.max(90,(variant==='signal-line'?180:150)-Math.min(60,Math.floor(Math.log2(effective))*5));
-  return {version:1,id,variant,seed:integer(seed,1),difficulty,effectiveDifficulty:effective,easier:easier===true,rewardScale:easier?.5:1,highestTownhall:Math.max(1,integer(highestTownhall,1)),status:'active',remaining:duration,initialDuration:duration,startedAt:finite(now),lastAt:finite(now),timeOffer:null,offerArmed:duration>30,extensions:0,trail:[],usedEdges:[],hintUsed:false,hint:null,message:'',rewardClaimed:false,
-    board:variant==='signal-line'?createSignalGraph(effective,seed):createHarborRoutes(effective,seed)};
+  return {version:1,...(boardVersion===1?{}:{boardVersion:2}),...(instructionsPending?{instructionsPending:true}:{}),id,variant,seed:integer(seed,1),difficulty,effectiveDifficulty:effective,easier:easier===true,rewardScale:easier?.5:1,highestTownhall:Math.max(1,integer(highestTownhall,1)),status:'active',remaining:duration,initialDuration:duration,startedAt:finite(now),lastAt:finite(now),timeOffer:null,offerArmed:duration>30,extensions:0,trail:[],usedEdges:[],hintUsed:false,hint:null,message:'',rewardClaimed:false,
+    board:variant==='signal-line'?createSignalGraph(effective,seed):createHarborRoutes(effective,seed,boardVersion)};
 }
 function signalInput(attempt,input) {
   const graph=attempt.board;
@@ -120,7 +137,7 @@ function signalInput(attempt,input) {
   return good(attempt.status==='won'?'Sygnał dotarł do całej przystani!':'Przewód połączony.');
 }
 export function applyOriginalInput(attempt,input={}) {
-  if(attempt.status!=='active'||attempt.timeOffer)return bad('Próba nie przyjmuje teraz ruchów.');
+  if(attempt.status!=='active'||attempt.timeOffer||attempt.instructionsPending)return bad('Próba nie przyjmuje teraz ruchów.');
   if(attempt.variant==='signal-line')return signalInput(attempt,input);
   if(input.kind!=='convoy')return bad('Wybierz konwój do wypłynięcia.');
   if(attempt.board.removed.includes(input.id))return bad('Ten konwój już wypłynął.');
@@ -131,7 +148,7 @@ export function applyOriginalInput(attempt,input={}) {
   return good(attempt.status==='won'?'Wszystkie konwoje bezpiecznie opuściły redę!':'Konwój wypłynął.');
 }
 export function advanceOriginalAttempt(attempt,seconds) {
-  seconds=finite(seconds);if(attempt.status!=='active'||!seconds)return;
+  seconds=finite(seconds);if(attempt.status!=='active'||attempt.instructionsPending||!seconds)return;
   let left=seconds;
   if(attempt.timeOffer) {
     if(attempt.timeOffer.status==='processing')return;
@@ -149,7 +166,8 @@ export function advanceOriginalAttempt(attempt,seconds) {
 }
 function cleanAttempt(raw) {
   if(raw?.version!==1||!variants.has(raw.variant)||typeof raw.id!=='string'||!raw.id||!Number.isSafeInteger(raw.seed)||!Number.isSafeInteger(raw.difficulty))return null;
-  const attempt=createOriginalAttempt(raw.variant,{...raw,now:finite(raw.startedAt)});
+  if(![undefined,1,2].includes(raw.boardVersion))return null;
+  const attempt=createOriginalAttempt(raw.variant,{...raw,boardVersion:raw.boardVersion===2?2:1,instructionsPending:raw.status==='active'&&raw.instructionsPending===true,now:finite(raw.startedAt)});
   if(!['active','won','lost','abandoned'].includes(raw.status))return null;
   attempt.status=raw.status;attempt.remaining=clamp(finite(raw.remaining),0,86400);attempt.initialDuration=clamp(finite(raw.initialDuration,attempt.initialDuration),1,86400);attempt.lastAt=finite(raw.lastAt,attempt.startedAt);attempt.offerArmed=raw.offerArmed===true;attempt.extensions=integer(raw.extensions);attempt.hintUsed=raw.hintUsed===true;attempt.rewardClaimed=raw.rewardClaimed===true;attempt.message=typeof raw.message==='string'?raw.message.slice(0,500):'';
   if(raw.timeOffer&&['choice','processing'].includes(raw.timeOffer.status))attempt.timeOffer={status:raw.timeOffer.status,choiceRemaining:clamp(finite(raw.timeOffer.choiceRemaining),0,5),method:['coins','ad'].includes(raw.timeOffer.method)?raw.timeOffer.method:null,receipt:typeof raw.timeOffer.receipt==='string'?raw.timeOffer.receipt:null};
@@ -157,7 +175,7 @@ function cleanAttempt(raw) {
   if(raw.rescueOutcome&&typeof raw.rescueOutcome==='object')attempt.rescueOutcome={rescued:integer(raw.rescueOutcome.rescued),waiting:integer(raw.rescueOutcome.waiting)};
   // Board position is deliberately not saved. Re-entry fails the current attempt;
   // completed attempts retain their result and reward receipt, not a fresh clock.
-  if(raw.status==='active'){attempt.status='lost';attempt.timeOffer=null;attempt.message='Po opuszczeniu planszy bieżąca próba została zakończona.';}
+  if(raw.status==='active'&&!attempt.instructionsPending){attempt.status='lost';attempt.timeOffer=null;attempt.message='Po opuszczeniu planszy bieżąca próba została zakończona.';}
   if(raw.status==='won'){
     attempt.status='active';let valid=true;
     const inputs=attempt.variant==='signal-line'?(Array.isArray(raw.trail)?raw.trail:[]).slice(0,attempt.board.edges.length+2).map(node=>({kind:'node',node})):(Array.isArray(raw.board?.removed)?raw.board.removed:[]).slice(0,attempt.board.paths.length+1).map(id=>({kind:'convoy',id}));
@@ -201,17 +219,25 @@ export function originalPuzzleAction(state,action={},context={}) {
   if(!variants.has(variant))return bad('Wybierz dostępną minigrę.');
   const at=finite(context.now,nowOf(state));let attempt=ledger.attempts[variant];
   if(action.type==='originalPuzzleStart'||action.type==='originalPuzzleEasier') {
-    if(attempt?.status==='active')return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),'active-round-exists');
+    if(attempt?.status==='active'){if(attempt.instructionsPending)return good('Instrukcja jest gotowa. Rozpocznij próbę, gdy będziesz gotowy.',{attemptId:attempt.id,difficulty:attempt.difficulty,instructionsPending:true});return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),'active-round-exists');}
     const easier=action.type==='originalPuzzleEasier';
     if(easier&&ledger.failures[variant]<3)return bad('Łatwiejsza odmiana jest dostępna po trzech porażkach.');
     ledger.sequence++;const id=allocateExpeditionAttemptId(state,variant);
-    let difficulty;try{difficulty=reserveExpeditionDifficulty(state,id,variant);}catch(e){return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),e.code);}
+    let difficulty;try{difficulty=action.deferStart===true?expeditionHourStatus(state,variant).nextDifficulty:reserveExpeditionDifficulty(state,id,variant);}catch(e){return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),e.code);}
     ledger.seed=(Math.imul(ledger.seed,1664525)+1013904223)>>>0;
     const highestTownhall=Math.max(1,integer(context.highestTownhall,state.buildings?.townhall?.level||1));
-    attempt=createOriginalAttempt(variant,{id,seed:ledger.seed,difficulty,now:at,highestTownhall,easier});ledger.attempts[variant]=attempt;if(easier)context.onEasier?.(attempt);
+    attempt=createOriginalAttempt(variant,{id,seed:ledger.seed,difficulty,now:at,highestTownhall,easier,instructionsPending:action.deferStart===true});ledger.attempts[variant]=attempt;if(easier)context.onEasier?.(attempt);
     return good(easier?'Rozpoczęto łatwiejszą próbę za mniejszą nagrodę.':'Próba rozpoczęta.',{attemptId:id,difficulty,rewardScale:attempt.rewardScale});
   }
   if(!attempt||action.attemptId&&action.attemptId!==attempt.id)return bad('Ta próba nie jest już dostępna.','stale-attempt');
+  if(action.type==='originalPuzzleBegin'){
+    if(attempt.status!=='active'||!attempt.instructionsPending)return bad('Ta próba jest już rozpoczęta.');
+    if(attempt.easier&&expeditionHourStatus(state,variant).failures<3)return bad('Łatwiejsza odmiana jest dostępna po trzech porażkach.');
+    let difficulty;try{difficulty=reserveExpeditionDifficulty(state,attempt.id,variant);}catch(error){return bad(developmentText('MSG-ACTIVE-VARIANT-LIMIT'),error.code);}
+    const fresh=createOriginalAttempt(variant,{id:attempt.id,seed:attempt.seed,difficulty,now:at,highestTownhall:Math.max(1,integer(context.highestTownhall,state.buildings?.townhall?.level||1)),easier:attempt.easier,boardVersion:attempt.boardVersion===2?2:1});
+    Object.assign(attempt,fresh);delete attempt.instructionsPending;return good('Próba rozpoczęta.');
+  }
+  if(attempt.instructionsPending){if(action.type==='originalPuzzleExit')return good('Instrukcja pozostaje gotowa do rozpoczęcia.');return bad('Najpierw przeczytaj zasady i rozpocznij próbę.','instructions-pending');}
   if(action.type==='originalPuzzleInput') {const result=applyOriginalInput(attempt,action.input||{});attempt.message=result.message;settleOutcome(state,attempt,context);return result;}
   if(action.type==='originalPuzzleExit') {if(attempt.status==='active'){attempt.status='abandoned';attempt.timeOffer=null;attempt.message='Wyjście zakończyło bieżącą próbę jako przegraną.';settleOutcome(state,attempt,context);}return good(attempt.message||'Próba zakończona.');}
   if(action.type==='originalPuzzleHint') {if(attempt.status!=='active')return bad('Rozpocznij próbę, aby skorzystać z podpowiedzi.');if(ledger.failures[variant]<3||attempt.hintUsed)return bad('Podpowiedź jest dostępna raz po trzech porażkach.');attempt.hintUsed=true;attempt.hint=hintFor(attempt);return good(attempt.hint.text,{hint:attempt.hint});}
@@ -259,7 +285,7 @@ export function advanceOriginalPuzzles(state,seconds,context={}) {
   }
 }
 export function nextOriginalPuzzleEvent(state) {
-  return Math.min(Infinity,...Object.values(current(state).attempts).filter(a=>a.status==='active').map(a=>a.timeOffer?.status==='processing'?Infinity:a.timeOffer?a.timeOffer.choiceRemaining:a.offerArmed&&a.remaining>30?a.remaining-30:a.remaining));
+  return Math.min(Infinity,...Object.values(current(state).attempts).filter(a=>a.status==='active'&&!a.instructionsPending).map(a=>a.timeOffer?.status==='processing'?Infinity:a.timeOffer?a.timeOffer.choiceRemaining:a.offerArmed&&a.remaining>30?a.remaining-30:a.remaining));
 }
 export function originalPuzzleStatus(state,variant='signal-line') {
   const ledger=current(state),attempt=ledger.attempts[variant],hour=expeditionHourStatus(state,variant);ledger.failures[variant]=hour.failures;

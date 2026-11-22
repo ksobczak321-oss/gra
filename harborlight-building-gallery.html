@@ -12,7 +12,7 @@
 <div id="status" role="status">Wczytywanie grafik…</div><nav aria-label="Budynki"></nav><main></main>
 <footer>Podgląd grafiki. Wygląd Teatru i ozdobnej chatki podąża za poziomem Ratusza. Żuraw w grze pojawia się tylko podczas trwającej budowy; istniejący statek pozostaje bez zmian.</footer>
 <script type="module">
-import {loadBuildingStages,applyBuildingStageArtwork,BUILDING_STAGE_IDS} from './harborlight-v1-building-stages.js?v=frontend-v32-23';
+import {loadBuildingStages,applyBuildingStageArtwork,BUILDING_STAGE_IDS} from './harborlight-v1-building-stages.js?v=frontend-v32-24';
 const names={townhall:'Ratusz',house:'Dom',farm:'Gospodarstwo',lumber:'Drwale',quarry:'Kamieniołom',windmill:'Młyn',sawmill:'Tartak',warehouse:'Magazyn',bakery:'Piekarnia',dairy:'Mleczarnia',slaughterhouse:'Rzeźnia',fisher:'Rybak',leatherworks:'Zakład skórzany',academy:'Akademia',barracks:'Koszary',chapel:'Kaplica',lighthouse:'Latarnia',theatre:'Teatr',market:'Targ',dock:'Port'};
 try{
  const manifest=await loadBuildingStages({preload:false});if(!manifest.enabled)throw Error('Podgląd grafik jest jeszcze przygotowywany.');

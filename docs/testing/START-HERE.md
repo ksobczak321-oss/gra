@@ -4,7 +4,7 @@ Każdy wiersz prowadzi do osobnego scenariusza. Wszystkie wyniki startowe to **N
 
 Najwygodniej otworzyć [interaktywną listę](qa-checklist.html): wynik PASS / FAIL / BLOCKED, notatki i dowody zapisują się w tej przeglądarce; przyciskiem „Eksportuj raport JSON” pobierz kopię. Ten plik i jego wyniki są dokumentacją QA, nie zapisem wyspy. Na GitHub pobierz HTML lub użyj podglądu Pages po jego publikacji; sam widok kodu HTML nie uruchamia listy.
 
-**Bieżąca paczka DEV 0.15.3.1:** zacznij od TC0188–0195. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **195**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
+**Bieżąca paczka DEV 0.15.4.0:** zacznij od TC0196–0207. Starsze przypadki zachowują historię i niezmienione regresje; sprzeczne oczekiwania sprawdzaj na wskazanym historycznym buildzie, a bieżącą prezentację według nowego zakresu. Liczba scenariuszy: **207**. Do filtrowania użyj ID lub obszaru. Przed pierwszym testem sprawdź rzeczywisty build w Ustawieniach — aktualizacja listy nie oznacza promocji PRE-PROD.
 
 1. Wpisz rzeczywisty build/SHA, środowisko, datę i testera. DEV oznacza przestrzeń roboczą/Pages, PRE-PROD — `harborlight-dev.web.app`; nowy zakres nie jest automatycznie wdrożony w chmurze.
 2. Otwórz kartę, przygotuj wskazane dane, wykonaj wszystkie kroki. Brak fixture, usługi, dostępu albo zatwierdzonej reguły to **BLOCKED** z przyczyną.
@@ -212,6 +212,18 @@ Pełna metodyka i zależności: [MANUAL-TEST-PLAN.md](MANUAL-TEST-PLAN.md). Bie�
 - [ ] [HL-TC-0193 — Worker otrzymuje ograniczone dane bez blokowania gry](manual/HL-TC-0193.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0194 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](manual/HL-TC-0194.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 - [ ] [HL-TC-0195 — Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania](manual/HL-TC-0195.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0196 — Brak żywności i zboża w cenach wszystkich rozbudów](manual/HL-TC-0196.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0197 — Historyczna opłacona budowa i zwykłe wyżywienie pozostają zachowane](manual/HL-TC-0197.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0198 — Równe kontrolki produkcji na szerokim i wąskim ekranie](manual/HL-TC-0198.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0199 — Doradca wybiera realny etap zamiast niedostępnego Ratusza 4](manual/HL-TC-0199.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0200 — Doradca przelicza aktualny plan i prowadzi do właściwej kontrolki](manual/HL-TC-0200.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0201 — Gospodarstwo dzieli nowych ludzi i przenosi istniejących między produktami](manual/HL-TC-0201.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0202 — Pełne instrukcje wszystkich55 gier i czytelne sterowanie](manual/HL-TC-0202.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0203 — Czytanie instrukcji nie zużywa czasu ani puli ekspedycji](manual/HL-TC-0203.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0204 — Pierwszy blask i każdy pokój czekają na przeczytanie opisu](manual/HL-TC-0204.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0205 — Zmiany mechanik Worda są czytelne i rozwiązywalne](manual/HL-TC-0205.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0206 — Misja otwiera dokładnie wskazaną grę i zachowuje wybór po odświeżeniu](manual/HL-TC-0206.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
+- [ ] [HL-TC-0207 — 81 mieszkańców spełnia próg Ratusza 4 a pozostałe braki są wyjaśnione](manual/HL-TC-0207.md) · P0 · definicja: **READY** · wynik: **NOT RUN**
 
 ## Wynik pojedynczego przypadku
 

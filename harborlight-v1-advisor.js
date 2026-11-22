@@ -1,12 +1,12 @@
 // Read-only advice. Detailed questions use an isolated snapshot on demand.
 // Continuous guidance copies current planning inputs only, never historical
 // meals, packed worlds, adventure boards or another island's state.
-import { ALL_BUILDINGS, EXPEDITIONS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-23';
-import { centralAvailable, centralUnreserved, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-23';
-import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-23';
-import { GOODS, FOOD_IDS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-23';
-import { quotePremiumBuilding, expeditionRoundReward } from './harborlight-v1-activities.js?v=frontend-v32-23';
-import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-23';
+import { ALL_BUILDINGS, EXPEDITIONS, buildingCost, upgradeEligibility, workerLimit, freeWorkers } from './harborlight-v1-state.js?v=frontend-v32-24';
+import { centralAvailable, centralUnreserved, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-24';
+import { constructionScheduleEstimate, activeWorkerIndices, plannedLevel, warehouseLimits, warehouseUsed, quoteTrade } from './harborlight-v1-logistics.js?v=frontend-v32-24';
+import { GOODS, FOOD_IDS, NEW_BUILDINGS, RECIPE_CATALOG, availableRecipes, productionAssignments, crewCapacity, localStorageStatus, foodReservePlan } from './harborlight-v1-provisions.js?v=frontend-v32-24';
+import { quotePremiumBuilding, expeditionRoundReward } from './harborlight-v1-activities.js?v=frontend-v32-24';
+import { housingStatus } from './harborlight-v1-housing.js?v=frontend-v32-24';
 
 export const ADVISOR_BUILDING_NAMES = Object.freeze({ townhall:'Ratusz', house:'Dom', farm:'Gospodarstwo', lumber:'Drwale', quarry:'Kamieniołom', windmill:'Młyn', sawmill:'Tartak', warehouse:'Magazyn', dock:'Port', market:'Targ', lighthouse:'Latarnia', chapel:'Kaplica', theatre:'Teatr', bakery:'Piekarnia', dairy:'Mleczarnia', slaughterhouse:'Rzeźnia', fisher:'Rybak', leatherworks:'Zakład skórzany', academy:'Akademia', barracks:'Koszary' });
 const aliases = {townhall:'ratusz\\w*', house:'dom(?:u|em|y|ow)?|lozk\\w*', farm:'gospodarstw\\w*|rolnik\\w*', lumber:'drwal\\w*|lesnik\\w*', quarry:'kamieniolom\\w*|kamieniarz\\w*', windmill:'mlyn\\w*|mlynarz\\w*', sawmill:'tartak\\w*', warehouse:'magazyn\\w*|tragarz\\w*', dock:'port(?:u|em|y|ow)?|porcie|przystan\\w*', market:'targ\\w*', lighthouse:'latarn\\w*', chapel:'kaplic\\w*', theatre:'teatr\\w*', bakery:'piekarn\\w*|piekarz\\w*', dairy:'mleczarn\\w*', slaughterhouse:'rzezn\\w*|rzeznik\\w*', fisher:'rybak\\w*', leatherworks:'zaklad\\w*\\s+skorz\\w*', academy:'akadem\\w*', barracks:'koszar\\w*'};
@@ -60,7 +60,7 @@ function foodAdvice(state) {
  const reserve=foodReservePlan(state,{available:id=>centralUnreserved(state,id)});
  if(reserve.complete)return null;
  const missing=Math.max(0,reserve.requiredSatiety-reserve.satiety);
- return base(state,{kind:'food',title:'Najpierw zadbaj o jedzenie',text:missing>0?`Do chronionej rezerwy na godzinę brakuje ${n(missing)} punktów sytości.`:`Zapasy pokrywają sytość, ale brakuje wymaganej różnorodności: ${reserve.requiredTypes} produktów.`,steps:[step('Sprawdź wyżywienie i wydawanie dostępnych produktów. Chronionej rezerwy nie przeznaczaj na rozbudowę.','warehouse','food'),step('Zapewnij zbiór zboża i warzyw w Gospodarstwie; Młyn może przerabiać zboże na pożywniejszą mąkę.','farm')],explanation:`Rezerwa wynosi ${n(reserve.requiredSatiety)} punktów sytości na godzinę. Od poziomu 3 Ratusza potrzebne są dwa produkty, od 8 — trzy, każdy z udziałem co najmniej 20%.`,reserve});
+ return base(state,{kind:'food',title:'Najpierw zadbaj o jedzenie',text:missing>0?`Do chronionej rezerwy na godzinę brakuje ${n(missing)} punktów sytości.`:`Zapasy pokrywają sytość, ale brakuje wymaganej różnorodności: ${reserve.requiredTypes} produktów.`,steps:[step('Sprawdź wyżywienie i wydawanie dostępnych produktów. Zachowaj chronioną rezerwę na kolejne posiłki mieszkańców.','warehouse','food'),step('Zapewnij zbiór zboża i warzyw w Gospodarstwie; Młyn może przerabiać zboże na pożywniejszą mąkę.','farm')],explanation:`Rezerwa wynosi ${n(reserve.requiredSatiety)} punktów sytości na godzinę. Od poziomu 3 Ratusza potrzebne są dwa produkty, od 8 — trzy, każdy z udziałem co najmniej 20%.`,reserve});
 }
 function suggestion(state) {
  const food=foodAdvice(state);if(food)return food;
@@ -189,9 +189,9 @@ function developmentGuidance(state,options={}) {
   action('review-assignments','Sprawdź wolnych mieszkańców i przydziały do produktów potrzebnych w bieżących misjach.','Review available residents and product assignments for current missions.','house','workers'),
   action('review-research','Sprawdź dostępne odkrycia i badania zwiększające wydajność wyspy.','Review discoveries and research that improve island efficiency.','academy')],{taskId:'maintain-economy'});
  const unlock=NEW_BUILDINGS[wanted]?.unlockLevel||(wanted==='dock'?4:wanted==='market'?2:1),next=plannedLevel(state,wanted)+1;
- if(th<unlock||wanted!=='townhall'&&next>th){const requirement=Math.max(unlock,next);return result('locked',say(`Cel: odblokuj rozwój — ${bname(wanted)}`,`Goal: unlock development — ${bname(wanted)}`),say(`Najpierw potrzebujesz Ratusza na poziomie ${n(requirement)}.`,`First, the Town Hall must reach level ${n(requirement)}.`),[
+ if(th<unlock||wanted!=='townhall'&&next>th){const requirement=Math.max(unlock,next),currentTownhall=plannedLevel(state,'townhall')+1;return result('locked',say(`Cel: przygotuj najbliższy krok — Ratusz ${n(currentTownhall)}`,`Goal: prepare the next step — Town Hall ${n(currentTownhall)}`),say(`${bname(wanted)} wymaga docelowo Ratusza na poziomie ${n(requirement)}. Teraz sprawdź wykonalność najbliższego poziomu ${n(currentTownhall)}; materiały i obsadę przygotuj etapami.`,`${bname(wanted)} eventually requires Town Hall level ${n(requirement)}. Review the immediate level ${n(currentTownhall)} first and prepare materials and staffing in stages.`),[
   action('unlock-townhall','Otwórz Ratusz i sprawdź warunki jego najbliższej rozbudowy.','Open the Town Hall and check the next upgrade prerequisites.','townhall'),
-  action('unlock-supplies','Przygotuj brakujące materiały i transport do rozbudowy Ratusza.','Prepare the missing materials and transport for the Town Hall upgrade.','warehouse','priorities')],{goal:'townhall',requestedGoal:wanted,requestedTargetLevel:next,targetLevel:requirement,taskId:'unlock-'+wanted});}
+  action('unlock-supplies','Przygotuj brakujące materiały i transport do rozbudowy Ratusza.','Prepare the missing materials and transport for the Town Hall upgrade.','warehouse','priorities')],{goal:'townhall',requestedGoal:wanted,requestedTargetLevel:next,targetLevel:currentTownhall,longTermRequirement:requirement,taskId:'unlock-'+wanted});}
  const eligibility=upgradeEligibility(state,wanted);
  if(eligibility.code==='townhall-population'){
   if(beds<eligibility.populationRequired&&amount(state.buildings.house.level)<th)wanted='house';
@@ -206,14 +206,17 @@ function developmentGuidance(state,options={}) {
  const targetLevel=plannedLevel(state,wanted)+1,cost=buildingCost(state,wanted),available=resource=>resource==='coins'?amount(state.resources.coins):Math.max(0,centralUnreserved(state,resource)-amount(reserve.materials[resource]));
  const missing=Object.entries(cost).map(([id,required])=>({id,required,available:available(id),missing:Math.max(0,required-available(id))})).filter(row=>row.missing>1e-7);
  const steps=[],transport=carriers();if(transport)steps.push(transport);
- if(cost.foodQuote?.ok===false)steps.push(action('building-food',`Zapewnij dodatkowe ${n(cost.foodQuote.missingSatiety)} punktów sytości na budowę ponad chronioną rezerwę mieszkańców.`,`Provide ${n(cost.foodQuote.missingSatiety)} additional construction satiety points above residents’ protected reserve.`,'warehouse','food'));
+ const legacyFoodMissing=state.ruleset!==32&&cost.foodQuote?.ok===false?cost.foodQuote.missingSatiety:0;
+ if(legacyFoodMissing)steps.push(action('building-food',`Zapewnij dodatkowe ${n(legacyFoodMissing)} punktów sytości na budowę ponad chronioną rezerwę mieszkańców.`,`Provide ${n(legacyFoodMissing)} additional construction satiety points above residents’ protected reserve.`,'warehouse','food'));
  const coins=missing.find(row=>row.id==='coins'),game=coins?miniGame():null;
  const producerSlots=Math.max(0,4-steps.length-(game?1:0));
  for(const row of missing.filter(row=>row.id!=='coins').slice(0,producerSlots)){const production=assignProduct(row.id);if(production)steps.push(production);}
  if(game)steps.push(game);
  if(steps.length<2)steps.push(action('construction-supply','Sprawdź tragarzy i priorytety dostaw do nowej budowy.','Check carriers and delivery priorities for the new project.','warehouse','priorities'));
- steps.push(action('upgrade-'+wanted,missing.length||cost.foodQuote?.ok===false?`Po zebraniu braków otwórz ${bname(wanted)}, sprawdź koszt i zleć poziom ${n(targetLevel)}.`:`Otwórz ${bname(wanted)}, sprawdź koszt i zleć poziom ${n(targetLevel)}.`,missing.length||cost.foodQuote?.ok===false?`After collecting the missing goods, open the ${bname(wanted)}, review the cost and order level ${n(targetLevel)}.`:`Open the ${bname(wanted)}, review the cost and order level ${n(targetLevel)}.`,wanted));
- return result('upgrade',say(`Cel: rozbudowa — ${bname(wanted)}`,`Goal: upgrade — ${bname(wanted)}`),say(`Następny poziom: ${n(targetLevel)}. ${missing.length?'Brakuje w centrali: '+missing.map(row=>`${gname(row.id)} ${n(row.missing)}`).join(', ')+'.':'Materiały i monety są dostępne.'}`,`Next level: ${n(targetLevel)}. ${missing.length?'Central storage is short of: '+missing.map(row=>`${gname(row.id)} ${n(row.missing)}`).join(', ')+'.':'Materials and coins are available.'}`),steps,{goal:wanted,targetLevel,taskId:'upgrade-'+wanted+'-'+targetLevel,missing,cost:Object.fromEntries(Object.entries(cost)),...(cost.foodQuote?.ok===false?{foodMissing:cost.foodQuote.missingSatiety}:{})});
+ const funded=!missing.length&&!legacyFoodMissing;
+ if(funded)steps.push(action('upgrade-'+wanted,`Otwórz ${bname(wanted)}, sprawdź koszt i zleć poziom ${n(targetLevel)}.`,`Open the ${bname(wanted)}, review the cost and order level ${n(targetLevel)}.`,wanted));
+ else steps.push(action('prepare-'+wanted,`Najpierw zgromadź brakujące materiały i monety dla budynku ${bname(wanted)}. Po odbiorze Doradca sprawdzi gotowość rozbudowy.`,`First gather the missing materials and coins for the ${bname(wanted)}. After collection the advisor will review upgrade readiness.`,'warehouse','priorities'));
+ return result(funded?'upgrade':'materials',funded?say(`Cel: rozbudowa — ${bname(wanted)}`,`Goal: upgrade — ${bname(wanted)}`):say(`Cel: przygotuj materiały — ${bname(wanted)}`,`Goal: prepare materials — ${bname(wanted)}`),say(`Najbliższy poziom: ${n(targetLevel)}. ${missing.length?'Do przygotowania: '+missing.map(row=>`${gname(row.id)} ${n(row.missing)}`).join(', ')+'.':'Materiały i monety są dostępne.'}`,`Immediate level: ${n(targetLevel)}. ${missing.length?'Prepare: '+missing.map(row=>`${gname(row.id)} ${n(row.missing)}`).join(', ')+'.':'Materials and coins are available.'}`),steps,{goal:wanted,targetLevel,taskId:(funded?'upgrade-':'prepare-')+wanted+'-'+targetLevel,missing,cost:Object.fromEntries(Object.entries(cost)),...(legacyFoodMissing?{foodMissing:legacyFoodMissing}:{})});
 }
 function lockAdvice(state,id,eligibility,next) {
  const unlock=NEW_BUILDINGS[id]?.unlockLevel || (id==='dock'?4:id==='market'?2:1);
@@ -349,13 +352,13 @@ function upgradePlan(state,id,options) {
  result.cost=Object.fromEntries(Object.entries(cost));
  const reserve=foodReservePlan(state,{available:resource=>centralUnreserved(state,resource)});
  if(!reserve.complete)result.steps.push(step('Najpierw uzupełnij chronioną rezerwę jedzenia i wymaganą różnorodność.','warehouse','food'));
- if(cost.foodQuote?.ok===false){result.text+=` Ponadto brakuje ${n(cost.foodQuote.missingSatiety)} punktów sytości na budowę ponad rezerwę.`;result.steps.push(step(`Zapewnij ${n(cost.foodQuote.missingSatiety)} dodatkowych punktów sytości na budowę; to osobny koszt od posiłków mieszkańców.`, 'warehouse','food'));result.foodMissing=cost.foodQuote.missingSatiety;}
+ if(state.ruleset!==32&&cost.foodQuote?.ok===false){result.text+=` Ponadto brakuje ${n(cost.foodQuote.missingSatiety)} punktów sytości na budowę ponad rezerwę.`;result.steps.push(step(`Zapewnij ${n(cost.foodQuote.missingSatiety)} dodatkowych punktów sytości na budowę; to osobny koszt od posiłków mieszkańców.`, 'warehouse','food'));result.foodMissing=cost.foodQuote.missingSatiety;}
  const budget={free:freeWorkers(state),hired:{}},warehouseCrew=amount(state.buildings.warehouse?.workers),room=hireRoom(state,'warehouse');
  if(!warehouseCrew&&budget.free>0&&room>0){budget.free--;budget.hired.warehouse=1;result.steps.push(step('Przydziel 1 wolną osobę do Magazynu jako tragarza. Dojście zajmuje do 2 minut.','warehouse','workers'));}
  else if(!warehouseCrew)result.steps.push(step('Zapewnij co najmniej jednego tragarza w Magazynie. Najpierw sprawdź wolnych mieszkańców; nie zdejmuj obsady potrzebnej do karmienia wyspy.','warehouse','workers'));
  const supply=productionPlan(state,cost,budget);result.steps.push(...supply.steps);result.productionNeeds=supply.needs;result.incomingForPlan=supply.arrivals;
  const coinShortfall=missing.find(row=>row.id==='coins');if(coinShortfall)result.steps.push(...resourceAdvice(state,'coins',coinShortfall.missing,budget));
- if(missing.length||cost.foodQuote?.ok===false){result.steps.push(step('W priorytetach transportu ustaw odbiór potrzebnych produktów i dostawy do budowy. Zachowaj obsługę jedzenia.','warehouse','priorities'));result.estimate={seconds:null,text:'Pełny czas zależy od zebrania materiałów i wolnej obsady. Po ich zapewnieniu przeliczę transport i budowę.'};}
+ if(missing.length||state.ruleset!==32&&cost.foodQuote?.ok===false){result.steps.push(step('W priorytetach transportu ustaw odbiór potrzebnych produktów i dostawy do budowy. Zachowaj obsługę jedzenia.','warehouse','priorities'));result.estimate={seconds:null,text:'Pełny czas zależy od zebrania materiałów i wolnej obsady. Po ich zapewnieniu przeliczę transport i budowę.'};}
  else {
   const estimate=constructionScheduleEstimate(state,cost,id),seconds=estimate.completionTotal??estimate.total;
   result.estimate={seconds:Number.isFinite(seconds)?seconds:null,text:Number.isFinite(seconds)?`Około ${duration(seconds)}: transport, kolejka i budowa przy obecnej obsadzie. To szacunek od zlecenia rozbudowy.`:'Czas nie jest jeszcze dostępny: tragarze muszą dotrzeć do pracy lub zakończyć wcześniejsze dostawy.'};

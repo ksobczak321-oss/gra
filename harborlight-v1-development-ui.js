@@ -1,8 +1,8 @@
-import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-23';
-import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation, developmentProductDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
-import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-23';
-import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-23';
-import { refreshBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-23';
+import { createResidentDirectory } from './harborlight-v1-resident-labels.js?v=frontend-v32-24';
+import { DEVELOPMENT_NAMES, GOODS_NAMES, developmentText, developmentBuildingCopy, developmentBuildingInformation, developmentProductDescription } from './harborlight-v1-development-copy.js?v=frontend-v32-24';
+import { NEW_BUILDINGS } from './harborlight-v1-provisions.js?v=frontend-v32-24';
+import { mapRegionFor, mapFootprintFor, buildingArtwork } from './harborlight-v1-map-art.js?v=frontend-v32-24';
+import { refreshBuildingStageArtwork } from './harborlight-v1-building-stages.js?v=frontend-v32-24';
 
 // All views share the approved presentation mapping; model IDs stay unchanged.
 export const DEVELOPMENT_BUILDINGS = Object.freeze(Object.fromEntries(Object.entries({
@@ -70,7 +70,7 @@ export function renderProductionControls(building,options={}){
   const assigned=Array.isArray(assignments)?Object.fromEntries(assignments.map(item=>[item.recipeId||item.id,item.workers])):assignments;
   const capacity=call(options,'provisions','crewCapacity',state,building);
   const crewLimit=typeof capacity==='object'?capacity.total??capacity.capacity:capacity;
-  const title=section('Produkty i pracownicy',...(options.context?.compactProductionHelp?[]:[p(`Załoga: ${whole(b.workers)}${crewLimit==null?'':` / ${whole(crewLimit)}`}. Każdą osobę przydziel do jednego produktu.`),p('Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.','v32-muted')]));
+  const title=section('Produkty i pracownicy',...(options.context?.compactProductionHelp?[]:[p(`Załoga: ${whole(b.workers)}${crewLimit==null?'':` / ${whole(crewLimit)}`}. Każdą osobę przydziel do jednego produktu.`),p(building==='farm'?'Przyciski − i + przesuwają pracowników między produktami. Łączna załoga Gospodarstwa pozostaje bez zmian.':'Przed zmianą produktu zmniejsz dotychczasowy przydział, a następnie przydziel wolne osoby do nowego produktu.','v32-muted')]));
   if(building==='slaughterhouse')title.append(p(developmentText('HELP-NEW-02'),'v32-muted'));
   const shownGoods=new Set();
   for(const recipeId of recipes){
@@ -82,8 +82,15 @@ export function renderProductionControls(building,options={}){
     const inputText=Object.entries(inputs).map(([id,qty])=>`${format(qty)} ${label(id)}`).join(' + ');
     const outText=output&&typeof output==='object'?Object.entries(output).map(([id,qty])=>`${format(qty)} ${label(id)}`).join(', '):RECIPE_LABELS[recipeId]||recipe.name||recipeId;
     const input=integerInput(assigned[recipeId]?.workers??assigned[recipeId]??0,b.workers,{'data-v32-workers':recipeId,'aria-label':`Pracownicy: ${RECIPE_LABELS[recipeId]||recipeId}`});
+    let workerField=field('Osoby',input);
+    if(building==='farm'){
+      const maximum=Math.min(whole(b.workers),whole(capacity?.perRecipe?.[recipeId]??capacity?.perProduct??b.workers));
+      input.max=maximum;
+      const change=async delta=>{const before=whole(input.value),next=Math.max(0,Math.min(maximum,before+delta));if(next===before)return;input.value=next;const result=await act(options,'provisionsSetWorkers',{building,recipeId,workers:next});if(result?.ok===false)input.value=before;};
+      workerField=field('Osoby',node('div',{class:'v32-worker-stepper'},btn('−',()=>change(-1),{'aria-label':`Zmniejsz przydział: ${RECIPE_LABELS[recipeId]||recipeId}`,'data-v32-product-worker-step':'-1','data-recipe':recipeId}),input,btn('+',()=>change(1),{'aria-label':`Zwiększ przydział: ${RECIPE_LABELS[recipeId]||recipeId}`,'data-v32-product-worker-step':'1','data-recipe':recipeId})));
+    }
     const action=submit(developmentText(RECIPE_ACTION_COPY[recipeId])||'Przydziel');action.classList.add('v32-recipe-assign');
-    title.append(form(()=>act(options,'provisionsSetWorkers',{building,recipeId,workers:whole(input.value)}),node('div',{class:'v32-recipe'},node('div',{},node('strong',{text:RECIPE_LABELS[recipeId]||recipe.name||recipeId}),p(inputText?`${inputText} → ${outText}`:'Pozyskiwanie surowca','v32-muted'),...Object.keys(output||{}).map(productInformation).filter(Boolean)),field('Osoby',input),action)));
+    title.append(form(()=>act(options,'provisionsSetWorkers',{building,recipeId,workers:whole(input.value)}),node('div',{class:'v32-recipe'},node('div',{},node('strong',{text:RECIPE_LABELS[recipeId]||recipe.name||recipeId}),p(inputText?`${inputText} → ${outText}`:'Pozyskiwanie surowca','v32-muted'),...Object.keys(output||{}).map(productInformation).filter(Boolean)),workerField,action)));
   }
   const local=call(options,'provisions','localStorageStatus',state,building);
   if(local){const goods=local.stock||local.goods||local.materials||local.products||{};title.append(p(`Magazyn lokalny: ${format(local.used??Object.values(goods).reduce((sum,v)=>sum+num(v),0))} / ${format(local.totalCapacity??local.capacity??local.total??300*num(b.level))}`,'v32-muted'));if(Object.keys(goods).length)title.append(p(Object.entries(goods).filter(([id,qty])=>shownGoods.has(id)||num(qty?.quantity??qty)>0).map(([id,qty])=>`${label(id)}: ${format(qty?.quantity??qty)}`).join(' · '),'v32-muted'));}
@@ -105,20 +112,8 @@ export function renderFoodControls(options={}){
   return root;
 }
 
-export function renderConstructionFoodMix(building,options={}){
-  const state=stateOf(options),quote=options.context?.constructionQuote?.(building)||options.quote||{};
-  const foodUnits=quote.foodUnits??options.foodUnits;
-  if(foodUnits==null&&!quote.satietyRequired)return null;
-  const defaultQuote=call(options,'provisions','quoteConstructionFood',state,foodUnits)||quote;
-  const mix=defaultQuote.materials||defaultQuote.foodMix||{};
-  const inputs=new Map(),required=num(quote.satietyRequired)||num(foodUnits)*6;
-  const summary=p('','v32-status');
-  const body=section('Jedzenie na budowę',p(developmentText('MSG-MEAL-COST',{'sytość':format(required)})),p('Sytość określa, ile potrzeb żywieniowych zaspokaja produkt. Na przykład 6 punktów sytości zapewnia 6 porcji zboża albo 1 porcja mąki. Możesz zmienić proponowany zestaw przed zatwierdzeniem.'));
-  const update=()=>{const provided=[...inputs].reduce((sum,[id,input])=>sum+whole(input.value)*(SATIETY[id]||0),0);summary.textContent=`Wybrane jedzenie: ${format(provided)} / ${format(required)} pkt sytości`;summary.dataset.kind=provided>=required?'success':'error';};
-  const grid=node('div',{class:'v32-mix-grid'});
-  for(const id of FOOD_IDS.filter(id=>id!=='food'||num(state.resources?.food)>0)){const input=integerInput(mix[id]||0,undefined,{'data-v32-build-food':id,onInput:update});inputs.set(id,input);grid.append(field(`${label(id)} (${format(SATIETY[id])} pkt)`,input));}
-  body.append(form(async()=>{const selected=Object.fromEntries([...inputs].filter(([,input])=>whole(input.value)>0).map(([id,input])=>[id,whole(input.value)]));if(options.context?.constructionSubmit){const result=await options.context.constructionSubmit(building,selected);if(result?.ok===false)announce(options,result.message,false);else options.onRefresh?.();}else await act(options,options.context?.constructionActionType||'upgrade',{building,id:building,foodMix:selected,mix:selected});},grid,summary,submit('Zatwierdź rozbudowę')));update();return body;
-}
+// Compatibility export for older panel callers; buildings no longer consume food.
+export function renderConstructionFoodMix(){return null;}
 
 export function renderTransportControls(building,options={}){
   const status=options.context?.transportStatus?.(building);if(!status)return null;
@@ -289,7 +284,7 @@ export function renderDevelopmentBuildingPanel(id,options={}){
   if(options.context?.buildingControls)secondary.prepend(options.context.buildingControls(id));
   secondary.append(info);
   const transport=num(b.level)>0?renderTransportControls(id,options):null;if(transport)secondary.append(transport);
-  if(options.showConstructionMix){const build=renderConstructionFoodMix(id,options);if(build)secondary.append(build);}
+
   root.append(layout);return root;
 }
 

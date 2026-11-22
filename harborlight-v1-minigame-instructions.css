@@ -1,0 +1,13 @@
+.minigame-instructions{box-sizing:border-box;min-width:0;margin:12px 0;padding:18px;border:1px solid #527482;border-radius:12px;background:#102e3d;color:#e1edf0;line-height:1.5;overflow-wrap:anywhere}
+.minigame-instructions h4,.minigame-instructions h5{margin:0 0 8px;color:#f1cb7c}
+.minigame-instructions h4{font-size:1.15rem}.minigame-instructions h5{margin-top:14px;font-size:1rem}
+.minigame-instructions p{margin:8px 0}.minigame-instructions ol,.minigame-instructions ul{padding-inline-start:24px;margin:8px 0}
+.minigame-instructions li+li{margin-top:7px}.minigame-instructions summary{cursor:pointer;font-weight:700;color:#f1cb7c;min-height:28px}
+.minigame-instructions-reading{padding:10px 12px;border-radius:8px;background:#1b4050;color:#d5e6e9}
+.minigame-instructions-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.minigame-instructions-actions button{min-height:44px;padding:10px 16px;border:1px solid #9b813e;border-radius:9px;background:#e6bd6c;color:#182d33;font:inherit;font-weight:700;cursor:pointer}
+.minigame-instructions-actions button.secondary{border-color:#668998;background:#21485b;color:#e1edf0}
+.minigame-instructions-actions button:focus-visible,.minigame-instructions summary:focus-visible{outline:3px solid #ffe4a6;outline-offset:3px}
+.minigame-instructions-actions button:disabled{opacity:.6;cursor:wait}
+.minigame-instructions[data-compact=true]{padding:12px 16px}.minigame-instructions[hidden]{display:none!important}
+@media(max-width:480px){.minigame-instructions{padding:14px}.minigame-instructions-actions button{flex:1 1 150px}}

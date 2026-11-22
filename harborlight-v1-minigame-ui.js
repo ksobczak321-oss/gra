@@ -1,4 +1,5 @@
-import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
+import { developmentText } from './harborlight-v1-development-copy.js?v=frontend-v32-24';
+import { createMiniGameInstructions } from './harborlight-v1-minigame-instructions.js?v=frontend-v32-24';
 // Browser controls and artwork for the two expedition games. The activity model
 // owns every card, collision, goal and deadline; this module only sends input.
 
@@ -125,7 +126,7 @@ function icon(symbolId) {
   return svg;
 }
 
-export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, language = 'pl', status: initialStatus = {}, animations = true, onRewardedAd=null }) {
+export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, language = 'pl', status: initialStatus = {}, animations = true, onRewardedAd=null, instructions=true }) {
   if (!host || !initialRun?.miniGame) throw new TypeError('A host and an expedition mini-game are required.');
   let run = initialRun, status = initialStatus, disposed = false, frame = 0;
   const words = WORDS[language] || WORDS.en;
@@ -136,6 +137,9 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   const progress = element('p', { class: 'minigame-progress', 'aria-live': 'polite', 'data-minigame-progress': '' });
   const message = element('p', { class: 'minigame-message', role: 'status', 'data-minigame-message': '' });
   root.append(title, description);
+  const instructionHost = element('div', { 'data-expedition-instructions': '' });
+  if (instructions) root.append(instructionHost);
+  let instructionKey = '';
   host.replaceChildren(root);
   let externalControls = null;
   if (controlsHost && run.miniGame.kind === 'tilt') {
@@ -145,12 +149,29 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   const cleanup = [];
   let updateBoard = () => {}, drawBoard = () => {}, fitLayout = () => {}, lossAt = null, previousState = '';
   const timeOffer=element('div',{class:'minigame-v32-time-offer',hidden:true,'data-expedition-time-offer':''});root.append(timeOffer);
-  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-23',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
+  if(!document.querySelector('[data-original-puzzle-css]')){const link=element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-24',import.meta.url).href,'data-original-puzzle-css':''});document.head.append(link);}
   const v32Help=element('div',{class:'minigame-v32-help','data-expedition-v32-help':''});root.append(v32Help);let helpKey='';
-  function renderHelp(){const key=`${run.id}:${run.status}:${status.canUseHelp}:${status.hintUsed}:${status.hint}`;if(key===helpKey)return;helpKey=key;v32Help.replaceChildren();if(status.canUseHelp){if(run.status==='active'&&!status.hintUsed){const b=element('button',{type:'button'},language==='en'?'Free hint':developmentText('UI-056'));b.addEventListener('click',()=>onAction?.({type:'expeditionHint',runId:run.id}));v32Help.append(b);}if(run.status==='lost'){const b=element('button',{type:'button'},language==='en'?'Easier attempt · 50% reward':developmentText('UI-057')+' · 50% nagrody');b.addEventListener('click',()=>onAction?.({type:'expeditionRestartEasier',runId:run.id}));v32Help.append(b);}}if(status.hint)v32Help.append(element('p',{role:'status'},status.hint));}
+  function renderHelp(){const key=`${run.id}:${run.status}:${status.canUseHelp}:${status.hintUsed}:${status.hint}`;if(key===helpKey)return;helpKey=key;v32Help.replaceChildren();if(status.canUseHelp){if(run.status==='active'&&!status.hintUsed){const b=element('button',{type:'button'},language==='en'?'Free hint':developmentText('UI-056'));b.addEventListener('click',()=>onAction?.({type:'expeditionHint',runId:run.id}));v32Help.append(b);}if(run.status==='lost'){const b=element('button',{type:'button'},language==='en'?'Easier attempt · 50% reward':developmentText('UI-057')+' · 50% nagrody');b.addEventListener('click',()=>onAction?.({type:'expeditionRestartEasier',runId:run.id,deferStart:true}));v32Help.append(b);}}if(status.hint)v32Help.append(element('p',{role:'status'},status.hint));}
   let offerKey='';
   function renderTimeOffer(){const offer=status.timeOffer;timeOffer.hidden=!offer;if(!offer){offerKey='';return;}const key=`${run.id}:${run.level}`;if(offerKey!==key){offerKey=key;timeOffer.replaceChildren();const dialog=element('section',{class:'original-puzzle-dialog',role:'dialog','aria-modal':'true','aria-label':language==='en'?'Extra time':'Dodatkowy czas'});dialog.append(element('h4',{},language==='en'?'Need more time?':'Potrzebujesz więcej czasu?'),element('p',{'data-expedition-offer-seconds':''}),element('p',{'data-expedition-offer-countdown':''}));const make=(label,fn)=>{const b=element('button',{type:'button'},label);b.addEventListener('click',fn);return b;};dialog.append(make(language==='en'?`${10*(status.highestTownhall||1)} coins`:developmentText('UI-053',{koszt:10*(status.highestTownhall||1)}),()=>onAction?.({type:'expeditionExtraTime',runId:run.id})));if(onRewardedAd)dialog.append(make(language==='en'?'Watch an ad':'Obejrzyj reklamę',()=>onRewardedAd(run)));dialog.append(make(language==='en'?'Keep playing':'Gram dalej',()=>onAction?.({type:'expeditionTimeChoice',runId:run.id,method:'decline'})));timeOffer.append(dialog);queueMicrotask(()=>dialog.querySelector('button')?.focus());}timeOffer.querySelector('[data-expedition-offer-seconds]').textContent=`${language==='en'?'Add':'Dodaj'} ${Math.ceil(Math.max(60,(status.remaining||30)*.5))} s`;timeOffer.querySelector('[data-expedition-offer-countdown]').textContent=`${language==='en'?'Resume in':'Powrót do gry'}: ${Math.ceil(offer.choiceRemaining)} s`;}
-  const active = () => run.status === 'active' && !status.presenceRequired && !status.adPaused && !document.hidden;
+  function renderInstructions() {
+    if (!instructions) return;
+    const pending = run.instructionsPending === true;
+    const key = `${run.id}:${run.level}:${pending}`;
+    if (instructionKey !== key) {
+      instructionKey = key;
+      instructionHost.replaceChildren(createMiniGameInstructions({ subject: run, language, compact: !pending,
+        ...(pending ? { onStart: () => onAction?.({ type: 'expeditionBegin', runId: run.id, stage: run.level }) } : {}) }));
+      queueMicrotask(() => { if (!disposed) fitLayout(); });
+    }
+    root.dataset.instructionsPending = String(pending);
+    for (const child of root.children) if (child !== title && child !== description && child !== instructionHost) {
+      child.inert = pending;
+      child.classList.toggle('minigame-awaiting-start', pending);
+    }
+    if (externalControls) { externalControls.inert = pending; externalControls.hidden = pending; }
+  }
+  const active = () => run.status === 'active' && !run.instructionsPending && !status.presenceRequired && !status.adPaused && !document.hidden;
   const send = action => {
     if (!active()) return;
     return onAction?.({ ...action, runId: run.id, stage: run.level });
@@ -465,15 +486,15 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
   function update(nextRun, nextStatus = status) {
     if (disposed || !nextRun?.miniGame) return;
     run = nextRun; status = nextStatus || {};
-    updateBoard();renderTimeOffer();renderHelp();
+    updateBoard();renderTimeOffer();renderHelp();renderInstructions();
   }
   function render(now) {
     if (disposed || !root.isConnected) return;
-    renderTimeOffer();renderHelp();drawBoard(now);
+    renderTimeOffer();renderHelp();renderInstructions();drawBoard(now);
     if (run.miniGame.kind === 'tilt') updateBoard();
     frame = requestAnimationFrame(render);
   }
-  updateBoard();renderTimeOffer(); fitLayout();
+  updateBoard();renderTimeOffer();renderInstructions(); fitLayout();
   // renderPanel mounts before a newly opened dialog enters the top layer.
   // Fit again in this same task after showModal, before its first paint.
   queueMicrotask(() => { if (!disposed) fitLayout(); });

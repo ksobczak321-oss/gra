@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createState, buildingCost, act} from '../harborlight-v1-state.js';
 import {centralAvailable} from '../harborlight-v1-inventory.js';
-import {foodReservePlan} from '../harborlight-v1-provisions.js';
+import {foodReservePlan,FOOD_IDS} from '../harborlight-v1-provisions.js';
 import {advisorPlan,advisorSuggestion} from '../harborlight-v1-advisor.js';
 import {ADVISOR_INTRO_IDS, ADVISOR_INTRO_COPY, introductionIndex} from '../harborlight-v1-advisor-intro.js';
 import {APPROVED_TOUR_IDS} from '../harborlight-v1-approved-copy.js';
@@ -25,7 +25,7 @@ test('Port natural-language goal uses exact live construction costs and protecte
  assert.equal(plan.kind,'upgrade');assert.equal(plan.goal,'dock');
  const cost=buildingCost(structuredClone(s),'dock');assert.deepEqual(plan.cost,Object.fromEntries(Object.entries(cost)));
  for(const row of plan.missing){assert.equal(row.required,cost[row.id]);assert.equal(row.available,row.id==='coins'?s.resources.coins:centralAvailable(structuredClone(s),row.id));}
- assert.deepEqual(structuredClone(s),copy);assert.equal(plan.foodMissing,cost.foodQuote.missingSatiety);assert.equal(plan.estimate.seconds,null);
+ assert.deepEqual(structuredClone(s),copy);assert.equal(plan.foodMissing,undefined);assert.ok(FOOD_IDS.every(id=>!(id in cost)));assert.ok(plan.steps.every(row=>!row.text.includes('sytości na budowę')));assert.equal(plan.estimate.seconds,null);
  const grain=advisorPlan(s,'Potrzebuję więcej zboża');const wholeAvailable=Math.floor(centralAvailable(structuredClone(s),'grain'));assert.ok(grain.text.includes(`${wholeAvailable} szt.`),'available fractional food must not be rounded up to a spendable whole unit');
  assert.ok(plan.steps.some(x=>x.target==='sawmill'));assert.ok(plan.steps.some(x=>x.target==='warehouse'&&x.section==='priorities'));
 });
@@ -101,7 +101,7 @@ test('scarce grain reserved for meals is excluded from construction and manufact
  const s=world();s.resources.grain=100;s.resources.vegetables=0;s.resources.food=0;
  const reserve=foodReservePlan(structuredClone(s)),p=advisorPlan(s,'Potrzebuję więcej zboża');
  assert.equal(p.kind,'resource');assert.ok(reserve.materials.grain>0);assert.match(p.text,/ponad rezerwy/);
- const upgrade=advisorPlan(s,'Port');assert.equal(upgrade.missing.find(x=>x.id==='grain').available,Math.max(0,100-reserve.materials.grain));
+ const upgrade=advisorPlan(s,'Port');assert.equal(upgrade.missing.some(x=>x.id==='grain'),false);assert.equal('grain'in upgrade.cost,false);assert.equal(centralAvailable(structuredClone(s),'grain'),Math.max(0,100-reserve.materials.grain));
 });
 
 test('a local finished stock recommendation waits for collection before hiring more',()=>{

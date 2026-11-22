@@ -73,8 +73,9 @@ with sync_playwright() as playwright:
     page.get_by_role('button',name='Zapisz ustawienia',exact=True).click()
     assert state(page,'provisions.foodSettings.limits.vegetables')==25
     page.locator('[data-upgrade-building="warehouse"]').click()
-    assert page.locator('[data-v32-construction="warehouse"]').count()==1
-    page.locator('#development-construction').press('Escape')
+    assert page.locator('[data-v32-construction="warehouse"]').count()==0
+    assert page.locator('#development-construction').count()==0
+    assert state(page,'buildings.warehouse.construction') is not None
     close(page)
     building(page,'academy')
     form=page.get_by_role('button',name='Zapisz na kurs',exact=True).locator('xpath=ancestor::form')
@@ -112,4 +113,4 @@ with sync_playwright() as playwright:
     assert state(page,'originalPuzzles.attempts["signal-line"].status')=='abandoned'
     assert not errors, errors
     browser.close()
-print('DEV v32 interface smoke passed: desktop/mobile panels, recipes, meals, construction mix, academy, barracks, theatre, Kingdom and minigames.')
+print('DEV v32 interface smoke passed: desktop/mobile panels, recipes, meals, food-free construction, academy, barracks, theatre, Kingdom and minigames.')

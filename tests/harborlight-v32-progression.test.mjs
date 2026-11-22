@@ -50,8 +50,10 @@ test('the actual 25-lesson DEV course completes without old Food or developer st
 test('reading between every lesson keeps the DEV course funded while real rations and production run',()=>{
  const{state:s,trace}=runCourse({pause:30});assert.equal(trace.length,25);assert.equal(s.tutorial.settled,true);assert.ok(s.statistics.crafted>0);assert.ok(s.resources.flour>0);assert.equal(s.resources.food,0);
 });
-test('first building aid prices missing six-satiety rations even when the live food quote is incomplete',()=>{
- const{state:s,command}=runCourse({through:4});for(const id of ['grain','vegetables','flour'])s.resources[id]=0;const raw=buildingCost(s,'townhall');assert.equal(raw.foodQuote.ok,false);const supplied=command({type:'prepareTutorialUpgrade'});assert.ok(supplied.reward.flour>0);assert.equal(supplied.reward.food,undefined);assert.ok(buildingCost(s,'townhall').foodQuote.ok);assert.equal(command({type:'upgrade',building:'townhall'}).ok,true);
+test('first building aid keeps resident meals while the Town Hall quote has no food or grain',()=>{
+ const{state:s,command}=runCourse({through:4});for(const id of ['grain','vegetables','flour'])s.resources[id]=0;
+ const raw=buildingCost(s,'townhall');assert.equal(raw.foodQuote,undefined);assert.equal(raw.foodUnits,undefined);assert.equal(raw.grain,undefined);assert.equal(raw.food,undefined);
+ const supplied=command({type:'prepareTutorialUpgrade'});assert.ok(supplied.reward.flour>0,'ordinary aid still supplies resident meals');assert.equal(supplied.reward.food,undefined);assert.deepEqual(buildingCost(s,'townhall'),raw);assert.equal(command({type:'upgrade',building:'townhall'}).ok,true);
 });
 test('typed flour rewards and unopened saved chests survive root normalization without rerolls',()=>{
  const{state:s}=runCourse({through:4});const previous=structuredClone(s.tutorial.chests),restored=normalizeState(JSON.parse(JSON.stringify(s)),s.worldTimeMs);assert.deepEqual(restored.tutorial.chests,previous);assert.equal(restored.resources.food,0);assert.ok(restored.resources.flour>0);

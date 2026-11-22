@@ -1,6 +1,6 @@
 // Foreground-time invitations and the independent real-time session timeout.
 // The host supplies foreground seconds; background timers never create activity.
-import { practicalCourseBlocksInvitations } from './harborlight-v1-learning-policy.js?v=frontend-v32-23';
+import { practicalCourseBlocksInvitations } from './harborlight-v1-learning-policy.js?v=frontend-v32-24';
 export const SESSION_IDLE_SECONDS = 30 * 60;
 export const SESSION_WARNING_SECONDS = 30;
 const EPS = 1e-7;

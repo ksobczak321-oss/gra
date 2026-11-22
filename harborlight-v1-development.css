@@ -167,3 +167,15 @@ body[data-ruleset="32"] .resource-dock-cards:not(.leisure-dock-cards)>.resource-
  #island-dialog .v32-panel-layout .v32-form>.v32-button{flex:1 1 100%;width:100%}
  #island-dialog .v32-panel-layout .v32-list-row>.v32-button{flex:1 1 100%;width:100%}
 }
+
+/* Product descriptions and staffing controls share one baseline. */
+.v32-recipe>div:first-child{align-self:flex-end}
+.v32-recipe .v32-info,#island-dialog .v32-panel-layout .v32-recipe .v32-info{padding:0;margin:12px 0 0}
+.v32-recipe .v32-info>summary,#island-dialog .v32-panel-layout .v32-recipe .v32-info>summary{box-sizing:border-box;min-height:42px;line-height:20px;padding:11px 12px}
+.v32-recipe .v32-info>p{padding:0 12px 12px}
+.v32-worker-stepper{display:grid;grid-template-columns:28px minmax(36px,1fr) 28px;align-items:end;gap:3px}
+.v32-worker-stepper>.v32-button{height:44px;min-height:44px;padding:0;font-size:18px}
+.v32-worker-stepper>input{min-width:0;text-align:center;padding-inline:3px!important}
+.v32-recipe .v32-field:has(.v32-worker-stepper),#island-dialog .v32-panel-layout .v32-recipe .v32-field:has(.v32-worker-stepper){flex:0 1 100px}
+.v32-worker-stepper>input::-webkit-inner-spin-button,.v32-worker-stepper>input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.v32-worker-stepper>input[type=number]{-moz-appearance:textfield}

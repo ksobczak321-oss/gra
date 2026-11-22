@@ -1,5 +1,5 @@
-import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v32-23';
-import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v32-23';
+import { availableGoods } from './harborlight-v1-logistics.js?v=frontend-v32-24';
+import { missionRewardText } from './harborlight-v1-missions.js?v=frontend-v32-24';
 
 const NAMES = {
   coins: ['Monety', 'Coins'], wood: ['Drewno', 'Wood'], stone: ['Kamień', 'Stone'],
@@ -62,7 +62,9 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
   const root = node('div', { class: 'lighthouse-missions', 'data-lighthouse-missions': '', 'data-i18n-ignore': '', lang: language });
   let status = {}, pending = false, renderKey = '';
   const read = () => typeof missionStatus === 'function' ? missionStatus(state) : missionStatus || {};
-  const keyOf = current => JSON.stringify([current.available, current.finished, current.kind, current.index, current.task?.id, current.task?.status, !!current.canStart, current.plan?.reason, current.plan?.reasonPl]);
+  const keyOf = current => JSON.stringify([current.available, current.finished, current.kind, current.index, current.task?.id, current.task?.status, !!current.canStart, current.plan?.reason, current.plan?.reasonPl,
+    current.assistancePlan?.main?.id,current.assistancePlan?.population?.met,current.assistancePlan?.assistanceMode,!!Object.keys(current.assistancePlan?.missing||{}).length,
+    state?.buildings?.[current.task?.objective?.building]?.construction?.stage]);
   const available = resource => resource === 'coins' ? whole(state?.resources?.coins) : whole(availableGoods(state, resource));
   const kindName = kind => kind === 'rescue' ? t('Plan ratunkowy', 'Rescue plan') : kind === 'support' ? t('Misja pomocnicza', 'Support mission') : t('Misja główna', 'Main mission');
   const localized = (item, key) => language === 'pl' ? item?.[`${key}Pl`] || item?.[key] || '' : item?.[key] || '';
@@ -90,13 +92,48 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
   const openBuilding = id => node('button', { type: 'button', class: 'secondary', 'data-mission-open-building': id, onclick: () => onOpenBuilding(id) }, t('Otwórz: ', 'Open: ') + name(id));
   const openAdventure = (objective,assistance=null) => node('button',{type:'button',class:'primary','data-mission-open-adventure':objective.kind||'escapeStory',
     onclick:()=>onOpenAdventure(objective.kind||'escapeStory',{...(objective.storyId?{storyId:objective.storyId}:{}),...(objective.puzzleKind?{puzzleKind:objective.puzzleKind}:{}),
-      ...(assistance?{rescueContext:assistance}:{})})},assistance?t('Wyrusz z pomocą','Start the rescue'):t('Rozpocznij przygodę','Start the adventure'));
+      ...(assistance?{rescueContext:assistance}:{})})},assistance?assistance.residentsRequested>0?t('Rozpocznij wyprawę po załogę','Start the crew rescue'):assistance.mode==='supplies'?t('Rozpocznij wyprawę po zaopatrzenie','Start the supply rescue'):t('Wyrusz z pomocą','Start the rescue'):t('Rozpocznij przygodę','Start the adventure'));
+
+  const goodsText = values => Object.entries(values||{}).filter(([,n])=>n>0).map(([id,n])=>`${name(id)}: ${count(n)}`).join(' · ');
+  const populationText = population => `${t('Mieszkańcy','Residents')}: ${count(population.current)} / ${count(population.required)} — ${population.met?t('warunek już spełniony.','requirement already met.'):t('przygotuj brakujące miejsca i załogę.','prepare the missing beds and crew.')}`;
+  const missingText = plan => Object.keys(plan.missing||{}).length?t('Do przygotowania dla celu głównego: ','Still needed for the main objective: ')+goodsText(plan.missing):t('Wymagany zapas jest już gotowy albo materiały zostały opłacone przy rozpoczęciu budowy.','The required stock is ready, or the materials were already paid when construction started.');
+  const suppliesText = plan => goodsText(plan.supplies)?t('Po ukończeniu tej wyprawy otrzymasz pomoc: ','Complete this adventure to receive assistance: ')+goodsText(plan.supplies):t('Sprawdź wskazane zapasy i przygotuj je przez produkcję oraz transport.','Review the listed stock and prepare it through production and transport.');
+  function assistanceInfo(current){
+    const plan=current.assistancePlan;if(!plan)return null;
+    const box=node('section',{class:'lighthouse-mission-box','data-mission-assistance-plan':''},
+      node('h4',{},t('Cel główny: ','Main objective: ')+localized(plan.main,'title')));
+    if(plan.population)box.append(node('p',{'data-mission-assistance-population':''},populationText(plan.population)));
+    box.append(node('p',{'data-mission-assistance-missing':''},missingText(plan)));
+    if(current.assistance){
+      box.append(node('p',{'data-mission-assistance-supplies':''},plan.residentsRequested>0?
+        t('Wyprawa pomoże przyjąć brakującą załogę: ','The adventure can bring in the missing crew: ')+count(plan.residentsRequested):suppliesText(plan)),
+        node('ol',{},
+          node('li',{},t('Otwórz „Statek bez kapitana” przyciskiem rozpoczęcia wyprawy poniżej. Przed grą przeczytaj jej cel i sposób sterowania.','Open “The captainless ship” with the adventure button below. Read its goal and controls before playing.')),
+          node('li',{},t('Rozwiąż kolejne pokoje opowieści i potwierdź przejście po każdym rozwiązaniu. Samo otwarcie pokoju nie zalicza wyprawy.','Solve the story’s rooms and confirm moving on after each solution. Opening a room does not complete the adventure.')),
+          node('li',{},t('Po ukończeniu finału gra rozliczy pomoc. Wróć do misji głównej, przygotuj pozostały zapas i wykonaj wskazaną czynność.','After the finale, the game records the assistance. Return to the main mission, prepare any remaining stock and perform the stated action.'))));
+    }
+    if(plan.main.objective.type==='building')box.append(node('p',{class:'lighthouse-mission-muted'},
+      t('Materiały trzeba zgromadzić, a następnie dowieźć na budowę. Samo spełnienie warunku mieszkańców nie kończy rozbudowy budynku.','Gather the materials, then have them delivered to the construction site. Meeting the population requirement alone does not finish the building upgrade.')),
+      openBuilding(plan.main.objective.building));
+    if(plan.canReturnToMain)box.append(action(t('Wróć do misji głównej','Return to the main mission'),'missionReturnToMain',{'data-mission-return-main':'',class:'secondary'}),
+      node('p',{class:'lighthouse-mission-muted'},t('Możesz kontynuować główny cel samodzielnie. Ukończone etapy, wpłaty i postęp rozpoczętych przygód pozostają zapisane.','You can continue the main objective yourself. Completed steps, contributions and progress in started adventures stay recorded.')));
+    return box;
+  }
 
   function objectiveInfo(current, box) {
     const task = current.task, objective = task.objective || {}, requirements = task.requirements || objective.requirements || {};
     if (objective.type === 'building') {
       const actual = whole(state?.buildings?.[objective.building]?.level);
       box.append(node('p', { 'data-mission-objective-progress': '' }, `${name(objective.building)}: ${t('poziom', 'level')} ${count(actual)} / ${count(objective.target)}`), openBuilding(objective.building));
+      const project=state?.buildings?.[objective.building]?.construction;
+      if(project&&project.targetLevel>=objective.target){
+        const stage=project.stage==='building'?t('Materiały dotarły na miejsce. Zaczekaj na ukończenie prac budowlanych.','The materials have arrived. Wait for the building work to finish.'):
+          project.stage==='queued'?t('Projekt czeka w kolejce za wcześniej rozpoczętą budową.','The project is queued behind an earlier construction.'):
+          t('Tragarze dowożą materiały na budowę. Przygotuj gotowych tragarzy w Magazynie i zaczekaj na zakończenie dostaw.','Carriers are delivering the materials to the site. Prepare ready carriers in the Warehouse and wait for the deliveries.');
+        box.append(node('p',{class:'lighthouse-mission-notice','data-mission-paid-construction':''},
+          t('Koszt tej rozbudowy został już opłacony. ','This upgrade has already been paid for. ')+stage));
+        if(project.stage==='transport')box.append(openBuilding('warehouse'));
+      }
     } else if (['production', 'delivered'].includes(objective.type)) {
       box.append(node('p', { 'data-mission-objective-progress': '' }, `${objective.type === 'production' ? t('Wyprodukowano', 'Produced') : t('Dostarczono do Magazynu', 'Delivered to central storage')}: ${name(objective.resource)} ${count(current.progress)} / ${count(objective.count)}`),
         node('progress', { value: whole(current.progress), max: Math.max(1, whole(objective.count)), 'aria-label': t('Postęp zadania', 'Task progress') }), openBuilding(PRODUCER[objective.resource] || 'warehouse'));
@@ -150,6 +187,7 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
     renderKey = keyOf(status);
     root.append(node('h3', {}, t('Latarnia — wspólny cel wyspy', 'Lighthouse — the island’s shared goal')),
       node('p', {}, t('Przywracając Latarni blask, rozwijasz całą osadę. Kolejne etapy pomagają zaplanować produkcję, przygotować zapasy i zapewnić mieszkańcom lepsze warunki życia.', 'Restoring the Lighthouse helps the whole settlement grow. Each step guides you through production, supplies and better living conditions for your residents.')));
+    const assistance=assistanceInfo(status);if(assistance)root.append(assistance);
     if (status.story) root.append(node('section', { class:'lighthouse-mission-box', 'data-mission-story':status.story.id },
       node('h4', {}, localized(status.story,'title')), node('p', {}, localized(status.story,'description')),
       node('p', { class:'lighthouse-mission-muted' }, t('Ta historia poprowadzi Cię przez 8 zadań rozwijających wyspę i Latarnię. Możesz też swobodnie rozwijać osadę poza misją.', 'This story guides you through eight tasks developing the island and the Lighthouse. You remain free to develop the settlement outside the mission.'))));
@@ -169,7 +207,9 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
       const frame = status.kind === kind ? status : status.parents?.find(parent => parent.kind === kind);
       path.append(node('span', { ...(status.kind === kind ? { 'aria-current': 'step' } : {}), 'data-mission-path': kind }, `${kindName(kind)} · ${frame ? `${count(frame.index)} / ` : ''}${total} ${t('etapów', 'steps')}`));
     }
-    root.append(path, node('p', { class: 'lighthouse-mission-muted' }, t('Misja główna ma 8 etapów. Jeśli zabraknie czasu, wykonasz 5 etapów pomocniczych i wrócisz do kolejnego celu. W razie potrzeby pomogą 3 etapy ratunkowe — dotychczasowy postęp zostaje z Tobą.', 'The main mission has eight steps. If time runs out, five support steps lead you back to the next goal. Three rescue steps offer further help when needed. Your previous progress is preserved.')));
+    root.append(path, node('p', { class: 'lighthouse-mission-muted' }, status.chapter?.campaignVersion||status.task?.campaignVersion?
+      t('Misja główna ma 8 etapów bez limitu czasu. Ścieżki pomocnicza i ratunkowa pomagają przygotować konkretny brak. Możesz wrócić do misji głównej i rozwijać wyspę samodzielnie; ukończony postęp pozostaje zapisany.','The main mission has eight steps without a time limit. Support and rescue paths help prepare a specific shortfall. You can return to the main mission and develop the island yourself; completed progress stays recorded.'):
+      t('Misja główna ma 8 etapów. Jeśli zabraknie czasu, wykonasz 5 etapów pomocniczych i wrócisz do kolejnego celu. W razie potrzeby pomogą 3 etapy ratunkowe — dotychczasowy postęp zostaje z Tobą.', 'The main mission has eight steps. If time runs out, five support steps lead you back to the next goal. Three rescue steps offer further help when needed. Your previous progress is preserved.')));
     if (!status.available || !status.task) {
       root.append(node('div', { class: 'lighthouse-mission-box', 'data-mission-unavailable': '' }, node('h4', {}, status.finished ? t('Rozdział ukończony!', 'Chapter complete!') : t('Przygotuj wyspę na kolejną przygodę', 'Prepare for the next chapter')),
         node('p', {}, status.finished ? t('Latarnia znów świeci. Rozwijaj wyspę i rozbuduj Ratusz, aby odkryć kolejny rozdział.', 'The Lighthouse shines again. Keep developing the island and upgrade the Town Hall to discover another chapter.') : status.preview ? reason(status) : t('Misje Latarni zaczynają się od 2. poziomu Ratusza, po ukończeniu lub zamknięciu samouczka.', 'Lighthouse missions begin at Town Hall level 2, after completing or closing the practical course.')),
@@ -201,6 +241,12 @@ export function createLighthouseMissionsPanel({ state, missionStatus, perform = 
   root.refresh = () => {
     const next = read(), key = keyOf(next);
     if (key !== renderKey) { render(); return; }
+    const population=root.querySelector('[data-mission-assistance-population]');
+    if(population&&next.assistancePlan?.population)population.textContent=populationText(next.assistancePlan.population);
+    const missing=root.querySelector('[data-mission-assistance-missing]');
+    if(missing&&next.assistancePlan)missing.textContent=missingText(next.assistancePlan);
+    const supplies=root.querySelector('[data-mission-assistance-supplies]');
+    if(supplies&&next.assistancePlan&&next.assistancePlan.residentsRequested===0)supplies.textContent=suppliesText(next.assistancePlan);
     const countdown = root.querySelector('[data-mission-countdown]');
     if (countdown) countdown.textContent = formatMissionDuration(next.active ? next.remaining : next.plan?.duration || next.task?.duration, language);
     const objective = next.task?.objective || {}, label = root.querySelector('[data-mission-objective-progress]');

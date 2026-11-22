@@ -24,7 +24,7 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "TOUR-20": "Zakład skórzany przerabia skóry na ubrania cywilne i stroje wojskowe. Wybierz potrzebny wyrób i przydziel pracowników.",
   "TOUR-21": "Przydziel tutaj tragarzy, by odbierali towary od producentów i dowozili materiały do przetwórstwa oraz na budowy. Pilnuj limitu każdego towaru i wspólnej pojemności. W Magazynie ustawisz także priorytety i jednorazowe ilości jedzenia do wydania.",
   "TOUR-22": "Pracownicy produkują towary, a tragarze dostarczają je do magazynu centralnego. Stamtąd surowce trafiają do dalszego przetwarzania i na budowy. Od 5 poziomu Magazynu odpowiednie badania pozwalają tworzyć bezpośrednie trasy dla konkretnego towaru i kierunku.",
-  "TOUR-23": "Przed rozpoczęciem rozbudowy sprawdź materiały, monety i pozostałe wymagania. Czas zależy od poziomu rozbudowywanego budynku. Część kosztu stanowi jedzenie na budowę: każda wymagana jednostka oznacza 6 punktów sytości. Zapłacisz produktami spożywczymi ponad chroniony zapas dla mieszkańców, np. 1 porcją mąki lub 6 porcjami zboża za każdą jednostkę. Proponowany zestaw możesz zmienić przed potwierdzeniem.",
+  "TOUR-23": "Przed rozpoczęciem rozbudowy sprawdź potrzebne materiały, monety i pozostałe wymagania. Budowy wymagają drewna, kamienia lub desek, zależnie od budynku. Dokładny koszt oraz przewidywany czas dostaw i prac znajdziesz w oknie rozbudowy.",
   "TOUR-24": "Akademia jest dostępna od 4. poziomu Ratusza. Na wyspie macierzystej otrzymasz wtedy pierwszych czterech profesorów. Każdy profesor może uczyć jednego mieszkańca albo pracować nad badaniami.",
   "TOUR-25": "Do nauki przydzielaj wolnych cywilów przebywających w Domu. Absolwent otrzymuje 100 punktów szczęścia na 7 dni i trwałą premię wydajności zależną od najwyższego poziomu Akademii w archipelagu. Ukończenie kursu wybiera ścieżkę cywilną. Kara za niepokrytą należność Królestwa obniża szczęście absolwenta.",
   "TOUR-26": "Badania poprawiają wydajność, odblokowują przepisy i otwierają nowe możliwości rozwoju. Kilku profesorów pracujących nad jednym badaniem skraca jego czas. Każda wyspa prowadzi własne badania; na drugiej postępują one dwa razy szybciej, na trzeciej trzy razy szybciej i tak dalej.",
@@ -107,8 +107,8 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "MSG-RECEIVER-FULL": "Odbiorca nie ma miejsca na dostawę. Stała trasa czeka; zwykli tragarze mogą dostarczyć nadmiar do centrali.",
   "MSG-ROUTE-WORKER-INFO": "Ten tragarz pozostaje pracownikiem Magazynu, ale kursuje wyłącznie na wskazanej trasie.",
   "MSG-POPULATION-NEEDED": "Do tej rozbudowy potrzebujesz co najmniej {wymagane} mieszkańców. Obecnie na wyspie: {obecne}. Żołnierzy na wyprawach nie wliczamy.",
-  "MSG-MEAL-COST": "Jedzenie na budowę: {sytość} punktów sytości. Ten koszt pokrywasz dowolnym jedzeniem ponad chronioną rezerwę mieszkańców.",
-  "MSG-MEAL-COST-MISSING": "Brakuje jedzenia o wartości {brak} punktów sytości na budowę. Godzinna rezerwa mieszkańców pozostaje chroniona.",
+  "MSG-MEAL-COST": "Potrzebne jedzenie: {sytość} punktów sytości. Wybierz produkty ponad chronioną rezerwę mieszkańców.",
+  "MSG-MEAL-COST-MISSING": "Brakuje jedzenia o wartości {brak} punktów sytości ponad chronioną rezerwę mieszkańców.",
   "MSG-UPGRADE-CONFIRM": "Rozbudować {budynek} do poziomu {poziom}? Koszt: {koszt}. Przewidywany czas: {czas}.",
   "MSG-UPGRADE-STARTED": "Przyjęto rozbudowę. Dostawy i prace sprawdzisz w kolejce budowy.",
   "MSG-STARTER-PROFESSORS": "Na wyspę przybyło czterech profesorów. Możesz rozpocząć naukę mieszkańców lub badania.",
@@ -365,7 +365,7 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "BLD-ACADEMY-INTERRUPTION-INFO": "Dobrowolne przerwanie kursu oznacza utratę opłaty i postępu bieżącej nauki; wcześniej ukończone rundy pozostają. Gdy prowadzący zostanie przymusowo usunięty z wyspy, kurs lub badanie czeka na zastępcę, zachowując postęp i opłatę.",
   "BLD-BARRACKS-RETURN-INFO": "Jeżeli po misji Królestwa powracające oddziały nie mieszczą się w limicie mieszkańców Ratusza, gracz ma 96 godzin na ukończenie każdego poziomu koniecznej jego rozbudowy. Jeśli brakuje również miejsc w Koszarach, po spełnieniu wymagań masz 24 godziny na uruchomienie ich darmowej, natychmiastowej rozbudowy, poziom Koszar nie może być wyższy niż poziom Ratusza. Bonus może przysługiwać przy każdym zwycięskim powrocie z misji Królestwa. Brak możliwości przyjęcia żołnierzy oznacza ich utratę.",
   "BLD-WAREHOUSE-MILK-OVERFLOW-INFO": "Surowe mleko w magazynie centralnym kwaśnieje po 72 godzinach.",
-  "BLD-WAREHOUSE-CONSTRUCTION-MEALS-INFO": "Jedzenie jest częścią kosztu budowy lub rozbudowy. Jedna jednostka żywności w koszcie odpowiada 6 punktom sytości. Wybierasz produkty ponad chronioną rezerwę mieszkańców. Przed zatwierdzeniem możesz zmienić proponowany zestaw.",
+  "BLD-WAREHOUSE-CONSTRUCTION-MEALS-INFO": "Budowa i rozbudowa wymagają monet oraz materiałów wskazanych w oknie budynku: drewna, kamienia lub desek. Zboże i pozostałe produkty spożywcze służą do produkcji, posiłków mieszkańców i innych zadań na wyspie.",
   "BLD-ACADEMY-RESCUE-INFO": "Ratunkowy dar profesora pojawia się dopiero wtedy, gdy na całym koncie naprawdę zabraknie odpowiedniej kadry i możliwości jej zastąpienia. Profesorowie na statkach, w oczekiwaniu lub chwilowo zajęci nadal są częścią Twojej kadry. Ratunkowego profesora nie można przekazać jako wykonania zadania Królestwa wymagającego oddania profesora.",
   "MSG-EMERGENCY-DISABLED-TYPE": "Aby zapobiec głodowi, mieszkańcom wydano także wyłączony produkt: {produkt}. Sprawdź zapasy i ustawienia wydawania jedzenia.",
   "MSG-FOOD-BATCH-USED": "Wydano całą ustawioną partię: {ilość} {produkt}. Limit nie odnawia się sam. Ustaw nową ilość, jeśli chcesz dalej wydawać ten produkt.",
@@ -373,7 +373,7 @@ export const DEVELOPMENT_COPY = Object.freeze({
   "MSG-DIET-GRACE": "Do {termin} nie naliczamy tej osobie kary za brak różnorodności jedzenia. Wykorzystaj ten czas na przygotowanie odpowiednich posiłków.",
   "MSG-SOUR-MILK-OVERFLOW": "Mleko skwaśniało, ale zabrakło miejsca na {liczba} porcji kwaśnego mleka. Ten nadmiar przepadł.",
   "MSG-COIN-ROUNDING": "Rozliczamy całe monety. Niecałkowita końcowa kwota jest zaokrąglana w górę.",
-  "MSG-MEAL-SELECT": "Jedzenie na budowę: {sytość} punktów sytości. Proponowany zestaw: {produkty}. Możesz go zmienić przed potwierdzeniem; chroniona rezerwa mieszkańców pozostaje nienaruszona.",
+  "MSG-MEAL-SELECT": "Potrzebne jedzenie: {sytość} punktów sytości. Proponowany zestaw: {produkty}. Możesz go zmienić przed potwierdzeniem; chroniona rezerwa mieszkańców pozostaje nienaruszona.",
   "MSG-ACADEMY-HOUSING": "Akademia ma {limit} miejsc dla profesorów: 3 + jej poziom. Adepci podczas nauki nadal zajmują swoje miejsca w Domu.",
   "MSG-PROFESSOR-CIVIL-EFFICIENCY": "Poza Akademią profesor pracuje z połową bazowej wydajności mieszkańca.",
   "MSG-ROUND-TRANSFER": "Ukończone rundy nauki tego mieszkańca pozostają zachowane. Może od razu nadrabiać brakujące kursy na nowej wyspie; poprzednia wyspa usuwa ją ze swojej listy mieszkańców.",
@@ -511,7 +511,7 @@ export function developmentBuildingInformation(id, state={}) {
   const supplementary = {
     academy: ['BLD-ACADEMY-ROUNDS-INFO', 'BLD-ACADEMY-INTERRUPTION-INFO', 'BLD-ACADEMY-RESCUE-INFO'],
     barracks: ['BLD-BARRACKS-RETURN-INFO'],
-    warehouse: ['BLD-WAREHOUSE-MILK-OVERFLOW-INFO', 'BLD-WAREHOUSE-CONSTRUCTION-MEALS-INFO']
+    warehouse: ['BLD-WAREHOUSE-MILK-OVERFLOW-INFO']
   };
   return [developmentBuildingCopy(id,state,'INFO'), ...(supplementary[id] || []).map(key=>developmentText(key))].filter(Boolean);
 }

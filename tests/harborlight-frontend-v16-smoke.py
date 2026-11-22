@@ -535,6 +535,7 @@ def language_and_legacy_acceptance(browser):
     assert saved(page)['resources']['coins'] == 250
     page.locator('.activity-expedition').click()
     page.locator('[data-expedition-choice="triples"]').click()
+    page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
     assert active_run(saved(page))['rulesVersion'] == 16
     expect(page.locator('[data-minigame-kind]')).to_be_visible()
     # New production starts explicitly honor the player's chosen type, while
@@ -545,6 +546,7 @@ def language_and_legacy_acceptance(browser):
         install_save(page, ordinary)
         page.locator('.activity-expedition').click()
         page.locator(f'[data-expedition-choice="{kind}"]').click()
+        page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         drawn = active_run(saved(page))
         assert drawn['rulesVersion'] == 16 and drawn['miniGame']['kind'] == kind
         expect(page.locator('[data-minigame-kind]')).to_have_attribute('data-minigame-kind', kind)

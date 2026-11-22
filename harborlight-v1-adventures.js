@@ -2,16 +2,16 @@
 // All wins are derived from concrete inputs, physics or actual mini-game boards.
 // Rewarded-ad authorizations belong to the caller's verified provider flow;
 // an action's `verified` field is never accepted as proof.
-import { advanceOriginalAttempt } from './harborlight-v1-original-puzzles.js?v=frontend-v32-23';
-import { allocateExpeditionAttemptId,reserveExpeditionDifficulty,recordExpeditionOutcome,expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-23';
-import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-23';
+import { advanceOriginalAttempt } from './harborlight-v1-original-puzzles.js?v=frontend-v32-24';
+import { allocateExpeditionAttemptId,reserveExpeditionDifficulty,recordExpeditionOutcome,expeditionHourStatus } from './harborlight-v1-expedition-hour.js?v=frontend-v32-24';
+import { grantBonusMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-24';
 import { BRIDGE_NODES, BRIDGE_HINT, bridgeEdgeAllowed, normalizedBridgeEdges, testBridge,
-  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-23';
-export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-23';
+  createGardenPuzzle, gardenFlow, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-24';
+export { BRIDGE_NODES, BRIDGE_HINT, pipePorts, testBridge, cargoMoment } from './harborlight-v1-adventure-puzzles.js?v=frontend-v32-24';
 
-import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v32-23';
-export { journeyStageStatus } from './harborlight-v1-adventure-journey.js?v=frontend-v32-23';
-export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v32-23';
+import * as Journey from './harborlight-v1-adventure-journey.js?v=frontend-v32-24';
+export { journeyStageStatus } from './harborlight-v1-adventure-journey.js?v=frontend-v32-24';
+export { getIslandPuzzleView, getCurrentStoryRoom, getStoryCatalog, ISLAND_PUZZLE_CATALOG, STORY_CATALOG, adventureRewardStatus, JOURNEY_RULES } from './harborlight-v1-adventure-journey.js?v=frontend-v32-24';
 
 const MATERIALS = ['wood', 'stone', 'grain', 'food', 'planks'];
 const GOODS = ['coins', ...MATERIALS];
@@ -209,6 +209,9 @@ function normalizeRun(raw, clock) {
   const seed = whole(raw.seed, 1, 0xffffffff), startedAt = finite(raw.startedAt, clock, 0, clock + recoveryPauseRemaining);
   const result = { id: raw.id, kind, stage, seed, startedAt, ...(recoveryPauseRemaining > 0 ? { recoveryPauseRemaining } : {}), claimed: raw.claimed === true || stage === 'complete', data: makeData(kind, seed, startedAt) };
   const saved = plain(raw.data) ? raw.data : {}, data = result.data;
+  if(saved.instructionsEnabled===true)data.instructionsEnabled=true;
+  if(saved.instructionsPending===true)data.instructionsPending=true;
+  if(saved.playStarted===true)data.playStarted=true;
   if (kind === 'cargoRain') {
     for (const drop of data.drops) drop.caught = saved.drops?.find(item => item?.id === drop.id)?.caught === true;
     for (const resource of GOODS) data.caught[resource] = data.drops.filter(drop => drop.caught && drop.resource === resource).reduce((sum, drop) => sum + drop.amount, 0);
@@ -243,7 +246,7 @@ function normalizeRun(raw, clock) {
     for (const crate of data.crates) { const prior = saved.crates?.find(item => item?.id === crate.id); if (data.slots.includes(prior?.slot) && !used.has(prior.slot)) { crate.slot = prior.slot; used.add(crate.slot); } }
     data.moment = cargoMoment(data.crates);
   }
-  if(saved.classicAttempt?.version===32&&typeof saved.classicAttempt.id==='string'){const a=saved.classicAttempt;data.classicAttempt={version:32,id:a.id.slice(0,120),variant:'classic-'+kind.replace(/[A-Z]/g,c=>'-'+c.toLowerCase()),difficulty:Math.max(1,whole(a.difficulty,1)),highestTownhall:Math.max(1,whole(a.highestTownhall,1)),remaining:finite(a.remaining),initialDuration:finite(a.initialDuration,180),status:a.status==='active'?'abandoned':['won','lost','abandoned'].includes(a.status)?a.status:'lost',timeOffer:null,offerArmed:a.offerArmed===true,extensions:whole(a.extensions),stageKey:typeof a.stageKey==='string'?a.stageKey:stage,maxStageIndex:whole(a.maxStageIndex,Math.max(0,STAGES[kind].indexOf(stage))),hintUsed:a.hintUsed===true};data.rewardScale=saved.rewardScale===.5?.5:1;}
+  if(saved.classicAttempt?.version===32&&typeof saved.classicAttempt.id==='string'){const a=saved.classicAttempt;data.classicAttempt={version:32,id:a.id.slice(0,120),variant:'classic-'+kind.replace(/[A-Z]/g,c=>'-'+c.toLowerCase()),difficulty:Math.max(1,whole(a.difficulty,1)),easier:a.easier===true,highestTownhall:Math.max(1,whole(a.highestTownhall,1)),remaining:finite(a.remaining),initialDuration:finite(a.initialDuration,180),status:a.status==='active'?(a.instructionsPending===true?'active':'abandoned'):['won','lost','abandoned'].includes(a.status)?a.status:'lost',timeOffer:null,offerArmed:a.offerArmed===true,extensions:whole(a.extensions),stageKey:typeof a.stageKey==='string'?a.stageKey:stage,maxStageIndex:whole(a.maxStageIndex,Math.max(0,STAGES[kind].indexOf(stage))),hintUsed:a.hintUsed===true,...(a.status==='active'&&a.instructionsPending===true?{instructionsPending:true}:{})};data.rewardScale=saved.rewardScale===.5?.5:1;}
   if (stage === 'complete') { data.reward = Object.fromEntries(GOODS.map(resource => [resource, whole(saved.reward?.[resource])])); data.effect = plain(saved.effect) ? { kind: String(saved.effect.kind || '').slice(0, 50), at: finite(saved.effect.at) } : null; }
   return result;
 }
@@ -343,18 +346,40 @@ function advanceCannon(state, run, seconds, from) {
 }
 function refreshStages(state, run) {
   const now = state.adventures.clock;
-  if (!run || run.stage === 'complete') return;
+  if (!run || run.stage === 'complete'||run.data.instructionsPending===true||run.data.classicAttempt?.instructionsPending===true) return;
   if (run.kind === 'treasureMap' && run.stage === 'pieces' && state.adventures.progress.mapPieces.length >= 4) run.stage = 'arrange';
   if (run.kind === 'signals' && run.stage === 'memorize' && now >= run.data.showUntil - EPS) run.stage = 'repeat';
   if (run.kind === 'rhythm' && run.stage === 'listen' && now >= run.data.playUntil - EPS) run.stage = 'perform';
   if (run.kind === 'cargoRain' && now >= run.startedAt + run.data.duration - EPS) complete(state, run);
 }
 export function classicAdventureStatus(state,run){const attempt=run?.data?.classicAttempt;return{attempt,hour:attempt?expeditionHourStatus(state,attempt.variant):null};}
-function classicFail(state,run){const a=run?.data?.classicAttempt;if(a?.status!=='active')return false;a.status='abandoned';a.timeOffer=null;recordExpeditionOutcome(state,a.id,'abandoned',a.variant);return true;}
-function classicBegin(state,run,context={},easier=false){if(state.ruleset!==32||run.kind==='cargoRain'||Journey.isJourneyKind(run.kind))return;const old=run.data.classicAttempt;if(old?.status==='active')return old;const variant='classic-'+run.kind.replace(/[A-Z]/g,c=>'-'+c.toLowerCase()),hour=expeditionHourStatus(state,variant);if(hour.activeRoundId)throw Object.assign(new Error('Ta odmiana ma już aktywną próbę.'),{code:'active-round-exists'});if(easier&&hour.failures<3)throw new Error('Łatwiejsza próba jest dostępna po trzech porażkach.');const id=allocateExpeditionAttemptId(state,variant),difficulty=reserveExpeditionDifficulty(state,id,variant),duration=Math.max(60,(ADVENTURE_CATALOG.find(x=>x.kind===run.kind)?.durationSeconds||180)/(1+.05*(difficulty-1)));const a={version:32,id,variant,difficulty,highestTownhall:Math.max(1,whole(context.highestTownhall,whole(state.buildings?.townhall?.level,1))),status:'active',remaining:duration,initialDuration:duration,timeOffer:null,offerArmed:true,extensions:0,stageKey:run.stage,maxStageIndex:Math.max(0,STAGES[run.kind].indexOf(run.stage)),hintUsed:false};run.data.classicAttempt=a;if(easier){a.initialDuration*=1.5;a.remaining=a.initialDuration;run.data.rewardScale=.5;if(run.kind==='bridge'){run.data.budget+=4;}if(run.kind==='signals')run.data.sequence=run.data.sequence.slice(0,3);}return a;}
-function classicTransition(state,run){const a=run.data.classicAttempt;if(a?.status==='active'&&a.stageKey!==run.stage){const index=STAGES[run.kind]?.indexOf(run.stage)||0;if(index>(a.maxStageIndex||0)){a.maxStageIndex=index;a.difficulty=expeditionHourStatus(state,a.variant).nextDifficulty;a.initialDuration=Math.max(60,(ADVENTURE_CATALOG.find(x=>x.kind===run.kind)?.durationSeconds||180)/(1+.05*(a.difficulty-1)))*(run.data.rewardScale===.5?1.5:1);a.remaining=a.initialDuration;a.offerArmed=true;a.timeOffer=null;}a.stageKey=run.stage;}}
+function classicFail(state,run){const a=run?.data?.classicAttempt;if(a?.status!=='active'||a.instructionsPending===true)return false;a.status='abandoned';a.timeOffer=null;recordExpeditionOutcome(state,a.id,'abandoned',a.variant);return true;}
+function classicBegin(state,run,context={},easier=false){
+ if(state.ruleset!==32||run.kind==='cargoRain'||Journey.isJourneyKind(run.kind))return;
+ const old=run.data.classicAttempt;if(old?.status==='active')return old;
+ const variant='classic-'+run.kind.replace(/[A-Z]/g,c=>'-'+c.toLowerCase()),hour=expeditionHourStatus(state,variant),pending=run.data.instructionsEnabled===true;
+ if(!pending&&hour.activeRoundId)throw Object.assign(new Error('Ta odmiana ma już aktywną próbę.'),{code:'active-round-exists'});
+ if(easier&&hour.failures<3)throw new Error('Łatwiejsza próba jest dostępna po trzech porażkach.');
+ const id=allocateExpeditionAttemptId(state,variant),difficulty=pending?hour.nextDifficulty:reserveExpeditionDifficulty(state,id,variant),duration=Math.max(60,(ADVENTURE_CATALOG.find(x=>x.kind===run.kind)?.durationSeconds||180)/(1+.05*(difficulty-1)));
+ const a={version:32,id,variant,difficulty,easier,highestTownhall:Math.max(1,whole(context.highestTownhall,whole(state.buildings?.townhall?.level,1))),status:'active',remaining:duration,initialDuration:duration,timeOffer:null,offerArmed:true,extensions:0,stageKey:run.stage,maxStageIndex:Math.max(0,STAGES[run.kind].indexOf(run.stage)),hintUsed:false};
+ if(pending){a.instructionsPending=true;run.data.instructionsPending=true;}else run.data.playStarted=true;
+ run.data.classicAttempt=a;
+ if(easier){a.initialDuration*=1.5;a.remaining=a.initialDuration;run.data.rewardScale=.5;if(run.kind==='bridge'){run.data.budget+=4;}if(run.kind==='signals')run.data.sequence=run.data.sequence.slice(0,3);}
+ return a;
+}
+function classicTransition(state,run){const a=run.data.classicAttempt;if(a?.status==='active'&&a.stageKey!==run.stage){const index=STAGES[run.kind]?.indexOf(run.stage)||0;if(index>(a.maxStageIndex||0)){a.maxStageIndex=index;a.difficulty=expeditionHourStatus(state,a.variant).nextDifficulty;a.initialDuration=Math.max(60,(ADVENTURE_CATALOG.find(x=>x.kind===run.kind)?.durationSeconds||180)/(1+.05*(a.difficulty-1)))*(run.data.rewardScale===.5?1.5:1);a.remaining=a.initialDuration;a.offerArmed=true;a.timeOffer=null;if(run.data.instructionsEnabled===true){a.instructionsPending=true;run.data.instructionsPending=true;}}a.stageKey=run.stage;}}
 function classicExtend(a){const seconds=Math.max(60,a.remaining*.5);a.remaining+=seconds;a.extensions++;a.offerArmed=true;a.timeOffer=null;return good('Dodano '+Math.ceil(seconds)+' sekund.',{seconds});}
 function classicTimeAction(state,run,action,context){const a=run.data.classicAttempt;if(!a)return null;const command=action.command;
+ if(command==='puzzleBegin'){
+  if(a.status!=='active'||a.instructionsPending!==true)return bad('Ta próba nie czeka na rozpoczęcie.');
+  const capacity=Journey.adventurePlayCapacity(state,context,run);if(!capacity.ok)return bad('Zakończ jedną z rozpoczętych przygód. Limit wynosi '+capacity.limit+'.','adventure-limit');
+  const hour=expeditionHourStatus(state,a.variant);if(a.easier&&hour.failures<3)return bad('Łatwiejsza próba jest dostępna po trzech porażkach.','help-not-ready');
+  let difficulty;try{difficulty=reserveExpeditionDifficulty(state,a.id,a.variant);}catch(error){return bad('Ta odmiana ma już aktywną próbę.',error.code);}
+  const duration=Math.max(60,(ADVENTURE_CATALOG.find(x=>x.kind===run.kind)?.durationSeconds||180)/(1+.05*(difficulty-1)))*(run.data.rewardScale===.5?1.5:1);
+  Object.assign(a,{difficulty,remaining:duration,initialDuration:duration,timeOffer:null,offerArmed:true,instructionsPending:false});run.data.instructionsPending=false;run.data.playStarted=true;
+  return good('Rozpoczęto etap. Powodzenia!');
+ }
+ if(a.instructionsPending===true&&!['classicRetry','classicEasier'].includes(command))return bad('Przeczytaj zasady i wybierz Rozpocznij, aby zagrać.');
  if(command==='classicRetry'||command==='classicEasier'){classicFail(state,run);try{classicBegin(state,run,context,command==='classicEasier');const fresh=makeData(run.kind,run.seed,state.adventures.clock);if(run.kind==='bridge')run.data.edges=[];if(run.kind==='signals')run.data.entered=[];if(run.kind==='garden')run.data.tiles=fresh.tiles;if(run.kind==='treasureMap'&&run.stage==='arrange')run.data.tiles=fresh.tiles;if(run.kind==='rhythm'&&run.stage==='perform'){run.data.beats=[];run.data.performStartedAt=null;}if(run.kind==='cargoBalance'&&run.stage==='load')for(const c of run.data.crates)c.slot=null;return good('Rozpoczęto nową próbę bieżącego etapu. Wcześniejsze przedmioty i nagrody pozostają.');}catch(error){return bad(error.message,error.code);}}
  if(command==='classicHint'){if(a.status!=='active'||a.hintUsed||expeditionHourStatus(state,a.variant).failures<3)return bad('Jedna darmowa podpowiedź jest dostępna po trzech porażkach.');a.hintUsed=true;return good(run.kind==='bridge'?'Zbuduj ciągły dolny pomost i ukośne podpory. Trójkąty przeniosą ciężar na oba brzegi.':run.kind==='signals'?'Światła mają także znaki. Zapamiętaj je w krótkich grupach i powtórz od lewej.':ADVENTURE_CATALOG.find(x=>x.kind===run.kind)?.description.pl||'Porównaj wskazówki z dostępnymi celami.');}
  if(command==='classicTimeChoice'){if(a.status!=='active'||a.timeOffer?.status!=='choice')return bad('Oferta czasu nie jest już dostępna.');if(action.method==='decline'){a.timeOffer=null;return good('Grasz dalej.');}if(action.method==='coins'){const price=10*a.highestTownhall;if(typeof context.spendCoins==='function'){if(!context.spendCoins(price))return bad('Brakuje monet.');}else{if((state.resources?.coins||0)<price)return bad('Brakuje monet.');state.resources.coins-=price;}return classicExtend(a);}if(action.method==='ad'){a.timeOffer={status:'processing',receipt:a.id+':ad:'+(a.extensions+1)};return good('Zegar etapu jest zatrzymany na czas reklamy.');}}
@@ -366,6 +391,13 @@ export function advanceAdventures(state, seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return;
   const from = adventures.clock; adventures.clock += seconds;
   for (const run of [adventures.active, ...Object.values(adventures.parked)].filter(Boolean)) {
+    if(run.data.instructionsPending===true||run.data.stageAttempt?.instructionsPending===true||run.data.classicAttempt?.instructionsPending===true){
+      run.startedAt+=seconds;
+      if(run.kind==='cargoRain')for(const drop of run.data.drops)drop.appearAt+=seconds;
+      if(run.kind==='signals')run.data.showUntil+=seconds;
+      if(run.kind==='rhythm'){if(Number.isFinite(run.data.playUntil))run.data.playUntil+=seconds;if(Number.isFinite(run.data.performStartedAt))run.data.performStartedAt+=seconds;}
+      continue;
+    }
     const paused = Math.min(seconds, finite(run.recoveryPauseRemaining));
     if (paused > 0) { run.recoveryPauseRemaining -= paused; if (run.recoveryPauseRemaining < EPS) delete run.recoveryPauseRemaining; }
     let activeSeconds = seconds - paused;
@@ -383,7 +415,7 @@ export function advanceAdventures(state, seconds) {
 export function nextAdventuresEvent(state) {
   const adventures = ensure(state), deadlines = [];
   for (const run of [adventures.active, ...Object.values(adventures.parked)].filter(Boolean)) {
-    if (run.stage === 'complete') continue;
+    if (run.stage === 'complete'||run.data.instructionsPending===true||run.data.stageAttempt?.instructionsPending===true||run.data.classicAttempt?.instructionsPending===true) continue;
     if(Journey.isJourneyKind(run.kind)&&run===adventures.active){deadlines.push(adventures.clock+Journey.nextJourneyEvent(run));continue;}
     const ca=run.data.classicAttempt;if(ca){if(run!==adventures.active||ca.status!=='active'||ca.timeOffer?.status==='processing')continue;deadlines.push(adventures.clock+(ca.timeOffer?ca.timeOffer.choiceRemaining:ca.offerArmed&&ca.remaining>30?ca.remaining-30:ca.remaining));}
     if (run.kind === 'cargoRain') deadlines.push(run.startedAt + run.data.duration);
@@ -437,11 +469,12 @@ function start(state, kind,context={}) {
   if (adventures.active?.kind === kind && adventures.active.stage !== 'complete') return good('Wracasz do rozpoczętej przygody.', { adventureId: adventures.active.id });
   const parked = adventures.parked[kind];
   if ((!parked || parked.stage === 'complete') && adventures.cooldowns[kind] > adventures.clock + EPS) return bad('Ta przygoda odpoczywa. Wybierz na razie inną.', 'adventure-cooldown');
-  const worlds=Array.isArray(context.worlds)&&context.worlds.includes(state)?context.worlds:[state],started=[...new Set(worlds.flatMap(w=>[w.adventures?.active,...Object.values(w.adventures?.parked||{})]))].filter(r=>r&&r.stage!=='complete'),limit=state.ruleset===32?3*Math.max(1,whole(context.highestTownhall,whole(state.buildings?.townhall?.level,1))):33;
-  if(!parked&&started.length>=limit)return bad('Zakończ jedną z rozpoczętych przygód. Limit wynosi '+limit+'.','adventure-limit');
+  const capacity=Journey.adventurePlayCapacity(state,context);
+  if(!parked&&context.deferStart!==true&&!capacity.ok)return bad('Zakończ jedną z rozpoczętych przygód. Limit wynosi '+capacity.limit+'.','adventure-limit');
   if(adventures.active&&Journey.isJourneyKind(adventures.active.kind))Journey.failJourneyStage(state,adventures.active);else if(adventures.active)classicFail(state,adventures.active);
   if (adventures.active && adventures.active.stage !== 'complete') adventures.parked[Journey.journeyRunKey(adventures.active)] = adventures.active;
   adventures.active = parked && parked.stage !== 'complete' ? parked : makeRun(state, kind);
+  if(context.deferStart===true){adventures.active.data.instructionsEnabled=true;if(!adventures.active.data.classicAttempt)adventures.active.data.instructionsPending=true;}
   delete adventures.parked[kind]; refreshStages(state, adventures.active);try{if(!adventures.active.data.classicAttempt)classicBegin(state,adventures.active,context);}catch(error){return bad(error.message,error.code);}
   return good('Przygoda rozpoczęta. Główna misja trwa dalej.', { adventureId: adventures.active.id });
 }
@@ -472,7 +505,7 @@ function adventureActionInternal(state, action, context = {}) {
   ensure(state);
   const journeyResult = Journey.journeyAction(state, action, context);
   if (journeyResult !== null) return journeyResult;
-  if (action.type === 'adventureStart') return start(state, action.kind,context);
+  if (action.type === 'adventureStart') return start(state, action.kind,{...context,deferStart:action.deferStart===true});
   if (action.type === 'adventureSuspend') {
     const active = state.adventures.active;
     if(active&&Journey.isJourneyKind(active.kind))Journey.failJourneyStage(state,active);else if(active)classicFail(state,active);
@@ -483,6 +516,8 @@ function adventureActionInternal(state, action, context = {}) {
   if (action.type !== 'adventureInput') return bad('Nieznane działanie w przygodzie.');
   const run = getActive(state, action);
   if (!run) return bad('Ta przygoda nie jest teraz otwarta.');
+  if(run.data.instructionsPending===true&&!run.data.classicAttempt){if(action.command==='puzzleBegin'){const capacity=Journey.adventurePlayCapacity(state,context,run);if(!capacity.ok)return bad('Zakończ jedną z rozpoczętych przygód. Limit wynosi '+capacity.limit+'.','adventure-limit');run.data.instructionsPending=false;run.data.playStarted=true;return good('Rozpoczęto grę. Powodzenia!');}return bad('Przeczytaj zasady i wybierz Rozpocznij, aby zagrać.');}
+  if(action.deferStart===true)run.data.instructionsEnabled=true;
   const timedResult=classicTimeAction(state,run,action,context);if(timedResult)return timedResult;
   refreshStages(state, run);
   if (run.stage === 'complete') return bad('Ta przygoda jest już ukończona. Nagroda została dodana do zasobów.');

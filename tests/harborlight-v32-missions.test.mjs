@@ -34,9 +34,17 @@ test('food aliases and direct ingredients share a joint physical budget during m
  const s=fixture({funded:false});s.resources.grain=s.population*6+6;assert.equal(L.availableGoods(s,'food'),1);assert.equal(centralAvailable(s,'grain'),6);assert.equal(quoteMaterialSpend(s,{grain:1,food:1}).ok,false);
  const proof=M.missionFeasibility(s,{grain:1,food:1},{allowProduction:false});assert.equal(proof.ready,false);assert.equal(proof.feasible,false);
 });
-test('incomplete construction-food previews preserve the full virtual meal cost in readiness',()=>{
- const s=fixture({campaign:true,funded:false});s.resources.coins=100000;s.resources.wood=3000;s.resources.stone=3000;s.resources.planks=3000;
- const readiness=M.campaignReadiness(s,context),building=readiness.steps.find(row=>row.index===8);assert.ok(building.requirements.food>0);assert.ok(building.missing.food>0);assert.equal(building.complete,false);
+test('construction readiness quotes exact non-food costs and shortfalls without completing the unfinished build',()=>{
+ const s=fixture({campaign:true,funded:false});Object.assign(s.resources,{coins:100,wood:100,stone:200,planks:20});
+ const before=JSON.stringify(s),expected={coins:500,wood:500,stone:500,planks:500},missing={coins:400,wood:400,stone:300,planks:480};
+ const readiness=M.campaignReadiness(s,context);
+ for(const index of [7,8]){
+  const step=readiness.steps.find(row=>row.index===index);
+  assert.deepEqual(step.requirements,expected);assert.deepEqual(step.missing,missing);
+  for(const id of P.FOOD_IDS){assert.equal(Object.hasOwn(step.requirements,id),false,id);assert.equal(Object.hasOwn(step.missing,id),false,id);}
+  assert.equal(step.complete,false);
+ }
+ assert.equal(s.buildings.lighthouse.level,1);assert.equal(JSON.stringify(s),before,'a readiness preview cannot spend stock, complete a building or pay a reward');
 });
 test('DEV feasibility plans four grain for each new flour output, rather than the old two-grain Food recipe',()=>{
  const s=fixture({funded:false}),plan=M.missionFeasibility(s,{}, {duration:3600,productionResource:'food',productionAmount:10});

@@ -134,6 +134,34 @@ test('the real state dispatcher binds recruitment to the canonical mission, solv
   assert.equal(state.population,54); assert.deepEqual(state.resources,before);
   state = reload(state);
   assert.equal(state.population,54); assert.equal(state.lighthouseMissions.recruitmentReceipts.length,1);
+  // The crew goal is settled, but the actual Town Hall upgrade still lacks
+  // materials. Its separate supply contract must never recruit those41 again.
+  const supplyOffer=Missions.missionAssistanceOffer(state,context);
+  assert.equal(supplyOffer.mode,'supplies');assert.equal(supplyOffer.residentsRequested,0);
+  assert.equal(supplyOffer.maximumResidents,0);assert.equal(supplyOffer.goalMissionId,taskId);
+  assert.notEqual(supplyOffer.receiptId,offer.receiptId);
+  assert.ok(Object.values(supplyOffer.supplies).some(amount=>amount>0));
+  const earnedCrew=copy(state.lighthouseMissions.assistanceContracts.find(contract=>contract.receiptId===offer.receiptId));
+  const invited=state.lighthouseMissions.invited;
+  command(state,{type:'adventureStart',assistanceMissionId:taskId});
+  assert.equal(state.adventures.active.data.rescueContext.receiptId,supplyOffer.receiptId);
+  const bound=state.lighthouseMissions.assistanceContracts.find(contract=>contract.receiptId===supplyOffer.receiptId);
+  assert.equal(bound.mode,'supplies');assert.equal(bound.residentsRequested,0);
+  assert.deepEqual(state.lighthouseMissions.assistanceContracts.find(contract=>contract.receiptId===offer.receiptId),earnedCrew);
+  const supplied=solveActualStory(state);state=supplied.state;
+  assert.equal(supplied.rooms,6);assert.equal(state.population,54);
+  assert.equal(state.lighthouseMissions.invited,invited);
+  assert.deepEqual(state.lighthouseMissions.assistanceContracts.find(contract=>contract.receiptId===offer.receiptId),earnedCrew);
+  const claimedSupplies=state.lighthouseMissions.assistanceContracts.find(contract=>contract.receiptId===supplyOffer.receiptId);
+  assert.equal(claimedSupplies.claimed,true);assert.equal(claimedSupplies.residentsAccepted,0);
+  assert.equal(state.lighthouseMissions.recruitmentReceipts.filter(id=>id===offer.receiptId).length,1);
+  assert.equal(state.lighthouseMissions.recruitmentReceipts.filter(id=>id===supplyOffer.receiptId).length,1);
+  const once=copy(state.resources);
+  command(state,{type:'adventureInput',adventureId:state.adventures.active.id,command:'puzzleNextRoom'});
+  assert.equal(state.population,54);assert.deepEqual(state.resources,once);
+  state=reload(state);
+  assert.equal(state.population,54);assert.equal(state.lighthouseMissions.invited,invited);
+  assert.equal(Missions.missionAssistanceOffer(state,context),null,'the settled supply contract cannot become a repeatable refill');
   assert.equal(State.act(state,{type:'adventureStart',assistanceMissionId:taskId},state.worldTimeMs).ok,false);
 });
 

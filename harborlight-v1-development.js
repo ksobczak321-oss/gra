@@ -1,14 +1,14 @@
 // The DEV v32 coordinator. Engines own their sidecars; the normal game owns
 // residents, physical inventory, its event clock and persistence.
-import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-23';
-import * as Education from './harborlight-v1-education.js?v=frontend-v32-23';
-import * as Military from './harborlight-v1-military.js?v=frontend-v32-23';
-import * as Kingdom from './harborlight-v1-kingdom.js?v=frontend-v32-23';
-import * as OriginalPuzzles from './harborlight-v1-original-puzzles.js?v=frontend-v32-23';
-import { centralAvailable, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-23';
-import { residentHasHousing, synchronizeResidents, recallSpecialistResident } from './harborlight-v1-residents.js?v=frontend-v32-23';
-import { receiveMaterials, stockRoom, warehouseUsed, warehouseLimits, notify as notifyWorld } from './harborlight-v1-logistics.js?v=frontend-v32-23';
-import { longestConstructionSeconds } from './harborlight-v1-economy.js?v=frontend-v32-23';
+import * as Provisions from './harborlight-v1-provisions.js?v=frontend-v32-24';
+import * as Education from './harborlight-v1-education.js?v=frontend-v32-24';
+import * as Military from './harborlight-v1-military.js?v=frontend-v32-24';
+import * as Kingdom from './harborlight-v1-kingdom.js?v=frontend-v32-24';
+import * as OriginalPuzzles from './harborlight-v1-original-puzzles.js?v=frontend-v32-24';
+import { centralAvailable, consumeMaterial, spendMaterials } from './harborlight-v1-inventory.js?v=frontend-v32-24';
+import { residentHasHousing, synchronizeResidents, recallSpecialistResident } from './harborlight-v1-residents.js?v=frontend-v32-24';
+import { receiveMaterials, stockRoom, warehouseUsed, warehouseLimits, notify as notifyWorld } from './harborlight-v1-logistics.js?v=frontend-v32-24';
+import { longestConstructionSeconds } from './harborlight-v1-economy.js?v=frontend-v32-24';
 export { Provisions, Education, Military, Kingdom, OriginalPuzzles };
 export const DEVELOPMENT_RULESET = 32;
 export const isDevelopment = state => state?.ruleset === DEVELOPMENT_RULESET;

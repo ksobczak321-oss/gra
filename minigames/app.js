@@ -1,11 +1,12 @@
-import { createState, EXPEDITIONS } from '../harborlight-v1-state.js?v=frontend-v32-15';
-import * as Adventures from '../harborlight-v1-adventures.js?v=frontend-v32-15';
-import * as Activities from '../harborlight-v1-activities.js?v=frontend-v32-15';
-import { normalizeExpeditionHour } from '../harborlight-v1-expedition-hour.js?v=frontend-v32-15';
-import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG } from '../harborlight-v1-story-catalog.js?v=frontend-v32-15';
-import { createAdventuresPanel } from '../harborlight-v1-adventures-ui.js?v=frontend-v32-15';
-import { mountMiniGame } from '../harborlight-v1-minigame-ui.js?v=frontend-v32-15';
-import { adventureArt, puzzleSceneArt } from '../harborlight-v1-adventures-art.js?v=frontend-v32-15';
+import { createState, EXPEDITIONS } from '../harborlight-v1-state.js?v=frontend-v32-24';
+import * as Adventures from '../harborlight-v1-adventures.js?v=frontend-v32-24';
+import * as Activities from '../harborlight-v1-activities.js?v=frontend-v32-24';
+import { normalizeExpeditionHour } from '../harborlight-v1-expedition-hour.js?v=frontend-v32-24';
+import { ISLAND_PUZZLE_CATALOG, STORY_CATALOG } from '../harborlight-v1-story-catalog.js?v=frontend-v32-24';
+import { createAdventuresPanel } from '../harborlight-v1-adventures-ui.js?v=frontend-v32-24';
+import { mountMiniGame } from '../harborlight-v1-minigame-ui.js?v=frontend-v32-24';
+import { adventureArt, puzzleSceneArt } from '../harborlight-v1-adventures-art.js?v=frontend-v32-24';
+import { createMiniGameInstructions, getMiniGameInstructionContent } from '../harborlight-v1-minigame-instructions.js?v=frontend-v32-24';
 
 // This launcher has no persistence, authentication or account client. The same
 // models and boards as the island run only against a new object in this tab.
@@ -41,7 +42,7 @@ export function validateCatalog(catalog) {
   if (seen.size !== expected) throw new Error('Katalog gier jest niekompletny.');
   return catalog;
 }
-export function createPracticeSession(entry, { variant = 1, level = 1, seed = 0x41234567, now = Date.now() } = {}) {
+export function createPracticeSession(entry, { variant = 1, level = 1, seed = 0x41234567, now = Date.now(), deferStart = false } = {}) {
   validateEntry(entry);
   const chosenVariant = limit(variant, 1, 5), difficulty = limit(level, 1, 100);
   // A practice series has its own elapsed clock. Anchor it at the current
@@ -68,8 +69,8 @@ export function createPracticeSession(entry, { variant = 1, level = 1, seed = 0x
   };
   const session = { entry, state, context, variant: chosenVariant, difficulty, paused: false, actions: 0, elapsed: 0 };
   const action = entry.engine.type === 'expedition'
-    ? { type: 'expeditionStart', expedition: 'misty', gameKind: entry.engine.id }
-    : { type: 'adventureStart', kind: entry.engine.type === 'puzzle' ? 'islandPuzzle' : entry.engine.type === 'story' ? 'escapeStory' : entry.engine.id, puzzleKind: entry.engine.id, storyId: entry.engine.id, variant: chosenVariant };
+    ? { type: 'expeditionStart', expedition: 'misty', gameKind: entry.engine.id, deferStart }
+    : { type: 'adventureStart', kind: entry.engine.type === 'puzzle' ? 'islandPuzzle' : entry.engine.type === 'story' ? 'escapeStory' : entry.engine.id, puzzleKind: entry.engine.id, storyId: entry.engine.id, variant: chosenVariant, deferStart };
   const result = dispatchPracticeAction(session, action);
   if (result?.ok === false) throw new Error(Adventures.adventureMessage(result.message, 'pl') || 'Nie udało się rozpocząć próby.');
   return session;
@@ -78,7 +79,7 @@ export function dispatchPracticeAction(session, action) {
   if (!session || !action || typeof action.type !== 'string') return { ok: false, message: 'Nieprawidłowy ruch.' };
   if (session.paused) return { ok: false, message: 'Wznów próbę, aby wykonać ruch.' };
   // No caller-supplied action can reach account services or ordinary island act().
-  const accepted = session.entry.engine.type === 'expedition' ? /^expedition(?:Start|Continue|Cashout|MiniGameInput|MiniGameReveal|PresenceConfirm|TimeChoice|ExtraTime|Hint|RestartEasier)$/ : /^adventure(?:Start|Input|BridgeExtra)$/;
+  const accepted = session.entry.engine.type === 'expedition' ? /^expedition(?:Start|Begin|Continue|Cashout|MiniGameInput|MiniGameReveal|PresenceConfirm|TimeChoice|ExtraTime|Hint|RestartEasier)$/ : /^adventure(?:Start|Input|BridgeExtra)$/;
   if (!accepted.test(action.type)) return { ok: false, message: 'To działanie nie należy do tej próby.' };
   const result = session.entry.engine.type === 'expedition'
     ? Activities.activityAction(session.state, action, session.context)
@@ -149,7 +150,8 @@ function renderCatalog(catalog) {
 }
 function inlineRules(entry) {
   const root = $('inline-rules'); root.replaceChildren();
-  const sections = [['Cel', entry.objective], ['Scenariusz', entry.scenario], ['Zasady', entry.rules], ['Sterowanie', entry.controls], ['Zwycięstwo', entry.win], ['Koniec próby i błędy', entry.fail], ['Czas', entry.timing], ['Punkty i nagrody w głównej grze', entry.scoring]];
+  const current = getMiniGameInstructionContent(entry.engine, 'pl');
+  const sections = [['Cel', current.objective], ['Scenariusz', current.scenario], ['Zasady', current.rules], ['Sterowanie', current.steps], ['Zwycięstwo', entry.win], ['Koniec próby i błędy', entry.fail], ['Czas', entry.timing], ['Punkty i nagrody w głównej grze', entry.scoring]];
   for (const [title, value] of sections) {
     if (!value || Array.isArray(value) && !value.length) continue;
     const content = Array.isArray(value) ? node('ul', {}, ...value.map(line => node('li', {}, typeof line === 'string' ? line : JSON.stringify(line)))) : node('p', {}, String(value));
@@ -221,9 +223,10 @@ function renderPlayer(entry, query) {
     else say('Osobna próba · postęp pozostaje tylko na tej stronie.');
     update(); return result;
   }
-  function restart() {
+  function beginSession() {
     cleanupController();
-    session = createPracticeSession(entry, { variant, level: difficulty });
+    session = createPracticeSession(entry, { variant, level: difficulty, deferStart: entry.engine.type === 'story' });
+    $('pause').disabled = false;
     paused = false; $('pause').textContent = 'Wstrzymaj'; $('pause').setAttribute('aria-pressed', 'false');
     $('board').inert = false;
     $('board').replaceChildren(); $('board').setAttribute('aria-busy', 'true');
@@ -239,6 +242,16 @@ function renderPlayer(entry, query) {
     say('Osobna próba · postęp pozostaje tylko na tej stronie.');
     $('expedition-controls').dataset.value = '';
     lastFrame = performance.now(); update();
+  }
+  function restart() {
+    cleanupController(); session = null; paused = false;
+    $('pause').disabled = true; $('pause').textContent = 'Wstrzymaj'; $('pause').setAttribute('aria-pressed', 'false');
+    $('board').inert = false;
+    $('board').replaceChildren(createMiniGameInstructions({ subject: entry.engine, language: 'pl', onStart: beginSession }));
+    $('board').dataset.game = entry.slug; $('board').setAttribute('aria-busy', 'false');
+    $('expedition-controls').replaceChildren(); $('expedition-controls').hidden = true;
+    say('Przeczytaj zasady. Próba i jej zegar rozpoczną się dopiero po kliknięciu „Rozpocznij grę”.');
+    lastFrame = performance.now();
   }
   $('restart').addEventListener('click', restart);
   $('pause').addEventListener('click', () => {

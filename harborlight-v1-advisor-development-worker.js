@@ -1,4 +1,4 @@
-import {advisorDevelopmentPlan} from './harborlight-v1-advisor-development-plan.js?v=frontend-v32-23';
+import {advisorDevelopmentPlan} from './harborlight-v1-advisor-development-plan.js?v=frontend-v32-24';
 // This worker can publish advice only; it has neither a world host nor commands.
 self.onmessage=event=>{
  const data=event.data;

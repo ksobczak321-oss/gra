@@ -52,6 +52,7 @@ try:
         for _ in range(8):
             page.locator('[data-expedition-choice="triples"]').click();page.wait_for_timeout(300)
             if page.evaluate('Object.values(window.__HARBORLIGHT_DEV_STATE__.expeditionRuns).some(run=>run.status==="active")'):break
+        page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         before=len(polls);page.wait_for_timeout(4500)
         assert len(polls)>before and all(status==200 for status in polls[before:]),polls
         assert page.evaluate('Object.values(window.__HARBORLIGHT_DEV_STATE__.expeditionRuns).some(run=>run.status==="active")')

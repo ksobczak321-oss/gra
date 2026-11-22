@@ -97,15 +97,19 @@ test('expired welcome reservation survives save but cannot be claimed after a la
  s.worldTimeMs=NOW+24*H+1000;tick(s,1);assert.equal(s.welcomeWorkers.pending.length,0);assert.equal(s.welcomeWorkers.granted,0);
  s.education.foundingGranted=true;s.military.foundingGranted=true;const r=requestUpgrade(s,{building:'townhall',skipTransport:true});assert.equal(r.ok,true,r.message);tick(s,10);assert.equal(s.population,108);assert.equal(s.welcomeWorkers.granted,0);
 });
-test('editable construction food preserves the protected reserve even when base cost uses the same food',()=>{
- const s=fundedWorld();s.buildings.house.level=3;for(const id of P.FOOD_IDS)s.resources[id]=0;const population=s.population,emptyQuote=buildingCost(s,'house'),baseGrain=emptyQuote.grain,required=emptyQuote.foodUnits*6;
- // House also needs 2000 grain as a building material. A valid food-only quote
- // must not let that second use consume one point of the hourly reserve.
- // The combined quote rejects this before creating a payable construction cost.
- s.resources.grain=baseGrain+required+6*population-1;const quote=buildingCost(s,'house',{foodMix:{grain:required}});assert.equal(quote.foodQuote.ok,false);assert.equal(canAfford(s,quote),false);const before=json(s.resources);const ordered=requestUpgrade(s,{building:'house',foodMix:{grain:required}});assert.equal(ordered.ok,false);assert.deepEqual(s.resources,before);
+test('current building orders need only materials and coins even with no food or grain',()=>{
+ const s=fundedWorld();s.buildings.house.level=3;for(const id of P.FOOD_IDS)s.resources[id]=0;
+ const quote=buildingCost(s,'house',{foodMix:{grain:999999}});
+ assert.deepEqual(quote,{coins:1500,wood:1500,stone:1500,planks:1500});assert.equal(quote.foodQuote,undefined);assert.equal(quote.foodUnits,undefined);assert.equal(canAfford(s,quote),true);
+ const ordered=requestUpgrade(s,{building:'house',foodMix:{grain:999999}});assert.equal(ordered.ok,true,ordered.message);assert.deepEqual(ordered.project.cost,quote);
+ for(const id of P.FOOD_IDS){assert.equal(s.resources[id],0,id);assert.equal(ordered.project.remainingMaterials[id]||0,0,id);assert.equal(centralReserved(s,id),0,id);}
 });
-test('chosen food remains physically reserved after save and meals cannot eat the construction order',()=>{
- let s=fundedWorld();s.buildings.house.level=3;const initialQuote=buildingCost(s,'house'),bread=Math.ceil(initialQuote.foodUnits*6/36);const chosen={bread};const cost=buildingCost(s,'house',{foodMix:chosen});const r=requestUpgrade(s,{building:'house',foodMix:chosen});assert.equal(r.ok,true,r.message);assert.equal(r.project.cost.bread,cost.bread);assert.equal(centralReserved(s,'bread'),bread);
+test('food already reserved by an older paid project survives reload and resident meals',()=>{
+ let s=fundedWorld();s.buildings.house.level=3;const r=requestUpgrade(s,{building:'house'});assert.equal(r.ok,true,r.message);
+ // A historical paid receipt includes its original ration. It is preserved
+ // as saved data rather than re-priced from today's food-free building quote.
+ const bread=5;r.project.cost.bread=bread;r.project.remainingMaterials.bread=bread;r.project.reservedMaterials.bread=bread;r.project.goodsTotal+=bread;r.project.goodsRemaining+=bread;
+ assert.equal(centralReserved(s,'bread'),bread);
  s=normalizeState(json(s),NOW);assert.equal(centralReserved(s,'bread'),bread);const reserved=centralReserved(s,'bread'),available=centralAvailable(s,'bread');P.feedResidents(s,3600,{now:NOW,hasHousing:()=>true,centralAvailable:id=>centralAvailable(s,id),consume:(id,n)=>{s.resources[id]-=Math.min(n,centralAvailable(s,id));}});assert.equal(centralReserved(s,'bread'),reserved);assert.ok(s.resources.bread>=reserved);assert.ok(centralAvailable(s,'bread')<=available);
 });
 test('actual tick starts individual hunger loss exactly after the twelve-hour shortage boundary',()=>{

@@ -1,10 +1,10 @@
-import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-23';
-import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-23';
+import { warehouseCapacityForLevel } from './harborlight-v1-economy.js?v=frontend-v32-24';
+import { lessonCopy as approvedLessonCopy } from './harborlight-v1-approved-copy.js?v=frontend-v32-24';
 // Persistent learning, meaningful activity and future verified social hooks.
 // No DOM, network requests or account creation happen in this module.
-import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-23';
-import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-23';
-import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-23';
+import { centralAvailable, centralReserved, ordinaryStock, ordinaryWarehouseUsed } from './harborlight-v1-inventory.js?v=frontend-v32-24';
+import { foodReservePlan, MATERIAL_IDS as DEV_MATERIAL_IDS } from './harborlight-v1-provisions.js?v=frontend-v32-24';
+import { DAY_SECONDS, warsawDayKey, secondsUntilWarsawMidnight, calendarDayDistance } from './harborlight-v1-calendar.js?v=frontend-v32-24';
 
 export const ACTIVE_PLAY_SECONDS = 300;
 export const ABANDONED_PLAY_SECONDS = 48 * 3600;
@@ -21,12 +21,7 @@ const savedMaterialsFor=state=>state.ruleset===32?[...new Set([...materialsFor(s
 const legacySavedReward=(state,reward)=>state.ruleset===32&&plain(reward)&&Object.hasOwn(reward,'food');
 const savedMaterialPromise=(state,reward)=>state.ruleset===32&&plain(reward)&&savedMaterialsFor(state).some(id=>Object.hasOwn(reward,id));
 function tutorialBuildingCost(state,building,context){
-  const cost=context.buildingCost?.(state,building);if(state.ruleset!==32||!plain(cost))return cost;
-  const foodUnits=nonnegative(cost.foodUnits,nonnegative(cost.food));if(!foodUnits)return rewardForState(state,cost);
-  // Price the missing construction ration using a real six-satiety product.
-  // This is a quote-only clone: no food or buildings are granted to the player.
-  const preview=structuredClone(state);preview.resources.flour=Math.max(nonnegative(preview.resources.flour),Math.ceil(foodUnits)+100+Math.ceil(foodReservePlan(state).requiredSatiety/6));
-  return rewardForState(state,context.buildingCost(preview,building,{foodMix:{flour:Math.ceil(foodUnits)}}));
+  return rewardForState(state,context.buildingCost?.(state,building));
 }
 const PRODUCERS = ['farm', 'windmill', 'lumber', 'sawmill', 'quarry'];
 const EPS = 1e-7;
@@ -1004,7 +999,7 @@ export function progressionAction(state, action, context = {}) {
     const reward = balancedCourse(state) ? fitOrdinaryReward(state, requested) : requested;
     if (balancedCourse(state) ? !awardOrdinary(state, reward) : !award(state, reward, context)) return bad('Material reward delivery is not available.');
     state.tutorial.buildingSuppliesClaimed = true;
-    emit(state, 'tutorial-supplies', 'Tutorial building supplies', balancedCourse(state) ? 'One-time supplies fill the missing first Town Hall budget directly in ordinary storage, including food for construction and meals.' : 'One-time supplies bring your available building budget to 500 coins and each material, with 600 Food for construction and meals. Bonus materials are immediately available without taking ordinary delivery space.');
+    emit(state, 'tutorial-supplies', 'Tutorial building supplies', state.ruleset===32 ? 'One-time supplies cover missing Town Hall coins and construction materials, plus food for residents.' : balancedCourse(state) ? 'One-time supplies fill the missing first Town Hall budget directly in ordinary storage, including food for construction and meals.' : 'One-time supplies bring your available building budget to 500 coins and each material, with 600 Food for construction and meals. Bonus materials are immediately available without taking ordinary delivery space.');
     return good('Tutorial building supplies received. You can now order the Town Hall upgrade.', { reward });
   }
   if (['tutorialObserve', 'claimTutorial', 'seeTutorialReward', 'shareTutorialReward', 'skipTutorialShare'].includes(action.type)) {

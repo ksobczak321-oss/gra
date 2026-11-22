@@ -1,4 +1,4 @@
-import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-23';
+import { developmentText, developmentBuildingCopy } from './harborlight-v1-development-copy.js?v=frontend-v32-24';
 // Approved presentation copy only. No world state, timers or rewards are mutated.
 // User revision: 2026-11-15. Native PL/EN share stable game IDs.
 // Numeric legacy tour positions migrate once through the retained stable IDs.
@@ -991,7 +991,7 @@ export const TOUR_COPY = Object.freeze({
   ...PREVIOUS_TOUR_COPY,
   ...Object.fromEntries(V4_TOUR_IDS.map((id,index) => [id, {
     pl: {title:V32_TOUR_TITLES[index],text:developmentText(`TOUR-${String(index+1).padStart(2,'0')}`)},
-    en: PREVIOUS_TOUR_COPY[id]?.en || {title:V32_TOUR_TITLES[index],text:developmentText(`TOUR-${String(index+1).padStart(2,'0')}`)}
+    en: id === 'construction' ? {title:'Building upgrades',text:'Before ordering an upgrade, check the required materials, coins and other conditions. Construction uses wood, stone or planks, depending on the building. Open its upgrade panel to review the exact cost and estimated delivery and construction times.'} : PREVIOUS_TOUR_COPY[id]?.en || {title:V32_TOUR_TITLES[index],text:developmentText(`TOUR-${String(index+1).padStart(2,'0')}`)}
   }]))
 });
 

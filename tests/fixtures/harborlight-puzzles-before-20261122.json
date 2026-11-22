@@ -1,0 +1,5149 @@
+{
+  "source": "ab0f914dda59b0ec830d7e3a6aa23eb36a5a4fb4",
+  "sourceSHA256": {
+    "island": "bf5a83ffc6c4ffd42c5abd84a7adc8d82ade3378e13d7542e50bf355b459a703",
+    "original": "6bf62492720ee5c24e58113cb89f838438cba47dae37210ecb24d9b42bbcb245"
+  },
+  "rows": [
+    {
+      "kind": "gull",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "gull",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 1,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            2,
+            3
+          ]
+        ],
+        "data": {
+          "solution": 3,
+          "food": 1,
+          "bait": 3,
+          "key": false,
+          "spots": [
+            {
+              "id": "0",
+              "height": 0,
+              "safe": true,
+              "food": 2
+            },
+            {
+              "id": "1",
+              "height": 1,
+              "safe": false,
+              "food": 0
+            },
+            {
+              "id": "2",
+              "height": 0,
+              "safe": true,
+              "food": 1
+            },
+            {
+              "id": "3",
+              "height": 2,
+              "safe": true,
+              "food": 1
+            }
+          ]
+        }
+      },
+      "expectedData": {
+        "solution": 3,
+        "food": 1,
+        "bait": 3,
+        "key": false,
+        "spots": [
+          {
+            "id": "0",
+            "height": 0,
+            "safe": true,
+            "food": 2
+          },
+          {
+            "id": "1",
+            "height": 1,
+            "safe": false,
+            "food": 0
+          },
+          {
+            "id": "2",
+            "height": 0,
+            "safe": true,
+            "food": 1
+          },
+          {
+            "id": "3",
+            "height": 2,
+            "safe": true,
+            "food": 1
+          }
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "gull",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "gull",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 2,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              2,
+              3
+            ],
+            [
+              5,
+              0,
+              "key"
+            ]
+          ],
+          "clock": 21,
+          "moves": 2,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "solution": 3,
+        "food": 1,
+        "bait": 3,
+        "key": true,
+        "spots": [
+          {
+            "id": "0",
+            "height": 0,
+            "safe": true,
+            "food": 2
+          },
+          {
+            "id": "1",
+            "height": 1,
+            "safe": false,
+            "food": 0
+          },
+          {
+            "id": "2",
+            "height": 0,
+            "safe": true,
+            "food": 1
+          },
+          {
+            "id": "3",
+            "height": 2,
+            "safe": true,
+            "food": 1
+          }
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "hiddenObjects",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "hiddenObjects",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 1,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            5,
+            2,
+            8
+          ]
+        ],
+        "data": {
+          "target": 8,
+          "color": 1,
+          "symbol": 1,
+          "inspected": [
+            8
+          ],
+          "found": false,
+          "objects": [
+            {
+              "id": "0",
+              "color": 2,
+              "symbol": 3
+            },
+            {
+              "id": "1",
+              "color": 0,
+              "symbol": 0
+            },
+            {
+              "id": "2",
+              "color": 1,
+              "symbol": 2
+            },
+            {
+              "id": "3",
+              "color": 2,
+              "symbol": 2
+            },
+            {
+              "id": "4",
+              "color": 0,
+              "symbol": 3
+            },
+            {
+              "id": "5",
+              "color": 1,
+              "symbol": 0
+            },
+            {
+              "id": "6",
+              "color": 2,
+              "symbol": 1
+            },
+            {
+              "id": "7",
+              "color": 0,
+              "symbol": 2
+            },
+            {
+              "id": "8",
+              "color": 1,
+              "symbol": 1
+            }
+          ]
+        }
+      },
+      "expectedData": {
+        "target": 8,
+        "color": 1,
+        "symbol": 1,
+        "inspected": [
+          8
+        ],
+        "found": false,
+        "objects": [
+          {
+            "id": "0",
+            "color": 2,
+            "symbol": 3
+          },
+          {
+            "id": "1",
+            "color": 0,
+            "symbol": 0
+          },
+          {
+            "id": "2",
+            "color": 1,
+            "symbol": 2
+          },
+          {
+            "id": "3",
+            "color": 2,
+            "symbol": 2
+          },
+          {
+            "id": "4",
+            "color": 0,
+            "symbol": 3
+          },
+          {
+            "id": "5",
+            "color": 1,
+            "symbol": 0
+          },
+          {
+            "id": "6",
+            "color": 2,
+            "symbol": 1
+          },
+          {
+            "id": "7",
+            "color": 0,
+            "symbol": 2
+          },
+          {
+            "id": "8",
+            "color": 1,
+            "symbol": 1
+          }
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "hiddenObjects",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "hiddenObjects",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 2,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              5,
+              2,
+              8
+            ],
+            [
+              4,
+              2,
+              8
+            ]
+          ],
+          "clock": 21,
+          "moves": 2,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "target": 8,
+        "color": 1,
+        "symbol": 1,
+        "inspected": [
+          8
+        ],
+        "found": true,
+        "objects": [
+          {
+            "id": "0",
+            "color": 2,
+            "symbol": 3
+          },
+          {
+            "id": "1",
+            "color": 0,
+            "symbol": 0
+          },
+          {
+            "id": "2",
+            "color": 1,
+            "symbol": 2
+          },
+          {
+            "id": "3",
+            "color": 2,
+            "symbol": 2
+          },
+          {
+            "id": "4",
+            "color": 0,
+            "symbol": 3
+          },
+          {
+            "id": "5",
+            "color": 1,
+            "symbol": 0
+          },
+          {
+            "id": "6",
+            "color": 2,
+            "symbol": 1
+          },
+          {
+            "id": "7",
+            "color": 0,
+            "symbol": 2
+          },
+          {
+            "id": "8",
+            "color": 1,
+            "symbol": 1
+          }
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "parrot",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "parrot",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            2,
+            2
+          ],
+          [
+            4,
+            2,
+            3
+          ]
+        ],
+        "data": {
+          "words": [
+            "Muszla",
+            "Żagiel",
+            "Kotwica",
+            "Latarnia"
+          ],
+          "entered": [
+            "Muszla",
+            "Żagiel"
+          ]
+        }
+      },
+      "expectedData": {
+        "words": [
+          "Muszla",
+          "Żagiel",
+          "Kotwica",
+          "Latarnia"
+        ],
+        "entered": [
+          "Muszla",
+          "Żagiel"
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "parrot",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "parrot",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 4,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              2,
+              2
+            ],
+            [
+              4,
+              2,
+              3
+            ],
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              4,
+              2,
+              1
+            ]
+          ],
+          "clock": 21,
+          "moves": 4,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "words": [
+          "Muszla",
+          "Żagiel",
+          "Kotwica",
+          "Latarnia"
+        ],
+        "entered": [
+          "Muszla",
+          "Żagiel",
+          "Kotwica",
+          "Latarnia"
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "crabs",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "crabs",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            6,
+            0,
+            "0",
+            2,
+            1
+          ],
+          [
+            6,
+            0,
+            "0",
+            2,
+            2
+          ]
+        ],
+        "data": {
+          "selected": "0",
+          "crabs": [
+            {
+              "id": "0",
+              "position": 2,
+              "goal": 4
+            },
+            {
+              "id": "1",
+              "position": 10,
+              "goal": 14
+            },
+            {
+              "id": "2",
+              "position": 20,
+              "goal": 24
+            }
+          ],
+          "walls": [
+            3,
+            12,
+            21
+          ]
+        }
+      },
+      "expectedData": {
+        "selected": "0",
+        "crabs": [
+          {
+            "id": "0",
+            "position": 2,
+            "goal": 4
+          },
+          {
+            "id": "1",
+            "position": 10,
+            "goal": 14
+          },
+          {
+            "id": "2",
+            "position": 20,
+            "goal": 24
+          }
+        ],
+        "walls": [
+          3,
+          12,
+          21
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "crabs",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "crabs",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 18,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              6,
+              0,
+              "0",
+              2,
+              1
+            ],
+            [
+              6,
+              0,
+              "0",
+              2,
+              2
+            ],
+            [
+              6,
+              0,
+              "0",
+              2,
+              7
+            ],
+            [
+              6,
+              0,
+              "0",
+              2,
+              8
+            ],
+            [
+              6,
+              0,
+              "0",
+              2,
+              9
+            ],
+            [
+              6,
+              0,
+              "0",
+              2,
+              4
+            ],
+            [
+              6,
+              0,
+              "1",
+              2,
+              11
+            ],
+            [
+              6,
+              0,
+              "1",
+              2,
+              16
+            ],
+            [
+              6,
+              0,
+              "1",
+              2,
+              17
+            ],
+            [
+              6,
+              0,
+              "1",
+              2,
+              18
+            ],
+            [
+              6,
+              0,
+              "1",
+              2,
+              13
+            ],
+            [
+              6,
+              0,
+              "1",
+              2,
+              14
+            ],
+            [
+              6,
+              0,
+              "2",
+              2,
+              25
+            ],
+            [
+              6,
+              0,
+              "2",
+              2,
+              26
+            ],
+            [
+              6,
+              0,
+              "2",
+              2,
+              27
+            ],
+            [
+              6,
+              0,
+              "2",
+              2,
+              22
+            ],
+            [
+              6,
+              0,
+              "2",
+              2,
+              23
+            ],
+            [
+              6,
+              0,
+              "2",
+              2,
+              24
+            ],
+            [
+              0,
+              0,
+              "0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 18,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": "0",
+        "crabs": [
+          {
+            "id": "0",
+            "position": 4,
+            "goal": 4
+          },
+          {
+            "id": "1",
+            "position": 14,
+            "goal": 14
+          },
+          {
+            "id": "2",
+            "position": 24,
+            "goal": 24
+          }
+        ],
+        "walls": [
+          3,
+          12,
+          21
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "packing",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "packing",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            2,
+            0,
+            "p2"
+          ],
+          [
+            2,
+            0,
+            "p0"
+          ]
+        ],
+        "data": {
+          "selected": "p0",
+          "items": [
+            {
+              "id": "p2",
+              "w": 4,
+              "h": 1,
+              "rotation": 0,
+              "at": null
+            },
+            {
+              "id": "p0",
+              "w": 2,
+              "h": 2,
+              "rotation": 0,
+              "at": null
+            },
+            {
+              "id": "p1",
+              "w": 2,
+              "h": 2,
+              "rotation": 0,
+              "at": null
+            },
+            {
+              "id": "p3",
+              "w": 4,
+              "h": 1,
+              "rotation": 0,
+              "at": null
+            }
+          ]
+        }
+      },
+      "expectedData": {
+        "selected": "p0",
+        "items": [
+          {
+            "id": "p2",
+            "w": 4,
+            "h": 1,
+            "rotation": 0,
+            "at": null
+          },
+          {
+            "id": "p0",
+            "w": 2,
+            "h": 2,
+            "rotation": 0,
+            "at": null
+          },
+          {
+            "id": "p1",
+            "w": 2,
+            "h": 2,
+            "rotation": 0,
+            "at": null
+          },
+          {
+            "id": "p3",
+            "w": 4,
+            "h": 1,
+            "rotation": 0,
+            "at": null
+          }
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "packing",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "packing",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 6,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              2,
+              0,
+              "p2"
+            ],
+            [
+              2,
+              0,
+              "p0"
+            ],
+            [
+              1,
+              0,
+              "p2",
+              1,
+              "8"
+            ],
+            [
+              1,
+              0,
+              "p0",
+              1,
+              "0"
+            ],
+            [
+              1,
+              0,
+              "p1",
+              1,
+              "2"
+            ],
+            [
+              1,
+              0,
+              "p3",
+              1,
+              "12"
+            ],
+            [
+              0,
+              0,
+              "p0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 6,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": "p0",
+        "items": [
+          {
+            "id": "p2",
+            "w": 4,
+            "h": 1,
+            "rotation": 0,
+            "at": 8
+          },
+          {
+            "id": "p0",
+            "w": 2,
+            "h": 2,
+            "rotation": 0,
+            "at": 0
+          },
+          {
+            "id": "p1",
+            "w": 2,
+            "h": 2,
+            "rotation": 0,
+            "at": 2
+          },
+          {
+            "id": "p3",
+            "w": 4,
+            "h": 1,
+            "rotation": 0,
+            "at": 12
+          }
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "untangle",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "untangle",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 1,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            1,
+            0,
+            "0",
+            1,
+            "0"
+          ]
+        ],
+        "data": {
+          "positions": [
+            0,
+            3,
+            2,
+            1,
+            4
+          ],
+          "selected": "0"
+        }
+      },
+      "expectedData": {
+        "positions": [
+          0,
+          3,
+          2,
+          1,
+          4
+        ],
+        "selected": "0"
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "untangle",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "untangle",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 2,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              1,
+              0,
+              "0",
+              1,
+              "0"
+            ],
+            [
+              1,
+              0,
+              "1",
+              1,
+              "1"
+            ],
+            [
+              0,
+              0,
+              "0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 2,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "positions": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "selected": "0"
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "navigation",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "navigation",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            6,
+            2,
+            6
+          ],
+          [
+            6,
+            2,
+            7
+          ]
+        ],
+        "data": {
+          "position": 7,
+          "goal": 35,
+          "walls": [
+            1,
+            2,
+            3,
+            11,
+            13,
+            15,
+            18,
+            19,
+            24,
+            25,
+            26,
+            28,
+            30,
+            31,
+            32,
+            33,
+            34
+          ],
+          "route": [
+            0,
+            6,
+            7
+          ],
+          "budget": 16
+        }
+      },
+      "expectedData": {
+        "position": 7,
+        "goal": 35,
+        "walls": [
+          1,
+          2,
+          3,
+          11,
+          13,
+          15,
+          18,
+          19,
+          24,
+          25,
+          26,
+          28,
+          30,
+          31,
+          32,
+          33,
+          34
+        ],
+        "route": [
+          0,
+          6,
+          7
+        ],
+        "budget": 16
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "navigation",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "navigation",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 10,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              6,
+              2,
+              6
+            ],
+            [
+              6,
+              2,
+              7
+            ],
+            [
+              6,
+              2,
+              8
+            ],
+            [
+              6,
+              2,
+              9
+            ],
+            [
+              6,
+              2,
+              10
+            ],
+            [
+              6,
+              2,
+              16
+            ],
+            [
+              6,
+              2,
+              17
+            ],
+            [
+              6,
+              2,
+              23
+            ],
+            [
+              6,
+              2,
+              29
+            ],
+            [
+              6,
+              2,
+              35
+            ]
+          ],
+          "clock": 21,
+          "moves": 10,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "position": 35,
+        "goal": 35,
+        "walls": [
+          1,
+          2,
+          3,
+          11,
+          13,
+          15,
+          18,
+          19,
+          24,
+          25,
+          26,
+          28,
+          30,
+          31,
+          32,
+          33,
+          34
+        ],
+        "route": [
+          0,
+          6,
+          7,
+          8,
+          9,
+          10,
+          16,
+          17,
+          23,
+          29,
+          35
+        ],
+        "budget": 16
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "scheduling",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "scheduling",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            1,
+            0,
+            "s0",
+            1,
+            "q0-1"
+          ],
+          [
+            1,
+            0,
+            "s1",
+            1,
+            "q1-2"
+          ]
+        ],
+        "data": {
+          "selected": "s0",
+          "jobs": [
+            {
+              "id": "s2",
+              "duration": 2,
+              "earliest": 3,
+              "latest": 4,
+              "quay": 0,
+              "at": null
+            },
+            {
+              "id": "s0",
+              "duration": 2,
+              "earliest": 1,
+              "latest": 2,
+              "quay": 0,
+              "at": 1
+            },
+            {
+              "id": "s1",
+              "duration": 1,
+              "earliest": 2,
+              "latest": 3,
+              "quay": 1,
+              "at": 2
+            }
+          ]
+        }
+      },
+      "expectedData": {
+        "selected": "s0",
+        "jobs": [
+          {
+            "id": "s2",
+            "duration": 2,
+            "earliest": 3,
+            "latest": 4,
+            "quay": 0,
+            "at": null
+          },
+          {
+            "id": "s0",
+            "duration": 2,
+            "earliest": 1,
+            "latest": 2,
+            "quay": 0,
+            "at": 1
+          },
+          {
+            "id": "s1",
+            "duration": 1,
+            "earliest": 2,
+            "latest": 3,
+            "quay": 1,
+            "at": 2
+          }
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "scheduling",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "scheduling",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 3,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              1,
+              0,
+              "s2",
+              1,
+              "q0-3"
+            ],
+            [
+              1,
+              0,
+              "s0",
+              1,
+              "q0-1"
+            ],
+            [
+              1,
+              0,
+              "s1",
+              1,
+              "q1-2"
+            ],
+            [
+              0,
+              0,
+              "s0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 3,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": "s0",
+        "jobs": [
+          {
+            "id": "s2",
+            "duration": 2,
+            "earliest": 3,
+            "latest": 4,
+            "quay": 0,
+            "at": 3
+          },
+          {
+            "id": "s0",
+            "duration": 2,
+            "earliest": 1,
+            "latest": 2,
+            "quay": 0,
+            "at": 1
+          },
+          {
+            "id": "s1",
+            "duration": 1,
+            "earliest": 2,
+            "latest": 3,
+            "quay": 1,
+            "at": 2
+          }
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "gears",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "gears",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            2,
+            0,
+            3,
+            3
+          ],
+          [
+            4,
+            2,
+            1,
+            3,
+            2
+          ]
+        ],
+        "data": {
+          "factors": [
+            3,
+            2,
+            1
+          ],
+          "reverse": [
+            0,
+            0,
+            0
+          ],
+          "desired": [
+            3,
+            2,
+            1
+          ],
+          "target": 6,
+          "targetReverse": 1
+        }
+      },
+      "expectedData": {
+        "factors": [
+          3,
+          2,
+          1
+        ],
+        "reverse": [
+          0,
+          0,
+          0
+        ],
+        "desired": [
+          3,
+          2,
+          1
+        ],
+        "target": 6,
+        "targetReverse": 1
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "gears",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "gears",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 4,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              2,
+              0,
+              3,
+              3
+            ],
+            [
+              4,
+              2,
+              1,
+              3,
+              2
+            ],
+            [
+              2,
+              2,
+              0
+            ]
+          ],
+          "clock": 21,
+          "moves": 4,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "factors": [
+          3,
+          2,
+          1
+        ],
+        "reverse": [
+          1,
+          0,
+          0
+        ],
+        "desired": [
+          3,
+          2,
+          1
+        ],
+        "target": 6,
+        "targetReverse": 1
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "optics",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "optics",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 1,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            2,
+            2,
+            12
+          ]
+        ],
+        "data": {
+          "receiver": 24,
+          "mirrors": [
+            {
+              "index": 12,
+              "rotation": 1
+            },
+            {
+              "index": 22,
+              "rotation": 0
+            }
+          ],
+          "desired": 1
+        }
+      },
+      "expectedData": {
+        "receiver": 24,
+        "mirrors": [
+          {
+            "index": 12,
+            "rotation": 1
+          },
+          {
+            "index": 22,
+            "rotation": 0
+          }
+        ],
+        "desired": 1
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "optics",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "optics",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 2,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              2,
+              2,
+              12
+            ],
+            [
+              2,
+              2,
+              22
+            ]
+          ],
+          "clock": 21,
+          "moves": 2,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "receiver": 24,
+        "mirrors": [
+          {
+            "index": 12,
+            "rotation": 1
+          },
+          {
+            "index": 22,
+            "rotation": 1
+          }
+        ],
+        "desired": 1
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "tides",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "tides",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            4,
+            0,
+            5,
+            1
+          ],
+          [
+            4,
+            4,
+            0,
+            5,
+            1
+          ]
+        ],
+        "data": {
+          "levels": [
+            4,
+            2,
+            0
+          ],
+          "target": [
+            0,
+            3,
+            3
+          ],
+          "capacity": 6
+        }
+      },
+      "expectedData": {
+        "levels": [
+          4,
+          2,
+          0
+        ],
+        "target": [
+          0,
+          3,
+          3
+        ],
+        "capacity": 6
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "tides",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "tides",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 9,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              4,
+              0,
+              5,
+              1
+            ],
+            [
+              4,
+              4,
+              0,
+              5,
+              1
+            ],
+            [
+              4,
+              4,
+              0,
+              5,
+              1
+            ],
+            [
+              4,
+              4,
+              0,
+              5,
+              1
+            ],
+            [
+              4,
+              4,
+              0,
+              5,
+              1
+            ],
+            [
+              4,
+              4,
+              0,
+              5,
+              1
+            ],
+            [
+              4,
+              4,
+              1,
+              5,
+              2
+            ],
+            [
+              4,
+              4,
+              1,
+              5,
+              2
+            ],
+            [
+              4,
+              4,
+              1,
+              5,
+              2
+            ]
+          ],
+          "clock": 21,
+          "moves": 9,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "levels": [
+          0,
+          3,
+          3
+        ],
+        "target": [
+          0,
+          3,
+          3
+        ],
+        "capacity": 6
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "hotel",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "hotel",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            1,
+            0,
+            "g0",
+            1,
+            "2"
+          ],
+          [
+            1,
+            0,
+            "g1",
+            1,
+            "0"
+          ]
+        ],
+        "data": {
+          "selected": "g0",
+          "guests": [
+            {
+              "id": "g0",
+              "room": 2,
+              "at": 2
+            },
+            {
+              "id": "g1",
+              "room": 0,
+              "at": 0
+            },
+            {
+              "id": "g2",
+              "room": 1,
+              "at": null
+            },
+            {
+              "id": "g3",
+              "room": 3,
+              "at": null
+            }
+          ],
+          "rooms": [
+            {
+              "floor": 0,
+              "beds": 2,
+              "sea": true
+            },
+            {
+              "floor": 0,
+              "beds": 1,
+              "sea": false
+            },
+            {
+              "floor": 1,
+              "beds": 3,
+              "sea": true
+            },
+            {
+              "floor": 1,
+              "beds": 1,
+              "sea": false
+            }
+          ]
+        }
+      },
+      "expectedData": {
+        "selected": "g0",
+        "guests": [
+          {
+            "id": "g0",
+            "room": 2,
+            "at": 2
+          },
+          {
+            "id": "g1",
+            "room": 0,
+            "at": 0
+          },
+          {
+            "id": "g2",
+            "room": 1,
+            "at": null
+          },
+          {
+            "id": "g3",
+            "room": 3,
+            "at": null
+          }
+        ],
+        "rooms": [
+          {
+            "floor": 0,
+            "beds": 2,
+            "sea": true
+          },
+          {
+            "floor": 0,
+            "beds": 1,
+            "sea": false
+          },
+          {
+            "floor": 1,
+            "beds": 3,
+            "sea": true
+          },
+          {
+            "floor": 1,
+            "beds": 1,
+            "sea": false
+          }
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "hotel",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "hotel",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 4,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              1,
+              0,
+              "g0",
+              1,
+              "2"
+            ],
+            [
+              1,
+              0,
+              "g1",
+              1,
+              "0"
+            ],
+            [
+              1,
+              0,
+              "g2",
+              1,
+              "1"
+            ],
+            [
+              1,
+              0,
+              "g3",
+              1,
+              "3"
+            ],
+            [
+              0,
+              0,
+              "g0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 4,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": "g0",
+        "guests": [
+          {
+            "id": "g0",
+            "room": 2,
+            "at": 2
+          },
+          {
+            "id": "g1",
+            "room": 0,
+            "at": 0
+          },
+          {
+            "id": "g2",
+            "room": 1,
+            "at": 1
+          },
+          {
+            "id": "g3",
+            "room": 3,
+            "at": 3
+          }
+        ],
+        "rooms": [
+          {
+            "floor": 0,
+            "beds": 2,
+            "sea": true
+          },
+          {
+            "floor": 0,
+            "beds": 1,
+            "sea": false
+          },
+          {
+            "floor": 1,
+            "beds": 3,
+            "sea": true
+          },
+          {
+            "floor": 1,
+            "beds": 1,
+            "sea": false
+          }
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "magnets",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "magnets",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            2,
+            2,
+            1
+          ]
+        ],
+        "data": {
+          "position": 0,
+          "goal": 5,
+          "strengths": [
+            2,
+            1,
+            4
+          ],
+          "poles": [
+            -1,
+            -1,
+            1
+          ],
+          "pulses": 0
+        }
+      },
+      "expectedData": {
+        "position": 0,
+        "goal": 5,
+        "strengths": [
+          2,
+          1,
+          4
+        ],
+        "poles": [
+          -1,
+          -1,
+          1
+        ],
+        "pulses": 0
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "magnets",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "magnets",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 7,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              1
+            ],
+            [
+              7
+            ],
+            [
+              7
+            ],
+            [
+              7
+            ],
+            [
+              7
+            ],
+            [
+              7
+            ]
+          ],
+          "clock": 21,
+          "moves": 7,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "position": 5,
+        "goal": 5,
+        "strengths": [
+          2,
+          1,
+          4
+        ],
+        "poles": [
+          -1,
+          -1,
+          1
+        ],
+        "pulses": 5
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "paperFold",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "paperFold",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 1,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            2,
+            2,
+            0
+          ]
+        ],
+        "data": {
+          "folds": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "target": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "front": [
+            "Muszla",
+            "Kotwica",
+            "Latarnia",
+            "Żagiel"
+          ],
+          "back": [
+            "Mapa",
+            "Skrzynia",
+            "Dzwon",
+            "Kompas"
+          ]
+        }
+      },
+      "expectedData": {
+        "folds": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "target": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "front": [
+          "Muszla",
+          "Kotwica",
+          "Latarnia",
+          "Żagiel"
+        ],
+        "back": [
+          "Mapa",
+          "Skrzynia",
+          "Dzwon",
+          "Kompas"
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "paperFold",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "paperFold",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 2,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              2,
+              2,
+              0
+            ],
+            [
+              2,
+              2,
+              3
+            ]
+          ],
+          "clock": 21,
+          "moves": 2,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "folds": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "target": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "front": [
+          "Muszla",
+          "Kotwica",
+          "Latarnia",
+          "Żagiel"
+        ],
+        "back": [
+          "Mapa",
+          "Skrzynia",
+          "Dzwon",
+          "Kompas"
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "invention",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "invention",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            3
+          ]
+        ],
+        "data": {
+          "selected": [
+            0,
+            3
+          ],
+          "roles": [
+            "reach",
+            "noise",
+            "fragile",
+            "grip",
+            "lift",
+            "water"
+          ],
+          "complete": false
+        }
+      },
+      "expectedData": {
+        "selected": [
+          0,
+          3
+        ],
+        "roles": [
+          "reach",
+          "noise",
+          "fragile",
+          "grip",
+          "lift",
+          "water"
+        ],
+        "complete": false
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "invention",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "invention",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 4,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              4,
+              2,
+              3
+            ],
+            [
+              4,
+              2,
+              4
+            ],
+            [
+              7
+            ]
+          ],
+          "clock": 21,
+          "moves": 4,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": [
+          0,
+          3,
+          4
+        ],
+        "roles": [
+          "reach",
+          "noise",
+          "fragile",
+          "grip",
+          "lift",
+          "water"
+        ],
+        "complete": true
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "photo",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "photo",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            2,
+            0,
+            3,
+            1
+          ],
+          [
+            4,
+            2,
+            0,
+            3,
+            1
+          ]
+        ],
+        "data": {
+          "camera": [
+            2,
+            0,
+            0
+          ],
+          "target": [
+            3,
+            2,
+            1
+          ]
+        }
+      },
+      "expectedData": {
+        "camera": [
+          2,
+          0,
+          0
+        ],
+        "target": [
+          3,
+          2,
+          1
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "photo",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "photo",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 6,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              2,
+              0,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              0,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              0,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              1,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              1,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              2,
+              3,
+              1
+            ]
+          ],
+          "clock": 21,
+          "moves": 6,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "camera": [
+          3,
+          2,
+          1
+        ],
+        "target": [
+          3,
+          2,
+          1
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "deduction",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "deduction",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            1,
+            0,
+            "p0",
+            1,
+            "1"
+          ],
+          [
+            1,
+            0,
+            "p1",
+            1,
+            "0"
+          ]
+        ],
+        "data": {
+          "selected": "p0",
+          "answer": [
+            1,
+            0,
+            2
+          ],
+          "assignments": [
+            1,
+            0,
+            null
+          ]
+        }
+      },
+      "expectedData": {
+        "selected": "p0",
+        "answer": [
+          1,
+          0,
+          2
+        ],
+        "assignments": [
+          1,
+          0,
+          null
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "deduction",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "deduction",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 3,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              1,
+              0,
+              "p0",
+              1,
+              "1"
+            ],
+            [
+              1,
+              0,
+              "p1",
+              1,
+              "0"
+            ],
+            [
+              1,
+              0,
+              "p2",
+              1,
+              "2"
+            ],
+            [
+              0,
+              0,
+              "p0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 3,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": "p0",
+        "answer": [
+          1,
+          0,
+          2
+        ],
+        "assignments": [
+          1,
+          0,
+          2
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "cooking",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "cooking",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            2,
+            0
+          ],
+          [
+            4,
+            2,
+            2
+          ]
+        ],
+        "data": {
+          "recipes": [
+            [
+              1,
+              0,
+              2
+            ],
+            [
+              2,
+              1,
+              0
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ],
+          "pot": [
+            1,
+            0,
+            1
+          ],
+          "served": 0
+        }
+      },
+      "expectedData": {
+        "recipes": [
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            1
+          ]
+        ],
+        "pot": [
+          1,
+          0,
+          1
+        ],
+        "served": 0
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "cooking",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "cooking",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 12,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              4,
+              2,
+              2
+            ],
+            [
+              4,
+              2,
+              2
+            ],
+            [
+              7
+            ],
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              4,
+              2,
+              0
+            ],
+            [
+              4,
+              2,
+              1
+            ],
+            [
+              7
+            ],
+            [
+              4,
+              2,
+              1
+            ],
+            [
+              4,
+              2,
+              1
+            ],
+            [
+              4,
+              2,
+              2
+            ],
+            [
+              7
+            ]
+          ],
+          "clock": 21,
+          "moves": 12,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "recipes": [
+          [
+            1,
+            0,
+            2
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            2,
+            1
+          ]
+        ],
+        "pot": [
+          0,
+          0,
+          0
+        ],
+        "served": 3
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "signalsDecode",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "signalsDecode",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            4,
+            3,
+            3
+          ],
+          [
+            4,
+            3,
+            0
+          ]
+        ],
+        "data": {
+          "key": [
+            2,
+            0,
+            1,
+            3
+          ],
+          "message": [
+            3,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "entered": [
+            3,
+            0
+          ]
+        }
+      },
+      "expectedData": {
+        "key": [
+          2,
+          0,
+          1,
+          3
+        ],
+        "message": [
+          3,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "entered": [
+          3,
+          0
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "signalsDecode",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "signalsDecode",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 6,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              4,
+              3,
+              3
+            ],
+            [
+              4,
+              3,
+              0
+            ],
+            [
+              4,
+              3,
+              0
+            ],
+            [
+              4,
+              3,
+              2
+            ],
+            [
+              4,
+              3,
+              0
+            ],
+            [
+              4,
+              3,
+              0
+            ]
+          ],
+          "clock": 21,
+          "moves": 6,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "key": [
+          2,
+          0,
+          1,
+          3
+        ],
+        "message": [
+          3,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "entered": [
+          3,
+          0,
+          0,
+          2,
+          0,
+          0
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "balance",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "balance",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            1,
+            0,
+            "w0",
+            1,
+            "0"
+          ],
+          [
+            1,
+            0,
+            "w1",
+            1,
+            "0"
+          ]
+        ],
+        "data": {
+          "selected": "w0",
+          "weights": [
+            {
+              "id": "w0",
+              "value": 3,
+              "plate": 0
+            },
+            {
+              "id": "w1",
+              "value": 1,
+              "plate": 0
+            },
+            {
+              "id": "w2",
+              "value": 2,
+              "plate": null
+            },
+            {
+              "id": "w3",
+              "value": 4,
+              "plate": null
+            }
+          ],
+          "target": [
+            4,
+            6
+          ]
+        }
+      },
+      "expectedData": {
+        "selected": "w0",
+        "weights": [
+          {
+            "id": "w0",
+            "value": 3,
+            "plate": 0
+          },
+          {
+            "id": "w1",
+            "value": 1,
+            "plate": 0
+          },
+          {
+            "id": "w2",
+            "value": 2,
+            "plate": null
+          },
+          {
+            "id": "w3",
+            "value": 4,
+            "plate": null
+          }
+        ],
+        "target": [
+          4,
+          6
+        ]
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "balance",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "balance",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 4,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              1,
+              0,
+              "w0",
+              1,
+              "0"
+            ],
+            [
+              1,
+              0,
+              "w1",
+              1,
+              "0"
+            ],
+            [
+              1,
+              0,
+              "w2",
+              1,
+              "1"
+            ],
+            [
+              1,
+              0,
+              "w3",
+              1,
+              "1"
+            ],
+            [
+              0,
+              0,
+              "w0"
+            ]
+          ],
+          "clock": 21,
+          "moves": 4,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "selected": "w0",
+        "weights": [
+          {
+            "id": "w0",
+            "value": 3,
+            "plate": 0
+          },
+          {
+            "id": "w1",
+            "value": 1,
+            "plate": 0
+          },
+          {
+            "id": "w2",
+            "value": 2,
+            "plate": 1
+          },
+          {
+            "id": "w3",
+            "value": 4,
+            "plate": 1
+          }
+        ],
+        "target": [
+          4,
+          6
+        ]
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "memoryTriples",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "memoryTriples",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            9,
+            2,
+            0
+          ],
+          [
+            9,
+            2,
+            7
+          ]
+        ],
+        "data": {
+          "miniGame": {
+            "version": 1,
+            "kind": "triples",
+            "seed": 3668340411,
+            "rows": 6,
+            "columns": 7,
+            "symbolCount": 12,
+            "cards": [
+              0,
+              5,
+              1,
+              5,
+              3,
+              2,
+              10,
+              0,
+              9,
+              3,
+              7,
+              9,
+              6,
+              1,
+              11,
+              11,
+              10,
+              10,
+              2,
+              8,
+              0,
+              7,
+              6,
+              8,
+              6,
+              8,
+              4,
+              4,
+              1,
+              4,
+              3,
+              9,
+              7,
+              2,
+              5,
+              11
+            ],
+            "revealed": [
+              0,
+              7
+            ],
+            "matched": [
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false
+            ],
+            "hideAt": null,
+            "shuffleCount": 0,
+            "shuffleInterval": null,
+            "nextShuffleAt": null,
+            "solved": false
+          }
+        }
+      },
+      "expectedData": {
+        "miniGame": {
+          "version": 1,
+          "kind": "triples",
+          "seed": 3668340411,
+          "rows": 6,
+          "columns": 7,
+          "symbolCount": 12,
+          "cards": [
+            0,
+            5,
+            1,
+            5,
+            3,
+            2,
+            10,
+            0,
+            9,
+            3,
+            7,
+            9,
+            6,
+            1,
+            11,
+            11,
+            10,
+            10,
+            2,
+            8,
+            0,
+            7,
+            6,
+            8,
+            6,
+            8,
+            4,
+            4,
+            1,
+            4,
+            3,
+            9,
+            7,
+            2,
+            5,
+            11
+          ],
+          "revealed": [
+            0,
+            7
+          ],
+          "matched": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "hideAt": null,
+          "shuffleCount": 0,
+          "shuffleInterval": null,
+          "nextShuffleAt": null,
+          "solved": false
+        }
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "memoryTriples",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "memoryTriples",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 36,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              9,
+              2,
+              0
+            ],
+            [
+              9,
+              2,
+              7
+            ],
+            [
+              9,
+              2,
+              20
+            ],
+            [
+              9,
+              2,
+              1
+            ],
+            [
+              9,
+              2,
+              3
+            ],
+            [
+              9,
+              2,
+              34
+            ],
+            [
+              9,
+              2,
+              2
+            ],
+            [
+              9,
+              2,
+              13
+            ],
+            [
+              9,
+              2,
+              28
+            ],
+            [
+              9,
+              2,
+              4
+            ],
+            [
+              9,
+              2,
+              9
+            ],
+            [
+              9,
+              2,
+              30
+            ],
+            [
+              9,
+              2,
+              5
+            ],
+            [
+              9,
+              2,
+              18
+            ],
+            [
+              9,
+              2,
+              33
+            ],
+            [
+              9,
+              2,
+              6
+            ],
+            [
+              9,
+              2,
+              16
+            ],
+            [
+              9,
+              2,
+              17
+            ],
+            [
+              9,
+              2,
+              8
+            ],
+            [
+              9,
+              2,
+              11
+            ],
+            [
+              9,
+              2,
+              31
+            ],
+            [
+              9,
+              2,
+              10
+            ],
+            [
+              9,
+              2,
+              21
+            ],
+            [
+              9,
+              2,
+              32
+            ],
+            [
+              9,
+              2,
+              12
+            ],
+            [
+              9,
+              2,
+              22
+            ],
+            [
+              9,
+              2,
+              24
+            ],
+            [
+              9,
+              2,
+              14
+            ],
+            [
+              9,
+              2,
+              15
+            ],
+            [
+              9,
+              2,
+              35
+            ],
+            [
+              9,
+              2,
+              19
+            ],
+            [
+              9,
+              2,
+              23
+            ],
+            [
+              9,
+              2,
+              25
+            ],
+            [
+              9,
+              2,
+              26
+            ],
+            [
+              9,
+              2,
+              27
+            ],
+            [
+              9,
+              2,
+              29
+            ]
+          ],
+          "clock": 21,
+          "moves": 36,
+          "hints": 0,
+          "hideRemaining": null
+        }
+      },
+      "expectedData": {
+        "miniGame": {
+          "version": 1,
+          "kind": "triples",
+          "seed": 3668340411,
+          "rows": 6,
+          "columns": 7,
+          "symbolCount": 12,
+          "cards": [
+            0,
+            5,
+            1,
+            5,
+            3,
+            2,
+            10,
+            0,
+            9,
+            3,
+            7,
+            9,
+            6,
+            1,
+            11,
+            11,
+            10,
+            10,
+            2,
+            8,
+            0,
+            7,
+            6,
+            8,
+            6,
+            8,
+            4,
+            4,
+            1,
+            4,
+            3,
+            9,
+            7,
+            2,
+            5,
+            11
+          ],
+          "revealed": [],
+          "matched": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "hideAt": null,
+          "shuffleCount": 0,
+          "shuffleInterval": null,
+          "nextShuffleAt": null,
+          "solved": true
+        }
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "signal-line",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "signal-line",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            14,
+            0,
+            "-2,0"
+          ],
+          [
+            14,
+            0,
+            "-2,-1"
+          ]
+        ],
+        "data": {
+          "attempt": {
+            "version": 1,
+            "id": "original-1",
+            "variant": "signal-line",
+            "seed": 3668340411,
+            "difficulty": 1,
+            "effectiveDifficulty": 1,
+            "easier": false,
+            "rewardScale": 1,
+            "highestTownhall": 1,
+            "status": "active",
+            "remaining": 180,
+            "initialDuration": 180,
+            "startedAt": 21000,
+            "lastAt": 21000,
+            "timeOffer": null,
+            "offerArmed": true,
+            "extensions": 0,
+            "trail": [
+              "-2,0",
+              "-2,-1"
+            ],
+            "usedEdges": [
+              "-2,-1|-2,0"
+            ],
+            "hintUsed": false,
+            "hint": null,
+            "message": "",
+            "rewardClaimed": false,
+            "board": {
+              "nodes": [
+                {
+                  "id": "0,0",
+                  "x": 3,
+                  "y": 2
+                },
+                {
+                  "id": "-1,0",
+                  "x": 2,
+                  "y": 2
+                },
+                {
+                  "id": "-1,1",
+                  "x": 2,
+                  "y": 3
+                },
+                {
+                  "id": "0,1",
+                  "x": 3,
+                  "y": 3
+                },
+                {
+                  "id": "-2,0",
+                  "x": 1,
+                  "y": 2
+                },
+                {
+                  "id": "-2,-1",
+                  "x": 1,
+                  "y": 1
+                },
+                {
+                  "id": "-1,-1",
+                  "x": 2,
+                  "y": 1
+                },
+                {
+                  "id": "1,0",
+                  "x": 4,
+                  "y": 2
+                },
+                {
+                  "id": "1,-1",
+                  "x": 4,
+                  "y": 1
+                },
+                {
+                  "id": "0,-1",
+                  "x": 3,
+                  "y": 1
+                },
+                {
+                  "id": "-2,1",
+                  "x": 1,
+                  "y": 3
+                }
+              ],
+              "edges": [
+                {
+                  "id": "-1,0|0,0",
+                  "a": "0,0",
+                  "b": "-1,0"
+                },
+                {
+                  "id": "-1,0|-1,1",
+                  "a": "-1,0",
+                  "b": "-1,1"
+                },
+                {
+                  "id": "-1,1|0,1",
+                  "a": "-1,1",
+                  "b": "0,1"
+                },
+                {
+                  "id": "0,0|0,1",
+                  "a": "0,1",
+                  "b": "0,0"
+                },
+                {
+                  "id": "-1,0|-2,0",
+                  "a": "-1,0",
+                  "b": "-2,0"
+                },
+                {
+                  "id": "-2,-1|-2,0",
+                  "a": "-2,0",
+                  "b": "-2,-1"
+                },
+                {
+                  "id": "-1,-1|-2,-1",
+                  "a": "-2,-1",
+                  "b": "-1,-1"
+                },
+                {
+                  "id": "-1,-1|-1,0",
+                  "a": "-1,-1",
+                  "b": "-1,0"
+                },
+                {
+                  "id": "0,0|1,0",
+                  "a": "0,0",
+                  "b": "1,0"
+                },
+                {
+                  "id": "1,-1|1,0",
+                  "a": "1,0",
+                  "b": "1,-1"
+                },
+                {
+                  "id": "0,-1|1,-1",
+                  "a": "1,-1",
+                  "b": "0,-1"
+                },
+                {
+                  "id": "0,-1|0,0",
+                  "a": "0,-1",
+                  "b": "0,0"
+                },
+                {
+                  "id": "-2,0|-2,1",
+                  "a": "-2,0",
+                  "b": "-2,1"
+                }
+              ],
+              "starts": [
+                "-2,0",
+                "-2,1"
+              ],
+              "width": 5,
+              "height": 4
+            }
+          }
+        }
+      },
+      "expectedData": {
+        "attempt": {
+          "version": 1,
+          "id": "original-1",
+          "variant": "signal-line",
+          "seed": 3668340411,
+          "difficulty": 1,
+          "effectiveDifficulty": 1,
+          "easier": false,
+          "rewardScale": 1,
+          "highestTownhall": 1,
+          "status": "active",
+          "remaining": 180,
+          "initialDuration": 180,
+          "startedAt": 21000,
+          "lastAt": 21000,
+          "timeOffer": null,
+          "offerArmed": true,
+          "extensions": 0,
+          "trail": [
+            "-2,0",
+            "-2,-1"
+          ],
+          "usedEdges": [
+            "-2,-1|-2,0"
+          ],
+          "hintUsed": false,
+          "hint": null,
+          "message": "",
+          "rewardClaimed": false,
+          "board": {
+            "nodes": [
+              {
+                "id": "0,0",
+                "x": 3,
+                "y": 2
+              },
+              {
+                "id": "-1,0",
+                "x": 2,
+                "y": 2
+              },
+              {
+                "id": "-1,1",
+                "x": 2,
+                "y": 3
+              },
+              {
+                "id": "0,1",
+                "x": 3,
+                "y": 3
+              },
+              {
+                "id": "-2,0",
+                "x": 1,
+                "y": 2
+              },
+              {
+                "id": "-2,-1",
+                "x": 1,
+                "y": 1
+              },
+              {
+                "id": "-1,-1",
+                "x": 2,
+                "y": 1
+              },
+              {
+                "id": "1,0",
+                "x": 4,
+                "y": 2
+              },
+              {
+                "id": "1,-1",
+                "x": 4,
+                "y": 1
+              },
+              {
+                "id": "0,-1",
+                "x": 3,
+                "y": 1
+              },
+              {
+                "id": "-2,1",
+                "x": 1,
+                "y": 3
+              }
+            ],
+            "edges": [
+              {
+                "id": "-1,0|0,0",
+                "a": "0,0",
+                "b": "-1,0"
+              },
+              {
+                "id": "-1,0|-1,1",
+                "a": "-1,0",
+                "b": "-1,1"
+              },
+              {
+                "id": "-1,1|0,1",
+                "a": "-1,1",
+                "b": "0,1"
+              },
+              {
+                "id": "0,0|0,1",
+                "a": "0,1",
+                "b": "0,0"
+              },
+              {
+                "id": "-1,0|-2,0",
+                "a": "-1,0",
+                "b": "-2,0"
+              },
+              {
+                "id": "-2,-1|-2,0",
+                "a": "-2,0",
+                "b": "-2,-1"
+              },
+              {
+                "id": "-1,-1|-2,-1",
+                "a": "-2,-1",
+                "b": "-1,-1"
+              },
+              {
+                "id": "-1,-1|-1,0",
+                "a": "-1,-1",
+                "b": "-1,0"
+              },
+              {
+                "id": "0,0|1,0",
+                "a": "0,0",
+                "b": "1,0"
+              },
+              {
+                "id": "1,-1|1,0",
+                "a": "1,0",
+                "b": "1,-1"
+              },
+              {
+                "id": "0,-1|1,-1",
+                "a": "1,-1",
+                "b": "0,-1"
+              },
+              {
+                "id": "0,-1|0,0",
+                "a": "0,-1",
+                "b": "0,0"
+              },
+              {
+                "id": "-2,0|-2,1",
+                "a": "-2,0",
+                "b": "-2,1"
+              }
+            ],
+            "starts": [
+              "-2,0",
+              "-2,1"
+            ],
+            "width": 5,
+            "height": 4
+          }
+        }
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "signal-line",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "signal-line",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 14,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              14,
+              0,
+              "-2,0"
+            ],
+            [
+              14,
+              0,
+              "-2,-1"
+            ],
+            [
+              14,
+              0,
+              "-1,-1"
+            ],
+            [
+              14,
+              0,
+              "-1,0"
+            ],
+            [
+              14,
+              0,
+              "-1,1"
+            ],
+            [
+              14,
+              0,
+              "0,1"
+            ],
+            [
+              14,
+              0,
+              "0,0"
+            ],
+            [
+              14,
+              0,
+              "0,-1"
+            ],
+            [
+              14,
+              0,
+              "1,-1"
+            ],
+            [
+              14,
+              0,
+              "1,0"
+            ],
+            [
+              14,
+              0,
+              "0,0"
+            ],
+            [
+              14,
+              0,
+              "-1,0"
+            ],
+            [
+              14,
+              0,
+              "-2,0"
+            ],
+            [
+              14,
+              0,
+              "-2,1"
+            ]
+          ],
+          "clock": 21,
+          "moves": 14,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "attempt": {
+          "version": 1,
+          "id": "original-1",
+          "variant": "signal-line",
+          "seed": 3668340411,
+          "difficulty": 1,
+          "effectiveDifficulty": 1,
+          "easier": false,
+          "rewardScale": 1,
+          "highestTownhall": 1,
+          "status": "won",
+          "remaining": 180,
+          "initialDuration": 180,
+          "startedAt": 21000,
+          "lastAt": 21000,
+          "timeOffer": null,
+          "offerArmed": true,
+          "extensions": 0,
+          "trail": [
+            "-2,0",
+            "-2,-1",
+            "-1,-1",
+            "-1,0",
+            "-1,1",
+            "0,1",
+            "0,0",
+            "0,-1",
+            "1,-1",
+            "1,0",
+            "0,0",
+            "-1,0",
+            "-2,0",
+            "-2,1"
+          ],
+          "usedEdges": [
+            "-2,-1|-2,0",
+            "-1,-1|-2,-1",
+            "-1,-1|-1,0",
+            "-1,0|-1,1",
+            "-1,1|0,1",
+            "0,0|0,1",
+            "0,-1|0,0",
+            "0,-1|1,-1",
+            "1,-1|1,0",
+            "0,0|1,0",
+            "-1,0|0,0",
+            "-1,0|-2,0",
+            "-2,0|-2,1"
+          ],
+          "hintUsed": false,
+          "hint": null,
+          "message": "",
+          "rewardClaimed": false,
+          "board": {
+            "nodes": [
+              {
+                "id": "0,0",
+                "x": 3,
+                "y": 2
+              },
+              {
+                "id": "-1,0",
+                "x": 2,
+                "y": 2
+              },
+              {
+                "id": "-1,1",
+                "x": 2,
+                "y": 3
+              },
+              {
+                "id": "0,1",
+                "x": 3,
+                "y": 3
+              },
+              {
+                "id": "-2,0",
+                "x": 1,
+                "y": 2
+              },
+              {
+                "id": "-2,-1",
+                "x": 1,
+                "y": 1
+              },
+              {
+                "id": "-1,-1",
+                "x": 2,
+                "y": 1
+              },
+              {
+                "id": "1,0",
+                "x": 4,
+                "y": 2
+              },
+              {
+                "id": "1,-1",
+                "x": 4,
+                "y": 1
+              },
+              {
+                "id": "0,-1",
+                "x": 3,
+                "y": 1
+              },
+              {
+                "id": "-2,1",
+                "x": 1,
+                "y": 3
+              }
+            ],
+            "edges": [
+              {
+                "id": "-1,0|0,0",
+                "a": "0,0",
+                "b": "-1,0"
+              },
+              {
+                "id": "-1,0|-1,1",
+                "a": "-1,0",
+                "b": "-1,1"
+              },
+              {
+                "id": "-1,1|0,1",
+                "a": "-1,1",
+                "b": "0,1"
+              },
+              {
+                "id": "0,0|0,1",
+                "a": "0,1",
+                "b": "0,0"
+              },
+              {
+                "id": "-1,0|-2,0",
+                "a": "-1,0",
+                "b": "-2,0"
+              },
+              {
+                "id": "-2,-1|-2,0",
+                "a": "-2,0",
+                "b": "-2,-1"
+              },
+              {
+                "id": "-1,-1|-2,-1",
+                "a": "-2,-1",
+                "b": "-1,-1"
+              },
+              {
+                "id": "-1,-1|-1,0",
+                "a": "-1,-1",
+                "b": "-1,0"
+              },
+              {
+                "id": "0,0|1,0",
+                "a": "0,0",
+                "b": "1,0"
+              },
+              {
+                "id": "1,-1|1,0",
+                "a": "1,0",
+                "b": "1,-1"
+              },
+              {
+                "id": "0,-1|1,-1",
+                "a": "1,-1",
+                "b": "0,-1"
+              },
+              {
+                "id": "0,-1|0,0",
+                "a": "0,-1",
+                "b": "0,0"
+              },
+              {
+                "id": "-2,0|-2,1",
+                "a": "-2,0",
+                "b": "-2,1"
+              }
+            ],
+            "starts": [
+              "-2,0",
+              "-2,1"
+            ],
+            "width": 5,
+            "height": 4
+          }
+        }
+      },
+      "expectedSolved": true
+    },
+    {
+      "kind": "harbor-routes",
+      "phase": "partial",
+      "raw": {
+        "version": 1,
+        "kind": "harbor-routes",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "clock": 21,
+        "startedClock": 21,
+        "moves": 2,
+        "solved": false,
+        "hints": 0,
+        "log": [
+          [
+            15,
+            0,
+            "convoy-3"
+          ],
+          [
+            15,
+            0,
+            "convoy-1"
+          ]
+        ],
+        "data": {
+          "attempt": {
+            "version": 1,
+            "id": "original-1",
+            "variant": "harbor-routes",
+            "seed": 3668340411,
+            "difficulty": 1,
+            "effectiveDifficulty": 1,
+            "easier": false,
+            "rewardScale": 1,
+            "highestTownhall": 1,
+            "status": "active",
+            "remaining": 150,
+            "initialDuration": 150,
+            "startedAt": 21000,
+            "lastAt": 21000,
+            "timeOffer": null,
+            "offerArmed": true,
+            "extensions": 0,
+            "trail": [],
+            "usedEdges": [],
+            "hintUsed": false,
+            "hint": null,
+            "message": "",
+            "rewardClaimed": false,
+            "board": {
+              "size": 5,
+              "paths": [
+                {
+                  "id": "convoy-1",
+                  "cells": [
+                    [
+                      2,
+                      3
+                    ],
+                    [
+                      3,
+                      3
+                    ],
+                    [
+                      4,
+                      3
+                    ],
+                    [
+                      4,
+                      2
+                    ]
+                  ],
+                  "direction": [
+                    0,
+                    -1
+                  ],
+                  "order": 0
+                },
+                {
+                  "id": "convoy-2",
+                  "cells": [
+                    [
+                      1,
+                      1
+                    ],
+                    [
+                      2,
+                      1
+                    ],
+                    [
+                      2,
+                      0
+                    ],
+                    [
+                      3,
+                      0
+                    ]
+                  ],
+                  "direction": [
+                    1,
+                    0
+                  ],
+                  "order": 1
+                },
+                {
+                  "id": "convoy-3",
+                  "cells": [
+                    [
+                      2,
+                      2
+                    ],
+                    [
+                      3,
+                      2
+                    ],
+                    [
+                      3,
+                      1
+                    ],
+                    [
+                      4,
+                      1
+                    ],
+                    [
+                      4,
+                      0
+                    ]
+                  ],
+                  "direction": [
+                    0,
+                    -1
+                  ],
+                  "order": 2
+                },
+                {
+                  "id": "convoy-4",
+                  "cells": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      1
+                    ],
+                    [
+                      0,
+                      2
+                    ],
+                    [
+                      1,
+                      2
+                    ],
+                    [
+                      1,
+                      3
+                    ]
+                  ],
+                  "direction": [
+                    0,
+                    1
+                  ],
+                  "order": 3
+                },
+                {
+                  "id": "convoy-5",
+                  "cells": [
+                    [
+                      1,
+                      4
+                    ],
+                    [
+                      2,
+                      4
+                    ],
+                    [
+                      3,
+                      4
+                    ]
+                  ],
+                  "direction": [
+                    1,
+                    0
+                  ],
+                  "order": 4
+                }
+              ],
+              "removed": [
+                "convoy-3",
+                "convoy-1"
+              ]
+            }
+          }
+        }
+      },
+      "expectedData": {
+        "attempt": {
+          "version": 1,
+          "id": "original-1",
+          "variant": "harbor-routes",
+          "seed": 3668340411,
+          "difficulty": 1,
+          "effectiveDifficulty": 1,
+          "easier": false,
+          "rewardScale": 1,
+          "highestTownhall": 1,
+          "status": "active",
+          "remaining": 150,
+          "initialDuration": 150,
+          "startedAt": 21000,
+          "lastAt": 21000,
+          "timeOffer": null,
+          "offerArmed": true,
+          "extensions": 0,
+          "trail": [],
+          "usedEdges": [],
+          "hintUsed": false,
+          "hint": null,
+          "message": "",
+          "rewardClaimed": false,
+          "board": {
+            "size": 5,
+            "paths": [
+              {
+                "id": "convoy-1",
+                "cells": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    3,
+                    3
+                  ],
+                  [
+                    4,
+                    3
+                  ],
+                  [
+                    4,
+                    2
+                  ]
+                ],
+                "direction": [
+                  0,
+                  -1
+                ],
+                "order": 0
+              },
+              {
+                "id": "convoy-2",
+                "cells": [
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    2,
+                    1
+                  ],
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    3,
+                    0
+                  ]
+                ],
+                "direction": [
+                  1,
+                  0
+                ],
+                "order": 1
+              },
+              {
+                "id": "convoy-3",
+                "cells": [
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    3,
+                    2
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    4,
+                    1
+                  ],
+                  [
+                    4,
+                    0
+                  ]
+                ],
+                "direction": [
+                  0,
+                  -1
+                ],
+                "order": 2
+              },
+              {
+                "id": "convoy-4",
+                "cells": [
+                  [
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    0,
+                    2
+                  ],
+                  [
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    3
+                  ]
+                ],
+                "direction": [
+                  0,
+                  1
+                ],
+                "order": 3
+              },
+              {
+                "id": "convoy-5",
+                "cells": [
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    2,
+                    4
+                  ],
+                  [
+                    3,
+                    4
+                  ]
+                ],
+                "direction": [
+                  1,
+                  0
+                ],
+                "order": 4
+              }
+            ],
+            "removed": [
+              "convoy-3",
+              "convoy-1"
+            ]
+          }
+        }
+      },
+      "expectedSolved": false
+    },
+    {
+      "kind": "harbor-routes",
+      "phase": "solved",
+      "raw": {
+        "version": 1,
+        "kind": "harbor-routes",
+        "seed": 912,
+        "variant": 3,
+        "level": 1,
+        "startedClock": 21,
+        "clock": 21,
+        "moves": 5,
+        "hints": 0,
+        "log": [],
+        "checkpoint": {
+          "version": 1,
+          "actions": [
+            [
+              15,
+              0,
+              "convoy-3"
+            ],
+            [
+              15,
+              0,
+              "convoy-1"
+            ],
+            [
+              15,
+              0,
+              "convoy-2"
+            ],
+            [
+              15,
+              0,
+              "convoy-5"
+            ],
+            [
+              15,
+              0,
+              "convoy-4"
+            ]
+          ],
+          "clock": 21,
+          "moves": 5,
+          "hints": 0
+        }
+      },
+      "expectedData": {
+        "attempt": {
+          "version": 1,
+          "id": "original-1",
+          "variant": "harbor-routes",
+          "seed": 3668340411,
+          "difficulty": 1,
+          "effectiveDifficulty": 1,
+          "easier": false,
+          "rewardScale": 1,
+          "highestTownhall": 1,
+          "status": "won",
+          "remaining": 150,
+          "initialDuration": 150,
+          "startedAt": 21000,
+          "lastAt": 21000,
+          "timeOffer": null,
+          "offerArmed": true,
+          "extensions": 0,
+          "trail": [],
+          "usedEdges": [],
+          "hintUsed": false,
+          "hint": null,
+          "message": "",
+          "rewardClaimed": false,
+          "board": {
+            "size": 5,
+            "paths": [
+              {
+                "id": "convoy-1",
+                "cells": [
+                  [
+                    2,
+                    3
+                  ],
+                  [
+                    3,
+                    3
+                  ],
+                  [
+                    4,
+                    3
+                  ],
+                  [
+                    4,
+                    2
+                  ]
+                ],
+                "direction": [
+                  0,
+                  -1
+                ],
+                "order": 0
+              },
+              {
+                "id": "convoy-2",
+                "cells": [
+                  [
+                    1,
+                    1
+                  ],
+                  [
+                    2,
+                    1
+                  ],
+                  [
+                    2,
+                    0
+                  ],
+                  [
+                    3,
+                    0
+                  ]
+                ],
+                "direction": [
+                  1,
+                  0
+                ],
+                "order": 1
+              },
+              {
+                "id": "convoy-3",
+                "cells": [
+                  [
+                    2,
+                    2
+                  ],
+                  [
+                    3,
+                    2
+                  ],
+                  [
+                    3,
+                    1
+                  ],
+                  [
+                    4,
+                    1
+                  ],
+                  [
+                    4,
+                    0
+                  ]
+                ],
+                "direction": [
+                  0,
+                  -1
+                ],
+                "order": 2
+              },
+              {
+                "id": "convoy-4",
+                "cells": [
+                  [
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1
+                  ],
+                  [
+                    0,
+                    2
+                  ],
+                  [
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    3
+                  ]
+                ],
+                "direction": [
+                  0,
+                  1
+                ],
+                "order": 3
+              },
+              {
+                "id": "convoy-5",
+                "cells": [
+                  [
+                    1,
+                    4
+                  ],
+                  [
+                    2,
+                    4
+                  ],
+                  [
+                    3,
+                    4
+                  ]
+                ],
+                "direction": [
+                  1,
+                  0
+                ],
+                "order": 4
+              }
+            ],
+            "removed": [
+              "convoy-3",
+              "convoy-1",
+              "convoy-2",
+              "convoy-5",
+              "convoy-4"
+            ]
+          }
+        }
+      },
+      "expectedSolved": true
+    }
+  ],
+  "originalWon": {
+    "version": 1,
+    "id": "old-convoy-win",
+    "variant": "harbor-routes",
+    "seed": 912,
+    "difficulty": 3,
+    "effectiveDifficulty": 3,
+    "easier": false,
+    "rewardScale": 1,
+    "highestTownhall": 1,
+    "status": "won",
+    "remaining": 145,
+    "initialDuration": 145,
+    "startedAt": 0,
+    "lastAt": 0,
+    "timeOffer": null,
+    "offerArmed": true,
+    "extensions": 0,
+    "trail": [],
+    "usedEdges": [],
+    "hintUsed": false,
+    "hint": null,
+    "message": "",
+    "rewardClaimed": false,
+    "board": {
+      "size": 6,
+      "paths": [
+        {
+          "id": "convoy-1",
+          "cells": [
+            [
+              4,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              4
+            ]
+          ],
+          "direction": [
+            0,
+            1
+          ],
+          "order": 0
+        },
+        {
+          "id": "convoy-2",
+          "cells": [
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              1
+            ]
+          ],
+          "direction": [
+            1,
+            0
+          ],
+          "order": 1
+        },
+        {
+          "id": "convoy-3",
+          "cells": [
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "direction": [
+            1,
+            0
+          ],
+          "order": 2
+        },
+        {
+          "id": "convoy-4",
+          "cells": [
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "direction": [
+            0,
+            -1
+          ],
+          "order": 3
+        },
+        {
+          "id": "convoy-5",
+          "cells": [
+            [
+              3,
+              2
+            ],
+            [
+              3,
+              3
+            ]
+          ],
+          "direction": [
+            0,
+            1
+          ],
+          "order": 4
+        },
+        {
+          "id": "convoy-6",
+          "cells": [
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "direction": [
+            -1,
+            0
+          ],
+          "order": 5
+        },
+        {
+          "id": "convoy-7",
+          "cells": [
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              5
+            ]
+          ],
+          "direction": [
+            0,
+            1
+          ],
+          "order": 6
+        }
+      ],
+      "removed": [
+        "convoy-1",
+        "convoy-2",
+        "convoy-4",
+        "convoy-3",
+        "convoy-5",
+        "convoy-6",
+        "convoy-7"
+      ]
+    }
+  }
+}

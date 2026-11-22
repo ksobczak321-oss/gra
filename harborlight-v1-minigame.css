@@ -206,3 +206,4 @@
  #island-dialog[data-panel-kind="puzzle"]:has(.expedition-decision) .minigame-side>.minigame-ad-slot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-width:0;justify-self:stretch}
  #island-dialog[data-panel-kind="puzzle"]:has(.expedition-decision) .minigame-side>.minigame-ad-slot>:is([data-buy-extra-time],[data-minigame-ad]){grid-column:auto;grid-row:auto}
 }
+.expedition-minigame .minigame-awaiting-start{display:none!important}

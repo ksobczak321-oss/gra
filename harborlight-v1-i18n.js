@@ -1,5 +1,5 @@
-import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v32-23';
-import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v32-23';
+import { APPROVED_TRANSLATIONS } from './harborlight-v1-approved-copy.js?v=frontend-v32-24';
+import { COPY_TRANSLATIONS } from './harborlight-v1-copy.js?v=frontend-v32-24';
 
 /** English is the source language. Polish strings are presentation only: saves,
  * identifiers, action payloads and user-entered values are never translated. */
@@ -50,6 +50,13 @@ registerTranslations({
   'Keep points for later when nobody can currently receive them.': 'Zachowaj punkty na później, gdy nikt nie może ich teraz otrzymać.',
   'The earned assistance could not be committed.': 'Nie udało się zatwierdzić zdobytej pomocy.',
   'Waiting for the planned materials of the accepted construction order.': 'Oczekiwanie na materiały do przyjętego zlecenia budowy.'
+});
+registerTranslations({
+  'Read the instructions and choose Start game before playing this round.': 'Przeczytaj instrukcję i wybierz „Zaczynam”, aby rozpocząć tę rundę.',
+  'This round is not waiting for its instructions to be confirmed.': 'Ta runda nie czeka na potwierdzenie instrukcji.',
+  'Mini-game started. The round timer is now running.': 'Minigra rozpoczęta. Czas rundy już płynie.',
+  'Read the instructions, then choose Start game. The round timer is paused.': 'Przeczytaj instrukcję, a potem wybierz „Zaczynam”. Czas rundy jest zatrzymany.',
+  'The instructions remain available. This round has not started.': 'Instrukcja pozostaje dostępna. Ta runda jeszcze się nie rozpoczęła.'
 });
 function entries(source) { for (const line of source.trim().split('\n')) { const divider = line.indexOf('|'); if (divider > 0) translations.set(line.slice(0, divider), line.slice(divider + 1)); } }
 entries(`
@@ -2029,6 +2036,7 @@ Choose a tutorial location.|Wybierz miejsce wskazane w samouczku.
 Building supplies are available only before your tutorial Town Hall upgrade.|Materiały na pierwszą rozbudowę ratusza możesz odebrać tylko przed zleceniem jej w samouczku.
 The tutorial building supplies were already received.|Materiały na rozbudowę w samouczku zostały już odebrane.
 One-time supplies fill the missing first Town Hall budget directly in ordinary storage, including food for construction and meals.|Jednorazowe zapasy uzupełniają brakujące zasoby na pierwszą rozbudowę ratusza bezpośrednio w zwykłym magazynie. Obejmują też żywność potrzebną na budowę i posiłki.
+One-time supplies cover missing Town Hall coins and construction materials, plus food for residents.|Jednorazowa pomoc uzupełnia brakujące monety i materiały na rozbudowę Ratusza oraz zapewnia zapas jedzenia dla mieszkańców.
 One-time supplies bring your available building budget to 500 coins and each material, with 600 Food for construction and meals. Bonus materials are immediately available without taking ordinary delivery space.|Jednorazowe zapasy uzupełniają środki na budowę do 500 monet i po 500 każdego materiału oraz do 600 jednostek żywności na budowę i posiłki. Materiały z premii możesz od razu wydawać; nie zajmują miejsca na zwykłe dostawy.
 Tutorial building supplies received. You can now order the Town Hall upgrade.|Materiały odebrane. Możesz już zlecić rozbudowę ratusza.
 Complete this lesson before opening its reward chest.|Ukończ tę lekcję, zanim otworzysz jej nagrodę.

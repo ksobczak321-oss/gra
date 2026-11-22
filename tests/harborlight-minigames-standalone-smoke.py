@@ -91,6 +91,13 @@ def open_board(page, entry, variant=1, level=1):
     board = page.locator('#board')
     expect(board).to_have_attribute('aria-busy', 'false')
     expect(board).to_have_attribute('data-game', entry['slug'])
+    intro = board.locator('[data-minigame-instructions]:not(details)')
+    expect(intro).to_have_count(1)
+    expect(page.locator('#pause')).to_be_disabled()
+    expect(board.locator('[data-minigame-kind], [data-adventure-kind]')).to_have_count(0)
+    intro.locator('[data-minigame-begin]').click()
+    if entry['engine']['type'] == 'story':
+        board.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
     assert len(board.inner_text()) > 30, entry['slug']
     engine = entry['engine']
     if engine['type'] in ('puzzle', 'story'):
@@ -125,6 +132,7 @@ try:
                 page.goto(BASE + prefix + suffix + '?game=expedition-triples', wait_until='networkidle')
                 expect(page.locator('#error')).to_be_hidden()
                 expect(page.locator('#board')).to_have_attribute('aria-busy', 'false')
+                page.locator('#board [data-minigame-instructions]:not(details) [data-minigame-begin]').click()
                 expect(page.locator('[data-memory-card]')).to_have_count(24)
                 assert page.evaluate('document.baseURI').endswith(prefix + '/minigames/')
                 report['bootstrap_routes'].append({'path': prefix + suffix, 'passed': True})
@@ -185,6 +193,8 @@ try:
         page.locator('#restart').click()
         expect(page.locator('#pause')).to_have_attribute('aria-pressed', 'false')
         assert page.locator('#board').evaluate('node=>node.inert') is False
+        expect(page.locator('#pause')).to_be_disabled()
+        page.locator('#board [data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         assert page.locator('[data-memory-card]').first.get_attribute('data-memory-state') == before
         report['interactions'].append('expedition-memory-reveal-pause-reset')
         # Group the rendered pictures, then make only normal UI reveals.
@@ -246,6 +256,7 @@ try:
         page.locator('#level').fill('8')
         page.locator('#settings').get_by_role('button', name='Otwórz wybraną próbę').click()
         expect(page.locator('#level')).to_have_value('8')
+        page.locator('#board [data-minigame-instructions]:not(details) [data-minigame-begin]').click()
         expect(page.locator('[data-memory-card]')).to_have_count(66)
         assert 'level=8' in page.url
         report['interactions'].append('selected-difficulty-form-starts-real-66-card-model')

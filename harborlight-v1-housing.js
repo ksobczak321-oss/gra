@@ -3,9 +3,9 @@
 // array, change its length, or advance residentSequence when admitting a person.
 // Normalizing a save creates a fresh array.
 // This lets production query each person's factor without sorting every worker.
-import { educationHousingAssignment, educationWorkMultiplier, personKey } from './harborlight-v1-education.js?v=frontend-v32-23';
-import { militaryHousingAssignment, militaryRecord } from './harborlight-v1-military.js?v=frontend-v32-23';
-import { feedingMultiplier } from './harborlight-v1-provisions.js?v=frontend-v32-23';
+import { educationHousingAssignment, educationWorkMultiplier, personKey } from './harborlight-v1-education.js?v=frontend-v32-24';
+import { militaryHousingAssignment, militaryRecord } from './harborlight-v1-military.js?v=frontend-v32-24';
+import { feedingMultiplier } from './harborlight-v1-provisions.js?v=frontend-v32-24';
 const allocations = new WeakMap();
 const count = value => Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
 const keyOf = person => Number.isSafeInteger(person?.id) && person.id > 0

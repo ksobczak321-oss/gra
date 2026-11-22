@@ -1,7 +1,8 @@
-import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-23';
-import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v32-23';
-import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-23';
-import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-23';
+import * as Adventures from './harborlight-v1-adventures.js?v=frontend-v32-24';
+import { puzzleSceneArt, puzzleTokenArt } from './harborlight-v1-adventures-art.js?v=frontend-v32-24';
+import { mountOriginalPuzzle } from './harborlight-v1-original-puzzles-ui.js?v=frontend-v32-24';
+import { mountMiniGame } from './harborlight-v1-minigame-ui.js?v=frontend-v32-24';
+import { createMiniGameInstructions } from './harborlight-v1-minigame-instructions.js?v=frontend-v32-24';
 
 const words = (language, pl, en) => language === 'en' ? en : pl;
 const line = (value, language) => typeof value === 'string' ? value : value?.[language] || value?.pl || '';
@@ -27,7 +28,7 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
   const t = (pl, en) => words(language, pl, en);
   const initial = getRun(), storyMode = initial.kind === 'escapeStory';
   const timed=getState()?.ruleset===32;const root=standardScene(initial,timed?t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy etap ma własny limit czasu. Wyjście kończy bieżącą próbę, zachowując wcześniejsze odkrycia.','Look around, compare clues and experiment. Every stage has its own timer. Leaving ends this attempt and keeps earlier discoveries.'):t('Rozglądaj się, porównuj wskazówki i eksperymentuj. Każdy ruch możesz przemyśleć — ta zagadka nie ma limitu czasu.','Look around, compare the clues and experiment. Take your time: this puzzle has no deadline.'));
-  if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-23',import.meta.url).href,'data-original-puzzle-css':''}));
+  if(!document.querySelector('[data-original-puzzle-css]'))document.head.append(element('link',{rel:'stylesheet',href:new URL('./harborlight-v1-original-puzzles.css?v=frontend-v32-24',import.meta.url).href,'data-original-puzzle-css':''}));
   root.classList.add('adv-expanded'); root.dataset.expandedAdventure = initial.kind;
   const story = element('section', { class: 'adv-story-heading', 'data-puzzle-story': '' });
   const hero = element('div', { class: 'adv-puzzle-hero' });
@@ -71,7 +72,9 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
   const nextRoom = button(t('Otwórz następny pokój', 'Open the next room'), () => send('puzzleNextRoom'), { class: 'adv-primary', 'data-puzzle-next-room': '' });
   roomSuccess.append(nextRoom);
   const timerOffer=element('div',{class:'adv-v32-time-offer',hidden:true,'data-journey-time-offer':''}),failedNotice=element('p',{class:'adv-status','data-journey-failed':'',hidden:true},t('Ta próba zakończyła się przegraną. Wcześniejsze etapy i przedmioty pozostają. Rozpocznij nową próbę tego etapu.','This attempt ended. Earlier stages and items are kept. Start a new attempt of this stage.'));
-  root.append(story, hero,failedNotice,workbench, roomSuccess,timerOffer);
+  const instructionHost = element('div', { 'data-journey-instructions': '' });
+  root.append(story, hero,instructionHost,failedNotice,workbench, roomSuccess,timerOffer);
+  let instructionKey = '';
   let lastSignature = '', shape = '', selectedDrag = null, miniController = null, originalController=null, originalKey='',timeOfferKey='', currentMiniId = '', disposed = false;
   const maps = new Map();
   let latestView = null;
@@ -114,12 +117,17 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
       setText(target.querySelector('.adv-puzzle-object-description'), line(record.description, language));
       target.setAttribute('aria-label', [family === 'cell' ? `${t('Pole', 'Cell')} ${Number(record.index ?? index) + 1}` : '', label, line(record.description, language)].filter(Boolean).join('. '));
       const picture = target.querySelector('.adv-puzzle-object-icon'), icon = record.icon || (family === 'cell' && record.symbol ? null : latestView?.kind);
-      const artKey = `${icon}:${record.rotation || 0}`;
+      const artKey = `${icon}:${record.rotation || 0}:${JSON.stringify(record.shapeCells || null)}`;
       if (picture.dataset.artKey !== artKey) {
         picture.dataset.artKey = artKey;
-        if (icon) picture.replaceChildren(artwork(puzzleTokenArt(icon, { label })));
+        if (record.shapeCells?.length) {
+          const width = record.shapeWidth || 1, height = record.shapeHeight || 1;
+          const preview = vector('svg', { viewBox: `0 0 ${width * 20} ${height * 20}`, 'aria-hidden': 'true', 'data-packing-shape': record.id });
+          for (const [x, y] of record.shapeCells) preview.append(vector('rect', { x: x * 20 + 1, y: y * 20 + 1, width: 18, height: 18, rx: 2, fill: '#e5c481', stroke: '#6b552d', 'stroke-width': 1 }));
+          picture.replaceChildren(preview);
+        } else if (icon) picture.replaceChildren(artwork(puzzleTokenArt(icon, { label })));
         else picture.replaceChildren(element('span', { class: 'adv-puzzle-symbol' }, record.symbol || '·'));
-        picture.style.transform = Number.isFinite(record.rotation) ? `rotate(${record.rotation * (Math.abs(record.rotation) < 5 ? 90 : 1)}deg)` : '';
+        picture.style.transform = !record.shapeCells && Number.isFinite(record.rotation) ? `rotate(${record.rotation * (Math.abs(record.rotation) < 5 ? 90 : 1)}deg)` : '';
       }
     });
     for (const [id, target] of map) if (!present.has(id)) { target.remove(); map.delete(id); }
@@ -143,7 +151,16 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
     }
     setText(heading, line(view.title, language)); setText(instruction, line(view.instruction, language));
     setText(eyebrow, room ? `${t('Pokój', 'Room')} ${room.roomIndex + 1} / ${room.roomCount}` : t('Mała przygoda, prawdziwy pomysł', 'A little adventure, a real idea'));
-    metadata.replaceChildren(element('span', {}, !timed?t('Bez limitu czasu','No time limit'):attempt?`${t('Czas etapu','Stage time')}: ${Math.ceil(attempt.remaining)} s`:t('Rozpocznij próbę etapu','Start this stage')),element('span',{},`${t('Trudność','Difficulty')}: ${attempt?.difficulty||1}${run.data.rewardScale===.5?' · 50% nagrody':''}`), element('span', { 'data-puzzle-progress': '' }, `${view.progress?.current ?? 0} / ${view.progress?.total ?? 1}`),
+    const instructionsPending = attempt?.instructionsPending === true;
+    const nextInstructionKey = `${attempt?.id || run.id}:${nextShape}:${instructionsPending}`;
+    if (instructionKey !== nextInstructionKey) {
+      instructionKey = nextInstructionKey;
+      instructionHost.replaceChildren(createMiniGameInstructions({ subject: run, language, compact: !instructionsPending,
+        ...(instructionsPending ? { onStart: () => send('puzzleBegin') } : {}) }));
+    }
+    workbench.hidden = instructionsPending;
+    root.dataset.instructionsPending = String(instructionsPending);
+    metadata.replaceChildren(element('span', {}, instructionsPending?t('Zegar czeka na rozpoczęcie','Timer waits for your start'):!timed?t('Bez limitu czasu','No time limit'):attempt?`${t('Czas etapu','Stage time')}: ${Math.ceil(attempt.remaining)} s`:t('Rozpocznij próbę etapu','Start this stage')),element('span',{},`${t('Trudność','Difficulty')}: ${attempt?.difficulty||1}${run.data.rewardScale===.5?' · 50% nagrody':''}`), element('span', { 'data-puzzle-progress': '' }, `${view.progress?.current ?? 0} / ${view.progress?.total ?? 1}`),
       element('span', {}, `${t('Wariant', 'Variant')} ${view.variant || 1}`), ...(view.status ? [element('span', { 'data-puzzle-status': '' }, line(view.status, language))] : []));
     if (room) {
       story.hidden = false;
@@ -186,10 +203,10 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
       drawing.append(vector('path', { d: 'M0 61q12-4 25 0t25 0 25 0 25 0v14H0Z', fill: '#2e6f78', stroke: '#9bc7bc', 'stroke-width': '.7' }));
       for (const rope of ropes) {
         const x1 = coordinate(rope.x1), y1 = coordinate(rope.y1) * .72, x2 = coordinate(rope.x2), y2 = coordinate(rope.y2) * .72;
-        drawing.append(vector('path', { d: `M${x1} ${y1} C38 ${y1 + 3},62 ${y2 + 3},${x2} ${y2}`, fill: 'none', stroke: rope.crossed ? '#daa46f' : '#b9d2a5', 'stroke-width': '1.2', 'data-puzzle-rope': `${rope.from}-${rope.to}` }));
-        for (const [x, y, value] of [[x1, y1, rope.from], [x2, y2, rope.to]]) {
+        drawing.append(vector('path', { d: rope.straight ? `M${x1} ${y1} L${x2} ${y2}` : `M${x1} ${y1} C38 ${y1 + 3},62 ${y2 + 3},${x2} ${y2}`, fill: 'none', stroke: rope.crossed ? '#daa46f' : '#b9d2a5', 'stroke-width': '1.2', 'data-puzzle-rope': `${rope.from}-${rope.to}` }));
+        for (const [x, y, value, label] of [[x1, y1, rope.from, rope.fromLabel], [x2, y2, rope.to, rope.toLabel]]) {
           drawing.append(vector('circle', { cx: x, cy: y, r: '3.6', fill: '#9d895a', stroke: '#ead7a2', 'stroke-width': '.6' }));
-          drawing.append(vector('text', { x, y: y + 1.25, 'text-anchor': 'middle', fill: '#fff0b9', 'font-size': '3.5', 'font-weight': 'bold' }, String(Number(value) + 1)));
+          drawing.append(vector('text', { x, y: y + 1.25, 'text-anchor': 'middle', fill: '#fff0b9', 'font-size': '3.5', 'font-weight': 'bold' }, label === undefined ? String(Number(value) + 1) : line(label, language)));
         }
       }
       for (const object of objects) {
@@ -211,18 +228,18 @@ export function createExpandedAdventureScene({ getState, getRun, language = 'pl'
       miniController?.dispose();miniController=null;minigame.hidden=false;
       const key=attempt?.id||`${run.id}:${room?.roomIndex||0}`;
       const status=()=>{const current=getRun(),p=current.data.puzzle,a=current.data.stageAttempt,s=Adventures.journeyStageStatus(getState(),current),b=p.data.attempt;return{...s,attempt:{...b,...a,id:a?.id||b.id,variant:p.kind},canStart:false,progress:p.kind==='signal-line'?b.usedEdges.length/b.board.edges.length:b.board.removed.length/b.board.paths.length,reward:0};};
-      if(!originalController||originalKey!==key){originalController?.dispose();originalKey=key;originalController=mountOriginalPuzzle({host:minigame,variant:run.data.puzzle.kind,getStatus:status,embedded:true,allowAdSimulation,onAction:action=>{if(action.type==='originalPuzzleInput'){const i=action.input;return move(i.kind==='node'?{type:'node',id:i.node}:i.kind==='convoy'?{type:'convoy',id:i.id}:{type:i.kind});}if(action.type==='originalPuzzleTimeChoice')return send('puzzleTimeChoice',{method:action.method});if(action.type==='originalPuzzleExtend')return send('puzzleAdComplete',{receipt:action.receipt,completed:action.completed});}});}else originalController.update();
+      if(!originalController||originalKey!==key){originalController?.dispose();originalKey=key;originalController=mountOriginalPuzzle({host:minigame,variant:run.data.puzzle.kind,getStatus:status,embedded:true,allowAdSimulation,language,onAction:action=>{if(action.type==='originalPuzzleInput'){const i=action.input;return move(i.kind==='node'?{type:'node',id:i.node}:i.kind==='convoy'?{type:'convoy',id:i.id}:{type:i.kind});}if(action.type==='originalPuzzleTimeChoice')return send('puzzleTimeChoice',{method:action.method});if(action.type==='originalPuzzleExtend')return send('puzzleAdComplete',{receipt:action.receipt,completed:action.completed});}});}else originalController.update();
     }else if (view.miniGame) {
       originalController?.dispose();originalController=null;
-      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v32-23', import.meta.url).href, 'data-adventure-minigame-css': '' }));
+      if (!document.querySelector('[data-adventure-minigame-css]')) document.head.append(element('link', { rel: 'stylesheet', href: new URL('./harborlight-v1-minigame.css?v=frontend-v32-24', import.meta.url).href, 'data-adventure-minigame-css': '' }));
       minigame.hidden = false;
-      const mini = { id: run.id, miniGame: view.miniGame, status: view.solved ? 'won' : failed?'lost':'active', level: run.data.puzzle.difficulty || 1, roundStartedAt: run.startedAt || 0 };
-      const status = { elapsed:attempt?attempt.initialDuration-attempt.remaining:0, remaining:attempt?.remaining||0,adPaused:!!attempt?.timeOffer };
+      const mini = { id: run.id, miniGame: view.miniGame, instructionsPending, status: view.solved ? 'won' : failed?'lost':'active', level: run.data.puzzle.difficulty || 1, roundStartedAt: run.startedAt || 0 };
+      const status = { elapsed:attempt?attempt.initialDuration-attempt.remaining:0, remaining:attempt?.remaining||0,adPaused:instructionsPending||!!attempt?.timeOffer };
       const miniKey = `${run.id}:${room?.roomIndex || 0}:${view.miniGame.kind}:${view.miniGame.cards?.length || 0}`;
       if (!miniController || currentMiniId !== miniKey) {
         miniController?.dispose(); currentMiniId = miniKey;
         miniController = mountMiniGame({ host: minigame, controlsHost: miniControls, run: mini, language, status,
-          onAction: input => move(input.type === 'expeditionMiniGameReveal' ? { type: 'reveal', index: input.index } : { type: 'tilt', tiltX: input.tiltX, tiltY: input.tiltY }) });
+          instructions: false, onAction: input => move(input.type === 'expeditionMiniGameReveal' ? { type: 'reveal', index: input.index } : { type: 'tilt', tiltX: input.tiltX, tiltY: input.tiltY }) });
       } else miniController.update(mini, status);
     } else { originalController?.dispose();originalController=null;minigame.hidden = true; if (miniController) { miniController.dispose(); miniController = null; minigame.replaceChildren(); miniControls.replaceChildren(); } }
     timerOffer.hidden=!attempt?.timeOffer||!!view.originalAttempt;

@@ -3,7 +3,7 @@
 export const STARTUP_REPLAY_PROTOCOL = 1;
 export const STARTUP_REPLAY_MIN_GAP_MS = 300_000;
 export const STARTUP_REPLAY_RESIDUAL_MS = 5_000;
-export const STARTUP_REPLAY_WORKER_URL = new URL('./harborlight-v1-startup-replay-worker.js?v=frontend-v32-23', import.meta.url);
+export const STARTUP_REPLAY_WORKER_URL = new URL('./harborlight-v1-startup-replay-worker.js?v=frontend-v32-24', import.meta.url);
 
 export function startupReplayGap(bundle, targetNow, eligible = () => true) {
   if (!Number.isFinite(targetNow)) return 0;

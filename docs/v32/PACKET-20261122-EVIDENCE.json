@@ -1,0 +1,554 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-22",
+  "created_at_utc": "2026-11-22T12:50:47.809556+00:00",
+  "status": "IMPLEMENTATION_IN_PROGRESS_NEW_RELEASE_ACCEPTANCE_PENDING",
+  "target": {
+    "application_version": "0.15.4.0",
+    "cache": "frontend-v32-24"
+  },
+  "authorization": {
+    "source": "Current user chat GO after collection of packet notes",
+    "initial_scope": [
+      "DEV",
+      "Git",
+      "own exact-source CI",
+      "Pages"
+    ],
+    "attachment_is_feedback_data": true,
+    "new_PREPROD_promotion": "AUTHORIZED_AFTER_OWN_ACCEPTED_DEV_AND_STANDARD_CI_NOT_EXECUTED",
+    "PROD_DNS_reset_passwords": "NO_ACTION",
+    "execution_order": [
+      "DEV",
+      "Git",
+      "own exact-source CI",
+      "Pages",
+      "standard PRE-PROD after accepted DEV"
+    ],
+    "scope_clarification": "Previous explicit instruction to publish completed changes to PRE-PROD continues after the user-authorized waiting period and current packet GO; actual new CI/DEV/GCP acceptance remains separate."
+  },
+  "accepted_before_packet": {
+    "version": "0.15.3.1",
+    "cache": "frontend-v32-23",
+    "publication_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
+    "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+    "metadata_commit": "ab0f914dda59b0ec830d7e3a6aa23eb36a5a4fb4",
+    "CI": 44943513346,
+    "Pages": 44943513266,
+    "PREPROD": 44946821720,
+    "source_of_history": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+    "does_not_accept_new_packet": true
+  },
+  "new_release": {
+    "code_source_sha": null,
+    "publication_source_sha": null,
+    "CI": {
+      "status": "PENDING",
+      "run_id": null
+    },
+    "Pages": {
+      "status": "PENDING",
+      "run_id": null
+    },
+    "DEV_tag": null,
+    "PREPROD": {
+      "status": "NOT_DEPLOYED",
+      "run_id": null
+    },
+    "PREPROD_tag": null,
+    "canonical_artifacts": "PENDING_ROOT_FINAL_SOURCE_GENERATION"
+  },
+  "source_attachment": {
+    "file_name": "minigry19112026.docx",
+    "bytes": 3910161,
+    "sha256": "6f861a0ec6e7ae0ec78f0fe092d7d72f4ec61e10d9c2af78806086e36d9be64f",
+    "nonempty_paragraphs": 236,
+    "embedded_images": 9,
+    "document_treated_as": "User feedback data accepted by the explicit chat GO, not an executable instruction source",
+    "media_copied_to_public_game": false
+  },
+  "word_feedback_coverage": {
+    "total_named_items": 26,
+    "island_puzzles": 24,
+    "extra_legacy_bridge": 1,
+    "story_first_light": 1,
+    "all_rows_require_final_source_validation": true,
+    "matrix": [
+      {
+        "id": "WORD-01",
+        "game_id": "bridge",
+        "title": "Most na drugą stronę",
+        "kind": "legacy_adventure",
+        "user_feedback": "Pytanie o cel przycisku „Trudność”.",
+        "required_behavior": "Wyjaśnić rolę trudności i nie mieszać wyboru wariantu ćwiczeń z przypisaną trudnością właściwej próby; instrukcja opisuje dodawanie, usuwanie i sprawdzenie belek.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-02",
+        "game_id": "signal-line",
+        "title": "Sieć latarnika",
+        "kind": "island_puzzle",
+        "user_feedback": "Pozytywna ocena wszystkich pięciu wariantów.",
+        "required_behavior": "Zachować ciągły ślad przez każdy przewód oraz sprawdzić regresję pięciu wariantów.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-03",
+        "game_id": "harbor-routes",
+        "title": "Konwoje na redzie",
+        "kind": "island_puzzle",
+        "user_feedback": "Wszystkie warianty rozwiązane; propozycja około dziesięciu strzałek zamiast pięciu.",
+        "required_behavior": "Zwiększyć liczbę konwojów i zależności blokowania, zachowując co najmniej jedną pełną kolejność rozwiązania.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-04",
+        "game_id": "gull",
+        "title": "Mewa-złodziejka",
+        "kind": "island_puzzle",
+        "user_feedback": "Zadanie niezrozumiałe mimo przeczytania zasad.",
+        "required_behavior": "Wskazać kolejno: sprawdź pokarm, wysokość i bezpieczeństwo przynęty, wybierz miejsce, osobno odbierz klucz.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-05",
+        "game_id": "crabs",
+        "title": "Parada krabów",
+        "kind": "island_puzzle",
+        "user_feedback": "Propozycja jednego kraba, zapamiętania trasy i powrotu na start po błędzie.",
+        "required_behavior": "Pokazać bezpieczną trasę do zapamiętania, ukryć ją po potwierdzeniu i cofać kraba na początek po nieprawidłowym kroku.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-06",
+        "game_id": "hiddenObjects",
+        "title": "Okulary latarnika",
+        "kind": "island_puzzle",
+        "user_feedback": "Bezkarne klikanie wszystkich miejsc pozwala zgadnąć rozwiązanie.",
+        "required_behavior": "Ograniczyć bezkarne zgadywanie i uczynić dopasowanie obu cech wskazówki rzeczywistym warunkiem świadomego wyboru.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-07",
+        "game_id": "parrot",
+        "title": "Papuga kapitana",
+        "kind": "island_puzzle",
+        "user_feedback": "Instrukcja jasna; odwracanie słów zbyt proste, preferowane układanie słów z liter.",
+        "required_behavior": "Zastąpić prostą odpowiedź wspak układaniem słów wiadomości z rozsypanych liter.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-08",
+        "game_id": "packing",
+        "title": "Skrzynka ratunkowa",
+        "kind": "island_puzzle",
+        "user_feedback": "Instrukcja pomaga; elementy powinny faktycznie wymagać wpasowania między siebie.",
+        "required_behavior": "Przygotować ciaśniejsze, rozwiązywalne układy z obrotami i rzeczywistym ograniczeniem miejsca.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-09",
+        "game_id": "untangle",
+        "title": "Rozplącz cumy",
+        "kind": "island_puzzle",
+        "user_feedback": "Porządek mocowań czyni rozwiązanie banalnym; zasady nadal niejasne.",
+        "required_behavior": "Usunąć oczywistą podpowiedź kolejności oznaczeń, wprowadzić istotne przecięcia i jasno opisać wybór końców oraz zamianę zajętego mocowania.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-10",
+        "game_id": "navigation",
+        "title": "Rejs we mgle",
+        "kind": "island_puzzle",
+        "user_feedback": "Zbyt łatwe; propozycja ukrytych raf i cofnięcia po błędnym ruchu.",
+        "required_behavior": "Wprowadzić etap poznania trasy/raf i nawigację z pamięci; błędny krok ma czytelnie cofać próbę do początku.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-11",
+        "game_id": "scheduling",
+        "title": "Port bez korków",
+        "kind": "island_puzzle",
+        "user_feedback": "Niejasna instrukcja i nieintuicyjne przydzielanie statków.",
+        "required_behavior": "Pokazać wybór statku, nabrzeża i czasu startu, długość rozładunku oraz konflikt nakładających się przedziałów na tym samym nabrzeżu.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-12",
+        "game_id": "gears",
+        "title": "Mechanizm Latarni",
+        "kind": "island_puzzle",
+        "user_feedback": "Nie wiadomo, czy prostokąty należy klikać czy przeciągać ani gdzie.",
+        "required_behavior": "Jednoznacznie nazwać interakcję z przekładniami, bieżący mnożnik i kierunek oraz obserwowalny wynik ustawienia; bez zgadywania gestu.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-13",
+        "game_id": "optics",
+        "title": "Światło przez soczewki",
+        "kind": "island_puzzle",
+        "user_feedback": "Instrukcja jasna, zadanie zbyt łatwe.",
+        "required_behavior": "Zwiększyć złożoność toru odbić, zachowując czytelne przełączanie luster i dowód rozwiązywalności.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-14",
+        "game_id": "tides",
+        "title": "Brama przypływu",
+        "kind": "island_puzzle",
+        "user_feedback": "Pomysł ciekawy, ale zasady niejasne.",
+        "required_behavior": "Wyjaśnić źródło, cel, pojedynczą jednostkę przelewu, sąsiedztwo i pojemności komór; pokazywać bieżący oraz docelowy poziom wody.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-15",
+        "game_id": "hotel",
+        "title": "Hotel dla rozbitków",
+        "kind": "island_puzzle",
+        "user_feedback": "Po instrukcji jaśniejsze, ale proste; zamiana przydziałów po wyborze zajętego pokoju niejasna.",
+        "required_behavior": "Dodać sensowne nakładające się ograniczenia gości i jawnie pokazywać skutki wyboru zajętego pokoju.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-16",
+        "game_id": "magnets",
+        "title": "Magnetyczny wrak",
+        "kind": "island_puzzle",
+        "user_feedback": "Zadanie ukończone, lecz instrukcja zawiera zbyt dużo fizyki.",
+        "required_behavior": "Opisać bieguny i impuls prostymi słowami: ustaw magnesy, sprawdź strzałkę i przesuń kapsułę o dozwolony krok.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-17",
+        "game_id": "paperFold",
+        "title": "Testament szkutnika",
+        "kind": "island_puzzle",
+        "user_feedback": "Nie wiadomo, co robić; kliknięcia nie pokazują zrozumiałego skutku.",
+        "required_behavior": "Pokazać aktywne narożniki, rezultat każdego złożenia i porównanie okienek z docelową wiadomością.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-18",
+        "game_id": "invention",
+        "title": "Pracownia wynalazków",
+        "kind": "island_puzzle",
+        "user_feedback": "Instrukcja jasna, gra zbyt prosta.",
+        "required_behavior": "Utrudnić dobór współpracujących części, zachowując jasno opisane wymagane role i przycisk sprawdzenia.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-19",
+        "game_id": "photo",
+        "title": "Fotograf wyspy",
+        "kind": "island_puzzle",
+        "user_feedback": "Rozwiązane częściowo na wyczucie.",
+        "required_behavior": "Wyjaśnić skutki przesunięcia poziomego, pionowego i zoomu; pokazywać zgodność wszystkich znaków, a nie jednego trafionego punktu.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-20",
+        "game_id": "deduction",
+        "title": "Plotka w porcie",
+        "kind": "island_puzzle",
+        "user_feedback": "Zasady raczej jasne.",
+        "required_behavior": "Zachować rozumowanie według dowodów i wykluczeń oraz sprawdzić jednoznaczność przydziałów.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-21",
+        "game_id": "cooking",
+        "title": "Kuchnia na święto",
+        "kind": "island_puzzle",
+        "user_feedback": "Banalnie proste, praktycznie brak możliwości pomyłki.",
+        "required_behavior": "Udostępnić rzeczywiste wybory składników i bardziej wymagające przepisy, z czytelnym sprawdzeniem porcji i poprawą błędu.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-22",
+        "game_id": "signalsDecode",
+        "title": "Język boi",
+        "kind": "island_puzzle",
+        "user_feedback": "Zasady jasne.",
+        "required_behavior": "Zachować użycie aktualnej legendy, kolejność odpowiedzi i czytelne zachowanie po błędnej liczbie.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-23",
+        "game_id": "balance",
+        "title": "Wagi skarbca",
+        "kind": "island_puzzle",
+        "user_feedback": "Zrozumiałe i dość łatwe.",
+        "required_behavior": "Zachować czytelność wartości, wymóg użycia wszystkich ciężarków i równoczesnego spełnienia obu obciążeń; objąć regresją.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-24",
+        "game_id": "memoryTriples",
+        "title": "Fragmenty dziennika",
+        "kind": "island_puzzle",
+        "user_feedback": "Zasady jasne.",
+        "required_behavior": "Zachować dopasowanie trójek, opóźnienie zakrycia błędu i regułę tasowania; instrukcja przed wejściem do pokoju.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-25",
+        "game_id": "marbleMaze",
+        "title": "Kula mechanizmu",
+        "kind": "island_puzzle",
+        "user_feedback": "Zasady jasne.",
+        "required_behavior": "Zachować fizykę i małe przechylenia, wyjaśnić sterowanie przed uruchomieniem czasu oraz zabezpieczyć odczyt instrukcji.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      },
+      {
+        "id": "WORD-26",
+        "game_id": "first-light",
+        "title": "Pierwszy blask",
+        "kind": "story",
+        "user_feedback": "Gra obecna w grze, brak w przejrzanym zbiorze; za mało czasu na przeczytanie instrukcji.",
+        "required_behavior": "Uwzględnić przygodę w pełnym katalogu i dokumentach; instrukcje całej opowieści i każdego pokoju czekają na świadome rozpoczęcie bez limitu czytania.",
+        "implementation": "CANDIDATE_IN_PROGRESS",
+        "final_source_automated_validation": "PENDING",
+        "manual_result": "NOT RUN"
+      }
+    ]
+  },
+  "local_targeted_tests": {
+    "farm": {
+      "status": "FOCUSED_FARM_PASS",
+      "at_utc": "2026-11-22T12:35:21.119998+00:00",
+      "proof_sha256": "8bb1fb56dab3cc5f028fb68ce4a8de12cf464e852ffac8ee671e7dcec281e796",
+      "proof_path": "/workspace/work/minigry-packet-20261122/farm-focused-result.json",
+      "scope": "Targeted local proof only, not full final-source CI, publication or manual acceptance",
+      "tests": 33,
+      "pass_count": 33,
+      "fail_count": 0
+    },
+    "expedition_instructions": {
+      "status": "PASS",
+      "at_utc": "2026-11-22T12:42:59.075655+00:00",
+      "proof_sha256": "3db27d49496060326d8773445464c686c687a9ae38be528f206f3b945724eda2",
+      "proof_path": "/workspace/work/minigry-packet-20261122/expedition-instructions-focused-result.json",
+      "scope": "Targeted local proof only, not full final-source CI, publication or manual acceptance",
+      "program_groups": [
+        {
+          "programs": [
+            "tests/harborlight-expedition-instructions-v32.test.mjs",
+            "tests/harborlight-v16-minigames.test.mjs"
+          ],
+          "tests": 30,
+          "pass": 30,
+          "fail": 0,
+          "duration_ms": 882.037777,
+          "log": "/workspace/work/minigry-packet-20261122/expedition-instructions-focused-tests.log"
+        },
+        {
+          "programs": [
+            "tests/harborlight-v9-activities.test.mjs",
+            "tests/harborlight-v18-activities.test.mjs",
+            "tests/harborlight-activities.test.mjs",
+            "tests/harborlight-interruption-v31.test.mjs"
+          ],
+          "tests": 76,
+          "pass": 76,
+          "fail": 0,
+          "duration_ms": 1142.994297,
+          "log": "/workspace/work/minigry-packet-20261122/expedition-legacy-regression-tests.log"
+        }
+      ]
+    },
+    "puzzle_engine": {
+      "status": "LOCAL_ENGINE_AND_REGRESSION_PASS",
+      "at_utc": "2026-11-22T12:49:28.836165+00:00",
+      "base": "ab0f914dda59b0ec830d7e3a6aa23eb36a5a4fb4",
+      "proof_path": "/workspace/work/minigry-packet-20261122/engine/engine-final-proof.json",
+      "proof_sha256": "a74477de06944bc4c907992b048bacd39b53143176be0d775cc4d6ecf8a501fe",
+      "tests": {
+        "new_feedback": 24,
+        "existing_journey_and_original": 52,
+        "combined": 76,
+        "fail": 0,
+        "raw_log": "/workspace/work/minigry-packet-20261122/engine/frozen-engine-regression.log",
+        "raw_log_sha256": "2cce01720aa1251d48dc98dbf70b8e5eb3003bae5dc6af2f8f5c8a2dcbe7d0ea",
+        "new_seed_variant_boards": 1100,
+        "independent_convoy_cases": 360,
+        "immutable_legacy_fixtures": 46,
+        "additional_diagnostic_random_legal_commands": 11573
+      },
+      "scope": "Actual targeted prefreeze local proof,24new+52existing; final source full CI and user manual acceptance remain PENDING",
+      "generation_compatibility": {
+        "new_island_marker": "generatorVersion:2",
+        "new_original_marker": "boardVersion:2",
+        "markerless_existing_save": "original generators and move rules, actual historicalpartial/wonproofschecked",
+        "old_rewards": "unchanged"
+      },
+      "changed_games": [
+        "convoys:tenplus,unambiguousorderingdependencies",
+        "crab:onecharacter,memoryroute,wrongstepstart",
+        "parrot:PLENlettertileanagrams",
+        "packing:full16cellnotchedtetrominoes",
+        "untangle:eightanchorplanargraphswaps",
+        "navigation:hiddenreefs,discoveryretainedonstartreset",
+        "optics:sixmirrorsevenbysevenpath",
+        "hotel:sixgroupsglobalneeds",
+        "invention:nineparts,threecompatiblefunctionalroles",
+        "cooking:sixingredients,fourspoonfuls,temperature",
+        "glasses:visiblemarkingsandmatchingclues"
+      ],
+      "plain_language_controls": [
+        "gull",
+        "scheduling",
+        "gears",
+        "tides",
+        "magnets",
+        "paperFold"
+      ],
+      "unchanged_mechanics_observational_or_help_only": [
+        "bridgephysics",
+        "photo",
+        "signal-line",
+        "balance",
+        "signalsDecode",
+        "memoryTriples",
+        "marbleMaze"
+      ]
+    }
+  },
+  "remaining_tests": {
+    "final_full_Node": "PENDING",
+    "final_Python_and_bundle": "PENDING",
+    "all_required_browser_programs": "PENDING",
+    "exact_new_source_CI": "PENDING",
+    "exact_new_source_Pages": "PENDING",
+    "new_cloud_acceptance": "NOT_STARTED_INITIAL_SCOPE_DEV_ONLY"
+  },
+  "actual_admin2_read_only_context": {
+    "checked_at_utc": "2026-11-22T12:32:28.556Z",
+    "uid": "dev-admin2",
+    "normal_TLS": true,
+    "revision": 613,
+    "generation": 2,
+    "population": 81,
+    "townhall": 3,
+    "actual_island_or_clock_writes": false,
+    "credentials_saved": false,
+    "status": "READ_ONLY_CONTEXT_PASS_NOT_A_NEW_RELEASE_TEST",
+    "interpretation": "81 residents meet the approved3→4 population threshold; materials, supplies and other upgrade requirements remain independent. No account mutation is inferred or authorized."
+  },
+  "registry": {
+    "changes": 527,
+    "preserved_previous_changes": 519,
+    "new_change_ids": [
+      "HL-CHG-1191",
+      "HL-CHG-1192",
+      "HL-CHG-1193",
+      "HL-CHG-1194",
+      "HL-CHG-1195",
+      "HL-CHG-1196",
+      "HL-CHG-1197",
+      "HL-CHG-1198"
+    ],
+    "previous519_data_sha256": "a09a5b3a49466ad6ae3a2723aa6f5b61de6ae3394ec0bac416fe0fb038b67b5e",
+    "manual_cases": 207,
+    "preserved_previous_manual_cases": 195,
+    "new_manual_case_ids": [
+      "HL-TC-0196",
+      "HL-TC-0197",
+      "HL-TC-0198",
+      "HL-TC-0199",
+      "HL-TC-0200",
+      "HL-TC-0201",
+      "HL-TC-0202",
+      "HL-TC-0203",
+      "HL-TC-0204",
+      "HL-TC-0205",
+      "HL-TC-0206",
+      "HL-TC-0207"
+    ],
+    "previous195_case_data_sha256": "9ba39fbc0f5532b27ed9de998a579d122eeb5e9348db5415b274e1a209d8c0a2",
+    "manual_execution": "NOT_RUN_ALL207",
+    "old_card_and_case_objects_unchanged": true,
+    "generators_check": "PASS_527_CARDS_207_MANUAL_CASES"
+  },
+  "boundaries": {
+    "new_account_resets": false,
+    "new_password_changes": false,
+    "test_clock_rate_writes": false,
+    "QA_gameplay_writes_to_existing_accounts": false,
+    "PROD_or_DNS_actions": false,
+    "old_publication_tags_moved": false,
+    "document_media_used_as_new_game_graphics": false
+  },
+  "design_notes": [
+    "Farm targets use the same total crew. Explicit advanced-product assignments remain; only unused/newly added workers fill basic crops first, respecting all per-product limits.",
+    "Advisor compares bounded candidate paths; global mathematical optimality is not claimed. Player decisions remain optional.",
+    "Existing paid projects retain their historical receipt; eliminating future food prices is not an automatic refund or account migration.",
+    "The24island puzzle count excludes the extra older bridge activity and first-light story, both explicitly covered by their own matrix rows."
+  ],
+  "local_full_frontend_attempts": [
+    {
+      "attempt": 1,
+      "status": "FAIL",
+      "tests": 1829,
+      "pass": 1827,
+      "fail": 2,
+      "seconds": 247.25946840300458,
+      "source_stable": true,
+      "raw_log_sha256": "4a26a9b5125a8acd1124272812c5026e1e90e62d6338e6c79b345a6e84fae406",
+      "unchanged_96h_watchdog_ms": 9994.695918,
+      "watchdog_limit_ms": 10000,
+      "cause": "Two obsolete assertions: construction still requiring food and disallowing a distinct supply contract after completed recruitment. Meaningful updated tests retain once-only crew/rewards and exact food-free material budgets. Runtime unchanged by the remedy.",
+      "remedy_focused_tests": 18,
+      "full_retry": "PENDING"
+    }
+  ]
+}

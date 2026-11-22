@@ -33,7 +33,7 @@ try:
     page.locator('#hit-menu').evaluate('(e)=>e.click()')
     if family in ['solo','decision']:
      page.get_by_role('button',name='Ekspedycje',exact=True).click()
-     if kind in['tilt','triples']:page.locator('[data-expedition-choice="'+kind+'"]').click();page.locator('[data-minigame-kind="'+kind+'"]').wait_for()
+     if kind in['tilt','triples']:page.locator('[data-expedition-choice="'+kind+'"]').click();page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click();page.locator('[data-minigame-kind="'+kind+'"]').wait_for()
      else:page.locator('[data-original-puzzle-choice="'+kind+'"]').click();page.get_by_role('button',name='Rozpocznij próbę',exact=True).click();page.locator('.original-puzzle-signal'if kind=='signal-line'else'.original-puzzle-routes').wait_for()
     else:
      page.get_by_role('button',name='Przygody na wyspie',exact=True).click()
@@ -41,6 +41,7 @@ try:
       page.locator('[data-adventure-all]').click()
       if family=='story':page.locator('[data-story-start="first-light"]').first.click()
       else:page.locator('[data-puzzle-start="'+kind+'"]').click()
+      page.locator('[data-minigame-instructions]:not(details) [data-minigame-begin]').click()
     if family=='decision':
      cards=page.evaluate('Object.values(window.__HARBORLIGHT_DEV_STATE__.expeditionRuns).find(r=>r.status==="active").miniGame.cards')
      for symbol in dict.fromkeys(cards):

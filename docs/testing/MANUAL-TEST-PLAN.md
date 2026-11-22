@@ -249,6 +249,18 @@ TC26 jest obecnie testem zachowania wcześniejszych dwóch światów podczas mig
 | [HL-TC-0193 — Worker otrzymuje ograniczone dane bez blokowania gry](manual/HL-TC-0193.md) | Wydajność planisty | P0 | READY | NOT RUN |
 | [HL-TC-0194 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](manual/HL-TC-0194.md) | Swoboda gracza | P0 | READY | NOT RUN |
 | [HL-TC-0195 — Zachowaj tutorial28 kurs25 i osobne bramki nowego wydania](manual/HL-TC-0195.md) | Zgodność i odbiór wydania | P0 | READY | NOT RUN |
+| [HL-TC-0196 — Brak żywności i zboża w cenach wszystkich rozbudów](manual/HL-TC-0196.md) | Koszty budowy | P0 | READY | NOT RUN |
+| [HL-TC-0197 — Historyczna opłacona budowa i zwykłe wyżywienie pozostają zachowane](manual/HL-TC-0197.md) | Zgodność zapisu | P0 | READY | NOT RUN |
+| [HL-TC-0198 — Równe kontrolki produkcji na szerokim i wąskim ekranie](manual/HL-TC-0198.md) | Układ produkcji | P0 | READY | NOT RUN |
+| [HL-TC-0199 — Doradca wybiera realny etap zamiast niedostępnego Ratusza 4](manual/HL-TC-0199.md) | Plan rozwoju | P0 | READY | NOT RUN |
+| [HL-TC-0200 — Doradca przelicza aktualny plan i prowadzi do właściwej kontrolki](manual/HL-TC-0200.md) | Swoboda gracza | P0 | READY | NOT RUN |
+| [HL-TC-0201 — Gospodarstwo dzieli nowych ludzi i przenosi istniejących między produktami](manual/HL-TC-0201.md) | Obsada Gospodarstwa | P0 | READY | NOT RUN |
+| [HL-TC-0202 — Pełne instrukcje wszystkich55 gier i czytelne sterowanie](manual/HL-TC-0202.md) | Instrukcje minigier | P0 | READY | NOT RUN |
+| [HL-TC-0203 — Czytanie instrukcji nie zużywa czasu ani puli ekspedycji](manual/HL-TC-0203.md) | Czytanie przed grą | P0 | READY | NOT RUN |
+| [HL-TC-0204 — Pierwszy blask i każdy pokój czekają na przeczytanie opisu](manual/HL-TC-0204.md) | Przygody fabularne | P0 | READY | NOT RUN |
+| [HL-TC-0205 — Zmiany mechanik Worda są czytelne i rozwiązywalne](manual/HL-TC-0205.md) | Zagadki z Worda | P0 | READY | NOT RUN |
+| [HL-TC-0206 — Misja otwiera dokładnie wskazaną grę i zachowuje wybór po odświeżeniu](manual/HL-TC-0206.md) | Misje i gry | P0 | READY | NOT RUN |
+| [HL-TC-0207 — 81 mieszkańców spełnia próg Ratusza 4 a pozostałe braki są wyjaśnione](manual/HL-TC-0207.md) | Ludność i pomoc | P0 | READY | NOT RUN |
 
 ## Raport i zgłoszenia
 

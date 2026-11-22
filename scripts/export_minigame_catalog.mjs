@@ -12,6 +12,7 @@ import { ADVENTURE_CATALOG, ADVENTURE_RULES } from '../harborlight-v1-adventures
 import { miniGameRoundRules } from '../harborlight-v1-minigames.js';
 import { cappedExpeditionReward } from '../harborlight-v1-expedition-hour.js';
 import { createOriginalAttempt } from '../harborlight-v1-original-puzzles.js';
+import { synchronizeMiniGameInstructions } from './minigame_instruction_overlay.mjs';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const OUTPUT = path.join(ROOT, 'docs/minigames/catalog.json');
@@ -145,6 +146,12 @@ const counts=Object.fromEntries(['puzzle','story','adventure','expedition'].map(
 if(entries.length!==55||counts.puzzle!==24||counts.story!==20||counts.adventure!==9||counts.expedition!==2)throw new Error('Active catalogue coverage differs');
 if(new Set(entries.map(x=>x.slug)).size!==entries.length)throw new Error('Duplicate slug');
 for(const entry of entries){if(entry.family==='puzzle'&&['signal-line','harbor-routes','memoryTriples','marbleMaze'].includes(entry.engine.id)){const original=['signal-line','harbor-routes'].includes(entry.engine.id);entry.sourceFiles.push(original?source('harborlight-v1-original-puzzles.js','export function createOriginalAttempt','Dokładny limit czasu Sieci i Konwojów'):source('harborlight-v1-minigames.js','export function miniGameRoundRules','Dokładny limit czasu i progresja Trójek lub Kulek'));entry.referenceLevels=[1,2,3,4,5,10].map(d=>({difficulty:d,timeLimit:original?createOriginalAttempt(entry.engine.id,{difficulty:d}).initialDuration:miniGameRoundRules(entry.engine.id==='memoryTriples'?'triples':'tilt',d).timeLimit}));}if(['puzzle','story'].includes(entry.family))entry.scoring.push('Po potwierdzeniu w głównej grze monety trafiają do portfela. Materiały są przyjmowane do Magazynu w granicach pojemności, a nadmiar pozostaje w dostawach; dawny klucz food oznacza w regułach v32 mąkę.');if(entry.family==='expedition'){entry.timing.push('Po 300 s bez znaczącej aktywności w głównej grze pojawia się pytanie o obecność. Na potwierdzenie masz 60 s; zegar ekspedycji nadal działa.');entry.fail.push('Brak potwierdzenia obecności w ciągu 60 s kończy serię i powoduje utratę całej niewypłaconej puli.');}entry.url=BASE_URL+'?game='+encodeURIComponent(entry.slug);for(const v of entry.variants) v.url=entry.url+'&variant='+v.number;for(const field of ['setup','rules','controls','win','fail','timing','scoring','retry','progression','examples','sourceFiles'])if(!entry[field]?.length)throw new Error(`Empty ${field}: ${entry.slug}`);}
+const instructedEntries=synchronizeMiniGameInstructions(entries);
+entries.splice(0,entries.length,...instructedEntries);
+for(const entry of entries){
+ entry.sourceFiles.push(source('harborlight-v1-minigame-instructions.js','export function getMiniGameInstructionContent','Te same cele, scenariusze, zasady i sterowanie co w instrukcji przed grą'));
+ entry.sourceFiles.push(source('scripts/minigame_instruction_overlay.mjs','export function synchronizeMiniGameInstructions','Spójny opis nowych mechanik oraz czytanie przed uruchomieniem zegara'));
+}
 const sources=[...new Set(entries.flatMap(x=>x.sourceFiles.map(s=>s.path)))].sort();
 const sourceHashes=Object.fromEntries(sources.map(name=>[name,crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT,name))).digest('hex')]));
 for(const [name,expected] of Object.entries(sourceHashes)){

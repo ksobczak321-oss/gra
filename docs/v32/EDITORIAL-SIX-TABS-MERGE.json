@@ -427,11 +427,27 @@
       "approved": "niejasne wyżywienie budowy i sytość",
       "formula_cells": [],
       "id": "TOUR-23",
-      "effective": "Przed rozpoczęciem rozbudowy sprawdź materiały, monety i pozostałe wymagania. Czas zależy od poziomu rozbudowywanego budynku. Część kosztu stanowi jedzenie na budowę: każda wymagana jednostka oznacza 6 punktów sytości. Zapłacisz produktami spożywczymi ponad chroniony zapas dla mieszkańców, np. 1 porcją mąki lub 6 porcjami zboża za każdą jednostkę. Proponowany zestaw możesz zmienić przed potwierdzeniem.",
-      "resolution": "Editorial query resolved: building food cost uses6satiety per unit and stock above residents protected reserve; example1flour/6grain.",
+      "effective": "Przed rozpoczęciem rozbudowy sprawdź potrzebne materiały, monety i pozostałe wymagania. Budowy wymagają drewna, kamienia lub desek, zależnie od budynku. Dokładny koszt oraz przewidywany czas dostaw i prac znajdziesz w oknie rozbudowy.",
+      "resolution": "GO z22 listopada2026 zastępuje wcześniejszą redakcję zasadą: nowe budowy i rozbudowy nie wymagają jedzenia ani zboża. Posiłki mieszkańców i podróże pozostają odrębne. Pierwotna uwaga użytkownika i wcześniejszy tekst są zachowane w historii.",
       "runtime_path": "construction",
       "runtime_references": [],
-      "status": "mapped"
+      "status": "mapped",
+      "effective_history": [
+        {
+          "effective": "Przed rozpoczęciem rozbudowy sprawdź materiały, monety i pozostałe wymagania. Czas zależy od poziomu rozbudowywanego budynku. Część kosztu stanowi jedzenie na budowę: każda wymagana jednostka oznacza 6 punktów sytości. Zapłacisz produktami spożywczymi ponad chroniony zapas dla mieszkańców, np. 1 porcją mąki lub 6 porcjami zboża za każdą jednostkę. Proponowany zestaw możesz zmienić przed potwierdzeniem.",
+          "resolution": "Editorial query resolved: building food cost uses6satiety per unit and stock above residents protected reserve; example1flour/6grain.",
+          "status": "mapped",
+          "preserved_from_publication": "1e21ff1340c7327db9d63a42934547f14548294e",
+          "superseded_by": "GO-PACKET-20261122: HL-CHG-1191"
+        }
+      ],
+      "effective_update": {
+        "date": "2026-11-22",
+        "source": "docs/v32/GO-PACKET-20261122.md",
+        "change_id": "HL-CHG-1191",
+        "user_decision": "Usuń także zboże — żadnego jedzenia w kosztach budowy",
+        "original_approved_and_correction_preserved": true
+      }
     },
     {
       "sheet": "Tutorial",
@@ -1712,11 +1728,27 @@
       "approved": "do zmiany",
       "formula_cells": [],
       "id": "BLD-WAREHOUSE-CONSTRUCTION-MEALS-INFO",
-      "effective": "Jedzenie jest częścią kosztu budowy lub rozbudowy. Jedna jednostka żywności w koszcie odpowiada 6 punktom sytości. Wybierasz produkty ponad chronioną rezerwę mieszkańców. Przed zatwierdzeniem możesz zmienić proponowany zestaw.",
-      "resolution": "Zamiast notatki „do zmiany” przygotowano jasne objaśnienie zgodne z quoteConstructionFood i potwierdzonym przelicznikiem 6 punktów sytości.",
+      "effective": "Budowa i rozbudowa wymagają monet oraz materiałów wskazanych w oknie budynku: drewna, kamienia lub desek. Zboże i pozostałe produkty spożywcze służą do produkcji, posiłków mieszkańców i innych zadań na wyspie.",
+      "resolution": "GO z22 listopada2026 zastępuje wcześniejszą redakcję zasadą: nowe budowy i rozbudowy nie wymagają jedzenia ani zboża. Posiłki mieszkańców i podróże pozostają odrębne. Pierwotna uwaga użytkownika i wcześniejszy tekst są zachowane w historii.",
       "runtime_path": "harborlight-v1-development-copy.js:developmentBuildingInformation",
       "runtime_references": [],
-      "status": "mapped"
+      "status": "mapped",
+      "effective_history": [
+        {
+          "effective": "Jedzenie jest częścią kosztu budowy lub rozbudowy. Jedna jednostka żywności w koszcie odpowiada 6 punktom sytości. Wybierasz produkty ponad chronioną rezerwę mieszkańców. Przed zatwierdzeniem możesz zmienić proponowany zestaw.",
+          "resolution": "Zamiast notatki „do zmiany” przygotowano jasne objaśnienie zgodne z quoteConstructionFood i potwierdzonym przelicznikiem 6 punktów sytości.",
+          "status": "mapped",
+          "preserved_from_publication": "1e21ff1340c7327db9d63a42934547f14548294e",
+          "superseded_by": "GO-PACKET-20261122: HL-CHG-1191"
+        }
+      ],
+      "effective_update": {
+        "date": "2026-11-22",
+        "source": "docs/v32/GO-PACKET-20261122.md",
+        "change_id": "HL-CHG-1191",
+        "user_decision": "Usuń także zboże — żadnego jedzenia w kosztach budowy",
+        "original_approved_and_correction_preserved": true
+      }
     },
     {
       "sheet": "Budynki — informacje",
@@ -2895,13 +2927,29 @@
       "approved": "niejasne",
       "formula_cells": [],
       "id": "MSG-MEAL-COST",
-      "effective": "Jedzenie na budowę: {sytość} punktów sytości. Ten koszt pokrywasz dowolnym jedzeniem ponad chronioną rezerwę mieszkańców.",
-      "resolution": "clarified_editorial_note",
+      "effective": "Potrzebne jedzenie: {sytość} punktów sytości. Wybierz produkty ponad chronioną rezerwę mieszkańców.",
+      "resolution": "GO z22 listopada2026 zastępuje wcześniejszą redakcję zasadą: nowe budowy i rozbudowy nie wymagają jedzenia ani zboża. Posiłki mieszkańców i podróże pozostają odrębne. Pierwotna uwaga użytkownika i wcześniejszy tekst są zachowane w historii.",
       "runtime_path": "harborlight-v1-development-ui.js",
       "runtime_references": [
         "harborlight-v1-development-ui.js"
       ],
-      "status": "runtime_referenced"
+      "status": "runtime_referenced",
+      "effective_history": [
+        {
+          "effective": "Jedzenie na budowę: {sytość} punktów sytości. Ten koszt pokrywasz dowolnym jedzeniem ponad chronioną rezerwę mieszkańców.",
+          "resolution": "clarified_editorial_note",
+          "status": "runtime_referenced",
+          "preserved_from_publication": "1e21ff1340c7327db9d63a42934547f14548294e",
+          "superseded_by": "GO-PACKET-20261122: HL-CHG-1191"
+        }
+      ],
+      "effective_update": {
+        "date": "2026-11-22",
+        "source": "docs/v32/GO-PACKET-20261122.md",
+        "change_id": "HL-CHG-1191",
+        "user_decision": "Usuń także zboże — żadnego jedzenia w kosztach budowy",
+        "original_approved_and_correction_preserved": true
+      }
     },
     {
       "sheet": "Komunikaty",
@@ -2912,13 +2960,29 @@
       "approved": "niejasne",
       "formula_cells": [],
       "id": "MSG-MEAL-COST-MISSING",
-      "effective": "Brakuje jedzenia o wartości {brak} punktów sytości na budowę. Godzinna rezerwa mieszkańców pozostaje chroniona.",
-      "resolution": "clarified_editorial_note",
+      "effective": "Brakuje jedzenia o wartości {brak} punktów sytości ponad chronioną rezerwę mieszkańców.",
+      "resolution": "GO z22 listopada2026 zastępuje wcześniejszą redakcję zasadą: nowe budowy i rozbudowy nie wymagają jedzenia ani zboża. Posiłki mieszkańców i podróże pozostają odrębne. Pierwotna uwaga użytkownika i wcześniejszy tekst są zachowane w historii.",
       "runtime_path": "harborlight-v1-provisions.js",
       "runtime_references": [
         "harborlight-v1-provisions.js"
       ],
-      "status": "runtime_referenced"
+      "status": "runtime_referenced",
+      "effective_history": [
+        {
+          "effective": "Brakuje jedzenia o wartości {brak} punktów sytości na budowę. Godzinna rezerwa mieszkańców pozostaje chroniona.",
+          "resolution": "clarified_editorial_note",
+          "status": "runtime_referenced",
+          "preserved_from_publication": "1e21ff1340c7327db9d63a42934547f14548294e",
+          "superseded_by": "GO-PACKET-20261122: HL-CHG-1191"
+        }
+      ],
+      "effective_update": {
+        "date": "2026-11-22",
+        "source": "docs/v32/GO-PACKET-20261122.md",
+        "change_id": "HL-CHG-1191",
+        "user_decision": "Usuń także zboże — żadnego jedzenia w kosztach budowy",
+        "original_approved_and_correction_preserved": true
+      }
     },
     {
       "sheet": "Komunikaty",
@@ -5146,11 +5210,27 @@
       "approved": "wyżywienie budowy",
       "formula_cells": [],
       "id": "MSG-MEAL-SELECT",
-      "effective": "Jedzenie na budowę: {sytość} punktów sytości. Proponowany zestaw: {produkty}. Możesz go zmienić przed potwierdzeniem; chroniona rezerwa mieszkańców pozostaje nienaruszona.",
-      "resolution": "clarified_editorial_note",
+      "effective": "Potrzebne jedzenie: {sytość} punktów sytości. Proponowany zestaw: {produkty}. Możesz go zmienić przed potwierdzeniem; chroniona rezerwa mieszkańców pozostaje nienaruszona.",
+      "resolution": "GO z22 listopada2026 zastępuje wcześniejszą redakcję zasadą: nowe budowy i rozbudowy nie wymagają jedzenia ani zboża. Posiłki mieszkańców i podróże pozostają odrębne. Pierwotna uwaga użytkownika i wcześniejszy tekst są zachowane w historii.",
       "runtime_path": "harborlight-v1-development-copy.js / katalog tekstów; brak istniejącego wyświetlenia",
       "runtime_references": [],
-      "status": "catalog_only_existing_trigger_not_added"
+      "status": "catalog_only_existing_trigger_not_added",
+      "effective_history": [
+        {
+          "effective": "Jedzenie na budowę: {sytość} punktów sytości. Proponowany zestaw: {produkty}. Możesz go zmienić przed potwierdzeniem; chroniona rezerwa mieszkańców pozostaje nienaruszona.",
+          "resolution": "clarified_editorial_note",
+          "status": "catalog_only_existing_trigger_not_added",
+          "preserved_from_publication": "1e21ff1340c7327db9d63a42934547f14548294e",
+          "superseded_by": "GO-PACKET-20261122: HL-CHG-1191"
+        }
+      ],
+      "effective_update": {
+        "date": "2026-11-22",
+        "source": "docs/v32/GO-PACKET-20261122.md",
+        "change_id": "HL-CHG-1191",
+        "user_decision": "Usuń także zboże — żadnego jedzenia w kosztach budowy",
+        "original_approved_and_correction_preserved": true
+      }
     },
     {
       "sheet": "Komunikaty",
