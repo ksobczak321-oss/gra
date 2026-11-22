@@ -570,5 +570,18 @@
     "frozen_runtime_and_existing_test_files_unchanged": 460,
     "additional_focused_tests": 2,
     "canonical_generation": "PENDING_NEW_FROZEN_SOURCE"
-  }
+  },
+  "canonical_attempt_history": [
+    {
+      "attempt": 1,
+      "source_sha": "8344e44719b20e7c4cdf3665f16f218ff6f33cfb",
+      "status": "FAIL",
+      "failed_step": "facts-export",
+      "seconds": 15.143,
+      "cause": "Exporter retained an explicit previous-version0.15.3.1 assertion after current runtime changed to0.15.4.0. Strict assertion corrected to current version; rules32/population18 and model unchanged.",
+      "generated_facts_or_later_artifacts": false,
+      "all_runtime_and_test_files_byte_identical_after_correction": 461,
+      "next_attempt": "PENDING_NEW_CODE"
+    }
+  ]
 }

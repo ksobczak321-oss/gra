@@ -396,7 +396,7 @@ const result = { meta: { appVersion: GAME_VERSION, ruleset: Development.DEVELOPM
     sourceConditionRows: conditions.length, buildingArtStageRows: buildingStageRows.length,
     buildingArtFamilies: BuildingStages.BUILDING_STAGE_IDS.length },
   limitations: ['Tabele są eksportem reguł i cytatów, nie zapisem użytkownika ani dowodem wdrożenia.','Scenariusze kosztów zakładają duże zapasy bieżących towarów; efekty mnożników i ograniczenia logistyczne opisano oddzielnie.'] };
-assert.equal(GAME_VERSION, '0.15.3.1'); assert.equal(fresh.ruleset, 32); assert.equal(fresh.population, 18);
+assert.equal(GAME_VERSION, '0.15.4.0'); assert.equal(fresh.ruleset, 32); assert.equal(fresh.population, 18);
 const json = JSON.stringify(result, (key, value) => typeof value === 'number' && !Number.isFinite(value) ? null : value, 2) + '\n';
 const outputIndex = process.argv.indexOf('--output');
 if (outputIndex >= 0) {
