@@ -377,6 +377,7 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
     const layoutConstraints = () => {
       const dialog = root.closest('dialog');
       return [innerWidth, innerHeight, host.clientWidth, root.clientWidth,
+        wrapper.clientWidth, wrapper.clientHeight,
         dialog ? getComputedStyle(dialog).maxHeight : '',
         dialog?.querySelector('.dialog-header')?.offsetHeight || 0].join(':');
     };
@@ -396,10 +397,13 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
       let best = { columns: 1, tile: 0, rows: game.cards.length };
       // Compact viewports can lose height before resize observers or animation
       // frames are delivered (for example when the browser toolbar expands).
-      // Keep the game's native horizontal layout as the mobile fallback;
-      // fitting a taller grid here would make CSS shrink otherwise readable
-      // cards during that interval. Card identities and order stay unchanged.
-      const minimumColumns = innerWidth <= 520 ? Math.min(game.columns, game.cards.length) : 1;
+      // Keep at most the native number of rows as the mobile fallback. A
+      // partially filled last row can often use one fewer column without
+      // adding a row (120 cards need 12, rather than 13, columns for 10 rows).
+      // This leaves larger cards while preserving the fallback's height
+      // budget, card identities and order during delayed resize callbacks.
+      const nativeRows = Math.ceil(game.cards.length / game.columns);
+      const minimumColumns = innerWidth <= 520 ? Math.ceil(game.cards.length / nativeRows) : 1;
       for (let columns = minimumColumns; columns <= game.cards.length; columns++) {
         const rows = Math.ceil(game.cards.length / columns);
         const tile = Math.floor(Math.min((availableWidth - (columns - 1) * gap) / columns,
@@ -426,6 +430,9 @@ export function mountMiniGame({ host, controlsHost, run: initialRun, onAction, l
       if (fittedConstraints !== layoutConstraints()) fitBoard();
     });
     resizeObserver.observe(host);
+    // Font fallback, translated copy and a newly visible header notice can
+    // change the board's height without changing the viewport or host width.
+    resizeObserver.observe(wrapper);
     const panel = root.closest('.minigame-panel');
     if (panel) resizeObserver.observe(panel);
     const body = root.closest('dialog')?.querySelector('.dialog-body');

@@ -212,6 +212,11 @@
    keep their reminder in one full-width toolbar row instead of an implicit
    half-width grid row that takes space away from the 120-card board. */
 @media(max-width:520px){
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-header:has(>.dialog-header-feedback){height:auto;min-height:64px;padding-block:6px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-header:has(>.dialog-header-feedback:not(:empty)){padding-block:2px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-header:has(>.dialog-header-feedback:empty){grid-template-rows:42px}
+ #island-dialog[data-panel-kind="puzzle"]:has([data-minigame-kind="triples"]) .dialog-header>.dialog-header-feedback:empty{display:none}
+ #island-dialog[data-panel-kind="puzzle"]:has(.expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]):not(:has(.expedition-decision)) .dialog-body .minigame-panel{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,.8fr)}
  .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>.minigame-help{display:none}
  .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>[data-expedition-instructions]{grid-column:1/-1;grid-row:2;min-width:0}
  .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>[data-expedition-instructions]>.minigame-instructions[data-compact=true]{margin:0 0 6px;padding:0}
