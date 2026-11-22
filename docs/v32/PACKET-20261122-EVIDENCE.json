@@ -44,7 +44,7 @@
     "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
     "publication_source_sha": null,
     "CI": {
-      "status": "PENDING_NEW_OWN_EXACT_SOURCE_RUN_AFTER_TEST_ONLY_CORRECTIONS",
+      "status": "PENDING_NEW_OWN_EXACT_SOURCE_RUN_AFTER_SELF_CONTAINED_BOOTSTRAP",
       "run_id": null
     },
     "Pages": {
@@ -2760,6 +2760,25 @@
       "Pages_two_separate_XLSX_PASS": true,
       "PREPROD_deployed": false,
       "DEV_tag_created": false
+    },
+    {
+      "event": "PREVIEW_NOT_ACCEPTED",
+      "source_sha": "d1f8bc57952eb0fa448c08c2dfdef502597f957c",
+      "CI_run": 45034760921,
+      "CI_conclusion": "failure",
+      "CI_seconds": 883,
+      "actual_Node_PASS": 2016,
+      "actual_Python_PASS": 173,
+      "standalone_minigames_PASS": true,
+      "first23_main_browser_programs_PASS": true,
+      "failure": "Newly included old v32UI program required an externally running static server; CI had no localhost3026 listener, so Page.goto failed before application assertions. Local execution also exposed its missing actual-ready wait. Both are corrected in test infrastructure.",
+      "Pages_run": 45034760951,
+      "Pages_conclusion": "success",
+      "Pages_seconds": 45,
+      "runtime_and_canonical468_public_content_exact_to_PUB2": true,
+      "new_PUB3_normal_TLS_full_byte_audit_claimed": false,
+      "PREPROD_deployed": false,
+      "DEV_tag_created": false
     }
   ],
   "local_UI_corrections_after_first_publication": {
@@ -2789,5 +2808,19 @@
     "other_local_browser_groups": "67furtheractualprograms being completed on immutablePUB2 application; results remain separate from own newCI",
     "runtime_or_canonical_changes": false,
     "new_source_full_CI": "PENDING"
+  },
+  "test_bootstrap_revision_after_PUB3": {
+    "scope": "Test infrastructure and metadata only; CODE5 runtime/canonical public files unchanged",
+    "v32_actual_race_loading0_ready7": "/workspace/work/minigry-packet-20261122/test-only-v32-ui-race-f6e66b8/startup-race-diagnostic.json",
+    "v32_ready_wait_external_server_full_PASS": "/workspace/work/minigry-packet-20261122/test-only-v32-ui-race-f6e66b8/full-readiness-only-attempt1-result.json",
+    "v32_self_server_no_BASE_full_PASS": "/workspace/work/minigry-packet-20261122/test-only-v32-ui-self-host-CI45034760921/full-self-host-attempt1-result.json",
+    "v32_original_assertions_unchanged": 26,
+    "clock_fixture_exact_diff": "/workspace/work/minigry-packet-20261122/legacy-fixture-validation/polish-clock-change-proof.json",
+    "all18_cloud_programs_actual_full_PASS": "/workspace/work/minigry-packet-20261122/legacy-fixture-validation/cloud-login-PUB2-complete-proof.json",
+    "all84_clock_bootstrap_audit": "/workspace/work/minigry-packet-20261122/legacy-fixture-validation/exact84-clock-bootstrap-audit.json",
+    "main20_original_attempt": "19PASS/1v32_bootstrapFAIL_preserved",
+    "main20_report": "/workspace/work/minigry-packet-20261122/post-editorial-main20-f6e66b8/summary.json",
+    "remaining_legacy_groups": "CONTINUE_LOCALLY_IN_PARALLEL_WITH_NEW_OWN_CI; no full84 local single-run claim",
+    "new_source_own_full_CI": "PENDING"
   }
 }

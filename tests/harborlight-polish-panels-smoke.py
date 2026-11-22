@@ -4,7 +4,7 @@ The catalog is used only to find real navigation buttons. Assertions inspect
 the rendered language and actual model-derived statuses, not catalog equality.
 No account, Firebase document, payment or external request is changed.
 """
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import json
@@ -178,7 +178,7 @@ def scenario(browser, mobile, records, failures):
     context.add_init_script('window.__HARBORLIGHT_DEV_FIXTURE__=%s;localStorage.setItem("harborlight-language","pl");' % json.dumps(seed()))
     page = context.new_page()
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.clock.install(time=NOW)
+    page.clock.install(time=NOW-timedelta(seconds=1))
     page.clock.pause_at(NOW)
     try:
         install_legacy_practical_course(page)

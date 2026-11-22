@@ -1,14 +1,45 @@
-"""DEV v32 real-interface smoke test. Start a static server at repository root.
-HARBORLIGHT_BASE_URL defaults to http://127.0.0.1:3026. No remote account is used.
+"""DEV v32 real-interface smoke test with its own ephemeral loopback server.
+HARBORLIGHT_BASE_URL can select an existing server. No remote account is used.
 """
+from contextlib import contextmanager
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 from pathlib import Path
 import subprocess
+from threading import Thread
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = os.environ.get('HARBORLIGHT_BASE_URL', 'http://127.0.0.1:3026').rstrip('/')
+FRONTEND_ROOT = Path(os.environ.get('HARBORLIGHT_FRONTEND_ROOT', ROOT)).resolve()
+BASE = os.environ.get('HARBORLIGHT_BASE_URL', '').rstrip('/')
+
+
+@contextmanager
+def frontend_base():
+    if BASE:
+        yield BASE
+        return
+
+    class StaticHandler(SimpleHTTPRequestHandler):
+        extensions_map = {**SimpleHTTPRequestHandler.extensions_map,
+                          '.js': 'text/javascript', '.html': 'text/html'}
+
+        def log_message(self, format, *args):
+            pass
+
+    server = ThreadingHTTPServer(('127.0.0.1', 0), partial(StaticHandler, directory=str(FRONTEND_ROOT)))
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield 'http://127.0.0.1:' + str(server.server_port)
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join()
+
+
 fixture = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', """
 import {createState} from './harborlight-v1-state.js';
 const s=createState(Date.now(),{ruleset:32});s.settings.language='pl';s.tutorial.autoOpenDisabled=true;
@@ -25,6 +56,7 @@ def boot(browser, width, height):
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.add_init_script('localStorage.setItem("harborlight-language","pl");window.__HARBORLIGHT_DEV_FIXTURE__='+json.dumps(fixture))
     page.goto(BASE+'/harborlight-v1-layered.html', wait_until='networkidle')
+    page.wait_for_function('document.documentElement.dataset.gameStartup === "ready"')
     return page, errors
 
 def building(page, building_id):
@@ -37,7 +69,7 @@ def close(page):
 def state(page, expression):
     return page.evaluate('window.__HARBORLIGHT_DEV_STATE__.'+expression)
 
-with sync_playwright() as playwright:
+with frontend_base() as BASE, sync_playwright() as playwright:
     browser=playwright.chromium.launch(executable_path=os.environ.get('HARBORLIGHT_CHROMIUM','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
     for width,height in [(1440,1000),(390,844)]:
         page,errors=boot(browser,width,height)

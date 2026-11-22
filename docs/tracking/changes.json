@@ -41836,9 +41836,10 @@
       },
       "canonical_artifact_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/canonical-artifacts-summary.json",
       "first_preview_CI_history": "PUB1CI45029811749FAILstaleadvisorliteral; PUB2CI45032326833FAILstaleconstructioncopy. Both2016Node173PythonPASS, noDEVtag/PREPROD. Tests-onlyfixes retainCODE5 and exact468publiccontent.",
-      "previous_unaccepted_publication": "f6e66b83e6612dcdb0a4908b0c828c824703e0a3",
-      "previous_unaccepted_CI_run": 45032326833,
-      "previous_unaccepted_CI_conclusion": "failure"
+      "previous_unaccepted_publication": "d1f8bc57952eb0fa448c08c2dfdef502597f957c",
+      "previous_unaccepted_CI_run": 45034760921,
+      "previous_unaccepted_CI_conclusion": "failure",
+      "latest_test_bootstrap_correction": "Own ephemeral server and actual-ready wait in v32UI; fixed identical install/pause clock anchor in Polish fixture. Original26v32assertions and frozenNOW preserved."
     }
   }
 }
