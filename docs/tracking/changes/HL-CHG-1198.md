@@ -8,10 +8,10 @@ Ta karta jest wersjonowanym wpisem w Git. **Nie została opublikowana jako natyw
 
 | Warstwa | Stan |
 |---|---|
-| Implementacja | `implemented_dev` |
-| DEV | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` |
-| CI | `PENDING_OWN_EXACT_SOURCE_RUN` |
-| PRE-PROD | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| Implementacja | `implemented` |
+| DEV | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` |
+| CI | `SUCCESS_45042424655` |
+| PRE-PROD | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
 | PROD | `postponed_by_user` |
 | Decyzja | `accepted` |
 
@@ -40,14 +40,16 @@ Pełne historyczne wklejki użytkownika zostały przeczytane; identyfikatory źr
 - **Dokumenty:** [docs/v32/GO-PACKET-20261122.md](../../v32/GO-PACKET-20261122.md), [docs/v32/PACKET-20261122-EVIDENCE.json](../../v32/PACKET-20261122-EVIDENCE.json)
 - **Kod:** [harborlight-v1-missions.js](../../../harborlight-v1-missions.js), [harborlight-v1-missions-ui.js](../../../harborlight-v1-missions-ui.js)
 - **Scenariusze automatyczne:** [tests/harborlight-mission-assistance-resolution.test.mjs](../../../tests/harborlight-mission-assistance-resolution.test.mjs), [tests/harborlight-mission-assistance-resolution-smoke.py](../../../tests/harborlight-mission-assistance-resolution-smoke.py)
-- **Kod dowodowy:** `34dac392fe569c71cee9b913c38ef9c47667ac3e`.
+- **Kod dowodowy:** `7f87e9392211a2e853dd2db744fb04a53fe549ee`.
+- **CI tego wydania:** https://github.com/ksobczak321-oss/gra/actions/runs/45042424655.
+- **Promocja kodu:** https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1.
 - **Ręczne wykonanie przypadku:** `NOT_RUN`.
 
 Powiązane przypadki do ręcznego przeklikania:
 
 - [HL-TC-0207 — 81 mieszkańców spełnia próg Ratusza 4 a pozostałe braki są wyjaśnione](../../testing/manual/HL-TC-0207.md) — `NOT RUN`.
 
-Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN.
+0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.
 
 ## Relacje
 
@@ -60,6 +62,7 @@ Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże ka
 - Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.
 - Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.
 - Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.
+- Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią.
 
 [Wróć do rejestru](../CHANGE-REGISTER.md).
 

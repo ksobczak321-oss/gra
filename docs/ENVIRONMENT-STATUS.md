@@ -12,13 +12,13 @@
 
 
 
-## Paczka 22 listopada — DEV 0.15.4.0 / cache24, odbiór oczekuje
+## DEV i PRE-PROD 0.15.4.0 / cache24 — odebrane automatycznie
 
-Kod aplikacji i źródła świeżych eksportów: `34dac392fe569c71cee9b913c38ef9c47667ac3e`. Paczka obejmuje budowę bez żywności i zboża, wyrównane kontrolki produkcji, wykonalne etapy Doradcy, podział załogi Gospodarstwa, instrukcje wszystkich55 minigier i uwagi Worda oraz obsługę opłaconego Ratusza4/admin2. Użytkownik zlecił DEV, następnie standardowy PRE-PROD z zachowaniem kont i postępu.
+Kod i kanoniczne artefakty: `34dac392fe569c71cee9b913c38ef9c47667ac3e`; odebrana publikacja: `7f87e9392211a2e853dd2db744fb04a53fe549ee`. Własny [CI 45042424655](https://github.com/ksobczak321-oss/gra/actions/runs/45042424655) **SUCCESS 35 min 11 s**: 2016 Node, 173 Python i 84 programy Chromium. [Pages 45042424738](https://github.com/ksobczak321-oss/gra/actions/runs/45042424738) ma osobny SUCCESS; 468 plików oraz oba XLSX sprawdzono przez normalny TLS. Standardowy [PRE-PROD 45045856773/próba 1](https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1) ma **SUCCESS 8 min 55 s**.
 
-Ostatnia poprawka usuwa problem kart19px na telefonie. Pełne testy na Chromium151/156 oraz niezależne próby fontów, rozmiarów i tasowania zachowują120 kart co najmniej20px oraz przyciski44px. Modele gospodarki pozostają identyczne. Cztery wcześniejsze nieudane CI i ich rzeczywiste wyniki zachowano w dowodach; nowa publikacja wymaga własnego pełnego CI2016Node/173Python/84programy Chromium oraz Pages. PRE-PROD nadal pozostaje na1e21/cache23.
+Admin3 wystartował w 89.368 s. Po gotowości przez co najmniej 10 s zachował gotowy ekran; maksymalna przerwa 239.1 ms. Wszystkie trzy profile zachowały identyczne bajty, UID, generacje i początki wysp; zegar admin3 zachowany. Oryginalne ZIP-y, cztery warunki receipt, obraz API, dokładny TAR i wszystkie 469 plików PRE-PROD mają niezależny PASS. Tagi `dev-0.15.4.0-20261122` i `preprod-0.15.4.0-20261122` są zdalnie potwierdzone na tej samej publikacji.
 
-Świeży master ma164 karty i69153 wierszy, z zachowaną historią100kart/220częściZIP/48komentarzy/4982formuł. Excel redakcyjny ma6kart/413wierszy/ABC/pustąC;55Word+55TXT odpowiada bieżącym instrukcjom.527kart i207ręcznych przypadków NOT RUN; poprzednie519/195 zachowane. [Zakres](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json). Bez resetu, zmian haseł, PROD i DNS.
+[Zakres i zachowana historia](v32/GO-PACKET-20261122.md) · [Dowody](v32/PACKET-20261122-EVIDENCE.json). 527 kart / 207 ręcznych przypadków; wszystkie ręczne wyniki **NOT RUN**. Zachowano poprzednie 519 kart, 195 definicji oraz ich historię. Końcowe metadane nie zmieniają gry, eksportów lub tagów. QA i wdrożenie nie resetowały ani nie zapisywały świata lub zegara. Bez zmian haseł, PROD i DNS.
 
 ## DEV i PRE-PROD 0.15.3.1 / cache23 — odebrane automatycznie
 

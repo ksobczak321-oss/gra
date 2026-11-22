@@ -2,7 +2,7 @@
   "schema_version": 1,
   "as_of": "2026-11-22",
   "created_at_utc": "2026-11-22T12:50:47.809556+00:00",
-  "status": "CODE6_LOCAL_TWO_BROWSER_RENDERING_AND_FRESH_CANONICAL_PASS_NEW_PUBLICATION_PENDING",
+  "status": "ACCEPTED_DEV_AND_PREPROD_0_15_4_0_ALL_AUTOMATED_GATES_PASS",
   "target": {
     "application_version": "0.15.4.0",
     "cache": "frontend-v32-24"
@@ -16,7 +16,7 @@
       "Pages"
     ],
     "attachment_is_feedback_data": true,
-    "new_PREPROD_promotion": "EXPLICITLY_AUTHORIZED_AFTER_OWN_ACCEPTED_DEV_AND_STANDARD_CI_NOT_EXECUTED",
+    "new_PREPROD_promotion": "COMPLETED_STANDARD_WORKFLOW_ALL_ACCEPTANCE_GATES_PASS",
     "PROD_DNS_reset_passwords": "NO_ACTION",
     "execution_order": [
       "DEV",
@@ -26,7 +26,8 @@
       "standard PRE-PROD after accepted DEV"
     ],
     "scope_clarification": "Previous explicit instruction to publish completed changes to PRE-PROD continues after the user-authorized waiting period and current packet GO; actual new CI/DEV/GCP acceptance remains separate.",
-    "explicit_current_PREPROD_confirmation": "User: jak skończysz wrzuć na pre prod (22 November 2026)"
+    "explicit_current_PREPROD_confirmation": "User: jak skończysz wrzuć na pre prod (22 November 2026)",
+    "completed_by_standard_PREPROD_run": 45045856773
   },
   "accepted_before_packet": {
     "version": "0.15.3.1",
@@ -42,21 +43,38 @@
   },
   "new_release": {
     "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-    "publication_source_sha": null,
+    "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
     "CI": {
-      "status": "PENDING_NEW_OWN_EXACT_SOURCE_RUN",
-      "run_id": null
+      "status": "SUCCESS",
+      "run_id": 45042424655,
+      "attempt": 1,
+      "Node": 2016,
+      "Python": 173,
+      "browser_programs": 84
     },
     "Pages": {
-      "status": "PENDING_NEW_OWN_EXACT_SOURCE_RUN",
-      "run_id": null
+      "status": "SUCCESS",
+      "run_id": 45042424738,
+      "attempt": 1,
+      "normal_TLS_files": 468
     },
-    "DEV_tag": null,
+    "DEV_tag": {
+      "name": "dev-0.15.4.0-20261122",
+      "object": "c8b675671399f150ac15cdd20f1b84acb02c1df7",
+      "peeled": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "remote_verified": true
+    },
     "PREPROD": {
-      "status": "NOT_DEPLOYED",
-      "run_id": null
+      "status": "ACCEPTED_ALL_INDEPENDENT_GATES",
+      "run_id": 45045856773,
+      "attempt": 1
     },
-    "PREPROD_tag": null,
+    "PREPROD_tag": {
+      "name": "preprod-0.15.4.0-20261122",
+      "object": "a0ae4107b9380905887837659cb894985120626d",
+      "peeled": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "remote_verified": true
+    },
     "canonical_artifacts": {
       "status": "PASS",
       "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
@@ -1088,7 +1106,7 @@
     "island_puzzles": 24,
     "extra_legacy_bridge": 1,
     "story_first_light": 1,
-    "all_rows_require_final_source_validation": true,
+    "all_rows_require_final_source_validation": false,
     "matrix": [
       {
         "id": "WORD-01",
@@ -1097,8 +1115,8 @@
         "kind": "legacy_adventure",
         "user_feedback": "Pytanie o cel przycisku „Trudność”.",
         "required_behavior": "Wyjaśnić rolę trudności i nie mieszać wyboru wariantu ćwiczeń z przypisaną trudnością właściwej próby; instrukcja opisuje dodawanie, usuwanie i sprawdzenie belek.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1108,8 +1126,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Pozytywna ocena wszystkich pięciu wariantów.",
         "required_behavior": "Zachować ciągły ślad przez każdy przewód oraz sprawdzić regresję pięciu wariantów.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1119,8 +1137,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Wszystkie warianty rozwiązane; propozycja około dziesięciu strzałek zamiast pięciu.",
         "required_behavior": "Zwiększyć liczbę konwojów i zależności blokowania, zachowując co najmniej jedną pełną kolejność rozwiązania.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1130,8 +1148,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zadanie niezrozumiałe mimo przeczytania zasad.",
         "required_behavior": "Wskazać kolejno: sprawdź pokarm, wysokość i bezpieczeństwo przynęty, wybierz miejsce, osobno odbierz klucz.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1141,8 +1159,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Propozycja jednego kraba, zapamiętania trasy i powrotu na start po błędzie.",
         "required_behavior": "Pokazać bezpieczną trasę do zapamiętania, ukryć ją po potwierdzeniu i cofać kraba na początek po nieprawidłowym kroku.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1152,8 +1170,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Bezkarne klikanie wszystkich miejsc pozwala zgadnąć rozwiązanie.",
         "required_behavior": "Ograniczyć bezkarne zgadywanie i uczynić dopasowanie obu cech wskazówki rzeczywistym warunkiem świadomego wyboru.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1163,8 +1181,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Instrukcja jasna; odwracanie słów zbyt proste, preferowane układanie słów z liter.",
         "required_behavior": "Zastąpić prostą odpowiedź wspak układaniem słów wiadomości z rozsypanych liter.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1174,8 +1192,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Instrukcja pomaga; elementy powinny faktycznie wymagać wpasowania między siebie.",
         "required_behavior": "Przygotować ciaśniejsze, rozwiązywalne układy z obrotami i rzeczywistym ograniczeniem miejsca.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1185,8 +1203,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Porządek mocowań czyni rozwiązanie banalnym; zasady nadal niejasne.",
         "required_behavior": "Usunąć oczywistą podpowiedź kolejności oznaczeń, wprowadzić istotne przecięcia i jasno opisać wybór końców oraz zamianę zajętego mocowania.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1196,8 +1214,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zbyt łatwe; propozycja ukrytych raf i cofnięcia po błędnym ruchu.",
         "required_behavior": "Wprowadzić etap poznania trasy/raf i nawigację z pamięci; błędny krok ma czytelnie cofać próbę do początku.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1207,8 +1225,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Niejasna instrukcja i nieintuicyjne przydzielanie statków.",
         "required_behavior": "Pokazać wybór statku, nabrzeża i czasu startu, długość rozładunku oraz konflikt nakładających się przedziałów na tym samym nabrzeżu.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1218,8 +1236,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Nie wiadomo, czy prostokąty należy klikać czy przeciągać ani gdzie.",
         "required_behavior": "Jednoznacznie nazwać interakcję z przekładniami, bieżący mnożnik i kierunek oraz obserwowalny wynik ustawienia; bez zgadywania gestu.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1229,8 +1247,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Instrukcja jasna, zadanie zbyt łatwe.",
         "required_behavior": "Zwiększyć złożoność toru odbić, zachowując czytelne przełączanie luster i dowód rozwiązywalności.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1240,8 +1258,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Pomysł ciekawy, ale zasady niejasne.",
         "required_behavior": "Wyjaśnić źródło, cel, pojedynczą jednostkę przelewu, sąsiedztwo i pojemności komór; pokazywać bieżący oraz docelowy poziom wody.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1251,8 +1269,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Po instrukcji jaśniejsze, ale proste; zamiana przydziałów po wyborze zajętego pokoju niejasna.",
         "required_behavior": "Dodać sensowne nakładające się ograniczenia gości i jawnie pokazywać skutki wyboru zajętego pokoju.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1262,8 +1280,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zadanie ukończone, lecz instrukcja zawiera zbyt dużo fizyki.",
         "required_behavior": "Opisać bieguny i impuls prostymi słowami: ustaw magnesy, sprawdź strzałkę i przesuń kapsułę o dozwolony krok.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1273,8 +1291,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Nie wiadomo, co robić; kliknięcia nie pokazują zrozumiałego skutku.",
         "required_behavior": "Pokazać aktywne narożniki, rezultat każdego złożenia i porównanie okienek z docelową wiadomością.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1284,8 +1302,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Instrukcja jasna, gra zbyt prosta.",
         "required_behavior": "Utrudnić dobór współpracujących części, zachowując jasno opisane wymagane role i przycisk sprawdzenia.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1295,8 +1313,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Rozwiązane częściowo na wyczucie.",
         "required_behavior": "Wyjaśnić skutki przesunięcia poziomego, pionowego i zoomu; pokazywać zgodność wszystkich znaków, a nie jednego trafionego punktu.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1306,8 +1324,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zasady raczej jasne.",
         "required_behavior": "Zachować rozumowanie według dowodów i wykluczeń oraz sprawdzić jednoznaczność przydziałów.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1317,8 +1335,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Banalnie proste, praktycznie brak możliwości pomyłki.",
         "required_behavior": "Udostępnić rzeczywiste wybory składników i bardziej wymagające przepisy, z czytelnym sprawdzeniem porcji i poprawą błędu.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1328,8 +1346,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zasady jasne.",
         "required_behavior": "Zachować użycie aktualnej legendy, kolejność odpowiedzi i czytelne zachowanie po błędnej liczbie.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1339,8 +1357,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zrozumiałe i dość łatwe.",
         "required_behavior": "Zachować czytelność wartości, wymóg użycia wszystkich ciężarków i równoczesnego spełnienia obu obciążeń; objąć regresją.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1350,8 +1368,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zasady jasne.",
         "required_behavior": "Zachować dopasowanie trójek, opóźnienie zakrycia błędu i regułę tasowania; instrukcja przed wejściem do pokoju.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1361,8 +1379,8 @@
         "kind": "island_puzzle",
         "user_feedback": "Zasady jasne.",
         "required_behavior": "Zachować fizykę i małe przechylenia, wyjaśnić sterowanie przed uruchomieniem czasu oraz zabezpieczyć odczyt instrukcji.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       },
       {
@@ -1372,8 +1390,8 @@
         "kind": "story",
         "user_feedback": "Gra obecna w grze, brak w przejrzanym zbiorze; za mało czasu na przeczytanie instrukcji.",
         "required_behavior": "Uwzględnić przygodę w pełnym katalogu i dokumentach; instrukcje całej opowieści i każdego pokoju czekają na świadome rozpoczęcie bez limitu czytania.",
-        "implementation": "CANDIDATE_IN_PROGRESS",
-        "final_source_automated_validation": "PENDING",
+        "implementation": "IMPLEMENTED",
+        "final_source_automated_validation": "PASS_OWN_CI_45042424655_EXACT_PUBLICATION",
         "manual_result": "NOT RUN"
       }
     ]
@@ -1480,12 +1498,12 @@
     }
   },
   "remaining_tests": {
-    "final_full_Node": "1829_FULL_PASS_CODE1_PLUS2_EXPORTER_SOURCE_TESTS_PASS_RUNTIME_IDENTICAL_TO_CODE3_OWN_CI2016_REQUIRED",
-    "final_Python_and_bundle": "145_PLUS28_PASS_173_TOTAL",
-    "all_required_browser_programs": "PENDING",
-    "exact_new_source_CI": "PENDING",
-    "exact_new_source_Pages": "PENDING",
-    "new_cloud_acceptance": "AUTHORIZED_CURRENT_USER_REQUEST_NOT_YET_STARTED"
+    "final_full_Node": "PASS_OWN_EXACT_SOURCE_AUTOMATED_GATES",
+    "final_Python_and_bundle": "PASS_OWN_EXACT_SOURCE_AUTOMATED_GATES",
+    "all_required_browser_programs": "PASS_OWN_EXACT_SOURCE_AUTOMATED_GATES",
+    "exact_new_source_CI": "PASS_OWN_EXACT_SOURCE_AUTOMATED_GATES",
+    "exact_new_source_Pages": "PASS_OWN_EXACT_SOURCE_AUTOMATED_GATES",
+    "new_cloud_acceptance": "PASS_OWN_EXACT_SOURCE_AUTOMATED_GATES"
   },
   "actual_admin2_read_only_context": {
     "checked_at_utc": "2026-11-22T12:32:28.556Z",
@@ -1498,7 +1516,26 @@
     "actual_island_or_clock_writes": false,
     "credentials_saved": false,
     "status": "READ_ONLY_CONTEXT_PASS_NOT_A_NEW_RELEASE_TEST",
-    "interpretation": "81 residents meet the approved3→4 population threshold; materials, supplies and other upgrade requirements remain independent. No account mutation is inferred or authorized."
+    "interpretation": "81 residents meet the approved3→4 population threshold; materials, supplies and other upgrade requirements remain independent. No account mutation is inferred or authorized.",
+    "separate_paid_project_diagnostic": {
+      "scope": "Read-only private copy of historical revision613; separate from actual deployed/browser/manual acceptance",
+      "status": "PASS_PRIVATE_COPY_PAID_TH4_RECOVERY",
+      "townhall4_already_paid": true,
+      "next_action": "Inspect Warehouse staffing and material transport; finish accepted construction",
+      "new_rescue_or_duplicate_payment_required": false,
+      "mission_recovery_report": "/workspace/work/minigry-packet-20261122/actual-admin2-paid-construction-recovery-proof-final.json",
+      "advisor_report": "/workspace/work/minigry-packet-20261122/advisor-admin2-readonly-final-proof.json",
+      "actual_account_or_clock_writes": false,
+      "manual_result": "NOT RUN"
+    },
+    "release24_before_after_read": {
+      "before_revision": 614,
+      "after_revision": 614,
+      "population": 82,
+      "byte_identical": true,
+      "report": "/workspace/work/minigry-packet-20261122/release/release24-account-preservation.json",
+      "historical_revision613_read_preserved": true
+    }
   },
   "registry": {
     "changes": 527,
@@ -1584,7 +1621,15 @@
     "scope": "Only source references in minigame export; active V2 anchor plus preserved legacy/version selector",
     "frozen_runtime_and_existing_test_files_unchanged": 460,
     "additional_focused_tests": 2,
-    "canonical_generation": "PENDING_NEW_FROZEN_SOURCE"
+    "canonical_generation": {
+      "status": "PASS_ACTUAL_CODE6_ATTEMPT5",
+      "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+      "report_sha256": "d41d617f7fdccdfef888f01097d201d9fd7d1881662c83690f6b4d57834a0a65",
+      "master_rows": 69153,
+      "acceptance_scope": "Canonical generation only; actual report validated independently"
+    },
+    "historical_initial_canonical_generation": "PENDING_NEW_FROZEN_SOURCE"
   },
   "canonical_attempt_history": [
     {
@@ -3709,6 +3754,16 @@
       "Node": 2016,
       "Python": 173,
       "Chromium_programs": 84,
+      "status": "PASS_OWN_EXACT_PUB5_CI",
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "run": 45042424655,
+      "report": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json"
+    },
+    "historical_initial_expected_own_CI": {
+      "Node": 2016,
+      "Python": 173,
+      "Chromium_programs": 84,
       "status": "PENDING_ACTUAL_RUN"
     }
   },
@@ -3833,6 +3888,16 @@
       "Pages_separate2XLSX_PASS": true,
       "PREPROD_deployed": false,
       "DEV_tag_created": false
+    },
+    {
+      "event": "ACCEPTED_PACKET",
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "CI_run": 45042424655,
+      "Pages_run": 45042424738,
+      "PREPROD_run": 45045856773,
+      "attempt": 1,
+      "accepted_at_utc": "2026-11-22T17:01:20.277686+00:00"
     }
   ],
   "local_UI_corrections_after_first_publication": {
@@ -3851,7 +3916,28 @@
     "final_advisor_UI_stable": "/workspace/work/minigry-packet-20261122/test-only-advisor-ui-CI45029811749/full-ui-stable-result.json",
     "final_48_instruction_contexts": "/workspace/work/minigry-packet-20261122/final-instructions-e3053c2/final-instructions-summary.json",
     "final_PL_EN_Begin_quote_ad": "/workspace/work/minigry-packet-20261122/legacy-fixture-validation/code5-PL-EN-immediate-Begin-quote-ad.json",
-    "final_source_full_CI": "PENDING"
+    "final_source_full_CI": {
+      "status": "HISTORICAL_PREVIEW_CI_FAILURE_SUPERSEDED",
+      "snapshot_code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+      "preview_publication_source_sha": "f6e66b83e6612dcdb0a4908b0c828c824703e0a3",
+      "actual_CI_run": 45032326833,
+      "actual_CI_conclusion": "failure",
+      "history": "docs/v32/PACKET-20261122-EVIDENCE.json#publication_workflow_history",
+      "superseded_by_current_acceptance": {
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "CI_run": 45042424655,
+        "CI_conclusion": "success",
+        "CI_report": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json",
+        "canonical_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+        "canonical_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "PREPROD_run": 45045856773,
+        "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
+        "scope": "Current accepted PUB5; does not rewrite earlier preview results"
+      }
+    },
+    "historical_initial_final_source_full_CI": "PENDING",
+    "snapshot_status": "HISTORICAL_SOURCE_SCOPED_PROOF_SUPERSEDED_BY_CURRENT_ACCEPTANCE"
   },
   "canonical_UI_only_refresh_identity": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/UI-only-refresh-identity-vs-CODE3.json",
   "test_only_revision_after_PUB2": {
@@ -3861,7 +3947,28 @@
     "version_literal_audit": "All84CIbrowserprograms scanned; only settings-signout exact expectation+PASSlabel0.15.3.1 were stale. Preserve current exact0.15.4.0 comparison.",
     "other_local_browser_groups": "67furtheractualprograms being completed on immutablePUB2 application; results remain separate from own newCI",
     "runtime_or_canonical_changes": false,
-    "new_source_full_CI": "PENDING"
+    "new_source_full_CI": {
+      "status": "HISTORICAL_PREVIEW_CI_FAILURE_SUPERSEDED",
+      "snapshot_code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+      "preview_publication_source_sha": "d1f8bc57952eb0fa448c08c2dfdef502597f957c",
+      "actual_CI_run": 45034760921,
+      "actual_CI_conclusion": "failure",
+      "history": "docs/v32/PACKET-20261122-EVIDENCE.json#publication_workflow_history",
+      "superseded_by_current_acceptance": {
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "CI_run": 45042424655,
+        "CI_conclusion": "success",
+        "CI_report": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json",
+        "canonical_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+        "canonical_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "PREPROD_run": 45045856773,
+        "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
+        "scope": "Current accepted PUB5; does not rewrite earlier preview results"
+      }
+    },
+    "historical_initial_new_source_full_CI": "PENDING",
+    "snapshot_status": "HISTORICAL_SOURCE_SCOPED_PROOF_SUPERSEDED_BY_CURRENT_ACCEPTANCE"
   },
   "test_bootstrap_revision_after_PUB3": {
     "scope": "Test infrastructure and metadata only; CODE5 runtime/canonical public files unchanged",
@@ -3875,7 +3982,28 @@
     "main20_original_attempt": "19PASS/1v32_bootstrapFAIL_preserved",
     "main20_report": "/workspace/work/minigry-packet-20261122/post-editorial-main20-f6e66b8/summary.json",
     "remaining_legacy_groups": "CONTINUE_LOCALLY_IN_PARALLEL_WITH_NEW_OWN_CI; no full84 local single-run claim",
-    "new_source_own_full_CI": "PENDING"
+    "new_source_own_full_CI": {
+      "status": "HISTORICAL_PREVIEW_CI_FAILURE_SUPERSEDED",
+      "snapshot_code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
+      "preview_publication_source_sha": "32990aa1cf260ba3a3511e2c2add982a7287895d",
+      "actual_CI_run": 45037008018,
+      "actual_CI_conclusion": "failure",
+      "history": "docs/v32/PACKET-20261122-EVIDENCE.json#publication_workflow_history",
+      "superseded_by_current_acceptance": {
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "CI_run": 45042424655,
+        "CI_conclusion": "success",
+        "CI_report": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json",
+        "canonical_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+        "canonical_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "PREPROD_run": 45045856773,
+        "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
+        "scope": "Current accepted PUB5; does not rewrite earlier preview results"
+      }
+    },
+    "historical_initial_new_source_own_full_CI": "PENDING",
+    "snapshot_status": "HISTORICAL_SOURCE_SCOPED_PROOF_SUPERSEDED_BY_CURRENT_ACCEPTANCE"
   },
   "CODE6_mobile_memory_fix": {
     "scope": "Rendering only; version0.15.4.0/cache24 is still an unaccepted preview and has never been tagged/deployedPREPROD",
@@ -3905,5 +4033,113 @@
     "no_single84_local_run_claim": true,
     "no_new_CODE6_full84_local_claim": true
   },
-  "CODE6_semantic_comparison_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/memory-layout-refresh-identity-vs-CODE5.json"
+  "CODE6_semantic_comparison_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/memory-layout-refresh-identity-vs-CODE5.json",
+  "accepted_at_utc": "2026-11-22T17:01:20.277686+00:00",
+  "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+  "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+  "manual_user_acceptance": "NOT_RUN",
+  "account_preservation": {
+    "status": "PASS",
+    "release": "0.15.4.0/cache24",
+    "before_at": "2026-11-22T16:47:53.843Z",
+    "after_at": "2026-11-22T16:58:15.572Z",
+    "same_three_UIDs": true,
+    "all_generations_preserved": true,
+    "all_island_origin_timestamps_preserved": true,
+    "all_generations_and_origin_timestamps_preserved": true,
+    "all_revisions_non_decreasing": true,
+    "all_clock_rate_revision_generation_preserved": true,
+    "profiles_byte_identical": true,
+    "records": [
+      {
+        "uid": "dev-admin1",
+        "same_generation": true,
+        "same_island_origin": true,
+        "island_origin_status": "PRESERVED",
+        "revision_non_decreasing": true,
+        "before_island_started_at": 1795282462850,
+        "after_island_started_at": 1795282462850,
+        "before_onboarding_world_started_at": 1795282462850,
+        "after_onboarding_world_started_at": 1795282462850,
+        "before_revision": 647,
+        "after_revision": 647,
+        "same_payload_hash": true,
+        "legitimate_newer_save_allowed": false,
+        "clock_rate_revision_generation_preserved": true
+      },
+      {
+        "uid": "dev-admin2",
+        "same_generation": true,
+        "same_island_origin": true,
+        "island_origin_status": "PRESERVED",
+        "revision_non_decreasing": true,
+        "before_island_started_at": 1795093230210,
+        "after_island_started_at": 1795093230210,
+        "before_onboarding_world_started_at": 1795093230210,
+        "after_onboarding_world_started_at": 1795093230210,
+        "before_revision": 614,
+        "after_revision": 614,
+        "same_payload_hash": true,
+        "legitimate_newer_save_allowed": false,
+        "clock_rate_revision_generation_preserved": true
+      },
+      {
+        "uid": "dev-admin3",
+        "same_generation": true,
+        "same_island_origin": true,
+        "island_origin_status": "PRESERVED",
+        "revision_non_decreasing": true,
+        "before_island_started_at": 1794837111444,
+        "after_island_started_at": 1794837111444,
+        "before_onboarding_world_started_at": 1794837111444,
+        "after_onboarding_world_started_at": 1794837111444,
+        "before_revision": 597,
+        "after_revision": 597,
+        "same_payload_hash": true,
+        "legitimate_newer_save_allowed": false,
+        "clock_rate_revision_generation_preserved": true,
+        "preserved_selected_rate": 1,
+        "preserved_clock_revision": 12
+      }
+    ],
+    "actual_island_or_clock_writes": false,
+    "accounts_reset_by_auditor": false,
+    "snapshots_rebaselined": false,
+    "raw_save_or_credentials_saved": false,
+    "comparison_network_requests": 0,
+    "manual_user_acceptance": "NOT_RUN"
+  },
+  "frontend_package": {
+    "archive": "/workspace/work/minigry-packet-20261122/release/committed-frontend-7f87e93.tar.gz",
+    "archive_sha256": "ce7f5f74dbe8c02062400c69195d8c6fea6d55a803903f197f7ade6f7fe3dc42",
+    "commit": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+    "file_count": 469,
+    "manifest_sha256": "6f9c2a5a0bda20128a90fd984f9ae171446fd3b7ff6c0b802c600ec16c3de934",
+    "total_bytes": 97005137,
+    "frontend_dir": "/workspace/work/minigry-packet-20261122/release/verified-local-standard-7f87e93"
+  },
+  "API_image_digest": "sha256:4116810756d78f8aac0cfb12022378ab5e5bef2bc4b0fb2e3bda97a1434dcf35",
+  "final_report_paths": {
+    "CI": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json",
+    "Pages": "/workspace/work/minigry-packet-20261122/release/Pages-45042424738-1/Pages-summary.json",
+    "Pages_public": "/workspace/work/minigry-packet-20261122/release/pages-public-byte-audit.json",
+    "Pages_XLSX": "/workspace/work/minigry-packet-20261122/release/Pages-XLSX-7f87e93.json",
+    "PREPROD": "/workspace/work/minigry-packet-20261122/release/GCP-45045856773-1/GCP-acceptance-summary.json",
+    "original_artifacts": "/workspace/work/minigry-packet-20261122/release/original-artifact-audit-45045856773-1.json",
+    "PREPROD_public": "/workspace/work/minigry-packet-20261122/release/preprod-public-byte-audit.json",
+    "building_manifest_header": "/workspace/work/minigry-packet-20261122/release/building-manifest-header-7f87e93-45045856773.json",
+    "accounts": "/workspace/work/minigry-packet-20261122/release/release24-account-preservation.json",
+    "DEV_tag": "/workspace/work/minigry-packet-20261122/release/DEV-tag-7f87e93.json",
+    "PREPROD_tag": "/workspace/work/minigry-packet-20261122/release/PREPROD-tag-7f87e93.json",
+    "canonical_artifacts": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json"
+  },
+  "final_metadata_scope": "METADATA_ONLY_APP_EXPORTS_AND_IMMUTABLE_TAGS_UNCHANGED",
+  "snapshot_reconciliation_after_standard_final_metadata": {
+    "version": 1,
+    "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+    "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+    "exact_own_CI": 45042424655,
+    "canonical_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+    "scope": "Only known pending snapshot keys and atomic historical preview triple; all old evidence retained"
+  }
 }

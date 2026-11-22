@@ -32704,10 +32704,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32738,17 +32738,19 @@
           "tests/harborlight-construction-food-removal.test.mjs",
           "tests/harborlight-v32-world-integration.test.mjs"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -32779,10 +32781,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32810,17 +32812,19 @@
         "automated_tests": [
           "tests/harborlight-production-controls-v32-smoke.py"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -32851,10 +32855,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32887,17 +32891,19 @@
           "tests/harborlight-advisor-development-plan.test.mjs",
           "tests/harborlight-advisor-ui-smoke.py"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -32928,10 +32934,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -32960,17 +32966,19 @@
           "tests/harborlight-farm-distribution-v32.test.mjs",
           "tests/harborlight-production-controls-v32-smoke.py"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -33001,10 +33009,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33041,17 +33049,19 @@
           "tests/harborlight-expedition-instructions-v32.test.mjs",
           "tests/harborlight-frontend-v17-smoke.py"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -33082,10 +33092,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33115,17 +33125,19 @@
           "tests/harborlight-v32-original-puzzles.test.mjs",
           "tests/harborlight-original-puzzles-v32-smoke.py"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -33156,10 +33168,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33189,17 +33201,19 @@
           "tests/harborlight-mission-sidebar-integration-v32-smoke.py",
           "tests/harborlight-mission-assistance-resolution.test.mjs"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -33230,10 +33244,10 @@
         ]
       },
       "status": {
-        "implementation": "implemented_dev",
-        "dev": "LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING",
-        "ci": "PENDING_OWN_EXACT_SOURCE_RUN",
-        "preprod": "AUTHORIZED_NOT_DEPLOYED_NEW_PACKET",
+        "implementation": "implemented",
+        "dev": "ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES",
+        "ci": "SUCCESS_45042424655",
+        "preprod": "ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES",
         "prod": "postponed_by_user",
         "decision": "accepted"
       },
@@ -33263,17 +33277,19 @@
           "tests/harborlight-mission-assistance-resolution.test.mjs",
           "tests/harborlight-mission-assistance-resolution-smoke.py"
         ],
-        "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
         "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-        "publication_source_sha": null,
-        "ci_run_url": null,
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "ci_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45042424655",
         "manual_execution": "NOT_RUN",
-        "release_note": "Paczka0.15.4.0/cache24 ma lokalne testy modelu i infrastruktury oraz świeże kanoniczne artefakty PASS. Własny CI/Pages/PUB i standardowy PRE-PROD pozostają oczekujące; wszystkie207 ręcznych przypadków NOT RUN."
+        "release_note": "0.15.4.0/cache24 accepted from own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; 2016 Node / 173 Python / 84 Chromium; original package 469, public TLS 469 and strict account audit PASS. All 207 manual cases NOT RUN. Previous failures preserved; no reset, PROD, DNS or password actions.",
+        "preprod_run_url": "https://github.com/ksobczak321-oss/gra/actions/runs/45045856773/attempts/1"
       },
       "notes": [
         "Użytkownik jawnie zlecił DEV→własneCI/Pages→PRE-PROD. Zwykła promocja zachowuje konta i postęp; bez resetu, haseł, PROD lub DNS.",
         "Zachowano wszystkie519 wcześniejszych kart i195 definicji ręcznych bez zmiany ich danych lub wyników.",
-        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium."
+        "Nie utworzono natywnego GitHub Issue; nowy wpis pozostaje kartą repozytorium.",
+        "Odebrane DEV i standardowy PRE-PROD po jawnej dyspozycji użytkownika; wcześniejszy opis początkowego zakresu pozostaje historią."
       ],
       "tags": [
         "v32",
@@ -33289,16 +33305,16 @@
     }
   ],
   "current_environment": {
-    "as_of": "2026-11-21",
-    "preprod_application_version": "0.15.3.1",
-    "preprod_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-    "preprod_ci_run_id": 44943513346,
-    "preprod_deployment_run_id": 44946821720,
+    "as_of": "2026-11-22",
+    "preprod_application_version": "0.15.4.0",
+    "preprod_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+    "preprod_ci_run_id": 45042424655,
+    "preprod_deployment_run_id": 45045856773,
     "preprod_deployment_attempt": 1,
     "preprod_status": "ACCEPTED_NATIVE_ORIGINAL_ARTIFACTS_ALL_BYTES_STRICT_ACCOUNTS",
     "prod_status": "postponed_by_user",
     "full_test_account_reset": "earlier_RESET_SUCCESS_INDEPENDENTLY_VERIFIED_not_repeated_by_this_deployment",
-    "note": "DEV i PRE-PROD 0.15.2.4/cache21 przyjęte automatycznie na publikacji d5ad35c, kod e394ea8. Własne CI 44569674535 SUCCESS: 1784 Node, 173 Python, 73 programy Chromium; Pages 44569674475 SUCCESS. Standardowy PRE-PROD 44577083312/1 SUCCESS, oryginalne dwa ZIP/receipt/TAR i wszystkie 460 plików HTTPS zgodne. Rzeczywisty admin3: start 280,121 s, responsywny Worker i 10 s gotowej gry; trzy konta, postęp i zegary zachowane. Ręczny odbiór użytkownika i 179 przypadków NOT RUN. Historyczne DDA, B94 QUALITY FAIL, C4 CI FAIL i C5 QUALITY HOLD pozostają odrębne. Bez resetu, PROD i DNS.",
+    "note": "Accepted packet 0.15.4.0/cache24 from own exact-source CI/Pages and standard manual PRE-PROD, with independent native/original/public/account/tag proofs. All 207 manual cases NOT RUN; no reset, PROD, DNS or password actions.",
     "previous_accepted_dev": {
       "as_of": "2026-11-04",
       "dev_application_version": "0.14.0.0",
@@ -33326,7 +33342,7 @@
       }
     },
     "preprod_promotion_status": "COMPLETED_ACCEPTED",
-    "preprod_promotion_target": "0.15.3.1",
+    "preprod_promotion_target": "0.15.4.0",
     "previous_accepted_preprod": {
       "preprod_application_version": "0.12.0.0",
       "preprod_source_sha": "d9e2940b9a00755d979c159ec0fb62e290dd7ff1",
@@ -33335,39 +33351,38 @@
       "preprod_deployment_attempt": 1,
       "preprod_status": "previous_release_verified"
     },
-    "preprod_pages_run_id": 44943513266,
+    "preprod_pages_run_id": 45042424738,
     "preprod_bridge_run_id": null,
-    "preprod_tag": "preprod-0.15.3.1-20261121",
-    "preprod_tag_remote_object": "918c09e493682bc705c17e8c75aeca0456e1fd5f",
+    "preprod_tag": "preprod-0.15.4.0-20261122",
+    "preprod_tag_remote_object": "a0ae4107b9380905887837659cb894985120626d",
     "preprod_artifacts": {
-      "status": "PASS_ORIGINAL_ZIPS_RECEIPT4_IMAGE_TAR467_ALL_PUBLIC_BYTES",
-      "source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "run": 44946821720,
+      "status": "PASS_ORIGINAL_ZIPS_RECEIPT4_IMAGE_TAR469_ALL_PUBLIC_BYTES",
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "run": 45045856773,
       "attempt": 1,
       "package": {
-        "archive": "/workspace/work/advisor-layout-20261121/release/committed-frontend-1e21ff1.tar.gz",
-        "archive_sha256": "e98be388d1ea109964e8c7f724c01235ce8c405f9c0201d15f98b44945913f31",
-        "commit": "1e21ff1340c7327db9d63a42934547f14548294e",
-        "file_count": 467,
-        "frontend_dir": "/workspace/work/advisor-layout-20261121/release/verified-local-frontend-1e21ff1",
-        "manifest_sha256": "322bcc484163a09f5e39f275a7bf2ef93adc09556a0c1e4ffdd1c34db1ca43ca",
-        "total_bytes": 96729691
+        "archive": "/workspace/work/minigry-packet-20261122/release/committed-frontend-7f87e93.tar.gz",
+        "archive_sha256": "ce7f5f74dbe8c02062400c69195d8c6fea6d55a803903f197f7ade6f7fe3dc42",
+        "commit": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "file_count": 469,
+        "manifest_sha256": "6f9c2a5a0bda20128a90fd984f9ae171446fd3b7ff6c0b802c600ec16c3de934",
+        "total_bytes": 97005137,
+        "frontend_dir": "/workspace/work/minigry-packet-20261122/release/verified-local-standard-7f87e93"
       },
-      "image_digest": "sha256:cde1de9c256cad1b963915a0106ffe9357d129873016210f06bc1f48bea5e76e",
+      "image_digest": "sha256:4116810756d78f8aac0cfb12022378ab5e5bef2bc4b0fb2e3bda97a1434dcf35",
       "reports": {
-        "CI": "/workspace/work/advisor-layout-20261121/release/CI-44943513346-1/CI-summary.json",
-        "Pages": "/workspace/work/advisor-layout-20261121/release/Pages-44943513266-1/Pages-summary.json",
-        "Pages_public": "/workspace/work/advisor-layout-20261121/release/pages-public-byte-audit-1e21ff1-44943513266.json",
-        "Pages_XLSX": "/workspace/work/advisor-layout-20261121/release/pages-XLSX-independent-audit-1e21ff1-44943513266.json",
-        "PREPROD": "/workspace/work/advisor-layout-20261121/release/GCP-44946821720-1/GCP-acceptance-summary.json",
-        "original_artifacts": "/workspace/work/advisor-layout-20261121/release/original-artifact-audit-44946821720-1.json",
-        "PREPROD_public": "/workspace/work/advisor-layout-20261121/release/preprod-public-byte-audit-1e21ff1-44946821720.json",
-        "building_manifest_header": "/workspace/work/advisor-layout-20261121/release/building-manifest-header-1e21ff1-44946821720.json",
-        "accounts": "/workspace/work/advisor-layout-20261121/release/release23-account-preservation.json",
-        "DEV_tag": "/workspace/work/advisor-layout-20261121/release/DEV-tag-proof.json",
-        "PREPROD_tag": "/workspace/work/advisor-layout-20261121/release/PREPROD-tag-proof.json",
-        "before_account_metadata": "/workspace/work/advisor-layout-20261121/release/before-release23-account-metadata.json",
-        "after_account_metadata": "/workspace/work/advisor-layout-20261121/release/after-release23-account-metadata.json"
+        "CI": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json",
+        "Pages": "/workspace/work/minigry-packet-20261122/release/Pages-45042424738-1/Pages-summary.json",
+        "Pages_public": "/workspace/work/minigry-packet-20261122/release/pages-public-byte-audit.json",
+        "Pages_XLSX": "/workspace/work/minigry-packet-20261122/release/Pages-XLSX-7f87e93.json",
+        "PREPROD": "/workspace/work/minigry-packet-20261122/release/GCP-45045856773-1/GCP-acceptance-summary.json",
+        "original_artifacts": "/workspace/work/minigry-packet-20261122/release/original-artifact-audit-45045856773-1.json",
+        "PREPROD_public": "/workspace/work/minigry-packet-20261122/release/preprod-public-byte-audit.json",
+        "building_manifest_header": "/workspace/work/minigry-packet-20261122/release/building-manifest-header-7f87e93-45045856773.json",
+        "accounts": "/workspace/work/minigry-packet-20261122/release/release24-account-preservation.json",
+        "DEV_tag": "/workspace/work/minigry-packet-20261122/release/DEV-tag-7f87e93.json",
+        "PREPROD_tag": "/workspace/work/minigry-packet-20261122/release/PREPROD-tag-7f87e93.json",
+        "canonical_artifacts": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json"
       }
     },
     "previous_accepted_dev_v30": {
@@ -33425,17 +33440,17 @@
       ]
     },
     "preprod_bridge_duration": null,
-    "preprod_deployment_duration": "7 min 42 s",
-    "dev_application_version": "0.15.3.1",
+    "preprod_deployment_duration": "8 min 31 s",
+    "dev_application_version": "0.15.4.0",
     "dev_status": "ACCEPTED_OWN_EXACT_CI_PAGES_ALL_BYTES",
     "dev_ci": "SUCCESS",
-    "dev_source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-    "dev_implementation_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-    "dev_ci_run_id": 44943513346,
-    "dev_pages_run_id": 44943513266,
+    "dev_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+    "dev_implementation_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+    "dev_ci_run_id": 45042424655,
+    "dev_pages_run_id": 45042424738,
     "dev_pages_conclusion": "SUCCESS",
-    "dev_tag": "dev-0.15.3.1-20261121",
-    "dev_cache": "frontend-v32-23",
+    "dev_tag": "dev-0.15.4.0-20261122",
+    "dev_cache": "frontend-v32-24",
     "previous_accepted_v32": {
       "source_sha": "fc2e87eec57c0388a16fb9b15a7d80ea0bc9c67c",
       "cache": "frontend-v32-4",
@@ -33444,10 +33459,10 @@
       "pages_run_id": 43703967803,
       "pages_conclusion": "success"
     },
-    "frontend_archive_sha256": "e98be388d1ea109964e8c7f724c01235ce8c405f9c0201d15f98b44945913f31",
-    "frontend_manifest_sha256": "322bcc484163a09f5e39f275a7bf2ef93adc09556a0c1e4ffdd1c34db1ca43ca",
-    "frontend_file_count": 467,
-    "frontend_total_bytes": 96729691,
+    "frontend_archive_sha256": "ce7f5f74dbe8c02062400c69195d8c6fea6d55a803903f197f7ade6f7fe3dc42",
+    "frontend_manifest_sha256": "6f9c2a5a0bda20128a90fd984f9ae171446fd3b7ff6c0b802c600ec16c3de934",
+    "frontend_file_count": 469,
+    "frontend_total_bytes": 97005137,
     "previous_published_v32_cache5": {
       "dev_application_version": "0.15.0.0",
       "dev_status": "published_pages_verified; final_metadata_ci_requires_own_result",
@@ -33508,13 +33523,13 @@
       "public_level5_preview_verification": "Cache7 implemented and tested locally;17hostedfilehashesverified viaHTTPS/TLS. Direct public Chromium render blocked by managedTLS, notPASS.",
       "dev_ci_failure_reason": "v17 delayed memory-board resize with120cards produced16.328px card width below unchanged20px minimum"
     },
-    "public_asset_file_count": 466,
-    "public_asset_total_bytes": 96673009,
-    "current_directory_scope": "Accepted0.15.3.1/cache23 CODEace6fb06bb20a65b20a363722cdf35a0799fb1c4 PUB1e21ff1340c7327db9d63a42934547f14548294e, CI44943513346, Pages44943513266, standardPREPROD44946821720/1; finalmetadata only, manual195NOT_RUN.",
-    "dev_tag_remote_object": "d3aa5e4f486a2fe2f7593d7fd40c18ff28ced2a0",
+    "public_asset_file_count": 468,
+    "public_asset_total_bytes": 96948189,
+    "current_directory_scope": "Accepted 0.15.4.0/cache24 CODE 34dac392fe569c71cee9b913c38ef9c47667ac3e, PUB 7f87e9392211a2e853dd2db744fb04a53fe549ee, own CI 45042424655, Pages 45042424738, standard PRE-PROD 45045856773/1; final metadata only, all 207 manual cases NOT RUN.",
+    "dev_tag_remote_object": "c8b675671399f150ac15cdd20f1b84acb02c1df7",
     "dev_tag_remote_verified": true,
-    "dev_ci_completed_at": "2026-11-21T20:30:11Z",
-    "dev_ci_duration": "34 min 44 s",
+    "dev_ci_completed_at": "2026-11-22T16:46:40Z",
+    "dev_ci_duration": "35 min 11 s",
     "dev_ci_successful_steps": 36,
     "dev_ci_failed_steps": 0,
     "previous_accepted_dev_cache8": {
@@ -33576,8 +33591,8 @@
       "preprod_bridge_duration": "13s",
       "preprod_deployment_duration": "2m12s"
     },
-    "preprod_tag_scope": "immutable_exact_advisor_tasks_cache23_accepted_publication",
-    "dev_tag_scope": "immutable_exact_advisor_tasks_cache23_accepted_publication",
+    "preprod_tag_scope": "immutable_exact_packet_cache24_accepted_publication",
+    "dev_tag_scope": "immutable_exact_packet_cache24_accepted_publication",
     "latest_fix_candidate_failure": {
       "status": "HISTORICAL_FAILURE_SUPERSEDED_BY_ACCEPTED_NEW_PUB",
       "history": [
@@ -34635,13 +34650,13 @@
       "preprod_account_API_enabled": false,
       "preprod_tag_scope": "historical source and artifact verification; functional acceptance reopened"
     },
-    "preprod_application_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-    "preprod_gate_duration": "0 min 13 s",
+    "preprod_application_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+    "preprod_gate_duration": "0 min 17 s",
     "preprod_tag_remote_verified": true,
-    "preprod_public_content_files": 466,
-    "preprod_public_content_bytes": 96666961,
-    "preprod_public_including_manifest_files": 467,
-    "preprod_public_HTTPS_hash_audit": "PASS_ALL467_NORMAL_TLS_EXACT_ORIGINAL_PACKAGE",
+    "preprod_public_content_files": 468,
+    "preprod_public_content_bytes": 96942141,
+    "preprod_public_including_manifest_files": 469,
+    "preprod_public_HTTPS_hash_audit": "PASS_ALL469_NORMAL_TLS_EXACT_ORIGINAL_PACKAGE",
     "preprod_next_promotion_status": "COMPLETED_ACCEPTED",
     "owner_reset_report": {
       "status": "RESET_SUCCESS_INDEPENDENTLY_VERIFIED",
@@ -35126,8 +35141,8 @@
       "native_UI_prerequisite": "owner_first_new_game"
     },
     "next_application_source_sha": null,
-    "next_application_version": "0.15.3.1",
-    "next_cache": "frontend-v32-23",
+    "next_application_version": "0.15.4.0",
+    "next_cache": "frontend-v32-24",
     "next_local_validation": null,
     "next_workbook": null,
     "owner_latest_empty_island_observation": {
@@ -36239,10 +36254,10 @@
       "subsequent_promotion_as_of": "2026-11-18"
     },
     "preprod_observed_candidate": {
-      "source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "version": "0.15.3.1",
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "version": "0.15.4.0",
       "status": "ACCEPTED",
-      "run": 44946821720,
+      "run": 45045856773,
       "attempt": 1,
       "manual_user_acceptance": "NOT_RUN"
     },
@@ -37587,1101 +37602,99 @@
     },
     "pending_next_source": null,
     "active_promotion_request": {
-      "status": "COMPLETED_DEV_THEN_STANDARD_PREPROD_0_15_3_1",
-      "target_version": "0.15.3.1",
-      "target_cache": "frontend-v32-23",
+      "status": "COMPLETED_DEV_THEN_STANDARD_PREPROD_0_15_4_0",
+      "target_version": "0.15.4.0",
+      "target_cache": "frontend-v32-24",
       "authorization_quote": "jak skończysz wrzuć na pre prod",
       "authorization_carried_forward": true,
-      "new_deployment_run": 44946821720,
+      "new_deployment_run": 45045856773,
       "new_deployment_completed": true,
       "no_reset_PROD_DNS_password_changes": true
     },
     "CI_test_totals": {
-      "run": 44943513346,
-      "attempt": 1,
-      "source": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "kind": "ci",
-      "event": "push",
-      "status": "completed",
-      "conclusion": "success",
-      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44943513346",
-      "created_at": "2026-11-21T19:55:27Z",
-      "completed_at": "2026-11-21T20:30:11Z",
-      "workflow_seconds": 2084.0,
-      "jobs": [
-        {
-          "id": 136965672296,
-          "name": "validate",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-11-21T19:55:30Z",
-          "completed_at": "2026-11-21T20:30:11Z",
-          "seconds": 2081.0,
-          "steps": [
-            {
-              "name": "Set up job",
-              "number": 1,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Checkout exact source commit",
-              "number": 2,
-              "conclusion": "success",
-              "seconds": 4.0
-            },
-            {
-              "name": "Setup Node",
-              "number": 3,
-              "conclusion": "success",
-              "seconds": 3.0
-            },
-            {
-              "name": "Setup Python",
-              "number": 4,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Test game rules and release promotion gates",
-              "number": 5,
-              "conclusion": "success",
-              "seconds": 147.0
-            },
-            {
-              "name": "Verify canonical API trade rules",
-              "number": 6,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test API infrastructure endpoints",
-              "number": 7,
-              "conclusion": "success",
-              "seconds": 3.0
-            },
-            {
-              "name": "Test isolated backend image payload",
-              "number": 8,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test cloud bootstrap safety",
-              "number": 9,
-              "conclusion": "success",
-              "seconds": 2.0
-            },
-            {
-              "name": "Test read-only cloud verification",
-              "number": 10,
-              "conclusion": "success",
-              "seconds": 5.0
-            },
-            {
-              "name": "Test deterministic frontend release bundle",
-              "number": 11,
-              "conclusion": "success",
-              "seconds": 10.0
-            },
-            {
-              "name": "Test Firebase Hosting preparation safety",
-              "number": 12,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test permanent DEV account preparation safety",
-              "number": 13,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Test guarded post-promotion PRE-PROD account reset",
-              "number": 14,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test production domain preparation safety",
-              "number": 15,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test isolated runtime and Hosting configuration",
-              "number": 16,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test monthly billing alert configuration safety",
-              "number": 17,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test dry-run tracking issue import and idempotency",
-              "number": 18,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify generated change cards and their index",
-              "number": 19,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify generated manual QA checklist and case index",
-              "number": 20,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test standalone physical game scenario",
-              "number": 21,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify generated legal documents match their reviewed drafts",
-              "number": 22,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify historical Excel 14 against accepted 0.14.0.0 source",
-              "number": 23,
-              "conclusion": "success",
-              "seconds": 19.0
-            },
-            {
-              "name": "Verify all lossless building sprites against approved atlases",
-              "number": 24,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Verify current DEV editorial Excel and empty correction column",
-              "number": 25,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify every standalone minigame and its Word and TXT instructions",
-              "number": 26,
-              "conclusion": "success",
-              "seconds": 7.0
-            },
-            {
-              "name": "Verify full current master Excel and preserved historical rules",
-              "number": 27,
-              "conclusion": "success",
-              "seconds": 39.0
-            },
-            {
-              "name": "Install browser acceptance dependencies",
-              "number": 28,
-              "conclusion": "success",
-              "seconds": 26.0
-            },
-            {
-              "name": "Build the frontend release being validated",
-              "number": 29,
-              "conclusion": "success",
-              "seconds": 3.0
-            },
-            {
-              "name": "Test every standalone minigame and download in Chromium",
-              "number": 30,
-              "conclusion": "success",
-              "seconds": 179.0
-            },
-            {
-              "name": "Test packaged game and both tutorial programs in Chromium",
-              "number": 31,
-              "conclusion": "success",
-              "seconds": 1366.0
-            },
-            {
-              "name": "Test packaged DEV login and cloud saves in Chromium",
-              "number": 32,
-              "conclusion": "success",
-              "seconds": 260.0
-            },
-            {
-              "name": "Publish browser failure diagnostics",
-              "number": 33,
-              "conclusion": "skipped",
-              "seconds": 0.0
-            },
-            {
-              "name": "Publish DEV account browser failure diagnostics",
-              "number": 34,
-              "conclusion": "skipped",
-              "seconds": 0.0
-            },
-            {
-              "name": "Post Setup Python",
-              "number": 66,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Post Setup Node",
-              "number": 67,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Post Checkout exact source commit",
-              "number": 68,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Complete job",
-              "number": 69,
-              "conclusion": "success",
-              "seconds": 0.0
-            }
-          ]
-        }
-      ],
-      "step_status_counts": {
-        "success": 36,
-        "skipped": 2
-      },
-      "full_log_bytes": 632073,
-      "full_log_sha256": "f77e311c9b22190f9945c897a55f157eaeef09fe0dbeec4a37cb6a6195f8dee8",
-      "observer_workflow_dispatches": 0,
-      "observer_repository_mutations": 0,
-      "observer_account_or_clock_writes": 0,
-      "node_full_stats_by_step": {
-        "Test game rules and release promotion gates": {
-          "tests": 1711,
-          "pass": 1711,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "duration_ms": 146626.465689
-        },
-        "Test API infrastructure endpoints": {
-          "tests": 178,
-          "pass": 178,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "duration_ms": 2598.966315
-        },
-        "Test standalone physical game scenario": {
-          "tests": 7,
-          "pass": 7,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "duration_ms": 55.794863
-        }
-      },
-      "node_total": 1896,
-      "python_reports": [
-        {
-          "step": "Test isolated backend image payload",
-          "tests": 2
-        },
-        {
-          "step": "Test cloud bootstrap safety",
-          "tests": 12
-        },
-        {
-          "step": "Test read-only cloud verification",
-          "tests": 10
-        },
-        {
-          "step": "Test deterministic frontend release bundle",
-          "tests": 28
-        },
-        {
-          "step": "Test Firebase Hosting preparation safety",
-          "tests": 17
-        },
-        {
-          "step": "Test permanent DEV account preparation safety",
-          "tests": 23
-        },
-        {
-          "step": "Test guarded post-promotion PRE-PROD account reset",
-          "tests": 20
-        },
-        {
-          "step": "Test production domain preparation safety",
-          "tests": 12
-        },
-        {
-          "step": "Test isolated runtime and Hosting configuration",
-          "tests": 13
-        },
-        {
-          "step": "Test monthly billing alert configuration safety",
-          "tests": 14
-        },
-        {
-          "step": "Test dry-run tracking issue import and idempotency",
-          "tests": 18
-        },
-        {
-          "step": "Verify historical Excel 14 against accepted 0.14.0.0 source",
-          "tests": 4
-        }
-      ],
-      "python_total": 173,
-      "legacy_96h_watchdog": [
-        {
-          "step": "Test game rules and release promotion gates",
-          "elapsed_ms": 6340.883873
-        }
-      ],
-      "browser_source_program_groups": [
-        {
-          "step": "Test every standalone minigame and download in Chromium",
-          "programs": [
-            "tests/harborlight-minigames-standalone-smoke.py"
-          ],
-          "count": 1,
-          "step_conclusion": "success",
-          "completed_programs_confirmed_by_sequential_step_success": 1
-        },
-        {
-          "step": "Test packaged game and both tutorial programs in Chromium",
-          "programs": [
-            "tests/harborlight-building-cache-v32-smoke.py",
-            "tests/harborlight-performance-v32-smoke.py",
-            "tests/harborlight-building-stages-v32-smoke.py",
-            "tests/harborlight-purple-editorial-ui-smoke.py",
-            "tests/harborlight-advisor-ui-smoke.py",
-            "tests/harborlight-advisor-layout-v32-smoke.py",
-            "tests/harborlight-advisor-development-worker-smoke.py",
-            "tests/harborlight-advisor-guidance-smoke.py",
-            "tests/harborlight-practical-paused-v32-smoke.py",
-            "tests/harborlight-menu-tour-info-v32-smoke.py",
-            "tests/harborlight-map-labels-v32-smoke.py",
-            "tests/harborlight-startup-replay-v32-smoke.py",
-            "tests/harborlight-startup-no-flash-v32-smoke.py",
-            "tests/harborlight-admin3-speed-v32-smoke.py",
-            "tests/harborlight-cloud-rules-v32-smoke.py",
-            "tests/harborlight-editorial-six-tabs-v32-smoke.py",
-            "tests/harborlight-pages-dev-v32-smoke.py",
-            "tests/harborlight-level5-preview-v32-smoke.py",
-            "tests/harborlight-new-building-layout-v32-smoke.py",
-            "tests/harborlight-menu-consistency-v32-smoke.py",
-            "tests/harborlight-worker-feedback-v32-smoke.py",
-            "tests/harborlight-native-map-v32-smoke.py",
-            "tests/harborlight-accepted-front-v32-smoke.py",
-            "tests/harborlight-resource-icons-v32-smoke.py",
-            "tests/harborlight-building-access-v32-smoke.py",
-            "tests/harborlight-tour-route-v5-smoke.py",
-            "tests/harborlight-onboarding-target-replacement-v32-smoke.py",
-            "tests/harborlight-warehouse-sections-v32-smoke.py",
-            "tests/harborlight-theatre-selection-v32-smoke.py",
-            "tests/harborlight-save-packing-v32-smoke.py",
-            "tests/harborlight-original-puzzles-v32-smoke.py",
-            "tests/harborlight-resident-labels-ui-v32-smoke.py",
-            "tests/harborlight-kingdom-resident-labels-v32-smoke.py",
-            "tests/harborlight-legacy-resident-labels-v32-smoke.py",
-            "tests/harborlight-theatre-free-placement-v31-smoke.py",
-            "tests/harborlight-frontend-v17-smoke.py",
-            "tests/harborlight-frontend-v18-smoke.py",
-            "tests/harborlight-tutorial-v18-smoke.py",
-            "tests/harborlight-tutorial-v21-smoke.py",
-            "tests/harborlight-tutorial-v22-smoke.py",
-            "tests/harborlight-tutorial-priority-v22-smoke.py",
-            "tests/harborlight-tutorial-map-v25-smoke.py",
-            "tests/harborlight-learning-review-v26-smoke.py",
-            "tests/harborlight-learning-flow-v26-smoke.py",
-            "tests/harborlight-starter-course-v26-smoke.py",
-            "tests/harborlight-learning-feedback-v27-smoke.py",
-            "tests/harborlight-learning-flow-v27-smoke.py",
-            "tests/harborlight-missions-ui-v27-smoke.py",
-            "tests/harborlight-missions-game-v27-smoke.py",
-            "tests/harborlight-release-v28-smoke.py",
-            "tests/harborlight-starter-course-v28-smoke.py",
-            "scripts/test_frontend_v29_learning.py",
-            "tests/harborlight-theatre-v29-smoke.py",
-            "tests/harborlight-adventures-v29-smoke.py",
-            "tests/harborlight-release-v29-smoke.py",
-            "tests/harborlight-theatre-v30-smoke.py",
-            "tests/harborlight-theatre-v30-game-smoke.py",
-            "tests/harborlight-adventures-v31-smoke.py",
-            "tests/harborlight-missions-v31-smoke.py",
-            "tests/harborlight-release-v31-smoke.py"
-          ],
-          "count": 60,
-          "step_conclusion": "success",
-          "completed_programs_confirmed_by_sequential_step_success": 60,
-          "actual_logged_starts": 60,
-          "actual_log_program_sequence_equals_source": true
-        },
-        {
-          "step": "Test packaged DEV login and cloud saves in Chromium",
-          "programs": [
-            "tests/harborlight-v32-live-cas-smoke.py",
-            "tests/harborlight-dev-auth-smoke.py",
-            "tests/harborlight-dev-game-smoke.py",
-            "tests/harborlight-settings-signout-smoke.py",
-            "tests/harborlight-v18-auth-smoke.py",
-            "tests/harborlight-onboarding-v20-smoke.py",
-            "tests/harborlight-v21-features-smoke.py",
-            "tests/harborlight-help-v24-smoke.py",
-            "tests/harborlight-community-v24-smoke.py",
-            "tests/harborlight-charity-v24-smoke.py",
-            "tests/harborlight-manual-checklist-smoke.py",
-            "tests/harborlight-polish-panels-smoke.py",
-            "tests/harborlight-economy-review-v26-smoke.py",
-            "tests/harborlight-housing-v27-smoke.py",
-            "tests/harborlight-onboarding-v28-smoke.py",
-            "tests/harborlight-social-v28-smoke.py",
-            "tests/harborlight-ship-capacity-v28-smoke.py",
-            "tests/harborlight-cloud-interruption-v31-smoke.py"
-          ],
-          "count": 18,
-          "step_conclusion": "success",
-          "completed_programs_confirmed_by_sequential_step_success": 18
-        }
-      ],
-      "browser_programs_expected_from_exact_source": 79,
-      "browser_programs_confirmed_all_required_steps": 79,
-      "crosschecks": {
-        "all_required_browser_steps_success": true,
-        "logged_program_sequences_match_source": true,
-        "all_reported_Node_failures_zero": true,
-        "watchdog_one_report_under_original10s": true,
-        "declared_Node_total": true,
-        "declared_Python_total": true
-      },
-      "actual_hosted_or_account_acceptance": "SEPARATE_REQUIRED_GCP_AND_PARENT_AUDITS"
+      "Node": 2016,
+      "frontend": 1831,
+      "backend": 178,
+      "board": 7,
+      "Python": 173,
+      "Chromium_programs": 84,
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "run": 45042424655
     },
     "latest_DEV_ci_observation": {
-      "run": 44943513346,
-      "attempt": 1,
-      "source": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "kind": "ci",
-      "event": "push",
       "status": "completed",
       "conclusion": "success",
-      "url": "https://github.com/ksobczak321-oss/gra/actions/runs/44943513346",
-      "created_at": "2026-11-21T19:55:27Z",
-      "completed_at": "2026-11-21T20:30:11Z",
-      "workflow_seconds": 2084.0,
-      "jobs": [
-        {
-          "id": 136965672296,
-          "name": "validate",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-11-21T19:55:30Z",
-          "completed_at": "2026-11-21T20:30:11Z",
-          "seconds": 2081.0,
-          "steps": [
-            {
-              "name": "Set up job",
-              "number": 1,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Checkout exact source commit",
-              "number": 2,
-              "conclusion": "success",
-              "seconds": 4.0
-            },
-            {
-              "name": "Setup Node",
-              "number": 3,
-              "conclusion": "success",
-              "seconds": 3.0
-            },
-            {
-              "name": "Setup Python",
-              "number": 4,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Test game rules and release promotion gates",
-              "number": 5,
-              "conclusion": "success",
-              "seconds": 147.0
-            },
-            {
-              "name": "Verify canonical API trade rules",
-              "number": 6,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test API infrastructure endpoints",
-              "number": 7,
-              "conclusion": "success",
-              "seconds": 3.0
-            },
-            {
-              "name": "Test isolated backend image payload",
-              "number": 8,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test cloud bootstrap safety",
-              "number": 9,
-              "conclusion": "success",
-              "seconds": 2.0
-            },
-            {
-              "name": "Test read-only cloud verification",
-              "number": 10,
-              "conclusion": "success",
-              "seconds": 5.0
-            },
-            {
-              "name": "Test deterministic frontend release bundle",
-              "number": 11,
-              "conclusion": "success",
-              "seconds": 10.0
-            },
-            {
-              "name": "Test Firebase Hosting preparation safety",
-              "number": 12,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test permanent DEV account preparation safety",
-              "number": 13,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Test guarded post-promotion PRE-PROD account reset",
-              "number": 14,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test production domain preparation safety",
-              "number": 15,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test isolated runtime and Hosting configuration",
-              "number": 16,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test monthly billing alert configuration safety",
-              "number": 17,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test dry-run tracking issue import and idempotency",
-              "number": 18,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify generated change cards and their index",
-              "number": 19,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify generated manual QA checklist and case index",
-              "number": 20,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Test standalone physical game scenario",
-              "number": 21,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify generated legal documents match their reviewed drafts",
-              "number": 22,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify historical Excel 14 against accepted 0.14.0.0 source",
-              "number": 23,
-              "conclusion": "success",
-              "seconds": 19.0
-            },
-            {
-              "name": "Verify all lossless building sprites against approved atlases",
-              "number": 24,
-              "conclusion": "success",
-              "seconds": 1.0
-            },
-            {
-              "name": "Verify current DEV editorial Excel and empty correction column",
-              "number": 25,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Verify every standalone minigame and its Word and TXT instructions",
-              "number": 26,
-              "conclusion": "success",
-              "seconds": 7.0
-            },
-            {
-              "name": "Verify full current master Excel and preserved historical rules",
-              "number": 27,
-              "conclusion": "success",
-              "seconds": 39.0
-            },
-            {
-              "name": "Install browser acceptance dependencies",
-              "number": 28,
-              "conclusion": "success",
-              "seconds": 26.0
-            },
-            {
-              "name": "Build the frontend release being validated",
-              "number": 29,
-              "conclusion": "success",
-              "seconds": 3.0
-            },
-            {
-              "name": "Test every standalone minigame and download in Chromium",
-              "number": 30,
-              "conclusion": "success",
-              "seconds": 179.0
-            },
-            {
-              "name": "Test packaged game and both tutorial programs in Chromium",
-              "number": 31,
-              "conclusion": "success",
-              "seconds": 1366.0
-            },
-            {
-              "name": "Test packaged DEV login and cloud saves in Chromium",
-              "number": 32,
-              "conclusion": "success",
-              "seconds": 260.0
-            },
-            {
-              "name": "Publish browser failure diagnostics",
-              "number": 33,
-              "conclusion": "skipped",
-              "seconds": 0.0
-            },
-            {
-              "name": "Publish DEV account browser failure diagnostics",
-              "number": 34,
-              "conclusion": "skipped",
-              "seconds": 0.0
-            },
-            {
-              "name": "Post Setup Python",
-              "number": 66,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Post Setup Node",
-              "number": 67,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Post Checkout exact source commit",
-              "number": 68,
-              "conclusion": "success",
-              "seconds": 0.0
-            },
-            {
-              "name": "Complete job",
-              "number": 69,
-              "conclusion": "success",
-              "seconds": 0.0
-            }
-          ]
-        }
-      ],
-      "step_status_counts": {
-        "success": 36,
-        "skipped": 2
-      },
-      "full_log_bytes": 632073,
-      "full_log_sha256": "f77e311c9b22190f9945c897a55f157eaeef09fe0dbeec4a37cb6a6195f8dee8",
-      "observer_workflow_dispatches": 0,
-      "observer_repository_mutations": 0,
-      "observer_account_or_clock_writes": 0,
-      "node_full_stats_by_step": {
-        "Test game rules and release promotion gates": {
-          "tests": 1711,
-          "pass": 1711,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "duration_ms": 146626.465689
-        },
-        "Test API infrastructure endpoints": {
-          "tests": 178,
-          "pass": 178,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "duration_ms": 2598.966315
-        },
-        "Test standalone physical game scenario": {
-          "tests": 7,
-          "pass": 7,
-          "fail": 0,
-          "cancelled": 0,
-          "skipped": 0,
-          "todo": 0,
-          "duration_ms": 55.794863
-        }
-      },
-      "node_total": 1896,
-      "python_reports": [
-        {
-          "step": "Test isolated backend image payload",
-          "tests": 2
-        },
-        {
-          "step": "Test cloud bootstrap safety",
-          "tests": 12
-        },
-        {
-          "step": "Test read-only cloud verification",
-          "tests": 10
-        },
-        {
-          "step": "Test deterministic frontend release bundle",
-          "tests": 28
-        },
-        {
-          "step": "Test Firebase Hosting preparation safety",
-          "tests": 17
-        },
-        {
-          "step": "Test permanent DEV account preparation safety",
-          "tests": 23
-        },
-        {
-          "step": "Test guarded post-promotion PRE-PROD account reset",
-          "tests": 20
-        },
-        {
-          "step": "Test production domain preparation safety",
-          "tests": 12
-        },
-        {
-          "step": "Test isolated runtime and Hosting configuration",
-          "tests": 13
-        },
-        {
-          "step": "Test monthly billing alert configuration safety",
-          "tests": 14
-        },
-        {
-          "step": "Test dry-run tracking issue import and idempotency",
-          "tests": 18
-        },
-        {
-          "step": "Verify historical Excel 14 against accepted 0.14.0.0 source",
-          "tests": 4
-        }
-      ],
-      "python_total": 173,
-      "legacy_96h_watchdog": [
-        {
-          "step": "Test game rules and release promotion gates",
-          "elapsed_ms": 6340.883873
-        }
-      ],
-      "browser_source_program_groups": [
-        {
-          "step": "Test every standalone minigame and download in Chromium",
-          "programs": [
-            "tests/harborlight-minigames-standalone-smoke.py"
-          ],
-          "count": 1,
-          "step_conclusion": "success",
-          "completed_programs_confirmed_by_sequential_step_success": 1
-        },
-        {
-          "step": "Test packaged game and both tutorial programs in Chromium",
-          "programs": [
-            "tests/harborlight-building-cache-v32-smoke.py",
-            "tests/harborlight-performance-v32-smoke.py",
-            "tests/harborlight-building-stages-v32-smoke.py",
-            "tests/harborlight-purple-editorial-ui-smoke.py",
-            "tests/harborlight-advisor-ui-smoke.py",
-            "tests/harborlight-advisor-layout-v32-smoke.py",
-            "tests/harborlight-advisor-development-worker-smoke.py",
-            "tests/harborlight-advisor-guidance-smoke.py",
-            "tests/harborlight-practical-paused-v32-smoke.py",
-            "tests/harborlight-menu-tour-info-v32-smoke.py",
-            "tests/harborlight-map-labels-v32-smoke.py",
-            "tests/harborlight-startup-replay-v32-smoke.py",
-            "tests/harborlight-startup-no-flash-v32-smoke.py",
-            "tests/harborlight-admin3-speed-v32-smoke.py",
-            "tests/harborlight-cloud-rules-v32-smoke.py",
-            "tests/harborlight-editorial-six-tabs-v32-smoke.py",
-            "tests/harborlight-pages-dev-v32-smoke.py",
-            "tests/harborlight-level5-preview-v32-smoke.py",
-            "tests/harborlight-new-building-layout-v32-smoke.py",
-            "tests/harborlight-menu-consistency-v32-smoke.py",
-            "tests/harborlight-worker-feedback-v32-smoke.py",
-            "tests/harborlight-native-map-v32-smoke.py",
-            "tests/harborlight-accepted-front-v32-smoke.py",
-            "tests/harborlight-resource-icons-v32-smoke.py",
-            "tests/harborlight-building-access-v32-smoke.py",
-            "tests/harborlight-tour-route-v5-smoke.py",
-            "tests/harborlight-onboarding-target-replacement-v32-smoke.py",
-            "tests/harborlight-warehouse-sections-v32-smoke.py",
-            "tests/harborlight-theatre-selection-v32-smoke.py",
-            "tests/harborlight-save-packing-v32-smoke.py",
-            "tests/harborlight-original-puzzles-v32-smoke.py",
-            "tests/harborlight-resident-labels-ui-v32-smoke.py",
-            "tests/harborlight-kingdom-resident-labels-v32-smoke.py",
-            "tests/harborlight-legacy-resident-labels-v32-smoke.py",
-            "tests/harborlight-theatre-free-placement-v31-smoke.py",
-            "tests/harborlight-frontend-v17-smoke.py",
-            "tests/harborlight-frontend-v18-smoke.py",
-            "tests/harborlight-tutorial-v18-smoke.py",
-            "tests/harborlight-tutorial-v21-smoke.py",
-            "tests/harborlight-tutorial-v22-smoke.py",
-            "tests/harborlight-tutorial-priority-v22-smoke.py",
-            "tests/harborlight-tutorial-map-v25-smoke.py",
-            "tests/harborlight-learning-review-v26-smoke.py",
-            "tests/harborlight-learning-flow-v26-smoke.py",
-            "tests/harborlight-starter-course-v26-smoke.py",
-            "tests/harborlight-learning-feedback-v27-smoke.py",
-            "tests/harborlight-learning-flow-v27-smoke.py",
-            "tests/harborlight-missions-ui-v27-smoke.py",
-            "tests/harborlight-missions-game-v27-smoke.py",
-            "tests/harborlight-release-v28-smoke.py",
-            "tests/harborlight-starter-course-v28-smoke.py",
-            "scripts/test_frontend_v29_learning.py",
-            "tests/harborlight-theatre-v29-smoke.py",
-            "tests/harborlight-adventures-v29-smoke.py",
-            "tests/harborlight-release-v29-smoke.py",
-            "tests/harborlight-theatre-v30-smoke.py",
-            "tests/harborlight-theatre-v30-game-smoke.py",
-            "tests/harborlight-adventures-v31-smoke.py",
-            "tests/harborlight-missions-v31-smoke.py",
-            "tests/harborlight-release-v31-smoke.py"
-          ],
-          "count": 60,
-          "step_conclusion": "success",
-          "completed_programs_confirmed_by_sequential_step_success": 60,
-          "actual_logged_starts": 60,
-          "actual_log_program_sequence_equals_source": true
-        },
-        {
-          "step": "Test packaged DEV login and cloud saves in Chromium",
-          "programs": [
-            "tests/harborlight-v32-live-cas-smoke.py",
-            "tests/harborlight-dev-auth-smoke.py",
-            "tests/harborlight-dev-game-smoke.py",
-            "tests/harborlight-settings-signout-smoke.py",
-            "tests/harborlight-v18-auth-smoke.py",
-            "tests/harborlight-onboarding-v20-smoke.py",
-            "tests/harborlight-v21-features-smoke.py",
-            "tests/harborlight-help-v24-smoke.py",
-            "tests/harborlight-community-v24-smoke.py",
-            "tests/harborlight-charity-v24-smoke.py",
-            "tests/harborlight-manual-checklist-smoke.py",
-            "tests/harborlight-polish-panels-smoke.py",
-            "tests/harborlight-economy-review-v26-smoke.py",
-            "tests/harborlight-housing-v27-smoke.py",
-            "tests/harborlight-onboarding-v28-smoke.py",
-            "tests/harborlight-social-v28-smoke.py",
-            "tests/harborlight-ship-capacity-v28-smoke.py",
-            "tests/harborlight-cloud-interruption-v31-smoke.py"
-          ],
-          "count": 18,
-          "step_conclusion": "success",
-          "completed_programs_confirmed_by_sequential_step_success": 18
-        }
-      ],
-      "browser_programs_expected_from_exact_source": 79,
-      "browser_programs_confirmed_all_required_steps": 79,
-      "crosschecks": {
-        "all_required_browser_steps_success": true,
-        "logged_program_sequences_match_source": true,
-        "all_reported_Node_failures_zero": true,
-        "watchdog_one_report_under_original10s": true,
-        "declared_Node_total": true,
-        "declared_Python_total": true
-      },
-      "actual_hosted_or_account_acceptance": "SEPARATE_REQUIRED_GCP_AND_PARENT_AUDITS",
-      "accepted": true
+      "run": 45042424655,
+      "source": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "accepted": true,
+      "report": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json"
     },
     "dev_ci_failure_reason": null,
     "current_preprod_fix": {
-      "source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-      "status": "ACCEPTED_ADVISOR_TASKS_ALL_GATES",
-      "run": 44946821720,
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "status": "ACCEPTED_PACKET_20261122_ALL_GATES",
+      "run": 45045856773,
       "attempt": 1,
-      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+      "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json"
     },
     "current_workbook": {
       "path": "docs/arkusze/HARBORLIGHT15-redakcja-6-zakladek.xlsx",
-      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "publication_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
       "sheets": 6,
       "rows": 413,
-      "C_all_blank": true,
-      "source_files": 117,
-      "bytes": 60328,
-      "sha256": "ddbbad979126ed87818e75405670e21c9b7214627f24e6014e9ec52eaa9e5fee",
       "columns": [
         "A",
         "B",
         "C"
       ],
+      "C_all_blank": true,
       "validation": "PASS",
-      "all_ABC_headers_and_data_rows_exact_previous_accepted_fc95": {
-        "status": "PASS",
-        "baseline_publication": "fc95a1aadf36a115538ed0b846f9ce48fbba651b",
-        "sheets": [
-          {
-            "name": "Tutorial",
-            "header_and_data_rows": 56,
-            "ABC_exact": true,
-            "C_data_blank": true
-          },
-          {
-            "name": "Budynki — opisy",
-            "header_and_data_rows": 25,
-            "ABC_exact": true,
-            "C_data_blank": true
-          },
-          {
-            "name": "Budynki — informacje",
-            "header_and_data_rows": 31,
-            "ABC_exact": true,
-            "C_data_blank": true
-          },
-          {
-            "name": "Dolny pasek",
-            "header_and_data_rows": 25,
-            "ABC_exact": true,
-            "C_data_blank": true
-          },
-          {
-            "name": "Komunikaty",
-            "header_and_data_rows": 216,
-            "ABC_exact": true,
-            "C_data_blank": true
-          },
-          {
-            "name": "Przyciski",
-            "header_and_data_rows": 66,
-            "ABC_exact": true,
-            "C_data_blank": true
-          }
-        ],
-        "total_rows_including_headers": 419,
-        "data_rows": 413,
-        "all_ABC_values_exact": true,
-        "C_all_blank": true,
-        "fields_excluded": false
-      },
-      "selected_six_sheet_read_and_merge_scope_preserved": true,
-      "new_publication_pending": false,
+      "sha256": "fc1e75b8e046441d0e65e96fe7d860a9a0bd7f11466b805e629a61c6dfb64eed",
+      "source_files": 119,
+      "accepted_changed_rows": 5,
+      "other408_rows_exact": true,
       "public_workbook_TLS": "PASS_SEPARATE_NORMAL_TLS_EXACT_PUBLICATION",
-      "publication_sha": "1e21ff1340c7327db9d63a42934547f14548294e"
+      "new_publication_pending": false
     },
     "master_workbook15_task": {
-      "status": "BUILD_FRESH_VALIDATE_OWN_CI_AND_PUBLICATION_PASS",
-      "source_freeze_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "status": "FRESH_CODE_OWN_PUBLICATION_CI_PREPROD_PASS",
+      "source_freeze_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "publication_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
       "output_workbook": "docs/arkusze/HARBORLIGHT15-zasady.xlsx",
-      "output_sha256": "0e91fe4182890d9f59dc6db8450980d2221496be3d38942864a1f8790fa8eaee",
-      "output_bytes": 8365051,
+      "output_sha256": "97e56228071c977ab92be76306e5eff23372d7464cc09113182e95dc6826cf1e",
+      "output_bytes": 8608624,
       "final_sheet_count": 164,
       "final_current_sheet_count": 64,
-      "final_row_count": 66801,
-      "source_files": 136,
-      "historical_proof": {
-        "historical_sheets_unchanged": 100,
-        "historical_zip_parts_unchanged": 220,
-        "historical_comments_unchanged": 48,
-        "historical_cached_formulas_unchanged": 4982
-      },
+      "final_row_count": 69153,
       "validation": "PASS",
+      "historical100_220_48_4982_preserved": true,
       "new_reset_executed": false,
-      "publication_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "ci_run": 44943513346,
-      "active_tour_rows": 28,
-      "archive_tour_rows": 56,
-      "preserved_practical_lessons": 25
+      "report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json"
     },
     "metadata_only_followup": {
-      "scope": "Finalmetadata only; application canonical artifacts and tags unchanged",
-      "accepted_publication_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "scope": "Final metadata only; application, canonical artifacts and tags unchanged",
+      "accepted_publication_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
       "new_GCP_deployment": false,
       "new_reset": false
     },
     "next_dev_scope": "docs/v32/GO-ADVISOR-TASKS.md",
     "latest_local_validation": {
-      "status": "FINAL_LOCAL_TESTS_AND_CANONICAL_PASS_SEPARATE_FROM_OWN_CI",
-      "code_source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-      "frontend": {
-        "status": "PASS_AFTER_FRIENDLY_STEERING",
-        "tests": 1711,
-        "pass": 1711,
-        "fail": 0,
-        "duration_ms": 217702.151901,
-        "path": "/workspace/work/advisor-layout-20261121/frontend-node-final-after-friendly.log",
-        "sha256": "8d3969491dbd2a6ff2dd9286fdbd2b411d35b4d960e8e427a54266848c0823f4"
-      },
-      "backend_pass": 178,
-      "board_pass": 7,
-      "Python_total_pass": 173,
-      "bundle": {
-        "status": "PASS",
-        "tests": 28,
-        "seconds": 14.315,
-        "path": "/workspace/work/advisor-layout-20261121/bundle28-final.log",
-        "sha256": "a13e6a82a08ba70b3db585541200bb94ada292ea8e931b18a9b6b2d4757e1e75"
-      },
-      "local_browser_programs": 8,
-      "watchdog": {
-        "status": "PASS",
-        "duration_ms": 8866.634829,
-        "limit_ms": 10000,
-        "limit_changed": false
-      },
-      "CODE_transition": {
-        "from": "6e7f593c7d6f7f23ac9ef095efefadb30e952cbe",
-        "to": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-        "only_changed_path": "scripts/export_workbook_v15_texts.mjs",
-        "root_identity_report": "/workspace/work/advisor-layout-20261121/CODE2-runtime-test-identity.json",
-        "exact_single_provenance_marker_replacement": true,
-        "runtime_and_test_sources_byte_exact": true,
-        "prior_1711_full_frontend_proof_remains_scoped_to_identical_runtime_test_sources": true
-      },
-      "own_publication_CI_run": 44943513346,
-      "manual_user_acceptance": "NOT_RUN",
-      "earlier_failures_remain_in_separate_history": true
+      "status": "LOCAL_ATTEMPTS_PRESERVED_SEPARATE_FROM_COMPLETE_OWN_CI",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "own_publication_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "own_CI_run": 45042424655,
+      "own_CI_frontend": 1831,
+      "own_CI_backend": 178,
+      "own_CI_board": 7,
+      "own_CI_Python": 173,
+      "own_CI_browser_programs": 84,
+      "local_attempt_history": "docs/v32/PACKET-20261122-EVIDENCE.json#local_full_frontend_attempts",
+      "source_anchor_remedy": "docs/v32/PACKET-20261122-EVIDENCE.json#exporter_source_anchor_remedy",
+      "canonical_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+      "manual_user_acceptance": "NOT_RUN"
     },
     "performance_fix_task": {
       "as_of": "2026-11-19",
@@ -38818,32 +37831,37 @@
       }
     },
     "actually_deployed_preprod": {
-      "version": "0.15.3.1",
-      "cache": "frontend-v32-23",
-      "source": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "code_source": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-      "run": 44946821720,
+      "version": "0.15.4.0",
+      "cache": "frontend-v32-24",
+      "source": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "code_source": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "run": 45045856773,
       "attempt": 1,
       "workflow": "SUCCESS",
       "quality": "ACCEPTED_ALL_INDEPENDENT_GATES",
-      "accepted_tag": "preprod-0.15.3.1-20261121"
+      "accepted_tag": "preprod-0.15.4.0-20261122"
     },
     "CI_test_totals_pending_next": null,
     "candidate_next_release": {
-      "version": "0.15.3.1",
-      "cache": "frontend-v32-23",
+      "version": "0.15.4.0",
+      "cache": "frontend-v32-24",
       "status": "ACCEPTED_DEV_PREPROD_ALL_AUTOMATED_GATES",
-      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
-      "publication_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "ci": 44943513346,
-      "pages": 44943513266,
-      "preprod": 44946821720,
+      "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "publication_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "ci": 45042424655,
+      "pages": 45042424738,
+      "preprod": 45045856773,
       "preprod_status": "ACCEPTED",
-      "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
-      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
-      "expected_public_package_files": 467,
-      "previous_unaccepted_publication": "5cb9e97f12f13631cb83473cd2506d25370384f4",
-      "manual_user_acceptance": "NOT_RUN"
+      "requirements": "docs/v32/GO-PACKET-20261122.md",
+      "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
+      "expected_public_package_files": 469,
+      "manual_user_acceptance": "NOT_RUN",
+      "application_version": "0.15.4.0",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "ci_run_id": 45042424655,
+      "pages_run_id": 45042424738,
+      "new_PREPROD_deployment": true
     },
     "historical_cache19_candidate_fields": {
       "dev_application_version": "0.15.2.2",
@@ -39100,7 +38118,7 @@
       "CI_run": 44520278661,
       "Pages_run": 44520278629
     },
-    "dev_pages_duration": "0 min 26 s",
+    "dev_pages_duration": "0 min 30 s",
     "historical_preprod_observed_candidate_before_C6": {
       "source_sha": "03f39a2e8e8854208548ba53dc842aae5955e2af",
       "run_id": 44093734171,
@@ -39183,10 +38201,10 @@
       "conclusion": "success"
     },
     "currently_public_DEV": {
-      "version": "0.15.3.1",
-      "cache": "frontend-v32-23",
-      "source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
-      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+      "version": "0.15.4.0",
+      "cache": "frontend-v32-24",
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json"
     },
     "advisor_guidance_task": {
       "status": "ACCEPTED_DEV_PREPROD_ALL_AUTOMATED_GATES_PASS",
@@ -39251,16 +38269,18 @@
       }
     },
     "canonical_guidance_minigames": {
-      "status": "PASS_EXACT_CODE_OWN_PUBLICATION_CI_AND_PREPROD",
-      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
       "games": 55,
-      "instructions": 110,
-      "DOCX_inner_parts": 1045,
-      "TXT_and_link_index_checks": 56,
-      "ZIP_bytes": 2390499,
-      "ZIP_sha256": "5872a18084e4a0c4521b17bb5a831993bc3b21837d17bf4ba0b8f7c040168cb2",
-      "text_or_gameplay_differences": 0,
-      "source_line_anchor_shifts": 0
+      "DOCX": 55,
+      "TXT": 55,
+      "language": "pl",
+      "runtime_languages": [
+        "pl",
+        "en"
+      ],
+      "sha256": "d3c5ff62eb1b678bff5e03602fce7dd29d69369552c8835f39fb0de5441bca59",
+      "status": "PASS_EXACT_CODE_OWN_CI_PAGES_PREPROD",
+      "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json"
     },
     "historical_before_final_guidance_currently_public_DEV": {
       "version": "0.15.2.4",
@@ -40777,15 +39797,16 @@
       "manual_user_acceptance": "NOT_RUN"
     },
     "public_index_accounting": {
-      "Pages": "Own-PUB Git index.html",
-      "PREPROD": "Original generated frontend index.html",
-      "Pages_content_bytes": 96673009,
-      "PREPROD_content_bytes": 96666961,
-      "generated_release_manifest_bytes": 62730,
-      "independent_verified_index_byte_delta": 6048
+      "Pages_source": "Git(PUB:index.html)",
+      "PREPROD_source": "Original generated TAR index.html",
+      "Pages_content_bytes": 96948189,
+      "PREPROD_content_bytes": 96942141,
+      "Pages_minus_PREPROD_content_bytes": 6048,
+      "manifest_bytes": 62996,
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee"
     },
     "pending_packet_20261122": {
-      "status": "LOCAL_MODEL_INFRA_CANONICAL_PASS_PUBLICATION_PENDING",
+      "status": "ACCEPTED_DEV_PREPROD_ALL_AUTOMATED_GATES",
       "application_version": "0.15.4.0",
       "cache": "frontend-v32-24",
       "requirements": "docs/v32/GO-PACKET-20261122.md",
@@ -40793,17 +39814,16 @@
       "change_range": "HL-CHG-1191–1198",
       "manual_case_range": "HL-TC-0196–0207",
       "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
-      "publication_source_sha": null,
-      "ci_run_id": null,
-      "pages_run_id": null,
+      "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "ci_run_id": 45042424655,
+      "pages_run_id": 45042424738,
       "initial_authorized_environments": [
         "DEV",
         "Git",
         "CI",
         "Pages"
       ],
-      "new_PREPROD_deployment": false,
-      "preprod_still_accepted_source": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "new_PREPROD_deployment": true,
       "manual_user_acceptance": "NOT_RUN",
       "new_PREPROD_authorized": true,
       "canonical_artifacts": {
@@ -41839,11 +40859,84 @@
       },
       "canonical_artifact_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
       "first_preview_CI_history": "PUB1CI45029811749FAILstaleadvisorliteral; PUB2CI45032326833FAILstaleconstructioncopy. Both2016Node173PythonPASS, noDEVtag/PREPROD. Tests-onlyfixes retainCODE5 and exact468publiccontent.",
-      "previous_unaccepted_publication": "32990aa1cf260ba3a3511e2c2add982a7287895d",
-      "previous_unaccepted_CI_run": 45037008018,
-      "previous_unaccepted_CI_conclusion": "failure",
       "latest_test_bootstrap_correction": "Own ephemeral server and actual-ready wait in v32UI; fixed identical install/pause clock anchor in Polish fixture. Original26v32assertions and frozenNOW preserved.",
-      "latest_rendering_correction": "Font-sensitive mobilememory19px→atleast20px; actual151/156 fulltests/stress/lifecyclePASS; no model changes"
+      "latest_rendering_correction": "Font-sensitive mobilememory19px→atleast20px; actual151/156 fulltests/stress/lifecyclePASS; no model changes",
+      "version": "0.15.4.0",
+      "source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "publication_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "ci": 45042424655,
+      "pages": 45042424738,
+      "preprod": 45045856773,
+      "preprod_status": "ACCEPTED",
+      "expected_public_package_files": 469,
+      "historical_previous_unaccepted_preview": {
+        "publication_source_sha": "32990aa1cf260ba3a3511e2c2add982a7287895d",
+        "CI_run": 45037008018,
+        "CI_conclusion": "failure",
+        "provenance": "Git(7f87e9392211a2e853dd2db744fb04a53fe549ee:docs/tracking/changes.json)#current_environment.pending_packet_20261122",
+        "history": "docs/v32/PACKET-20261122-EVIDENCE.json#publication_workflow_history",
+        "does_not_describe_current_release": true
+      },
+      "implementation_snapshot_status": "HISTORICAL_IMPLEMENTATION_DETAILS_ACCEPTED_IN_FINAL_PUB5",
+      "implementation_snapshots_final_acceptance": {
+        "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "publication_source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+        "CI_run": 45042424655,
+        "CI_conclusion": "success",
+        "CI_report": "/workspace/work/minigry-packet-20261122/release/CI-45042424655-1/CI-summary.json",
+        "canonical_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt5/canonical-artifacts-summary.json",
+        "canonical_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+        "PREPROD_run": 45045856773,
+        "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json",
+        "scope": "Current accepted PUB5; does not rewrite earlier preview results"
+      }
+    },
+    "historical_cache23_before_packet_20261122": {
+      "version": "0.15.3.1",
+      "cache": "frontend-v32-23",
+      "DEV_source": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "PREPROD_source": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "CI": 44943513346,
+      "Pages": 44943513266,
+      "PREPROD": 44946821720,
+      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+    },
+    "preprod_dispatch": "manual",
+    "account_integrity_after_packet_20261122": {
+      "status": "PASS",
+      "release": "0.15.4.0/cache24",
+      "all_origins_preserved": true,
+      "report": "/workspace/work/minigry-packet-20261122/release/release24-account-preservation.json"
+    },
+    "historical_candidate_before_packet_20261122": {
+      "version": "0.15.3.1",
+      "cache": "frontend-v32-23",
+      "source_sha": "ace6fb06bb20a65b20a363722cdf35a0799fb1c4",
+      "publication_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "ci": 44943513346,
+      "pages": 44943513266,
+      "preprod": 44946821720,
+      "requirements": "docs/v32/GO-ADVISOR-TASKS.md",
+      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json",
+      "previous_unaccepted_publication": "5cb9e97f12f13631cb83473cd2506d25370384f4"
+    },
+    "historical_preprod_accepted_before_packet_20261122": {
+      "source_sha": "1e21ff1340c7327db9d63a42934547f14548294e",
+      "evidence": "docs/v32/ADVISOR-TASKS-EVIDENCE.json"
+    },
+    "next_release_planning_status": "CURRENT_PACKET_ACCEPTED_NO_ADDITIONAL_CANDIDATE_PROPOSED",
+    "cache24_current_acceptance": {
+      "event": "ACCEPTED_PACKET",
+      "source_sha": "7f87e9392211a2e853dd2db744fb04a53fe549ee",
+      "code_source_sha": "34dac392fe569c71cee9b913c38ef9c47667ac3e",
+      "CI_run": 45042424655,
+      "Pages_run": 45042424738,
+      "PREPROD_run": 45045856773,
+      "attempt": 1,
+      "accepted_at_utc": "2026-11-22T17:01:20.277686+00:00",
+      "version": "0.15.4.0",
+      "cache": "frontend-v32-24",
+      "evidence": "docs/v32/PACKET-20261122-EVIDENCE.json"
     }
   }
 }

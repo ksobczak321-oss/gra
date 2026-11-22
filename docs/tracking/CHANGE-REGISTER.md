@@ -14,10 +14,10 @@ Rejestr nie publikuje prywatnych kwot Billing ani danych osobistych związanych 
 
 ## Bieżące środowiska
 
-- Nowy DEV **0.15.3.1**: `ACCEPTED_OWN_EXACT_CI_PAGES_ALL_BYTES`; CI `SUCCESS`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
-- Odebrany PRE-PROD **0.15.3.1**: źródło `1e21ff1340c7327db9d63a42934547f14548294e`; [deploy 44946821720](https://github.com/ksobczak321-oss/gra/actions/runs/44946821720), próba 1.
+- Nowy DEV **0.15.4.0**: `ACCEPTED_OWN_EXACT_CI_PAGES_ALL_BYTES`; CI `SUCCESS`. Wyniki nowego zakresu wymagają własnego SHA i przebiegu.
+- Odebrany PRE-PROD **0.15.4.0**: źródło `7f87e9392211a2e853dd2db744fb04a53fe549ee`; [deploy 45045856773](https://github.com/ksobczak321-oss/gra/actions/runs/45045856773), próba 1.
 - PRE-PROD tej wcześniejszej wersji nie oznacza promocji nowych kart. PROD oraz pełny reset kont: bez nowej operacji.
-DEV i PRE-PROD 0.15.2.4/cache21 przyjęte automatycznie na publikacji d5ad35c, kod e394ea8. Własne CI 44569674535 SUCCESS: 1784 Node, 173 Python, 73 programy Chromium; Pages 44569674475 SUCCESS. Standardowy PRE-PROD 44577083312/1 SUCCESS, oryginalne dwa ZIP/receipt/TAR i wszystkie 460 plików HTTPS zgodne. Rzeczywisty admin3: start 280,121 s, responsywny Worker i 10 s gotowej gry; trzy konta, postęp i zegary zachowane. Ręczny odbiór użytkownika i 179 przypadków NOT RUN. Historyczne DDA, B94 QUALITY FAIL, C4 CI FAIL i C5 QUALITY HOLD pozostają odrębne. Bez resetu, PROD i DNS.
+Accepted packet 0.15.4.0/cache24 from own exact-source CI/Pages and standard manual PRE-PROD, with independent native/original/public/account/tag proofs. All 207 manual cases NOT RUN; no reset, PROD, DNS or password actions.
 
 ## Historyczny punkt odniesienia ewidencji
 
@@ -274,7 +274,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1187 — Planuj wykonalny rozwój co 120 sekund rzeczywistych](changes/HL-CHG-1187.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
 | [HL-CHG-1188 — Worker otrzymuje ograniczone dane bez blokowania gry](changes/HL-CHG-1188.md) | Bug | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
 | [HL-CHG-1189 — Zachowaj rozmowę PL/EN szkic i wyciszenie bez autokomend](changes/HL-CHG-1189.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_44946821720_1_ALL_INDEPENDENT_GATES` |
-| [HL-CHG-1192 — Wyrównaj opis produktu liczbę osób i przydział w jednym rzędzie](changes/HL-CHG-1192.md) | Bug | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1192 — Wyrównaj opis produktu liczbę osób i przydział w jednym rzędzie](changes/HL-CHG-1192.md) | Bug | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
 
 <a id="hl-epic-tut"></a>
 
@@ -328,8 +328,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1113 — Zróżnicowane cele fabularne nie powtarzają zakupu mieszkańca w każdym rozdziale](changes/HL-CHG-1113.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1136 — Tutorial 48 i samouczek 25 objaśniają nowe produkty i budynki](changes/HL-CHG-1136.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1159 — Dobrowolny doradca Królestwa i trzy kroki pierwszego tutoriala](changes/HL-CHG-1159.md) | Story | `accepted` | `accepted_DEV_4dcc34e_0.15.1.0_cache15_layout2` | `SUCCESS44292700743_DDA_SUBSEQUENT_PROMOTION_PRESERVED_ORIGINAL_HISTORY` |
-| [HL-CHG-1193 — Prowadź gracza przez wykonalne inwestycje pośrednie do dalszego celu](changes/HL-CHG-1193.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
-| [HL-CHG-1197 — Zachowaj dokładny stały wybór minigier wymaganych przez misje](changes/HL-CHG-1197.md) | Bug | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1193 — Prowadź gracza przez wykonalne inwestycje pośrednie do dalszego celu](changes/HL-CHG-1193.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
+| [HL-CHG-1197 — Zachowaj dokładny stały wybór minigier wymaganych przez misje](changes/HL-CHG-1197.md) | Bug | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
 
 <a id="hl-epic-eco"></a>
 
@@ -380,8 +380,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1125 — Mleko zachowuje skumulowany wiek centralny podczas transportu](changes/HL-CHG-1125.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1126 — Wiele produktów ma fizyczne składniki, bufory i kursy tragarzy](changes/HL-CHG-1126.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1131 — Koszty budowy używają fizycznego miksu ponad rezerwę sytości](changes/HL-CHG-1131.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1191 — Usuń żywność i zboże ze wszystkich cen budowy i rozbudowy](changes/HL-CHG-1191.md) | Decision | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
-| [HL-CHG-1194 — Dziel załogę między uprawy i przenoś ją ręcznie bez zatrudniania](changes/HL-CHG-1194.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1191 — Usuń żywność i zboże ze wszystkich cen budowy i rozbudowy](changes/HL-CHG-1191.md) | Decision | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
+| [HL-CHG-1194 — Dziel załogę między uprawy i przenoś ją ręcznie bez zatrudniania](changes/HL-CHG-1194.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
 
 <a id="hl-epic-peo"></a>
 
@@ -452,7 +452,7 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1127 — Kursy, rundy i równoległe badania zachowują osoby i opłaty](changes/HL-CHG-1127.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1128 — Wojsko ma wyłączną karierę, szkolenia, wyprawy i kolejkę powrotów](changes/HL-CHG-1128.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
 | [HL-CHG-1133 — Darmowy ratunek przyjmuje pełną grupę na wybranej wyspie](changes/HL-CHG-1133.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1198 — Wyjaśnij81 mieszkańców koszty Ratusza 4 i dobrowolną pomoc ratunkową](changes/HL-CHG-1198.md) | Bug | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1198 — Wyjaśnij81 mieszkańców koszty Ratusza 4 i dobrowolną pomoc ratunkową](changes/HL-CHG-1198.md) | Bug | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
 
 <a id="hl-epic-min"></a>
 
@@ -501,8 +501,8 @@ Powiązanie `superseded_by` nie usuwa historii. Przykłady: PayU → Paynow; aut
 | [HL-CHG-1111 — Nowe mechaniki mają rzeczywistą interakcję i weryfikowane rozwiązanie](changes/HL-CHG-1111.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1112 — Warianty przygód zmieniają układ, wskazówki i rozwiązanie](changes/HL-CHG-1112.md) | Story | `accepted` | `verified_own_ci_and_pages` | `deployed_source_7e81a1a` |
 | [HL-CHG-1135 — Autorskie plansze, licznik odmian i przedłużenia czasu](changes/HL-CHG-1135.md) | Story | `accepted` | `published_source_86eb8d9` | `deployed_source_86eb8d9` |
-| [HL-CHG-1195 — Pokaż wszystkim 55 grom instrukcję przed startem bez limitu czytania](changes/HL-CHG-1195.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
-| [HL-CHG-1196 — Wprowadź czytelne sterowanie i wymagające rozwiązywalne zagadki z uwag Worda](changes/HL-CHG-1196.md) | Story | `accepted` | `LOCAL_TESTS_AND_ARTIFACTS_PASS_PUBLICATION_PENDING` | `AUTHORIZED_NOT_DEPLOYED_NEW_PACKET` |
+| [HL-CHG-1195 — Pokaż wszystkim 55 grom instrukcję przed startem bez limitu czytania](changes/HL-CHG-1195.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
+| [HL-CHG-1196 — Wprowadź czytelne sterowanie i wymagające rozwiązywalne zagadki z uwag Worda](changes/HL-CHG-1196.md) | Story | `accepted` | `ACCEPTED_EXACT_PUB_OWN_CI_PAGES_BYTES` | `ACCEPTED_45045856773_1_ALL_INDEPENDENT_GATES` |
 
 <a id="hl-epic-acc"></a>
 
