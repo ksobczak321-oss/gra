@@ -207,3 +207,14 @@
  #island-dialog[data-panel-kind="puzzle"]:has(.expedition-decision) .minigame-side>.minigame-ad-slot>:is([data-buy-extra-time],[data-minigame-ad]){grid-column:auto;grid-row:auto}
 }
 .expedition-minigame .minigame-awaiting-start{display:none!important}
+
+/* The full instructions are read before Start. During a phone memory round,
+   keep their reminder in one full-width toolbar row instead of an implicit
+   half-width grid row that takes space away from the 120-card board. */
+@media(max-width:520px){
+ .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>.minigame-help{display:none}
+ .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>[data-expedition-instructions]{grid-column:1/-1;grid-row:2;min-width:0}
+ .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>[data-expedition-instructions]>.minigame-instructions[data-compact=true]{margin:0 0 6px;padding:0}
+ .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>[data-expedition-instructions]>.minigame-instructions[data-compact=true]>summary{display:flex;align-items:center;box-sizing:border-box;min-height:44px;padding:8px 12px;font-size:13px;line-height:1.3}
+ .expedition-minigame[data-minigame-kind="triples"][data-instructions-pending="false"]>[data-expedition-instructions]>.minigame-instructions[data-compact=true][open]{padding:0 12px 12px}
+}

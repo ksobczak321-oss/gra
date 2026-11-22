@@ -75,10 +75,19 @@ def natural_delivery_and_resume(browser,language,mobile):
         open_map(page,'townhall-upgrade','townhall')
         before=base.saved(page)
         page.locator('[data-upgrade-building="townhall"]').click()
-        meals=page.locator('[data-v32-construction="townhall"]')
-        expect(meals).to_be_visible()
-        assert base.saved(page)['constructionProjects']==before['constructionProjects'],'Opening food selection must not create the construction order'
-        meals.get_by_role('button',name='Zatwierdź rozbudowę',exact=True).click()
+        expect(page.locator('[data-v32-construction="townhall"]')).to_have_count(0)
+        ordered=base.saved(page)
+        assert len(ordered['constructionProjects'])==len(before['constructionProjects'])+1,'Upgrade immediately creates exactly one paid order'
+        order=next(p for p in ordered['constructionProjects']if p['building']=='townhall')
+        assert order['cost']=={'coins':100,'wood':100,'stone':100,'planks':100}
+        assert ordered['resources']['coins']==before['resources']['coins']-100
+        assert order['reservedCoins']==100 and order['goodsTotal']==300
+        for material in ['wood','stone','planks']:assert order['reservedMaterials'][material]==100
+        foods=page.evaluate("async()=>[...(await import('./harborlight-v1-provisions.js')).FOOD_IDS]")
+        for food in foods:
+            assert food not in order['cost']and order['reservedMaterials'].get(food,0)==0
+            assert ordered['resources'].get(food,0)==before['resources'].get(food,0)
+            assert ordered['bonusMaterials'].get(food,0)==before['bonusMaterials'].get(food,0)
         expect(page.locator('[data-starter-construction-guide]')).to_be_visible()
         page.locator('[data-start-acceleration-guide]').click()
         started=base.saved(page)

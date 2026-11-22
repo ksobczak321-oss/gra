@@ -189,13 +189,24 @@ def townhall_population_gate(browser):
     context, page = enter(browser, world('gate', population=81))
     building(page, 'townhall')
     expect(page.locator('[data-upgrade-building="townhall"]')).to_be_enabled()
+    before = cloud.cloud_state(UID)
     page.locator('[data-upgrade-building="townhall"]').click()
-    meals = page.locator('[data-v32-construction="townhall"]')
-    expect(meals).to_contain_text('9000 punktów sytości')
-    expect(meals.locator('[data-v32-build-food="food"]')).to_have_value('1500')
-    meals.get_by_role('button', name='Zatwierdź rozbudowę', exact=True).click()
+    expect(page.locator('[data-v32-construction="townhall"]')).to_have_count(0)
     expect(page.locator('body')).to_have_attribute('data-cloud-status', 'saved')
-    assert cloud.cloud_state(UID)['constructionProjects'][0]['building'] == 'townhall'
+    ordered = cloud.cloud_state(UID)
+    assert len(ordered['constructionProjects']) == len(before['constructionProjects']) + 1
+    project = ordered['constructionProjects'][0]
+    assert project['building'] == 'townhall' and project['targetLevel'] == 4
+    assert project['cost'] == {'coins': 1500, 'wood': 1500, 'stone': 1500, 'planks': 1500}
+    assert ordered['resources']['coins'] == before['resources']['coins'] - 1500
+    assert project['reservedCoins'] == 1500 and project['goodsTotal'] == 4500
+    for material in ['wood', 'stone', 'planks']:
+        assert project['reservedMaterials'][material] == 1500
+    foods = page.evaluate("async()=>[...(await import('./harborlight-v1-provisions.js')).FOOD_IDS]")
+    for food in foods:
+        assert food not in project['cost'] and project['reservedMaterials'].get(food, 0) == 0
+        assert ordered['resources'].get(food, 0) == before['resources'].get(food, 0)
+        assert ordered['bonusMaterials'].get(food, 0) == before['bonusMaterials'].get(food, 0)
     exact_history()
     cloud.no_island_cache(page)
     context.close()

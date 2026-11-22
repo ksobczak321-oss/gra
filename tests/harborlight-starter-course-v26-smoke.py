@@ -162,14 +162,23 @@ def fresh_starter(browser, language, mobile):
         before = saved(page)
         assert before['resources']['coins'] < 2000 and not before['commerce']['receipts'], 'Starter must be funded by course rewards'
         upgrade.click()
-        meals = page.locator('[data-v32-construction="townhall"]')
-        expect(meals).to_be_visible()
-        assert saved(page)['constructionProjects'] == before['constructionProjects'], 'Opening food selection must not create the construction order'
-        meals.get_by_role('button', name='Zatwierdź rozbudowę', exact=True).click()
+        expect(page.locator('[data-v32-construction="townhall"]')).to_have_count(0)
+        started = saved(page)
+        assert len(started['constructionProjects']) == len(before['constructionProjects']) + 1, 'Upgrade immediately creates exactly one paid construction order'
+        project = next(item for item in started['constructionProjects'] if item['building'] == 'townhall')
+        assert project['cost'] == {'coins': 100, 'wood': 100, 'stone': 100, 'planks': 100}
+        assert started['resources']['coins'] == before['resources']['coins'] - 100
+        assert project['reservedCoins'] == 100 and project['goodsTotal'] == 300
+        for material in ['wood', 'stone', 'planks']:
+            assert project['reservedMaterials'][material] == 100
+        foods = page.evaluate("async()=>[...(await import('./harborlight-v1-provisions.js')).FOOD_IDS]")
+        for food in foods:
+            assert food not in project['cost'] and project['reservedMaterials'].get(food, 0) == 0
+            assert started['resources'].get(food, 0) == before['resources'].get(food, 0)
+            assert started['bonusMaterials'].get(food, 0) == before['bonusMaterials'].get(food, 0)
         explanation = page.locator('[data-starter-construction-guide]')
         expect(explanation).to_be_visible()
         expect(explanation).to_contain_text('monety z gry' if language == 'pl' else 'game coins')
-        project = next(item for item in saved(page)['constructionProjects'] if item['building'] == 'townhall')
         assert not project.get('starterTurbo'), 'A new order must keep ordinary clocks'
         assert not saved(page)['tutorial']['completed'].get('townhall-upgrade')
         page.locator('[data-start-acceleration-guide]').click()
