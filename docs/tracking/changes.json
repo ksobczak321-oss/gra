@@ -41835,7 +41835,10 @@
         }
       },
       "canonical_artifact_report": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/canonical-artifacts-summary.json",
-      "first_preview_CI_history": "45029811749 FAILURE,2016Node/173PythonPASS, obsolete advisor expectation; no PREPROD or tag"
+      "first_preview_CI_history": "PUB1CI45029811749FAILstaleadvisorliteral; PUB2CI45032326833FAILstaleconstructioncopy. Both2016Node173PythonPASS, noDEVtag/PREPROD. Tests-onlyfixes retainCODE5 and exact468publiccontent.",
+      "previous_unaccepted_publication": "f6e66b83e6612dcdb0a4908b0c828c824703e0a3",
+      "previous_unaccepted_CI_run": 45032326833,
+      "previous_unaccepted_CI_conclusion": "failure"
     }
   }
 }

@@ -44,7 +44,7 @@
     "code_source_sha": "e3053c23d6fbb41736197d1bd7aea03c4ada20bd",
     "publication_source_sha": null,
     "CI": {
-      "status": "PENDING_NEW_OWN_EXACT_SOURCE_RUN",
+      "status": "PENDING_NEW_OWN_EXACT_SOURCE_RUN_AFTER_TEST_ONLY_CORRECTIONS",
       "run_id": null
     },
     "Pages": {
@@ -2741,6 +2741,25 @@
       "Pages_seconds": 40,
       "PREPROD_deployed": false,
       "DEV_tag_created": false
+    },
+    {
+      "event": "PREVIEW_NOT_ACCEPTED",
+      "source_sha": "f6e66b83e6612dcdb0a4908b0c828c824703e0a3",
+      "CI_run": 45032326833,
+      "CI_conclusion": "failure",
+      "CI_seconds": 897,
+      "actual_Node_PASS": 2016,
+      "actual_Python_PASS": 173,
+      "standalone_minigames_PASS": true,
+      "first15_main_browser_programs_PASS": true,
+      "failure": "Editorial tutorial test still expected six satiety points in construction copy. Actual revised copy correctly describes only materials/coins/transport/work. Subsequent local coverage also found a stale settings version expectation0.15.3.1.",
+      "Pages_run": 45032326825,
+      "Pages_conclusion": "success",
+      "Pages_seconds": 35,
+      "Pages_all468_public_bytes_PASS": true,
+      "Pages_two_separate_XLSX_PASS": true,
+      "PREPROD_deployed": false,
+      "DEV_tag_created": false
     }
   ],
   "local_UI_corrections_after_first_publication": {
@@ -2761,5 +2780,14 @@
     "final_PL_EN_Begin_quote_ad": "/workspace/work/minigry-packet-20261122/legacy-fixture-validation/code5-PL-EN-immediate-Begin-quote-ad.json",
     "final_source_full_CI": "PENDING"
   },
-  "canonical_UI_only_refresh_identity": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/UI-only-refresh-identity-vs-CODE3.json"
+  "canonical_UI_only_refresh_identity": "/workspace/work/minigry-packet-20261122/artifacts/attempt4/UI-only-refresh-identity-vs-CODE3.json",
+  "test_only_revision_after_PUB2": {
+    "scope": "Only fixture expectations and documentation. All application/canonical468publiccontent bytes stay identical; CODE5 remains source of exports.",
+    "editorial_actual_full": "/workspace/work/minigry-packet-20261122/test-only-editorial-CI45032326833/full-editorial-result.json",
+    "food_text_audit84_programs_and11_helpers": "/workspace/work/minigry-packet-20261122/test-only-editorial-CI45032326833/ci84-food-construction-text-audit.json",
+    "version_literal_audit": "All84CIbrowserprograms scanned; only settings-signout exact expectation+PASSlabel0.15.3.1 were stale. Preserve current exact0.15.4.0 comparison.",
+    "other_local_browser_groups": "67furtheractualprograms being completed on immutablePUB2 application; results remain separate from own newCI",
+    "runtime_or_canonical_changes": false,
+    "new_source_full_CI": "PENDING"
+  }
 }

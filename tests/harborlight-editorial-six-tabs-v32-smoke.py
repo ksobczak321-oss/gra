@@ -24,6 +24,8 @@ BUILDINGS=['townhall','house','farm','lumber','quarry','windmill','sawmill','war
 FISHER_MENU='Zatrudnij rybaków, by dostarczali ryby. To dodatkowe źródło pożywienia, które pomaga urozmaicać posiłki mieszkańców.'
 PORT_MENU='Kupuj i sprzedawaj towary oraz wysyłaj statki między własnymi wyspami. Przed rejsem sprawdź czy na docelowej wyspie jest wystarczająco miejsca na nowych mieszkańców i towary.'
 FOOD_SETTINGS='Tutaj ustawiasz priorytety i limity wydawanych porcji żywieniowych. W przypadku gdy objęty limitem produkt jest jedynym dostępnym jedzeniem zostanie wydany mieszkańcom jako gwarantowana porcja żywieniowa.'
+CONSTRUCTION_TOUR='Przed rozpoczęciem rozbudowy sprawdź potrzebne materiały, monety i pozostałe wymagania. Budowy wymagają drewna, kamienia lub desek, zależnie od budynku. Dokładny koszt oraz przewidywany czas dostaw i prac znajdziesz w oknie rozbudowy.'
+CONSTRUCTION_FOOD=re.compile(r'wyżywieni|żywno|jedzeni|syto(?:ść|ści)|zboż|6\s+punkt',re.I)
 FARM_BUTTONS={'farmGrain':'Przydziel do zbioru zboża','farmVegetables':'Przydziel do zbioru warzyw','farmLivestock':'Przydziel do produkcji żywca','farmMilk':'Przydziel do produkcji mleka'}
 LEAK=re.compile(r'\{[^{}\n]+\}|\[object Object\]|\bundefined\b|\bNaN\b|\bniejasne\b|poł[ąa]cz\s+(?:linie|\d+\s+i\s+\d+)|\bpo\s+Tour\s*\d+|do potwierdzeni[ae].*lekcji|niebieskie.*czerwone|dostosuj\s+(?:sytosc|sytość|ze ser)|sytość do sprawdzenia|zjedzona sytosc brzmi dziwnie|Dopisek na kontach testowych:',re.I)
 fixture=json.loads(subprocess.check_output(['node','--input-type=module','-e',"""
@@ -160,7 +162,9 @@ with sync_playwright() as p:
             description=page.locator('#island-onboarding-description').inner_text();clean(description,'active tour '+identity)
             for selector in ['[data-onboarding-card]','[data-onboarding-next]','[data-onboarding-exit]','[data-onboarding-highlight]']:
                 bounded(page,page.locator(selector),'active tour '+identity+' '+selector)
-            if identity=='construction':assert '6 punktów sytości' in description,description
+            if identity=='construction':
+                assert description==CONSTRUCTION_TOUR,description
+                assert not CONSTRUCTION_FOOD.search(description),description
             if identity=='building-house':assert 'Każdy poziom daje 36 łóżek.' in description,description
             if identity in ['construction','building-house','building-farm']:
                 page.screenshot(path=str(OUTPUT/f'tour28-{identity}-{width}.png'))
@@ -174,7 +178,9 @@ with sync_playwright() as p:
         retained_seen=[]
         for identity in fixture['ids'][start:end+1]:
             description=fixture['retainedCopy'][identity]['text'];clean(description,'retained catalogue '+identity)
-            if identity=='construction':assert '6 punktów sytości' in description,description
+            if identity=='construction':
+                assert description==CONSTRUCTION_TOUR,description
+                assert not CONSTRUCTION_FOOD.search(description),description
             if identity=='building-house':assert 'Każdy poziom daje 36 łóżek.' in description,description
             if identity=='education':assert 'Absolwent otrzymuje 100 punktów szczęścia na 7 dni' in description,description
             retained_seen.append(identity)
