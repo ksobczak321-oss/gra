@@ -23,11 +23,24 @@ const sourceCommit = (sourceRefIndex >= 0 ? process.argv[sourceRefIndex + 1] : p
 if (!/^[a-f0-9]{40}$/.test(sourceCommit)) throw new Error('Expected full source SHA');
 const materialNames = {coins:'monety',wood:'drewno',stone:'kamień',grain:'zboże',food:'mąka',planks:'deski'};
 const kebab = s => s.replace(/[A-Z]/g, c => '-' + c.toLowerCase());
-const source = (name, needle, description) => {
+const source = (name, needle, description, preferLast = false) => {
   const body = fs.readFileSync(path.join(ROOT, name), 'utf8');
-  const at = body.indexOf(needle);
+  const at = preferLast ? body.lastIndexOf(needle) : body.indexOf(needle);
   if (at < 0) throw new Error(`Missing source anchor: ${name}: ${needle}`);
   return { path: name, line: body.slice(0, at).split('\n').length, description };
+};
+const puzzleMechanicSources = id => {
+  const file='harborlight-v1-island-puzzles.js';
+  if(['signal-line','harbor-routes'].includes(id))return [
+    source(file,"for(const variant of ['signal-line','harbor-routes'])",'Połączenie bieżącej zagadki z oryginalnym silnikiem'),
+    source('harborlight-v1-original-puzzles.js',id==='signal-line'?'export function createSignalGraph(':'export function createHarborRoutes(','Generator bieżącej planszy i zgodność starszych zapisów')
+  ];
+  const needle='engine.'+id+'={';
+  const current=source(file,needle,'Bieżąca definicja silnika: ruchy, sterowanie i warunek rozwiązania',true);
+  const earlier=source(file,needle,'Wcześniejsza definicja: zgodność zapisów i wspólne zachowane reguły');
+  return current.line===earlier.line?[current]:[
+    current,earlier,source(file,'const puzzleEngine =','Wybór wersji generatora dla nowej i zapisanej planszy')
+  ];
 };
 const commonPractice = [
   'Samodzielny link uruchamia izolowaną próbę testową w bieżącej karcie przeglądarki. Nie wymaga przypisania do prywatnej wyspy ani nie dopisuje nagród do konta gracza.',
@@ -126,7 +139,7 @@ const entries = ISLAND_PUZZLE_CATALOG.map(spec => {
     timing:journeyTiming(spec.durationSeconds,spec.id),scoring:['Zwycięstwo jest potwierdzane z rzeczywistego stanu planszy. Sama liczba kliknięć nie daje zaliczenia.', 'W głównej grze pojedyncza zagadka ma bazowy pakiet 5 + 2 × poziom monet oraz po 5 drewna i kamienia. Faktyczną wypłatę ogranicza wspólny budżet nagród i jednorazowe potwierdzenie; powtórka może być treningiem bez wypłaty.'],retry:journeyRetry,progression:['Trudność danej odmiany rośnie z wygranymi w godzinowym oknie wspólnym dla konta.', 'Wariant 1–5 i ziarno są parametrami generatora planszy. Ich wybór może zmieniać układ, lecz skończona liczba ustawień nie gwarantuje, że każda para parametrów da inną planszę. Warunek zwycięstwa pozostaje ten sam.'],
     variants:Array.from({length:5},(_,i)=>({number:i+1,label:'Wariant '+(i+1)})),unlock:{townhallLevel:1,description:'Pojedyncze zagadki są dostępne bez progów fabularnych opowieści.'},exampleClues,
     relatedEngineModes:['signal-line','harbor-routes'].includes(spec.id)?['Samodzielna oryginalna minigra i pokój przygody korzystają z tego samego silnika ruchów. Katalog nie liczy ich jako dwóch odrębnych tytułów.']:spec.id==='memoryTriples'?['expedition-triples']:spec.id==='marbleMaze'?['expedition-tilt']:[],
-    sourceFiles:[source('harborlight-v1-story-catalog.js',"['"+spec.id+"'",'Nazwa, cel i czas katalogowy'),source('harborlight-v1-island-puzzles.js',['signal-line','harbor-routes'].includes(spec.id)?"for(const variant of ['signal-line','harbor-routes'])":'engine.'+spec.id+'={','Legalne ruchy i warunek rozwiązania'),...journeySources]
+    sourceFiles:[source('harborlight-v1-story-catalog.js',"['"+spec.id+"'",'Nazwa, cel i czas katalogowy'),...puzzleMechanicSources(spec.id),...journeySources]
   };
 });
 for (const story of STORY_CATALOG) {

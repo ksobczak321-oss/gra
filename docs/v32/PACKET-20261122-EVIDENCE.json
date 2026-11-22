@@ -16,7 +16,7 @@
       "Pages"
     ],
     "attachment_is_feedback_data": true,
-    "new_PREPROD_promotion": "AUTHORIZED_AFTER_OWN_ACCEPTED_DEV_AND_STANDARD_CI_NOT_EXECUTED",
+    "new_PREPROD_promotion": "EXPLICITLY_AUTHORIZED_AFTER_OWN_ACCEPTED_DEV_AND_STANDARD_CI_NOT_EXECUTED",
     "PROD_DNS_reset_passwords": "NO_ACTION",
     "execution_order": [
       "DEV",
@@ -25,7 +25,8 @@
       "Pages",
       "standard PRE-PROD after accepted DEV"
     ],
-    "scope_clarification": "Previous explicit instruction to publish completed changes to PRE-PROD continues after the user-authorized waiting period and current packet GO; actual new CI/DEV/GCP acceptance remains separate."
+    "scope_clarification": "Previous explicit instruction to publish completed changes to PRE-PROD continues after the user-authorized waiting period and current packet GO; actual new CI/DEV/GCP acceptance remains separate.",
+    "explicit_current_PREPROD_confirmation": "User: jak skończysz wrzuć na pre prod (22 November 2026)"
   },
   "accepted_before_packet": {
     "version": "0.15.3.1",
@@ -549,6 +550,25 @@
       "cause": "Two obsolete assertions: construction still requiring food and disallowing a distinct supply contract after completed recruitment. Meaningful updated tests retain once-only crew/rewards and exact food-free material budgets. Runtime unchanged by the remedy.",
       "remedy_focused_tests": 18,
       "full_retry": "PENDING"
+    },
+    {
+      "attempt": 2,
+      "source_sha": "4921e127f57f9595fcec2350cc280d5f7c95ccab",
+      "status": "PASS",
+      "tests": 1829,
+      "pass": 1829,
+      "fail": 0,
+      "seconds": 236.2547631780035,
+      "unchanged_96h_watchdog_ms": 9989.518311,
+      "watchdog_limit_ms": 10000,
+      "source_stable": true,
+      "runtime_test_source_equivalence_after_exporter_only_transition": true
     }
-  ]
+  ],
+  "exporter_source_anchor_remedy": {
+    "scope": "Only source references in minigame export; active V2 anchor plus preserved legacy/version selector",
+    "frozen_runtime_and_existing_test_files_unchanged": 460,
+    "additional_focused_tests": 2,
+    "canonical_generation": "PENDING_NEW_FROZEN_SOURCE"
+  }
 }
